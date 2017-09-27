@@ -191,25 +191,24 @@ stdenv.mkDerivation rec {
         && libxscrnsaver != null)}-x11"
     "--${boolEn (xorg.libXv != null)}-xv"
     "--disable-gl-cocoa"
-    # FIXME: add passthru booleans to mesa for feature detection
-    # "--${boolEn (mesa.x11-gl-backend != null)}-gl-x11"
-    # "--${boolEn (mesa.x11-egl-backend != null)}-egl-x11"
-    # "--${boolEn (mesa.drm-egl-backend != null)}-egl-drm"
-    # "--${boolEn (mesa.wayland-gl-backend != null)}-gl-wayland"
+    "--${boolEn opengl-dummy.glx}-gl-x11"
+    "--${boolEn opengl-dummy.egl}-egl-x11"
+    "--${boolEn opengl-dummy.egl}-egl-drm"
+    "--${boolEn opengl-dummy.gbm}-gl-wayland"
     "--disable-gl-win32"  # windows
-    "--disable-gl-dxinterop"  # windows
+    "--disable-gl-dxinterop"  # Windows
     "--disable-egl-angle"  # windows
-    "--disable-egl-angle-win32"  # windows
+    "--disable-egl-angle-win32"  # Windows
     "--${boolEn (libvdpau != null)}-vdpau"
     # FIXME: add passthru booleans to libvdpau for feature detection
-    #"--${boolEn ( != null)}-vdpau-gl-x11"
+    "--${boolEn opengl-dummy.glx}-vdpau-gl-x11"
     "--${boolEn (libva != null)}-vaapi"
     # FIXME: add passthru booleans to libva for feature detection
-    # "--${boolEn ( != null)}-vaapi-x11"
-    # "--${boolEn ( != null)}-vaapi-wayland"
-    # "--${boolEn ( != null)}-vaapi-drm"
-    # "--${boolEn ( != null)}-vaapi-glx"
-    # "--${boolEn ( != null)}-vaapi-x-egl"
+    "--enable-vaapi-x11"
+    "--enable-vaapi-wayland"
+    "--enable-vaapi-drm"
+    "--${boolEn opengl-dummy.glx}-vaapi-glx"
+    "--${boolEn opengl-dummy.egl}-vaapi-x-egl"
     "--${boolEn (libcaca != null)}-caca"
     "--${boolEn (libjpeg != null)}-jpeg"
     "--disable-direct3d"  # windows
@@ -220,7 +219,7 @@ stdenv.mkDerivation rec {
     "--disable-plain-gl"
     # FIXME:
     ###"--disable-mali-dbdev"
-    "--${boolEn (mesa != null)}-gl"
+    "--${boolEn (opengl-dummy != null)}-gl"
     "--${boolEn (libva != null)}-vaapi-hwaccel"
     "--disable-videotoolbox-hwaccel-new"  # macos
     "--disable-videotoolbox-hwaccel-old"  # macos

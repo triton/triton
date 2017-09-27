@@ -1875,6 +1875,41 @@ let
     ];
   };
 
+  fs-repo-migrations = buildFromGitHub {
+    version = 3;
+    owner = "ipfs";
+    repo = "fs-repo-migrations";
+    rev = "v1.3.0";
+    sha256 = "1bnlj9hls8bhdcljn21y72g75p0qb768l4i51gib827ylhs9l0ww";
+    propagatedBuildInputs = [
+      goprocess
+      go-homedir
+      go-os-rename
+      go-random
+      go-random-files
+      net
+    ];
+    postPatch = ''
+      # Unvendor
+      find . -name \*.go -exec sed -i 's,".*Godeps/_workspace/src/,",g' {} \;
+
+      # Remove old, unused migrations
+      sed -i '/mg[01234]/d' main.go
+    '';
+    subPackages = [
+      "."
+      "go-migrate"
+      "ipfs-1-to-2/lock"
+      "ipfs-1-to-2/repolock"
+      "ipfs-4-to-5/go-datastore"
+      "ipfs-4-to-5/go-datastore/query"
+      "ipfs-4-to-5/go-ds-flatfs"
+      "ipfs-5-to-6/migration"
+      "mfsr"
+      "stump"
+    ];
+  };
+
   fsync = buildFromGitHub {
     version = 2;
     owner = "spf13";
@@ -3748,6 +3783,30 @@ let
     repo   = "go-radix";
     sha256 = "1lwh7qfsn0nk20jprdfa79ibnz9vw8yljhcvw7c2sqhss4lwyvkz";
     date = "2017-07-27";
+  };
+
+  go-random = buildFromGitHub {
+    version = 3;
+    rev = "384f606e91f542a98e779e652eed88051618f0f7";
+    owner  = "jbenet";
+    repo   = "go-random";
+    sha256 = "0dsp9g972y0i93fdb9kn3vvjk7px8z1gx4yikw9al1y7mdx37pbp";
+    date = "2015-08-29";
+    propagatedBuildInputs = [
+      go-humanize
+    ];
+  };
+
+  go-random-files = buildFromGitHub {
+    version = 3;
+    rev = "737479700b40b4b50e914e963ce8d9d44603e3c8";
+    owner  = "jbenet";
+    repo   = "go-random-files";
+    sha256 = "12dm4bhj0v67w7a3g9rxhdnw8r927dz4z9dpx1pglisw58dc3kci";
+    date = "2015-06-09";
+    propagatedBuildInputs = [
+      go-random
+    ];
   };
 
   go-resiliency = buildFromGitHub {

@@ -1321,6 +1321,8 @@ freetype = callPackage ../all-pkgs/f/freetype {
 
 frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
+fs-repo-migrations = pkgs.goPackages.fs-repo-migrations.bin // { outputs = [ "bin" ]; };
+
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
 fuse_2 = callPackage ../all-pkgs/f/fuse/2.nix { };

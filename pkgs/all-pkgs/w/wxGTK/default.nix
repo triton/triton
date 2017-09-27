@@ -12,8 +12,8 @@
 , libnotify
 , libpng
 , libtiff
-, mesa
 , msgpack-c
+, opengl-dummy
 , xorg
 , xz
 , zlib
@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
     libnotify
     libpng
     libtiff
-    mesa
     msgpack-c
+    opengl-dummy
     xorg.libICE
     xorg.libSM
     xorg.libX11
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     gtk3
   ];
 
-  SEARCH_LIB = "${mesa}/lib";
+  SEARCH_LIB = "${opengl-dummy}/lib";
 
   preConfigure = ''
     sed -i configure \

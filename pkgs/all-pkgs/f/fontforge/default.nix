@@ -1,7 +1,7 @@
 { stdenv
 , autoconf
 , automake
-, fetchurl
+, fetchzip
 , fetchpatch
 , gettext
 , gnulib
@@ -28,9 +28,10 @@ in
 stdenv.mkDerivation rec {
   name = "fontforge-${version}";
 
-  src = fetchurl {
+  src = fetchzip {
+    version = 3;
     url = "https://github.com/fontforge/fontforge/archive/${version}.tar.gz";
-    sha256 = "3f53d06caba2a96dc498df81717e35504815046b3178e811c85c4cc135492d8c";
+    sha256 = "4e854db895ae1386a12a60af224d072664e3dc7b5d75145edc39566302730332";
   };
 
   patches = [

@@ -2,15 +2,19 @@
 , autoreconfHook
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , zlib
 }:
 
+let
+  version = "3.8.3";
+in
 stdenv.mkDerivation rec {
-  name = "id3lib-3.8.3";
+  name = "id3lib-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/id3lib/${name}.tar.gz";
+    url = "mirror://sourceforge/id3lib/id3lib/${version}/${name}.tar.gz";
     sha256 = "0yfhqwk0w8q2hyv1jib1008jvzmwlpsxvc8qjllhna6p1hycqj97";
   };
 
@@ -47,8 +51,7 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch =
-  /* Fix for newer autotools */ ''
+  postPatch = /* Fix for newer autotools */ ''
     sed -i {.,zlib}/configure.in \
       -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/'
   '';
@@ -66,7 +69,7 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Id3 library for C/C++";
     homepage = http://id3lib.sourceforge.net/;
     license = licenses.lgpl21;

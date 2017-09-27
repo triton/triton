@@ -6623,7 +6623,7 @@ let
       cgofuse
       cobra
       crypto
-      dropbox-sdk-go-unofficial
+      #dropbox-sdk-go-unofficial
       eme
       errors
       ewma
@@ -6651,9 +6651,16 @@ let
     ];
     postPatch = ''
       # Azure-sdk-for-go does not provide a stable apit status:
-      rm -rf azureblob/
+      rm -r azureblob/
       sed -i fs/all/all.go \
         -e '/azureblob/d'
+
+      # Dropbox doesn't build easily
+      rm -r dropbox/
+      sed -i fs/all/all.go \
+        -e '/dropbox/d'
+      sed -i fs/hash.go \
+        -e '/dbhash/d'
     '';
     meta.useUnstable = true;
   };

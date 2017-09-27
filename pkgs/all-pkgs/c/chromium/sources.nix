@@ -2,16 +2,16 @@
 { }:
 {
   "stable" = {
-    version = "61.0.3163.91";
-    sha256 = "0a2b4423551217d3ada244730fdfe3454f2630c8551b0bb784b727dc8294f2aa";
+    version = "61.0.3163.100";
+    sha256 = "4135968cac6623c1d2b224494600cd274098cce41c298f8c3908b354a34c281b";
   };
   "beta" = {
-    version = "62.0.3202.18";
-    sha256 = "38d76599b999e3636c3eb60888acd34ea8a8d7e24e6dba21ec7ae39d2045d47f";
+    version = "62.0.3202.29";
+    sha256 = "c8d4485650ec31144c7e3825de8c7910c94207448df396df1cf4f978a2b01831";
   };
   "dev" = {
-    version = "63.0.3213.3";
-    sha256 = "a9c680b181f18be8b39945e715b8a54640af74a4ed85c65a9de038085ad8be77";
+    version = "63.0.3223.8";
+    sha256 = "bced462e16a28ff0a3896539e6c7f72e76cb7ba16640a6cac9a533ec4b8f5ee5";
   };
 }
 

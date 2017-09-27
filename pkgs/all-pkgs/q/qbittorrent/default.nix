@@ -34,8 +34,8 @@ let
     };
     head = {
       fetchzipversion = 3;
-      version = "2017-09-11";
-      rev = "56887efdf507fa63530096f7a35c0f74eadae9de";
+      version = "2017-09-26";
+      rev = "796cd674d77158d41363f098b03ccd7400129adc";
       sha256 = "514310264736b91b43f0bbea5e8f5e28d688dd6f94acfdab7b3a0d2bf807f6fb";
     };
   };

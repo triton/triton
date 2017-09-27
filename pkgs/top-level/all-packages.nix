@@ -4363,11 +4363,6 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_4-12 = callPackage ../all-pkgs/l/linux {
-    channel = "4.12";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_4-13 = callPackage ../all-pkgs/l/linux {
     channel = "4.13";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4472,9 +4467,6 @@ libstartup_notification =
 #  # Build the kernel modules for the some of the kernels.
   linuxPackages_4-9 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-9;
-  });
-  linuxPackages_4-12 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4-12;
   });
   linuxPackages_4-13 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-13;

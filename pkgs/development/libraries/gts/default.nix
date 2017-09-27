@@ -4,13 +4,14 @@
 , glib
 }:
 
-
+let
+  version = "0.7.6";
+in
 stdenv.mkDerivation rec {
   name = "gts-${version}";
-  version = "0.7.6";
 
   src = fetchurl {
-    url = "mirror://sourceforge/gts/${name}.tar.gz";
+    url = "mirror://sourceforge/gts/gts/${version}/${name}.tar.gz";
     sha256 = "07mqx09jxh8cv9753y2d2jsv7wp8vjmrd7zcfpbrddz3wc9kx705";
   };
 

@@ -270,6 +270,13 @@ BEGIN {
     shouldSetRev = 1;
     shouldSetHash = 1;
     shouldSetVersion = 1;
+    if (/= [^ ]*.override {$/) {
+      shouldSetDate = 0;
+      shouldAddDate = 0;
+      shouldSetRev = 0;
+      shouldSetHash = 0;
+      shouldSetVersion = 0;
+    }
   }
 
   # Find the closing stmt and add any unadded fields

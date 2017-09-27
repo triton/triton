@@ -7,6 +7,7 @@
 , alsa-lib
 , dbus
 , fixesproto
+, glib
 , ibus
 , inputproto
 , kbproto
@@ -70,6 +71,7 @@ stdenv.mkDerivation rec {
     alsa-lib
     dbus
     fixesproto
+    glib  # ???: possibly not propagated via pkgconfig correctly
     ibus
     inputproto
     kbproto

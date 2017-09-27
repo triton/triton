@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   name = "ufraw-0.22";
 
   src = fetchurl {
-    url = "mirror://sourceforge/ufraw/${name}.tar.gz";
+    url = "mirror://sourceforge/ufraw/ufraw/${name}/${name}.tar.gz";
     sha256 = "0pm216pg0vr44gwz9vcvq3fsf8r5iayljhf5nis2mnw7wn6d5azp";
   };
 

@@ -28,16 +28,18 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt
     elem
     platforms;
+
+  version = "14.4.2";
 in
 stdenv.mkDerivation rec {
-  name = "sox-14.4.2";
+  name = "sox-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/sox/${name}.tar.gz";
+    url = "mirror://sourceforge/sox/sox/${version}/${name}.tar.gz";
     sha256 = "b45f598643ffbd8e363ff24d61166ccec4836fea6d3888881b8df53e3bb55f6c";
   };
 

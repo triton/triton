@@ -31,7 +31,7 @@ let
     gnused
   ];
 
-  version = "2.14.1";
+  version = "2.14.2";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "6f724c6d0e9e13114ab35db6f67e1b2c1934b641e89366e6a0e37618231f2cc6";
+    sha256 = "50e9723996114ad1eec4dda89960d9fe34461749ae42031008a261fedd03c7a1";
   };
 
   patches = [

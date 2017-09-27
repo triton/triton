@@ -1,17 +1,31 @@
-{ stdenv, fetchurl, alsa-lib, glib, jack2_lib, libsndfile, pkgconfig
+{ stdenv
+, cmake
+, fetchFromGitHub
+, ninja
+
+, alsa-lib, glib, jack2_lib, libsndfile, pkgconfig
 , pulseaudio_lib }:
 
+let
+  version = "1.1.7";
+in
 stdenv.mkDerivation  rec {
   name = "fluidsynth-${version}";
-  version = "1.1.6";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/fluidsynth/${name}.tar.bz2";
-    sha256 = "00gn93bx4cz9bfwf3a8xyj2by7w23nca4zxf09ll53kzpzglg2yj";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "FluidSynth";
+    repo = "fluidsynth";
+    rev = "v${version}";
+    sha256 = "10301f5f845db5e7b1bd3da4f0a02fc84face2293f8974def45c7d3388be6233";
   };
 
-  buildInputs = [ glib libsndfile pkgconfig ]
-    ++ stdenv.lib.optionals true [ alsa-lib pulseaudio_lib jack2_lib ];
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
+
+  buildInputs = [ glib libsndfile pkgconfig alsa-lib pulseaudio_lib jack2_lib ];
 
   meta = with stdenv.lib; {
     description = "Real-time software synthesizer based on the SoundFont 2 specifications";

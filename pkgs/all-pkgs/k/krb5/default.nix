@@ -77,13 +77,19 @@ stdenv.mkDerivation rec {
   ];
 
   buildPhase = optionalString libOnly ''
+    runHook preBuild
+
     (cd util; make)
     (cd include; make)
     (cd lib; make)
     (cd build-tools; make)
+
+    runHook postBuild
   '';
 
   installPhase = optionalString libOnly ''
+    runHook preInstall
+
     mkdir -p $out/{bin,include/{gssapi,gssrpc,kadm5,krb5},lib/pkgconfig,sbin,share/{et,man/man1}}
     (cd util; make install)
     (cd include; make install)
@@ -91,7 +97,11 @@ stdenv.mkDerivation rec {
     (cd build-tools; make install)
     rm -rf $out/{sbin,share}
     find $out/bin -type f | grep -v 'krb5-config' | xargs rm
-  '' + ''
+
+    runHook postInstall
+  '';
+
+  postInstall = ''
     ln -s libgssapi_krb5.so "$out"/lib/libgssapi.so
   '';
 

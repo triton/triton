@@ -128,7 +128,7 @@
 , rubberband
 #, libquvi
 , samba_client
-, SDL_2
+, sdl
 #, shine
 , snappy
 , soxr
@@ -241,7 +241,7 @@ assert ffplayProgram ->
   && avformatLibrary
   && swscaleLibrary
   && swresampleLibrary
-  && SDL_2 != null;
+  && sdl != null;
 assert ffprobeProgram ->
   avcodecLibrary
   && avformatLibrary;
@@ -364,7 +364,7 @@ stdenv.mkDerivation rec {
     rtmpdump
     rubberband
     samba_client
-    SDL_2
+    sdl
     soxr
     snappy
     speex
@@ -587,8 +587,8 @@ stdenv.mkDerivation rec {
     "--${boolEn (opengl-dummy != null && opengl-dummy.glx)}-opengl"
     "--${boolEn (openssl != null)}-openssl"
     "--disable-schannel"  # windows
-    "--${boolEn (SDL_2 != null)}-sdl"
-    "--${boolEn (SDL_2 != null)}-sdl2"
+    "--${boolEn (sdl != null)}-sdl"
+    "--${boolEn (sdl != null)}-sdl2"
     "--disable-securetransport"
     #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"
     "--${boolEn (zlib != null)}-zlib"

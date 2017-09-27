@@ -32,16 +32,16 @@
 , libxkbcommon
 , libxscrnsaver
 #, lua
-, mesa
 , mujs
 , nvidia-cuda-toolkit
 , nvidia-drivers
 , openal
+, opengl-dummy
 , pulseaudio_lib
 , pythonPackages
 , rubberband
 , samba_client
-, SDL_2
+, sdl
 , speex
 , v4l_lib
 , wayland
@@ -102,16 +102,16 @@ stdenv.mkDerivation rec {
     # MPV does not support lua 5.3 yet
     #lua
     #luasockets
-    mesa
     mujs
     nvidia-cuda-toolkit
     nvidia-drivers
     openal
+    opengl-dummy
     pulseaudio_lib
     pythonPackages.youtube-dl
     rubberband
     samba_client
-    SDL_2
+    sdl
     speex
     v4l_lib
     wayland
@@ -166,7 +166,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
     "--${boolEn (libarchive != null)}-libarchive"
     "--${boolEn (ffmpeg != null)}-libavdevice"
-    "--${boolEn (SDL_2 != null)}-sdl2"
+    "--${boolEn (sdl != null)}-sdl2"
     "--disable-sdl1"
     "--disable-oss-audio"
     "--disable-rsound"

@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "notmuch-0.25";
+  name = "notmuch-0.25.1";
 
   src = fetchurl {
     url = "https://notmuchmail.org/releases/${name}.tar.gz";
-    multihash = "QmZ2mNC3AMEqgCM5zipuA7sYWGdaQZbG6pmedHsyBMY7tF";
+    multihash = "QmPTvFm9YtScuPPBy2egWt5RQm5c9d899jKK1bKfEvHNgA";
     hashOutput = false;
-    sha256 = "65d28d1f783d02629039f7d15d9a2bada147a7d3809f86fe8d13861b0f6ae60b";
+    sha256 = "b4bf09ec9b7b64180704faa26d66cad5f911a5a00ef812da34cb02c3f8872831";
   };
 
   nativeBuildInputs = [

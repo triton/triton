@@ -1,10 +1,13 @@
 {stdenv, fetchurl, autoconf}:
 
+let
+  version = "0.15.1b";
+in
 stdenv.mkDerivation rec {
-  name = "libmad-0.15.1b";
-  
+  name = "libmad-${version}";
+
   src = fetchurl {
-    url = "mirror://sourceforge/mad/${name}.tar.gz";
+    url = "mirror://sourceforge/mad/libmad/${version}/${name}.tar.gz";
     multihash = "QmWuZPxbgcQEspBQGJwrrHNshYFbdBGUDTjpdBAKf1nQwf";
     sha256 = "bbfac3ed6bfbc2823d3775ebb931087371e142bb0e9bb1bee51a76a6e0078690";
   };

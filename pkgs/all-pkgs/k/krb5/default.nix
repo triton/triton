@@ -25,16 +25,16 @@ let
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
   major = "1.15";
-  patch = "1";
+  patch = "2";
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "QmXeUvydbyo4PMKLodc9tNkCSUTzvCi3TYuBboxM6c5pF8";
+    multihash = "Qmcqo8RvhJmEmpDwh3maAUonESoyZFT64EsBJECDmdv4mh";
     hashOutput = false;
-    sha256 = "437c8831ddd5fde2a993fef425dedb48468109bb3d3261ef838295045a89eb45";
+    sha256 = "1639e392edf25e3b6cfec2ae68f97eb53e07c2dbe74bfeede0108465d5d1c87e";
   };
 
   prePatch= ''
@@ -98,13 +98,13 @@ stdenv.mkDerivation rec {
   passthru = rec {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.15" "1";
+      urls = tarballUrls "1.15" "2";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprints = [
         "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305"
         "C449 3CB7 39F4 A89F 9852  CBC2 0CBA 0857 5F83 72DF"
       ];
-      sha256 = "437c8831ddd5fde2a993fef425dedb48468109bb3d3261ef838295045a89eb45";
+      sha256 = "1639e392edf25e3b6cfec2ae68f97eb53e07c2dbe74bfeede0108465d5d1c87e";
     };
   };
 

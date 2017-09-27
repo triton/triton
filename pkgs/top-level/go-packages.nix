@@ -1306,6 +1306,15 @@ let
     ];
   };
 
+  cpufeat = buildFromGitHub {
+    version = 3;
+    rev = "3794dfbfb04749f896b521032f69383f24c3687e";
+    owner  = "templexxx";
+    repo   = "cpufeat";
+    sha256 = "01i4kcfv81gxlglyvkdi4aajj0ivy7rhcsq4b9yind1smq3rfxs5";
+    date = "2017-09-27";
+  };
+
   cpuid = buildFromGitHub {
     version = 3;
     rev = "v1.1";
@@ -8115,6 +8124,9 @@ let
     owner  = "templexxx";
     repo   = "xor";
     sha256 = "0r0gcii6p1qaxxd9sgbwl693jp4kvciqw2qnr1a80l4rv6dyaigf";
+    propagatedBuildInputs = [
+      cpufeat
+    ];
   };
 
   xorm = buildFromGitHub {

@@ -2,7 +2,6 @@
 , autoreconfHook
 , fetchFromGitHub
 , lib
-, perl
 , python2
 
 , glproto

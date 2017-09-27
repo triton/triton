@@ -8,7 +8,7 @@
 , lcms
 , libtiff
 , openexr
-, mesa
+, opengl-dummy
 , xorg
 }:
 
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     lcms
     libtiff
     openexr
-    mesa
+    opengl-dummy
   ] ++ optionals (xorg != null) [
     xorg.xproto
     xorg.libX11

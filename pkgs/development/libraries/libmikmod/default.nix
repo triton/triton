@@ -1,10 +1,14 @@
 { stdenv, fetchurl, texinfo, alsa-lib, pulseaudio_lib }:
 
+let
+  version = "3.3.11.1";
+in
 stdenv.mkDerivation rec {
-  name = "libmikmod-3.3.7";
+  name = "libmikmod-${version}";
+
   src = fetchurl {
-    url = "mirror://sourceforge/mikmod/${name}.tar.gz";
-    sha256 = "18nrkf5l50hfg0y50yxr7bvik9f002lhn8c00nbcp6dgm5011x2c";
+    url = "mirror://sourceforge/mikmod/libmikmod/${version}/${name}.tar.gz";
+    sha256 = "ad9d64dfc8f83684876419ea7cd4ff4a41d8bcd8c23ef37ecb3a200a16b46d19";
   };
 
   buildInputs = [ texinfo alsa-lib pulseaudio_lib ];

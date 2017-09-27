@@ -3332,10 +3332,12 @@ scrot = callPackage ../all-pkgs/s/scrot { };
 
 sddm = callPackage ../all-pkgs/s/sddm { };
 
-SDL_2 = callPackage ../all-pkgs/s/SDL { };
+sdl_2 = callPackage ../all-pkgs/s/SDL { };
+SDL_2 = callPackageAlias "sdl_2" { };  # DEPRECATED
+sdl = callPackageAlias "sdl_2" { };
 
 SDL_2_image = callPackage ../all-pkgs/s/SDL_image {
-  SDL = pkgs.SDL_2;
+  SDL = pkgs.sdl_2;
 };
 
 sdparm = callPackage ../all-pkgs/s/sdparm { };

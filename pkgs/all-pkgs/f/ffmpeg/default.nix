@@ -2,9 +2,9 @@
 , fetchFromGitHub
 , fetchurl
 , lib
+, nasm
 , perl
 , texinfo
-, yasm
 
 /*
  *  Licensing options (yes some are listed twice, filters and such are not listed)
@@ -90,6 +90,7 @@
 , libcaca
 #, libcdio-paranoia
 , libdc1394
+, libdrm
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
@@ -97,6 +98,7 @@
 , libnppSupport ? false
 , libogg
 , libraw1394
+, librsvg
 , libsndio ? null
 , libssh
 , libtheora
@@ -108,6 +110,7 @@
 , libxcbshmExtlib ? true
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
+, libxml2
 , libzimg ? null
 , mfx-dispatcher
 , mmal ? null
@@ -164,11 +167,17 @@
 let
   inherit (builtins)
     compareVersions;
+
+  inherit (stdenv)
+    targetSystem;
+
   inherit (lib)
     boolEn
+    elem
     optional
     optionals
     optionalString
+    platforms
     versionOlder;
 
   sources = {
@@ -178,9 +187,9 @@ let
       sha256 = "98b97e1b908dfeb6aeb6d407e5a5eacdfc253a40c2d195f5867ed2d1d46ea957";
     };
     "9.9" = { # Git
-      version = "2017.07.28";
-      rev = "bf8ab72ae95bb11f2c281d464594c2f6ba70326b";
-      sha256 = "b48a4e947018c89e11481a6495e2b703ab194d7e15e8494e5873362f207eb8cc";
+      version = "2017.09.28";
+      rev = "47d6b02f6c3d58141ace48bb5e8971cae56f8874";
+      sha256 = "34423e7a86b9c0798dae1a8d2d2b96f18d12c4fb90c32bd6e7a8b32a0e36e263";
     };
   };
   source = sources."${channel}";
@@ -316,7 +325,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     perl
     texinfo
-    yasm
+    nasm
   ];
 
   buildInputs = [
@@ -341,10 +350,12 @@ stdenv.mkDerivation rec {
     libbs2b
     libcaca
     libdc1394
+    libdrm
     libgcrypt
     libmodplug
     libogg
     libraw1394
+    librsvg
     libssh
     libtheora
     libva
@@ -352,6 +363,7 @@ stdenv.mkDerivation rec {
     libvorbis
     libvpx
     libwebp
+    libxml2
     mfx-dispatcher
     nvidia-cuda-toolkit
     nvidia-drivers
@@ -420,11 +432,12 @@ stdenv.mkDerivation rec {
     "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
     "--${boolEn grayBuild}-gray"
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
+    #(fflag "--disable-autodetect" "3.4")
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
     "--enable-pthreads"
-    "--disable-w32threads"  # windows
-    "--disable-os2threads"  # os/2
+    "--disable-w32threads"  # Windows
+    "--disable-os2threads"  # OS/2
     "--${boolEn networkBuild}-network"
     "--${boolEn pixelutilsBuild}-pixelutils"
     /*
@@ -461,24 +474,31 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    "--disable-audiotoolbox"  # macos
+    "--disable-audiotoolbox"  # macOS
     "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda"
+    (fflag "--${boolEn (
+      nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-cuda-sdk" "3.4")
     "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuvid"
-    "--disable-d3d11va"  # windows
-    "--disable-dxva2"  # windows
+    "--disable-d3d11va"  # Windows
+    "--disable-dxva2"  # Windows
+    (fflag "--${boolEn (libdrm != null)}-libdrm" "3.4")
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
     "--${boolEn libnppSupport}-libnpp"
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
     "--${boolEn nvenc}-nvenc"
+    /**/(fflag "--disable-omx" "3.4")
+    /**/(fflag "--disable-omx-rpi" "3.4")
+    /**/(fflag "--disable-rkmpp" "3.4")
     "--${boolEn (libva != null)}-vaapi"
-    "--disable-vda"  # macos
+    "--disable-vda"  # macOS
     "--${boolEn (libvdpau != null)}-vdpau"
-    "--disable-videotoolbox"  # macos
+    "--disable-videotoolbox"  # macOS
     # Undocumented
     # FIXME
     #"--${boolEn (xorg.libXvMC != null)}-xvmc"
@@ -486,9 +506,13 @@ stdenv.mkDerivation rec {
     /*
      *  External libraries
      */
+    (fflag "--${boolEn (alsa-lib != null)}-alsa" "3.4")
+    (fflag "--disable-appkit" "3.4")  # macOS
+    (fflag "--disable-avfoundation" "3.4")  # macOS
     #"--${boolEn (avisynth != null)}-avisynth"
     /**/"--disable-avisynth"
     "--${boolEn (bzip2 != null)}-bzlib"
+    (fflag "--disable-coreimage" "3.4")  # macOS
     # Recursive dependency
     "--${boolEn (chromaprint != null)}-chromaprint"
     # Undocumented (broadcom)
@@ -499,6 +523,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
+    (fflag "--${boolEn (jack2_lib != null)}-jack" "3.4")
     "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
     "--${boolEn (libass != null)}-libass"
@@ -528,7 +553,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (kvazaar != null)}-libkvazaar"
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"
-    (deprfflag null "3.4" "--disable-libnut")
+    (deprfflag null "3.3" "--disable-libnut")
     #"--${boolEn (opencore-amr != null)}-libopencore-amrnb"
     /**/"--disable-libopencore-amrnb"
     #"--${boolEn (opencore-amr != null)}-libopencore-amrwb"
@@ -541,9 +566,10 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopenmpt"
     "--${boolEn (opus != null)}-libopus"
     "--${boolEn (pulseaudio_lib != null)}-libpulse"
+    (fflag "--${boolEn (librsvg != null)}-librsvg" "3.4")
     "--${boolEn (rubberband != null)}-librubberband"
     "--${boolEn (rtmpdump != null)}-librtmp"
-    (deprfflag null "3.4" "--disable-libschroedinger")
+    (deprfflag null "3.3" "--disable-libschroedinger")
     #"--${boolEn (shine != null)}-libshine"
     /**/"--disable-libshine"
     "--${boolEn (samba_client != null)}-libsmbclient"
@@ -557,7 +583,9 @@ stdenv.mkDerivation rec {
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"
+    (fflag "--${boolEn (v4l_lib != null)}-v4l2_m2m" "3.4")
     "--${boolEn (vid-stab != null)}-libvidstab"
+    /**/(fflag "--disable-libvmaf" "3.4")
     "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"
     "--${boolEn (libvorbis != null)}-libvorbis"
     "--${boolEn (libvpx != null)}-libvpx"
@@ -571,6 +599,7 @@ stdenv.mkDerivation rec {
     "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"
     "--${boolEn libxcbshapeExtlib}-libxcb-shape"
     "--${boolEn (xvidcore != null)}-libxvid"
+    (fflag "--${boolEn (libxml2 != null)}-libxml2" "3.4")
     "--${boolEn (libzimg != null)}-libzimg"
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
@@ -578,15 +607,17 @@ stdenv.mkDerivation rec {
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
+    /**/(fflag "--disable-libndi_newtek" "3.4")
     "--disable-mediacodec"  # android
     (fflag "--${boolEn (libmysofa != null)}-libmysofa" "3.4")
-    (deprfflag null "3.4" "--disable-netcdf")
+    (deprfflag null "3.3" "--disable-netcdf")
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"
     "--${boolEn (opengl-dummy != null && opengl-dummy.glx)}-opengl"
     "--${boolEn (openssl != null)}-openssl"
-    "--disable-schannel"  # windows
+    /**/(fflag "--disable-sndio" "3.4")
+    "--disable-schannel"  # Windows
     "--${boolEn (sdl != null)}-sdl"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-securetransport"
@@ -599,6 +630,7 @@ stdenv.mkDerivation rec {
     "--${boolEn optimizationsDeveloper}-optimizations"
     "--${boolEn extraWarningsDeveloper}-extra-warnings"
     "--${boolEn strippingDeveloper}-stripping"
+    (fflag "--${boolEn (elem targetSystem platforms.linux)}-linux-perf" "3.4")
   ] ++ optionals (alsa-lib != null && flite != null) [
     # Flite requires alsa but the configure test under specifies
     # dependencies and fails without -lasound.

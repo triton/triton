@@ -3278,6 +3278,8 @@ rest = callPackage ../all-pkgs/r/rest { };
 
 rfkill = callPackage ../all-pkgs/r/rfkill { };
 
+rhash = callPackage ../all-pkgs/r/rhash { };
+
 riot = callPackage ../all-pkgs/r/riot { };
 
 rocksdb = callPackage ../all-pkgs/r/rocksdb { };

@@ -59,8 +59,8 @@ let
     };
     "beta" = {
       suffix = "-beta";
-      version = "1.21.0-beta1";
-      sha256 = "c020d86b1ba5a7a8f59082360301971adf6bd1fdfe55bcdf6eeb61084ecb0854";
+      version = "1.21.0-beta2";
+      sha256 = "b9979e9a7033ad1f250fc022334a97a524fcbe18b937802728c701145f2dbd11";
     };
   };
   source = sources."${channel}";

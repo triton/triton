@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, yasm
+, nasm
 
 , fontconfig
 , freetype
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    yasm
+    nasm
   ];
 
   buildInputs = [
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     "--disable-coretext" # OSX
     "--enable-require-system-font-provider"
     "--${boolEn (harfbuzz_lib != null)}-harfbuzz"
-    "--${boolEn (yasm != null)}-asm"
+    "--${boolEn (nasm != null)}-asm"
     "--${boolEn rasterizerSupport}-rasterizer"
     "--${boolEn largeTilesSupport}-large-tiles"
   ];

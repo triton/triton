@@ -1,4 +1,6 @@
 { stdenv
+, autoreconfHook
+, fetchTritonPatch
 , fetchurl
 }:
 
@@ -19,6 +21,22 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "824339b7e47f1ea030fd411035d446c47c09061b";
+      file = "l/libsodium/libsodium-1.0.10-cpuflags.patch";
+      sha256 = "744230d34b59cc1a15dc82c6fd2a24baff141363b09f4220021fed901d49c97f";
+    })
+  ];
+
+  configureFlags = [
+    "--disable-sse4_1"
+  ];
 
   doCheck = true;
 

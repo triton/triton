@@ -33,7 +33,7 @@ let
     enFlag;
 
     channel = "0.3";
-    version = "${channel}.4";
+    version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/grilo-plugins/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "990282a518968c52f6a67b96c6b708e236a59da1c7c920ed45e6316ab49ddeb5";
+    sha256 = "2977827b8ecb3e15535236180e57dc35e85058d111349bdb6a1597e62a5068fb";
   };
 
   nativeBuildInputs = [

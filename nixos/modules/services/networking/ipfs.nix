@@ -5,7 +5,7 @@ let
 
   ipfs_path = "/var/lib/ipfs";
 
-  attrs = {
+  ipfsAttrs = {
     Addresses = {
       Swarm = [
         "/ip4/0.0.0.0/tcp/4001"
@@ -19,9 +19,9 @@ let
       API = "/ip4/127.0.0.1/tcp/5001";
       Gateway = "/ip4/127.0.0.1/tcp/8001";
     };
-  };
+  } // cfg.extraAttrs;
 
-  extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON attrs);
+  extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON ipfsAttrs);
 
   extraFlags = [
   ] ++ optionals cfg.gc [
@@ -35,6 +35,7 @@ let
     optionals;
 
   inherit (lib.types)
+    attrs
     bool
     str;
 in
@@ -67,6 +68,15 @@ in
         '';
       };
 
+
+      extraAttrs = mkOption {
+        type = attrs;
+        default = { };
+        description = ''
+          Extra attrs to pass when generating the JSON config.
+        '';
+      };
+
     };
 
   };
@@ -74,9 +84,10 @@ in
   config = mkIf cfg.enable {
 
     environment.variables = {
-      IPFS_API = "127.0.0.1:8001";
       IPFS_PATH = "/var/lib/ipfs";
     };
+
+    networking.proxy.envVars.IPFS_API = "127.0.0.1:8001";
 
     systemd.services.ipfs = {
       wantedBy = [ "multi-user.target" ];
@@ -88,6 +99,7 @@ in
         fs-repo-migrations
         ipfs
         jq
+        util-linux_full
       ];
 
       preStart = ''
@@ -115,7 +127,7 @@ in
           exit 6
         fi
 
-        fs-repo-migrations -y -to $(ipfs repo version -q | sed 's,fs-repo@\([0-9]\+\),\1,g')
+        su ipfs -s /bin/sh -c "fs-repo-migrations -y -to $(ipfs repo version -q | sed 's,fs-repo@\([0-9]\+\),\1,g')"
 
         touch "${ipfs_path}/new_config"
         chmod 0660 "${ipfs_path}/new_config"

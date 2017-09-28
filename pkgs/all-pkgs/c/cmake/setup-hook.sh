@@ -1,4 +1,4 @@
-addCMakeParams() {
+addCmakeParams() {
     addToSearchPath CMAKE_PREFIX_PATH $1
 }
 
@@ -43,13 +43,7 @@ cmakeConfigurePhase() {
     eval "$postConfigure"
 }
 
-if [ -n "${cmakeConfigure-true}" -a -z "$configurePhase" ]; then
-    configurePhase=cmakeConfigurePhase
-fi
-
-envHooks+=(addCMakeParams)
-
-makeCmakeFindLibs(){
+makeCmakeFindLibs() {
   for flag in $NIX_CFLAGS_COMPILE $NIX_LDFLAGS; do
     case $flag in
       -I*)
@@ -62,6 +56,26 @@ makeCmakeFindLibs(){
   done
 }
 
+cmakeAddHookOnce() {
+  local hookVar="$1"
+  local targetHook="$2"
+
+  local hook
+  local hookArr="${hookVar}[@]"
+  for hook in "${!hookArr}"; do
+    if [ "$hook" = "$targetHook" ]; then
+      return 0
+    fi
+  done
+  eval "${hookVar}"'+=("$targetHook")'
+}
+
+if [ -n "${cmakeConfigure-true}" -a -z "$configurePhase" ]; then
+  configurePhase=cmakeConfigurePhase
+fi
+
+cmakeAddHookOnce envHooks addCmakeParams
+
 # not using setupHook, because it could be a setupHook adding additional
 # include flags to NIX_CFLAGS_COMPILE
-postHooks+=(makeCmakeFindLibs)
+cmakeAddHookOnce postHooks makeCmakeFindLibs

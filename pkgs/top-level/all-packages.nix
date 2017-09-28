@@ -880,7 +880,12 @@ clutter-gtk_1-8 = callPackage ../all-pkgs/c/clutter-gtk {
 };
 clutter-gtk = callPackageAlias "clutter-gtk_1-8" { };
 
-cmake = callPackage ../all-pkgs/c/cmake { };
+cmake = callPackage ../all-pkgs/c/cmake {
+  cmake = pkgs.cmake_bootstrap;
+};
+cmake_bootstrap = callPackageAlias "cmake" {
+  bootstrap = true;
+};
 
 cmocka = callPackage ../all-pkgs/c/cmocka { };
 
@@ -1986,7 +1991,9 @@ json-c = callPackage ../all-pkgs/j/json-c { };
 
 json-glib = callPackage ../all-pkgs/j/json-glib { };
 
-jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
+jsoncpp = callPackage ../all-pkgs/j/jsoncpp {
+  cmake = pkgs.cmake_bootstrap;
+};
 
 judy = callPackage ../all-pkgs/j/judy { };
 

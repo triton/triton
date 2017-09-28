@@ -1,23 +1,33 @@
 { stdenv
+, cmake
 , fetchTritonPatch
 , fetchurl
 
 , bzip2
 , curl
 , expat
+, jsoncpp
 , libarchive
+, libuv
 , ncurses
+, rhash
 , xz
 , zlib
+
+, bootstrap ? false
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
   majorVersion = "3.9";
   minorVersion = "3";
   version = "${majorVersion}.${minorVersion}";
 in
 stdenv.mkDerivation rec {
-  name = "cmake-${version}";
+  name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
@@ -33,41 +43,50 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  buildInputs = [
+  nativeBuildInputs = optionals (!bootstrap) [
+    cmake
+  ];
+
+  buildInputs = optionals (!bootstrap) [
     bzip2
     curl
     expat
+    jsoncpp
     libarchive
+    libuv
     ncurses
+    rhash
     xz
     zlib
   ];
 
-  CMAKE_PREFIX_PATH = stdenv.lib.concatStringsSep ":" buildInputs;
+  postPatch = optionalString (!bootstrap) ''
+    sed -i '/CMAKE_USE_SYSTEM_/s,OFF,ON,g' CMakeLists.txt
+  '';
 
   preConfigure = ''
-    fixCmakeFiles .
     substituteInPlace Modules/Platform/UnixPaths.cmake \
       --subst-var-by libc ${stdenv.libc}
+  '' + optionalString bootstrap ''
+    fixCmakeFiles .
+
     configureFlagsArray+=("--parallel=$NIX_BUILD_CORES")
   '';
 
-  cmakeConfigure = false;
-
-  configureFlags = [
+  configureFlags = optionals bootstrap [
+    "--no-system-libs"
     "--docdir=/share/doc/${name}"
     "--mandir=/share/man"
+  ];
 
-    "--system-curl"
-    "--system-expat"
-    "--no-system-jsoncpp"  # Uses cmake as a build system
-    "--system-zlib"
-    "--system-bzip2"
-    "--system-libarchive"
+  # Cmake flags are only used by the final build of cmake
+  cmakeFlags = optionals (!bootstrap) [
+    "-DCMAKE_USE_SYSTEM_KWIML=OFF"
   ];
 
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
+  cmakeConfigure = !bootstrap;
 
   meta = with stdenv.lib; {
     description = "Cross-Platform Makefile Generator";

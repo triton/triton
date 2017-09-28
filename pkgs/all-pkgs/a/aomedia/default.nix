@@ -2,9 +2,9 @@
 , cmake
 , fetchgit
 , lib
+, nasm
 , ninja
 , perl
-, yasm
 }:
 
 let
@@ -22,16 +22,16 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    nasm
     ninja
     perl
-    yasm
   ];
 
   cmakeFlags = [
     "-DENABLE_CCACHE=OFF"
     "-DENABLE_DISTCC=OFF"
     "-DENABLE_DOCS=OFF"
-    "-DENABLE_NASM=OFF"
+    "-DENABLE_NASM=ON"
     "-DENABLE_IDE_TEST_HOSTING=OFF"
     "-DBUILD_SHARED_LIBS=ON"
   ];

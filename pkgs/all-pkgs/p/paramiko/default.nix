@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.3.1";
 in
 buildPythonPackage rec {
   name = "paramiko-${version}";
@@ -21,7 +21,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "paramiko";
     inherit version;
-    sha256 = "ff94ae65379914ec3c960de731381f49092057b6dd1d24d18842ead5a2eb2277";
+    sha256 = "fa6b4f5c9d88f27c60fd9578146ff24e99d4b9f63391ff1343305bfd766c4660";
   };
 
   propagatedBuildInputs = [

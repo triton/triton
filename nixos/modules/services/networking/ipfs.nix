@@ -81,7 +81,14 @@ in
     systemd.services.ipfs = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
-      path = with pkgs; [ ipfs gawk findutils jq ];
+      path = with pkgs; [
+        gawk
+        gnused
+        findutils
+        fs-repo-migrations
+        ipfs
+        jq
+      ];
 
       preStart = ''
         if [ "$(ls "${ipfs_path}" | wc -l)" -eq "0" ]; then
@@ -107,6 +114,9 @@ in
           echo "Or you can delete all of the file in ${ipfs_path} and restart the service" >&2
           exit 6
         fi
+
+        fs-repo-migrations -y -to $(ipfs repo version -q | sed 's,fs-repo@\([0-9]\+\),\1,g')
+
         touch "${ipfs_path}/new_config"
         chmod 0660 "${ipfs_path}/new_config"
         chown ipfs:ipfs "${ipfs_path}/new_config"

@@ -2,8 +2,8 @@
 , fetchFromGitHub
 , fetchurl
 , lib
+, nasm
 , perl
-, yasm
 
 # Limit default decoder max to WHXGA
 , sizeLimit ? "5120x3200" # limit max size to allow in the decoder
@@ -102,8 +102,8 @@ stdenv.mkDerivation rec {
       };
 
   nativeBuildInputs = [
+    nasm
     perl
-    yasm
   ];
 
   postPatch = ''
@@ -136,7 +136,7 @@ stdenv.mkDerivation rec {
     "--${boolEn examplesSupport}-examples"
     "--disable-docs"
     #libc
-    "--as=yasm"
+    "--as=nasm"
     "${if (sizeLimit != null) then "--size-limit=${sizeLimit}" else null}"
     "--disable-codec-srcs"
     "--disable-debug-libs"

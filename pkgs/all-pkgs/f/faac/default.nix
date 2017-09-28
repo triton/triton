@@ -13,14 +13,14 @@ let
     boolEn;
 
   channel = "1.29";
-  version = "${channel}.3";
+  version = "${channel}.7.7";
 in
 stdenv.mkDerivation rec {
   name = "faac-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/faac/faac-src/faac-${channel}/${name}.tar.gz";
-    sha256 = "cef2897843baf366983ad29f471cd1c4dcc95762b86d283a925514bcc5cf5a3f";
+    sha256 = "b898fcf55e7b52f964ee62d077f56fe9b3b35650e228f006fbef4ce903b4d731";
   };
 
   nativeBuildInputs = [

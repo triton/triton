@@ -14,11 +14,11 @@ let
     optionalString;
 
   sources = {
-    "5.5" = {
-      version = "5.6.1";
-      sha256 = "006f9cb3886877df845e3c3dea8a688777fb739a862d3afe1a113c16a732715f";
+    "5" = {
+      version = "5.6.2";
+      sha256 = "ef505373fdd85c762dedef0b067ce7b089e177568a57b31e5b4126d8acd47653";
     };
-    "6.0" = {
+    "6" = {
       version = "6.0.0-beta2";
       sha256 = "0c200154c4980ad6e278d9c9ee9e2ca22d2c501c4c67e6fe748adde31aa36b0e";
     };
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     util-linux_full
   ];
 
-  postPatch = optionalString (channel == "5.0") ''
+  postPatch = optionalString (channel == "5") ''
     # ES_HOME defaults to install prefix which is read-only
     sed -i bin/elasticsearch{,-plugin} \
       -e 's,ES_HOME=`dirname "$SCRIPT"`/..,,'
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
     sed -i bin/elasticsearch \
       -e '/x$ES_INCLUDE/,+16 d'
     rm -f bin/elasticsearch.in.sh
-  '' + optionalString (channel == "6.0") ''
+  '' + optionalString (channel == "6") ''
     # 1: ES_HOME defaults to install prefix which is read-only
     # 2: Remove broken code, we hard code the path anyways
     sed -i bin/elasticsearch-env \

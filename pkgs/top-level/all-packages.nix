@@ -1071,13 +1071,13 @@ eglexternalplatform = callPackage ../all-pkgs/e/eglexternalplatform { };
 
 eigen = callPackage ../all-pkgs/e/eigen { };
 
-elasticsearch_5-5 = callPackage ../all-pkgs/e/elasticsearch {
-  channel = "5.5";
+elasticsearch_5 = callPackage ../all-pkgs/e/elasticsearch {
+  channel = "5";
 };
-elasticsearch_6-0 = callPackage ../all-pkgs/e/elasticsearch {
-  channel = "6.0";
+elasticsearch_6 = callPackage ../all-pkgs/e/elasticsearch {
+  channel = "6";
 };
-elasticsearch = callPackageAlias "elasticsearch_5-5" { };
+elasticsearch = callPackageAlias "elasticsearch_5" { };
 
 elfutils = callPackage ../all-pkgs/e/elfutils { };
 

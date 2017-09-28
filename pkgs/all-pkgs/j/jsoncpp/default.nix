@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.8.1";
+  version = "1.8.3";
 in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "open-source-parsers";
     repo = "jsoncpp";
     rev = version;
-    sha256 = "a3691ee58b1cda92a4c2a15945b3877a1ebb12be4be89b78fc0752ca747e0eb4";
+    sha256 = "717c519f06a83992ea80db04355fe7ca06556891cce45281dbeadfb6378997f9";
   };
 
   nativeBuildInputs = [

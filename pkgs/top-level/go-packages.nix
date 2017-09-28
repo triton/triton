@@ -870,6 +870,19 @@ let
     sha256 = "003qj5rpr27923bjvgd3mbgack3blw0m4izrq9plpxkha1glylz3";
   };
 
+  chroma = buildFromGitHub {
+    version = 3;
+    rev = "v0.1.1";
+    owner  = "alecthomas";
+    repo   = "chroma";
+    sha256 = "0x9v06fi3c69mj2zxagsbkh0ic0898rpr8infrlmvnjdx59f54kc";
+    excludedPackages = "cmd";
+    propagatedBuildInputs = [
+      fnmatch
+      regexp2
+    ];
+  };
+
   circbuf = buildFromGitHub {
     version = 1;
     date = "2015-08-26";
@@ -1832,6 +1845,15 @@ let
     owner  = "spacemonkeygo";
     repo   = "flagfile";
     sha256 = "0vaqlmayva323hs7qyza1n7383d2ly2k0hv8p2j6jl4bid9w8jy0";
+  };
+
+  fnmatch = buildFromGitHub {
+    version = 3;
+    date = "2016-04-03";
+    rev = "cbb64ac3d964b81592e64f957ad53df015803288";
+    owner  = "danwakefield";
+    repo   = "fnmatch";
+    sha256 = "126zbs23kbv3zn5g60a2w6cdxjrhqplpn6h8rwvvhm8lss30bql6";
   };
 
   form = buildFromGitHub {
@@ -4215,10 +4237,10 @@ let
 
   grpc = buildFromGitHub {
     version = 3;
-    rev = "v1.6.0";
+    rev = "v1.5.2";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1hwibykd1qhrvlzw8zx8878kc4hwn81rjkza2x47wigvw7mmslc1";
+    sha256 = "b73b1b59a78445c0e8cfbef3720ed63b61d7aded45bcf7f14aff149c084e48a7";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -4245,7 +4267,6 @@ let
       "connectivity"
       "credentials"
       "grpclb/grpc_lb_v1"
-      "grpclb/grpc_lb_v1/messages"
       "grpclog"
       "internal"
       "keepalive"
@@ -4570,6 +4591,7 @@ let
       amber
       blackfriday
       cast
+      chroma
       cobra
       cssmin
       emoji
@@ -5765,13 +5787,11 @@ let
       "pkg/homedir"
       "pkg/idtools"
       "pkg/ioutils"
-      "pkg/jsonlog"
       "pkg/jsonmessage"
       "pkg/longpath"
       "pkg/mount"
       "pkg/namesgenerator"
       "pkg/pools"
-      "pkg/promise"
       "pkg/stdcopy"
       "pkg/stringid"
       "pkg/system"
@@ -6807,6 +6827,14 @@ let
     owner  = "mitchellh";
     repo   = "reflectwalk";
     sha256 = "1xpgzn3rgc222yz09nmn1h8xi2769x3b5cmb23wch0w43cj8inkz";
+  };
+
+  regexp2 = buildFromGitHub {
+    version = 3;
+    rev = "v1.1.6";
+    owner  = "dlclark";
+    repo   = "regexp2";
+    sha256 = "1z44159gfiv99p32qgypwflix4krk88mnx1n5h94gy2sqhh07gi0";
   };
 
   resumable = buildFromGitHub {

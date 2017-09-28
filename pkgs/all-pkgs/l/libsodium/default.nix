@@ -9,7 +9,7 @@ let
     "mirror://gentoo/distfiles/libsodium-${version}.tar.gz"
   ];
 
-  version = "1.0.13";
+  version = "1.0.14";
 in
 stdenv.mkDerivation rec {
   name = "libsodium-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "9c13accb1a9e59ab3affde0e60ef9a2149ed4d6e8f99c93c7a5b97499ee323fd";
+    sha256 = "3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7";
   };
 
   doCheck = true;
@@ -30,10 +30,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.0.13";
+      urls = tarballUrls "1.0.14";
       minisignUrls = map (n: "${n}.minisig") urls;
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "9c13accb1a9e59ab3affde0e60ef9a2149ed4d6e8f99c93c7a5b97499ee323fd";
+      sha256 = "3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7";
     };
   };
 

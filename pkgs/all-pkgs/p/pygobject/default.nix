@@ -23,7 +23,21 @@ let
     optionalString
     versionOlder;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.28" = {
+      version = "2.28";
+      date = "2013-02-19";
+      # Latest commit from pygobject-2-28 branch
+      rev = "9456ba70fdb98b3a4eb7ee2f630182387a54ca00";
+      sha256 = "bf61ddfa54b9af5ff4ed4321ac2a8f613da334e88f481a53a634dd7d08509327";
+      fetchzipversion = 2;
+    };
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "7411acd600c8cb6f00d2125afa23303f2104e59b83e0a4963288dbecc3b029fa";
+    };
+  };
+  source = sources."${channel}";
 
   is2x = versionOlder channel "3.0";
 in

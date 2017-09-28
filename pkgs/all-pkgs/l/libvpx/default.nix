@@ -60,9 +60,9 @@ let
     # master
     "1.999" = {
       fetchzipversion = 3;
-      version = "2017-07-28";
-      rev = "5d0bef4763b7e87451b4176771d344d4172960df";
-      sha256 = "15c829f4bd8f7ae290c7fd75921f25706b924c4cb43ae14caea29314ae61deb1";
+      version = "2017-09-27";
+      rev = "c493ea1a6b7ade049ac22d8d063b73f12d65bbea";
+      sha256 = "e3379632547091c9d162c0970619ae4c262c8364821439e1c3f1b592e1085e5e";
     };
   };
   source = sources."${channel}";

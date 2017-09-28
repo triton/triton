@@ -3,6 +3,7 @@
 , fetchTritonPatch
 , fetchurl
 , lib
+, ninja
 
 , curl
 , cairo
@@ -37,19 +38,20 @@ let
     boolOn
     boolString;
 
-  version = "0.57.0";
+  version = "0.59.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    multihash = "QmRR3WwoFFYcCDwjYxQKZzSS7oKDTaUNR4HMi2f2PH6khv";
-    sha256 = "0ea37de71b7db78212ebc79df59f99b66409a29c2eac4d882dae9f2397fe44d8";
+    multihash = "QmVQoPnFRohtQ2ZMEWRE2dtCfUt9NbM82Brc1YeY3GVrkL";
+    sha256 = "a3d626b24cd14efa9864e12584b22c9c32f51c46417d7c10ca17651f297c9641";
   };
 
   nativeBuildInputs = [
     cmake
+    ninja
   ];
 
   buildInputs = [

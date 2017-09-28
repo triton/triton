@@ -31,12 +31,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mariadb-10.2.8";
+  name = "mariadb-10.2.9";
 
   src = fetchurl {
     url = "mirror://mariadb/${name}/source/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "8dd250fe79f085e26f52ac448fbdb7af2a161f735fae3aed210680b9f2492393";
+    sha256 = "12e0a01c52591ee77cf0f940fe65df024457fa16c70f08c6116048d576096124";
   };
 
   nativeBuildInputs = [

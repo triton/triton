@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , lib
-, yasm
+, nasm
 }:
 
 stdenv.mkDerivation rec {
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [
-    yasm
+    nasm
   ];
 
   configureFlags = [

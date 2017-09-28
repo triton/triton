@@ -391,10 +391,10 @@ pygments = callPackage ../all-pkgs/p/pygments { };
 pygobject_2 = callPackage ../all-pkgs/p/pygobject {
   channel = "2.28";
 };
-pygobject_3-24 = callPackage ../all-pkgs/p/pygobject {
-  channel = "3.24";
+pygobject_3-26 = callPackage ../all-pkgs/p/pygobject {
+  channel = "3.26";
 };
-pygobject = callPackageAlias "pygobject_3-24" { };
+pygobject = callPackageAlias "pygobject_3-26" { };
 
 pygtk = callPackage ../all-pkgs/p/pygtk { };
 

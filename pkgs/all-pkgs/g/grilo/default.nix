@@ -4,6 +4,8 @@
 , gettext
 , intltool
 , lib
+#, meson
+#, ninja
 
 , glib
 , gobject-introspection
@@ -19,7 +21,7 @@ let
     boolEn;
 
   channel = "0.3";
-  version = "${channel}.3";
+  version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "grilo-${version}";
@@ -27,13 +29,15 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/grilo/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5c874222c7bdf42490cd56765a593c41407247706bb1f24a1bd5d007aa38a0e3";
+    sha256 = "7c6964053b42574c2f14715d2392a02ea5cbace955eb73e067c77aa3e43b066e";
   };
 
   nativeBuildInputs = [
     file
     gettext
     intltool
+    #meson
+    #ninja
   ];
 
   buildInputs = [
@@ -65,6 +69,15 @@ stdenv.mkDerivation rec {
     "--${boolEn (vala != null)}-vala"
     "--enable-nls"
   ];
+
+  # mesonFlags = [
+  #   "-Denable-grl-net=true"
+  #   "-Denable-grl-pls=${boolTf (totem-pl-parser != null)}"
+  #   "-Denable-gtk-doc=false"
+  #   "-Denable-introspection=${boolTf (gobject-introspection != null)}"
+  #   "-Denable-test-ui=false"
+  #   "-Denable-vala=${boolTf (vala != null)}"
+  # ];
 
   passthru = {
     srcVerification = fetchurl {

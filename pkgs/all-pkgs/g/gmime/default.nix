@@ -13,7 +13,7 @@ let
     boolEn;
 
   channel = "3.0";
-  version = "${channel}.0";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "gmime-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gmime/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "9d4874fb66d8b09d79ba144d2fbcab6157cf5986268fc4fdc9d98daa12c1a791";
+    sha256 = "0deb460111ffa2ec672677da339b82dedeb28b258ccdb216daa21c81a9472fb2";
   };
 
   buildInputs = [

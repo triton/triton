@@ -4,6 +4,7 @@
 
 , alsa-lib
 , libx11
+, libxcursor
 , libxi
 , libxinerama
 , libxrandr
@@ -42,7 +43,7 @@ stdenv.mkDerivation rec {
   libs = optionals (type != "headless") [
     alsa-lib
     libx11
-    xorg.libXcursor
+    libxcursor
     libxi
     libxinerama
     libxrandr

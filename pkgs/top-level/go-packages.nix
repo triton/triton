@@ -1916,6 +1916,7 @@ let
       find . -name \*.go -exec sed -i 's,".*Godeps/_workspace/src/,",g' {} \;
 
       # Remove old, unused migrations
+      sed -i 's,&mg[01234].Migration{},nil,g' main.go
       sed -i '/mg[01234]/d' main.go
     '';
     subPackages = [

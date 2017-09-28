@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, yasm
+, nasm
 
 , channel ? null
 }:
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    yasm
+    nasm
   ];
 
   passthru = {

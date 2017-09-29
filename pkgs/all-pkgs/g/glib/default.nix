@@ -7,7 +7,7 @@
 , python
 
 , attr
-, libelf
+, elfutils
 , libffi
 , libselinux
 , pcre
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     attr
-    libelf
+    elfutils
     libffi
     libselinux
     pcre
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libselinux != null)}-selinux"
     "--disable-fam"
     "--${boolEn (attr != null)}-xattr"  # glibc or attr
-    "--${boolEn (libelf != null)}-libelf"
+    "--${boolEn (elfutils != null)}-libelf"
     "--${boolEn (util-linux_lib != null)}-libmount"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

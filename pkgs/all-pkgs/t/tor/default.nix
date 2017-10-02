@@ -10,16 +10,19 @@
 , libsodium
 , openssl
 , systemd_lib
+, xz
 , zlib
+, zstd
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.3.0.10";
+  name = "tor-0.3.1.7";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
+    multihash = "Qmckk7KgPvzaWMeqvbYXa1B8yts9UgtUyqoKs5TA7ivVKX";
     hashOutput = false;
-    sha256 = "9a8e6e49a1688dae64dca10f84a414ec9a4f393fb2256ae28e0c2e3239185ab1";
+    sha256 = "1df5dd4894bb2f5e0dc96c466955146353cf33ac50cd997cfc1b28ea3ed9c08f";
   };
 
   nativeBuildInputs = [
@@ -35,7 +38,9 @@ stdenv.mkDerivation rec {
     libsodium
     openssl
     systemd_lib
+    xz
     zlib
+    zstd
   ];
 
   postPatch = ''
@@ -48,6 +53,8 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--disable-unittests"
     "--enable-systemd"
+    "--enable-lzma"
+    "--enable-zstd"
     "--with-tcmalloc"
   ];
 

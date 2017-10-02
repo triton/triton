@@ -452,8 +452,6 @@ go.stdenv.mkDerivation (
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];
 
-  buildDirCheck = args.buildDirCheck or (if go.channel == "1.8" then true else false);  # FIXME
-
   # This breaks cgo packages like libseccomp-golang
   optimize = false;
   fortifySource = false;  # Can't fortify without optimize

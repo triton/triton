@@ -25,6 +25,11 @@
         file = "go/remove-tools.patch";
         sha256 = "647282e43513a6d0a71aa406f54a0b13d3331f825bc60fedebaa32d757f0e483";
       }
+      {
+        rev = "9ea313ea633a868f95db3f0883573961edb06abd";
+        file = "g/go/0001-cmd-compile-replace-GOROOT-in-line-directives.patch";
+        sha256 = "7c37ad5bf8d40a40ae44f1caa61f3d7c27bdf7a9aa2f27e8b769e6d9972959dd";
+      }
     ];
   };
 }

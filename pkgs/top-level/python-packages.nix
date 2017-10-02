@@ -110,6 +110,8 @@ in {
 
 acd-cli = callPackage ../all-pkgs/a/acd-cli { };
 
+affinity = callPackage ../all-pkgs/a/affinity { };
+
 alabaster = callPackage ../all-pkgs/a/alabaster { };
 
 aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };

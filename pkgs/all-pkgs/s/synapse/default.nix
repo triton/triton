@@ -2,6 +2,8 @@
 , buildPythonPackage
 , fetchFromGitHub
 
+, affinity
+, bcrypt
 , bleach
 , blist
 , canonicaljson
@@ -15,7 +17,6 @@
 , phonenumbers
 , pillow
 , psutil
-, py-bcrypt
 , pydenticon
 , pymacaroons-pynacl
 , pynacl
@@ -28,7 +29,7 @@
 }:
 
 let
-  version = "0.22.1";
+  version = "0.23.1";
 in
 buildPythonPackage {
   name = "synapse-${version}";
@@ -38,10 +39,12 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";
-    sha256 = "fd335cfa70b8faf53e01d5c80235d599f5f1c22111d52060e87eac5118aff4a5";
+    sha256 = "ceba09cec0d7a4ef488baba3470569904cbb2ba0ed5074ac2a321d03a55ab80c";
   };
 
   propagatedBuildInputs = [
+    affinity
+    bcrypt
     bleach
     blist
     canonicaljson
@@ -55,7 +58,6 @@ buildPythonPackage {
     phonenumbers
     pillow
     psutil
-    py-bcrypt
     pydenticon
     pymacaroons-pynacl
     pynacl

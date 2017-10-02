@@ -341,7 +341,13 @@ go.stdenv.mkDerivation (
       local d; local cmd;
       cmd="$1"
       d="$2"
+      if [ -n "$NIX_DEBUG" ]; then
+        echo "Checking to Go Build: $dir" >&2
+      fi
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
+      if [ -n "$NIX_DEBUG" ]; then
+        echo "Go Building: $dir" >&2
+      fi
       local OUT
       if ! OUT="$(go $cmd -work''${NIX_DEBUG+ -x} -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
         if ! echo "$OUT" | grep -q "$ERREGEX"; then
@@ -416,7 +422,13 @@ go.stdenv.mkDerivation (
       subPackageExpr+='\)''$'
     fi
     while read f; do
+      if [ -n "$NIX_DEBUG" ]; then
+        echo "Checking to Go Install: $f" >&2
+      fi
       echo "$(dirname $f)" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr" || continue
+      if [ -n "$NIX_DEBUG" ]; then
+        echo "Go Installing: $f" >&2
+      fi
       mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
       cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
     done < <(find . -type f)

@@ -55,6 +55,7 @@ stdenv.mkDerivation rec {
   JEMALLOC_LIB = "-ljemalloc";
 
   makeFlags = [
+    "USE_RTTI=1" # Needed for ceph
     "DEBUG_LEVEL=0"
   ];
 

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.1.13";
+  version = "1.1.14";
 in
 stdenv.mkDerivation rec {
   name = "libmtp-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libmtp/libmtp/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "494ee02fbfbc316aad75b93263dac00f02a4899f28cfda1decbbd6e26fda6d40";
+    sha256 = "3817d3e296be8f1bc527385585780e70984e8e0d6a0d00349240d67e3df412e8";
   };
 
   buildInputs = [

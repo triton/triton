@@ -412,20 +412,22 @@ go.stdenv.mkDerivation (
     if [ -n "$subPackages" ]; then
       subPackageExpr='\('
       for subPackage in $subPackages; do
-        if [ "$subPackageExpr" != '/\(' ]; then
+        if [ "$subPackageExpr" != '\(' ]; then
           subPackageExpr+='\|'
         fi
         if [ "$subPackage" != "." ]; then
           subPackageExpr+="/$subPackage"
         fi
       done
-      subPackageExpr+='\)''$'
+      subPackageExpr+='\)'
+    else
+      subPackageExpr='.*'
     fi
     while read f; do
       if [ -n "$NIX_DEBUG" ]; then
         echo "Checking to Go Install: $f" >&2
       fi
-      echo "$(dirname $f)" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr" || continue
+      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr"'\(/[^/]*\|\.a\)''$' || continue
       if [ -n "$NIX_DEBUG" ]; then
         echo "Go Installing: $f" >&2
       fi

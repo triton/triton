@@ -5,6 +5,7 @@
 #, gnome-common
 , intltool
 , itstool
+, lib
 , makeWrapper
 #, yelp-tools
 
@@ -14,19 +15,25 @@
 , glib
 , gtk
 , libnotify
+, libx11
 , libxml2
 , webkitgtk
-, xorg
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.0";
+      sha256 = "6ff0a026ec94e5bc1b30f78df91e54f4f82fd982f4c29b52fe5dacc886a9f7f7";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "zenity-${source.version}";
@@ -56,7 +63,7 @@ stdenv.mkDerivation rec {
     libxml2
     webkitgtk
   ] ++ optionals gtk.x11_backend [
-    xorg.libX11
+    libx11
   ];
 
   configureFlags = [
@@ -88,7 +95,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Creates simple interactive graphical dialogs";
     homepage = https://help.gnome.org/users/zenity/;
     license = licenses.gpl2;

@@ -1425,6 +1425,17 @@ let
     sha256 = "1fx4lz9gwps99ck0iskdjm0l3pnqr306h4w7578x3ni2vimc0ahy";
   };
 
+  diskv = buildFromGitHub {
+    version = 3;
+    rev = "v2.0.1";
+    owner  = "peterbourgon";
+    repo   = "diskv";
+    sha256 = "0himh621lksnk8wq1j36b607a1nv5mpwbd7d06mq14bcnr68ljvy";
+    propagatedBuildInputs = [
+      btree
+    ];
+  };
+
   distribution = buildFromGitHub {
     version = 3;
     rev = "bb49a1685d2773cb43dacc16e100419f310ba347";
@@ -2101,6 +2112,20 @@ let
     sha256 = "1mzn45p24qn7qdagfb9mlj96jlmwk3kgk637kxnb4qaqnl8bkkh1";
   };
 
+  gnostic = buildFromGitHub {
+    version = 3;
+    rev = "v0.1.0";
+    owner = "googleapis";
+    repo = "gnostic";
+    sha256 = "0maql4kfc6q303lxz7pldjbh3k65pkw9yczxsg7285srmf7yp5s6";
+    excludedPackages = "tools";
+    propagatedBuildInputs = [
+      docopt-go
+      protobuf
+      yaml_v2
+    ];
+  };
+
   json-iterator_go = buildFromGitHub {
     version = 3;
     rev = "1.0.2";
@@ -2289,6 +2314,20 @@ let
     propagatedBuildInputs = [
       net
       sys
+    ];
+  };
+
+  gophercloud = buildFromGitHub {
+    version = 3;
+    rev = "8c5c0c21b452d5d9faf056bbdf5bd59333097c6a";
+    owner = "gophercloud";
+    repo = "gophercloud";
+    sha256 = "00ffif7748wib616vrqycn6v765nl9v0c45n6dcxk38yjh3vfi1l";
+    date = "2017-10-03";
+    excludedPackages = "test";
+    propagatedBuildInputs = [
+      crypto
+      yaml_v2
     ];
   };
 
@@ -4003,6 +4042,18 @@ let
     date = "2017-09-28";
   };
 
+  go-stdlib = buildFromGitHub {
+    version = 3;
+    rev = "48e4d763b2fbcd10e666e6a1742acdf8cc2286ef";
+    owner  = "opentracing-contrib";
+    repo   = "go-stdlib";
+    sha256 = "0lpha7d65x4zywhp2dmdb7zl9m8yg0jxcc1ikifnd1lqna7wwwkn";
+    date = "2017-05-28";
+    propagatedBuildInputs = [
+      opentracing-go
+    ];
+  };
+
   go-stream-muxer = buildFromGitHub {
     version = 3;
     rev = "6ebe3f58af097068454b167a89442050b023b571";
@@ -4573,6 +4624,24 @@ let
     sha256 = "1v2sjbgcnip3j1fx05wp73xcw0j8h6p6nwwy5mbc297yklyycvi7";
   };
 
+  httpcache = buildFromGitHub {
+    version = 3;
+    rev = "c1f8028e62adb3d518b823a2f8e6a95c38bdd3aa";
+    owner  = "gregjones";
+    repo   = "httpcache";
+    sha256 = "11g3lvqpbvbp2fmgrpkyzyf1x7lz1xlhwrr0h2s2q2g4cs086wia";
+    date = "2017-09-26";
+    propagatedBuildInputs = [
+      diskv
+      goleveldb
+      gomemcache
+      redigo
+    ];
+    postPatch = ''
+      grep -r '+build appengine' -l | xargs rm
+    '';
+  };
+
   httprouter = buildFromGitHub {
     version = 3;
     rev = "975b5c4c7c21c0e3d2764200bf2aa8e34657ae6e";
@@ -4986,17 +5055,24 @@ let
     sha256 = "1ym992v5026kcnbd17fgbmch3yz04kv3iw5j7ay6iwkcr13am9zm";
     goPackagePath = "k8s.io/client-go";
     propagatedBuildInputs = [
+      diskv
       glog
+      gnostic
       gopass
+      gophercloud
       go-autorest
       go-oidc
+      go-restful-swagger12
       groupcache
+      httpcache
       kubernetes-api
       kubernetes-apimachinery
+      mergo
       net
       oauth2
       pflag
       protobuf
+      ratelimit
     ];
     meta.useUnstable = true;
     date = "2017-09-22";
@@ -6172,6 +6248,17 @@ let
     '';
   };
 
+  opentracing-go = buildFromGitHub {
+    version = 3;
+    owner = "opentracing";
+    repo = "opentracing-go";
+    rev = "v1.0.2";
+    sha256 = "0g9h4slaiik7fa0rx04jxdjrn9i9w597ws95hmip125jbjafvqc6";
+    propagatedBuildInputs = [
+      net
+    ];
+  };
+
   osext = buildFromGitHub {
     version = 3;
     date = "2017-05-10";
@@ -6432,6 +6519,8 @@ let
       fsnotify_v1
       go-autorest
       goleveldb
+      gophercloud
+      go-stdlib
       govalidator
       go-zookeeper
       google-api-go-client
@@ -6439,6 +6528,7 @@ let
       kubernetes-client-go
       net
       oauth2
+      opentracing-go
       prometheus_client_golang
       prometheus_client_model
       prometheus_common

@@ -4915,6 +4915,23 @@ let
     ];
   };
 
+  kubernetes-api = buildFromGitHub {
+    version = 3;
+    rev = "81aa34336d28aadc3a8e8da7dfd9258c5157e5e4";
+    date = "2017-09-21";
+    owner  = "kubernetes";
+    repo   = "api";
+    sha256 = "09g1gj8f2rp7kkcgisv9zrgv8y91q8xlg4aafs9ppgyas98qxd0g";
+    goPackagePath = "k8s.io/api";
+    goPackageAliases = [
+      "k8s.io/client-go/pkg/apis"
+    ];
+    propagatedBuildInputs = [
+      gogo_protobuf
+      kubernetes-apimachinery
+    ];
+  };
+
   kubernetes-apimachinery = buildFromGitHub {
     version = 3;
     rev = "3b05bbfa0a45413bfa184edbf9af617e277962fb";
@@ -4961,74 +4978,28 @@ let
     ];
   };
 
-  kubernetes-client-go_1-4 = buildFromGitHub {
+  kubernetes-client-go = buildFromGitHub {
     version = 3;
-    rev = "e5fcd1eb6215fb420fbfc95d7e2b3b672ab5d8e8";
-    date = "2017-02-11";
+    rev = "82aa063804cf055e16e8911250f888bc216e8b61";
     owner  = "kubernetes";
     repo   = "client-go";
-    sha256 = "e70098488f56e95ec82b92c3f6daf5a4e92e9c0fd73f56e2af5c5a50504c60e1";
-    goPackageAliases = [
-      "k8s.io/client-go"
-    ];
-    subPackages = [
-      "1.4/pkg/util/yaml"
-    ];
-    buildInputs = [
-      glog
-      yaml
-    ];
-    meta.autoUpdate = false;
-  };
-
-  kubernetes-client-go_1-5 = buildFromGitHub {
-    version = 3;
-    rev = "v4.0.0";
-    owner  = "kubernetes";
-    repo   = "client-go";
-    sha256 = "0hnik5jail1hi8wjpn5k29wvssqzrl54zmkv18zbmridnxqplq30";
+    sha256 = "1ym992v5026kcnbd17fgbmch3yz04kv3iw5j7ay6iwkcr13am9zm";
     goPackagePath = "k8s.io/client-go";
-    excludedPackages = "examples";
     propagatedBuildInputs = [
-      distribution_for_engine-api
       glog
-      ugorji_go
-      gofuzz
       gopass
+      go-autorest
       go-oidc
-      go-restful-swagger12
-      go-spew
       groupcache
-      inf_v0
-      mergo
+      kubernetes-api
+      kubernetes-apimachinery
       net
       oauth2
       pflag
-      gogo_protobuf
-      ratelimit
-      semver
-      spec
-      yaml
-      pborman_uuid
+      protobuf
     ];
-    meta.autoUpdate = false;
-  };
-
-  kubernetes-client-go = buildFromGitHub {
-    version = 3;
-    rev = "v4.0.0";
-    owner  = "kubernetes";
-    repo   = "client-go";
-    sha256 = "0hnik5jail1hi8wjpn5k29wvssqzrl54zmkv18zbmridnxqplq30";
-    goPackagePath = "k8s.io/client-go";
-    subPackages = [
-      "pkg/apis/authentication"
-      "pkg/apis/authentication/v1"
-    ];
-    propagatedBuildInputs = [
-      kubernetes-apimachinery
-      gogo_protobuf
-    ];
+    meta.useUnstable = true;
+    date = "2017-09-22";
   };
 
   ldap = buildFromGitHub {
@@ -6464,6 +6435,7 @@ let
       govalidator
       go-zookeeper
       google-api-go-client
+      kubernetes-apimachinery
       kubernetes-client-go
       net
       oauth2
@@ -7909,7 +7881,6 @@ let
     buildInputs = [
       armon_go-metrics
       aws-sdk-go
-      azure-storage-go
       columnize
       cockroach-go
       complete
@@ -7978,6 +7949,11 @@ let
       vault-plugin-auth-kubernetes
       yaml
     ];
+
+    postPatch = ''
+      rm -r physical/azure
+      sed -i '/physAzure/d' cli/commands.go
+    '';
 
     # Regerate protos
     preBuild = ''
@@ -8102,8 +8078,8 @@ let
       go-cleanhttp
       go-multierror
       jose
+      kubernetes-api
       kubernetes-apimachinery
-      kubernetes-client-go
       logxi
       mapstructure
       vault_for_plugins

@@ -7618,6 +7618,13 @@ let
     ];
     excludedPackages = "\\(test\\|suite\\|fixtures\\|examples\\|docker\\)";
     meta.autoUpdate = false;
+    patches = [
+      (fetchTritonPatch {
+        rev = "bbf0173a53b7b44b052022532eaca9aa0565f5e3";
+        file = "t/teleport/fix.patch";
+        sha256 = "7deb529032415073c1883b0557b35156c28b9010f6dab0ae41c4262f1ab38f8b";
+      })
+    ];
     postPatch = ''
       sed -i 's,--gofast_out,--go_out,' Makefile
     '';

@@ -1546,7 +1546,7 @@ gnome-terminal_3-24 = callPackage ../all-pkgs/g/gnome-terminal {
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   nautilus = pkgs.nautilus_3-26;
   vala = pkgs.vala_0-36;
-  vte = pkgs.vte_0-48;
+  vte = pkgs.vte_0-50;
 };
 gnome-terminal = callPackageAlias "gnome-terminal_3-24" { };
 
@@ -3687,12 +3687,12 @@ volume_key = callPackage ../all-pkgs/v/volume_key { };
 
 vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
-vte_0-48 = callPackage ../all-pkgs/v/vte {
-  channel = "0.48";
+vte_0-50 = callPackage ../all-pkgs/v/vte {
+  channel = "0.50";
   atk = pkgs.atk_2-26;
   gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
 };
-vte = callPackageAlias "vte_0-48" { };
+vte = callPackageAlias "vte_0-50" { };
 
 vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
 

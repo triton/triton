@@ -7561,10 +7561,10 @@ let
 
   teleport = buildFromGitHub {
     version = 3;
-    rev = "v2.3.1";
+    rev = "v2.3.2";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "29d7595f97b63fc92155c669ae9a1265429ef6bf16850db96dbb5a75b358c977";
+    sha256 = "7ee600d525cbda4893b33556ffa44a92bffe1f2f7a9b6fd6a5ccd5422ab63f58";
     nativeBuildInputs = [
       pkgs.protobuf-cpp
       protobuf.bin

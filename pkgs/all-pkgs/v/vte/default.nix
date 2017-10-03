@@ -63,8 +63,8 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs ./src/box_drawing_generate.sh
-    patchShebangs ./src/test-vte-sh.sh
+    patchShebangs src/box_drawing_generate.sh
+    patchShebangs src/test-vte-sh.sh
   '';
 
   configureFlags = [

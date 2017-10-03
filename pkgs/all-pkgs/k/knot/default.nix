@@ -15,13 +15,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.5.4";
+  name = "knot-2.6.0";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmcRVTVF98H1ZhAN3RvCKczapL36stT11uwfsqLo2qvtjj";
+    multihash = "QmYtuiUgg2EwWBF57zpjbiouswh4Mb7kRvKP98BYdhsqFe";
     hashOutput = false;
-    sha256 = "3fde76e9084b75df374709cb73a8289f77c6a95b7ccff8584d7423566faa24f0";
+    sha256 = "68e04961d0bf6ba193cb7ec658b295c4ff6e60b3754d64bcd77ebdcee0f283fd";
   };
 
   buildInputs = [
@@ -41,11 +41,14 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    # "--enable-lto"
-    "--enable-systemd"
+    "--enable-recvmmsg=yes"
+    "--enable-reuseport=yes"
+    "--enable-systemd=yes"
+    "--enable-dnstap"
     "--with-urcu=${liburcu}"
     "--with-lmdb=${lmdb}"
-    "--enable-dnstap"
+    "--with-module-dnstap=yes"
+    "--with-module-rosedb=yes"
   ];
 
   preInstall = ''

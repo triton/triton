@@ -67,6 +67,7 @@ let
 
     postPatch = ''
       sed -i 's,/bin/\(u\|\)mount,\1mount,g' ceph_disk/main.py
+      sed -i 's,/sbin/blkid,blkid,g' ceph_disk/main.py
     '';
   };
 

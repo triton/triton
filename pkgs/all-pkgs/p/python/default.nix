@@ -53,8 +53,8 @@ let
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };
     "3.6" = {
-      versionPatch = "2";
-      sha256 = "9229773be41ed144370f47f0f626a1579931f5a390f1e8e3853174d52edd64a9";
+      versionPatch = "3";
+      sha256 = "cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
@@ -345,21 +345,22 @@ stdenv.mkDerivation rec {
     interpreter = "${self}/bin/${executable}";
 
     srcVerification = fetchurl rec {
-      inherit (source) pgpKeyFingerprint;
+      inherit (source)
+        pgpKeyFingerprint;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls source.versionPatch);
     };
 
     srcVerificationBootstrap = fetchurl rec {
       inherit (source) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "14";
-      outputHash = "9229773be41ed144370f47f0f626a1579931f5a390f1e8e3853174d52edd64a9";
+      urls = tarballUrls "3";
+      outputHash = "cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da";
       pgpsigUrls = map (n: "${n}.asc") urls;
     };
   };

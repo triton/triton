@@ -11,11 +11,11 @@
 
 , dri2proto
 , dri3proto
+, elfutils
 , expat
 , glproto
 , libclc
 , libdrm
-, libelf
 , libffi
 , libglvnd
 , libomxil-bellagio
@@ -118,8 +118,8 @@ stdenv.mkDerivation rec {
   ] ++ optionals (buildConfig != "opengl-dummy") [
     dri2proto
     dri3proto
+    elfutils
     libclc
-    libelf
     libffi
     libglvnd
     libpthread-stubs

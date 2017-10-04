@@ -29,9 +29,9 @@ in
 assert any (n: n == type) [ "kernel" "user" "all" ];
 assert buildKernel -> kernel != null;
 
-assert buildKernel && !(kernel.isCompatibleVersion source.maxKernelVersion "0") ->
+assert buildKernel && !(kernel.isCompatibleVersion source.maxLinuxVersion "0") ->
   throw ("The '${channel}' SPL channel is only supported on Linux kernel "
-    + "channels less than or equal to ${source.maxKernelVersion}");
+    + "channels less than or equal to ${source.maxLinuxVersion}");
 
 stdenv.mkDerivation rec {
   name = "spl-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";
@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
   optimize = !buildKernel;
 
   passthru = {
-    inherit (source) maxKernelVersion;
+    inherit (source) maxLinuxVersion;
     inherit channel;
     buildType = type;
   };

@@ -7,8 +7,8 @@
 }:
 
 let
-  date = "2017-09-04";
-  rev = "58f9eef531c3fe91ff9577fa3a91d01f3931e04d";
+  date = "2017-10-04";
+  rev = "ad4ee18ea61a3ab46d425205f91783233516f030";
 in
 stdenv.mkDerivation {
   name = "libclc-${date}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
     owner = "llvm-mirror";
     repo = "libclc";
     inherit rev;
-    sha256 = "fc6cd3a2206f4121c43917677627c63dc41f05bc948ebe5547741b9277702a04";
+    sha256 = "9d33560df5a0485395030f66fe1be85d8761d1dc1e2941667d73ed290dbbaa2c";
   };
 
   nativeBuildInputs = [

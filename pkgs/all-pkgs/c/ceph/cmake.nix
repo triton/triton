@@ -22,6 +22,7 @@
 , nss
 , openldap
 , openssl
+, parted
 , rdma-core
 , rocksdb
 , snappy
@@ -56,8 +57,16 @@ let
 
     inherit src;
 
+    pythonPath = [
+      parted
+    ];
+
     prePatch = ''
       cd src/ceph-disk
+    '';
+
+    postPatch = ''
+      sed -i 's,/bin/\(u\|\)mount,\1mount,g' ceph_disk/main.py
     '';
   };
 

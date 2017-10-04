@@ -45,14 +45,36 @@ let
 
   inherit (sources)
     version;
+
+  src = fetchurl {
+    url = "https://github.com/wkennington/ceph/releases/download/${version}/ceph-${version}.tar.xz";
+    inherit (sources) sha256;
+  };
+
+  cephDisk = python3Packages.buildPythonPackage {
+    name = "ceph-disk-${version}";
+
+    inherit src;
+
+    prePatch = ''
+      cd src/ceph-disk
+    '';
+  };
+
+  cephVolume = python3Packages.buildPythonPackage {
+    name = "ceph-volume-${version}";
+
+    inherit src;
+
+    prePatch = ''
+      cd src/ceph-volume
+    '';
+  };
 in
 stdenv.mkDerivation rec {
   name = "ceph-${version}";
 
-  src = fetchurl {
-    url = "https://github.com/wkennington/ceph/releases/download/${version}/${name}.tar.xz";
-    inherit (sources) sha256;
-  };
+  inherit src;
 
   nativeBuildInputs = [
     cmake
@@ -168,6 +190,9 @@ stdenv.mkDerivation rec {
     # Bring in lib as a native build input
     mkdir -p "$out"/nix-support
     echo "$lib" > "$out"/nix-support/propagated-native-build-inputs
+
+    ln -sv "${cephDisk}/bin/ceph-disk" "$out"/bin
+    ln -sv "${cephVolume}/bin/ceph-volume" "$out"/bin
   '';
 
   preFixup = ''
@@ -181,6 +206,11 @@ stdenv.mkDerivation rec {
 
   # FIXME
   buildDirCheck = false;
+
+  passthru = {
+    disk = cephDisk;
+    volume = cephVolume;
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

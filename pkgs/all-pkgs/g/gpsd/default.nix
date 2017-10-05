@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gpsd-3.16";
+  name = "gpsd-3.17";
 
   src = fetchurl {
     url = "mirror://savannah/gpsd/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "03579af13a4d3fe0c5b79fa44b5f75c9f3cac6749357f1d99ce5d38c09bc2029";
+    sha256 = "68e0dbecfb5831997f8b3d6ba48aed812eb465d8c0089420ab68f9ce4d85e77a";
   };
 
   nativeBuildInputs = [

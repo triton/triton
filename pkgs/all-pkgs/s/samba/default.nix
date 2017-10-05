@@ -190,11 +190,20 @@ stdenv.mkDerivation rec {
     (if isClient then null else "--enable-ceph-reclock")
   ];
 
-  preInstall = ''
-    installFlagsArray+=("DESTDIR=$out")
+  configurePhase = ''
+    patchShebangs buildtools/bin/waf
+    export PATH="$(pwd)/buildtools/bin:$PATH"
+    configureFlagsArray+=("--prefix=$out")
+    waf configure -j $NIX_BUILD_CORES $configureFlags "''${configureFlagsArray[@]}"
   '';
 
-  postInstall = ''
+  buildPhase = ''
+    waf build -j $NIX_BUILD_CORES
+  '';
+
+  installPhase = ''
+    waf install -j $NIX_BUILD_CORES --destdir "$out"
+
     dir="$out/$out"
     mv "$out/$out"/* "$out"
     while [ "$out" != "$dir" ]; do
@@ -203,12 +212,12 @@ stdenv.mkDerivation rec {
     done
 
     # Remove unecessary components
-    rm -r $out/var
-    rm -r $out/libexec/ctdb/tests
-    rm -r $out/lib/python2.7/site-packages/samba/tests
-    rm $out/bin/ctdb_run{_cluster,}_tests
-    rm -r $out/share/ctdb/tests
-    rmdir $out/share/ctdb
+    rm -r "$out"/var
+    rm -r "$out"/libexec/ctdb/tests
+    rm -r "$out"/lib/python2.7/site-packages/samba/tests
+    rm "$out"/bin/ctdb_run{_cluster,}_tests
+    rm -r "$out"/share/ctdb/tests
+    rmdir "$out"/share/ctdb
   '';
 
   preFixup = optionalString isClient ''

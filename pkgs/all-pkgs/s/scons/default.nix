@@ -1,12 +1,12 @@
 { stdenv
+, buildPythonPackage
 , fetchurl
-, pythonPackages
 }:
 
 let
   version = "2.5.1";
 in
-pythonPackages.buildPythonPackage rec {
+buildPythonPackage rec {
   name = "scons-${version}";
 
   src = fetchurl {

@@ -3333,7 +3333,7 @@ sbc = callPackage ../all-pkgs/s/sbc { };
 
 schroedinger = callPackage ../all-pkgs/s/schroedinger { };
 
-scons = pkgs.pythonPackages.scons;
+scons = pkgs.python2Packages.scons;
 
 screen = callPackage ../all-pkgs/s/screen { };
 

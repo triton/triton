@@ -1,33 +1,18 @@
 { stdenv
+, buildPythonPackage
 , fetchurl
-, gettext
 , lib
-, pythonPackages
 }:
 
-stdenv.mkDerivation rec {
-  name = "mercurial-4.3.2";
+buildPythonPackage rec {
+  name = "mercurial-4.3.3";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
-    multihash = "Qmeen22Bw14g5TmJf8LKBvui93MqAu5KZDo9QNNLkVexKz";
+    multihash = "QmNX2B85UWAJHZZg353WSFnavycvdGnG4rvDGjZM9sj1dF";
     hashOutput = false;
-    sha256 = "0f5bf688ba2add6f5db98a633edef43411ecf2c7ada5f2e14b9265820a96cd48";
+    sha256 = "47a63c78698bc735667984bbc5b76619ff29a38d742f20cdf9f44cce59752374";
   };
-
-  nativeBuildInputs = [
-    gettext
-    pythonPackages.docutils
-    pythonPackages.python
-  ];
-
-  buildFlags = [
-    "all"
-  ];
-
-  preInstall = ''
-    installFlagsArray+=("PREFIX=$out")
-  '';
 
   passthru = {
     srcVerification = fetchurl {

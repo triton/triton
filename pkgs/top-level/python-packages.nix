@@ -310,6 +310,8 @@ matrix-synapse-ldap3 = callPackage ../all-pkgs/m/matrix-synapse-ldap3 { };
 
 meson = callPackage ../all-pkgs/m/meson { };
 
+mercurial = callPackage ../all-pkgs/m/mercurial { };
+
 mistune = callPackage ../all-pkgs/m/mistune { };
 
 monotonic = callPackage ../all-pkgs/m/monotonic { };

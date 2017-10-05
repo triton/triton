@@ -2651,7 +2651,7 @@ mdadm = callPackage ../all-pkgs/m/mdadm { };
 
 mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 
-mercurial = callPackage ../all-pkgs/m/mercurial { };
+mercurial = pkgs.python2Packages.mercurial;
 
 mesa_noglu = callPackage ../all-pkgs/m/mesa {
   libglvnd = null;

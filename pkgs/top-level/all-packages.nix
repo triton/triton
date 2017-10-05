@@ -3118,6 +3118,9 @@ popt = callPackage ../all-pkgs/p/popt { };
 
 portaudio = callPackage ../all-pkgs/p/portaudio { };
 
+postgresql_10 = callPackage ../all-pkgs/p/postgresql {
+  channel = "10";
+};
 postgresql_9-6 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.6";
 };
@@ -3130,10 +3133,7 @@ postgresql_9-4 = callPackage ../all-pkgs/p/postgresql {
 postgresql_9-3 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.3";
 };
-postgresql_9-2 = callPackage ../all-pkgs/p/postgresql {
-  channel = "9.2";
-};
-postgresql = callPackageAlias "postgresql_9-6" { };
+postgresql = callPackageAlias "postgresql_10" { };
 
 potrace = callPackage ../all-pkgs/p/potrace { };
 

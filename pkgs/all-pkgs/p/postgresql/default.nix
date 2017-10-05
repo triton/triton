@@ -8,6 +8,7 @@
 
 # Optional Dependencies
 , kerberos
+, icu
 , pam
 , openldap
 , openssl
@@ -90,6 +91,8 @@ stdenv.mkDerivation rec {
     zlib
   ] ++ optionals (versionAtLeast source.version "9.6.0") [
     systemd_lib
+  ] ++ optionals (versionAtLeast source.version "10.0") [
+    icu
   ];
 
   configureFlags = [
@@ -124,10 +127,7 @@ stdenv.mkDerivation rec {
     "--with-libxml"
     "--with-libxslt"
     "--with-zlib"
-  ] ++ optionals (versionAtLeast source.version "9.1.0") [
     "--without-selinux"
-  ] ++ optionals (versionOlder source.version "9.3.0") [
-    "--enable-shared"
   ] ++ optionals (versionAtLeast source.version "9.4.0") [
     "--disable-tap-tests"
     "--with-uuid=ossp"
@@ -138,6 +138,8 @@ stdenv.mkDerivation rec {
     "--enable-atomics"
   ] ++ optionals (versionAtLeast source.version "9.6.0") [
     "--with-systemd"
+  ] ++ optionals (versionAtLeast source.version "10.0") [
+    "--with-icu"
   ];
 
   outputs = [ "out" "doc" ];

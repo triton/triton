@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "10.2.2";
+  version = "11.0.0";
 in
 buildPythonPackage rec {
   name = "cherrypy-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "32d93334df765c7fd5d22815ab643333e850f0cc4f6d51fee62a68f23eea8ff8";
+    sha256 = "5671f88c8dd8aecaac650761d18f74a2789b88a9337eb7433abe92a5e0be6780";
   };
 
   propagatedBuildInputs = [

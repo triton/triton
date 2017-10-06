@@ -1426,10 +1426,10 @@ let
   }) // {inherit ;};
 
   xorgserver = (mkDerivation "xorgserver" {
-    name = "xorg-server-1.19.3";
+    name = "xorg-server-1.19.4";
     src = fetchurl {
-      url = mirror://xorg/individual/xserver/xorg-server-1.19.3.tar.bz2;
-      sha256 = "677a8166e03474719238dfe396ce673c4234735464d6dadf2959b600d20e5a98";
+      url = mirror://xorg/individual/xserver/xorg-server-1.19.4.tar.bz2;
+      sha256 = "aa758acea91deaf1f95069ddc5ea3818e13675fb14fef40ad1b3d0b2bf03c9a8";
     };
     nativeBuildInputs = [ bison flex utilmacros ];
     buildInputs = [ bigreqsproto compositeproto damageproto dbus libdmx dmxproto opengl-dummy dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont2 libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ];

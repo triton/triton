@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , lib
+, makeWrapper
 , meson
 , ninja
 , python3Packages
@@ -23,6 +24,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    makeWrapper
     meson
     ninja
     python3Packages.docutils
@@ -37,6 +39,11 @@ stdenv.mkDerivation rec {
   postPatch = ''
     grep -q "'rst2man'" meson.build
     sed -i "s,'rst2man','rst2man.py',g" meson.build
+  '';
+
+  preFixup = ''
+    wrapProgram $out/bin/sshfs \
+      --prefix 'PATH' : "${fuse_3}/bin"
   '';
 
   passthru = {

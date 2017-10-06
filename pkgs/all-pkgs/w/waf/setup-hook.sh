@@ -12,29 +12,36 @@ waf_unpack() {
 }
 
 wafConfigurePhase() {
-  eval "${preConfigure}"
-  echo "configure flags: --prefix=${out} ${configureFlags}"
-  ./waf configure --prefix=${out} ${configureFlags}
-  eval "${postConfigure}"
+  eval "$preConfigure"
+
+  if [ -z "$dontAddPrefix" ]; then
+    wafFlagsArray+=("--prefix" "$prefix")
+  fi
+
+  wafFlagsArray+=('--jobs' "$NIX_BUILD_CORES")
+
+  echo "configure flags: $wafFlags ${wafFlagsArray[@]}"
+  ./waf configure $wafFlags "${wafFlagsArray[@]}"
+  eval "$postConfigure"
 }
 
 wafBuildPhase() {
-  eval "${preBuild}"
-  ./waf build
-  eval "${postBuild}"
+  eval "$preBuild"
+  ./waf build --jobs $NIX_BUILD_CORES
+  eval "$postBuild"
 }
 
 wafInstallPhase() {
-  eval "${preInstall}"
-  ./waf install
-  eval "${postInstall}"
+  eval "$preInstall"
+  ./waf install --jobs $NIX_BUILD_CORES
+  eval "$postInstall"
 }
 
 remove_waf_link() {
   rm -fv 'waf'
 }
 
-if [ -n "${wafSetupHook-true}" ] ; then
+if [ -n "${wafSetupHook:-true}" ] ; then
   preConfigurePhases+=('waf_unpack')
 
   configurePhase='wafConfigurePhase'
@@ -45,3 +52,4 @@ if [ -n "${wafSetupHook-true}" ] ; then
 
   postPhases+=('remove_waf_link')
 fi
+

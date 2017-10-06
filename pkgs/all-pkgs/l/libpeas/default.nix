@@ -21,7 +21,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.22" = {
+      version = "1.22.0";
+      sha256 = "5b2fc0f53962b25bca131a5ec0139e6fef8e254481b6e777975f7a1d2702a962";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libpeas-${source.version}";

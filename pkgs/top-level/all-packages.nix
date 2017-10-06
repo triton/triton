@@ -2343,10 +2343,10 @@ libossp-uuid = callPackage ../all-pkgs/l/libossp-uuid { };
 
 libpcap = callPackage ../all-pkgs/l/libpcap { };
 
-libpeas_1-20 = callPackage ../all-pkgs/l/libpeas {
-  channel = "1.20";
+libpeas_1-22 = callPackage ../all-pkgs/l/libpeas {
+  channel = "1.22";
 };
-libpeas = callPackageAlias "libpeas_1-20" { };
+libpeas = callPackageAlias "libpeas_1-22" { };
 
 libpipeline = callPackage ../all-pkgs/l/libpipeline { };
 

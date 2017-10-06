@@ -4495,10 +4495,12 @@ let
     excludedPackages = "example";
     propagatedBuildInputs = [
       aeshash
+      blake2b-simd
       cuckoo
       go-farm
       go-metro
       hrff
+      whirlpool
     ];
   };
 
@@ -8228,6 +8230,15 @@ let
     repo = "w32";
     sha256 = "021764v4m4xp2xdsnlzx6871h5l8vraww39qig7sjsvbpw0v1igx";
     date = "2016-09-30";
+  };
+
+  whirlpool = buildFromGitHub {
+    version = 3;
+    rev = "c19460b8caa623b49cd9060e866f812c4b10c4ce";
+    owner = "jzelinskie";
+    repo = "whirlpool";
+    sha256 = "1dhhxpm9hwnddxajkqc6k6kf6rbj926nkvw88rngycvqxir6bs5k";
+    date = "2017-06-03";
   };
 
   wmi = buildFromGitHub {

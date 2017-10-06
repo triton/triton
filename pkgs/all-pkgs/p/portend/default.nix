@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.8";
+  version = "2.2";
 in
 buildPythonPackage rec {
   name = "portend-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "portend";
     inherit version;
-    sha256 = "7de919b82c4ac60d4768fe80a2557290661aa665b7c427de6249d8cb2fde5561";
+    sha256 = "bc48d3d99e1eaf2e9406c729f8848bfdaf87876cd3560dc3ec6c16714f529586";
   };
 
   propagatedBuildInputs = [

@@ -104,7 +104,7 @@ rec {
 
       # Copy the upstream systemd units we're interested in.
       for i in ${toString upstreamUnits}; do
-        fn=${cfg.package}/example/systemd/${type}/$i
+        fn=${cfg.package}/lib/systemd/${type}/$i
         if ! [ -e $fn ]; then echo "missing $fn"; false; fi
         if [ -L $fn ]; then
           target="$(readlink "$fn")"
@@ -121,7 +121,7 @@ rec {
       # Copy .wants links, but only those that point to units that
       # we're interested in.
       for i in ${toString upstreamWants}; do
-        fn=${cfg.package}/example/systemd/${type}/$i
+        fn=${cfg.package}/lib/systemd/${type}/$i
         if ! [ -e $fn ]; then echo "missing $fn"; false; fi
         x=$out/$(basename $fn)
         mkdir $x

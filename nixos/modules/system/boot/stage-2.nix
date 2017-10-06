@@ -21,6 +21,7 @@ let
     inherit (config.nix) readOnlyStore;
     inherit (config.networking) useHostResolvConf;
     ttyGid = config.ids.gids.tty;
+    systemd = "${config.systemd.package}/lib/systemd/systemd";
     path =
       [ pkgs.coreutils
         pkgs.util-linux_full

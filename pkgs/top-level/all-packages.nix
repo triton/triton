@@ -3550,8 +3550,6 @@ systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";
 };
 
-systemd_dist = callPackage ../all-pkgs/s/systemd/dist.nix { };
-
 systemd-dummy = callPackage ../all-pkgs/s/systemd-dummy { };
 
 taglib = callPackage ../all-pkgs/t/taglib { };

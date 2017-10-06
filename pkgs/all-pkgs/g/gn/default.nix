@@ -32,6 +32,8 @@ stdenv.mkDerivation rec {
     python2
   ];
 
+  setupHook = ./setup-hook.sh;
+
   patches = [
     (fetchTritonPatch {
       rev = "81e065acf0b534fd119f6398d8ee8a941b740dc5";

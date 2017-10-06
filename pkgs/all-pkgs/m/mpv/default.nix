@@ -122,7 +122,7 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  configureFlags = [
+  wafFlags = [
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"

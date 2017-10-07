@@ -61,10 +61,10 @@ let
       maxXorgVersion = "1.19";
     };
     long-lived = {
-      versionMajor = "384";
-      versionMinor = "90";
-      sha256i686   = "97a667de9fd7fdaa2f47b75d4049394224788931c2df2848de3f5553de810057";
-      sha256x86_64 = "2b96394931d3caf635aeb5c1b02244c76de9be54f4af944b8f7743eae570302a";
+      versionMajor = "387";
+      versionMinor = "12";
+      sha256i686   = "aabac19b2bbc30ab9fb01954328633ff08b5aa5c2996f03722dd0806b247d536";
+      sha256x86_64 = "6951372a9e805bfe58fdddf9c728bf12a4c5d8cf38d1c8e6b7afaea492ef83f6";
       maxLinuxVersion = "4.13";
       maxXorgVersion = "1.19";
     };
@@ -315,11 +315,12 @@ stdenv.mkDerivation {
       nvidia_lib_install 364 377 'libnvidia-egl-wayland'  # Renamed in 378.09
     '' + (
       if (versionAtLeast version "378.13") then ''
-        nvidia_lib_install 378 0 'libnvidia-egl-wayland' '1' '1.0.1'
+        nvidia_lib_install 378 384 'libnvidia-egl-wayland' '1' '1.0.1'
       '' else ''
         nvidia_lib_install 378 378 'libnvidia-egl-wayland' '1' '1.0.0'
       ''
-    ) + ''
+    )+ ''
+      nvidia_lib_install 387 0 'libnvidia-egl-wayland' '1' '1.0.2'
       nvidia_lib_install 0 0 'libnvidia-eglcore'
       nvidia_lib_install 0 0 'libnvidia-glcore'
       nvidia_lib_install 0 0 'libnvidia-glsi'

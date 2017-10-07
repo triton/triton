@@ -11,7 +11,7 @@
 , libsm
 , libtiff
 , libx11
-, mesa
+, opengl-dummy
 , xorg
 , zlib
 }:
@@ -47,13 +47,13 @@ stdenv.mkDerivation rec {
     bzip2
     fontconfig
     freetype
+    libice
     libjpeg
     libpng
-    libtiff
-    mesa
-    libice
     libsm
+    libtiff
     libx11
+    opengl-dummy
     xorg.libXext
     xorg.libXcursor
     xorg.libXft
@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (xorg != null)}-xfixes"
     "--${boolWt (xorg != null)}-xinput"
     "--${boolWt (xorg != null)}-xim"
-    "--${boolWt (mesa != null)}-opengl"
+    "--${boolWt (opengl-dummy != null)}-opengl"
   ];
 
   doCheck = true;

@@ -8,8 +8,8 @@
 , libxslt
 , perl
 
-, mesa
 , ncurses
+, opengl-dummy
 , openssl
 , unixODBC
 , wxGTK
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     unixODBC
     zlib
   ] ++ optionals graphical [
-    mesa
+    opengl-dummy
     wxGTK
   ];
 

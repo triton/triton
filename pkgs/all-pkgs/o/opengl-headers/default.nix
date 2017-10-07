@@ -2,6 +2,7 @@
 , fetchurl
 , fetchFromGitHub
 , lib
+, python2Packages
 }:
 
 # TODO: build release tarballs, repo vendors pdfs
@@ -13,9 +14,9 @@ stdenv.mkDerivation rec {
   name = "opengl-headers-${version}";
 
   src = fetchurl {
-    url = "http://opengl-headers.tar.xz";
-    multihash = "QmZvWAAPb4FAB4psCuvfKZW1N638AFG7ZTLX1Jr4kRE8UB";
-    sha256 = "77172528da0549cebdaf4f5f129e020bfad722fdf9808f5e32d14766c2e81081";
+    url = "http://opengl-headers.tar.xz";  # dummy url
+    multihash = "QmY1EgsrwD8RjC1S6AWavDUjKWZ1pAafovQb97FaFedM1G";
+    sha256 = "f79976ac9731f02b515c2eef164443acdaf34cc6ad9e60a6165e50ac82bac5fe";
   };
 
   configurePhase = ":";
@@ -44,9 +45,30 @@ stdenv.mkDerivation rec {
         sha256 = "40b8204a8c97e95913c31d11dc58527780e866424c5dd577f9a8ee2209612209";
       };
 
+      nativeBuildInputs = [
+        python2Packages.lxml
+        python2Packages.python
+      ];
+
+      postPatch = ''
+        sed -i xml/genglvnd.py \
+          -e 's,drafts/,,'
+      '';
+
       configurePhase = ":";
 
       buildPhase = ''
+        # Some headers such as glx.h are not pre-generated, regenerate all
+        # to be sure none are missing.
+        pushd xml
+          python genheaders.py
+        popd
+        pushd api
+          for header in glcorearb.h glext.h gl.h; do
+            python ../xml/genglvnd.py -registry ../xml/gl.xml GL/$header.h
+          done
+        popd
+
         tar -Jcvf opengl-headers-${version}.tar.xz api/
       '';
 

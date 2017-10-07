@@ -52,6 +52,7 @@ let
     versionOlder;
 
   # http://www.nvidia.com/object/unix.html
+  # http://www.nvidia.com/object/quadro-branch-history-table.html
   sources = rec {
     tesla = {
       versionMajor = "375";

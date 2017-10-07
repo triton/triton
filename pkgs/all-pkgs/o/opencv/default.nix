@@ -26,7 +26,7 @@
 , libraw1394
 , libtiff
 , libwebp
-, mesa
+, opengl-dummy
 #, nvidia-cuda-toolkit
 #, openexr
 , pango
@@ -84,8 +84,8 @@ stdenv.mkDerivation rec {
     libraw1394
     libtiff
     libwebp
-    mesa
     #openexr
+    opengl-dummy
     pango
     #python2Packages.numpy
     #python2Packages.python
@@ -156,7 +156,7 @@ stdenv.mkDerivation rec {
     # WITH_OPENCL_SVM
     #"-DWITH_OPENEXR=${boolOn (openexr != null)}"
     /**/"-DWITH_OPENEXR=OFF"
-    "-DWITH_OPENGL=${boolOn (mesa != null)}"
+    "-DWITH_OPENGL=${boolOn (opengl-dummy != null)}"
     # WITH_OPENMP
     # WITH_OPENNI
     # WITH_OPENNI2

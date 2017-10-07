@@ -6,7 +6,7 @@
 #, egl-headers
 , eglexternalplatform
 , libx11
-, mesa_noglu
+, opengl-dummy
 , wayland
 , xproto
 }:
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     #egl-headers  # Vendored by Mesa ATM
     eglexternalplatform
     libx11
-    mesa_noglu
+    opengl-dummy
     wayland
     xproto
   ];

@@ -35,7 +35,7 @@ let
   '';
 
   channel = "2.54";
-  version = "${channel}.0";
+  version = "${channel}.1";
 in
 
 assert stdenv.cc.isGNU;
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "fe22998ff0394ec31e6e5511c379b74011bee61a4421bca7fcab223dfbe0fc6a";
+    sha256 = "50c01b1419324f10fbf9b9709ec2164b18586968bdce7540583bf32302cf47a3";
   };
 
   nativeBuildInputs = [

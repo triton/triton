@@ -28,7 +28,7 @@
 # JP3D comp
 , jp3dSupport ? false
 
-, channel ? "2.2"
+, channel ? "2.3"
 }:
 
 assert jpipServerSupport ->
@@ -53,10 +53,10 @@ let
       version = "1.5.2";
       sha256 = "3ced2c9e5292024b045052385ae98127d786c76fe3b7289ab02ccb46d087bb34";
     };
-    "2.2" = {
+    "2.3" = {
       fetchzipversion = 3;
-      version = "2.2.0";
-      sha256 = "d3a3007893a722b08cbe94b1c07e9a32b6426c08452341997a075d0a4bf3e8b5";
+      version = "2.3.0";
+      sha256 = "072b868039e8c11c2d753d9096f8de66e115cc503a8fb60122728904ed61d4ac";
     };
   };
   source = sources."${channel}";

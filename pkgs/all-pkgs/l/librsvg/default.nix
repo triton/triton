@@ -19,7 +19,7 @@ let
     boolEn;
 
   versionMajor = "2.40";
-  versionMinor = "18";
+  versionMinor = "19";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "bfc8c488c89c1e7212c478beb95c41b44701636125a3e6dab41187f1485b564c";
+    sha256 = "612b4d8b8609036f5d899be3fe70d9866b5f6ac5c971154c1c0ef7242216c1f7";
   };
 
   buildInputs = [

@@ -8,7 +8,7 @@
 , libdrm
 , libinput
 , libxkbcommon
-, mesa_noglu
+, opengl-dummy
 , systemd_lib
 , wayland
 , wayland-protocols
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     libdrm
     libinput
     libxkbcommon
-    mesa_noglu
+    openl-dummy
     systemd_lib
     wayland
     wayland-protocols

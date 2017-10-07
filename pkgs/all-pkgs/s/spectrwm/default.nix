@@ -1,23 +1,35 @@
 { stdenv
 , fetchpatch
 , fetchFromGitHub
+, lib
 , makeWrapper
 
 , fontconfig
 , freetype
+, libx11
+, libxcb
+, libxcursor
+, libxft
+, libxrandr
+, libxrender
+, libxt
+#, libxtst
+, randrproto
+, renderproto
 , which
 , xorg
+, xproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "spectrwm-2016-12-09";
+  name = "spectrwm-2017-10-03";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "conformal";
     repo = "spectrwm";
-    rev = "2646d004bf17fb42799b887b4781a28de4c8bfb9";
-    sha256 = "cc331269543ab8b0b2018ec7be549e0856738e1e2eeb8787280079fe7d225c86";
+    rev = "81a78469359435f1cb9f38632aafad1cf8833640";
+    sha256 = "cbac32e175ef3a4616d20141bdf7b6436a6782cd75dca0dccbc08b9445713d7d";
   };
 
   nativeBuildInputs = [
@@ -27,20 +39,21 @@ stdenv.mkDerivation rec {
   buildInputs = [
     fontconfig
     freetype
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXcursor
-    xorg.libXft
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXt
+    libx11
+    libxcb
+    libxcursor
+    libxft
+    libxrandr
+    libxrender
+    libxt
+    #libxtst
     xorg.libXtst
-    xorg.randrproto
-    xorg.renderproto
+    randrproto
+    renderproto
     xorg.xcbutil
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
-    xorg.xproto
+    xproto
   ];
 
   postUnpack = ''
@@ -64,7 +77,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${which}/bin"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A tiling window manager";
     homepage = https://github.com/conformal/spectrwm;
     license = licenses.isc;

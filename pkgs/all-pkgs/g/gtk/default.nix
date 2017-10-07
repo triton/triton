@@ -23,9 +23,11 @@
 , libsm
 , libx11
 , libxcomposite
+, libxcursor
 , libxdamage
 , libxext
 , libxfixes
+, libxi
 , libxinerama
 , libxkbcommon
 , libxrandr
@@ -42,10 +44,6 @@
 , channel
 }:
 
-assert libx11 != null ->
-  xorg.libXcursor != null
-  && xorg.libXi != null;
-
 let
   inherit (lib)
     boolEn
@@ -59,8 +57,8 @@ let
 
   sources = {
     "3.22" = {
-      version = "3.22.21";
-      sha256 = "1bd3c1a85cfb4db112cabb5379abb05a1a94fe43052d309d573493fca00e6b87";
+      version = "3.22.24";
+      sha256 = "cbb16e4cfc928ab8f5f22f7290616f95f6ebc8c97cc724a2007b07ced833592b";
     };
     "3.91" = {
       version = "3.91.1";
@@ -112,11 +110,11 @@ stdenv.mkDerivation rec {
     libsm
     libx11
     libxcomposite
-    xorg.libXcursor
+    libxcursor
     libxdamage
     libxext
     libxfixes
-    xorg.libXi
+    libxi
     libxinerama
     libxrandr
     libxrender

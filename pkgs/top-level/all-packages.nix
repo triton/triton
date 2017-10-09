@@ -3083,6 +3083,8 @@ pinentry = callPackage ../all-pkgs/p/pinentry {
   type = "nox";
 };
 
+pipewire = callPackage ../all-pkgs/p/pipewire { };
+
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 
 pkg-config = callPackage ../all-pkgs/p/pkg-config { };

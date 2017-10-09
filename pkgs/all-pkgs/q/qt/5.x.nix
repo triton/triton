@@ -2,16 +2,20 @@
 , bison
 , fetchurl
 , gperf
+, lib
 , perl
 , python2
 , which
 
 , alsa-lib
 , bluez
+, compositeproto
+, damageproto
 , cups
 , dbus
 , double-conversion
 , expat
+, fixesproto
 , fontconfig
 , freetype
 , glib
@@ -20,6 +24,7 @@
 , harfbuzz_lib
 , hunspell
 , icu
+, inputproto
 , libcap
 , libdrm
 , libevdev
@@ -27,7 +32,19 @@
 , libjpeg
 , libpng
 , libproxy
+, libx11
+, libxcb
+, libxcomposite
+, libxcursor
+, libxdamage
+, libxext
+, libxfixes
+, libxi
 , libxkbcommon
+, libxrandr
+, libxrender
+, libxscrnsaver
+#, libxtst
 , mariadb-connector-c
 , mtdev
 , opengl-dummy
@@ -36,11 +53,17 @@
 , pcre2
 , postgresql
 , pulseaudio_lib
+, randrproto
+, recordproto
+, renderproto
+, scrnsaverproto
 , sqlite
 , systemd_lib
 , tslib
 , wayland
+, xextproto
 , xorg
+, xproto
 , zlib
 
 , buildWebEngine ? false
@@ -48,7 +71,7 @@
 
 let
   versionMajor = "5.9";
-  versionPatch = "1";
+  versionPatch = "2";
   version = "${versionMajor}.${versionPatch}";
 
   inherit (stdenv.lib)
@@ -61,9 +84,9 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "77b4af61c49a09833d4df824c806acaf";
-    sha1Confirm = "8b9900cece0a18cf23d53a42379a628a1c1330ae";
-    sha256 = "7b41a37d4fe5e120cdb7114862c0153f86c07abbec8db71500443d2ce0c89795";
+    md5Confirm = "738d1b98106e1bd39f00cc228beb522a";
+    sha1Confirm = "c4c6636bea4521c771673a699845119e5842aad4";
+    sha256 = "6c6171a4d1ea3fbd4212d6a04899650218583df3ec583a8a6a4a589fe18620ff";
   };
 
   nativeBuildInputs = [
@@ -81,6 +104,7 @@ stdenv.mkDerivation rec {
     cups
     dbus
     double-conversion
+    fixesproto
     fontconfig
     freetype
     glib
@@ -88,13 +112,21 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     harfbuzz_lib
     icu
+    inputproto
     libdrm
     libevdev
     libinput
     libjpeg
     libpng
     libproxy
+    libx11
+    libxcb
+    libxcomposite
+    libxext
+    libxfixes
+    libxi
     libxkbcommon
+    libxrender
     mariadb-connector-c
     mtdev
     opengl-dummy
@@ -102,43 +134,34 @@ stdenv.mkDerivation rec {
     pcre2
     postgresql
     pulseaudio_lib
+    renderproto
     sqlite
     systemd_lib
     tslib
     wayland
-    xorg.fixesproto
-    xorg.inputproto
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXcomposite
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXrender
-    xorg.renderproto
+    xextproto
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
     xorg.xcbutilrenderutil
     xorg.xcbutilwm
-    xorg.xextproto
-    xorg.xproto
+    xproto
     zlib
   ] ++ optionals buildWebEngine [
+    compositeproto
+    damageproto
     expat
     hunspell
     libcap
-    pciutils
-    xorg.compositeproto
-    xorg.damageproto
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXrandr
+    libxcursor
+    libxdamage
+    libxrandr
+    #libxtst
     xorg.libXtst
-    xorg.libXScrnSaver
-    xorg.randrproto
-    xorg.recordproto
-    xorg.scrnsaverproto
+    libxscrnsaver
+    pciutils
+    randrproto
+    recordproto
+    scrnsaverproto
   ];
 
   # For some reason libdrm doesn't map drm.h correctly
@@ -274,7 +297,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

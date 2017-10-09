@@ -7,20 +7,20 @@
 
 , pam
 , qt5
-, systemd_full
+, systemd_lib
 , xorg
 }:
 
 let
-  version = "0.15.0";
+  version = "0.16.0";
 in
 stdenv.mkDerivation {
   name = "sddm-${version}";
 
   src = fetchurl {
-    url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.gz";
+    url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.xz";
     hashOutput = false;  # https://github.com/sddm/sddm/releases
-    sha256 = "a4211e5b66f674415e07bc1cc39c16f60ae6025418bcbaba1118cd51e57c3174";
+    sha256 = "e9138a23e7f0846f7dcb925964d301f1a597fae2047b373d7dbe4cd5340f8e3b";
   };
 
   nativeBuildInputs = [
@@ -33,7 +33,7 @@ stdenv.mkDerivation {
   buildInputs = [
     pam
     qt5
-    systemd_full
+    systemd_lib
     xorg.libxcb
   ];
 

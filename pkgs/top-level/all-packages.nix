@@ -2276,9 +2276,7 @@ libmbim = callPackage ../all-pkgs/l/libmbim { };
 
 libmcrypt = callPackage ../all-pkgs/l/libmcrypt { };
 
-libmediaart = callPackage ../all-pkgs/l/libmediaart {
-  qt5 = null;
-};
+libmediaart = callPackage ../all-pkgs/l/libmediaart { };
 
 libmediainfo = callPackage ../all-pkgs/l/libmediainfo { };
 

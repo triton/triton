@@ -92,10 +92,10 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     perl
     python2
+    which
   ] ++ optionals buildWebEngine [
     bison
     gperf
-    which
   ];
 
   buildInputs = [

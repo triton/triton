@@ -3565,6 +3565,11 @@ tmux = callPackage ../all-pkgs/t/tmux { };
 
 tor = callPackage ../all-pkgs/t/tor { };
 
+totem_3-26 = callPackage ../all-pkgs/t/totem {
+  channel = "3.26";
+};
+totem = callPackageAlias "totem_3-26" { };
+
 totem-pl-parser_3-26 = callPackage ../all-pkgs/t/totem-pl-parser {
   channel = "3.26";
 };

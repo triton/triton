@@ -1,26 +1,21 @@
 { stdenv
 , fetchurl
+, lib
+, meson
+, ninja
 
 , glib
 , gdk-pixbuf
 , gobject-introspection
-, qt5
 , vala
+, zlib
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    optionals;
-
   versionMajor = "1.9";
   versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 in
-
-assert gdk-pixbuf != null -> qt5 == null;
-assert qt5 != null -> gdk-pixbuf == null;
-
 stdenv.mkDerivation rec {
   name = "libmediaart-${version}";
 
@@ -30,26 +25,28 @@ stdenv.mkDerivation rec {
     sha256 = "a57be017257e4815389afe4f58fdacb6a50e74fd185452b23a652ee56b04813d";
   };
 
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
+
   buildInputs = [
     gdk-pixbuf
     glib
     gobject-introspection
-    qt5
-    vala
+    #vala
+    zlib
   ];
 
-  configureFlags = [
-    "--disable-installed-tests"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
-    (enFlag "gdkpixbuf" (gdk-pixbuf != null) null)
-    (enFlag "qt" (qt5 != null) null)
-    "--enable-nemo"
-    "--disable-unit-tests"
-    "--with-compile-warnings"
+  postPatch = ''
+    # Remove broken meson vala binding generator
+    sed -i libmediaart/meson.build \
+      -e '/libmediaart_vapi/,+3d'
+  '';
+
+  mesonFlags = [
+    "-Dimage_library=gdk-pixbuf"
+    "-Dwith-docs=no"
   ];
 
   passthru = {
@@ -64,7 +61,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Manages, extracts and handles media art caches";
     homepage = https://github.com/GNOME/libmediaart;
     license = licenses.lgpl21Plus;

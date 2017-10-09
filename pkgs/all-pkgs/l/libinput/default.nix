@@ -71,6 +71,12 @@ stdenv.mkDerivation rec {
     valgrind
   ];
 
+  postPatch = ''
+    # Remove invalid function argument
+    sed -i meson_options.txt \
+      -e '/default: ${"''"}/d'
+  '';
+
   mesonFlags = [
     #"-Dudev-dir"
     "-Dlibwacom=${boolTf (libwacom != null)}"

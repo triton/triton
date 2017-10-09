@@ -11,7 +11,9 @@
 , gst-plugins-base
 , gstreamer
 , jack2_lib
+, libva
 , libx11
+, sdl
 , systemd_full
 , v4l_lib
 }:
@@ -43,8 +45,10 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gstreamer
     jack2_lib
+    libva
     libx11
-    systemd_full
+    sdl
+    systemd_full  # FIXME: remove hard dependency on full
     v4l_lib
   ];
 

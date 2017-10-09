@@ -4,6 +4,7 @@
 
 , bzip2
 , cairo
+, fontconfig
 , gdk-pixbuf_unwrapped
 , glib
 , gobject-introspection
@@ -34,6 +35,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bzip2
     cairo
+    fontconfig
     gdk-pixbuf_unwrapped
     glib
     gobject-introspection
@@ -66,6 +68,8 @@ stdenv.mkDerivation rec {
       -e "s#gdk_pixbuf_cache_file = .*#gdk_pixbuf_cache_file = $GDK_PIXBUF/loaders.cache#" \
       -e "s#\$(GDK_PIXBUF_QUERYLOADERS)#GDK_PIXBUF_MODULEDIR=$GDK_PIXBUF/loaders \$(GDK_PIXBUF_QUERYLOADERS)#"
   '';
+
+  buildDirCheck = false;  # FIXME
 
   passthru = {
     srcVerification = fetchurl {

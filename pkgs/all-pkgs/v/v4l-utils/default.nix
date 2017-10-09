@@ -1,10 +1,12 @@
 { stdenv
 , fetchurl
-, libjpeg-turbo_1-4
+, lib
+, perl
 
 , alsa-lib
-, xorg
-, qt4
+, libjpeg-turbo_1-4
+, libx11
+, qt5
 
 , channel ? null
 }:
@@ -34,13 +36,21 @@ stdenv.mkDerivation rec {
     sha256 = "0618162ddb0b57fe7c45407d4d66ed79e3a134cdbc9e72598d34e61d3359e20d";
   };
 
+  nativeBuildInputs = [
+    perl
+  ];
+
   buildInputs = optionals (channel == "utils") [
     alsa-lib
-    xorg.libX11
-    qt4
+    libx11
+    qt5
   ] ++ [
     libjpeg-turbo_1-4
   ];
+
+  postPatch = ''
+    patchShebangs utils/cec-ctl/msg2ctl.pl
+  '';
 
   preConfigure = optionalString (channel == "utils") ''
     configureFlagsArray+=(

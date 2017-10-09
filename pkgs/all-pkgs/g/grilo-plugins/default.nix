@@ -1,4 +1,5 @@
 { stdenv
+, gperf
 , fetchurl
 , pkgconfig
 , intltool
@@ -45,6 +46,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gperf
     intltool
     itstool
   ];

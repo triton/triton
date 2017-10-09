@@ -2,7 +2,7 @@
 , fetchTritonPatch
 , fetchurl
 , gettext
-, intltool
+, itstool
 , lib
 , makeWrapper
 , meson
@@ -61,6 +61,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    itstool
     makeWrapper
     meson
     ninja
@@ -103,9 +104,6 @@ stdenv.mkDerivation rec {
   postPatch = /* Disable post-install hook, already handled by setup-hooks */ ''
     sed -i meson.build \
       -e '/postinstall.py/d'
-  '' + /* FIXME: i18n.merge_file in meson is failing with permission denied */ ''
-    sed -i data/meson.build \
-      -e '/org.gnome.Nautilus.desktop/ N; s/install: true/install: false/'
   '';
 
   mesonFlags = [

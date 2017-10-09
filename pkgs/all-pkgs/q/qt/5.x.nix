@@ -74,7 +74,7 @@ let
   versionPatch = "2";
   version = "${versionMajor}.${versionPatch}";
 
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 in
 stdenv.mkDerivation rec {

@@ -15,9 +15,11 @@
 , gtk
 , iso-codes
 , itstool
+, libseccomp
 , libx11
 , libxext
 , libxml2
+, libxrandr
 , pango
 , python
 , randrproto
@@ -41,9 +43,9 @@ let
     optionals;
 
   sources = {
-    "3.24" = {
-      version = "3.24.2";
-      sha256 = "8fa1de66a6a75963bffc79b01a60434c71237d44c51beca09c0f714a032d785e";
+    "3.26" = {
+      version = "3.26.1";
+      sha256 = "92fa697af986fb2c6bc6595f0155c968c17e5d1981a50584ff4fb6fd60124e2f";
     };
   };
   source = sources."${channel}";
@@ -73,15 +75,16 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     iso-codes
+    libseccomp
     libx11
     libxext
     libxml2
+    libxrandr
     pango
     randrproto
     systemd_lib
     xproto
   ] ++ optionals (libx11 != null) [
-    xorg.libXrandr
     xorg.libxkbfile
     xorg.xkeyboardconfig
   ];

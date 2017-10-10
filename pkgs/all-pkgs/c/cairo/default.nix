@@ -16,7 +16,9 @@
 , libxrender
 , lzo
 , opengl-dummy
+, xextproto
 , xorg
+, xproto
 , zlib
 }:
 
@@ -28,13 +30,16 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "cairo-1.14.10";
+  name = "cairo-1.15.8";
 
   src = fetchurl {
-    url = "https://cairographics.org/releases/${name}.tar.xz";
-    multihash = "QmceAfwie7MyRPHeezGiTA7aUtMVrMKdT6v7YVq8yPavj7";
+    urls = [
+      "https://cairographics.org/releases/${name}.tar.xz"
+      "https://cairographics.org/snapshots/${name}.tar.xz"
+    ];
+    multihash = "QmSiPuQ4YdCeYftpAu6CkoqnSKxZUDMRkovt7vBTCWUKAT";
     hashOutput = false;
-    sha256 = "7e87878658f2c9951a14fc64114d4958c0e65ac47530b8ac3078b2ce41b66a09";
+    sha256 = "3224260a4f8e22e7ea95faf706ae111b974833dd74185be1db5ebc7618a98464";
   };
 
   nativeBuildInputs = [
@@ -56,6 +61,8 @@ stdenv.mkDerivation rec {
     libxcb
     libxext
     libxrender
+    xextproto
+    xproto
   ];
 
   patches = [
@@ -82,12 +89,6 @@ stdenv.mkDerivation rec {
     '';
 
   configureFlags = [
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-largefile"
-    #"--disable-atomic"
-    "--disable-gcov"
     "--disable-valgrind"
     "--${boolEn opengl-dummy.glx}-xlib"
     "--${boolEn opengl-dummy.glx}-xlib-xrender"
@@ -132,7 +133,6 @@ stdenv.mkDerivation rec {
     "--disable-trace"
     "--enable-interpreter"
     "--disable-symbol-lookup"
-    #"--enable-some-floating-point"
     "--${boolWt opengl-dummy.glx}-x"
     #(wtFlag "skia" true "yes")
     #(wtFlag "skia-build-type" true "Release")

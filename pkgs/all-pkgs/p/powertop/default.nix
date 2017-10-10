@@ -10,12 +10,16 @@
 , xorg
 }:
 
+let
+  version = "2.9";
+in
 stdenv.mkDerivation rec {
-  name = "powertop-2.8";
+  name = "powertop-${version}";
 
   src = fetchurl {
-    url = "https://01.org/sites/default/files/downloads/powertop/${name}.tar.gz";
-    sha256 = "a87b563f73106babfa3e74dcf92f252938c061e309ace20a361358bbfa579c5a";
+    url = "https://01.org/sites/default/files/downloads/powertop/powertop-v${version}.tar.gz";
+    multihash = "QmYKHfQHNrZKhe9wTn95QQUNiGqsmQmWVXHEDw9FhEBXJV";
+    sha256 = "aa7fb7d8e9a00f05e7d8a7a2866d85929741e0d03a5bf40cab22d2021c959250";
   };
 
   buildInputs = [

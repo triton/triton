@@ -5,13 +5,14 @@
 , setuptools-scm
 
 , acl
+, llfuse
 , lz4
 , msgpack-python
 , openssl
 }:
 
 let
-  version = "1.0.10";
+  version = "1.1.0";
 in
 buildPythonPackage rec {
   name = "borgbackup-${version}";
@@ -19,7 +20,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "borgbackup";
     inherit version;
-    sha256 = "978f28f144924005219da989b1b436a32b2735a34c6d0dc15bb0a1ccffad59e9";
+    sha256 = "b40c1120c480a8235ce403b8e6e7abf1377458896f438eafce60f54916789e6f";
   };
 
   BORG_LZ4_PREFIX = lz4;
@@ -37,6 +38,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     msgpack-python
+    llfuse
   ];
 
   disabled = pythonOlder "3.4";

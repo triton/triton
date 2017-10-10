@@ -120,6 +120,10 @@ in
           chmod 0750 "${ipfs_path}"
         fi
 
+        # We shouldn't have a stale API file
+        # Leaving this around will break all ipfs commands prior to starting the daemon
+        rm -f "${ipfs_path}/api"
+
         if [ ! -e "${ipfs_path}/config" ]; then
           echo "Missing config file: ${ipfs_path}/config" >&2
           echo "You can fix this by running `ipfs init -e` and copying the config from \$HOME/.ipfs/config" >&2

@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , libtool
 , makeWrapper
 
@@ -23,46 +24,51 @@
 , libcanberra
 , libdrm
 , libgudev
+, libice
 , libinput
+, libsm
 , libstartup_notification
+, libx11
+, libxcb
+, libxcomposite
+, libxcursor
+, libxdamage
+, libxext
+, libxfixes
+, libxi
+, libxinerama
 , libxkbcommon
+#, libxkbfile
+, libxrandr
+, libxrender
+#, libxtst
 , linux-headers
-, mesa_noglu
+, opengl-dummy
 , pango
 , systemd_lib
 , upower
 , wayland
 , wayland-protocols
+#, xkeyboardconfig
 , xorg
+, xproto
 , zenity
 
 , channel
 }:
 
-assert xorg != null ->
-  xorg.libICE != null
-  && xorg.libSM != null
-  && xorg.libX11 != null
-  && xorg.libxcb != null
-  && xorg.libXcomposite != null
-  && xorg.libXcursor != null
-  && xorg.libXdamage != null
-  && xorg.libXext != null
-  && xorg.libXfixes != null
-  && xorg.libXi != null
-  && xorg.libXinerama != null
-  && xorg.libxkbfile != null
-  && xorg.libXrandr != null
-  && xorg.libXrender != null
-  && xorg.xkeyboardconfig != null;
-
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
-    boolWt
-    optionals;
+    boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.1";
+      sha256 = "16faf617aae9be06dc5f9e104f4cd20dfdd4d6ec0bc10053752262e9f79a04c2";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "mutter-${source.version}";
@@ -98,48 +104,46 @@ stdenv.mkDerivation rec {
     libcanberra
     libdrm
     libgudev
+    libice
     libinput
+    libsm
     libstartup_notification
+    libx11
+    libxcb
+    libxcomposite
+    libxcursor
+    libxdamage
+    libxext
+    libxfixes
+    libxi
+    libxinerama
     libxkbcommon
+    #libxkbfile
+    xorg.libxkbfile
+    libxrandr
+    libxrender
+    #libxtst
+    xorg.libXtst
     linux-headers
-    mesa_noglu
+    opengl-dummy
     pango
     systemd_lib
     upower
     wayland
     wayland-protocols
-    zenity
-  ] ++ optionals (xorg != null) [
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libxkbfile
-    xorg.libXrandr
-    xorg.libXrender
+    #xkeyboardconfig
     xorg.xkeyboardconfig
-    xorg.xproto
+    xproto
+    zenity
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "9e67dfb8cbcb8c314fee112e2b751dd907cec544";
-      file = "mutter/math.patch";
-      sha256 = "8c29cc1d5e414583d9a27884dda09a5bbab7b76cf8598145c2c818b3cf95a273";
-    })
-    (fetchTritonPatch {
-      rev = "9e67dfb8cbcb8c314fee112e2b751dd907cec544";
-      file = "mutter/x86.patch";
-      sha256 = "0f7438b60b8c32b9f788245273081c4181eb529610ca804c5ba46d12338b1475";
-    })
-  ];
+  # patches = [
+  #   (fetchTritonPatch {
+  #     rev = "9e67dfb8cbcb8c314fee112e2b751dd907cec544";
+  #     file = "mutter/x86.patch";
+  #     sha256 = "0f7438b60b8c32b9f788245273081c4181eb529610ca804c5ba46d12338b1475";
+  #   })
+  # ];
 
   configureFlags = [
     "--enable-nls"
@@ -155,7 +159,12 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--enable-compile-warnings"
     "--${boolWt (libcanberra != null)}-libcanberra"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    # FIXME: Autoconf macro is failing to detect xrandr version
+    "-DHAVE_XRANDR15"
   ];
 
   preFixup =
@@ -188,8 +197,8 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
-    description = "GNOME 3 compositing window manager based on Clutter";
+  meta = with lib; {
+    description = "Compositing window manager based on Clutter";
     homepage = https://git.gnome.org/browse/mutter/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [

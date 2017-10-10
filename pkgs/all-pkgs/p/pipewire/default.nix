@@ -14,7 +14,8 @@
 , libva
 , libx11
 , sdl
-, systemd_full
+, systemd-dummy
+, systemd_lib
 , v4l_lib
 }:
 
@@ -48,17 +49,14 @@ stdenv.mkDerivation rec {
     libva
     libx11
     sdl
-    systemd_full  # FIXME: remove hard dependency on full
+    systemd-dummy
+    systemd_lib
     v4l_lib
   ];
 
   postPatch = /* Fix hardcoded systemd unit directory */ ''
     sed -i src/daemon/systemd/user/meson.build \
       -e "s,systemd_user_services_dir\s=.*,systemd_user_services_dir = '$out/lib/systemd/user/',"
-  '';
-
-  preConfigure = ''
-
   '';
 
   meta = with lib; {

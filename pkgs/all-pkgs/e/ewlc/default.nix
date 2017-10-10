@@ -7,17 +7,21 @@
 , dbus
 , libdrm
 , libinput
+, libx11
+, libxcb
+, libxfixes
 , libxkbcommon
 , opengl-dummy
 , systemd_lib
 , wayland
 , wayland-protocols
 , xorg
+, xproto
 }:
 
 let
-  date = "2017-05-07";
-  rev = "8b280f7091af80852a6575f24e7a79d218a9840d";
+  date = "2017-06-19";
+  rev = "b4095c75b99b604c934b69f57017798bb0338c1b";
 in
 stdenv.mkDerivation rec {
   name = "ewlc-${date}";
@@ -27,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "Enerccio";
     repo = "ewlc";
     inherit rev;
-    sha256 = "e5b3b18697518d84404530a69d09d15b667c3bb20abeb2dd6cc73b2cd7304c39";
+    sha256 = "9255d4c4c287fff5dd424054f7378313d8a7b64c0ca7a5681bbf55727e8110b2";
   };
 
   nativeBuildInputs = [
@@ -40,19 +44,18 @@ stdenv.mkDerivation rec {
     dbus
     libdrm
     libinput
+    libx11
+    libxcb
+    libxfixes
     libxkbcommon
-    openl-dummy
+    opengl-dummy
     systemd_lib
     wayland
     wayland-protocols
-    xorg.fixesproto
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXfixes
     xorg.pixman
     xorg.xcbutilimage
     xorg.xcbutilwm
-    xorg.xproto
+    xproto
   ];
 
   cmakeFlags = [

@@ -3729,6 +3729,8 @@ wireguard = callPackage ../all-pkgs/w/wireguard {
 
 wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
 
+wlc = callPackage ../all-pkgs/w/wlc { };
+
 wpa_supplicant = callPackage ../all-pkgs/w/wpa_supplicant { };
 
 wxGTK = callPackage ../all-pkgs/w/wxGTK { };

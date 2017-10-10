@@ -19,6 +19,11 @@ let
       API = "/ip4/127.0.0.1/tcp/5001";
       Gateway = "/ip4/127.0.0.1/tcp/8001";
     };
+    Discovery = {
+      MDNS = {
+        Enabled = false;
+      };
+    };
   } // cfg.extraAttrs;
 
   extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON ipfsAttrs);
@@ -146,6 +151,7 @@ in
         Type = "simple";
         ExecStart = "${pkgs.ipfs}/bin/ipfs daemon ${concatStringsSep " " extraFlags}";
         User = "ipfs";
+        LimitNOFILE = "infinity";
         PermissionsStartOnly = true;
         UMask = "0027";
         RestartPreventExitStatus = "6";

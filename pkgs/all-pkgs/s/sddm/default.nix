@@ -8,6 +8,7 @@
 , pam
 , qt5
 , systemd_lib
+, systemd-dummy
 , xorg
 }:
 
@@ -34,8 +35,19 @@ stdenv.mkDerivation {
     pam
     qt5
     systemd_lib
+    systemd-dummy
     xorg.libxcb
   ];
+
+  postPatch = ''
+    # Fix systemd journal dependency
+    grep -q 'libsystemd-journal' CMakeLists.txt
+    sed -i 's,libsystemd-journal,libsystemd,' CMakeLists.txt
+
+    # Fix broken man page
+    grep -q '\*\*@SYSTEM_CONFIG_DIR@\*$' data/man/sddm.conf.rst.in
+    sed -i '/SYSTEM_CONFIG_DIR/s,@\*$,@**,' data/man/sddm.conf.rst.in
+  '';
 
   preConfigure = ''
     touch "$TMPDIR/login.defs"
@@ -53,6 +65,17 @@ stdenv.mkDerivation {
     "-DUID_MIN=1000"
     "-DUID_MAX=2147483647"
   ];
+
+  postConfigure = ''
+    sed \
+      -e '/#define RUNTIME_DIR/s,".*","/run/sddm",' \
+      -e '/#define STATE_DIR/s,".*","/var/lib/sddm",' \
+      -e '/#define CONFIG_FILE/s,".*","/etc/sddm.conf",' \
+      -e '/#define CONFIG_DIR/s,".*","/etc/sddm.conf.d",' \
+      -e '/#define SYSTEM_CONFIG_DIR/s,".*","/run/current-system/sw/lib/sddm/sddm.conf.d",' \
+      -e '/#define LOG_FILE/s,".*","/var/log/sddm.log",' \
+      -i ./src/common/Constants.h
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

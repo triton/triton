@@ -296,6 +296,8 @@ ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
 
+llfuse = callPackage ../all-pkgs/l/llfuse { };
+
 lxml = callPackage ../all-pkgs/l/lxml { };
 
 m2crypto = callPackage ../all-pkgs/m/m2crypto { };

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "3.3.0";
+  version = "3.4.0";
   version' = lib.replaceStrings ["."] ["_"] version;
 in
 stdenv.mkDerivation rec {
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/thom311/libnl/releases/download/"
       + "libnl${version'}/libnl-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "705468b5ae4cd1eb099d2d1c476d6a3abe519bc2810becf12fb1e32de1e074e4";
+    sha256 = "b7287637ae71c6db6f89e1422c995f0407ff2fe50cecd61a312b6a9b0921f5bf";
   };
 
   nativeBuildInputs = [

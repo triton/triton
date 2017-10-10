@@ -10,12 +10,12 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "libmatroska-1.4.7";
+  name = "libmatroska-1.4.8";
 
   src = fetchurl {
-    url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.bz2";
-    multihash = "QmP28YKW2UhrqK7FDcd8h4D8YVXJx2SnujrhMwv2YzteBZ";
-    sha256 = "46441eb3bae9f970f68affaa211dd74302a7072dcd2becfb1114da11b66525fa";
+    url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.xz";
+    multihash = "QmTQvHwzCcV58uQ1eSvFXW6vQyvA3K5rXqLTZjXnYERg1o";
+    sha256 = "d8c72b20d4c5bf888776884b0854f95e74139b5267494fae1f395f7212d7c992";
   };
 
   buildInputs = [

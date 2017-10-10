@@ -29,7 +29,6 @@
 , pango
 , systemd_lib
 , tslib
-, xorg
 , wayland
 
 , channel
@@ -38,8 +37,7 @@
 let
   inherit (lib)
     boolEn
-    boolWt
-    optionals;
+    boolWt;
 
   sources = {
     "1.26" = {

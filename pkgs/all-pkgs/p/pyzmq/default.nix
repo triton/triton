@@ -18,7 +18,7 @@ buildPythonPackage rec {
     sha256 = "0322543fff5ab6f87d11a8a099c4c07dd8a1719040084b6ce9162bcdf5c45c9d";
   };
 
-  propagatedBuildInputs = [
+  buildInputs = [
     zeromq
   ];
 

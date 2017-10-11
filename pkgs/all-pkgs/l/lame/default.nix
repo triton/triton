@@ -36,6 +36,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
+      rev = "b29eb4e2cc5185e9dd8bc670bc48797cf8dce10e";
+      file = "l/lame/CVE-2017-15018.patch";
+      sha256 = "de7467b0edc241bb739f267d054be75fdaf9af6e0360556c948a8b40b469ca6e";
+    })
+    (fetchTritonPatch {
       rev = "7b4e03ea2c1aa248c38b4f55ed4892bfceaf4d32";
       file = "lame/lame-gcc-4.9.patch";
       sha256 = "9f675fa1a5ef15111bb51253b31fc88dbf9b21a5111e38ac0060b97abe42b39f";

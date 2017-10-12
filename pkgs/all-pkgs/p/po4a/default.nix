@@ -10,16 +10,16 @@
 }:
 
 let
-  version = "0.48";
-  id = "4176";
+  version = "0.52";
+  id = "4229";
 in
 stdenv.mkDerivation rec {
   name = "po4a-${version}";
 
   src = fetchurl {
     url = "https://alioth.debian.org/frs/download.php/file/${id}/${name}.tar.gz";
-    multihash = "QmdSkx1isZmu4u6XbfaL8H6VKx4Xos2e9oSShV8hDvq3fz";
-    sha256 = "a89595ca42e896c97ce4ffc231a075cc88692216b4bc05df40414d7428c4286c";
+    multihash = "QmamQ6BT5uizwcgwkGGbrpY5A2oUNqgU13DoGqDM1YgNrG";
+    sha256 = "60a243da3ae372f019cd71483d46c898897f8692958403dfc2c8001c713e6fcf";
   };
 
   # Perl needs en_US.UTF-8

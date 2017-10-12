@@ -1,6 +1,6 @@
 { stdenv
 , cmake
-, fetchgit
+, fetchFromGitHub
 , pythonPackages
 , ninja
 
@@ -42,16 +42,17 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.9.0";
 in
 stdenv.mkDerivation {
   name = "osquery-${version}";
 
-  src = fetchgit {
-    version = 2;
-    url = "https://github.com/facebook/osquery";
-    rev = "refs/tags/${version}";
-    sha256 = "161336e8df16ba466ff7232de3da67367a20e9c2bab44fb259ce3b00b2332635";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "facebook";
+    repo = "osquery";
+    rev = version;
+    sha256 = "b28ea504b506ee136816c7064ff8fa64617c07feded412531172500e72d7ffd2";
   };
 
   nativeBuildInputs = [

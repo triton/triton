@@ -8,16 +8,17 @@
 , appstream-glib
 , cairo
 , efivar
+, elfutils
 , fontconfig
 , freetype
 , fwupdate
 , gcab
 , gdk-pixbuf
 , glib
+, gnutls
 , gobject-introspection
 , gpgme
 , libarchive
-, libelf
 , libgpg-error
 , libgudev
 , libgusb
@@ -27,12 +28,13 @@
 , pango
 , polkit
 , sqlite
-, systemd_full
+, systemd_lib
+, systemd-dummy
 , util-linux_lib
 }:
 
 let
-  version = "0.9.7";
+  version = "1.0.0";
 in
 stdenv.mkDerivation rec {
   name = "fwupd-${version}";
@@ -42,29 +44,32 @@ stdenv.mkDerivation rec {
     owner = "hughsie";
     repo = "fwupd";
     rev = version;
-    sha256 = "980393b4ea3d58b1be26598daaed4fb36932cf893dfd97f534ff01ba7ff9719d";
+    sha256 = "5779cf25d3cc645bac24e93c44d0db3b7bb4b620c3611587dfcb2152b271067a";
   };
 
   nativeBuildInputs = [
     gettext
     meson
     ninja
+    python3Packages.pygobject
+    python3Packages.python
   ];
 
   buildInputs = [
     appstream-glib
     cairo
     efivar
+    elfutils
     fontconfig
     freetype
     fwupdate
     gcab
     gdk-pixbuf
     glib
+    gnutls
     gobject-introspection
     gpgme
     libarchive
-    libelf
     libgpg-error
     libgudev
     libgusb
@@ -73,12 +78,9 @@ stdenv.mkDerivation rec {
     libusb
     pango
     polkit
-    python3Packages.pillow
-    python3Packages.pycairo
-    python3Packages.pygobject
-    python3Packages.python
     sqlite
-    systemd_full
+    systemd_lib
+    systemd-dummy
     util-linux_lib
   ];
 
@@ -87,12 +89,8 @@ stdenv.mkDerivation rec {
   '';
 
   mesonFlags = [
-    "-Denable-colorhug=false"
-    "-Denable-uefi=${if fwupdate != null then "true" else "false"}"
-    "-Denable-dell=${if fwupdate != null then "true" else "false"}"
-    "-Denable-thunderbolt=false"
     "-Denable-doc=false"
-    "-Denable-man=false"
+    "-Denable-tests=false"
   ];
 
   meta = with stdenv.lib; {

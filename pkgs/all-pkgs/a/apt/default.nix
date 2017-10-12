@@ -6,27 +6,29 @@
 , gettext
 , libxslt
 , ninja
+, perl
 , po4a
 
 , bzip2
 , curl
 , db
 , dpkg
-, googletest
+, gnutls
 , lz4
+, systemd_lib
 , xz
 , zlib
 }:
 
 let
-  version = "1.3.1";
+  version = "1.5";
 in
 stdenv.mkDerivation {
   name = "apt-${version}";
 
   src = fetchurl {
     url = "mirror://debian/pool/main/a/apt/apt_${version}.tar.xz";
-    sha256 = "7ae8ebc1e371d10c4bfe1b0009cbdb6d22944963a616ae6407c74d122234fa58";
+    sha256 = "7d9a4daf7a4ae87de7ff4b1423e951ce66fe0535944f0774c8890d8f2a23e920";
   };
 
   nativeBuildInputs = [
@@ -36,6 +38,7 @@ stdenv.mkDerivation {
     gettext
     libxslt
     ninja
+    perl
     po4a
   ];
 
@@ -44,24 +47,28 @@ stdenv.mkDerivation {
     curl
     db
     dpkg
-    googletest
+    gnutls
     lz4
+    systemd_lib
     xz
     zlib
   ];
 
-  preConfigure = ''
-    cmakeFlagsArray+=(
-      "-DCMAKE_INSTALL_LOCALSTATEDIR=$TMPDIR/var"
-    )
-  '';
-
   cmakeFlags = [
+    "-DCMAKE_INSTALL_SYSCONFDIR=/etc"
+    "-DCMAKE_INSTALL_LOCALSTATEDIR=/var"
     "-DROOT_GROUP=wheel"
     "-DWITH_DOC=OFF"
     "-DDOCBOOK_XSL=${docbook-xsl}/share/xml/docbook-xsl"
     "-DBERKELEY_DB_INCLUDE_DIRS=${db}/include"
   ];
+
+  preInstall = ''
+    sed \
+      -e "s,{DESTDIR}/etc,$out/etc,g" \
+      -e "s,{DESTDIR}/var,$TMPDIR/var,g" \
+      -i cmake_install.cmake
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

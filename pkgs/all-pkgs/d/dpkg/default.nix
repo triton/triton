@@ -12,14 +12,14 @@
 }:
 
 let
-  version = "1.18.16";
+  version = "1.18.24";
 in
 stdenv.mkDerivation {
   name = "dpkg-${version}";
 
   src = fetchurl {
     url = "mirror://debian/pool/main/d/dpkg/dpkg_${version}.tar.xz";
-    sha256 = "4b147ccf8753e02e2bb598263b4a0ec51418d3c30da08776bad32059a7741388";
+    sha256 = "d853081d3e06bfd46a227056e591f094e42e78fa8a5793b0093bad30b710d7b4";
   };
 
   nativeBuildInputs = [
@@ -58,6 +58,9 @@ stdenv.mkDerivation {
         --prefix PATH : "$out/bin" \
         --prefix PERL5LIB : "$out/${perl.libPrefix}"
     done
+
+    grep -q "$TMPDIR" "$out/${perl.libPrefix}"/Dpkg.pm
+    sed -i "s,$TMPDIR,,g" "$out/${perl.libPrefix}"/Dpkg.pm
   '';
 
   meta = with lib; {

@@ -10,17 +10,17 @@
 }:
 
 let
-  version = "1.0.41";
+  version = "1.2.13";
 in
 stdenv.mkDerivation {
   name = "aws-sdk-cpp-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "aws";
     repo = "aws-sdk-cpp";
     rev = version;
-    sha256 = "a55f922a9128d184bfd2350821838027b1423d86b8e860d0ae67a495f98cab11";
+    sha256 = "689bea30403f5cdab16ef3149dba35d9d057745d14f18383c587cacebcf1c215";
   };
 
   nativeBuildInputs = [

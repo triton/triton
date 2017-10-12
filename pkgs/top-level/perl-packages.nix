@@ -7178,11 +7178,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  MIMECharset = buildPerlPackage {
-    name = "MIME-Charset-1.011.1";
+  MIMECharset = buildPerlPackage rec {
+    name = "MIME-Charset-1.012.2";
     src = fetchurl {
-      url = mirror://cpan/authors/id/N/NE/NEZUMI/MIME-Charset-1.011.1.tar.gz;
-      sha256 = "2955a3b617fe12654efc2a13ae1dc7d32aad81d35cfae21f74337213cf2435d5";
+      url = "mirror://cpan/authors/id/N/NE/NEZUMI/${name}.tar.gz";
+      sha256 = "878c779c0256c591666bd06c0cde4c0d7820eeeb98fd1183082aee9a1e7b1d13";
     };
     meta = {
       description = "Charset Information for MIME";
@@ -7255,10 +7255,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   ModuleBuild = buildPerlPackage rec {
-    name = "Module-Build-0.4220";
+    name = "Module-Build-0.4224";
     src = fetchurl {
       url = "mirror://cpan/authors/id/L/LE/LEONT/${name}.tar.gz";
-      sha256 = "fb1207c7e799366f7a8adda3f135bf8141c4d6068505650d4db2b2d3ce34b5a2";
+      sha256 = "a6ca15d78244a7b50fdbf27f85c85f4035aa799ce7dd018a0d98b358ef7bc782";
     };
     buildInputs = [ CPANMeta ExtUtilsCBuilder ];
     meta = {
@@ -12866,10 +12866,10 @@ let self = _self // overrides; _self = with self; {
   # };
 
   UnicodeLineBreak = buildPerlPackage rec {
-    name = "Unicode-LineBreak-2015.12";
+    name = "Unicode-LineBreak-2017.004";
     src = fetchurl {
       url = "mirror://cpan/authors/id/N/NE/NEZUMI/${name}.tar.gz";
-      sha256 = "9509114ee76ecd6e2990d9ad7f260a81292804de54acd1c852d7e57812b316b4";
+      sha256 = "655bc3c4cb60ad0770d97816716cfe322f24e602c70e595f5941dfa02c40cb76";
     };
     propagatedBuildInputs = [ MIMECharset ];
     meta = {

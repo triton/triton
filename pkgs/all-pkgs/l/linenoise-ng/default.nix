@@ -4,15 +4,19 @@
 , ninja
 }:
 
+let
+  date = "2017-06-28";
+  rev = "4754bee2d8eb3c4511e6ac87cac62255b2011e2f";
+in
 stdenv.mkDerivation {
-  name = "linenoise-2016-03-23";
+  name = "linenoise-ng-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "arangodb";
     repo = "linenoise-ng";
-    rev = "df1cfb41e3de9d2e716016d0571338ceed62290f";
-    sha256 = "4bb3a462b080dd2ddaec71dae86353875c7413c16626266fc8a6eb39264a8dec";
+    inherit rev;
+    sha256 = "d07d9d44c22bf6ea80fa2145214ed1f319a058628a92537aabb38f95dd28f6eb";
   };
 
   nativeBuildInputs = [

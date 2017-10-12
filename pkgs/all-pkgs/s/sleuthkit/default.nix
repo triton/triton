@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sleuthkit-4.4.1";
+  name = "sleuthkit-4.4.2";
 
   src = fetchurl {
     url = "https://github.com/sleuthkit/sleuthkit/releases/download/"
       + "${name}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d90eed4064be64f156fa36a17c724bea9e76d3f4993eb092e977fb394b90130c";
+    sha256 = "135964463f4b0a58fcd95fdf731881fcd6f2f227eeb8ffac004880c8e4d8dd53";
   };
 
   buildInputs = [

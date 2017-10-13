@@ -5,7 +5,6 @@
 with lib;
 
 let
-
   cfg = config.services.dbus;
 
   homeDir = "/var/run/dbus";
@@ -39,7 +38,6 @@ let
         > "$out/session-local.conf"
     '';
   };
-
 in
 
 {
@@ -81,12 +79,19 @@ in
 
   config = mkIf cfg.enable {
 
-    environment.systemPackages = [ pkgs.dbus ];
+    environment.etc = singleton {
+      source = configDir;
+      target = "dbus-1";
+    };
 
-    environment.etc = singleton
-      { source = configDir;
-        target = "dbus-1";
-      };
+    environment.pathsToLink = [
+      "/etc/dbus-1"
+      "/share/dbus-1"
+    ];
+
+    environment.systemPackages = [
+      pkgs.dbus
+    ];
 
     users.extraUsers.messagebus = {
       uid = config.ids.uids.messagebus;
@@ -99,15 +104,15 @@ in
 
     systemd.packages = [ pkgs.dbus ];
 
-    security.setuidOwners = singleton
-      { program = "dbus-daemon-launch-helper";
-        source = "${pkgs.dbus}/libexec/dbus-daemon-launch-helper";
-        owner = "root";
-        group = "messagebus";
-        setuid = true;
-        setgid = false;
-        permissions = "u+rx,g+rx,o-rx";
-      };
+    security.setuidOwners = singleton {
+      program = "dbus-daemon-launch-helper";
+      source = "${pkgs.dbus}/libexec/dbus-daemon-launch-helper";
+      owner = "root";
+      group = "messagebus";
+      setuid = true;
+      setgid = false;
+      permissions = "u+rx,g+rx,o-rx";
+    };
 
     services.dbus.packages = [
       pkgs.dbus
@@ -142,9 +147,5 @@ in
         wantedBy = [ "sockets.target" ];
       };
     };
-
-    environment.pathsToLink = [ "/etc/dbus-1" "/share/dbus-1" ];
-
   };
-
 }

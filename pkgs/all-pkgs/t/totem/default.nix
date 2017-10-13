@@ -139,7 +139,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/totem \
-      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GRL_PLUGIN_PATH' : "$GRL_PLUGIN_PATH" \

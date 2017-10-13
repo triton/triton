@@ -2122,6 +2122,8 @@ libdbi = callPackage ../all-pkgs/l/libdbi { };
 
 libdc1394 = callPackage ../all-pkgs/l/libdc1394 { };
 
+libdmx = callPackage ../all-pkgs/l/libdmx { };
+
 libdrm = callPackage ../all-pkgs/l/libdrm { };
 
 libdvdcss = callPackage ../all-pkgs/l/libdvdcss { };
@@ -3849,6 +3851,7 @@ xorg = recurseIntoAttrs (
       glproto
       inputproto
       kbproto
+      libdmx
       libfontenc
       libice
       libpthread-stubs

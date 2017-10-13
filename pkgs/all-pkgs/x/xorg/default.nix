@@ -17,6 +17,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , glproto
 , inputproto
 , kbproto
+, libdmx
 , libfontenc
 , libice
 , libpthread-stubs
@@ -98,6 +99,7 @@ let
       glproto
       inputproto
       kbproto
+      libdmx
       libfontenc
       libxcb
       presentproto
@@ -876,17 +878,6 @@ let
     buildInputs = [ libX11 libXext xextproto xf86vidmodeproto xproto ];
 
   }) // {inherit libX11 libXext xextproto xf86vidmodeproto xproto ;};
-
-  libdmx = (mkDerivation "libdmx" {
-    name = "libdmx-1.1.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libdmx-1.1.3.tar.bz2;
-      sha256 = "00djlxas38kbsrglcmwmxfbmxjdchlbj95pqwjvdg8jn5rns6zf9";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ dmxproto libX11 libXext xextproto ];
-
-  }) // {inherit dmxproto libX11 libXext xextproto ;};
 
   libpciaccess = (mkDerivation "libpciaccess" {
     name = "libpciaccess-0.13.5";

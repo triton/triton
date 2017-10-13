@@ -25,8 +25,8 @@ let
       sha256 = "02945ea68da447102f3e6c2b896c1d2061fd115de99404facc2aca3ad7010d71";
     };
     "2" = {
-      version = "2.0.1";
-      sha256 = "e9fbbb475ddd171b3a6a54b989cbade1f6f874fc35d505ebc5be426bc6e4db7e";
+      version = "2.0.2";
+      sha256 = "94088d3b87f7d42c7116d9adaad155859e93330c6e47f5989f2de600b9a6c111";
     };
   };
 
@@ -84,6 +84,7 @@ stdenv.mkDerivation rec {
       pgpKeyFingerprints = [
         # Adam Jackson
         "DD38 563A 8A82 2453 7D1F  90E4 5B8A 2D50 A0EC D0D3"
+        "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
         # Keith Packard
         "C383 B778 2556 13DF DB40  9D91 DB22 1A69 0000 0011"
       ];

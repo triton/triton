@@ -24,6 +24,8 @@ let
     boolWt
     optionals;
 
+  loadersCachePath = "lib/gdk-pixbuf-2.0/2.10.0/loaders.cache";
+
   sources = {
     "2.36" = {
       version = "2.36.11";
@@ -59,6 +61,8 @@ stdenv.mkDerivation rec {
     shared-mime-info
   ];
 
+  inherit loadersCachePath;
+
   postPatch = ''
     sed -i build-aux/gen-installed-test.py \
       -i build-aux/gen-resources.py \
@@ -87,6 +91,8 @@ stdenv.mkDerivation rec {
   doCheck = false;
 
   passthru = {
+    inherit loadersCachePath;
+
     inherit (source) version;
 
     srcVerification = fetchurl {

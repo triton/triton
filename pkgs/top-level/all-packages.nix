@@ -2555,6 +2555,8 @@ libxrandr = callPackage ../all-pkgs/l/libxrandr { };
 
 libxrender = callPackage ../all-pkgs/l/libxrender { };
 
+libxres = callPackage ../all-pkgs/l/libxres { };
+
 libxscrnsaver = callPackage ../all-pkgs/l/libxscrnsaver { };
 
 libxslt = callPackage ../all-pkgs/l/libxslt { };
@@ -3867,6 +3869,7 @@ xorg = recurseIntoAttrs (
       libxinerama
       libxrandr
       libxrender
+      libxres
       libxscrnsaver
       libxt
       presentproto

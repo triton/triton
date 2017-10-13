@@ -64,6 +64,11 @@ stdenv.mkDerivation rec {
       -e "/\(pkgconfig\|GDK_PIXBUF\)/! s,[^IL]${gdk-pixbuf_unwrapped},$out,g"
   '';
 
+  # Prevent the gdk-pixbuf setup-hook from returning the wrong loaders.cache.
+  preFixup = ''
+    rm -v $out/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+  '';
+
   buildDirCheck = false;  # FIXME
 
   passthru = {

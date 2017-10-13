@@ -17,9 +17,9 @@
 let
   sources = {
     "0.15" = {
-      version = "0.15.35";
-      sha256_alpha = "7b8b0b173b34eac9e54e84de2fe03c0114796046088a287343853a15b5802ecb";
-      sha256_headless = "33f674097b3fc92a7d6bdda50aa036f847fc2338564e4c32555adbf8f9040995";
+      version = "0.15.36";
+      sha256_alpha = "9fc0fa814c127e2668653a333e38149d667d15f259eaa582fe2605524b9cff02";
+      sha256_headless = "a74d9155e826ce7518893cff9df760375b73a073a1c5ee27324cb2753672a599";
     };
   };
   source = sources."${channel}";

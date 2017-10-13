@@ -7,7 +7,7 @@
 }:
 
 let
-  name = "ccid-1.4.27";
+  name = "ccid-1.4.28";
 
   tarballUrls = id: [
     "https://alioth.debian.org/frs/download.php/file/${id}/${name}.tar.bz2"
@@ -17,10 +17,10 @@ stdenv.mkDerivation rec {
   inherit name;
 
   src = fetchurl {
-    urls = tarballUrls "4218";
+    urls = tarballUrls "4230";
     hashOutput = false;
-    multihash = "QmVhzTQMANuMwnCjkn3uwm4G5TQEGwAAFPyRfKHf8XQqWh";
-    sha256 = "a660e269606986cb94840ad5ba802ffb0cd23dd12b98f69a35035e0deb9dd137";
+    multihash = "QmYD2PrFU8SGtKTffruUfB8jEdRrg8SrAeRmTSuog1Rj2U";
+    sha256 = "875836ac5d9d952b40dc1a253a726e74361671864d81337285a3260268f8ade0";
   };
 
   nativeBuildInputs = [
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4219");
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4231");
       pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
       inherit (src) urls outputHashAlgo outputHash;
     };

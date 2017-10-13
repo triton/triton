@@ -2565,6 +2565,8 @@ libxslt = callPackage ../all-pkgs/l/libxslt { };
 
 libxt = callPackage ../all-pkgs/l/libxt { };
 
+libxtst = callPackage ../all-pkgs/l/libxtst { };
+
 libxv = callPackage ../all-pkgs/l/libxv { };
 
 libyaml = callPackage ../all-pkgs/l/libyaml { };
@@ -3877,6 +3879,7 @@ xorg = recurseIntoAttrs (
       libxres
       libxscrnsaver
       libxt
+      libxtst
       libxv
       presentproto
       printproto

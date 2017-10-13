@@ -41,6 +41,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxres
 , libxscrnsaver
 , libxt
+, libxtst
 , libxv
 , presentproto
 , printproto
@@ -147,6 +148,7 @@ let
     libXres = libxres;
     libXScrnSaver = libxscrnsaver;
     libXt = libxt;
+    libXtst = libxtst;
     libXv = libxv;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
@@ -814,17 +816,6 @@ let
     buildInputs = [ printproto libX11 libXau libXp libXt ];
 
   }) // {inherit printproto libX11 libXau libXp libXt ;};
-
-  libXtst = (mkDerivation "libXtst" {
-    name = "libXtst-1.2.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXtst-1.2.3.tar.bz2;
-      sha256 = "012jpyj7xfm653a9jcfqbzxyywdmwb2b5wr1dwylx14f3f54jma6";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ inputproto recordproto libX11 libXext xextproto libXi ];
-
-  }) // {inherit inputproto recordproto libX11 libXext xextproto libXi ;};
 
   libXvMC = (mkDerivation "libXvMC" {
     name = "libXvMC-1.0.10";

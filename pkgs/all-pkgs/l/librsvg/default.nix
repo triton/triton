@@ -19,6 +19,8 @@ let
   inherit (lib)
     boolEn;
 
+  loadersCachePath = "lib/gdk-pixbuf-2.0/2.10.0";
+
   versionMajor = "2.40";
   versionMinor = "19";
   version = "${versionMajor}.${versionMinor}";
@@ -64,14 +66,16 @@ stdenv.mkDerivation rec {
       -e "/\(pkgconfig\|GDK_PIXBUF\)/! s,[^IL]${gdk-pixbuf_unwrapped},$out,g"
   '';
 
-  # Prevent the gdk-pixbuf setup-hook from returning the wrong loaders.cache.
+  # We generate loaders.cache in gdk-pixbuf so this is redundant.
   preFixup = ''
-    rm -v $out/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    rm -v $out/${loadersCachePath}/loaders.cache
   '';
 
   buildDirCheck = false;  # FIXME
 
   passthru = {
+    inherit loadersCachePath;
+
     srcVerification = fetchurl {
       failEarly = true;
       sha256Url = "https://download.gnome.org/sources/librsvg/${versionMajor}/"

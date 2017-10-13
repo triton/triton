@@ -1,10 +1,12 @@
 { stdenv
+, lib
+
 , gdk-pixbuf_unwrapped
 , librsvg
 }:
 
 # This is a meta package for all gdk-pixbuf loaders, see
-# gdk-pixbuf-core for the main gdk-pixbuf package.
+# gdk-pixbuf_unwrapped for the actual gdk-pixbuf package.
 
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf_wrapped-${gdk-pixbuf_unwrapped.version}";
@@ -18,6 +20,8 @@ stdenv.mkDerivation rec {
     librsvg
   ];
 
+  loadersCache = gdk-pixbuf_unwrapped.loadersCache;
+
   configurePhase = ":";
 
   buildPhase = ''
@@ -25,18 +29,22 @@ stdenv.mkDerivation rec {
 
     echo "Generating loaders.cache"
     gdk-pixbuf-query-loaders --update-cache \
-      ${gdk-pixbuf_unwrapped}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so \
-      ${librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so
+      ${gdk-pixbuf_unwrapped}/${gdk-pixbuf_unwrapped.loadersCachePath}/loaders/*.so \
+      ${librsvg}/${librsvg.loadersCachePath}/loaders/*.so
   '';
 
   installPhase = ''
     install -vD -m 644 loaders.cache \
-      $out/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+      $out/${gdk-pixbuf_unwrapped.loadersCache}
   '';
 
   dontStrip = true;
 
-  meta = with stdenv.lib; {
+  passthru = {
+    loadersCachePath = gdk-pixbuf_unwrapped.loadersCachePath;
+  };
+
+  meta = with lib; {
     description = "A library for image loading and manipulation";
     homepage = http://library.gnome.org/devel/gdk-pixbuf/;
     maintainers = with maintainers; [

@@ -1,5 +1,5 @@
 findGdkPixbufLoaders() {
-  export GDK_PIXBUF_MODULE_FILE="@out@/$loadersCachePath"
+  export GDK_PIXBUF_MODULE_FILE="@out@/@loadersCache@"
 }
 
 envHooks+=('findGdkPixbufLoaders')

@@ -57,16 +57,11 @@ stdenv.mkDerivation rec {
     "--disable-vala"
   ];
 
-  # It wants to add loaders and update the loaders.cache in gdk-pixbuf
-  # Patching the Makefiles so it creates rsvg specific loaders and the
-  # relevant loader.cache here.
+  # Librsvg updates gdk-pixbuf's loader cache by default, this forces the
+  # loaders.cache to be generated into the correct prefix.
   postConfigure = ''
-    GDK_PIXBUF=$out/lib/gdk-pixbuf-2.0/2.10.0
-    mkdir -p $GDK_PIXBUF/loaders
     sed -i gdk-pixbuf-loader/Makefile \
-      -e "s#gdk_pixbuf_moduledir = .*#gdk_pixbuf_moduledir = $GDK_PIXBUF/loaders#" \
-      -e "s#gdk_pixbuf_cache_file = .*#gdk_pixbuf_cache_file = $GDK_PIXBUF/loaders.cache#" \
-      -e "s#\$(GDK_PIXBUF_QUERYLOADERS)#GDK_PIXBUF_MODULEDIR=$GDK_PIXBUF/loaders \$(GDK_PIXBUF_QUERYLOADERS)#"
+      -e "/\(pkgconfig\|GDK_PIXBUF\)/! s,[^IL]${gdk-pixbuf_unwrapped},$out,g"
   '';
 
   buildDirCheck = false;  # FIXME

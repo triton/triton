@@ -36,6 +36,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxft
 , libxi
 , libxinerama
+, libxkbfile
 , libxrandr
 , libxrender
 , libxres
@@ -104,6 +105,7 @@ let
       libdmx
       libfontenc
       libxcb
+      libxkbfile
       presentproto
       printproto
       randrproto
@@ -871,17 +873,6 @@ let
     buildInputs = [ zlib ];
 
   }) // {inherit zlib ;};
-
-  libxkbfile = (mkDerivation "libxkbfile" {
-    name = "libxkbfile-1.0.9";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libxkbfile-1.0.9.tar.bz2;
-      sha256 = "0smimr14zvail7ar68n7spvpblpdnih3jxrva7cpa6cn602px0ai";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ kbproto libX11 ];
-
-  }) // {inherit kbproto libX11 ;};
 
   libxshmfence = (mkDerivation "libxshmfence" {
     name = "libxshmfence-1.2";

@@ -2549,6 +2549,8 @@ libxinerama = callPackage ../all-pkgs/l/libxinerama { };
 
 libxkbcommon = callPackage ../all-pkgs/l/libxkbcommon { };
 
+libxkbfile = callPackage ../all-pkgs/l/libxkbfile { };
+
 libxklavier = callPackage ../all-pkgs/l/libxklavier { };
 
 libxml2 = callPackage ../all-pkgs/l/libxml2 { };
@@ -3874,6 +3876,7 @@ xorg = recurseIntoAttrs (
       libxft
       libxi
       libxinerama
+      libxkbfile
       libxrandr
       libxrender
       libxres

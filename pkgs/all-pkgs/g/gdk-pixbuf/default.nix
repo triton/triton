@@ -41,7 +41,9 @@ stdenv.mkDerivation rec {
   dontStrip = true;
 
   passthru = {
-    loadersCachePath = gdk-pixbuf_unwrapped.loadersCachePath;
+    inherit (gdk-pixbuf_unwrapped)
+      loadersCache
+      loadersCachePath;
   };
 
   meta = with lib; {

@@ -2,6 +2,7 @@
 , fetchurl
 , intltool
 , itstool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -11,7 +12,9 @@
 , gsettings-desktop-schemas
 , gtk
 , libcanberra
-, xorg
+, libx11
+, libxext
+, shared-mime-info
 
 , channel
 }:
@@ -43,8 +46,8 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     libcanberra
-    xorg.libX11
-    xorg.libXext
+    libx11
+    libxext
   ];
 
   configureFlags = [
@@ -59,6 +62,7 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
@@ -76,7 +80,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Utility used in the GNOME desktop environment for screenshots";
     homepage = http://en.wikipedia.org/wiki/GNOME_Screenshot;
     license = licenses.gpl2;

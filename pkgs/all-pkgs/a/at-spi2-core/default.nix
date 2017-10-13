@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [
     #"-Ddbus_services_dir"
-    "-Ddbus_daemon=/run/current-system/sw/bin/"
+    "-Ddbus_daemon=/run/current-system/sw/bin/dbus-daemon"
     #"-Dsystemd_user_dir"
     "-Denable_docs=false"
     "-Denable-introspection=yes"

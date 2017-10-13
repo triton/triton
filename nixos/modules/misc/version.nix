@@ -62,7 +62,7 @@ in
     nixosRelease = mkOption {
       readOnly = true;
       type = types.str;
-      default = readFile releaseFile;
+      default = removeSuffix "\n" (builtins.readFile releaseFile);
       description = "NixOS release.";
     };
 

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
@@ -20,7 +21,7 @@ stdenv.mkDerivation rec {
     makeFlags+=("DESTDIR=$out")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Utility for RAR archives";
     homepage = http://www.rarlab.com/;
     license = licenses.unfreeRedistributable; # unRAR

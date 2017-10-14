@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "qemu-2.8.0";
+  name = "qemu-2.10.1";
 
   src = fetchurl {
     url = "http://wiki.qemu-project.org/download/${name}.tar.bz2";
-    multihash = "QmRvELhGfxezAs6tKsGoG8xe38rY8FMDqsqNxHdAQLb8dX";
+    multihash = "QmNjp2xNu4xU6jJZ9DpknWENsbzZPrxWHHVG3HZcKxi5Y9";
     hashOutput = false;
-    sha256 = "dafd5d7f649907b6b617b822692f4c82e60cf29bc0fc58bc2036219b591e5e62";
+    sha256 = "8e040bc7556401ebb3a347a8f7878e9d4028cf71b2744b1a1699f4e741966ba8";
   };
 
   nativeBuildInputs = [
@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--help"
     "--enable-modules"
   ];
 

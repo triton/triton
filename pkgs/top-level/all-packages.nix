@@ -3348,7 +3348,9 @@ SDL_2_image = callPackage ../all-pkgs/s/SDL_image {
 
 sdparm = callPackage ../all-pkgs/s/sdparm { };
 
-seabios = callPackage ../all-pkgs/s/seabios { };
+seabios_qemu = callPackage ../all-pkgs/s/seabios {
+  type = "qemu";
+};
 
 seahorse = callPackage ../all-pkgs/s/seahorse { };
 

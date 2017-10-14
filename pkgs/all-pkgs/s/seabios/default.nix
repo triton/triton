@@ -2,7 +2,11 @@
 , fetchurl
 , iasl
 , python
+
+, type
 }:
+
+assert type == "qemu";
 
 stdenv.mkDerivation rec {
   name = "seabios-1.10.2";
@@ -19,10 +23,10 @@ stdenv.mkDerivation rec {
   ];
 
   configurePhase = ''
-    # build SeaBIOS for CSM
     cat > .config << EOF
-    CONFIG_CSM=y
-    CONFIG_QEMU_HARDWARE=y
+    CONFIG_QEMU=y
+    CONFIG_VGA_CIRRUS=y
+    CONFIG_DEBUG_LEVEL=0
     EOF
 
     make olddefconfig
@@ -31,7 +35,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/share/seabios
-    cp out/Csm16.bin $out/share/seabios/Csm16.bin
+    cp out/bios.bin $out/share/seabios
   '';
 
   # We don't need any security / optimization features for a bios image

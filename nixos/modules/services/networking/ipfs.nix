@@ -154,6 +154,7 @@ in
         LimitNOFILE = "infinity";
         PermissionsStartOnly = true;
         UMask = "0027";
+        Restart = "on-failure";
         RestartPreventExitStatus = "6";
       };
     };

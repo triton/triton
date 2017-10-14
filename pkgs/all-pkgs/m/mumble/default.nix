@@ -1,6 +1,7 @@
 { stdenv
 , fetchgit
 , fetchurl
+, lib
 , python2
 , which
 
@@ -23,7 +24,6 @@
 , portaudio
 , protobuf-cpp
 , pulseaudio_lib
-, qt4
 , qt5
 , speech-dispatcher
 , speex
@@ -48,37 +48,35 @@ assert (config == "mumble" || config == "murmur");
 assert (releaseType == "release" || releaseType == "debug");
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolNo
-    optional
     optionals
     optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "git" = {
+      fetchzipversion = 3;
+      version = "2017-08-23";
+      rev = "f2cbebdce87ac68929effb18e2ced7bbc58f89f9";
+      sha256 = "93c28e806e1a6b573612ed47f4790e98719bbe83a135446ea8a88a568e54b2b1";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "${config}-${source.version}";
 
-  src =
-    if channel == "git" then
-      fetchgit {
-        version = source.fetchzipversion;
-        url = "https://github.com/mumble-voip/mumble";
-        inherit (source)
-          rev
-          sha256;
-      }
-    else
-      fetchurl {
-        url = "https://github.com/mumble-voip/mumble/releases/download/"
-          + "${source.version}/mumble-${source.version}.tar.gz";
-        inherit (source) sha256;
-      };
+  src = fetchgit {
+    version = source.fetchzipversion;
+    url = "https://github.com/mumble-voip/mumble";
+    inherit (source)
+      rev
+      sha256;
+  };
 
   nativeBuildInputs = [
     python2
   ] ++ optionals (config == "mumble") [
-    qt4
     qt5
   ] ++ optionals (config == "murmur") [
     which
@@ -89,7 +87,6 @@ stdenv.mkDerivation rec {
     boost
     openssl_1-0-2
     protobuf-cpp
-    qt4
     qt5
   ] ++ optionals (config == "mumble") [
     alsa-lib
@@ -118,13 +115,10 @@ stdenv.mkDerivation rec {
     ./mumble-jack-support.patch
   ];
 
-  postPatch = optionalString (config == "mumble") (
-    ''
-      export MUMBLE_PYTHON="${python2}/bin/python"
-    '' + optionalString (channel != "1.2") ''
-      patchShebangs ./scripts/rcc-depends.py
-    ''
-  );
+  postPatch = optionalString (config == "mumble") ''
+    export MUMBLE_PYTHON="${python2}/bin/python"
+    patchShebangs ./scripts/rcc-depends.py
+  '';
 
   configureFlags = [
     "${releaseType}"
@@ -158,7 +152,7 @@ stdenv.mkDerivation rec {
     "no-bundled-opus"
     "vorbis-recording"
     "${boolNo mumbleOverlay}overlay"
-    "${boolNo (qt5 == null)}qt4-legacy-compat"
+    "no-qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
     "no-ice"
     "${boolNo (grpc != null)}grpc"
@@ -167,7 +161,7 @@ stdenv.mkDerivation rec {
 
   configurePhase = ''
     echo "configureFlags: $configureFlags"
-    export QT_SELECT=${if (qt5 != null) then "qt5" else "qt4"}
+    export QT_SELECT=qt5
     qmake ./main.pro \
       -recursive \
       "CONFIG += $configureFlags" \
@@ -202,7 +196,7 @@ stdenv.mkDerivation rec {
     ''
   );
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Low-latency, high quality voice chat software";
     homepage = http://mumble.sourceforge.net/;
     license = licenses.bsd3;

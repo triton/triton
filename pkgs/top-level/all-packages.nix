@@ -2759,31 +2759,19 @@ mumble_generics = overrides: callPackage ../all-pkgs/m/mumble ({
   pulseaudio_lib = null;
   speech-dispatcher = null;
 } // overrides);
-mumble_1-2 = pkgs.mumble_generics {
-  channel = "1.2";
-  config = "mumble";
-  qt5 = null;
-};
 mumble_git = pkgs.mumble_generics {
   channel = "git";
   config = "mumble";
-  qt4 = null;
 };
-mumble = callPackageAlias "mumble_1-2" { };
+mumble = callPackageAlias "mumble_git" { };
 
 mupdf = callPackage ../all-pkgs/m/mupdf { };
 
-murmur_1-2 = pkgs.mumble_generics {
-  channel = "1.2";
-  config = "murmur";
-  qt5 = null;
-};
 murmur_git = pkgs.mumble_generics {
   channel = "git";
   config = "murmur";
-  qt4 = null;
 };
-murmur = callPackageAlias "murmur_1-2" { };
+murmur = callPackageAlias "murmur_git" { };
 
 musepack = callPackage ../all-pkgs/m/musepack { };
 

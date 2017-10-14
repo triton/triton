@@ -67,7 +67,12 @@ in {
         # Looks weird? Of course, it's between single quoted shell strings.
         # NOTE: Order DOES matter here, so single character quotes need to be
         #       at the last position.
-        quoteVariants = [ "'\"'''\"'" "\"\"\"" "\"" "'\"'\"'" ];
+        quoteVariants = [
+          "'\"'''\"'"
+          "\"\"\""
+          "\""
+          "'\"'\"'"
+        ];
 
         mkStringSkipper =
           labelNum: quote:

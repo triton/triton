@@ -4345,8 +4345,6 @@ libstartup_notification =
     overrides = (config.perlPackageOverrides or (p: {})) pkgs;
   });
 #
-  pyxml = callPackage ../development/python-modules/pyxml { };
-#
   apache-httpd = callPackage ../all-pkgs/a/apache-httpd  { };
 
   apacheHttpdPackagesFor = apacheHttpd: self:

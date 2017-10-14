@@ -446,11 +446,13 @@ python-tvrage = callPackage ../all-pkgs/p/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/p/pytz { };
 
-pywbem = callPackage ../all-pkgs/p/pywbem { };
-
 pyudev = callPackage ../all-pkgs/p/pyudev { };
 
 pyutil = callPackage ../all-pkgs/p/pyutil { };
+
+pywbem = callPackage ../all-pkgs/p/pywbem { };
+
+pyxml = callPackage ../all-pkgs/p/pyxml { };
 
 pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 

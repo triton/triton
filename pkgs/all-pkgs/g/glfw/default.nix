@@ -1,11 +1,20 @@
 { stdenv
 , cmake
 , fetchurl
+, lib
 , ninja
 , unzip
 
-, mesa
-, xorg
+, kbproto
+, libx11
+, libxcursor
+, libxinerama
+, libxrandr
+, libxrender
+, opengl-dummy
+, randrproto
+, renderproto
+, xproto
 }:
 
 let
@@ -27,23 +36,23 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    mesa
-    xorg.kbproto
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.randrproto
-    xorg.renderproto
-    xorg.xproto
+    kbproto
+    libx11
+    libxcursor
+    libxinerama
+    libxrandr
+    libxrender
+    opengl-dummy
+    randrproto
+    renderproto
+    xproto
   ];
 
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=ON"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for creating OpenGL contexts and managing input";
     homepage = "http://www.glfw.org/";
     license = licenses.zlib;

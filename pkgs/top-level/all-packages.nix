@@ -3225,9 +3225,7 @@ qpdf = callPackage ../all-pkgs/q/qpdf { };
 
 qrencode = callPackage ../all-pkgs/q/qrencode { };
 
-qt4 = callPackage ../all-pkgs/q/qt/4.x.nix { };
-
-qt5 = callPackage ../all-pkgs/q/qt/5.x.nix { };
+qt5 = callPackage ../all-pkgs/q/qt { };
 
 quassel = callPackage ../all-pkgs/q/quassel rec {
   monolithic = true;

@@ -890,7 +890,6 @@ export NIX_INDENT_MAKE=1
 # Normalize the NIX_BUILD_CORES variable. The value might be 0, which
 # means that we're supposed to try and auto-detect the number of
 # available CPU cores at run-time.
-
 if [ -z "${NIX_BUILD_CORES//[^0-9]/}" ]; then
   NIX_BUILD_CORES='1'
 elif [ "$NIX_BUILD_CORES" -le 0 ]; then

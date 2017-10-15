@@ -1,21 +1,9 @@
 set -e
 set -o pipefail
 
-: ${outputs:=out}
+trap "exitHandler" EXIT
 
-# Array handling, we need to turn some variables into arrays
-prePhases=($prePhases)
-preConfigurePhases=($preConfigurePhases)
-preBuildPhases=($preBuildPhases)
-preInstallPhases=($preInstallPhases)
-preFixupPhases=($preFixupPhases)
-preDistPhases=($preDistPhases)
-postPhases=($postPhases)
-
-
-################################################################################
-# Hook handling.
-
+################################ Hook handling #################################
 
 # Run all hooks with the specified name in the order in which they
 # were added, stopping if any fails (returns a non-zero exit
@@ -98,10 +86,7 @@ _eval() {
   fi
 }
 
-################################################################################
-# Logging.
-
-nestingLevel=0
+################################### Logging ####################################
 
 startNest() {
   nestingLevel=$(( $nestingLevel + 1 ))
@@ -126,8 +111,7 @@ closeNest() {
   done
 }
 
-################################################################################
-# Error handling.
+################################ Error handling ################################
 
 exitHandler() {
   exitCode=$?
@@ -166,10 +150,7 @@ exitHandler() {
   exit "$exitCode"
 }
 
-trap "exitHandler" EXIT
-
-################################################################################
-# Helper functions.
+############################### Helper functions ###############################
 
 addToSearchPathWithCustomDelimiter() {
   local delimiter="$1"
@@ -180,8 +161,6 @@ addToSearchPathWithCustomDelimiter() {
     eval export ${varName}=${!varName}${!varName:+$delimiter}${dir}
   fi
 }
-
-PATH_DELIMITER=':'
 
 addToSearchPath() {
   addToSearchPathWithCustomDelimiter "${PATH_DELIMITER}" "$@"
@@ -204,194 +183,7 @@ installBin() {
   cp "$@" "$out/bin"
 }
 
-################################################################################
-# Initialisation.
-
-# Set a fallback default value for SOURCE_DATE_EPOCH, used by some
-# build tools to provide a deterministic substitute for the "current"
-# time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it
-# confuses some applications.
-export SOURCE_DATE_EPOCH
-: ${SOURCE_DATE_EPOCH:=1}
-
-# Wildcard expansions that don't match should expand to an empty list.
-# This ensures that, for instance, "for i in *; do ...; done" does the
-# right thing.
-shopt -s nullglob
-
-# Set up the initial path.
-PATH=
-for i in $initialPath; do
-  if [ "$i" = / ]; then
-    i=
-  fi
-  addToSearchPath 'PATH' "$i/bin"
-  addToSearchPath 'PATH' "$i/sbin"
-done
-
-if [ "$NIX_DEBUG" = 1 ]; then
-  echo "initial path: $PATH"
-fi
-
-# Check that the pre-hook initialised SHELL.
-if [ -z "$SHELL" ]; then
-  echo "SHELL not set"
-  exit 1
-fi
-BASH="$SHELL"
-export CONFIG_SHELL="$SHELL"
-
-# Set the TZ (timezone) environment variable, otherwise commands like
-# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
-# be set--see zic manual page 2004').
-export TZ='UTC'
-
-# Before doing anything else, state the build time
-NIX_BUILD_START="$(date '+%s')"
-
-# Execute the pre-hook.
-if [ -z "$shell" ]; then
-  export shell=$SHELL
-fi
-runHook 'preHook'
-
-# Allow the caller to augment buildInputs (it's not always possible to
-# do this before the call to setup.sh, since the PATH is empty at that
-# point; here we have a basic Unix environment).
-runHook 'addInputsHook'
-
-# Recursively find all build inputs.
-findInputs() {
-  local pkg="$1"
-  local var="$2"
-  local propagatedBuildInputsFile="$3"
-
-  case ${!var} in
-    *\ $pkg\ *)
-      return 0
-      ;;
-  esac
-
-  eval $var="'${!var} $pkg '"
-
-  if ! [ -e "$pkg" ]; then
-    echo "build input $pkg does not exist" >&2
-    exit 1
-  fi
-
-  if [ -f "$pkg" ]; then
-    source "$pkg"
-  fi
-
-  if [ -f "$pkg/nix-support/setup-hook" ]; then
-    source "$pkg/nix-support/setup-hook"
-  fi
-
-  if [ -f "$pkg/nix-support/$propagatedBuildInputsFile" ]; then
-    for i in $(cat "$pkg/nix-support/$propagatedBuildInputsFile"); do
-      findInputs "$i" $var $propagatedBuildInputsFile
-    done
-  fi
-}
-
-crossPkgs=''
-for i in $buildInputs $defaultBuildInputs $propagatedBuildInputs; do
-  findInputs "$i" 'crossPkgs' 'propagated-build-inputs'
-done
-
-nativePkgs=''
-for i in $nativeBuildInputs $defaultNativeBuildInputs $propagatedNativeBuildInputs; do
-  findInputs "$i" 'nativePkgs' 'propagated-native-build-inputs'
-done
-
-# We want to allow builders to apply setup-hooks to themselves
-if [ "${selfApplySetupHook-0}" = "1" ]; then
-  source "$setupHook"
-fi
-
-# Set the relevant environment variables to point to the build inputs
-# found above.
-_addToNativeEnv() {
-  local pkg="$1"
-
-  addToSearchPath '_PATH' "$1/bin"
-
-  # Run the package-specific hooks set by the setup-hook scripts.
-  runHook 'envHook' "$pkg"
-}
-
-for i in $nativePkgs; do
-  _addToNativeEnv "$i"
-done
-
-_addToCrossEnv() {
-  local pkg="$1"
-
-  # Some programs put important build scripts (freetype-config and similar)
-  # into their crossDrv bin path. Intentionally these should go after
-  # the nativePkgs in PATH.
-  addToSearchPath '_PATH' "$1/bin"
-
-  # Run the package-specific hooks set by the setup-hook scripts.
-  runHook 'crossEnvHook' "$pkg"
-}
-
-for i in $crossPkgs; do
-  _addToCrossEnv "$i"
-done
-
-# Add the output as an rpath.
-if [ "$NIX_NO_SELF_RPATH" != 1 ]; then
-  export NIX_LDFLAGS="-rpath $out/lib $NIX_LDFLAGS"
-  if [ -n "$NIX_LIB64_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib64 $NIX_LDFLAGS"
-  fi
-  if [ -n "$NIX_LIB32_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib32 $NIX_LDFLAGS"
-  fi
-fi
-
-# Set the prefix.  This is generally $out, but it can be overriden,
-# for instance if we just want to perform a test build/install to a
-# temporary location and write a build report to $out.
-if [ -z "$prefix" ]; then
-  prefix="$out"
-fi
-
-if [ "$useTempPrefix" = 1 ]; then
-  prefix="$NIX_BUILD_TOP/tmp_prefix"
-fi
-
-PATH=$_PATH${_PATH:+:}$PATH
-if [ "$NIX_DEBUG" = 1 ]; then
-  echo "final path: $PATH"
-fi
-
-# Make GNU Make produce nested output.
-export NIX_INDENT_MAKE=1
-
-# Normalize the NIX_BUILD_CORES variable. The value might be 0, which
-# means that we're supposed to try and auto-detect the number of
-# available CPU cores at run-time.
-
-if [ -z "${NIX_BUILD_CORES//[^0-9]/}" ]; then
-  NIX_BUILD_CORES='1'
-elif [ "$NIX_BUILD_CORES" -le 0 ]; then
-  NIX_BUILD_CORES=$(nproc 2>/dev/null || true)
-  if expr >/dev/null 2>&1 "$NIX_BUILD_CORES" : "^[0-9][0-9]*$"; then
-    :
-  else
-    NIX_BUILD_CORES='1'
-  fi
-fi
-export NIX_BUILD_CORES
-
-# Dummy implementation of the paxmark function. On Linux, this is
-# overwritten by paxctl's setup hook.
-paxmark() { true; }
-
-################################################################################
-# Textual substitution functions.
+######################## Textual substitution functions ########################
 
 substitute() {
   local input="$1"
@@ -464,7 +256,69 @@ substituteAllInPlace() {
 }
 
 ################################################################################
-# What follows is the generic builder.
+
+# Recursively find all build inputs.
+findInputs() {
+  local pkg="$1"
+  local var="$2"
+  local propagatedBuildInputsFile="$3"
+
+  case ${!var} in
+    *\ $pkg\ *)
+      return 0
+      ;;
+  esac
+
+  eval $var="'${!var} $pkg '"
+
+  if ! [ -e "$pkg" ]; then
+    echo "build input $pkg does not exist" >&2
+    exit 1
+  fi
+
+  if [ -f "$pkg" ]; then
+    source "$pkg"
+  fi
+
+  if [ -f "$pkg/nix-support/setup-hook" ]; then
+    source "$pkg/nix-support/setup-hook"
+  fi
+
+  if [ -f "$pkg/nix-support/$propagatedBuildInputsFile" ]; then
+    for i in $(cat "$pkg/nix-support/$propagatedBuildInputsFile"); do
+      findInputs "$i" $var $propagatedBuildInputsFile
+    done
+  fi
+}
+
+# Set the relevant environment variables to point to the build inputs
+# found above.
+_addToNativeEnv() {
+  local pkg="$1"
+
+  addToSearchPath '_PATH' "$1/bin"
+
+  # Run the package-specific hooks set by the setup-hook scripts.
+  runHook 'envHook' "$pkg"
+}
+
+_addToCrossEnv() {
+  local pkg="$1"
+
+  # Some programs put important build scripts (freetype-config and similar)
+  # into their crossDrv bin path. Intentionally these should go after
+  # the nativePkgs in PATH.
+  addToSearchPath '_PATH' "$1/bin"
+
+  # Run the package-specific hooks set by the setup-hook scripts.
+  runHook 'crossEnvHook' "$pkg"
+}
+
+# Dummy implementation of the paxmark function. On Linux, this is
+# overwritten by paxctl's setup hook.
+paxmark() { true; }
+
+############################### Generic builder ################################
 
 # This function is useful for debugging broken Nix builds.  It dumps
 # all environment variables to a file `env-vars' in the build
@@ -486,7 +340,6 @@ stripHash() {
   fi
 }
 
-unpackCmdHooks+=('_defaultUnpack')
 _defaultUnpack() {
   local fn="$1"
 
@@ -907,6 +760,147 @@ genericBuild() {
     stopNest
   done
 }
+
+################################ Initialisation ################################
+
+: ${outputs:=out}
+
+# Array handling, we need to turn some variables into arrays
+prePhases=($prePhases)
+preConfigurePhases=($preConfigurePhases)
+preBuildPhases=($preBuildPhases)
+preInstallPhases=($preInstallPhases)
+preFixupPhases=($preFixupPhases)
+preDistPhases=($preDistPhases)
+postPhases=($postPhases)
+
+PATH_DELIMITER=':'
+
+nestingLevel=0
+
+# Set a fallback default value for SOURCE_DATE_EPOCH, used by some
+# build tools to provide a deterministic substitute for the "current"
+# time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it
+# confuses some applications.
+export SOURCE_DATE_EPOCH
+: ${SOURCE_DATE_EPOCH:=1}
+
+# Wildcard expansions that don't match should expand to an empty list.
+# This ensures that, for instance, "for i in *; do ...; done" does the
+# right thing.
+shopt -s nullglob
+
+# Set up the initial path.
+PATH=
+for i in $initialPath; do
+  if [ "$i" = / ]; then
+    i=
+  fi
+  addToSearchPath 'PATH' "$i/bin"
+  addToSearchPath 'PATH' "$i/sbin"
+done
+
+if [ "$NIX_DEBUG" = 1 ]; then
+  echo "initial path: $PATH"
+fi
+
+# Check that the pre-hook initialised SHELL.
+if [ -z "$SHELL" ]; then
+  echo "SHELL not set"
+  exit 1
+fi
+BASH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+
+# Set the TZ (timezone) environment variable, otherwise commands like
+# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
+# be set--see zic manual page 2004').
+export TZ='UTC'
+
+# Before doing anything else, state the build time
+NIX_BUILD_START="$(date '+%s')"
+
+# Execute the pre-hook.
+if [ -z "$shell" ]; then
+  export shell=$SHELL
+fi
+runHook 'preHook'
+
+# Allow the caller to augment buildInputs (it's not always possible to
+# do this before the call to setup.sh, since the PATH is empty at that
+# point; here we have a basic Unix environment).
+runHook 'addInputsHook'
+
+crossPkgs=''
+for i in $buildInputs $defaultBuildInputs $propagatedBuildInputs; do
+  findInputs "$i" 'crossPkgs' 'propagated-build-inputs'
+done
+
+nativePkgs=''
+for i in $nativeBuildInputs $defaultNativeBuildInputs $propagatedNativeBuildInputs; do
+  findInputs "$i" 'nativePkgs' 'propagated-native-build-inputs'
+done
+
+# We want to allow builders to apply setup-hooks to themselves
+if [ "${selfApplySetupHook-0}" = "1" ]; then
+  source "$setupHook"
+fi
+
+for i in $nativePkgs; do
+  _addToNativeEnv "$i"
+done
+
+for i in $crossPkgs; do
+  _addToCrossEnv "$i"
+done
+
+# Add the output as an rpath.
+if [ "$NIX_NO_SELF_RPATH" != 1 ]; then
+  export NIX_LDFLAGS="-rpath $out/lib $NIX_LDFLAGS"
+  if [ -n "$NIX_LIB64_IN_SELF_RPATH" ]; then
+    export NIX_LDFLAGS="-rpath $out/lib64 $NIX_LDFLAGS"
+  fi
+  if [ -n "$NIX_LIB32_IN_SELF_RPATH" ]; then
+    export NIX_LDFLAGS="-rpath $out/lib32 $NIX_LDFLAGS"
+  fi
+fi
+
+# Set the prefix.  This is generally $out, but it can be overriden,
+# for instance if we just want to perform a test build/install to a
+# temporary location and write a build report to $out.
+if [ -z "$prefix" ]; then
+  prefix="$out"
+fi
+
+if [ "$useTempPrefix" = 1 ]; then
+  prefix="$NIX_BUILD_TOP/tmp_prefix"
+fi
+
+PATH=$_PATH${_PATH:+:}$PATH
+if [ "$NIX_DEBUG" = 1 ]; then
+  echo "final path: $PATH"
+fi
+
+# Make GNU Make produce nested output.
+export NIX_INDENT_MAKE=1
+
+# Normalize the NIX_BUILD_CORES variable. The value might be 0, which
+# means that we're supposed to try and auto-detect the number of
+# available CPU cores at run-time.
+
+if [ -z "${NIX_BUILD_CORES//[^0-9]/}" ]; then
+  NIX_BUILD_CORES='1'
+elif [ "$NIX_BUILD_CORES" -le 0 ]; then
+  NIX_BUILD_CORES=$(nproc 2>/dev/null || true)
+  if expr >/dev/null 2>&1 "$NIX_BUILD_CORES" : "^[0-9][0-9]*$"; then
+    :
+  else
+    NIX_BUILD_CORES='1'
+  fi
+fi
+export NIX_BUILD_CORES
+
+unpackCmdHooks+=('_defaultUnpack')
 
 # Execute the post-hooks.
 runHook 'postHook'

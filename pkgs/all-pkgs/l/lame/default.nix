@@ -1,10 +1,10 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , lib
 , nasm
 
 , libsndfile
+, ncurses
 }:
 
 let
@@ -23,36 +23,24 @@ let
     else
       "lame";
 
-  channel = "3.99";
-  version = "${channel}.5";
+  channel = "3.100";
+  version = "${channel}";
 in
 stdenv.mkDerivation rec {
   name = "lame-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/lame/lame/${channel}/${name}.tar.gz";
-    sha256 = "24346b4158e4af3bd9f2e194bb23eb473c75fb7377011523353196b19b9a23ff";
+    sha256 = "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "b29eb4e2cc5185e9dd8bc670bc48797cf8dce10e";
-      file = "l/lame/CVE-2017-15018.patch";
-      sha256 = "de7467b0edc241bb739f267d054be75fdaf9af6e0360556c948a8b40b469ca6e";
-    })
-    (fetchTritonPatch {
-      rev = "7b4e03ea2c1aa248c38b4f55ed4892bfceaf4d32";
-      file = "lame/lame-gcc-4.9.patch";
-      sha256 = "9f675fa1a5ef15111bb51253b31fc88dbf9b21a5111e38ac0060b97abe42b39f";
-    })
-  ];
 
   nativeBuildInputs = [
     nasm
   ];
 
-  buildInputs = [ ]
-    ++ optional (libsndfile != null) libsndfile;
+  buildInputs = [
+    ncurses
+  ] ++ optional (libsndfile != null) libsndfile;
 
   configureFlags = [
     "--disable-maintainer-mode"

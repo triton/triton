@@ -10,6 +10,7 @@
 , boost
 , fixesproto
 , grpc
+, ice
 , inputproto
 , jack2_lib
 , libcap
@@ -56,9 +57,9 @@ let
   sources = {
     "git" = {
       fetchzipversion = 3;
-      version = "2017-08-23";
-      rev = "f2cbebdce87ac68929effb18e2ced7bbc58f89f9";
-      sha256 = "93c28e806e1a6b573612ed47f4790e98719bbe83a135446ea8a88a568e54b2b1";
+      version = "2017-10-15";
+      rev = "a8d8c136b68ab4502ec0cd08bd9e876b39d4c1ed";
+      sha256 = "15583ffd50a8518afe3fcc1c6b92b45f7a9010719a7685440b22a7707fb0b24e";
     };
   };
   source = sources."${channel}";
@@ -108,6 +109,7 @@ stdenv.mkDerivation rec {
     xproto
   ] ++ optionals (config == "murmur") [
     grpc
+    ice
     libcap
   ];
 
@@ -118,6 +120,8 @@ stdenv.mkDerivation rec {
   postPatch = optionalString (config == "mumble") ''
     export MUMBLE_PYTHON="${python2}/bin/python"
     patchShebangs ./scripts/rcc-depends.py
+  '' + optionalString (config == "murmur" && ice != null) ''
+    sed -i 's,/usr,${ice},g' src/murmur/murmur_ice/murmur_ice.pro
   '';
 
   configureFlags = [
@@ -154,7 +158,7 @@ stdenv.mkDerivation rec {
     "${boolNo mumbleOverlay}overlay"
     "no-qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
-    "no-ice"
+    "${boolNo (ice != null)}ice"
     "${boolNo (grpc != null)}grpc"
     "qssldiffiehellmanparameters"
   ];

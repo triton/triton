@@ -39,9 +39,25 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("prefix=$out")
   '';
 
+  makeFlags = [
+    # Required to put docs / manpages in $out/share
+    "USR_DIR_INSTALL=yes"
+  ];
+
   buildFlags = [
     "srcs"
   ];
+
+  postInstall = ''
+    install_slice() {
+      local actualMakeFlags
+      commonMakeFlags 'install'
+      actualMakeFlags+=("-C" ".." "install-slice")
+      printMakeFlags 'install-slice'
+      make "''${actualMakeFlags[@]}"
+    }
+    install_slice
+  '';
 
   meta = with stdenv.lib; {
     description = "The internet communications engine";

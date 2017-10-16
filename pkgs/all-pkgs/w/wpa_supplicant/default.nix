@@ -78,7 +78,48 @@ stdenv.mkDerivation rec {
     sha256 = "b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450";
   };
 
-  patches = optionals (versionAtLeast openssl.version "1.1.0") [
+  patches = [
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch";
+      sha256 = "529113cc81256c6178f3c1cf25dd8d3f33e6d770e4a180bd31c6ab7e4917f40b";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0002-Prevent-reinstallation-of-an-already-in-use-group-ke.patch";
+      sha256 = "d86d47ab74170f3648b45b91bce780949ca92b09ab43df065178850ec0c335d7";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0003-Extend-protection-of-GTK-IGTK-reinstallation-of-WNM-.patch";
+      sha256 = "d4535e36739a0cc7f3585e6bcba3c0bb8fc67cb3e729844e448c5dc751f47e81";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0004-Prevent-installation-of-an-all-zero-TK.patch";
+      sha256 = "793a54748161b5af430dd9de4a1988d19cb8e85ab29bc2340f886b0297cee20b";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0005-Fix-PTK-rekeying-to-generate-a-new-ANonce.patch";
+      sha256 = "147c8abe07606905d16404fb2d2c8849796ca7c85ed8673c09bb50038bcdeb9e";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0006-TDLS-Reject-TPK-TK-reconfiguration.patch";
+      sha256 = "596d4d3b63ea859ed7ea9791b3a21cb11b6173b04c0a14a2afa47edf1666afa6";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0007-WNM-Ignore-WNM-Sleep-Mode-Response-without-pending-r.patch";
+      sha256 = "c5a17af84aec2d88c56ce0da2d6945be398fe7cab5c0c340deb30973900c2736";
+    })
+    (fetchTritonPatch {
+      rev = "dc847f050bc48a6f589efae3aed0bf8279195f30";
+      file = "w/wpa_supplicant/rebased-v2.6-0008-FT-Do-not-allow-multiple-Reassociation-Response-fram.patch";
+      sha256 = "c8840d857b9432f3b488113c85c1ff5d4a4b8d81078b7033388dae1e990843b1";
+    })
+  ] ++ optionals (versionAtLeast openssl.version "1.1.0") [
     (fetchTritonPatch {
       rev = "01c6bdc70a6e1f37438e98777b9e645d5e6f994b";
       file = "w/wpa_supplicant/fix-pem-decryption.patch";

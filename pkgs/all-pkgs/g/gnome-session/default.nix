@@ -14,8 +14,8 @@
 , gsettings-desktop-schemas
 , gtk
 , json-glib
-, mesa_noglu
 , mutter
+, opengl-dummy
 , systemd_lib
 , upower
 , xorg
@@ -59,8 +59,8 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     json-glib
-    mesa_noglu
-    mutter # gschemas
+    mutter  # gschemas
+    opengl-dummy
     systemd_lib
     upower
   ] ++ optionals (xorg != null) [

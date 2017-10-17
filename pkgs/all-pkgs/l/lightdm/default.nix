@@ -14,8 +14,8 @@
 }:
 
 let
-  ver_branch = "1.22";
-  version = "1.22.0";
+  ver_branch = "1.24";
+  version = "${ver_branch}.0";
 in
 
 stdenv.mkDerivation rec {
@@ -23,8 +23,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://launchpad.net/lightdm/${ver_branch}/${version}/+download/${name}.tar.xz";
-    multihash = "QmZxr1nRvHY5bQPjmP6Z9qftFSjMC24BXJ7mbetM1DC78f";
-    sha256 = "e4b9afb6a7e627440ccda140972631e54d005340ec6043d538281f28a8dbab28";
+    multihash = "QmccP64cjisjrVUNFAjbV9gwvp5XUTtTeCeTBrMKHfnVeS";
+    sha256 = "cd509b74382bcf382c6e3e4b54ac30ba804022fec968d6993d134552ea1a43a2";
   };
 
   patches = [

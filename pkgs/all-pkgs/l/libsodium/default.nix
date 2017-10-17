@@ -1,6 +1,4 @@
 { stdenv
-, autoreconfHook
-, fetchTritonPatch
 , fetchurl
 }:
 
@@ -11,7 +9,7 @@ let
     "mirror://gentoo/distfiles/libsodium-${version}.tar.gz"
   ];
 
-  version = "1.0.14";
+  version = "1.0.15";
 in
 stdenv.mkDerivation rec {
   name = "libsodium-${version}";
@@ -19,24 +17,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7";
+    sha256 = "fb6a9e879a2f674592e4328c5d9f79f082405ee4bb05cb6e679b90afe9e178f4";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "824339b7e47f1ea030fd411035d446c47c09061b";
-      file = "l/libsodium/libsodium-1.0.10-cpuflags.patch";
-      sha256 = "744230d34b59cc1a15dc82c6fd2a24baff141363b09f4220021fed901d49c97f";
-    })
-  ];
-
-  configureFlags = [
-    "--disable-sse4_1"
-  ];
+  # Hack to not use AVX512 since our binutils is too old
+  preConfigure = ''
+    sed -i 's,avx512,avx513,g' configure
+  '';
 
   doCheck = true;
 
@@ -48,10 +35,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.0.14";
+      urls = tarballUrls "1.0.15";
       minisignUrls = map (n: "${n}.minisig") urls;
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7";
+      sha256 = "fb6a9e879a2f674592e4328c5d9f79f082405ee4bb05cb6e679b90afe9e178f4";
     };
   };
 

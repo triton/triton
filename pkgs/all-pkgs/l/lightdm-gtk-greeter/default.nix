@@ -23,7 +23,7 @@ let
     boolWt;
 
   channel = "2.0";
-  version = "${channel}.2";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "lightdm-gtk-greeter-${version}";
@@ -31,7 +31,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://launchpad.net/lightdm-gtk-greeter/${channel}/${version}/"
       + "+download/${name}.tar.gz";
-    sha256 = "8ee6d93d1d6837b3590f64ac4d5bac5db888a8861dff1cb2ef10f7816ad36690";
+    multihash = "QmPTUzthaVAJmdEzhz7hRLEqgRaFAWmvRQo6n4UgNBP1Am";
+    sha256 = "3db39542cffd54d84c2e1632c1a1668f4f63d8596a6d8fd9fd1649fc7d15db30";
   };
 
   nativeBuildInputs = [

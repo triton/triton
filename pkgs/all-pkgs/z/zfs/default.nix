@@ -9,6 +9,7 @@
 , attr
 , libtirpc
 , lvm2
+, openssl
 , python
 , systemd_lib
 , util-linux_full
@@ -73,6 +74,8 @@ stdenv.mkDerivation rec {
     systemd_lib
     util-linux_full
     zlib
+  ] ++ optionals (buildUser && channel == "dev") [
+    openssl
   ];
 
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work

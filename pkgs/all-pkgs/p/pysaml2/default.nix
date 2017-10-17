@@ -16,7 +16,7 @@
 }:
 
 let
-  version = "4.4.0";
+  version = "4.5.0";
 in
 buildPythonPackage {
   name = "pysaml2-${version}";
@@ -24,7 +24,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pysaml2";
     inherit version;
-    sha256 = "a83768a873b905451b4931f242983ac95849d4c7ccefbe13119f301f6feadd5a";
+    sha256 = "59f82ee82390482640b298045a792455dae6cae580d8c0a3c935f0038f878133";
   };
 
   propagatedBuildInputs = [

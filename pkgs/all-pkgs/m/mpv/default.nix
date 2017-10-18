@@ -29,8 +29,11 @@
 , libvdpau
 , libx11
 , libxext
+, libxinerama
 , libxkbcommon
+, libxrandr
 , libxscrnsaver
+, libxv
 #, lua
 , mujs
 , nvidia-cuda-toolkit
@@ -97,8 +100,12 @@ stdenv.mkDerivation rec {
     libvdpau
     libx11
     libxext
+    libxinerama
     libxkbcommon
+    libxrandr
     libxscrnsaver
+    libxv
+    xorg.libXxf86vm
     # MPV does not support lua 5.3 yet
     #lua
     #luasockets
@@ -115,10 +122,6 @@ stdenv.mkDerivation rec {
     speex
     v4l_lib
     wayland
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXv
-    xorg.libXxf86vm
     zlib
   ];
 

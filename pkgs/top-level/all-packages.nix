@@ -1190,6 +1190,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   gmp = null;
   gsm = null;
   #iblc = null;
+  jack2_lib = null;
   jni = null;
   kvazaar = null;
   ladspa-sdk = null;

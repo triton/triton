@@ -2732,7 +2732,16 @@ mp3val = callPackage ../all-pkgs/m/mp3val { };
 
 mp4v2 = callPackage ../all-pkgs/m/mp4v2 { };
 
-mpd = callPackage ../all-pkgs/m/mpd { };
+mpd = callPackage ../all-pkgs/m/mpd {
+  avahi = null;
+  fluidsynth = null;
+  game-music-emu = null;
+  jack2_lib = null;
+  libmikmod = null;
+  libmms = null;
+  libmodplug = null;
+  samba_client = null;
+};
 
 mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
 

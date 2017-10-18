@@ -1733,7 +1733,13 @@ gst-plugins-base_1-12 = callPackage ../all-pkgs/g/gst-plugins-base {
 };
 gst-plugins-base = callPackageAlias "gst-plugins-base_1-12" { };
 
-gst-plugins-good_1-12 = callPackage ../all-pkgs/g/gst-plugins-good {
+gst-plugins-good_generics = overrides:
+  callPackage ../all-pkgs/g/gst-plugins-good ({
+    aalib = null;
+    libcaca = null;
+    wavpack = null;
+  } // overrides);
+gst-plugins-good_1-12 = pkgs.gst-plugins-good_generics {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;

@@ -1,6 +1,6 @@
 { stdenv
 , autoreconfHook
-, fetchgit
+, fetchFromGitHub
 , fetchurl
 , lib
 
@@ -31,9 +31,9 @@ let
     };
     "head" = {
       fetchzipversion = 3;
-      version = "2017-09-01";
-      rev = "95c48711f60092ad9108fe78d4b84c5a3eac84ad";
-      sha256 = "2f5e993dfef17ee621804730e4f1db14dc75ac03f69ee6483b3fff709c81230d";
+      version = "2017-10-08";
+      rev = "43dfdc08ba57ce164e99e11226bcfad31db413e4";
+      sha256 = "3ae356d19d0b6248615088ad36b3dad3c05114b787828c94eb17872bc2171fac";
     };
   };
   source = sources."${channel}";
@@ -48,9 +48,10 @@ stdenv.mkDerivation rec {
 
   src =
     if channel == "head" then
-      fetchgit {
+      fetchFromGitHub {
         version = source.fetchzipversion;
-        url = "git://git.xiph.org/opus.git";
+        owner = "xiph";
+        repo = "opus";
         inherit (source) rev sha256;
       }
     else

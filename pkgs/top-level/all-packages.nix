@@ -1736,6 +1736,7 @@ gst-plugins-base = callPackageAlias "gst-plugins-base_1-12" { };
 gst-plugins-good_generics = overrides:
   callPackage ../all-pkgs/g/gst-plugins-good ({
     aalib = null;
+    jack2_lib = null;
     libcaca = null;
     wavpack = null;
   } // overrides);

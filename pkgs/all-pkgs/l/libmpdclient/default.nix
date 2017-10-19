@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
-, doxygen
+, lib
+, meson
+, ninja
 }:
 
 let
@@ -18,7 +20,14 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    doxygen
+    meson
+    ninja
+  ];
+
+  mesonFlags = [
+    "-Dtcp=true"
+    "-Ddocumentation=false"
+    "-Dtest=false"
   ];
 
   passthru = {
@@ -27,7 +36,7 @@ stdenv.mkDerivation rec {
       versionMinor;
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Client library for MPD (music player daemon)";
     homepage = http://www.musicpd.org/libs/libmpdclient/;
     license = licenses.gpl2;

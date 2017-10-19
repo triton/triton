@@ -1238,7 +1238,10 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
 ffmpeg_3-3 = pkgs.ffmpeg_generic {
   channel = "3.3";
 };
-ffmpeg_3 = callPackageAlias "ffmpeg_3-3" { };
+ffmpeg_3-4 = pkgs.ffmpeg_generic {
+  channel = "3.4";
+};
+ffmpeg_3 = callPackageAlias "ffmpeg_3-4" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies

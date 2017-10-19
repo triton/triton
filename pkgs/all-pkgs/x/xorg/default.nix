@@ -64,6 +64,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xf86miscproto
 , xf86vidmodeproto
 , xineramaproto
+, xorg-server
 , xproto
 , xrefresh
 , xtrans
@@ -154,6 +155,7 @@ let
     libXv = libxv;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
+    xorgserver = xorg-server;
 
 ################################################################################
 
@@ -1379,17 +1381,6 @@ let
     buildInputs = [ ];
 
   }) // {inherit ;};
-
-  xorgserver = (mkDerivation "xorgserver" {
-    name = "xorg-server-1.19.5";
-    src = fetchurl {
-      url = mirror://xorg/individual/xserver/xorg-server-1.19.5.tar.bz2;
-      sha256 = "18fffa8eb93d06d2800d06321fc0df4d357684d8d714315a66d8dfa7df251447";
-    };
-    nativeBuildInputs = [ bison flex utilmacros ];
-    buildInputs = [ bigreqsproto compositeproto damageproto dbus libdmx dmxproto opengl-dummy dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont2 libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ];
-
-  }) // {inherit bigreqsproto compositeproto damageproto dbus libdmx dmxproto opengl-dummy dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ;};
 
   xpr = (mkDerivation "xpr" {
     name = "xpr-1.0.4";

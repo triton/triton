@@ -129,44 +129,6 @@ in
     ] ++ attrs.nativeBuildInputs;
   };
 
-  xorgserver = with xorg; attrs: attrs // {
-    nativeBuildInputs = [
-      makeWrapper
-    ] ++ attrs.nativeBuildInputs;
-
-    patches = [
-      ./xorgserver-xkbcomp-path.patch
-    ];
-
-    configureFlags = [
-      "--enable-kdrive"             # not built by default
-      "--with-sha1=libcrypto"
-      "--enable-xephyr"
-      "--enable-dri"
-      "--enable-dri2"
-      "--enable-dri3"
-      "--enable-xcsecurity"         # enable SECURITY extension
-      "--enable-glamor"
-      "--with-default-font-path="   # there were only paths containing "${prefix}",
-                                    # and there are no fonts in this package anyway
-    ];
-
-    postInstall = ''
-      rm -fr $out/share/X11/xkb/compiled
-      ln -s /var/tmp $out/share/X11/xkb/compiled
-
-      wrapProgram $out/bin/Xephyr \
-        --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
-        --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
-      wrapProgram $out/bin/Xvfb \
-        --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
-        --set XORG_DRI_DRIVER_PATH ${args.opengl-dummy.driverSearchPath}/lib/dri \
-        --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
-    '';
-
-    bindnow = false;
-  };
-
   lndir = attrs: attrs // {
     preConfigure = ''
       substituteInPlace lndir.c \

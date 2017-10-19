@@ -3911,6 +3911,7 @@ xorg = recurseIntoAttrs (
       xf86miscproto
       xf86vidmodeproto
       xineramaproto
+      xorg-server
       xproto
       xrefresh
       xtrans
@@ -3918,6 +3919,8 @@ xorg = recurseIntoAttrs (
       ;
   }
 );
+
+xorg-server = callPackage ../all-pkgs/x/xorg-server { };
 
 xproto = callPackage ../all-pkgs/x/xproto { };
 

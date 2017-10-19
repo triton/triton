@@ -16,7 +16,9 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.musicpd.org/download/libmpdclient/${versionMajor}/"
         + "${name}.tar.xz";
-    sha256 = "5115bd52bc20a707c1ecc7587e6389c17305348e2132a66cf767c62fc55ed45d";
+    multihash = "QmPGLstus9AbHLBTqbMP3eGH55eCt5Nn22MrAwEcWEBKGY";
+    hashOutput = false;
+    sha256 = "5115bd52bc20a707c1ecc7487e6389c17305348e2132a66cf767c62fc55ed45d";
   };
 
   nativeBuildInputs = [
@@ -34,6 +36,16 @@ stdenv.mkDerivation rec {
     inherit
       versionMajor
       versionMinor;
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "0392 335A 7808 3894 A430  1C43 236E 8A58 C6DB 4512";
+      failEarly = true;
+    };
   };
 
   meta = with lib; {

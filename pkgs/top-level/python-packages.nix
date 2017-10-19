@@ -223,6 +223,8 @@ dnsdiag = callPackage ../all-pkgs/d/dnsdiag { };
 
 dnspython = callPackage ../all-pkgs/d/dnspython { };
 
+docopt = callPackage ../all-pkgs/d/docopt { };
+
 docutils = callPackage ../all-pkgs/d/docutils { };
 
 duplicity = callPackage ../all-pkgs/d/duplicity { };

@@ -1,18 +1,17 @@
 { stdenv
-, autoconf
-, autoconf-archive
-, automake
 , fetchTritonPatch
 , fetchurl
 , gettext
+, lib
 , makeWrapper
-# Required
+, meson
+, ninja
+
 , glib
 , ncurses
 , libmpdclient
-# Optional
 , lirc
-# Screens
+
 , helpScreen ? false
 , artistScreen ? true
 , searchScreen ? true
@@ -29,8 +28,8 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
+  inherit (lib)
+    boolEn
     optionals
     optionalString;
 
@@ -62,7 +61,7 @@ let
 
     '';*/
 
-    meta = with stdenv.lib; {
+    meta = with lib; {
       description = "Meta package of ncmpc lyrics plugins";
       homepage = https://github.com/codyopel/ncmpc-lyrics-plugins;
       license = licenses.gpl2Plus;
@@ -75,19 +74,19 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "ncmpc-0.27";
+  name = "ncmpc-0.28";
 
   src = fetchurl {
     url = "https://www.musicpd.org/download/ncmpc/0/${name}.tar.xz";
-    sha256 = "f9a26a3fc869cfdf0a16b0ea3e6512c2fe28a031bbc71b1d24a2bf0bbd3e15d9";
+    hashOutput = false;
+    sha256 = "f66e5b6fef83bdfda3b3efaf3fbad6a4d8c47bb1b3b6810bed44d3e35b007804";
   };
 
   nativeBuildInputs = [
-    autoconf
-    autoconf-archive
-    automake
     gettext
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -99,20 +98,7 @@ stdenv.mkDerivation rec {
     ncmpc-lyrics-plugins
   ];
 
-  patches = [
-  	# default ax_with_curses.m4 produces automagic dependency on ncursesw
-  	# also, ncursesw is required for colors, so we force it here
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "ncmpc/ncmpc-0.24-ncursesw.patch";
-      sha256 = "946aa473365b57533b4ba1ca908b1bea9684a529193b5c402ad8701d5713a2d3";
-    })
-  ];
-
-  preConfigure =
-    /* Re-run autoreconf after patching */ ''
-    ./autogen.sh
-  '' + optionalString (lirc != null)
+  preConfigure = optionalString (lirc != null)
     /* upstream lirc doesn't have a pkg-config file */ ''
     export LIBLIRCCLIENT_CFLAGS="-I${lirc}/include/lirc"
     export LIBLIRCCLIENT_LIBS="-llirc_client"
@@ -124,16 +110,16 @@ stdenv.mkDerivation rec {
     "--enable-locale"
     "--enable-nls"
     "--enable-colors"
-    (enFlag "lirc" (lirc != null) null)
-    (enFlag "help-screen" helpScreen null)
+    "--${boolEn (lirc != null)}-lirc"
+    "--${boolEn helpScreen}-help-screen"
     "--enable-mouse"
-    (enFlag "artist-screen" artistScreen null)
-    (enFlag "search-screen" searchScreen null)
-    (enFlag "song-screen" songScreen null)
-    (enFlag "key-screen" keyScreen null)
-    (enFlag "lyrics-screen" lyricsScreen null)
-    (enFlag "outputs-screen" outputsScreen null)
-    (enFlag "chat-screen" chatScreen null)
+    "--${boolEn artistScreen}-artist-screen"
+    "--${boolEn searchScreen}-search-screen"
+    "--${boolEn songScreen}-song-screen"
+    "--${boolEn keyScreen}-key-screen"
+    "--${boolEn lyricsScreen}-lyrics-screen"
+    "--${boolEn outputsScreen}-outputs-screen"
+    "--${boolEn chatScreen}-chat-screen"
     "--disable-werror"
     "--disable-debug"
     "--disable-test"
@@ -155,7 +141,19 @@ stdenv.mkDerivation rec {
       --prefix PYTHONPATH : "$PYTHONPATH"
   '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "0392 335A 7808 3894 A430  1C43 236E 8A58 C6DB 4512";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Curses-based interface for MPD (music player daemon)";
     homepage = http://www.musicpd.org/clients/ncmpc/;
     license = licenses.gpl2Plus;

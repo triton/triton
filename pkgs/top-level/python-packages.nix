@@ -483,6 +483,8 @@ rpyc = callPackage ../all-pkgs/r/rpyc { };
 
 rsa = callPackage ../all-pkgs/r/rsa { };
 
+ruamel-yaml = callPackage ../all-pkgs/r/ruamel-yaml { };
+
 s3transfer = callPackage ../all-pkgs/s/s3transfer { };
 
 safe = callPackage ../all-pkgs/s/safe { };

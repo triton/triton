@@ -73,18 +73,6 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  #FIXME: make it also work on non-nixos?
-  postPatch = ''
-    # Substituting store paths would create a circular dependency on systemd
-    sed \
-      -e "s,/bin/login,/run/current-system/sw/bin/login," \
-      -e "s,/sbin/shutdown,/run/current-system/sw/bin/shutdown," \
-      -i include/pathnames.h
-
-    # We can't setuid in a nixbuild
-    sed -i 's, 4755 , 0755 ,g' Makefile.in
-  '';
-
   # !!! It would be better to obtain the path to the mount helpers
   # (/sbin/mount.*) through an environment variable, but that's
   # somewhat risky because we have to consider that mount can setuid
@@ -93,7 +81,6 @@ stdenv.mkDerivation rec {
     "--with-cap-ng"  # We can't disable this at the moment even though it isn't needed for libs
     "--enable-tunelp"
     "--enable-line"
-    "--enable-reset"
     "--enable-vipw"
     "--enable-newgrp"
     "--enable-write"
@@ -118,6 +105,8 @@ stdenv.mkDerivation rec {
     "--with-systemd"
     "--enable-chfn-chsh"
     "--enable-pg"
+    "--disable-makeinstall-chown"
+    "--disable-makeinstall-setuid"
   ]);
 
   preBuild = optionalString libOnly ''

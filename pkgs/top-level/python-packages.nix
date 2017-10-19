@@ -162,6 +162,8 @@ blist = callPackage ../all-pkgs/b/blist { };
 
 borgbackup = callPackage ../all-pkgs/b/borgbackup { };
 
+borgmatic = callPackage ../all-pkgs/b/borgmatic { };
+
 botocore = callPackage ../all-pkgs/b/botocore { };
 
 brotli = callPackage ../all-pkgs/b/brotli/python.nix {

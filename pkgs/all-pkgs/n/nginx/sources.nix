@@ -5,7 +5,7 @@
   };
 
   "unstable" = {
-    version = "1.13.4";
-    sha256 = "de21f3c49ba65c611329d8759a63d72e5fcf719bc6f2a3270e2541348ef1fbba";
+    version = "1.13.6";
+    sha256 = "8512fc6f986a20af293b61f33b0e72f64a72ea5b1acbcc790c4c4e2d6f63f8f8";
   };
 }

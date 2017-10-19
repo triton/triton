@@ -40,13 +40,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.8.3";
+  name = "libinput-1.9.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    multihash = "QmV4hV3E8GKaac9cXWn3pzSxgbQ8kcBBMxNeWgnvEiguPe";
+    multihash = "QmaK19TegKKL1WqSBjCBB2s7LdyRQan8vqeKu3b872x2C4";
     hashOutput = false;
-    sha256 = "2fe2e2f52f0971a9c43541b8f26582ca8df6ed4bb9050e85eb40d4ff6b13142d";
+    sha256 = "fd717b1f9cf867b2ca1763a5a4638423af178f3a70aa34d278e8bf42777d108e";
   };
 
   nativeBuildInputs = [
@@ -70,12 +70,6 @@ stdenv.mkDerivation rec {
     check
     valgrind
   ];
-
-  postPatch = ''
-    # Remove invalid function argument
-    sed -i meson_options.txt \
-      -e '/default: ${"''"}/d'
-  '';
 
   mesonFlags = [
     #"-Dudev-dir"

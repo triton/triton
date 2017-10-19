@@ -2,15 +2,17 @@
 , fetchurl
 
 , c-ares
+, expat
+, jemalloc
 , libssh2
-, libxml2
+, libuv
 , openssl
 , sqlite
 , zlib
 }:
 
 let
-  version = "1.32.0";
+  version = "1.33.0";
 in
 stdenv.mkDerivation rec {
   name = "aria2-${version}";
@@ -18,20 +20,25 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/aria2/releases/download/"
       + "release-${version}/${name}.tar.xz";
-    sha256 = "546e9194a9135d665fce572cb93c88f30fb5601d113bfa19951107ced682dc50";
+    sha256 = "996e3fc2fd07ce2dd517e20a1f79b8b3dbaa5c7e27953b5fc19dae38f3874b8c";
   };
 
   buildInputs = [
     c-ares
+    expat
+    jemalloc
     libssh2
-    libxml2
+    libuv
     openssl
     sqlite
     zlib
   ];
 
   configureFlags = [
+    "--enable-libaria2"
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
+    "--with-libuv"
+    "--with-jemalloc"
   ];
 
   meta = with stdenv.lib; {

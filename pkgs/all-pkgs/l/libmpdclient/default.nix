@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.xz";
     multihash = "QmPGLstus9AbHLBTqbMP3eGH55eCt5Nn22MrAwEcWEBKGY";
     hashOutput = false;
-    sha256 = "5115bd52bc20a707c1ecc7487e6389c17305348e2132a66cf767c62fc55ed45d";
+    sha256 = "5115bd52bc20a707c1ecc7587e6389c17305348e2132a66cf767c62fc55ed45d";
   };
 
   nativeBuildInputs = [

@@ -413,6 +413,8 @@ pygtk = callPackage ../all-pkgs/p/pygtk { };
 
 pykka = callPackage ../all-pkgs/p/pykka { };
 
+pykwalify = callPackage ../all-pkgs/p/pykwalify { };
+
 pylast = callPackage ../all-pkgs/p/pylast { };
 
 pymacaroons-pynacl = callPackage ../all-pkgs/p/pymacaroons-pynacl { };

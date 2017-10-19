@@ -1,31 +1,35 @@
 { stdenv
 , bison
+, docbook2x
 , fetchurl
 , flex
 
 , gmp
+, iptables
 , libmnl
 , libnftnl
 , readline
 }:
 
 stdenv.mkDerivation rec {
-  name = "nftables-0.7";
+  name = "nftables-0.8";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nftables/files/${name}.tar.bz2";
+    multihash = "QmP72Q17QGWm9K14mQgXtJ3NgCRHWrLqrTqLAs5MENfuwh";
     hashOutput = false;
-    multihash = "QmPaVkUfFmLDUCtiGHnwRUVhY9b7zbhWuypXLccUMNKEH5";
-    sha256 = "fe639239d801ce5890397f6f4391c58a934bfc27d8b7d5ef922692de5ec4ed43";
+    sha256 = "3f5b88e7b163bb46aa39e89419686b98f9316606a05865c3856dc68e414f389a";
   };
 
   nativeBuildInputs = [
     bison
+    docbook2x
     flex
   ];
 
   buildInputs = [
     gmp
+    iptables
     libmnl
     libnftnl
     readline
@@ -36,6 +40,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--without-mini-gmp"
     "--with-cli"
+    "--with-xtables"
   ];
 
   preInstall = ''

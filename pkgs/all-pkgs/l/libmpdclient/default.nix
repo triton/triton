@@ -5,16 +5,16 @@
 
 let
   versionMajor = "2";
-  versionMinor = "10";
+  versionMinor = "13";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
   name = "libmpdclient-${version}";
 
   src = fetchurl {
-    url = "http://www.musicpd.org/download/libmpdclient/${versionMajor}/"
+    url = "https://www.musicpd.org/download/libmpdclient/${versionMajor}/"
         + "${name}.tar.xz";
-    sha256 = "10pzs9z815a8hgbbbiliapyiw82bnplsccj5irgqjw5f5plcs22g";
+    sha256 = "5115bd52bc20a707c1ecc7587e6389c17305348e2132a66cf767c62fc55ed45d";
   };
 
   nativeBuildInputs = [

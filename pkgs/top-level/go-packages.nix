@@ -2124,6 +2124,17 @@ let
     sha256 = "1mzn45p24qn7qdagfb9mlj96jlmwk3kgk637kxnb4qaqnl8bkkh1";
   };
 
+  gmsm = buildFromGitHub {
+    version = 3;
+    rev = "v1.0";
+    owner = "tjfoc";
+    repo = "gmsm";
+    sha256 = "1jj45ig99hwci7x4idy9lqjbjhxrn6bffffsw7gz4n06gx1kyfak";
+    propagatedBuildInputs = [
+      crypto
+    ];
+  };
+
   gnostic = buildFromGitHub {
     version = 3;
     rev = "v0.1.0";
@@ -5015,6 +5026,7 @@ let
     propagatedBuildInputs = [
       crypto
       errors
+      gmsm
       net
       templexxx_reedsolomon
       xor
@@ -7010,6 +7022,9 @@ let
     sha256 = "1v2p99ggw94kj1mg89h6dqnmc4806vqica0rjj2i50p8j40zpq86";
     subPackages = [
       "."
+    ];
+    propagatedBuildInputs = [
+      cpufeat
     ];
   };
 

@@ -1,5 +1,9 @@
 { stdenv
+, docbook_xml_dtd_44
+, docbook-xsl
 , fetchurl
+, libxslt
+, xmlto
 
 , audit_lib
 , expat
@@ -18,6 +22,13 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "71184eb27638e224579ffa998e88f01d0f1fef17a7811406e53350735eaecd1b";
   };
+
+  nativeBuildInputs = [
+    docbook_xml_dtd_44
+    docbook-xsl
+    libxslt
+    xmlto
+  ];
 
   buildInputs = [
     audit_lib
@@ -43,6 +54,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
     "--with-session-socket-dir=/tmp"
+    "--enable-xml-docs"
     "--enable-libaudit"
     "--enable-systemd"
     "--disable-selinux"

@@ -3,23 +3,25 @@
 , fetchurl
 , lib
 
+, gnupg
 , fasteners
+, lftp
 , librsync
-, lockfile
+, pyrax
 }:
 
 let
   versionMajor = "0.7";
-  version = "${versionMajor}.13.1";
+  version = "${versionMajor}.14";
 in
 buildPythonPackage rec {
   name = "duplicity-${version}";
 
   src = fetchurl {
     url = "https://code.launchpad.net/duplicity/${versionMajor}-series/"
-      "${version}/+download/${name}.tar.gz";
-    multihash = "QmPAzT2Z9NoBDjaErbey5Es6S8bd86TkS6MpgdhncWUTzs";
-    sha256 = "adb8668fb10e0b0f91cb77f758d02c02bf5c02e6c4835904a82cbdab6db4bef2";
+      + "${version}/+download/${name}.tar.gz";
+    multihash = "QmRVshopPEkadktNLZq66x1HsbsEmYdZjcAvQG4Grqv6L7";
+    sha256 = "7a3eb74a2a36b004b10add2970b37cfbac0bd693d79513e6311c8e4b8c3dd73e";
   };
 
   buildInputs = [
@@ -28,7 +30,9 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     fasteners
-    lockfile
+    gnupg
+    lftp
+    pyrax
   ];
 
   meta = with lib; {

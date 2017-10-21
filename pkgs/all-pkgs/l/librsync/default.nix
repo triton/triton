@@ -10,18 +10,17 @@
 }:
 
 let
-  date = "2017-04-18";
-  rev = "572f55f9b798407ad913bc3e4e26087026149028";
+  version = "2.0.1";
 in
 stdenv.mkDerivation rec {
-  name = "librsync-${date}";
+  name = "librsync-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "librsync";
     repo = "librsync";
-    rev = rev;
-    sha256 = "e7f90f0ebcd8ac4cf545d101cb68350ad490c6ff1067086825e2350a00395923";
+    rev = "v${version}";
+    sha256 = "4ed1c66c6b9b18f50e10288164455f0c046060f78f83565b6886a499f00cd912";
   };
 
   nativeBuildInputs = [

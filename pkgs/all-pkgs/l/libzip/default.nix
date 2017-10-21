@@ -2,16 +2,17 @@
 , fetchurl
 , perl
 
+, bzip2
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "libzip-1.2.0";
+  name = "libzip-1.3.0";
 
   src = fetchurl {
     url = "https://www.nih.at/libzip/${name}.tar.xz";
-    multihash = "QmRCdruhq1ijRiNFvquzq9QE8f786e9C6ueZtHovRV7atu";
-    sha256 = "ffc0764395fba3d45dc5a6e32282788854618b9e9838337f8218b596007f1376";
+    multihash = "QmfBKAT8MbgGGB5QzYFN7XjtFn8F1oVLYE4WCXtBCd8of6";
+    sha256 = "aa936efe34911be7acac2ab07fb5c8efa53ed9bb4d44ad1fe8bff19630e0d373";
   };
 
   nativeBuildInputs = [
@@ -19,6 +20,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    bzip2
     zlib
   ];
 

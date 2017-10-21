@@ -208,6 +208,8 @@ daemonize = callPackage ../all-pkgs/d/daemonize { };
 
 dbus-python = callPackage ../all-pkgs/d/dbus-python { };
 
+debtcollector = callPackage ../all-pkgs/d/debtcollector { };
+
 decorator = callPackage ../all-pkgs/d/decorator { };
 
 deluge = callPackage ../all-pkgs/d/deluge {
@@ -293,7 +295,11 @@ iotop = callPackage ../all-pkgs/i/iotop { };
 
 imagesize = callPackage ../all-pkgs/i/imagesize { };
 
+ip-associations-python-novaclient-ext = callPackage ../all-pkgs/i/ip-associations-python-novaclient-ext { };
+
 ipaddress = callPackage ../all-pkgs/i/ipaddress { };
+
+iso8601 = callPackage ../all-pkgs/i/iso8601 { };
 
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
@@ -301,11 +307,17 @@ jmespath = callPackage ../all-pkgs/j/jmespath { };
 
 jsonschema = callPackage ../all-pkgs/j/jsonschema { };
 
+keyring = callPackage ../all-pkgs/k/keyring { };
+
+keystoneauth1 = callPackage ../all-pkgs/k/keystoneauth1 { };
+
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
 
 llfuse = callPackage ../all-pkgs/l/llfuse { };
+
+lockfile = callPackage ../all-pkgs/l/lockfile { };
 
 lxml = callPackage ../all-pkgs/l/lxml { };
 
@@ -335,6 +347,8 @@ mutagen = callPackage ../all-pkgs/m/mutagen { };
 
 netaddr = callPackage ../all-pkgs/n/netaddr { };
 
+netifaces = callPackage ../all-pkgs/n/netifaces { };
+
 nevow = callPackage ../all-pkgs/n/nevow { };
 
 notify-python = callPackage ../all-pkgs/n/notify-python { };
@@ -342,6 +356,18 @@ notify-python = callPackage ../all-pkgs/n/notify-python { };
 oauthlib = callPackage ../all-pkgs/o/oauthlib { };
 
 olefile = callPackage ../all-pkgs/o/olefile { };
+
+os-diskconfig-python-novaclient-ext = callPackage ../all-pkgs/o/os-diskconfig-python-novaclient-ext { };
+
+os-networksv2-python-novaclient-ext = callPackage ../all-pkgs/o/os-networksv2-python-novaclient-ext { };
+
+os-virtual-interfacesv2-python-novaclient-ext = callPackage ../all-pkgs/o/os-virtual-interfacesv2-python-novaclient-ext { };
+
+oslo-i18n = callPackage ../all-pkgs/o/oslo-i18n { };
+
+oslo-serialization = callPackage ../all-pkgs/o/oslo-serialization { };
+
+oslo-utils = callPackage ../all-pkgs/o/oslo-utils { };
 
 packaging = callPackage ../all-pkgs/p/packaging { };
 
@@ -433,6 +459,8 @@ pyopenssl = callPackage ../all-pkgs/p/pyopenssl { };
 
 pyparsing = callPackage ../all-pkgs/p/pyparsing { };
 
+pyrax = callPackage ../all-pkgs/p/pyrax { };
+
 pyrss2gen = callPackage ../all-pkgs/p/pyrss2gen { };
 
 pysaml2 = callPackage ../all-pkgs/p/pysaml2 { };
@@ -453,6 +481,8 @@ python-ldap = callPackage ../all-pkgs/p/python-ldap { };
 
 python-magic = callPackage ../all-pkgs/p/python-magic { };
 
+python-novaclient = callPackage ../all-pkgs/p/python-novaclient { };
+
 python-tvrage = callPackage ../all-pkgs/p/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/p/pytz { };
@@ -469,7 +499,15 @@ pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 
 pyzmq = callPackage ../all-pkgs/p/pyzmq { };
 
+rackspace-auth-openstack = callPackage ../all-pkgs/r/rackspace-auth-openstack { };
+
+rackspace-novaclient = callPackage ../all-pkgs/r/rackspace-novaclient { };
+
 rarfile = callPackage ../all-pkgs/r/rarfile { };
+
+rax-default-network-flags-python-novaclient-ext = callPackage ../all-pkgs/r/rax-default-network-flags-python-novaclient-ext { };
+
+rax-scheduled-images-python-novaclient-ext = callPackage ../all-pkgs/r/rax-scheduled-images-python-novaclient-ext { };
 
 rebulk = callPackage ../all-pkgs/r/rebulk { };
 
@@ -506,6 +544,8 @@ scandir = callPackage ../all-pkgs/s/scandir { };
 
 scons = callPackage ../all-pkgs/s/scons { };
 
+secretstorage = callPackage ../all-pkgs/s/secretstorage { };
+
 service-identity = callPackage ../all-pkgs/s/service-identity { };
 
 setuptools = callPackage ../all-pkgs/s/setuptools { };
@@ -535,6 +575,8 @@ sphinxcontrib-websupport = callPackage ../all-pkgs/s/sphinxcontrib-websupport { 
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/s/statistics { };
+
+stevedore = callPackage ../all-pkgs/s/stevedore { };
 
 sydent = callPackage ../all-pkgs/s/sydent { };
 
@@ -575,6 +617,8 @@ webob = callPackage ../all-pkgs/w/webob { };
 werkzeug = callPackage ../all-pkgs/w/werkzeug { };
 
 wheel = callPackage ../all-pkgs/w/wheel { };
+
+wrapt = callPackage ../all-pkgs/w/wrapt { };
 
 xcb-proto = callPackage ../all-pkgs/x/xcb-proto { };
 
@@ -983,26 +1027,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
        homepage = http://github.com/sunlightlabs/jellyfish;
        description = "Approximate and phonetic matching of strings";
        maintainers = with maintainers; [ ];
-     };
-   };
-
-   lockfile = buildPythonPackage rec {
-     name = "lockfile-0.12.2";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/l/lockfile/${name}.tar.gz";
-       sha256 = "16gpx5hm73ah5n1079ng0vy381hl802v606npkx4x8nb0gg05vba";
-     };
-
-     buildInputs = with self; [
-       pbr
-     ];
-
-
-     meta = {
-       homepage = http://launchpad.net/pylockfile;
-       description = "Platform-independent advisory file locking capability for Python applications";
-       license = licenses.asl20;
      };
    };
 

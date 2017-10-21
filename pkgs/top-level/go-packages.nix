@@ -1720,9 +1720,6 @@ let
     repo = "etcd";
     rev = "785a5a11edf826f8d3e3396c33bf38c717b6225e";
     sha256 = "1riqdqm02mj6yykzf5576rd159jl1ryzsidy51ml338a9f5dd9j9";
-    nativeBuildInputs = [
-      ugorji_go.bin
-    ];
     propagatedBuildInputs = [
       bbolt
       btree
@@ -1762,12 +1759,6 @@ let
     excludedPackages = "\\(test\\|benchmark\\|example\\|bridge\\)";
     meta.useUnstable = true;
     date = "2017-10-20";
-
-    preBuild = ''
-      pushd go/src/$goPackagePath
-      go list ./... | xargs go generate
-      popd
-    '';
   };
 
   etcd_client = etcd.override {
@@ -1806,8 +1797,6 @@ let
       "raft/raftpb"
     ];
     buildInputs = [
-      go-semver
-      ugorji_go
     ];
     propagatedBuildInputs = [
       protobuf

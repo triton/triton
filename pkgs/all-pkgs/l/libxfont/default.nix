@@ -21,8 +21,8 @@ let
 
   sources = {
     "1" = {
-      version = "1.5.2";
-      sha256 = "02945ea68da447102f3e6c2b896c1d2061fd115de99404facc2aca3ad7010d71";
+      version = "1.5.3";
+      sha256 = "ab85c10fd2683481dfef672a77fe60e6a2039558cbc0e9bf56b5e1df471c93d0";
     };
     "2" = {
       version = "2.0.2";
@@ -87,6 +87,8 @@ stdenv.mkDerivation rec {
         "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
         # Keith Packard
         "C383 B778 2556 13DF DB40  9D91 DB22 1A69 0000 0011"
+        # Matt Turner
+        "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
       ];
       failEarly = true;
     };

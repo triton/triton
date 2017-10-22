@@ -15,6 +15,10 @@
 , iso-codes
 , json-glib
 , libnotify
+, libx11
+, libxext
+, libxfixes
+, libxi
 , libxkbcommon
 , python3Packages
 , vala
@@ -26,7 +30,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "1.5.16";
+  version = "1.5.17";
 in
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
@@ -34,7 +38,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/ibus/ibus/releases/download/${version}/"
       + "${name}.tar.gz";
-    sha256 = "36b57bfbe4f92e3281fb535cae65794b6f25164b2a3288e73e6d06b4a409fe1e";
+    sha256 = "0347a8055977ca458e8add750af5f9b76e1a524844cc3b0e2fad70ce153dd219";
   };
 
   nativeBuildInputs = [
@@ -53,14 +57,14 @@ stdenv.mkDerivation rec {
     iso-codes
     json-glib
     libnotify
+    libx11
+    libxext
+    libxfixes
+    libxi
     libxkbcommon
     python3Packages.python
     vala
     wayland
-    xorg.libX11
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
   ];
 
   configureFlags = [

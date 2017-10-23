@@ -3,19 +3,20 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "spice-protocol-0.12.12";
+  name = "spice-protocol-0.12.13";
 
   src = fetchurl {
     url = "https://www.spice-space.org/download/releases/${name}.tar.bz2";
+    multihash = "QmdMxn3Dj7ygCoTqvAPy5PuJW77S2DWEBVnMGNHXGPRZM4";
     hashOutput = false;
-    sha256 = "17abdc2743b5d44b0f4423b61c44aafe9f2078c27218aeea78c2d02a5c409d03";
+    sha256 = "89ee11b202d2268e061788e6ace114e1ff18c7620ae64d1ca3aba252ee7c9933";
   };
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sign") src.urls;
-      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      pgpKeyFingerprint = "94A9 F756 61F7 7A61 6864  9B23 A9D8 C214 29AC 6C82";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

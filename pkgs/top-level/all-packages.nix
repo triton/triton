@@ -3661,6 +3661,8 @@ upower = callPackage ../all-pkgs/u/upower { };
 
 usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
+usbredir = callPackage ../all-pkgs/u/usbredir { };
+
 usbutils = callPackage ../all-pkgs/u/usbutils { };
 
 utf8proc = callPackage ../all-pkgs/u/utf8proc { };

@@ -1,53 +1,63 @@
 { stdenv
 , fetchurl
-, python2
+, python3Packages
 
 , celt_0_5_1
 , cyrus-sasl
 , glib
+, gstreamer
+, gst-plugins-base
 , libcacard
 , libjpeg
 , lz4
 , openssl
+, orc
 , spice-protocol
 , xorg
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "spice-0.12.8";
+  name = "spice-0.14.0";
 
   src = fetchurl {
     url = "http://www.spice-space.org/download/releases/${name}.tar.bz2";
+    multihash = "QmZ6j9JvFUUxHnaZmdkmdrwHmVjKkUXkf89Jwr77Qjobp9";
     hashOutput = false;
-    sha256 = "f901a5c5873d61acac84642f9eea5c4d6386fc3e525c2b68792322794e1c407d";
+    sha256 = "3adb9495b51650e5eab53c74dd6a74919af4b339ff21721d9ab2a45b2e3bb848";
   };
 
   nativeBuildInputs = [
-    python2
+    python3Packages.python
   ];
 
   buildInputs = [
     celt_0_5_1
     cyrus-sasl
     glib
+    gstreamer
+    gst-plugins-base
     libcacard
     libjpeg
     lz4
     openssl
+    orc
     spice-protocol
     xorg.pixman
     zlib
   ];
 
   configureFlags = [
-    "--with-sasl"
-    "--enable-client"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--enable-smartcard"
+    "--enable-gstreamer=1.0"
     "--enable-lz4"
+    "--with-sasl"
   ];
 
   postInstall = ''
-    ln -s spice-server $out/include/spice
+    ln -sv spice-server $out/include/spice
   '';
 
   passthru = {

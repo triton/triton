@@ -1,8 +1,59 @@
 { stdenv
+, bison
 , fetchurl
+, flex
+, gettext
 , iasl
+, perl
 , python
 
+, acl
+, alsa-lib
+, bluez
+, bzip2
+, ceph_lib
+, curl
+, cyrus-sasl
+, dtc
+, glib
+, glusterfs
+, gnutls
+, gtk
+, jemalloc
+, kbproto
+, libaio
+, libcacard
+, libcap
+, libcap-ng
+, libdrm
+, libepoxy
+, libiscsi
+, libjpeg
+, libnfs
+, libpng
+, libseccomp
+, libssh2
+, libtasn1
+, libusb
+, libx11
+, lzo
+, numactl
+, ncurses
+, opengl-dummy
+, pulseaudio_lib
+, rdma-core
+, sdl
+, snappy
+, spice
+, spice-protocol
+, usbredir
+, util-linux_lib
+, vde2
+, virglrenderer
+, vte
+, xfsprogs_lib
+, xorg
+, xproto
 , zlib
 }:
 
@@ -17,18 +68,80 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    bison
+    flex
+    gettext
     iasl
+    perl
     python
   ];
 
   buildInputs = [
+    acl
+    alsa-lib
+    bluez
+    bzip2
+    ceph_lib
+    curl
+    cyrus-sasl
+    dtc
+    glib
+    glusterfs
+    gnutls
+    gtk
+    jemalloc
+    kbproto
+    libaio
+    libcacard
+    libcap
+    libcap-ng
+    libdrm
+    libepoxy
+    libiscsi
+    libjpeg
+    libnfs
+    libpng
+    libseccomp
+    libssh2
+    libtasn1
+    libusb
+    libx11
+    lzo
+    numactl
+    ncurses
+    opengl-dummy
+    pulseaudio_lib
+    rdma-core
+    sdl
+    snappy
+    spice
+    spice-protocol
+    usbredir
+    util-linux_lib
+    vde2
+    virglrenderer
+    vte
+    xfsprogs_lib
+    xorg.pixman
+    xproto
     zlib
   ];
 
   configureFlags = [
-    "--help"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--audio-drv-list=alsa,sdl,pa"  # TODO: oss
+    "--enable-system"
+    "--enable-user"
+    "--disable-docs"
+    "--disable-guest-agent"
+    "--disable-guest-agent-msi"
     "--enable-modules"
+    "--enable-jemalloc"
   ];
+
+  # We can't enable stack protector on firmware code
+  stackProtector = false;
 
   passthru = {
     srcVerification = fetchurl {

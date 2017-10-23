@@ -3,6 +3,7 @@
 
 , glib
 , nss
+, pcsc-lite_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -17,6 +18,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     nss
+    pcsc-lite_lib
   ];
 
   meta = with stdenv.lib; {

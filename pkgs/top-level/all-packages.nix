@@ -2334,6 +2334,8 @@ libnetfilter_queue = callPackage ../all-pkgs/l/libnetfilter_queue { };
 
 libnfnetlink = callPackage ../all-pkgs/l/libnfnetlink { };
 
+libnfs = callPackage ../all-pkgs/l/libnfs { };
+
 libnfsidmap = callPackage ../all-pkgs/l/libnfsidmap { };
 
 libnftnl = callPackage ../all-pkgs/l/libnftnl { };

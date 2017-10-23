@@ -3693,6 +3693,8 @@ vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vcdimager = callPackage ../all-pkgs/v/vcdimager { };
 
+vde2 = callPackage ../all-pkgs/v/vde2 { };
+
 vid-stab = callPackage ../all-pkgs/v/vid-stab { };
 
 videoproto = callPackage ../all-pkgs/v/videoproto { };

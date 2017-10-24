@@ -47,7 +47,9 @@
 , sdl
 , speex
 , v4l_lib
+, vulkan-headers
 , wayland
+, wayland-protocols
 , xorg
 , zlib
 }:
@@ -56,7 +58,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "0.26.0";
+  version = "0.27.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
@@ -64,7 +66,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 3;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "0d8eebc876f55ee7f72ed49cf2a1dc72604bffb205ad78eb54514da2051f4ca0";
+    sha256 = "33ecc720192645c148036487a6f97b2124ecf1c750caa3f99b90f91092a24bcb";
   };
 
   nativeBuildInputs = [
@@ -121,11 +123,14 @@ stdenv.mkDerivation rec {
     sdl
     speex
     v4l_lib
+    vulkan-headers
     wayland
+    wayland-protocols
     zlib
   ];
 
   wafFlags = [
+    ###"--enable-lgpl"
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -141,7 +146,7 @@ stdenv.mkDerivation rec {
     ###"--enable-asm"
     "--disable-test"
     "--disable-clang-database"
-    "--disable-uwp"  # windows
+    "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
     "--disable-termios"
@@ -167,6 +172,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-lazy"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
+    ###"--enable-libaf"
     "--${boolEn (libarchive != null)}-libarchive"
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
@@ -179,13 +185,18 @@ stdenv.mkDerivation rec {
     "--${boolEn (openal != null)}-openal"
     "--disable-opensles"  # android
     "--${boolEn (alsa-lib != null)}-alsa"
-    "--disable-coreaudio"  # macos
-    "--disable-audiounit"  # ios
-    "--disable-wasapi"  # windows
-    "--disable-cocoa"  # macos
+    "--disable-coreaudio"  # macOS
+    "--disable-audiounit"  # iOS
+    "--disable-wasapi"  # Windows
+    "--disable-cocoa"  # macOS
     "--${boolEn (libdrm != null)}-drm"
-    #"--${boolEn ( != null)}-gbm"
-    "--${boolEn (wayland != null && libxkbcommon != null)}-wayland"
+    "--${boolEn opengl-dummy.gbm}-gbm"
+    ###"--${boolEn (wayland != null)}-wayland-scanner"
+    ###"--${boolEn (wayland-protocols != null)}-wayland-protocols"
+    "--${boolEn (
+        wayland != null &&
+        wayland-protocols != null &&
+        libxkbcommon != null)}-wayland"
     "--${boolEn (
         libx11 != null
         && libxext != null
@@ -198,9 +209,9 @@ stdenv.mkDerivation rec {
     "--${boolEn opengl-dummy.egl}-egl-x11"
     "--${boolEn opengl-dummy.egl}-egl-drm"
     "--${boolEn opengl-dummy.gbm}-gl-wayland"
-    "--disable-gl-win32"  # windows
+    "--disable-gl-win32"  # Windows
     "--disable-gl-dxinterop"  # Windows
-    "--disable-egl-angle"  # windows
+    "--disable-egl-angle"  # Windows
     "--disable-egl-angle-win32"  # Windows
     "--${boolEn (libvdpau != null)}-vdpau"
     # FIXME: add passthru booleans to libvdpau for feature detection
@@ -214,30 +225,31 @@ stdenv.mkDerivation rec {
     "--${boolEn opengl-dummy.egl}-vaapi-x-egl"
     "--${boolEn (libcaca != null)}-caca"
     "--${boolEn (libjpeg != null)}-jpeg"
-    "--disable-direct3d"  # windows
-    "--disable-android"  # android
+    "--disable-direct3d"  # Windows
+    "--disable-android"  # Android
     # FIXME: add raspberry pi support
     "--disable-rpi"
-    ###"--disable-ios-gl"
+    "--disable-ios-gl"  # iOS
     "--disable-plain-gl"
-    # FIXME:
-    ###"--disable-mali-dbdev"
+    "--disable-mali-fbdev"
     "--${boolEn (opengl-dummy != null)}-gl"
+    ###"--${boolEn (vulkan-headers != null)}-vulkan"
+    /**/###"--disable-shaderc"
     "--${boolEn (libva != null)}-vaapi-hwaccel"
-    "--disable-videotoolbox-hwaccel-new"  # macos
-    "--disable-videotoolbox-hwaccel-old"  # macos
-    "--disable-videotoolbox-gl"  # macos
+    "--disable-videotoolbox-hwaccel-new"  # macOS
+    "--disable-videotoolbox-hwaccel-old"  # macOS
+    ###"--disable-videotoolbox-hwaccel"  # macOS
+    "--disable-videotoolbox-gl"  # macOS
     "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
-    "--disable-d3d-hwaccel"  # windows
-    "--disable-d3d-hwaccel-new"  # windows
-    "--disable-d3d9-hwaccel"  # windows
-    "--disable-gl-dxinterop-d3d9"  # windows
+    "--disable-d3d-hwaccel"  # Windows
+    "--disable-d3d9-hwaccel"  # Windows
+    "--disable-gl-dxinterop-d3d9"  # Windows
     "--${boolEn (
       ffmpeg != null
       && ffmpeg.features.cuda
       && nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda-hwaccel"
-    ###"--enable-tv-interface"
+    "--enable-tv"
     # FIXME
     # "--${boolEn (v4l_lib != null)}-tv-v4l2"
     # "--${boolEn (v4l_lib != null)}-libv4l2"

@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "screen-4.6.1";
+  name = "screen-4.6.2";
 
   src = fetchurl {
     url = "mirror://gnu/screen/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "aba9af66cb626155d6abce4703f45cce0e30a5114a368bd6387c966cbbbb7c64";
+    sha256 = "1b6922520e6a0ce5e28768d620b0f640a6631397f95ccb043b70b91bb503fa3a";
   };
 
   buildInputs = [

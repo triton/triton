@@ -219,6 +219,8 @@ deluge_head = callPackage ../all-pkgs/d/deluge {
   channel = "head";
 };
 
+defusedxml = callPackage ../all-pkgs/d/defusedxml { };
+
 diffoscope = callPackage ../all-pkgs/d/diffoscope { };
 
 discogs-client = callPackage ../all-pkgs/d/discogs-client { };

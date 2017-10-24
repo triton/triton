@@ -3,6 +3,7 @@
 , fetchPyPi
 
 , decorator
+, defusedxml
 , future
 , paste
 , pycryptodomex
@@ -29,6 +30,7 @@ buildPythonPackage {
 
   propagatedBuildInputs = [
     decorator
+    defusedxml
     future
     paste
     pycryptodomex

@@ -16,12 +16,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "apr-util-1.6.0";
+  name = "apr-util-1.6.1";
 
   src = fetchurl {
     url = "mirror://apache/apr/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "8474c93fa74b56ac6ca87449abe3e155723d5f534727f3f33283f6631a48ca4c";
+    sha256 = "d3e12f7b6ad12687572a3a39475545a072608f4ba03a6ce8a3778f607dd0035b";
   };
 
   nativeBuildInputs = [
@@ -73,6 +73,8 @@ stdenv.mkDerivation rec {
         "5B51 81C2 C0AB 13E5 9DA3  F7A3 EC58 2EB6 39FF 092C"
         # Nick Kew
         "3CE3 BAC2 EB7B BC62 4D1D  22D8 F3B9 D88C B87F 79A9"
+        # William A. Roe Jr
+        "B1B9 6F45 DFBD CCF9 7401  9235 193F 180A B55D 9977"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

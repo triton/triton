@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "apr-1.6.2";
+  name = "apr-1.6.3";
 
   src = fetchurl {
     url = "mirror://apache/apr/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "09109cea377bab0028bba19a92b5b0e89603df9eab05c0f7dbd4dd83d48dcebd";
+    sha256 = "131f06d16d7aabd097fa992a33eec2b6af3962f93e6d570a9bd4d85e95993172";
   };
 
   preFixup = ''

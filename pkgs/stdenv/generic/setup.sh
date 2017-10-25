@@ -494,7 +494,7 @@ configurePhase() {
   fi
 
   # Add --disable-dependency-tracking to speed up some builds.
-  if [ -z "$dontAddDisableDepTrack" ]; then
+  if [ -n "${addDisableDepTrack-true}" ]; then
     if grep -q dependency-tracking "$configureScript" 2>/dev/null; then
       configureFlags="--disable-dependency-tracking $configureFlags"
     fi

@@ -152,6 +152,17 @@ exitHandler() {
 
 ############################### Helper functions ###############################
 
+arrayToDict() {
+  local tmp=(${!1})
+  declare -gA "$1"
+  eval "$1"='()'
+  local i=1
+  while [ "$i" -lt "${#tmp[@]}" ]; do
+    eval "$1[\"${tmp[$(( $i - 1 ))]}\"]"='"${tmp[$i]}"'
+    i=$(( $i + 2 ))
+  done
+}
+
 addToSearchPathWithCustomDelimiter() {
   local delimiter="$1"
   local varName="$2"

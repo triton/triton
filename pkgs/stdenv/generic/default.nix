@@ -85,6 +85,8 @@ let
       || l == "unfree-redistributable"
     ) licenses;
 
+  dictToArray = d: lib.concatLists (lib.mapAttrsToList (n: v: [ n v ]) d);
+
   # Alow granular checks to allow only some unfree packages
   # Example:
   # {pkgs, ...}:

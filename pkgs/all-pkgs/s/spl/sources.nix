@@ -1,9 +1,9 @@
 {
   "stable" = {
-    version = "0.7.2";
+    version = "0.7.3";
     maxLinuxVersion = "4.13";
     fetchzipVersion = 3;
-    sha256 = "daa72a90f7f3e5b5b6206d1160872d2b22bd1a4565c76699a1e3ff655661ed43";
+    sha256 = "08a658fcee0b56a301d8f0fa82867353be10964d273df72a9d9cd2ee6fd2b876";
   };
   "dev" = {
     date = "2017-10-15";

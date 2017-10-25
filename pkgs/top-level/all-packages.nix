@@ -2596,6 +2596,8 @@ lightdm = callPackage ../all-pkgs/l/lightdm { };
 
 lightdm-gtk-greeter = callPackage ../all-pkgs/l/lightdm-gtk-greeter { };
 
+light-locker = callPackage ../all-pkgs/l/light-locker { };
+
 lilv = callPackage ../all-pkgs/l/lilv { };
 
 linenoise = callPackage ../all-pkgs/l/linenoise { };

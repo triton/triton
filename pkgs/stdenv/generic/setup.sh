@@ -736,7 +736,7 @@ genericBuild() {
     if [ "$curPhase" = 'checkPhase' -a -z "$doCheck" ]; then continue; fi
     if [ "$curPhase" = 'installPhase' -a -n "$dontInstall" ]; then continue; fi
     if [ "$curPhase" = 'fixupPhase' -a -n "$dontFixup" ]; then continue; fi
-    if [ "$curPhase" = 'fixupCheckPhase' -a -n "$dontCheckFixup" ]; then continue; fi
+    if [ "$curPhase" = 'fixupCheckPhase' -a -n "$dontFixupCheck" ]; then continue; fi
     if [ "$curPhase" = 'installCheckPhase' -a -z "$doInstallCheck" ]; then continue; fi
     if [ "$curPhase" = 'distPhase' -a -z "$doDist" ]; then continue; fi
 

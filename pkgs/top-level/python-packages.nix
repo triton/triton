@@ -678,7 +678,7 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    acme = buildPythonPackage rec {
      inherit (self.certbot) src version;
      name = "acme-${version}";
-     sourceRoot = "certbot-v${version}/acme";
+     srcRoot = "certbot-v${version}/acme";
 
      propagatedBuildInputs = with self; [
        cryptography

@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     sha256 = "10ckm98rfqfbwr84b8mc1ssgj84wjgkr4dadvx2l7c64sigi66dg";
   };
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   buildInputs = [
     cmake pkgconfig intltool vala makeWrapper

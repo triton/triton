@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     unzip
   ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   configurePhase = ":";
 
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     local UCD
-    for UCD in $sourceRoot/*.txt ; do
+    for UCD in $srcRoot/*.txt ; do
       install -D -m644 -v "$UCD" \
         "$out/share/unicode-character-database/$(basename "$UCD")"
     done

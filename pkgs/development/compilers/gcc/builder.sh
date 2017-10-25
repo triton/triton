@@ -190,7 +190,7 @@ preConfigure() {
     # Perform the build in a different directory.
     mkdir ../build
     cd ../build
-    configureScript=../$sourceRoot/configure
+    configureScript=../$srcRoot/configure
 }
 
 

@@ -95,8 +95,8 @@ stdenv.mkDerivation rec {
       tail -n +"$skip" ./run_files/cuda-linux64-rel-${version}-*.run |
         gzip -cd | tar xvf -
 
-      sourceRoot="$(pwd)"
-      export sourceRoot
+      srcRoot="$(pwd)"
+      export srcRoot
 
       local -a RemoveList
       RemoveList=(
@@ -130,7 +130,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    cp -vR "$sourceRoot" "$out"
+    cp -vR "$srcRoot" "$out"
     rm $out/env-vars
 
     # Change the #error on GCC > 4.9 to a #warning.

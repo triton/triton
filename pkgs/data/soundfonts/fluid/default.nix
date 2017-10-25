@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "1f96bi0y6rms255yr8dfk436azvwk66c99j6p43iavyq8jg7c5f8";
   };
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     install -Dm644 "FluidR3 GM2-2.SF2" $out/share/soundfonts/FluidR3_GM2-2.sf2

@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
 
    src = zookeeper.src;
 
-   setSourceRoot = "export sourceRoot=${zookeeper.name}/src/c";
+   setSourceRoot = "export srcRoot=${zookeeper.name}/src/c";
 
    buildInputs = [ zookeeper bash ];
 

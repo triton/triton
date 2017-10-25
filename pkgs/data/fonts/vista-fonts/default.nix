@@ -13,7 +13,7 @@ stdenv.mkDerivation {
   unpackPhase = "
     cabextract --lowercase --filter ppviewer.cab $src
     cabextract --lowercase --filter '*.TTF' ppviewer.cab
-    sourceRoot=.
+    srcRoot=.
   ";
   
   buildPhase = "true";

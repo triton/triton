@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [unzip];
   phases = [ "unpackPhase" "installPhase" ];
-  sourceRoot = "FiraFonts4106";
+  srcRoot = "FiraFonts4106";
 
   installPhase = ''
     mkdir -p $out/share/fonts/opentype

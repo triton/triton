@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   phases = [ "unpackPhase" "installPhase" ];
 
   postUnpack = ''
-    (cd $sourceRoot; tar -xzf Sources/cndrvcups-common-2.90-1.tar.gz)
-    (cd $sourceRoot; tar -xzf Sources/cndrvcups-lb-2.90-1.tar.gz)
+    (cd $srcRoot; tar -xzf Sources/cndrvcups-common-2.90-1.tar.gz)
+    (cd $srcRoot; tar -xzf Sources/cndrvcups-lb-2.90-1.tar.gz)
   '';
 
   nativeBuildInputs = [ makeWrapper unzip autoreconfHook libtool ];

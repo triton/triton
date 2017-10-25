@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   phases = ["unpackPhase" "installPhase"];
 
-  sourceRoot = "Fonts/STIX-Word";
+  srcRoot = "Fonts/STIX-Word";
 
   installPhase = ''
     mkdir -p $out/share/fonts/opentype

@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  sourceRoot = "./MediaInfoLib/Project/GNU/Library/";
+  srcRoot = "./MediaInfoLib/Project/GNU/Library/";
 
   configureFlags = [
     "--enable-shared"

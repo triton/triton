@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   postUnpack = ''
     mv u-boot-1.1.4 u-boot-3.4.27
     unzip -o $srcAddon
-    sourceRoot=u-boot-3.4.27
+    srcRoot=u-boot-3.4.27
   '';
 
   patches = [ ./gas220.patch ];

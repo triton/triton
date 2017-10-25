@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/chrissimpkins/Hack/releases/download/v${version}/Hack-v${version_}-ttf.zip";
   };
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   nativeBuildInputs = [ unzip ];
 

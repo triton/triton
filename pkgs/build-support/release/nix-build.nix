@@ -163,8 +163,8 @@ stdenv.mkDerivation (
        # "(standards) Configuration"), like `make distcheck' does.
        '' mkdir "../build"
           cd "../build"
-          configureScript="../$sourceRoot/configure"
-          chmod -R a-w "../$sourceRoot"
+          configureScript="../$srcRoot/configure"
+          chmod -R a-w "../$srcRoot"
 
           echo "building out of source tree, from \`$PWD'..."
 

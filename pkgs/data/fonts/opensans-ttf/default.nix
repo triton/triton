@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "1ycn39dijhd3lffmafminrnfmymdig2jvc6i47bb42fx777q97q4";
   };
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     mkdir -p $out/share/fonts/truetype

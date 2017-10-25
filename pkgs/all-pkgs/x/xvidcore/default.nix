@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    sourceRoot="$sourceRoot/build/generic"
+    srcRoot="$sourceRoot/build/generic"
   '';
 
   nativeBuildInputs = [

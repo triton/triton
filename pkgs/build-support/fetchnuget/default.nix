@@ -14,7 +14,7 @@ attrs @
       name = "${baseName}.${version}.zip";
     };
 
-    sourceRoot = ".";
+    srcRoot = ".";
 
     buildInputs = [ unzip ];
 

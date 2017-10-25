@@ -59,7 +59,7 @@ stdenv.mkDerivation {
     inherit sha256;
   };
 
-  sourceRoot = ".dropbox-dist";
+  srcRoot = ".dropbox-dist";
 
   buildInputs = [ makeWrapper patchelf ];
   dontPatchELF = true; # patchelf invoked explicitly below

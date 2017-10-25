@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   preUnpack = ''
     mkdir src

@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    makeFlagsArray+=("FONT_S=$sourceRoot/liberation-fonts-ttf-${version}")
+    makeFlagsArray+=("FONT_S=$srcRoot/liberation-fonts-ttf-${version}")
   '';
 
   installPhase = ''

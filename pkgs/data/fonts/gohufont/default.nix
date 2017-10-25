@@ -23,16 +23,16 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     # convert bdf to psf fonts
-    sourceRoot="$(pwd)"
+    srcRoot="$(pwd)"
     mkdir psf
 
     cd "${bdf2psf}/usr/share/bdf2psf"
-    for i in $sourceRoot/bdf/*.bdf; do
+    for i in $srcRoot/bdf/*.bdf; do
       bdf2psf --fb $i standard.equivalents \
                       ascii.set+useful.set+linux.set 512 \
-                      "$sourceRoot/psf/$(basename $i .bdf).psf"
+                      "$srcRoot/psf/$(basename $i .bdf).psf"
     done
-    cd "$sourceRoot"
+    cd "$srcRoot"
 
     # install the psf fonts (for the virtual console)
     fontDir="$out/share/consolefonts"

@@ -81,11 +81,11 @@ in stdenv.mkDerivation rec {
   dontUseCmakeConfigure = true;
 
   postUnpack = ''
-    mkdir -v $sourceRoot/src
-  '' + (stdenv.lib.concatMapStrings (f: "ln -sfv ${f} $sourceRoot/src/${f.outputHash}-${f.name}\nln -sfv ${f} $sourceRoot/src/${f.name}\n") srcs.third_party)
+    mkdir -v $srcRoot/src
+  '' + (stdenv.lib.concatMapStrings (f: "ln -sfv ${f} $srcRoot/src/${f.outputHash}-${f.name}\nln -sfv ${f} $sourceRoot/src/${f.name}\n") srcs.third_party)
   + ''
-    ln -sv ${srcs.help} $sourceRoot/src/${srcs.help.name}
-    ln -svf ${srcs.translations} $sourceRoot/src/${srcs.translations.name}
+    ln -sv ${srcs.help} $srcRoot/src/${srcs.help.name}
+    ln -svf ${srcs.translations} $srcRoot/src/${srcs.translations.name}
   '';
 
   QT4DIR = qt4;

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = linux-firmware;
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   preUnpack = ''
     mkdir src

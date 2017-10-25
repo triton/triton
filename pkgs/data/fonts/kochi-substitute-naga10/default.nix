@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     sha256 = "f4d69b24538833bf7e2c4de5e01713b3f1440960a6cc2a5993cb3c68cd23148c";
   };
 
-  sourceRoot = "kochi-substitute-${version}";
+  srcRoot = "kochi-substitute-${version}";
 
   installPhase = ''
     mkdir -p $out/share/fonts/truetype

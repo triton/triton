@@ -50,8 +50,8 @@ stdenv.mkDerivation rec {
 
       tail -n +"$skip" "$src" | gzip -cd | tar xvf -
 
-      sourceRoot="$(pwd)"
-      export sourceRoot
+      srcRoot="$(pwd)"
+      export srcRoot
     '';
 
   nvLibPath = makeSearchPath "lib" buildInputs;

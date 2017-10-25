@@ -28,7 +28,7 @@ stdenv.mkDerivation {
     })
   ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   nativeBuildInputs = [
     autoconf

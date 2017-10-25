@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ unzip ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   phases = [ "unpackPhase" "installPhase" ];
   unpackPhase = ''

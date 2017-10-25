@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    sourceRoot="$(pwd)"
+    srcRoot="$(pwd)"
   '';
 
   configurePhase = ":";
@@ -45,9 +45,9 @@ stdenv.mkDerivation rec {
   buildPhase = ":";
 
   installPhase = ''
-    install -D -m 644 -v "$sourceRoot/libpepflashplayer.so" \
+    install -D -m 644 -v "$srcRoot/libpepflashplayer.so" \
       "$out/lib/PepperFlash/libpepflashplayer.so"
-    install -D -m 644 -v "$sourceRoot/manifest.json" \
+    install -D -m 644 -v "$srcRoot/manifest.json" \
       "$out/lib/PepperFlash/manifest.json"
   '';
 

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [unzip];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   unpackPhase = "true";
 

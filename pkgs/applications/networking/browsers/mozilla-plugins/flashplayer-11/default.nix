@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ unzip ];
 
   postUnpack = ''
-    pushd $sourceRoot
+    pushd $srcRoot
     tar -xvzf *${arch}/*${suffix}.tar.gz
 
     ${ lib.optionalString is-i686 ''
@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
     popd
   '';
 
-  sourceRoot = "fp_${version}_archive";
+  srcRoot = "fp_${version}_archive";
 
   dontStrip = true;
   dontPatchELF = true;

@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    sourceRoot="$(pwd)/$sourceRoot"
+    srcRoot="$(pwd)/$sourceRoot"
   '';
 
   patches = [
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     unset CC
     configureFlagsArray+=(
-      "CFLAGS=-I$sourceRoot/interface"
+      "CFLAGS=-I$srcRoot/interface"
     )
   '';
 

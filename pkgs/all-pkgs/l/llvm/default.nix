@@ -55,7 +55,7 @@ stdenv.mkDerivation {
     hashOutput = false;
   });
 
-  sourceRoot = "llvm-${replaceChars ["-"] [""] version}.src";
+  srcRoot = "llvm-${replaceChars ["-"] [""] version}.src";
 
   nativeBuildInputs = [
     cmake

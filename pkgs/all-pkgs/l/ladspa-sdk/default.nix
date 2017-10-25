@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    sourceRoot="$sourceRoot/src"
+    srcRoot="$sourceRoot/src"
   '';
 
   prePatch = /* Patches expect the actual source root */ ''

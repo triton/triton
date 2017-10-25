@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   phases = [ "unpackPhase" "installPhase" ];
 
-  sourceRoot = "./";
+  srcRoot = "./";
 
   unpackCmd = ''
     ttfName=$(basename $(stripHash $curSrc; echo $strippedName))

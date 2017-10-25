@@ -56,7 +56,7 @@ rec {
 
     phases = "unpackPhase installPhase";
 
-    sourceRoot = ".";
+    srcRoot = ".";
 
     installPhase = ''
       mkdir -p $out/share/fonts/noto

@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ unzip ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     mkdir -p $out/share/fonts/hanazono

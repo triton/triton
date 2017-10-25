@@ -52,7 +52,7 @@ self: super: {
     };
     jailbreak = false;
     doHaddock = false;
-    postUnpack = "sourceRoot+=/Cabal";
+    postUnpack = "srcRoot+=/Cabal";
   });
   jailbreak-cabal = super.jailbreak-cabal.override {
     Cabal = self.Cabal_1_23_0_0;

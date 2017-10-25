@@ -14,7 +14,7 @@ let
     };
 
     setSourceRoot = ''
-      sourceRoot=$( echo SourceHanSans* )
+      srcRoot=$( echo SourceHanSans* )
     '';
 
     installPhase = ''

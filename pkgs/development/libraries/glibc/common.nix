@@ -209,7 +209,7 @@ stdenv.mkDerivation ({
     mkdir ../build
     cd ../build
 
-    configureScript="`pwd`/../$sourceRoot/configure"
+    configureScript="`pwd`/../$srcRoot/configure"
 
     ${stdenv.lib.optionalString (stdenv.cc.libc != null)
       ''makeFlags="$makeFlags BUILD_LDFLAGS=-Wl,-rpath,${stdenv.cc.libc}/lib"''

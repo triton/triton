@@ -167,7 +167,7 @@ let
 
         mkdir -p $dev/lib/modules/${modDirVersion}
         cd ..
-        mv $sourceRoot $dev/lib/modules/${modDirVersion}/source
+        mv $srcRoot $dev/lib/modules/${modDirVersion}/source
         cd $dev/lib/modules/${modDirVersion}/source
 
         mv $buildRoot/.config $buildRoot/Module.symvers $TMPDIR

@@ -44,15 +44,15 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postUnpack = /* Make sure sourceRoot is an absolute path */ ''
-    pushd "$sourceRoot"
-      sourceRoot="$(pwd)"
+  postUnpack = /* Make sure srcRoot is an absolute path */ ''
+    pushd "$srcRoot"
+      srcRoot="$(pwd)"
     popd
   '';
 
   prePatch = ''
-    cp -v ${./gtest.pc.in} $sourceRoot/googletest/gtest.pc.in
-    sed -i $sourceRoot/googletest/gtest.pc.in \
+    cp -v ${./gtest.pc.in} $srcRoot/googletest/gtest.pc.in
+    sed -i $srcRoot/googletest/gtest.pc.in \
       -e 's|(Version:) .+|1 ${version}|'
   '';
 
@@ -61,18 +61,18 @@ stdenv.mkDerivation rec {
   '';
 
   preAutoreconf = ''
-    cd "$sourceRoot/googletest"
+    cd "$srcRoot/googletest"
   '';
 
   postAutoreconf = ''
-    cd "$sourceRoot"
+    cd "$srcRoot"
   '';
 
   preConfigure = ''
-    cd "$sourceRoot/googletest"
+    cd "$srcRoot/googletest"
       ./configure --with-pthreads
       make -f ./Makefile -j$NIX_BUILD_CORES -l$NIX_BUILD_CORES fused-gtest
-    cd "$sourceRoot"
+    cd "$srcRoot"
   '';
 
   cmakeFlags = [
@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
-    pushd $sourceRoot/googletest
+    pushd $srcRoot/googletest
       install -D -m755 -v scripts/gtest-config -t "$out"/bin
       install -D -m644 -v m4/gtest.m4 -t "$out"/share/aclocal
       install -D -m644 -v fused-src/gtest/* -t "$out"/share/gtest/src/src

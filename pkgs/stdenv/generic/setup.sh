@@ -415,37 +415,37 @@ unpackPhase() {
   # Find the source directory.
   if [ -n "$setSourceRoot" ]; then
     runOneHook 'setSourceRoot'
-  elif [ -z "$sourceRoot" ]; then
-    sourceRoot=
+  elif [ -z "$srcRoot" ]; then
+    srcRoot=
     for i in *; do
       if [ -d "$i" ]; then
         case $dirsBefore in
           *\ $i\ *)
             ;;
           *)
-            if [ -n "$sourceRoot" ]; then
+            if [ -n "$srcRoot" ]; then
               echo "unpacker produced multiple directories"
               exit 1
             fi
-            sourceRoot="$i"
+            srcRoot="$i"
             ;;
         esac
       fi
     done
   fi
 
-  if [ -z "$sourceRoot" ]; then
+  if [ -z "$srcRoot" ]; then
     echo "unpacker appears to have produced no directories"
     exit 1
   fi
 
-  echo "source root is $sourceRoot"
+  echo "source root is $srcRoot"
 
   # By default, add write permission to the sources.  This is often
   # necessary when sources have been copied from other store
   # locations.
   if [ "$dontMakeSourcesWritable" != 1 ]; then
-    chmod -R u+w "$sourceRoot"
+    chmod -R u+w "$srcRoot"
   fi
 
   runHook 'postUnpack'
@@ -753,7 +753,7 @@ genericBuild() {
     eval "${!curPhase:-$curPhase}"
 
     if [ "$curPhase" = 'unpackPhase' ]; then
-      cd "${sourceRoot:-.}"
+      cd "${srcRoot:-.}"
     fi
 
     if [ -n "$tracePhases" ]; then

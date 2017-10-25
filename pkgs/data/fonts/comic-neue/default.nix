@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ unzip ];
   phases = [ "unpackPhase" "installPhase" ];
-  sourceRoot = name;
+  srcRoot = name;
 
   installPhase = ''
     mkdir -vp $out/share/fonts/truetype $out/share/fonts/opentype $out/share/fonts/EOT $out/share/fonts/WOFF $out/share/fonts/WOFF2 $out/share/doc/${name}

@@ -73,7 +73,7 @@ go.stdenv.mkDerivation (
     # Extract the source
     cd "$NIX_BUILD_TOP"
     mkdir -p "go/src/$(dirname "$goPackagePath")"
-    mv "$sourceRoot" "go/src/$goPackagePath"
+    mv "$srcRoot" "go/src/$goPackagePath"
 
     # Deal with gx dependencies
     if [ -d "go/src/$goPackagePath/vendor/gx" ]; then

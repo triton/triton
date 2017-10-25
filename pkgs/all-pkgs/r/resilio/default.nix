@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     patchelf
   ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     install -D -m755 -v rslsync $out/bin/rslsync

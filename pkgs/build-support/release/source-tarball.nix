@@ -106,7 +106,7 @@ stdenv.mkDerivation (
       # frightening warnings about it).
       touch -d "2000-01-01 00:00:00 UTC" modern
       touch -d "1970-01-01 00:00:00 UTC" then
-      find $sourceRoot ! -newer then -print0 | xargs -0r touch --reference modern
+      find $srcRoot ! -newer then -print0 | xargs -0r touch --reference modern
       eval "$nextPostUnpack"
     '';
 

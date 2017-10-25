@@ -17,7 +17,7 @@ let
   stdenv.mkDerivation rec {
     inherit name src meta;
     buildInputs = [ unzip ];
-    sourceRoot = ".";
+    srcRoot = ".";
     phases = "unpackPhase installPhase" + (if isItaly then "patchPhase" else "");
     unpackCmd = "unzip $src ${readmeFile} ${dictFileName}.dic ${dictFileName}.aff";
     prePatch = if isItaly then ''

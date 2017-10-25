@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     libarchive
   ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   preUnpack = ''
     mkdir src

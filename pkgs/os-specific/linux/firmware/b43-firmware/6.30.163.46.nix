@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   phases = [ "unpackPhase" "installPhase" ];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     mkdir $out

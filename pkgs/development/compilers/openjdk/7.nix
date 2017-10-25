@@ -49,7 +49,7 @@ let
       (fetchjava "jaxp" "0ag0vql0vpkfx0kwb8s28snpy8nvbs63fb34g1fdrs8raip7yczz")
     ];
 
-    sourceRoot = ".";
+    srcRoot = ".";
 
     outputs = [ "out" "jre" ];
 

@@ -39,8 +39,8 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    mkdir -p $sourceRoot/pppd/plugins
-    tar zxvf ${ppp-dhcp} -C $sourceRoot/pppd/plugins
+    mkdir -p $srcRoot/pppd/plugins
+    tar zxvf ${ppp-dhcp} -C $srcRoot/pppd/plugins
   '';
 
   patches = [

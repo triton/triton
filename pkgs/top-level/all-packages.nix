@@ -248,7 +248,7 @@ let  # BEGIN let/in 1
     writeScript "ensure-newer-sources-hook.sh" ''
       postUnpackHooks+=(_ensureNewerSources)
       _ensureNewerSources() {
-        '${pkgs.findutils}/bin/find' "$sourceRoot" \
+        '${pkgs.findutils}/bin/find' "$srcRoot" \
           '!' -newermt '${year}-01-01' \
           -exec touch -h -d '${year}-01-02' '{}' '+'
       }

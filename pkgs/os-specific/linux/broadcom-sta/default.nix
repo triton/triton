@@ -25,9 +25,9 @@ stdenv.mkDerivation {
   makeFlags = "KBASE=${kernel.dev}/lib/modules/${kernel.modDirVersion}";
 
   unpackPhase = ''
-      sourceRoot=broadcom-sta
-      mkdir "$sourceRoot"
-      tar xvf "$src" -C "$sourceRoot"
+      srcRoot=broadcom-sta
+      mkdir "$srcRoot"
+      tar xvf "$src" -C "$srcRoot"
   '';
 
   installPhase =

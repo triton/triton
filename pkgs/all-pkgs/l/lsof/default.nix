@@ -13,8 +13,8 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    tar -xvf $sourceRoot/lsof_''${version}_src.tar
-    sourceRoot="lsof_''${version}_src"
+    tar -xvf $srcRoot/lsof_''${version}_src.tar
+    srcRoot="lsof_''${version}_src"
   '';
 
   postPatch = ''

@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
 
       buildPhase = ''
         cd ..
-        tar Jcfv ${name}.tar.xz $sourceRoot
+        tar Jcfv ${name}.tar.xz $srcRoot
       '';
 
       installPhase = ''

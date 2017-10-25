@@ -34,7 +34,7 @@ updateSourceDateEpoch() {
 postUnpackHooks+=(_updateSourceDateEpochFromSourceRoot)
 
 _updateSourceDateEpochFromSourceRoot() {
-    if [ -n "$sourceRoot" ]; then
-        updateSourceDateEpoch "$sourceRoot"
+    if [ -n "$srcRoot" ]; then
+        updateSourceDateEpoch "$srcRoot"
     fi
 }

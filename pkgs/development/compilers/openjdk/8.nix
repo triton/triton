@@ -67,7 +67,7 @@ let
       (fetchjava "nashorn" "a01b30245b84d50607f3336d37c40a9f347b8ff0eb2311670be549f99edb05bc")
     ];
 
-    sourceRoot = ".";
+    srcRoot = ".";
 
     outputs = [ "out" "jre" ];
 

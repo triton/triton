@@ -11,7 +11,7 @@ stdenv.mkDerivation {
 
   buildInputs = [unzip];
 
-  sourceRoot = ".";
+  srcRoot = ".";
 
   installPhase = ''
     mkdir -p $out/texmf-dist/fonts/opentype

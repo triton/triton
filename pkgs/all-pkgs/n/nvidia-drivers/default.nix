@@ -172,8 +172,8 @@ stdenv.mkDerivation {
 
       tail -n +"$skip" "$src" | xz -d | tar xvf -
 
-      sourceRoot="$(pwd)"
-      export sourceRoot
+      srcRoot="$(pwd)"
+      export srcRoot
 
       runHook 'postUnpack'
     '';
@@ -237,7 +237,7 @@ stdenv.mkDerivation {
     # Create the kernel module
     echo "Building the NVIDIA Linux kernel modules against: $kernel"
 
-    cd "$sourceRoot/kernel"
+    cd "$srcRoot/kernel"
 
     kernelVersion="$(ls "$kernel/lib/modules")"
     [ ! -z "$kernelVersion" ]
@@ -254,7 +254,7 @@ stdenv.mkDerivation {
       -l$NIX_BUILD_CORES \
       module
 
-    cd "$sourceRoot"
+    cd "$srcRoot"
   '');
 
   installPhase = optionalString buildKernelspace (

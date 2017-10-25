@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0x7cz6hvhpil1rh03rax9zsfzm54bh7r4bbrq8rz673gl9h47v0v";
   };
 
-  setSourceRoot = "sourceRoot=`pwd`";
+  setSourceRoot = "srcRoot=`pwd`";
 
   buildInputs = [ fontforge ];
 

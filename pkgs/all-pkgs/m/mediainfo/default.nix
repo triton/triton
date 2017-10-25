@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  sourceRoot = "./MediaInfo/Project/GNU/${target}/";
+  srcRoot = "./MediaInfo/Project/GNU/${target}/";
 
   preConfigure = ''
     ./autogen.sh

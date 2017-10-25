@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   buildInputs = [unzip];
   phases = ["unpackPhase" "installPhase"];
 
-  sourceRoot = "quattrocento-sans-v${version}";
+  srcRoot = "quattrocento-sans-v${version}";
 
   installPhase = ''
     mkdir -p $out/share/fonts/opentype

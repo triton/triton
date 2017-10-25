@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ automake autoconf libtool ];
   configureFlags = [ "--enable-shared" ];
 
-  sourceRoot = "./ZenLib/Project/GNU/Library/";
+  srcRoot = "./ZenLib/Project/GNU/Library/";
 
   preConfigure = "sh autogen.sh";
 

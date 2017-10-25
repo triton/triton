@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    sourceRoot="$sourceRoot/source"
+    srcRoot="$sourceRoot/source"
   '';
 
   configureFlags = [

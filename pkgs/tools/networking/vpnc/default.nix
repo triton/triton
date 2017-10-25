@@ -9,8 +9,8 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    mv $sourceRoot/trunk/* $sourceRoot/.
-    rm -r $sourceRoot/{trunk,branches,tags}
+    mv $srcRoot/trunk/* $sourceRoot/.
+    rm -r $srcRoot/{trunk,branches,tags}
   '';
 
   patches = [ ./makefile.patch ./no_default_route_when_netmask.patch ];

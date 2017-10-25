@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    rm -v $sourceRoot/configure{,.ac}
+    rm -v $srcRoot/configure{,.ac}
   '';
 
   patches = [

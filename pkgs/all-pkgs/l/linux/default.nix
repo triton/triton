@@ -187,13 +187,13 @@ let
       cd $buildRoot
 
       # Get a basic config file for later refinement with $generateConfig.
-      make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch
+      make -C ../$srcRoot O=$PWD $kernelBaseConfig ARCH=$arch
 
       # Create the config file.
       echo "generating kernel configuration..."
       echo "$kernelConfig" > kernel-config
       DEBUG=1 ARCH=$arch KERNEL_CONFIG=kernel-config AUTO_MODULES=$autoModules \
-           SRC=../$sourceRoot perl -w $generateConfig
+           SRC=../$srcRoot perl -w $generateConfig
     '';
 
     installPhase = "mv .config $out";

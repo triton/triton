@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    export sourceRoot="$sourceRoot/cpp"
+    export srcRoot="$sourceRoot/cpp"
   '';
 
   preConfigure = ''

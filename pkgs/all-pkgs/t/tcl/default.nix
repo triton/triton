@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    sourceRoot="$sourceRoot/unix"
+    srcRoot="$sourceRoot/unix"
   '';
 
   postPatch = ''

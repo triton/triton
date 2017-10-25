@@ -46,6 +46,7 @@
 , snappy
 , spice
 , spice-protocol
+, texinfo
 , usbredir
 , util-linux_lib
 , vde2
@@ -74,6 +75,7 @@ stdenv.mkDerivation rec {
     iasl
     perl
     python
+    texinfo
   ];
 
   buildInputs = [
@@ -133,7 +135,7 @@ stdenv.mkDerivation rec {
     "--audio-drv-list=alsa,sdl,pa"  # TODO: oss
     "--enable-system"
     "--enable-user"
-    "--disable-docs"
+    "--enable-docs"
     "--disable-guest-agent"
     "--disable-guest-agent-msi"
     "--enable-modules"

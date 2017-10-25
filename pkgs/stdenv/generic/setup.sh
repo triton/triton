@@ -444,7 +444,7 @@ unpackPhase() {
   # By default, add write permission to the sources.  This is often
   # necessary when sources have been copied from other store
   # locations.
-  if [ "$dontMakeSourcesWritable" != 1 ]; then
+  if [ -n "${makeSourcesWritable-true}" ]; then
     chmod -R u+w "$srcRoot"
   fi
 

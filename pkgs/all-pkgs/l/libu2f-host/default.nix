@@ -3,31 +3,40 @@
 
 , hidapi
 , json-c
+, openssl
 }:
 
 stdenv.mkDerivation rec {
-  name = "libu2f-host-1.1.3";
+  name = "libu2f-host-1.1.4";
 
   src = fetchurl {
     url = "https://developers.yubico.com/libu2f-host/Releases/${name}.tar.xz";
+    multihash = "QmXvcqDudTWNmd5BYZo5BEuVm6GfRQ9C6skmF3GPe18e8K";
     hashOutput = false;
-    multihash = "QmS21DAPfqHzmimnPEXqpXiBFHf28uQ4Vco2vxpx8CvgRH";
-    sha256 = "3e00c1910de64e2c90f20c05bb468b183ffed05e13cb340442d206014752039d";
+    sha256 = "6043ec020d96358a4887a3ff09492c4f9f6b5bccc48dcdd8f28b15b1c6157a6f";
   };
 
   buildInputs = [
     hidapi
     json-c
+    openssl
   ];
   
   # We don't want the old udev rules by default
   postPatch = ''
+    grep -q 'udevrulesfile=70-old-u2f.rules' configure
     sed -i 's,udevrulesfile=70-old-u2f.rules,udevrulesfile=70-u2f.rules,g' configure
   '';
 
   preConfigure = ''
     configureFlagsArray+=("--with-udevrulesdir=$out/lib/udev/rules.d")
   '';
+
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--with-openssl"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

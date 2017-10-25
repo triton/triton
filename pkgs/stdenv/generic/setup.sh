@@ -330,7 +330,7 @@ paxmark() { true; }
 # then go to the build directory and source in `env-vars' to reproduce
 # the environment used for building.
 dumpVars() {
-  if [ "$noDumpEnvVars" != 1 ]; then
+  if [ -n "${dumpEnvVars-true}" ]; then
     export > "$NIX_BUILD_TOP/env-vars" || true
   fi
 }

@@ -25,7 +25,7 @@ cmakeConfigurePhase() {
       cd $TMPDIR/build
     fi
 
-    if [ -z "$dontAddPrefix" ]; then
+    if [ -n "${addPrefix-true}" ]; then
       cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")
     fi
 

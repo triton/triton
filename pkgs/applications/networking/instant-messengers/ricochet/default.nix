@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureScript = "qmake";
-  dontAddPrefix = true;
+  addPrefix = false;
   configureFlags = [ "PREFIX=$(out)" "DEFINES+=RICOCHET_NO_PORTABLE" ];
 
   installPhase = ''

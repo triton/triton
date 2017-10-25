@@ -14,7 +14,7 @@ let
 
       buildInputs = [aspell which];
 
-      dontAddPrefix = true;
+      addPrefix = false;
 
       preBuild = "makeFlagsArray=(dictdir=$out/lib/aspell datadir=$out/lib/aspell)";
 

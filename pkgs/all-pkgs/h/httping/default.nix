@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
-  dontAddPrefix = true;
+  addPrefix = false;
 
   configureFlags = [
     "--with-tfo"

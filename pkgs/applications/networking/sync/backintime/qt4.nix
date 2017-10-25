@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   preConfigure = "cd qt4";
   configureFlags = [  ];
 
-  dontAddPrefix = true;
+  addPrefix = false;
 
   preFixup =
       ''

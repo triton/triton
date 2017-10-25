@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   configureScript = "./genMakefiles";
 
   # Not a standard configure script
-  dontAddPrefix = true;
+  addPrefix = false;
 
   meta = with lib; {
     description = "Libraries for RTP/RTCP/RTSP/SIP multimedia streaming";

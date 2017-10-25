@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   preConfigure = "cd common";
 
-  dontAddPrefix = true;
+  addPrefix = false;
 
   preFixup =
     ''

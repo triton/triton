@@ -14,7 +14,7 @@ waf_unpack() {
 wafConfigurePhase() {
   eval "$preConfigure"
 
-  if [ -z "$dontAddPrefix" ]; then
+  if [ -n "${addPrefix-true}" ]; then
     wafFlagsArray+=("--prefix" "$prefix")
   fi
 

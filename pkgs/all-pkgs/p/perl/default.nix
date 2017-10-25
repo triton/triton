@@ -111,7 +111,7 @@ stdenv.mkDerivation rec {
     unset LD_LIBRARY_PATH
   '';
 
-  dontAddPrefix = true;
+  addPrefix = false;
 
   # This is broken with make 4.2 and perl 5.22.1
   parallelInstall = false;

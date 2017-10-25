@@ -489,7 +489,7 @@ configurePhase() {
     done
   fi
 
-  if [ -z "$dontAddPrefix" ]; then
+  if [ -n "${addPrefix-true}" ]; then
     configureFlags="${prefixKey:---prefix=}$prefix $configureFlags"
   fi
 

@@ -82,8 +82,6 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
-  parallelBuild = false;
-
   meta = with lib; {
     description = "A simple GTK+ frontend for mpv";
     homepage = https://github.com/gnome-mpv/gnome-mpv;

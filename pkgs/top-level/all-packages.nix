@@ -3964,6 +3964,8 @@ yelp-xsl_3-20 = callPackage ../all-pkgs/y/yelp-xsl {
 };
 yelp-xsl = callPackageAlias "yelp-xsl_3-20" { };
 
+yubikey-manager = pkgs.python3Packages.yubikey-manager;
+
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 
 zenity_generics = overrides: callPackage ../all-pkgs/z/zenity ({

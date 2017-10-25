@@ -630,6 +630,8 @@ xcb-proto = callPackage ../all-pkgs/x/xcb-proto { };
 
 youtube-dl = callPackage ../all-pkgs/y/youtube-dl { };
 
+yubikey-manager = callPackage ../all-pkgs/y/yubikey-manager { };
+
 zbase32 = callPackage ../all-pkgs/z/zbase32 { };
 
 zfec = callPackage ../all-pkgs/z/zfec { };

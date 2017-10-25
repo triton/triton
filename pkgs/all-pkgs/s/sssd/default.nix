@@ -28,6 +28,7 @@
 , popt
 , python2Packages
 , samba_client
+, systemd-dummy
 , systemd_lib
 , talloc
 , tdb
@@ -52,13 +53,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "sssd-1.15.3";
+  name = "sssd-1.16.0";
 
   src = fetchurl {
     url = "https://releases.pagure.org/SSSD/sssd/${name}.tar.gz";
     multihash = "QmdKnfSBrvXgYcQwiVnCZax4v4VcYWNwJciXDS3JNHH69d";
     hashOutput = false;
-    sha256 = "6e508dc71c0e132b15db1db29d2e309d610027e89f7097ead5d7c9867f6d6634";
+    sha256 = "c581a6e5365cef87fca419c0c9563cf15eadbb682863d648d85ffcded7a3940f";
   };
 
   nativeBuildInputs = [
@@ -90,15 +91,12 @@ stdenv.mkDerivation rec {
     python2Packages.python
     python2Packages.python-ldap
     samba_client
+    systemd-dummy
     systemd_lib
     talloc
     tdb
     tevent
   ];
-
-  postPatch = ''
-    sed -i 's,HAVE_SYSTEMD=no,HAVE_SYSTEMD=yes,g' configure
-  '';
 
   # Configure doesn't correctly export this value
   SGML_CATALOG_FILES = xmlcatalog;
@@ -116,16 +114,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--with-initscript=systemd"
-    "--with-nscd=/run/current-system/bin/nscd"
-    "--with-ipa-getkeytab=/run/current-system/bin/ipa-getkeytab"
+    "--with-nscd=/run/current-system/sw/bin/nscd"
+    "--with-ipa-getkeytab=/run/current-system/sw/bin/ipa-getkeytab"
+    "--with-session-recording-shell=/run/current-system/sw/bin/tlog-rec-session"
     "--without-python3-bindings"
     "--without-selinux"
     "--without-semanage"
   ];
-
-  preBuild = ''
-    cat Makefile
-  '';
 
   preInstall = ''
     installFlagsArray+=(

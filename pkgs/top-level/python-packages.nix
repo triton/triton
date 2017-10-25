@@ -467,6 +467,8 @@ pyrss2gen = callPackage ../all-pkgs/p/pyrss2gen { };
 
 pysaml2 = callPackage ../all-pkgs/p/pysaml2 { };
 
+pyscard = callPackage ../all-pkgs/p/pyscard { };
+
 pytest = callPackage ../all-pkgs/p/pytest { };
 
 pytest-benchmark = callPackage ../all-pkgs/p/pytest-benchmark { };

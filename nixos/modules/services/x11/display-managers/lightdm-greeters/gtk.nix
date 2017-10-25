@@ -48,6 +48,7 @@ let
     theme-name = ${cfg.theme.name}
     icon-theme-name = ${cfg.iconTheme.name}
     background = ${ldmcfg.background}
+    indicators=~host;~spacer;~clock;~spacer;~session;~language;~a11y;~power;~
     '';
 
 in

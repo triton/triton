@@ -471,7 +471,7 @@ patchPhase() {
   runHook 'postPatch'
 }
 
-fixLibtool() {
+libtoolFix() {
   sed -i -e 's^eval sys_lib_.*search_path=.*^^' "$1"
 }
 
@@ -482,10 +482,10 @@ configurePhase() {
     configureScript=./configure
   fi
 
-  if [ -z "$dontFixLibtool" ]; then
+  if [ -n "${fixLibtool-true}" ]; then
     find . -iname "ltmain.sh" | while read i; do
       echo "fixing libtool script $i"
-      fixLibtool "$i"
+      libtoolFix "$i"
     done
   fi
 

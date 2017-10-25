@@ -1,14 +1,12 @@
 { stdenv
-, autoconf
-, autoconf-archive
-, automake
 , fetchFromGitHub
 , gettext
 , intltool
 , lib
-, libtool
 , makeWrapper
-, pkgconfig
+, meson
+, ninja
+, python3
 
 , adwaita-icon-theme
 , appstream-glib
@@ -29,7 +27,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2017-08-10";
+  version = "2017-10-23";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
@@ -38,19 +36,17 @@ stdenv.mkDerivation rec {
     version = 3;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "2e13ab37fffdb2124d62872994de6b79a128f9cb";
-    sha256 = "cbd5d22ba1722e980f59290ebcdb0ed8a4351631e4010bc2c337344de89e7934";
+    rev = "0f3c23f0d752af1eff7dec7ca95143e4b4f1eb97";
+    sha256 = "acdf223aad33b507732d5d67838070ddec360d31ce6132a4d5bcd90711310443";
   };
 
   nativeBuildInputs = [
-    autoconf
-    autoconf-archive
-    automake
     gettext
     intltool
-    libtool
     makeWrapper
-    pkgconfig
+    meson
+    ninja
+    python3
   ];
 
   buildInputs = [
@@ -69,20 +65,12 @@ stdenv.mkDerivation rec {
     wayland
   ];
 
-  preConfigure = /* Ignore autogen.sh and run the commands manually */ ''
-    aclocal --install -I m4
-    intltoolize --copy --automake
-    autoreconf --force --install -Wno-portability
+  postPatch = ''
+    patchShebangs src/generate_authors.py
+  '' + /* Post-install is already handled by setup-hooks */ ''
+    sed -i meson.build \
+      -e '/meson_post_install.py/d'
   '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-schemas-compile"
-    "--disable-debug"
-    "--enable-opencl-cb"
-    "--enable-appstream-util"
-  ];
 
   preFixup = ''
     wrapProgram $out/bin/gnome-mpv  \

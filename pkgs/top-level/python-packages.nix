@@ -493,6 +493,8 @@ pytz = callPackage ../all-pkgs/p/pytz { };
 
 pyudev = callPackage ../all-pkgs/p/pyudev { };
 
+pyusb = callPackage ../all-pkgs/p/pyusb { };
+
 pyutil = callPackage ../all-pkgs/p/pyutil { };
 
 pywbem = callPackage ../all-pkgs/p/pywbem { };

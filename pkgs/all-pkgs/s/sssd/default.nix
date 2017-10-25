@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://releases.pagure.org/SSSD/sssd/${name}.tar.gz";
-    multihash = "QmdKnfSBrvXgYcQwiVnCZax4v4VcYWNwJciXDS3JNHH69d";
+    multihash = "Qmdc59CttdA7knVBxW1nZe8q74SeBuytCxDtYtgqmFoppc";
     hashOutput = false;
     sha256 = "c581a6e5365cef87fca419c0c9563cf15eadbb682863d648d85ffcded7a3940f";
   };

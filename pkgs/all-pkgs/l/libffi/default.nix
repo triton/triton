@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     ln -sv "$out/lib/"libffi*/include $out/include
   '';
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     description = "A foreign function call interface library";

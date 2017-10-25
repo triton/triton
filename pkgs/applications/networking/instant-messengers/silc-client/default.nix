@@ -17,7 +17,7 @@ stdenv.mkDerivation {
 
   enableParallelBuilding = true;
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   configureFlags = "--with-ncurses=${ncurses}";
 

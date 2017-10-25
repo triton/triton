@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     sha256 = "4814781d395b0ef093b21a08e8e6e0bd3dab8762f9935bbfb71679b0dea7c3e9";
   };
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.canonware.com/jemalloc/index.html;

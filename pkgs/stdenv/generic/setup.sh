@@ -501,7 +501,7 @@ configurePhase() {
   fi
 
   # By default, disable static builds.
-  if [ -z "$dontDisableStatic" ]; then
+  if [ -n "${disableStatic-true}" ]; then
     if grep -q enable-static "$configureScript" 2>/dev/null; then
       configureFlags="--disable-static $configureFlags"
     fi

@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   '';
 
   # We need this for embedded things like busybox
-  dontDisableStatic = true;
+  disableStatic = false;
 
   # Dont depend on a shell potentially from the bootstrap
   dontPatchShebangs = true;

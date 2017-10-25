@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     "--enable-curses"
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

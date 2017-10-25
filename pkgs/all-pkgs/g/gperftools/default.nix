@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   # some packages want to link to the static tcmalloc_minimal
   # to drop the runtime dependency on gperftools
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     homepage = https://code.google.com/p/gperftools/;

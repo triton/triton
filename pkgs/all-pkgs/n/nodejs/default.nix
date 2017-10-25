@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     "--with-intl=system-icu"
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   setupHook = ./setup-hook.sh;
 

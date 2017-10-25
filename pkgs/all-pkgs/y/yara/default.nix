@@ -38,7 +38,7 @@ stdenv.mkDerivation {
   ];
 
   # This is broken with their build system
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with lib; {
     maintainers = with maintainers; [

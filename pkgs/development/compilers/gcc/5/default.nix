@@ -271,7 +271,7 @@ stdenv.mkDerivation ({
 
   ABSOLUTE_LIBTOOL_EXCLUDED = libPathExcludes;
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   configureFlags = "
     --enable-lto

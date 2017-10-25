@@ -184,7 +184,7 @@ stdenv.mkDerivation rec {
   # ];
 
   # There is a build bug with `--disable-static`
-  dontDisableStatic = true;
+  disableStatic = false;
 
   postInstall = ''
     find $out/lib -name \*.a -delete

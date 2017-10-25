@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     "--disable-shared"
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     description = "A fast lexical analyser generator";

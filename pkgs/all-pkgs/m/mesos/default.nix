@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   version = "0.26.0";
   name = "mesos-${version}";
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   src = fetchurl {
     url = "mirror://apache/mesos/${version}/${name}.tar.gz";

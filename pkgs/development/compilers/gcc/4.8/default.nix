@@ -291,7 +291,7 @@ stdenv.mkDerivation ({
     export CFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CFLAGS_FOR_TARGET"
   '';
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   configureFlags = "
     ${if stdenv.isSunOS then

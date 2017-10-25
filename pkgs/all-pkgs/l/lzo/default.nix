@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     "--enable-shared"
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     description = "Real-time data (de)compression library";

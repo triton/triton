@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     autoreconfHook
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     description = "Library and tools for non-uniform memory access (NUMA) machines";

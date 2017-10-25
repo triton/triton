@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     "--enable-static"
   ];
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     homepage = http://code.google.com/p/snappy/;

@@ -139,7 +139,7 @@ stdenv.mkDerivation ({
       sed -i 's,\(#[ ]*\)warning\( _FORTIFY_SOURCE\),\1error\2,g' include/features.h
     '';
 
-  dontDisableStatic = true; # Disabling static is not recognized by glibc
+  disableStatic = false; # Disabling static is not recognized by glibc
 
   configureFlags = [
     "-C"

@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     rm -rf $out/share/doc
   '';
 
-  dontDisableStatic = true;
+  disableStatic = false;
 
   meta = with stdenv.lib; {
     homepage = http://tukaani.org/xz/;

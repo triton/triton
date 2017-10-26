@@ -41,12 +41,6 @@
 
 # Set latency_msec in module-loopback (Default: 200)
 , loopbackLatencyMsec ? "20"
-# Set default resampler (Default: speex-float-1)
-# See `resample-method` in manpage for pulse-daemon.conf, resample-methods.nix
-# or run `pulseaudio --dump-resample-methods` for possible values.
-# NOTE: Only speex resample methods supports dynamic sample rates used by
-#       some applications such as mumble.
-, resampleMethod ? "speex-float-1"
 }:
 
 let
@@ -119,24 +113,13 @@ stdenv.mkDerivation rec {
       file = "pulseaudio/caps-fix.patch";
       sha256 = "840fb49e7d581349ce687345030564f386e92a5dc05431a727a67a8ab879f756";
     })
-  ] ++ optionals (resampleMethod != "speex-float-1") [
-    (fetchTritonPatch {
-      rev = "eb290e5c68b1b1492561a04baf072d5b7e600cb0";
-      file = "pulseaudio/pulseaudio-default-resampler.patch";
-      sha256 = "80947bc3c746f6b36e32b0ccbd58ce4c731c080bb682f4a315f7ea842552c867";
-    })
   ];
 
-  postPatch =
-    optionalString (loopbackLatencyMsec != "200")
-    /* Allow patching default latency_msec */ ''
-      sed -i src/modules/module-loopback.c \
-        -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'
-    '' + optionalString (resampleMethod != "speex-float-1")
-    /* Allow patching default resampler */ ''
-      sed -i src/pulsecore/resampler.c \
-        -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/'
-    '';
+  postPatch = optionalString (loopbackLatencyMsec != "200")
+      /* Allow patching default latency_msec */ ''
+    sed -i src/modules/module-loopback.c \
+      -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'
+  '';
 
   preConfigure = /* autoreconf */ ''
     export NOCONFIGURE="yes"

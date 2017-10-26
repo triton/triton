@@ -2395,6 +2395,8 @@ libs3 = callPackage ../all-pkgs/l/libs3 { };
 
 libsamplerate = callPackage ../all-pkgs/l/libsamplerate { };
 
+libsass = callPackage ../all-pkgs/l/libsass { };
+
 libscrypt = callPackage ../all-pkgs/l/libscrypt { };
 
 libseccomp = callPackage ../all-pkgs/l/libseccomp { };

@@ -40,7 +40,7 @@
 , prefix ? ""
 
 # Set latency_msec in module-loopback (Default: 200)
-, loopbackLatencyMsec ? "200"
+, loopbackLatencyMsec ? "20"
 # Set default resampler (Default: speex-float-1)
 # See `resample-method` in manpage for pulse-daemon.conf, resample-methods.nix
 # or run `pulseaudio --dump-resample-methods` for possible values.

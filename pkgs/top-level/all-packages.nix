@@ -1629,6 +1629,8 @@ google-chrome_unstable = callPackage ../all-pkgs/g/google-chrome {
 };
 google-chrome = callPackageAlias "google-chrome_stable" { };
 
+googletest = callPackage ../all-pkgs/g/googletest { };
+
 gperf = pkgs.gperf_3-1;
 gperf_3-1 = callPackage ../all-pkgs/g/gperf {
   channel = "3.1";
@@ -1797,8 +1799,6 @@ gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   gstreamer = pkgs.gstreamer_1-12;
 };
 gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-12" { };
-
-googletest = callPackage ../all-pkgs/g/googletest { };
 
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 # Deprecated alias

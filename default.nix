@@ -11,6 +11,9 @@ if ! builtins ? nixVersion || builtins.compareVersions requiredVersion builtins.
   abort "This version of Triton requires Nix >= ${requiredVersion}, please upgrade!"
 else
   import ./pkgs/top-level/all-packages.nix {
-    inherit targetSystem hostSystem config;
+    inherit
+      config
+      hostSystem
+      targetSystem;
     stdenv = null;
   }

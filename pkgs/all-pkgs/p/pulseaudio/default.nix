@@ -47,8 +47,6 @@ let
   inherit (lib)
     optionals
     optionalString;
-  inherit (builtins.getAttr resampleMethod (import ./resample-methods.nix))
-    resampleMethodString;
 
   libOnly = prefix == "lib";
 

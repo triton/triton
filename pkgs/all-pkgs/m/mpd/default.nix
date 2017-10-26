@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 # Required
 , boost
@@ -56,7 +57,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     boolWt
@@ -245,7 +246,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A flexible, powerful daemon for playing music";
     homepage = http://www.musicpd.org/;
     license = licenses.gpl2;

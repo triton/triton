@@ -6,6 +6,7 @@
 , gettext
 , gnum4
 , intltool
+, lib
 , libtool
 
 , alsa-lib
@@ -43,7 +44,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
   inherit (builtins.getAttr resampleMethod (import ./resample-methods.nix))
@@ -124,7 +125,7 @@ stdenv.mkDerivation rec {
     optionalString (loopbackLatencyMsec != "200")
     /* Allow patching default latency_msec */ ''
       sed -i src/modules/module-loopback.c \
-        -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'  
+        -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'
     '' + optionalString (resampleMethod != "speex-float-1")
     /* Allow patching default resampler */ ''
       sed -i src/pulsecore/resampler.c \
@@ -228,7 +229,7 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = optionalString libOnly ''
-    rm -rvf $out/{bin,share,etc,lib/{pulse-*,systemd}}
+    rm -rvf $out/{bin,share/{bash-completion,locale,zsh},etc,lib/{pulse-*,systemd}}
   '';
 
   # FIXME
@@ -243,7 +244,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Sound server for POSIX and Win32 systems";
     homepage = http://www.pulseaudio.org/;
     licenses = licenses.lgpl2Plus;

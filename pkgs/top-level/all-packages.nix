@@ -2518,6 +2518,8 @@ libwacom = callPackage ../all-pkgs/l/libwacom { };
 
 libwebp = callPackage ../all-pkgs/l/libwebp { };
 
+libwnck = callPackage ../all-pkgs/l/libwnck { };
+
 libwps = callPackage ../all-pkgs/l/libwps { };
 
 libx11 = callPackage ../all-pkgs/l/libx11 { };

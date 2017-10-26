@@ -7,6 +7,7 @@
 , cairo
 , gksu
 , glib
+, gnome-themes-standard
 , gtk_2
 , libredirect
 , libx11
@@ -84,6 +85,8 @@ let
       cp -prvd * $out/
     '' + ''
       wrapProgram $out/sublime_text \
+        --set 'GTK2_RC_FILES' \
+            '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
         --set LD_PRELOAD '${libredirect}/lib/libredirect.so' \
         --set NIX_REDIRECTS ${builtins.concatStringsSep ":" redirects}
     '' + /* Without this, plugin_host crashes, even though it has the rpath */ ''

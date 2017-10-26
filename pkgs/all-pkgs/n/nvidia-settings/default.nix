@@ -8,6 +8,7 @@
 , dbus
 , gdk-pixbuf
 , glib
+, gnome-themes-standard
 , gtk_2
 , gtk_3
 , jansson
@@ -114,6 +115,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/bin/nvidia-settings \
       --prefix LD_LIBRARY_PATH : "$out/lib" \
+      --set 'GTK2_RC_FILES' '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';

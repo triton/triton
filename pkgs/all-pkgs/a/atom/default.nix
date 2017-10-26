@@ -16,6 +16,7 @@
 , gdk-pixbuf_unwrapped
 , git
 , glib
+, gnome-themes-standard
 , gtk_2
 , gvfs
 , kbproto
@@ -158,6 +159,8 @@ stdenv.mkDerivation rec {
       -e 's,$(basename $0),atom${source.suffix},'
 
     wrapProgram $out/bin/atom${source.suffix} \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \
       --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
       --prefix 'LIBRARY_PATH' : "${libPath}" \

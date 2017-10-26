@@ -1,8 +1,11 @@
 { stdenv
 , fetchurl
 , gnupg
+, lib
+, makeWrapper
 
 , gcr
+, gnome-themes-standard
 , gtk_2
 , libassuan
 , libcap
@@ -15,11 +18,12 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     any
     boolEn
     boolWt
-    optionals;
+    optionals
+    optionalString;
 
   isNox = type == "nox";
   isGtk = type == "gtk";
@@ -34,6 +38,10 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "1672c2edc1feb036075b187c0773787b2afd0544f55025c645a71b4c2f79275a";
   };
+
+  nativeBuildInputs = [
+    makeWrapper
+  ];
 
   buildInputs = [
     libassuan
@@ -73,6 +81,12 @@ stdenv.mkDerivation rec {
     "-L${gcr}/lib"
   ];
 
+  preFixup = optionalString isGtk ''
+    wrapProgram $out/bin/pinentry-gtk-2 \
+      --set 'GTK2_RC_FILES' \
+        '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc'
+  '';
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
@@ -82,7 +96,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GnuPG's interface to passphrase input";
     homepage = "http://gnupg.org/aegypten2/";
     license = licenses.gpl2Plus;

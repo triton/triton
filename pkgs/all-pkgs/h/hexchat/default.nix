@@ -5,6 +5,8 @@
 , fetchurl
 , intltool
 , libtool
+, lib
+, makeWrapper
 , python2
 
 , dbus
@@ -12,6 +14,7 @@
 , enchant
 , gdk-pixbuf
 , glib
+, gnome-themes-standard
 , gtk2
 , iso-codes
 , libcanberra
@@ -20,6 +23,7 @@
 , libxml2
 , openssl
 , pciutils
+, shared-mime-info
 }:
 
 stdenv.mkDerivation rec {
@@ -40,6 +44,7 @@ stdenv.mkDerivation rec {
 
     intltool
     libxml2
+    makeWrapper
     python2
   ];
 
@@ -57,6 +62,10 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
+  preBuild = ''
+    export XDG_DATA_DIRS='${shared-mime-info}/share'
+  '';
+
   postPatch = ''
     links="$(find . -type l)"
     for link in $links; do
@@ -69,8 +78,7 @@ stdenv.mkDerivation rec {
   '';
 
   preConfigure = ''
-    export NOCONFIGURE=1
-    ./autogen.sh
+    NOCONFIGURE=1 ./autogen.sh
   '';
 
   configureFlags = [
@@ -82,6 +90,13 @@ stdenv.mkDerivation rec {
     "--disable-lua"
   ];
 
+  preFixup = ''
+    wrapProgram $out/bin/hexchat \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
@@ -91,7 +106,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A popular and easy to use graphical IRC (chat) client";
     homepage = http://hexchat.github.io/;
     license = licenses.gpl2;

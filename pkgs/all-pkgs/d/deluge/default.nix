@@ -10,6 +10,7 @@
 
 , chardet
 , geoip
+, gnome-themes-standard
 , librsvg
 , libtorrent-rasterbar_1-1_head
 , Mako
@@ -133,6 +134,7 @@ buildPythonPackage rec {
 
   preFixup = ''
     wrapProgram $out/bin/deluge \
+      --set 'GTK2_RC_FILES' '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 

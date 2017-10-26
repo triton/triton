@@ -52,9 +52,6 @@ let
 
   version = "11.1";
 in
-
-assert resampleMethodString != null;
-
 stdenv.mkDerivation rec {
   name = "${prefix}pulseaudio-${version}";
 

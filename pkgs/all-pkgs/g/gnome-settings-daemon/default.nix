@@ -4,6 +4,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , libtool
 , libxslt
 , makeWrapper
@@ -25,6 +26,7 @@
 , gsettings-desktop-schemas
 , gtk
 , ibus
+, inputproto
 , lcms2
 , libcanberra
 , libgudev
@@ -48,7 +50,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt;
 
@@ -92,6 +94,7 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     #ibus
+    inputproto
     lcms2
     libcanberra
     libgudev
@@ -109,7 +112,6 @@ stdenv.mkDerivation rec {
     upower
     wayland
     xf86-input-wacom
-    xorg.inputproto
     xorg.libX11
     xorg.libXext
     xorg.libXi
@@ -170,7 +172,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Gnome Settings Daemon";
     homepage = https://git.gnome.org/browse/gnome-settings-daemon;
     license = licenses.gpl2Plus;

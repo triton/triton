@@ -14,6 +14,7 @@
 , gsettings-desktop-schemas
 , gtk
 , json-glib
+, libepoxy
 , mutter
 , opengl-dummy
 , systemd_lib
@@ -59,6 +60,7 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     json-glib
+    libepoxy
     mutter  # gschemas
     opengl-dummy
     systemd_lib

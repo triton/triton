@@ -19,8 +19,14 @@
 , gtk3
 , libasyncns
 , libcap
+, libice
+, libsm
 , libsndfile
 , jack2_lib
+, libx11
+, libxcb
+, libxi
+, libxtst
 , lirc
 , openssl
 , sbc
@@ -29,7 +35,7 @@
 , systemd_lib
 , tdb
 , webrtc-audio-processing
-, xorg
+, xextproto
 
 , prefix ? ""
 
@@ -77,34 +83,34 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    glib
     dbus
+    fftw_single
+    glib
     libasyncns
     libcap
     libsndfile
-    fftw_single
-    tdb
     speexdsp
+    tdb
   ] ++ optionals (!libOnly) [
     alsa-lib
-    gtk3
-    gconf
     avahi
+    bluez
+    gconf
+    gtk3
     jack2_lib
+    libice
+    libsm
+    libx11
+    libxcb
+    libxi
+    libxtst
     lirc
     openssl
+    sbc
     soxr
     systemd_lib
     webrtc-audio-processing
-    xorg.libX11
-    xorg.libxcb
-    xorg.libICE
-    xorg.libSM
-    xorg.libXtst
-    xorg.xextproto
-    xorg.libXi
-    bluez
-    sbc
+    xextproto
   ];
 
   patches = [
@@ -132,24 +138,23 @@ stdenv.mkDerivation rec {
         -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/'
     '';
 
-  preConfigure =
-    /* Performs an autoreconf */ ''
-      export NOCONFIGURE="yes"
-      patchShebangs bootstrap.sh
-      ./bootstrap.sh
-    '' + /* Move the udev rules under $(prefix). */ ''
-      sed -i "src/Makefile.in" \
-        -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
-    '' + /* don't install proximity-helper as root and setuid */ ''
-      sed -i "src/Makefile.in" \
-        -e "s|chown root|true |" \
-        -e "s|chmod r+s |true |"
-    '' + ''
-      configureFlagsArray+=(
-        "--with-systemduserunitdir=$out/lib/systemd/user"
-        "--with-bash-completion-dir=$out/share/bash-completions/completions"
-      )
-    '';
+  preConfigure = /* autoreconf */ ''
+    export NOCONFIGURE="yes"
+    patchShebangs bootstrap.sh
+    ./bootstrap.sh
+  '' + /* Move the udev rules under $(prefix). */ ''
+    sed -i "src/Makefile.in" \
+      -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
+  '' + /* don't install proximity-helper as root and setuid */ ''
+    sed -i "src/Makefile.in" \
+      -e "s|chown root|true |" \
+      -e "s|chmod r+s |true |"
+  '' + ''
+    configureFlagsArray+=(
+      "--with-systemduserunitdir=$out/lib/systemd/user"
+      "--with-bash-completion-dir=$out/share/bash-completions/completions"
+    )
+  '';
 
   configureFlags = [
     "--localstatedir=/var"
@@ -158,14 +163,14 @@ stdenv.mkDerivation rec {
     "--disable-neon-opt"
     "--with-caps=${libcap}"
     "--disable-tests"
-    "--disable-samplerate" # Deprecated
+    "--disable-samplerate"  # Deprecated
     "--with-database=tdb"
     "--disable-esound"
     "--disable-oss-output"
-    "--enable-oss-wrapper" # Does not use OSS
+    "--enable-oss-wrapper"  # Does not use OSS
     "--disable-coreaudio-output"
     "--disable-solaris"
-    "--disable-waveout" # Windows Only
+    "--disable-waveout"  # Windows
     "--enable-glib2"
     "--enable-asyncns"
     "--disable-tcpwrap"

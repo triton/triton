@@ -154,7 +154,7 @@ stdenv.mkDerivation rec {
       fi
     done
 
-    # Fix beta detection
+    # Fix runtime beta detection
     sed -i $out/bin/atom${source.suffix} \
       -e 's,$(basename $0),atom${source.suffix},'
 
@@ -169,6 +169,8 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share"
 
     wrapProgram $out/bin/apm${source.suffix} \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \
       --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
       --prefix 'LIBRARY_PATH' : "${libPath}" \

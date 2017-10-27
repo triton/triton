@@ -12,10 +12,10 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gtk3
+, gtk_3
+, libx11
 , libxml2
 , pango
-, xorg
 }:
 
 let
@@ -24,7 +24,7 @@ let
     boolWt;
 
   channel = "3.0";
-  version = "${versionMajor}.2";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "libunique-${version}";
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     dbus-glib
     gdk-pixbuf
     glib
-    gtk3
+    gtk_3
     gobject-introspection
     libx11
     libxml2

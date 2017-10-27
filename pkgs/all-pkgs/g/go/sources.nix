@@ -14,8 +14,8 @@
     ];
   };
   "1.9" = {
-    version = "1.9.1";
-    sha256 = "a84afc9dc7d64fe0fa84d4d735e2ece23831a22117b50dafc75c1484f1cb550e";
+    version = "1.9.2";
+    sha256 = "665f184bf8ac89986cfd5a4460736976f60b57df6b320ad71ad4cef53bb143dc";
     sha256Bootstrap = {
       "x86_64-linux" = "d70eadefce8e160638a9a6db97f7192d8463069ab33138893ad3bf31b0650a79";
     };
@@ -24,11 +24,6 @@
         rev = "2426b84827f78c72ffcb9da51d34b889fcb8b056";
         file = "go/remove-tools.patch";
         sha256 = "647282e43513a6d0a71aa406f54a0b13d3331f825bc60fedebaa32d757f0e483";
-      }
-      {
-        rev = "9ea313ea633a868f95db3f0883573961edb06abd";
-        file = "g/go/0001-cmd-compile-replace-GOROOT-in-line-directives.patch";
-        sha256 = "7c37ad5bf8d40a40ae44f1caa61f3d7c27bdf7a9aa2f27e8b769e6d9972959dd";
       }
     ];
   };

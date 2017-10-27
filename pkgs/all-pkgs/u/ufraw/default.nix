@@ -3,6 +3,7 @@
 , fetchTritonPatch
 , fetchurl
 , lib
+, makeWrapper
 
 , bzip2
 , cfitsio
@@ -10,6 +11,7 @@
 , gconf
 #, gimp
 , glib
+, gnome-themes-standard
 , gtk_2
 , gtkimageview
 , jasper
@@ -18,6 +20,7 @@
 , libjpeg
 , libpng
 , libtiff
+, shared-mime-info
 , zlib
 }:
 
@@ -37,6 +40,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
+    makeWrapper
   ];
 
   buildInputs = [
@@ -93,6 +97,13 @@ stdenv.mkDerivation rec {
     #"--${boolWt (gimp != null)}-gimp"
     "--without-gimp"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/ufraw \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
 
   meta = with lib; {
     description = "Utility to read & manipulate raw images from digital cameras";

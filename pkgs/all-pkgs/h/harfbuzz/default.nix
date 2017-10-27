@@ -21,7 +21,7 @@ let
     optionals
     optionalString;
 
-  version = "1.6.0";
+  version = "1.6.3";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "5037ac0efc85a02a334965e66c1053d9dc9ed6833eae9739bd85bc33c83167c9";
+    sha256 = "e31eb367beb61a9399d2c78b51c225ab2b1cbd46f364f2d80d97bb422b44101a";
   };
 
   buildInputs = [
@@ -62,9 +62,8 @@ stdenv.mkDerivation rec {
     "--without-uniscribe"
     "--without-directwrite"
     "--without-coretext"
-  ] ++ optionals (type == "full") [
-    "--${boolWt (cairo != null)}-cairo"
-    "--${boolWt (fontconfig != null)}-fontconfig"
+    "--${boolWt (type == "full" && cairo != null)}-cairo"
+    "--${boolWt (type == "full" && fontconfig != null)}-fontconfig"
   ];
 
   postInstall = ''

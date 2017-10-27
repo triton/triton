@@ -3,6 +3,7 @@
 , docbook-xsl
 , fetchurl
 , gtk-doc
+, lib
 , libxslt
 
 , atk
@@ -18,21 +19,18 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
+
+  channel = "3.0";
+  version = "${versionMajor}.2";
 in
-
-assert xorg != null -> xorg.libX11 != null;
-
 stdenv.mkDerivation rec {
   name = "libunique-${version}";
-  versionMajor = "3.0";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libunique/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libunique/${channel}/${name}.tar.xz";
     sha256 = "0f70lkw66v9cj72q0iw1s2546r6bwwcd8idcm3621fg2fgh2rw58";
   };
 
@@ -51,25 +49,25 @@ stdenv.mkDerivation rec {
     glib
     gtk3
     gobject-introspection
+    libx11
     libxml2
     pango
-    xorg.libX11
   ];
 
   configureFlags = [
     "--enable-glibtest"
-    (enFlag "dbus" (dbus-glib != null) null)
+    "--${boolEn (dbus-glib != null)}-dbus"
     "--enable-bacon"
     "--disable-maintainer-flags"
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (libx11 != null)}-x"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for writing single instance applications";
     homepage = http://live.gnome.org/LibUnique;
     license = licenses.lgpl21;

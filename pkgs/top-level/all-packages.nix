@@ -2472,9 +2472,7 @@ libu2f-host = callPackage ../all-pkgs/l/libu2f-host { };
 
 libungif = callPackage ../all-pkgs/l/libungif { };
 
-libunique_1 = callPackage ../all-pkgs/l/libunique/1.x.nix { };
-libunique_3 = callPackage ../all-pkgs/l/libunique/3.x.nix { };
-libunique = callPackageAlias "libunique_3" { };
+libunique = callPackage ../all-pkgs/l/libunique { };
 
 libunistring = callPackage ../all-pkgs/l/libunistring { };
 

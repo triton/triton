@@ -2,11 +2,14 @@
 , fetchTritonPatch
 , fetchurl
 , intltool
+, lib
 , makeWrapper
 
 , gconf
+, gnome-themes-standard
 , gtk2
 , libgksu
+, shared-mime-info
 }:
 
 stdenv.mkDerivation rec {
@@ -53,7 +56,14 @@ stdenv.mkDerivation rec {
     "--disable-nautilus-extension"
   ];
 
-  meta = with stdenv.lib; {
+  preFixup = ''
+    wrapProgram $out/bin/gksu \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
+
+  meta = with lib; {
     description = "A graphical frontend for libgksu";
     homepage = "http://www.nongnu.org/gksu/";
     license = licenses.gpl2;

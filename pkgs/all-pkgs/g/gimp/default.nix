@@ -40,6 +40,7 @@
 , libwebp
 , libwmf
 , libx11
+, libxcursor
 , libxext
 , libxfixes
 , libxt

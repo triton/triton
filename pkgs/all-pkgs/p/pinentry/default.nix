@@ -12,6 +12,7 @@
 , libgpg-error
 , libsecret
 , ncurses
+, shared-mime-info
 , qt5
 
 , type
@@ -84,7 +85,8 @@ stdenv.mkDerivation rec {
   preFixup = optionalString isGtk ''
     wrapProgram $out/bin/pinentry-gtk-2 \
       --set 'GTK2_RC_FILES' \
-        '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc'
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
   passthru = {

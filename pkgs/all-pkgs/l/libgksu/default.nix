@@ -4,21 +4,23 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , makeWrapper
 
 , gconf
-, gtk2
+, gnome-themes-standard
+, gtk_2
 , libglade
 , libgnome-keyring
 , libgtop
 , libstartup_notification
+, shared-mime-info
 #, sudo
 , xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "libgksu-${version}";
-  version = "2.0.12";
+  name = "libgksu-2.0.12";
 
   src = fetchurl {
     url = "https://people.debian.org/~kov/gksu/${name}.tar.gz";
@@ -34,7 +36,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     gconf
-    gtk2
+    gtk_2
     libglade
     libgnome-keyring
     libgtop
@@ -87,21 +89,19 @@ stdenv.mkDerivation rec {
     })
 	];
 
-  postPatch =
-    /* gentoo bug #467026 */ ''
-      sed -i configure.ac \
-        -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
-    '' +
-    /* Fix some binary paths */ ''
-      sed -i  libgksu/gksu-run-helper.c \
-        -e 's|/usr/bin/xauth|${xorg.xauth}/bin/xauth|g'
-      sed -i libgksu/libgksu.c \
-        -e 's|/usr/bin/xauth|${xorg.xauth}/bin/xauth|g' \
-        -e 's|/usr/bin/sudo|/var/setuid-wrappers/sudo|g' \
-        -e 's|/bin/su\([^d]\)|/var/setuid-wrappers/su\1|g'
-    '' + ''
-      touch NEWS README
-    '';
+  postPatch = /* gentoo bug #467026 */ ''
+    sed -i configure.ac \
+      -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
+  '' + /* Fix some binary paths */ ''
+    sed -i  libgksu/gksu-run-helper.c \
+      -e 's|/usr/bin/xauth|${xorg.xauth}/bin/xauth|g'
+    sed -i libgksu/libgksu.c \
+      -e 's|/usr/bin/xauth|${xorg.xauth}/bin/xauth|g' \
+      -e 's|/usr/bin/sudo|/var/setuid-wrappers/sudo|g' \
+      -e 's|/bin/su\([^d]\)|/var/setuid-wrappers/su\1|g'
+  '' + ''
+    touch NEWS README
+  '';
 
   preConfigure = ''
     intltoolize --force --copy --automake
@@ -116,10 +116,13 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram "$out/bin/gksu-properties" \
-      --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE"
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for integration of su into applications";
     homepage = http://www.nongnu.org/gksu/;
     license = licenses.lgpl2;

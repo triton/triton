@@ -23,6 +23,7 @@ stdenv.mkDerivation {
         + "librevenge-${version}.tar.xz";
     sha256 = "1cj76cz4mqcy2mgv9l5xlc95bypyk8zbq0ls9cswqrs2y0lhfgwk";
   };
+
   buildInputs = [
     boost
     cppunit

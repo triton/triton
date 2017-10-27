@@ -4,7 +4,7 @@
 , intltool
 , lib
 , makeWrapper
-, pythonPackages
+, python2Packages
 
 , aalib
 , alsa-lib
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     makeWrapper
-    pythonPackages.wrapPython
+    python2Packages.wrapPython
   ];
 
   buildInputs = [
@@ -114,6 +114,7 @@ stdenv.mkDerivation rec {
     libwebp
     libwmf
     libx11
+    libxcursor
     libxext
     libxfixes
     libxt
@@ -121,10 +122,9 @@ stdenv.mkDerivation rec {
     openexr
     pango
     poppler
-    pythonPackages.python
-    pythonPackages.pygtk
+    python2Packages.python
+    python2Packages.pygtk
     shared-mime-info
-    xorg.libXcursor
     xorg.libXmu
     xorg.libXpm
     xproto
@@ -133,7 +133,7 @@ stdenv.mkDerivation rec {
   ];
 
   pythonPath = [
-    pythonPackages.pygtk
+    python2Packages.pygtk
   ];
 
   configureFlags = [

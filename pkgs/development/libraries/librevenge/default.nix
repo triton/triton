@@ -1,43 +1,58 @@
-{stdenv, fetchurl, boost, pkgconfig, cppunit, zlib}:
+{ stdenv
+, fetchurl
+, lib
+
+, boost
+, cppunit
+, zlib
+}:
+
+# FIXME: build from master, no releases in a long time
+
 let
-  s = # Generated upstream information
-  rec {
-    baseName="librevenge";
-    version="0.0.4";
-    name="${baseName}-${version}";
-    url="mirror://sourceforge/libwpd/librevenge/librevenge-${version}/librevenge-${version}.tar.xz";
-    sha256="1cj76cz4mqcy2mgv9l5xlc95bypyk8zbq0ls9cswqrs2y0lhfgwk";
-  };
-  buildInputs = [
-    boost pkgconfig cppunit zlib
-  ];
+  inherit (lib)
+    boolEn;
+
+  version = "0.0.4";
 in
 stdenv.mkDerivation {
-  inherit (s) name version;
-  inherit buildInputs;
-  src = fetchurl {
-    inherit (s) url sha256;
-  };
+  name = "librevenge-${version}";
 
+  src = fetchurl {
+    url = "mirror://sourceforge/libwpd/librevenge/librevenge-${version}/"
+        + "librevenge-${version}.tar.xz";
+    sha256 = "1cj76cz4mqcy2mgv9l5xlc95bypyk8zbq0ls9cswqrs2y0lhfgwk";
+  };
+  buildInputs = [
+    boost
+    cppunit
+    zlib
+  ];
+
+  # FIXME
   # Clang generates warnings in Boost's header files
   # -Werror causes these warnings to be interpreted as errors
   # Simplest solution: disable -Werror
-  configureFlags = if stdenv.cc.isClang
-    then [ "--disable-werror" ] else null;
+  configureFlags = [
+    "--${boolEn (!stdenv.cc.isClang)}-werror"
+  ];
 
   # Fix an issue with boost 1.59
   # This is fixed upstream so please remove this when updating
   postPatch = ''
-    sed -i 's,-DLIBREVENGE_BUILD,\0 -DBOOST_ERROR_CODE_HEADER_ONLY,g' src/lib/Makefile.in
+    sed -i src/lib/Makefile.in \
+      -e 's,-DLIBREVENGE_BUILD,\0 -DBOOST_ERROR_CODE_HEADER_ONLY,g'
   '';
 
-  meta = {
-    inherit (s) version;
-    description = ''A base library for writing document import filters'';
-    license = stdenv.lib.licenses.mpl20 ;
-    maintainers = [stdenv.lib.maintainers.raskin];
-    platforms = with stdenv.lib.platforms;
-      i686-linux
-      ++ x86_64-linux;
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-implicit-fallthrough"
+  ];
+
+  meta = with lib; {
+    description = "A base library for writing document import filters";
+    license = licenses.mpl20 ;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -13,6 +13,7 @@
 , libx11
 , openssl
 , pango
+, shared-mime-info
 
 , pkexecPath ? "/var/setuid-wrappers/pkexec"
 }:
@@ -87,6 +88,7 @@ let
       wrapProgram $out/sublime_text \
         --set 'GTK2_RC_FILES' \
             '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+        --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
         --set LD_PRELOAD '${libredirect}/lib/libredirect.so' \
         --set NIX_REDIRECTS ${builtins.concatStringsSep ":" redirects}
     '' + /* Without this, plugin_host crashes, even though it has the rpath */ ''

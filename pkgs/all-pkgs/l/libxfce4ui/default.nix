@@ -3,14 +3,20 @@
 , gettext
 , intltool
 , lib
+, makeWrapper
 , perl
 
 , glib
+, gnome-themes-standard
 , gtk_2
 , gtk_3
+, libice
+, libsm
+, libx11
 , libxfce4util
+, shared-mime-info
 , xfconf
-, xorg
+, xproto
 
 , channel
 }:
@@ -19,7 +25,14 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "4.12" = {
+      version = "4.12.1";
+      multihash = "QmRw2T45nvzKnRGsqNFpajLTKD64pUaxyy3sG9wD15SeYe";
+      sha256 = "3d619811bfbe7478bb984c16543d980cadd08586365a7bc25e59e3ca6384ff43";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libxfce4ui-${source.version}";
@@ -34,6 +47,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
     perl
   ];
 
@@ -41,12 +55,12 @@ stdenv.mkDerivation rec {
     glib
     gtk_2
     gtk_3
+    libice
+    libsm
+    libx11
     libxfce4util
     xfconf
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.xproto
+    xproto
   ];
 
   configureFlags = [
@@ -64,6 +78,13 @@ stdenv.mkDerivation rec {
     #"--disable-visibility"
     "--with-x"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/xfce4-about \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
 
   meta = with lib; {
     description = "Unified widgets and session management libraries";

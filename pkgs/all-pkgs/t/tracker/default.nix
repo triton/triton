@@ -121,7 +121,6 @@ stdenv.mkDerivation rec {
     gst-libav
     gst-plugins-base
     gstreamer
-    #gtk2
     gtk
     #gupnp-dlna
     icu

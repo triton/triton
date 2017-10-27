@@ -2,13 +2,17 @@
 , fetchurl
 , intltool
 , lib
+, makeWrapper
 
 , glib
+, gnome-themes-standard
 , gtk_2
+, libx11
 , libxfce4ui
 , libxfce4util
 , perlPackages
-, xorg
+, shared-mime-info
+, xproto
 }:
 
 let
@@ -29,16 +33,17 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
     glib
     gtk_2
+    libx11
     libxfce4ui
     libxfce4util
     perlPackages.URI
-    xorg.libX11
-    xorg.xproto
+    xproto
   ];
 
   configureFlags = [
@@ -53,6 +58,17 @@ stdenv.mkDerivation rec {
     #"--disable-visibility"
     "--with-x"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/exo-desktop-item-edit \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+    wrapProgram $out/bin/exo-preferred-applications \
+      --set 'GTK2_RC_FILES' \
+          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
 
   meta = with lib; {
     description = "Extensions to Xfce by os-cillation";

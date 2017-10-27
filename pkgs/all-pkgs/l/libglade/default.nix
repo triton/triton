@@ -1,22 +1,24 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , atk
 , glib
-, gtk2
+, gtk_2
 , libxml2
 , python2
 }:
 
+let
+  channel = "2.6";
+  version = "${channel}.4";
+in
 stdenv.mkDerivation rec {
   name = "libglade-${version}";
-  versionMajor = "2.6";
-  versionMinor = "4";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libglade/${versionMajor}/${name}.tar.bz2";
+    url = "mirror://gnome/sources/libglade/${channel}/${name}.tar.bz2";
     sha256 = "64361e7647839d36ed8336d992fd210d3e8139882269bed47dc4674980165dec";
   };
 
@@ -27,7 +29,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     atk
     glib
-    gtk2
+    gtk_2
     libxml2
     python2
   ];
@@ -39,7 +41,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library to construct graphical interfaces at runtime";
     homepage = https://library.gnome.org/devel/libglade/stable/;
     license = licenses.lgpl2;

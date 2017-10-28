@@ -70,9 +70,8 @@
 }:
 
 let
-  versionMajor = "5.9";
-  versionPatch = "2";
-  version = "${versionMajor}.${versionPatch}";
+  channel = "5.9";
+  version = "${channel}.2";
 
   inherit (lib)
     optionals;
@@ -81,7 +80,7 @@ stdenv.mkDerivation rec {
   name = "qt-${version}";
 
   src = fetchurl {
-    url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
+    url = "http://download.qt.io/official_releases/qt/${channel}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     hashOutput = false;
     md5Confirm = "738d1b98106e1bd39f00cc228beb522a";
@@ -164,8 +163,9 @@ stdenv.mkDerivation rec {
     scrnsaverproto
   ];
 
-  # For some reason libdrm doesn't map drm.h correctly
-  NIX_CFLAGS_COMPILE = "-I${libdrm}/include/libdrm";
+  inherit version;
+  setupHook = ./setup-hook.sh;
+  selfApplySetupHook = true;
 
   postPatch = ''
     # Fix references to pwd
@@ -183,6 +183,10 @@ stdenv.mkDerivation rec {
   '';
 
   prefixKey = "-prefix ";
+
+  preConfigure = /* Use a more predictable directory for plugins than $out/plugins */ ''
+    configureFlagsArray+=('-plugindir' "$out/lib/qt-${version}/plugins")
+  '';
 
   configureFlags = [
     "-release"
@@ -278,27 +282,41 @@ stdenv.mkDerivation rec {
     "-skip" "webengine"
   ];
 
+  # For some reason libdrm doesn't map drm.h correctly
+  NIX_CFLAGS_COMPILE = "-I${libdrm}/include/libdrm";
+
   # This is really broken and should be fixed uptream
   preFixup = ''
     find $out/lib/pkgconfig -name \*.pc -exec sed -i 's,Qt5UiPlugin,,g' {} \;
   '';
 
-  # FIXME
-  buildDirCheck = false;
+  buildDirCheck = false;  # FIXME
 
   passthru = {
+    inherit version;
+
+    plugindir = "lib/qt-${version}/plugins";
+
     srcVerification = fetchurl {
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
       md5Url = "https://download.qt.io/official_releases/qt/"
-        + "${versionMajor}/${version}/single/md5sums.txt";
+        + "${channel}/${version}/single/md5sums.txt";
     };
   };
 
   meta = with lib; {
+    description = "Cross-platform toolkit for embedded & desktop";
+    homepage = https://www.qt.io;
+    license = with licenses; [
+      fdl
+      gpl3
+      lgpl3
+    ];
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

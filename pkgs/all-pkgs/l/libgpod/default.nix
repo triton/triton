@@ -8,6 +8,7 @@
 , gdk-pixbuf
 , glib
 , libimobiledevice
+, libplist
 , libusb
 , libxml2
 , mutagen
@@ -37,7 +38,6 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
-    libimobiledevice.swig
     perl
     perlPackages.XMLParser
   ];
@@ -46,6 +46,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     libimobiledevice
+    libplist
     libusb
     libxml2
     mutagen

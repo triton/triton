@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchgit
+, fetchTritonPatch
 , fetchurl
 , gettext
 , intltool
@@ -106,6 +107,15 @@ buildPythonPackage rec {
   buildInputs = optionals doCheck [
     pytest
     zope-interface
+  ];
+
+  patches = optionals (channel == "stable") [
+    # Remove for 1.3.16
+    (fetchTritonPatch {
+      rev = "fb4f50bb98024562652d4bfd702b660f2ae3cfe4";
+      file = "d/deluge/deluge-1.3.15-fix-preferences-dialog.patch";
+      sha256 = "01e01364dd41b0dcd69871a973448f50a5c8efb4e13dd456569e21259e1dc06c";
+    })
   ];
 
   postPatch = optionalString (channel == "head") (

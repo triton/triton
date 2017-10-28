@@ -12,29 +12,25 @@
 , gobject-introspection
 , harfbuzz_lib
 , libx11
+, libxft
 , libxrender
-, xorg
 }:
-
-assert libx11 != null ->
-  xorg.libXft != null;
 
 let
   inherit (lib)
     optionals
     optionalString;
 
-  versionMajor = "1.40";
-  versionMinor = "11";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "1.40";
+  version = "${channel}.13";
 in
 stdenv.mkDerivation rec {
   name = "pango-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/pango/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5b11140590e632739e4151cae06b8116160d59e22bf36a3ccd5df76d1cf0383e";
+    sha256 = "f84e98db1078772ff4935b40a1629ff82ef0dfdd08d2cbcc0130c8c437857196";
   };
 
   nativeBuildInputs = [
@@ -51,9 +47,8 @@ stdenv.mkDerivation rec {
     gobject-introspection
     harfbuzz_lib
     libx11
+    libxft
     libxrender
-  ] ++ optionals (xorg != null) [
-    xorg.libXft
   ];
 
   mesonFlags = [
@@ -74,7 +69,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/pango/${versionMajor}/"
+      sha256Url = "https://download.gnome.org/sources/pango/${channel}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

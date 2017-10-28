@@ -616,6 +616,8 @@ adwaita-icon-theme_3-26 = callPackage ../all-pkgs/a/adwaita-icon-theme {
 };
 adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-26" { };
 
+adwaita-qt = callPackage ../all-pkgs/a/adwaita-qt { };
+
 afflib = callPackage ../all-pkgs/a/afflib { };
 
 alsa-firmware = callPackage ../all-pkgs/a/alsa-firmware { };

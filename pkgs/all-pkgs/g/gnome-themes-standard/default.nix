@@ -53,6 +53,8 @@ stdenv.mkDerivation rec {
     librsvg
   ];
 
+  setupHook = ./setup-hook.sh;
+
   configureFlags = [
     "--enable-glibtest"
     "--enable-nls"

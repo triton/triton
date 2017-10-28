@@ -138,6 +138,11 @@ stdenv.mkDerivation rec {
     python2Packages.pygtk
   ];
 
+  postPatch = /* Use system theme by default */ ''
+    sed -i app/config/gimpguiconfig.h \
+      -e '/GIMP_CONFIG_DEFAULT_THEME/ s/03-Dark/System/'
+  '';
+
   configureFlags = [
     "--enable-vector-icons"
   ];

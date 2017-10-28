@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , libxml2
@@ -40,7 +41,7 @@ stdenv.mkDerivation rec {
   parallelBuild = false;
   parallelInstall = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The Shared MIME-info Database specification";
     homepage = https://freedesktop.org/wiki/Software/shared-mime-info;
     license = licenses.gpl2Plus;

@@ -53,6 +53,7 @@ stdenv.mkDerivation rec {
     dbus-glib
     gdk-pixbuf
     glib
+    gnome-themes-standard
     gtk2
     iso-codes
     libcanberra
@@ -92,9 +93,8 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/hexchat \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
   '';
 
   passthru = {

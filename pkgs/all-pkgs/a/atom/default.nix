@@ -93,6 +93,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     gdk-pixbuf_unwrapped
     glib
+    gnome-themes-standard
     gtk_2
     gvfs
     kbproto
@@ -169,14 +170,13 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share"
 
     wrapProgram $out/bin/apm${source.suffix} \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \
       --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
       --prefix 'LIBRARY_PATH' : "${libPath}" \
       --prefix 'LD_LIBRARY_PATH' : "${libPath}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
 
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \

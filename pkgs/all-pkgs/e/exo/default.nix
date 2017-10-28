@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
+    gnome-themes-standard
     gtk_2
     libx11
     libxfce4ui
@@ -61,13 +62,11 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/exo-desktop-item-edit \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
     wrapProgram $out/bin/exo-preferred-applications \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
   '';
 
   meta = with lib; {

@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     gconf
+    gnome-themes-standard
     gtk_2
     libglade
     libgnome-keyring
@@ -117,9 +118,8 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram "$out/bin/gksu-properties" \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
   '';
 
   meta = with lib; {

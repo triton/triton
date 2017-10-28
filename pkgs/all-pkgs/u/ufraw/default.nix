@@ -50,6 +50,7 @@ stdenv.mkDerivation rec {
     gconf
     #gimp
     glib
+    gnome-themes-standard
     gtk_2
     gtkimageview
     jasper
@@ -100,9 +101,8 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/ufraw \
-      --set 'GTK2_RC_FILES' \
-          '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --run "$DEFAULT_GTK2_RC_FILES"
   '';
 
   meta = with lib; {

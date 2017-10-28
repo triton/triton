@@ -41,6 +41,10 @@ let
       makeWrapper
     ];
 
+    buildInputs = [
+      gnome-themes-standard
+    ];
+
     libPath = makeSearchPath "lib" [
       cairo
       glib
@@ -86,9 +90,8 @@ let
       cp -prvd * $out/
     '' + ''
       wrapProgram $out/sublime_text \
-        --set 'GTK2_RC_FILES' \
-            '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
         --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+        --run "$DEFAULT_GTK2_RC_FILES" \
         --set LD_PRELOAD '${libredirect}/lib/libredirect.so' \
         --set NIX_REDIRECTS ${builtins.concatStringsSep ":" redirects}
     '' + /* Without this, plugin_host crashes, even though it has the rpath */ ''

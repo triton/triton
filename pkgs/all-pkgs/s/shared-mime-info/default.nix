@@ -8,11 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "shared-mime-info-1.7";
+  name = "shared-mime-info-1.9";
 
   src = fetchurl {
     url = "https://freedesktop.org/~hadess/${name}.tar.xz";
-    sha256 = "eacc781cfebaa2074e43cf9521dc7ab4391ace8a4712902b2841669c83144d2e";
+    multihash = "QmeixzYsCLRNL4JyjYcdLXjmMVBiEJUQhfE1rvX8mVqAZQ";
+    sha256 = "5c0133ec4e228e41bdf52f726d271a2d821499c2ab97afd3aa3d6cf43efcdc83";
   };
 
   nativeBuildInputs = [
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The Shared MIME-info Database specification";
-    homepage = http://freedesktop.org/wiki/Software/shared-mime-info;
+    homepage = https://freedesktop.org/wiki/Software/shared-mime-info;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       codyopel

@@ -4,6 +4,7 @@
 
 , libidn2
 , libpsl
+, lzip
 , openssl_1-0-2
 , pcre
 , util-linux_lib
@@ -21,12 +22,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "wget-1.19.1";
+  name = "wget-1.19.2";
 
   src = fetchurl {
-    url = "mirror://gnu/wget/${name}.tar.xz";
+    url = "mirror://gnu/wget/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "0c950b9671881222a4d385b013c9604e98a8025d1988529dfca0e93617744cd2";
+    sha256 = "d59a745ad2c522970660bb30d38601f9457b151b322e01fa20a5a0da0f55df07";
   };
 
   nativeBuildInputs = [
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libidn2
     libpsl
+    lzip
     openssl_1-0-2
     pcre
     util-linux_lib

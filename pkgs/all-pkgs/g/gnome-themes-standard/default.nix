@@ -62,6 +62,12 @@ stdenv.mkDerivation rec {
     "--${boolEn (gtk_2 != null)}-gtk2-engine"
   ];
 
+  postInstall = ''
+    sed -i $out/share/themes/Adwaita/gtk-2.0/gtkrc \
+      -i $out/share/themes/Adwaita-dark/gtk-2.0/gtkrc \
+      -e '/Set GTK settings/a gtk-icon-theme-name = "Adwaita"'
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

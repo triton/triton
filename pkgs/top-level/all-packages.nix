@@ -1560,8 +1560,6 @@ gnome-terminal = callPackageAlias "gnome-terminal_3-26" { };
 
 gnome-themes-standard_3-22 = callPackage ../all-pkgs/g/gnome-themes-standard {
   channel = "3.22";
-  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gnome-themes-standard = callPackageAlias "gnome-themes-standard_3-22" { };
 

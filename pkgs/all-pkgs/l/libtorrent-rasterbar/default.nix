@@ -26,8 +26,8 @@ let
 
   sources = {
     "1.1" = {
-      version = "1.1.4";
-      sha256 = "ccf42367803a6df7edcf4756d1f7d0a9ce6158ec33b851b3b58fd470ac4eeba6";
+      version = "1.1.5";
+      sha256 = "103134068389155a0f2bccaca72a57765460eb8188495089dcad280dcf426930";
     };
     "1.1-head" = {
       fetchzipversion = 3;

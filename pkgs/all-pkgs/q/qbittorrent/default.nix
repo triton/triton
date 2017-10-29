@@ -3,8 +3,10 @@
 , fetchTritonPatch
 , fetchurl
 , lib
+, makeWrapper
 , which
 
+, adwaita-qt
 , boost
 , dbus
 , libtorrent-rasterbar
@@ -64,10 +66,12 @@ stdenv.mkDerivation rec {
       };
 
   nativeBuildInputs = [
+    makeWrapper
     which
   ];
 
   buildInputs = [
+    adwaita-qt
     boost
     dbus
     libtorrent-rasterbar
@@ -102,6 +106,12 @@ stdenv.mkDerivation rec {
     "--without-qt4"
     "--with-qjson=system"
   ];
+
+  preFixup = optionalString guiSupport ''
+    wrapProgram $out/bin/qbittorrent \
+      --prefix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH" \
+      --run "$DEFAULT_QT_STYLE_OVERRIDE"
+  '';
 
   passthru = {
     srcVerification = fetchurl {

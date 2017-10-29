@@ -26,7 +26,6 @@
 , jinja2
 , mock
 , mp3val
-, mpd
 , munkres
 , musicbrainzngs
 , mutagen
@@ -35,6 +34,7 @@
 , pyacoustid
 , pyechonest
 , pylast
+, python-mpd2
 , pyxdg
 , pyyaml
 , rarfile
@@ -79,8 +79,8 @@ let
     fetchart = requests != null;
     lastgenre = pylast != null;
     lastimport = pylast != null;
-    mpdstats = mpd != null;
-    mpdupdate = mpd != null;
+    mpdstats = python-mpd2 != null;
+    mpdupdate = python-mpd2 != null;
     replaygain = bs1770gain != null;
     thumbnails = pyxdg != null;
     web = flask != null;
@@ -168,7 +168,6 @@ buildPythonPackage rec {
     jinja2
     mock
     mp3val
-    mpd
     munkres
     musicbrainzngs
     mutagen
@@ -176,6 +175,7 @@ buildPythonPackage rec {
     pyacoustid
     pyechonest
     pylast
+    python-mpd2
     pyxdg
     pyyaml
     rarfile

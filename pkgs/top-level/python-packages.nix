@@ -1072,22 +1072,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    };
 
-   mpd = buildPythonPackage rec {
-     name = "python-mpd-0.3.0";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/python-mpd/python-mpd-0.3.0.tar.gz";
-       md5Confirm = "5b3849b131e2fb12f251434597d65635";
-       sha256 = "1d11rl46prk5n8chmaxwwhi3c85s4gxadxapfkilc3rf3nx2x082";
-     };
-
-     meta = with pkgs.stdenv.lib; {
-       description = "An MPD (Music Player Daemon) client library written in pure Python";
-       homepage = http://jatreuman.indefero.net/p/python-mpd/;
-      license = licenses.gpl3;
-     };
-   };
-
    munkres = buildPythonPackage rec {
      name = "munkres-${version}";
      version = "1.0.10";

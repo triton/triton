@@ -1,9 +1,10 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
-  version = "4.11";
+  version = "4.13";
 
   tarballUrls = [
     "mirror://kernel/software/network/ethtool/ethtool-${version}.tar"
@@ -15,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "12d8edaa8064966b8ef19cc44fecc096a68828035b6a1f2c67a27531a718e1b2";
+    sha256 = "b7c1a380007d30eaf261a63b3cfc000f9d93f9eb7626dcd48b5d2a733af99cba";
   };
 
   passthru = {
@@ -33,7 +34,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Utility for controlling network drivers and hardware";
     homepage = https://www.kernel.org/pub/software/network/ethtool/;
     license = licenses.gpl2;

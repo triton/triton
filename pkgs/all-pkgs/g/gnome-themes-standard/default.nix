@@ -4,13 +4,8 @@
 , intltool
 , lib
 
-, adwaita-icon-theme
-, cairo
-, gdk-pixbuf
 , glib
 , gtk_2
-, gtk
-, librsvg
 
 , channel
 }:
@@ -44,13 +39,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adwaita-icon-theme
-    cairo
-    gdk-pixbuf
     glib
     gtk_2
-    gtk
-    librsvg
   ];
 
   setupHook = ./setup-hook.sh;
@@ -58,7 +48,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-glibtest"
     "--enable-nls"
-    "--${boolEn (gtk != null)}-gtk3-engine"
+    "--disable-gtk3-engine"
     "--${boolEn (gtk_2 != null)}-gtk2-engine"
   ];
 

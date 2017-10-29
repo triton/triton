@@ -485,6 +485,8 @@ python-ldap = callPackage ../all-pkgs/p/python-ldap { };
 
 python-magic = callPackage ../all-pkgs/p/python-magic { };
 
+python-mpd2 = callPackage ../all-pkgs/p/python-mpd2 { };
+
 python-novaclient = callPackage ../all-pkgs/p/python-novaclient { };
 
 python-tvrage = callPackage ../all-pkgs/p/python-tvrage { };

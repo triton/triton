@@ -52,9 +52,9 @@ let
     };
     "head" = {
       fetchzipversion = 3;
-      version = "2017-07-05";
-      rev = "e3f537770f5282b7629e880caa282989c86ebc89";
-      sha256 = "3ac11daca86587ca82b7d1a6e6978fd7a0734b5313245b67c96db90d735d1b1b";
+      version = "2017-10-29";
+      rev = "0ba87b424c6781beefa450696042bf4e9abeb64b";
+      sha256 = "2dbb2d31260c79c3eac2b6477b77a55326b3683410b4512b99573cd13c154163";
     };
   };
   source = sources."${channel}";

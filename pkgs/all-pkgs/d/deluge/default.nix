@@ -9,6 +9,7 @@
 , lib
 , makeWrapper
 
+, adwaita-icon-theme
 , chardet
 , geoip
 , gnome-themes-standard
@@ -82,6 +83,7 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
+    adwaita-icon-theme
     chardet
     geoip
     gnome-themes-standard
@@ -146,6 +148,7 @@ buildPythonPackage rec {
   preFixup = ''
     wrapProgram $out/bin/deluge \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';
 

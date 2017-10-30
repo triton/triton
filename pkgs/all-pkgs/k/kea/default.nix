@@ -4,6 +4,7 @@
 , dhcp
 , fetchurl
 , perl
+, python2Packages
 
 , boost
 #, cassandra
@@ -12,21 +13,23 @@
 , mariadb-connector-c
 , openssl_1-0-2
 , postgresql
+, zlib
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.2.0";
+  version = "1.3.0";
 in
 stdenv.mkDerivation rec {
   name = "kea-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
+    multihash = "QmSjmvseLKnXDXv8DvBauHqwt13RYDabxE9k7J3UmpMRwj";
     hashOutput = false;
-    sha256 = "22d15945b13600b56c37213797ca1f3ee9851e6119120aeae08033c4cc52d129";
+    sha256 = "6edfcdbf2526c218426a1d1a6a6694a4050c97bb8412953a230285d63415c391";
   };
 
   nativeBuildInputs = [
@@ -41,39 +44,34 @@ stdenv.mkDerivation rec {
     mariadb-connector-c
     openssl_1-0-2
     postgresql
+    python2Packages.python
+    zlib
   ];
 
   postPatch = ''
     find . -name \*.in -and -not -name Makefile.in \
       -exec sed -i 's,@abs_top_\(src\|build\)dir@,/no-such-path,g' {} \;
 
-    find . -name Makefile.in -exec sed -i '/-D[^ =]*=/s,$(abs_top_\(src\|build\)dir),/no-such-path,g' {} \;
+    find . -name Makefile.in -exec sed \
+      -e 's,@sysconfdir@,$(sysconfdir),g' \
+      -e '/-D[^ =]*=/s,$(abs_top_\(src\|build\)dir),/no-such-path,g' \
+      -i  {} \;
   '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--disable-debug"
-    #"--with-werror"
-    # Flag is not a boolean
-    #"--disable-static-link"
-    "--with-pythonpath"
-    # Flag is not a boolean
+    "--enable-shell"
   ] ++ optionals doCheck [
     "--with-gtest-source=${googletest}/share/gtest/src"
     "--with-gtest=${googletest}"
   ] ++ [
-    "--without-lcov"
     "--with-openssl=${openssl_1-0-2}"
     "--without-botan-config"
     "--with-dhcp-mysql=${mariadb-connector-c}/bin/mariadb_config"
     "--with-dhcp-pgsql=${postgresql}/bin/pg_config"
     #"--with-cql=${cassandra}/bin/cql_config"
     "--with-log4cplus"
-    "--disable-generate-parser"
-    "--disable-generate-docs"
-    "--disable-install-configurations"
-    "--disable-logger-checks"
   ];
 
   makeFlags = optionals doCheck [

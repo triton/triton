@@ -63,9 +63,9 @@ let
     };
     long-lived = {
       versionMajor = "387";
-      versionMinor = "12";
-      sha256i686   = "aabac19b2bbc30ab9fb01954328633ff08b5aa5c2996f03722dd0806b247d536";
-      sha256x86_64 = "6951372a9e805bfe58fdddf9c728bf12a4c5d8cf38d1c8e6b7afaea492ef83f6";
+      versionMinor = "22";
+      sha256i686   = "39544f0a677838a4fb09668d48b91eadd6ba5babecb0aa0cef41c303b0a4649b";
+      sha256x86_64 = "2056b386f619ed096ee3c2267c495c6b00d1a2a4c933f0635befcf4e69c3856c";
       maxLinuxVersion = "4.13";
       maxXorgVersion = "1.19";
     };

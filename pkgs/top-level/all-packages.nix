@@ -2739,6 +2739,8 @@ mongodb = callPackage ../all-pkgs/m/mongodb { };
 
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
+moolticute = callPackage ../all-pkgs/m/moolticute { };
+
 mosh = callPackage ../all-pkgs/m/mosh { };
 
 motif = callPackage ../all-pkgs/m/motif { };

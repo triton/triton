@@ -1,6 +1,8 @@
 Differences between Triton and NixOS
 ====================================
 
+# Notice: for those still linking to this doc, this has not been updated since June, 2016 and was outdated then.
+
 **This is probably missing a lot**
 
 
@@ -55,6 +57,17 @@ Changes incorporated in Triton
   + use platform tuple for driver directory instead of platform word size
   + mesa.driverLink -> mesa.driverSearchPath
   + mesaSupported -> mesa_noglu.meta.platforms
+
+* OpenGL
+
+  + convert builds using mesa as a compile-time dependency to opengl-dummy
+
+    - opengl-dummy is currently a minimal build of mesa, but in the future could
+      be converted to dummy libraries just to satisfy compile-time dependencies.
+      This avoids a dependency on llvm and other mesa specific deps at build-time
+      when using non-mesa opengl implementations (e.g. nvidia-drivers).
+      opengl-dummy provides opengl-dummy.{egl{,-streams},gbm,glesv{1,2},glx}
+      interfaces for making OpenGL features globally configurable at build-time.
 
 * Python
 
@@ -164,4 +177,3 @@ Changes incorporated in Triton
   + enable /tmp cleanup by default
   + disable audit in the kernel by default
   + merge ffmpeg builds (regular & full) & remove pre 2.x versions
-

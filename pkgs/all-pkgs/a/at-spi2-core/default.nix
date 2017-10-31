@@ -65,13 +65,7 @@ stdenv.mkDerivation rec {
     xextproto
   ];
 
-  postPatch = /* Meson file missing in release tarball */ ''
-    [ ! -f po/meson.build ]
-    cat > po/meson.build <<EOF
-    i18n = import('i18n')
-    i18n.gettext('at-spi2-core', preset: 'glib')
-    EOF
-  '' + /* Remove hardcoded references to the build driectory */ ''
+  postPatch = /* Remove hardcoded references to the build driectory */ ''
     sed -i atspi/atspi-enum-types.h.template \
       -e '/@filename@/d'
   '';

@@ -30,16 +30,15 @@
 }:
 
 let
-  version = "384.59";
+  version = "387.22";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
 
   src = fetchurl {
-    url = "http://http.download.nvidia.com/XFree86/nvidia-settings/"
+    url = "mirror://nvidia/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    multihash = "QmS2sHYE9evBrdEKpC6LXNzWwPkXhmameTw7i5yCj4FqiC";
-    sha256 = "d7b9cc117bff1397f3a2ccf745acbc8294a668f06740ea35dd38b38c9788adb7";
+    sha256 = "d307594eb8c8607d547545418333593554edb2b642d8e8583b2b3298a4f35f73";
   };
 
   nativeBuildInputs = [

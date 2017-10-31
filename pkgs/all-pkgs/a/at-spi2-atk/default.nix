@@ -25,8 +25,8 @@ let
 
   sources = {
     "2.26" = {
-      version = "2.26.0";
-      sha256 = "d25e528e1406a10c7d9b675aa15e638bcbf0a122ca3681f655a30cce83272fb9";
+      version = "2.26.1";
+      sha256 = "b4f0c27b61dbffba7a5b5ba2ff88c8cee10ff8dac774fa5b79ce906853623b75";
     };
   };
   source = sources."${channel}";

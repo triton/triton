@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.24";
+  name = "dbus-1.12.0";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmWvhVWg4vcNDM98BQLsccCidgQEvdsRPGycXFHDGobYBS";
+    multihash = "QmTDziqD3c2xb4xRdWRENjaSCFtZPkseZcmtQgiHvMQxQV";
     hashOutput = false;
-    sha256 = "71184eb27638e224579ffa998e88f01d0f1fef17a7811406e53350735eaecd1b";
+    sha256 = "39af0d9267391434b549c5c4adc001b735518c96f7630c3fe7162af1d13ef3c0";
   };
 
   nativeBuildInputs = [
@@ -56,15 +56,16 @@ stdenv.mkDerivation rec {
     "--with-session-socket-dir=/tmp"
     "--enable-xml-docs"
     "--enable-libaudit"
+    "--enable-inotify"
     "--enable-systemd"
     "--disable-selinux"
     "--disable-apparmor"
+    "--enable-systemd"
     "--disable-tests"
+    "--enable-epoll"
     "--enable-x11-autolaunch"
     "--enable-user-session"
   ];
-
-  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl {

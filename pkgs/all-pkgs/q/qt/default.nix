@@ -273,7 +273,6 @@ stdenv.mkDerivation rec {
     "-skip" "serialbus"
     "-skip" "serialport"
     "-skip" "virtualkeyboard"
-    "-skip" "websockets"
     "-skip" "webview"
     "-skip" "winextras"
   ] ++ optionals (!buildWebEngine) [

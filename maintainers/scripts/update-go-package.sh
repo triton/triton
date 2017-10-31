@@ -126,6 +126,9 @@ fetch_go() {
   fi
 }
 ARGS=($(awk '{ print "- " $1 " fetch_go " $1; }' $TMPDIR/list))
+if [ "${#ARGS[@]}" -eq "0" ]; then
+  exit 0
+fi
 export CONCURRENT_LIMIT=1
 concurrent "${ARGS[@]}"
 export CONCURRENT_LIMIT=10

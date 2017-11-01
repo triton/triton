@@ -1,6 +1,5 @@
 { stdenv
-, autoreconfHook
-, fetchFromGitHub
+, fetchurl
 
 , libunwind
 }:
@@ -8,17 +7,10 @@
 stdenv.mkDerivation rec {
   name = "gperftools-2.6.1";
 
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "gperftools";
-    repo = "gperftools";
-    rev = name;
-    sha256 = "dfe31ac0d98936ab55ed694c04f7b4d52ec90b7be4e18d59b4e76e9054535324";
+  src = fetchurl {
+    url = "https://github.com/gperftools/gperftools/releases/download/${name}/${name}.tar.gz";
+    sha256 = "38b467eb42a028f253d227fbc428263cb39e6c8687c047466aa2ce5bb4699d81";
   };
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
 
   buildInputs = [
     libunwind

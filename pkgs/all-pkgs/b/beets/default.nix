@@ -60,8 +60,6 @@ let
     optional
     optionals;
 
-  completion = "${bash-completion}/share/bash-completion/bash_completion";
-
   sources = {
     "stable" = {
       version = "1.4.5";
@@ -172,14 +170,11 @@ buildPythonPackage rec {
     })
   ];
 
-  postPatch = ''
-    sed -i -e '/assertIn.*item.*path/d' test/test_info.py
-    echo echo completion tests passed > test/rsrc/test_completion.sh
-
+  postPatch = /* Fix bash completion path */ ''
     sed -i -e '/^BASH_COMPLETION_PATHS *=/,/^])$/ {
-      /^])$/i u"${completion}"
+      /^])$/i u"${bash-completion}/share/bash-completion/bash_completion"
     }' beets/ui/commands.py
-  '' + /* fix paths for badfiles plugin */ ''
+  '' + /* Fix paths for badfiles plugin */ ''
     sed -i -e '/self\.run_command(\[/ {
       s,"flac","${flac}/bin/flac",
       s,"mp3val","${mp3val}/bin/mp3val",

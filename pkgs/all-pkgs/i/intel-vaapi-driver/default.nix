@@ -8,6 +8,8 @@
 , libdrm
 , libva
 , libx11
+, libxext
+, libxfixes
 , opengl-dummy
 , wayland
 , xorg
@@ -15,7 +17,7 @@
 }:
 
 let
-  version = "1.8.3";
+  version = "2.0.0";
 in
 stdenv.mkDerivation rec {
   name = "intel-vaapi-driver-${version}";
@@ -28,19 +30,21 @@ stdenv.mkDerivation rec {
         + "libva-intel-driver/${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "54411d9e579300ed63f8b9b06152a1a9ec95b7699507d7ffa014cd7b2aeaff6f";
+    sha256 = "10f6b0a91f34715d8d4d9a9e0fb3cc0afe5fcf85355db1272bd5fff31522f469";
   };
 
   nativeBuildInputs = [
     gnum4
+    xorg.intelgputools
     python
   ];
 
   buildInputs = [
-    xorg.intelgputools
     libdrm
     libva
     libx11
+    libxext
+    libxfixes
     opengl-dummy
     wayland
     xproto
@@ -60,7 +64,6 @@ stdenv.mkDerivation rec {
     "--enable-x11"
     "--enable-wayland"
     "--enable-hybrid-codec"
-    "--disable-tests"
   ];
 
   passthru = {

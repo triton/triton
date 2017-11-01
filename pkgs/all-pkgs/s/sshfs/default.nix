@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "3.3.0";
+  version = "3.3.1";
 in
 stdenv.mkDerivation rec {
   name = "sshfs-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libfuse/sshfs/releases/download/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "9ddfcc2564fafe002706b093b6295afbcb2cc0a3bc52bc805cc5361cb69ca51d";
+    sha256 = "de13bfe0eb5821a7d878f8dea3dc815edaee734418e0950c2732399acd4fb443";
   };
 
   nativeBuildInputs = [

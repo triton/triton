@@ -1972,6 +1972,8 @@ iptables = callPackage ../all-pkgs/i/iptables { };
 
 iputils = callPackage ../all-pkgs/i/iputils { };
 
+irqbalance = callPackage ../all-pkgs/i/irqbalance { };
+
 isl_0-14 = callPackage ../all-pkgs/i/isl {
   channel = "0.14";
 };

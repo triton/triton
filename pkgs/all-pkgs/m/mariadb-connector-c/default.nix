@@ -46,9 +46,22 @@ stdenv.mkDerivation rec {
     "-DWITH_SQLITE=ON"
   ];
 
+  # Hack to make sure we include the libpath in the _config binaries
+  preBuild = ''
+    sed \
+      -e 's,-lz,-L${zlib}/lib -lz,g' \
+      -e 's,-lssl,-L${openssl}/lib -lssl,g' \
+      -i mariadb_config/mariadb_config.c
+  '';
+
   postInstall = ''
     ln -sv mariadb_config "$out"/bin/mysql_config
     ln -sv mariadb "$out"/include/mysql
+  '';
+
+  # Make sure we have all the needed lib paths
+  preFixupCheck = ''
+    echo 'void main() {}' | NIX_LDFLAGS= gcc -x c -o main - $("$out"/bin/mariadb_config --libs)
   '';
 
   meta = with stdenv.lib; {

@@ -46,6 +46,8 @@
 # For use in inline plugin
 , pycountry
 
+, channel
+
 # External plugins
 , enableAlternatives ? false
 #, enableArtistCountry ? true
@@ -60,16 +62,36 @@ let
 
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "1.4.5";
+  sources = {
+    "stable" = {
+      version = "1.4.5";
+      sha256 = "1bea88c5c23137a36d09590856df8c2f4e857ef29890d16c4d14b1170e9202fc";
+    };
+    "head" = {
+      fetchzipversion = 3;
+      version = "2017-10-29";
+      rev = "7c9ce0da7a25b85846674c27f3618689cf9c2ba2";
+      sha256 = "988712027732c67b7b8c08e185061a1afdafa88addedf76da143e29af24233be";
+    };
+  };
+  source = sources."${channel}";
 in
 buildPythonPackage rec {
-  name = "beets-${version}";
+  name = "beets-${source.version}";
 
-  src = fetchPyPi {
-    package = "beets";
-    inherit version;
-    sha256 = "1bea88c5c23137a36d09590856df8c2f4e857ef29890d16c4d14b1170e9202fc";
-  };
+  src =
+    if channel != "head" then
+      fetchPyPi {
+        package = "beets";
+        inherit (source) sha256 version;
+      }
+    else
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "beetbox";
+        repo = "beets";
+        inherit (source) rev sha256;
+      };
 
   nativeBuildInputs = [
     makeWrapper

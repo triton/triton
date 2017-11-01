@@ -13,7 +13,6 @@
 , mariadb-connector-c
 , openssl_1-0-2
 , postgresql
-, zlib
 }:
 
 let
@@ -45,7 +44,6 @@ stdenv.mkDerivation rec {
     openssl_1-0-2
     postgresql
     python2Packages.python
-    zlib
   ];
 
   postPatch = ''

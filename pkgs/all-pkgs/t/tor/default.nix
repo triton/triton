@@ -16,13 +16,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.3.1.7";
+  name = "tor-0.3.1.8";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
-    multihash = "Qmckk7KgPvzaWMeqvbYXa1B8yts9UgtUyqoKs5TA7ivVKX";
+    multihash = "QmZtEns7r7uaikdaLpKaChN9UtQnG8jSK9Wzy4MvNiyUhY";
     hashOutput = false;
-    sha256 = "1df5dd4894bb2f5e0dc96c466955146353cf33ac50cd997cfc1b28ea3ed9c08f";
+    sha256 = "7df6298860a59f410ff8829cf7905a50c8b3a9094d51a8553603b401e4b5b1a1";
   };
 
   nativeBuildInputs = [

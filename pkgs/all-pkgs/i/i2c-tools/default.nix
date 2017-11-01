@@ -1,14 +1,15 @@
 { stdenv
-, fetchurl
+, fetchzip
 }:
 
 stdenv.mkDerivation rec {
-  name = "i2c-tools-3.1.0";
+  name = "i2c-tools-4.0";
 
-  src = fetchurl {
-    name = "${name}.tar.bz2";
-    multihash = "QmTkoGdSwJ8gzQ9Wo35aiW9d8opK3RZiXUcFTUmU3uHAw9";
-    sha256 = "960023f61de292c6dd757fcedec4bffa7dd036e8594e24b26a706094ca4c142a";
+  src = fetchzip {
+    version = 3;
+    url = "https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/snapshot/${name}.tar.gz";
+    multihash = "Qmba1eHzkV4e3GQ6rjiybNT3y1NsUnCCoATPWY4EqJfPP9";
+    sha256 = "4c18fe69e56ac6dc21aaf79244985b991f9f2aa740accea2fa99f0604973fb7e";
   };
 
   preBuild = ''

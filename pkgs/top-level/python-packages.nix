@@ -154,7 +154,12 @@ bcrypt = callPackage ../all-pkgs/b/bcrypt { };
 
 beautifulsoup = callPackage ../all-pkgs/b/beautifulsoup { };
 
-beets = callPackage ../all-pkgs/b/beets { };
+beets = callPackage ../all-pkgs/b/beets {
+  channel = "stable";
+};
+beets_head = callPackage ../all-pkgs/b/beets {
+  channel = "head";
+};
 
 bleach = callPackage ../all-pkgs/b/bleach { };
 

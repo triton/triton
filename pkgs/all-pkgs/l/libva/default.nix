@@ -14,7 +14,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "1.8.3";
+  version = "2.0.0";
 in
 stdenv.mkDerivation rec {
   name = "libva-${version}";
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "56ee129deba99b06eb4a8d4f746b117c5d1dc2ec5b7a0bfc06971fca1598ab9b";
+    sha256 = "bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533";
   };
 
   buildInputs = [
@@ -44,10 +44,8 @@ stdenv.mkDerivation rec {
     "--enable-drm"
     "--enable-x11"
     "--${boolEn opengl-dummy.glx}-glx"
-    "--${boolEn opengl-dummy.egl}-egl"
     "--enable-wayland"
     "--enable-va-messaging"
-    "--enable-dummy-driver"
     "--with-drivers-path=${opengl-dummy.driverSearchPath}/lib/dri"
   ];
 

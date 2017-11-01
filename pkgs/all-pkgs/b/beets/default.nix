@@ -55,88 +55,9 @@
 
 let
   inherit (lib)
-    attrNames
-    concatMapStrings
-    concatStringsSep
-    elem
-    filterAttrs
-    id
-    makeSearchPath
     optional
-    optionals
-    optionalString
-    platforms
-    versionOlder;
+    optionals;
 
-  optionalPlugins = {
-    acousticbrainz = requests != null;
-    badfiles = flac != null && mp3val != null;
-    beatport = requests != null;
-    bpd = false;
-    chroma = pyacoustid != null;
-    discogs = discogs-client != null;
-    embyupdate = requests != null;
-    fetchart = requests != null;
-    lastgenre = pylast != null;
-    lastimport = pylast != null;
-    mpdstats = python-mpd2 != null;
-    mpdupdate = python-mpd2 != null;
-    replaygain = bs1770gain != null;
-    thumbnails = pyxdg != null;
-    web = flask != null;
-  };
-
-  pluginsWithoutDeps = [
-    "absubmit"
-    "bench"
-    "bpd"
-    "bpm"
-    "bucket"
-    "convert"
-    "cue"
-    "duplicates"
-    "edit"
-    "embedart"
-    "embyupdate"
-    "export"
-    "filefilter"
-    "freedesktop"
-    "fromfilename"
-    "ftintitle"
-    "fuzzy"
-    "hook"
-    "ihate"
-    "importadded"
-    "importfeeds"
-    "info"
-    "inline"
-    "ipfs"
-    "keyfinder"
-    "lyrics"
-    "mbcollection"
-    "mbsubmit"
-    "mbsync"
-    "metasync"
-    "missing"
-    "permissions"
-    "play"
-    "plexupdate"
-    "random"
-    "rewrite"
-    "scrub"
-    "smartplaylist"
-    "spotify"
-    "the"
-    "types"
-    "zero"
-  ];
-
-  enabledOptionalPlugins = attrNames (filterAttrs (_: id) optionalPlugins);
-
-  allPlugins = pluginsWithoutDeps ++ attrNames optionalPlugins;
-  allEnabledPlugins = pluginsWithoutDeps ++ enabledOptionalPlugins;
-
-  testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
   version = "1.4.5";
@@ -185,7 +106,6 @@ buildPythonPackage rec {
     werkzeug
   ] ++ optionals isPy2 [
     enum34
-  ] ++ optionals (versionOlder pythonPackages.python.channel "3.5") [
     pathlib
   ] ++ [
     pycountry
@@ -249,57 +169,6 @@ buildPythonPackage rec {
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
   '';
-
-  preCheck = ''
-    (${concatMapStrings (s: "echo \"${s}\";") allPlugins}) \
-      | sort -u > plugins_defined
-    find beetsplug -mindepth 1 \
-      \! -path 'beetsplug/__init__.py' -a \
-      \( -name '*.py' -o -path 'beetsplug/*/__init__.py' \) -print \
-      | sed -n -re 's|^beetsplug/([^/.]+).*|\1|p' \
-      | sort -u > plugins_available
-
-    if ! mismatches="$(diff -y plugins_defined plugins_available)"; then
-      echo "The the list of defined plugins (left side) doesn't match" \
-           "the list of available plugins (right side):" >&2
-      echo "$mismatches" >&2
-      exit 1
-    fi
-  '';
-
-  # TODO: fix LOCALE_ARCHIVE for freebsd
-  checkPhase = ''
-    runHook 'preCheck'
-
-    LANG=en_US.UTF-8 \
-    LOCALE_ARCHIVE=${glibcLocales}/lib/locale/locale-archive \
-    BEETS_TEST_SHELL="${testShell}" \
-    BASH_COMPLETION_SCRIPT="${completion}" \
-    HOME="$(mktemp -d)"
-    nosetests -v
-    mkdir -p $HOME/
-
-    runHook 'postCheck'
-  '';
-
-  installCheckPhase = ''
-    runHook 'preInstallCheck'
-
-    tmphome="$(mktemp -d)"
-
-    EDITOR="${writeScript "beetconfig.sh" ''
-      #!${stdenv.shell}
-      cat > "$1" <<CFG
-      plugins: ${concatStringsSep " " allEnabledPlugins}
-      CFG
-    ''}" HOME="$tmphome" "$out/bin/beet" config -e
-    EDITOR=true HOME="$tmphome" "$out/bin/beet" config -e
-
-    runHook 'postInstallCheck'
-  '';
-
-  doCheck = !isPy3;
-  doInstallCheck = true;
 
   meta = with lib; {
     description = "Music tagger and library organizer";

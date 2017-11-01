@@ -4,21 +4,26 @@
 , libevent
 }:
 
-let
-  version = "0.2.0";
-in
 stdenv.mkDerivation rec {
-  name = "fstrm-${version}";
+  name = "fstrm-0.3.2";
 
   src = fetchurl {
-    url = "https://github.com/farsightsec/fstrm/releases/download/v${version}/"
-      + "${name}.tar.gz";
-    sha256 = "ad5d39957a4b334a6c7fcc94f308dc7ac75e1997cc642e9bb91a18fc0f42a98a";
+    url = "https://dl.farsightsecurity.com/dist/fstrm/${name}.tar.gz";
+    multihash = "QmNy73Qze5KLFLKexm5m8bRWT5h8S7A8ySiYjMwPCfijQF";
+    hashOutput = false;
+    sha256 = "2d509999ac904e48c038f88820f47859da85ceb86c06552e4052897082423ec5";
   };
 
   buildInputs = [
     libevent
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

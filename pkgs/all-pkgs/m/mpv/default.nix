@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchFromGitHub
 , lib
 , makeWrapper
 , perl
@@ -52,21 +52,60 @@
 , wayland-protocols
 , xorg
 , zlib
+
+, channel ? "stable"
 }:
 
 let
+  inherit (builtins)
+    compareVersions;
+
   inherit (lib)
     boolEn;
 
-  version = "0.27.0";
+  # Minimum/maximun/matching version
+  reqMin = v: (compareVersions v channel != 1);
+  reqMax = v: (compareVersions channel v != 1);
+  reqMatch = v: (compareVersions v channel == 0);
+
+  # Usage:
+  # f - Configure flag
+  # v - Version that the configure option was added
+  strNew = f: v:
+    if v == null || reqMin v  then
+      "${f}"
+    else
+      null;
+  strDepr = f: vmin: vmax:
+    if (vmin == null || reqMin vmin) && (vmax == null || reqMax vmax) then
+      "${f}"
+    else
+      null;
+
+  sources = {
+    "stable" = {
+      fetchzipversion = 3;
+      version = "0.27.0";
+      rev = "v0.27.0";
+      sha256 = "d80c86af466589d610a522b0ab20ee7b13630418d846d78bbfeb55930e5ecd59";
+    };
+    "999" = {
+      fetchzipversion = 3;
+      version = "2017-11-01";
+      rev = "09c61347a8481cfb42bfc381880bd3fe93c4e744";
+      sha256 = "5708ddd576ca9a5839c1c9191ef71a37d6ec883e4b4b8a6fa1dcd7fe007cf486";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "mpv-${version}";
+  name = "mpv-${source.version}";
 
-  src = fetchzip {
-    version = 3;
-    url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "33ecc720192645c148036487a6f97b2124ecf1c750caa3f99b90f91092a24bcb";
+  src = fetchFromGitHub {
+    version = source.fetchzipversion;
+    owner = "mpv-player";
+    repo = "mpv";
+    inherit (source) rev sha256;
   };
 
   nativeBuildInputs = [
@@ -127,10 +166,12 @@ stdenv.mkDerivation rec {
     wayland
     wayland-protocols
     zlib
+
+    xorg.xproto
   ];
 
   wafFlags = [
-    ###"--enable-lgpl"
+    (strNew "--disable-lgpl" "0.28.0")  # Enables GPL
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -174,6 +215,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
     ###"--enable-libaf"
     "--${boolEn (libarchive != null)}-libarchive"
+    (strNew "--enable-ffmpeg-upstream" "0.28.0")  # Upstream fucked up hard
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-sdl1"
@@ -190,9 +232,10 @@ stdenv.mkDerivation rec {
     "--disable-wasapi"  # Windows
     "--disable-cocoa"  # macOS
     "--${boolEn (libdrm != null)}-drm"
+    (strNew "--enable-drmprime" "0.28.0")
     "--${boolEn opengl-dummy.gbm}-gbm"
-    ###"--${boolEn (wayland != null)}-wayland-scanner"
-    ###"--${boolEn (wayland-protocols != null)}-wayland-protocols"
+    (strNew "--${boolEn (wayland != null)}-wayland-scanner" "0.28.0")
+    (strNew "--${boolEn (wayland-protocols != null)}-wayland-protocols" "0.28.0")
     "--${boolEn (
         wayland != null &&
         wayland-protocols != null &&
@@ -200,10 +243,10 @@ stdenv.mkDerivation rec {
     "--${boolEn (
         libx11 != null
         && libxext != null
-        && xorg.libXinerama != null
-        && xorg.libXrandr != null
+        && libxinerama != null
+        && libxrandr != null
         && libxscrnsaver != null)}-x11"
-    "--${boolEn (xorg.libXv != null)}-xv"
+    "--${boolEn (libxv != null)}-xv"
     "--disable-gl-cocoa"
     "--${boolEn opengl-dummy.glx}-gl-x11"
     "--${boolEn opengl-dummy.egl}-egl-x11"
@@ -215,32 +258,34 @@ stdenv.mkDerivation rec {
     "--disable-egl-angle-win32"  # Windows
     "--${boolEn (libvdpau != null)}-vdpau"
     # FIXME: add passthru booleans to libvdpau for feature detection
-    "--${boolEn opengl-dummy.glx}-vdpau-gl-x11"
-    "--${boolEn (libva != null)}-vaapi"
+    # "--${boolEn opengl-dummy.glx}-vdpau-gl-x11"  # FIXME
+    #"--${boolEn (libva != null)}-vaapi"
+    /**/"--disable-vaapi"  # FIXME: 0.27.0 only supports libva 1.x
     # FIXME: add passthru booleans to libva for feature detection
-    "--enable-vaapi-x11"
-    "--enable-vaapi-wayland"
-    "--enable-vaapi-drm"
-    "--${boolEn opengl-dummy.glx}-vaapi-glx"
-    "--${boolEn opengl-dummy.egl}-vaapi-x-egl"
+    #"--enable-vaapi-x11"  # FIXME: 0.27.0 only supports libva 1.x
+    #"--enable-vaapi-wayland"  # FIXME: 0.27.0 only supports libva 1.x
+    #"--enable-vaapi-drm"  # FIXME: 0.27.0 only supports libva 1.x
+    #"--${boolEn opengl-dummy.glx}-vaapi-glx"  # FIXME: 0.27.0 only supports libva 1.x
+    #"--${boolEn opengl-dummy.egl}-vaapi-x-egl"  # FIXME: 0.27.0 only supports libva 1.x
     "--${boolEn (libcaca != null)}-caca"
     "--${boolEn (libjpeg != null)}-jpeg"
     "--disable-direct3d"  # Windows
     "--disable-android"  # Android
-    # FIXME: add raspberry pi support
-    "--disable-rpi"
+    "--disable-rpi"  # FIXME: add raspberry pi support
     "--disable-ios-gl"  # iOS
     "--disable-plain-gl"
     "--disable-mali-fbdev"
     "--${boolEn (opengl-dummy != null)}-gl"
-    ###"--${boolEn (vulkan-headers != null)}-vulkan"
-    /**/###"--disable-shaderc"
-    "--${boolEn (libva != null)}-vaapi-hwaccel"
-    "--disable-videotoolbox-hwaccel-new"  # macOS
-    "--disable-videotoolbox-hwaccel-old"  # macOS
+    #(strNew "--${boolEn (vulkan-headers != null)}-vulkan" "0.28.0")
+    /**/(strNew "--disable-vulkan" "0.28.0")
+    /**/(strNew "--disable-shaderc" "0.28.0")
+    #(strDepr "--${boolEn (libva != null)}-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
+    (strDepr "--disable-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
+    (strDepr "--disable-videotoolbox-hwaccel-new" null "0.27.0")  # macOS
+    (strDepr "--disable-videotoolbox-hwaccel-old" null "0.27.0")  # macOS
     ###"--disable-videotoolbox-hwaccel"  # macOS
     "--disable-videotoolbox-gl"  # macOS
-    "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
+    (strDepr "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel" null "0.27.0")
     "--disable-d3d-hwaccel"  # Windows
     "--disable-d3d9-hwaccel"  # Windows
     "--disable-gl-dxinterop-d3d9"  # Windows

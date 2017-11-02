@@ -2761,7 +2761,7 @@ mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
 
 mpfr = callPackage ../all-pkgs/m/mpfr { };
 
-mpv = callPackage ../all-pkgs/m/mpv {
+mpv_generics = overrides: callPackage ../all-pkgs/m/mpv ({
   jack2_lib = null;
   lcms2 = null;
   libbs2b = null;
@@ -2772,6 +2772,11 @@ mpv = callPackage ../all-pkgs/m/mpv {
   openal = null;
   rubberband = null;
   samba_client = null;
+} // overrides);
+mpv = pkgs.mpv_generics { };
+mpv_head = pkgs.mpv_generics {
+  channel = "999";
+  ffmpeg = pkgs.ffmpeg_head;  # Requires newer than latest release
 };
 
 ms-sys = callPackage ../all-pkgs/m/ms-sys { };

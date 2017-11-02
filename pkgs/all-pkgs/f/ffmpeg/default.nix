@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, fetchTritonPatch
 , fetchurl
 , lib
 , nasm
@@ -401,6 +402,14 @@ stdenv.mkDerivation rec {
   ] ++ optionals nonfreeLicensing [
     fdk-aac
     openssl
+  ];
+
+  patches = optionals (!versionOlder channel "3.5") [
+    (fetchTritonPatch {
+      rev = "7deabe056f426f80c70a73b0bc310cfbf53d0231";
+      file = "f/ffmpeg/ffmpeg-3.5.dev-revert-libva2-uncompat-changes.patch";
+      sha256 = "84c6302fd49203735c4286acf5310b47504e6cbf39ba7fb8d388265a4c635acc";
+    })
   ];
 
   postPatch = ''

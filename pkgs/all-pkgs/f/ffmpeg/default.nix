@@ -187,9 +187,9 @@ let
       sha256 = "aeee06e4d8b18d852c61ebbfe5e1bb7014b1e118e8728c1c2115f91e51bffbef";
     };
     "9.9" = { # Git
-      version = "2017.10.18";
-      rev = "f4090940bd3024e69d236257d327f11d1e496229";
-      sha256 = "bb1105f0d8a65a0d7c85e9ac709be717acc546cea661ac6884930139077fe4ed";
+      version = "2017.11.01";
+      rev = "5ab41a25ba9ce2b3a8b5d22930161042718d7f84";
+      sha256 = "ecf342adce1603c73b269e2f189ace100e8b51cc2c8cfadee539851707894ddb";
     };
   };
   source = sources."${channel}";
@@ -496,7 +496,7 @@ stdenv.mkDerivation rec {
     /**/"--disable-omx-rpi"
     /**/"--disable-rkmpp"
     "--${boolEn (libva != null)}-vaapi"
-    "--disable-vda"  # macOS
+    (deprfflag "--disable-vda" null "3.4")  # macOS
     "--${boolEn (libvdpau != null)}-vdpau"
     "--disable-videotoolbox"  # macOS
     # Undocumented
@@ -523,7 +523,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
-    "--${boolEn (jack2_lib != null)}-jack"
+    (deprfflag "--${boolEn (jack2_lib != null)}-jack" null "3.4")
     "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
     "--${boolEn (libass != null)}-libass"
@@ -550,6 +550,7 @@ stdenv.mkDerivation rec {
     "--disable-libiec61883"
     #"--${boolEn (ilbc != null)}-libilbc"
     "--disable-libilbc"
+    (fflag "--${boolEn (jack2_lib != null)}-libjack" "3.5")
     "--${boolEn (kvazaar != null)}-libkvazaar"
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"

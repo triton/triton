@@ -2494,6 +2494,9 @@ libutp = callPackage ../all-pkgs/l/libutp { };
 libuv = callPackage ../all-pkgs/l/libuv { };
 
 libva = callPackage ../all-pkgs/l/libva { };
+libva_1 = callPackage ../all-pkgs/l/libva {
+  channel = "1";
+};
 
 libva-vdpau-driver = callPackage ../all-pkgs/l/libva-vdpau-driver { };
 

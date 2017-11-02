@@ -181,11 +181,6 @@ let
     versionOlder;
 
   sources = {
-    "3.3" = {
-      version = "3.3.4";
-      multihash = "QmTkSKW9nBseRrd6mw7JW1aM1Xb2szKZJug2wvZPCaK4XK";
-      sha256 = "98b97e1b908dfeb6aeb6d407e5a5eacdfc253a40c2d195f5867ed2d1d46ea957";
-    };
     "3.4" = {
       version = "3.4";
       multihash = "QmPwvCQ6r12AgTeNTTDseG9NNo2V7mzqh81GNt58SUpnsd";
@@ -437,7 +432,7 @@ stdenv.mkDerivation rec {
     "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
     "--${boolEn grayBuild}-gray"
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
-    #(fflag "--disable-autodetect" "3.4")
+    #"--disable-autodetect"
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
     "--enable-pthreads"
@@ -483,23 +478,23 @@ stdenv.mkDerivation rec {
     "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda"
-    (fflag "--${boolEn (
+    "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuda-sdk" "3.4")
+      && nvidia-drivers != null)}-cuda-sdk"
     "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuvid"
     "--disable-d3d11va"  # Windows
     "--disable-dxva2"  # Windows
-    (fflag "--${boolEn (libdrm != null)}-libdrm" "3.4")
+    "--${boolEn (libdrm != null)}-libdrm"
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
     "--${boolEn libnppSupport}-libnpp"
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
     "--${boolEn nvenc}-nvenc"
-    /**/(fflag "--disable-omx" "3.4")
-    /**/(fflag "--disable-omx-rpi" "3.4")
-    /**/(fflag "--disable-rkmpp" "3.4")
+    /**/"--disable-omx"
+    /**/"--disable-omx-rpi"
+    /**/"--disable-rkmpp"
     "--${boolEn (libva != null)}-vaapi"
     "--disable-vda"  # macOS
     "--${boolEn (libvdpau != null)}-vdpau"
@@ -511,13 +506,13 @@ stdenv.mkDerivation rec {
     /*
      *  External libraries
      */
-    (fflag "--${boolEn (alsa-lib != null)}-alsa" "3.4")
-    (fflag "--disable-appkit" "3.4")  # macOS
-    (fflag "--disable-avfoundation" "3.4")  # macOS
+    "--${boolEn (alsa-lib != null)}-alsa"
+    "--disable-appkit"  # macOS
+    "--disable-avfoundation"  # macOS
     #"--${boolEn (avisynth != null)}-avisynth"
     /**/"--disable-avisynth"
     "--${boolEn (bzip2 != null)}-bzlib"
-    (fflag "--disable-coreimage" "3.4")  # macOS
+    "--disable-coreimage"  # macOS
     # Recursive dependency
     "--${boolEn (chromaprint != null)}-chromaprint"
     # Undocumented (broadcom)
@@ -528,7 +523,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
-    (fflag "--${boolEn (jack2_lib != null)}-jack" "3.4")
+    "--${boolEn (jack2_lib != null)}-jack"
     "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
     "--${boolEn (libass != null)}-libass"
@@ -558,7 +553,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (kvazaar != null)}-libkvazaar"
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"
-    (deprfflag null "3.3" "--disable-libnut")
     #"--${boolEn (opencore-amr != null)}-libopencore-amrnb"
     /**/"--disable-libopencore-amrnb"
     #"--${boolEn (opencore-amr != null)}-libopencore-amrwb"
@@ -571,10 +565,9 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopenmpt"
     "--${boolEn (opus != null)}-libopus"
     "--${boolEn (pulseaudio_lib != null)}-libpulse"
-    (fflag "--${boolEn (librsvg != null)}-librsvg" "3.4")
+    "--${boolEn (librsvg != null)}-librsvg"
     "--${boolEn (rubberband != null)}-librubberband"
     "--${boolEn (rtmpdump != null)}-librtmp"
-    (deprfflag null "3.3" "--disable-libschroedinger")
     #"--${boolEn (shine != null)}-libshine"
     /**/"--disable-libshine"
     "--${boolEn (samba_client != null)}-libsmbclient"
@@ -588,9 +581,9 @@ stdenv.mkDerivation rec {
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"
-    (fflag "--${boolEn (v4l_lib != null)}-v4l2_m2m" "3.4")
+    "--${boolEn (v4l_lib != null)}-v4l2_m2m"
     "--${boolEn (vid-stab != null)}-libvidstab"
-    /**/(fflag "--disable-libvmaf" "3.4")
+    /**/"--disable-libvmaf"
     "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"
     "--${boolEn (libvorbis != null)}-libvorbis"
     "--${boolEn (libvpx != null)}-libvpx"
@@ -604,7 +597,7 @@ stdenv.mkDerivation rec {
     "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"
     "--${boolEn libxcbshapeExtlib}-libxcb-shape"
     "--${boolEn (xvidcore != null)}-libxvid"
-    (fflag "--${boolEn (libxml2 != null)}-libxml2" "3.4")
+    "--${boolEn (libxml2 != null)}-libxml2"
     "--${boolEn (libzimg != null)}-libzimg"
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
@@ -612,16 +605,15 @@ stdenv.mkDerivation rec {
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
-    /**/(fflag "--disable-libndi_newtek" "3.4")
+    /**/"--disable-libndi_newtek"
     "--disable-mediacodec"  # android
-    (fflag "--${boolEn (libmysofa != null)}-libmysofa" "3.4")
-    (deprfflag null "3.3" "--disable-netcdf")
+    "--${boolEn (libmysofa != null)}-libmysofa"
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"
     "--${boolEn (opengl-dummy != null && opengl-dummy.glx)}-opengl"
     "--${boolEn (openssl != null)}-openssl"
-    /**/(fflag "--disable-sndio" "3.4")
+    /**/"--disable-sndio"
     "--disable-schannel"  # Windows
     "--${boolEn (sdl != null)}-sdl"
     "--${boolEn (sdl != null)}-sdl2"
@@ -635,7 +627,7 @@ stdenv.mkDerivation rec {
     "--${boolEn optimizationsDeveloper}-optimizations"
     "--${boolEn extraWarningsDeveloper}-extra-warnings"
     "--${boolEn strippingDeveloper}-stripping"
-    (fflag "--${boolEn (elem targetSystem platforms.linux)}-linux-perf" "3.4")
+    "--${boolEn (elem targetSystem platforms.linux)}-linux-perf"
   ] ++ optionals (alsa-lib != null && flite != null) [
     # Flite requires alsa but the configure test under specifies
     # dependencies and fails without -lasound.

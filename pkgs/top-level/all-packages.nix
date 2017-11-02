@@ -1208,7 +1208,6 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   libmodplug = null;
   #libnpp = null;
   libssh = null;
-  libva = pkgs.libva_1;
   libwebp = null; # ???
   libzimg = null;
   mfx-dispatcher = null;

@@ -8,39 +8,26 @@
 , libxfixes
 , opengl-dummy
 , wayland
-
-, channel ? "2"
 }:
 
 let
   inherit (lib)
-    boolEn
-    optionals;
+    boolEn;
 
-  sources = {
-    "1" = {
-      version = "1.8.3";
-      sha256 = "56ee129deba99b06eb4a8d4f746b117c5d1dc2ec5b7a0bfc06971fca1598ab9b";
-    };
-    "2" = {
-      version = "2.0.0";
-      sha256 = "bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533";
-    };
-  };
-  source = sources."${channel}";
+  version = "2.0.0";
 in
 stdenv.mkDerivation rec {
-  name = "libva-${source.version}";
+  name = "libva-${version}";
 
   src = fetchurl rec {
     urls = [
-      ("https://github.com/01org/libva/releases/download/${source.version}/"
+      ("https://github.com/01org/libva/releases/download/${version}/"
         + "${name}.tar.bz2")
       ("https://www.freedesktop.org/software/vaapi/releases/libva/"
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533";
   };
 
   buildInputs = [
@@ -60,9 +47,6 @@ stdenv.mkDerivation rec {
     "--enable-wayland"
     "--enable-va-messaging"
     "--with-drivers-path=${opengl-dummy.driverSearchPath}/lib/dri"
-  ] ++ optionals (channel == "1") [
-    "--${boolEn opengl-dummy.egl}-egl"
-    "--enable-dummy-driver"
   ];
 
   preInstall = ''

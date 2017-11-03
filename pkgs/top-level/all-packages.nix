@@ -1247,7 +1247,7 @@ ffmpeg_3-3 = pkgs.ffmpeg_generic {
 ffmpeg_3-4 = pkgs.ffmpeg_generic {
   channel = "3.4";
 };
-ffmpeg_3 = callPackageAlias "ffmpeg_3-4" { };
+ffmpeg_3 = callPackageAlias "ffmpeg_3-3" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies
@@ -1700,7 +1700,6 @@ gssdp = callPackageAlias "gssdp_1-0" { };
 
 gst-libav_1-12 = callPackage ../all-pkgs/g/gst-libav {
   channel = "1.12";
-  ffmpeg = pkgs.ffmpeg_3-3;  # FIXME: remove once fixed upstream
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };

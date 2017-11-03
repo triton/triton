@@ -1698,6 +1698,7 @@ gssdp = callPackageAlias "gssdp_1-0" { };
 
 gst-libav_1-12 = callPackage ../all-pkgs/g/gst-libav {
   channel = "1.12";
+  ffmpeg = pkgs.ffmpeg_3-3;  # FIXME: remove once fixed upstream
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };

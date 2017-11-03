@@ -148,6 +148,10 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
+
+    wrapProgram $out/bin/totem-video-thumbnailer \
+      --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
   passthru = {

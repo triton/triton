@@ -1,4 +1,5 @@
 { stdenv
+, autoreconfHook
 , fetchurl
 , gettext
 , intltool
@@ -10,6 +11,7 @@
 , gdk-pixbuf
 , glib
 , gnome_doc_utils
+, gnome-common
 , gobject-introspection
 , gsettings-desktop-schemas
 , gtk
@@ -32,8 +34,7 @@
 }:
 
 assert libx11 != null ->
-  xorg.libXrandr != null
-  && xorg.libxkbfile != null
+  xorg.libxkbfile != null
   && xorg.xkeyboardconfig != null;
 
 let
@@ -60,7 +61,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     gettext
+    gnome-common
     intltool
     itstool
     libxslt
@@ -107,6 +110,18 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--${boolWt (libx11 != null)}-x"
   ];
+
+  postPatch = /* FIXME: find way to support bwrap */ ''
+    sed -i configure.ac \
+      -e '/HAVE_BWRAP/d'
+  '' + /* Fix hardcoded bubblewrap paths */ ''
+    sed -i libgnome-desktop/gnome-desktop-thumbnail-script.c \
+      -e '/\/lib64/d' \
+      -e "/--ro-bind/ s,/usr,${gdk-pixbuf}," \
+      -e "/--symlink/ s,usr/bin,${gdk-pixbuf}/bin,g" \
+      -e "/--ro-bind/ s,/lib,${gdk-pixbuf}/lib," \
+      -e '/usr\/sbin/d'
+  '';
 
   passthru = {
     srcVerification = fetchurl {

@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${gvfs}/bin" \
       --prefix 'PATH' : "${totem}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "${nautilus_unwrapped}/share" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "${evince}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gdk-pixbuf}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gnome-terminal}/share" \

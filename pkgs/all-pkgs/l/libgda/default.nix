@@ -1,7 +1,11 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, fetchFromGitHub
+, gnome-common
+, gtk-doc
 , intltool
 , itstool
+, lib
 
 , atk
 , db
@@ -27,26 +31,32 @@
 , postgresql
 , readline
 , sqlite
-#, vala
+, vala
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
 
-    channel = "5.2";
-    version = "${channel}.4";
+    version = "2017-11-03";
 in
 stdenv.mkDerivation rec {
   name = "libgda-${version}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/libgda/${channel}/${name}.tar.xz";
-    sha256 = "2cee38dd583ccbaa5bdf6c01ca5f88cc08758b9b144938a51a478eb2684b765e";
+  # A release has not been tagged since 2015
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "GNOME";
+    repo = "libgda";
+    rev = "567e359987e18128eaa824062f64218734aef200";
+    sha256 = "910feac0605341b869bdd105eae15f024c0a5e4d404ff03f58b977c2998ae83f";
   };
 
   nativeBuildInputs = [
+    autoreconfHook
+    gnome-common
+    gtk-doc
     intltool
     itstool
   ];
@@ -55,12 +65,12 @@ stdenv.mkDerivation rec {
     atk
     db
     #firebird
-    gdk-pixbuf
+    #gdk-pixbuf  # ui
     glib
     gobject-introspection
-    graphviz
-    gtk3
-    gtksourceview
+    #graphviz  # ui
+    #gtk3  # ui
+    #gtksourceview  # ui
     iso-codes
     json-glib
     libgee
@@ -76,21 +86,27 @@ stdenv.mkDerivation rec {
     postgresql
     readline
     sqlite
-    #vala
+    vala
   ];
+
+  autoreconfPhase = ''
+    sed -i autogen.sh -e 's/which/type/'
+    ./autogen.sh
+  '';
 
   configureFlags = [
     "--enable-nls"
-    "--enable-tools"
+    "--disable-tools"  # ui
     "--enable-json"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "gda-gi" (gobject-introspection != null) null)
-    (enFlag "gdaui-gi" (gobject-introspection != null) null)
-    (enFlag "gi-system-install" (gobject-introspection != null) null)
-    #(enFlag "gdaui-vala" (vala != null) null)
-    #(enFlag "vala-extensions" (vala != null) null)
-    #(enFlag "vala" (vala != null) null)
-    (enFlag "crypto" (openssl != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (gobject-introspection != null)}-gda-gi"
+    #"--${boolEn (gobject-introspection != null)}-gdaui-gi"
+    "--disable-gda-ui"  # ui
+    "--${boolEn (gobject-introspection != null)}-gi-system-install"
+    #"--${boolEn (vala != null)}-gdaui-vala"
+    "--${boolEn (vala != null)}-vala-extensions"
+    "--${boolEn (vala != null)}-vala"
+    "--${boolEn (openssl != null)}-crypto"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -101,25 +117,27 @@ stdenv.mkDerivation rec {
     "--disable-rebuilds"
     "--enable-default-binary"
     "--enable-warnings"
-    "--with-ui"
-    (wtFlag "gtksourceview" (gtksourceview != null) null)
+    "--without-ui"  # ui
+    #"--${boolWt (gtksourceview != null)}-gtksourceview"
+    "--without-gtksourceview"  # ui
     # TODO: goocanvas
-    "--disable-goocanvas"
-    (wtFlag "graphviz" (graphviz != null) null)
-    (wtFlag "bdb" (db != null) null)
-    (wtFlag "mysql" (mariadb-connector-c != null) null)
-    (wtFlag "postgres" (postgresql != null) null)
+    "--disable-goocanvas"  # ui
+    #"--${boolWt (graphviz != null)}-graphviz"
+    "--without-graphviz"  # ui
+    "--${boolWt (db != null)}-bdb"
+    "--${boolWt (mariadb-connector-c != null)}-mysql"
+    "--${boolWt (postgresql != null)}-postgres"
     "--without-oracle"
     # TODO: java support
     "--disable-java"
     "--with-jni"
-    (wtFlag "ldap" (openldap != null) null)
+    "--${boolWt (openldap != null)}-ldap"
     # TODO: firebird support
     "--disable-firebird"
     "--without-mdb"
-    (wtFlag "libsoup" (libsoup != null) null)
-    (wtFlag "libsecret" (libsecret != null) null)
-    #(wtFlag "gnome-keyring" (gnome-keyring != null) null)
+    "--${boolWt (libsoup != null)}-libsoup"
+    "--${boolWt (libsecret != null)}-libsecret"
+    #"--${boolWt (gnome-keyring != null)}-gnome-keyring"
     "--with-gnome-keyring"
   ];
 
@@ -130,7 +148,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNOME database access library";
     homepage = https://wiki.gnome.org/Projects/libgdata;
     license = licenses.lgpl21Plus;

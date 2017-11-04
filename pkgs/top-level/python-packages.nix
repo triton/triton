@@ -346,6 +346,8 @@ matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };
 
 matrix-synapse-ldap3 = callPackage ../all-pkgs/m/matrix-synapse-ldap3 { };
 
+mccabe = callPackage ../all-pkgs/m/mccabe { };
+
 meson = callPackage ../all-pkgs/m/meson { };
 
 mercurial = callPackage ../all-pkgs/m/mercurial { };

@@ -1694,7 +1694,7 @@ gsound = callPackage ../all-pkgs/g/gsound { };
 gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
   channel = "1.0";
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-34;
+  vala = pkgs.vala_0-36;
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
@@ -1832,7 +1832,7 @@ gtksourceview_3-22 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.22";
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  vala = pkgs.vala_0-34;
+  vala = pkgs.vala_0-36;
 };
 gtksourceview = callPackageAlias "gtksourceview_3-22" { };
 
@@ -1850,7 +1850,7 @@ gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
   channel = "1.0";
   gssdp = pkgs.gssdp_1-0;
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-34;
+  vala = pkgs.vala_0-36;
 };
 gupnp = callPackageAlias "gupnp_1-0" { };
 
@@ -3705,9 +3705,6 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-34 = callPackage ../all-pkgs/v/vala {
-  channel = "0.34";
-};
 vala_0-36 = callPackage ../all-pkgs/v/vala {
   channel = "0.36";
 };

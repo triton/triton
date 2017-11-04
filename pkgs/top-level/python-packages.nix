@@ -324,6 +324,8 @@ keyring = callPackage ../all-pkgs/k/keyring { };
 
 keystoneauth1 = callPackage ../all-pkgs/k/keystoneauth1 { };
 
+lazy-object-proxy = callPackage ../all-pkgs/l/lazy-object-proxy { };
+
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };

@@ -99,6 +99,20 @@ stdenv.mkDerivation rec {
     zeitgeist
   ];
 
+  postPatch = /* Fix compatibility with libgda master */ ''
+    # Use correct api version
+    sed -i CMakeLists.txt \
+      -e 's/libgda-5.0/libgda-6.0/g'
+
+    # Replace vendored vapi files
+    rm -v vapi/libgda-5.0.*
+    ln -sv ${libgda}/share/vala/vapi/* vapi/
+
+    # Function re-named, 19f3059dc5a10ea7d79a56283adcab3db4803295
+    sed -i src/DataBase.vala \
+      -e 's/prepare_create_table/prepare_create_table_v/g'
+  '';
+
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=ON"
     "-DBUILD_FOR_ELEMENTARY=OFF"

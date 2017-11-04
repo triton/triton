@@ -1,6 +1,6 @@
 { stdenv
 , autoreconfHook
-, fetchFromGitHub
+, fetchurl
 , gnome-common
 , gtk-doc
 , intltool
@@ -39,24 +39,19 @@ let
     boolEn
     boolWt;
 
-    version = "2017-11-03";
+  channel = "5.2";
+  version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "libgda-${version}";
 
-  # A release has not been tagged since 2015
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "GNOME";
-    repo = "libgda";
-    rev = "567e359987e18128eaa824062f64218734aef200";
-    sha256 = "910feac0605341b869bdd105eae15f024c0a5e4d404ff03f58b977c2998ae83f";
+  src = fetchurl {
+    url = "mirror://gnome/sources/libgda/${channel}/${name}.tar.xz";
+    sha256 = "2cee38dd583ccbaa5bdf6c01ca5f88cc08758b9b144938a51a478eb2684b765e";
   };
 
   nativeBuildInputs = [
     autoreconfHook
-    gnome-common
-    gtk-doc
     intltool
     itstool
   ];
@@ -89,9 +84,17 @@ stdenv.mkDerivation rec {
     vala
   ];
 
-  autoreconfPhase = ''
-    sed -i autogen.sh -e 's/which/type/'
-    ./autogen.sh
+  postPatch = /* Fix building against newer versions of vala */ ''
+    sed -i configure.ac \
+      -e 's/\[0\.26\.0\]//g' \
+      -e 's/\[0\.26\]//g' \
+      -e 's/vala_api="0.26/vala_api="`pkg-config --modversion vapigen`/'
+  '' + /* Remove non-UTF-8 (ISO-8859-16) strings
+          See: 12429af2c0a40bb199ced605b7f7fab5ecc77e86 */ ''
+    for nonutf8 in */*.h */*/*.h */*/*/*.h; do
+      sed -i "$nonutf8" \
+        -e '/Copyright (C)/ s/\*.*$/*/g'
+    done
   '';
 
   configureFlags = [
@@ -139,6 +142,11 @@ stdenv.mkDerivation rec {
     "--${boolWt (libsecret != null)}-libsecret"
     #"--${boolWt (gnome-keyring != null)}-gnome-keyring"
     "--with-gnome-keyring"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-implicit-function-declaration"  # gcc7
+    "-Wno-int-to-pointer-cast"  # gcc7
   ];
 
   preInstall = ''

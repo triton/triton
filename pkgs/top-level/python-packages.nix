@@ -312,6 +312,8 @@ ipaddress = callPackage ../all-pkgs/i/ipaddress { };
 
 iso8601 = callPackage ../all-pkgs/i/iso8601 { };
 
+isort = callPackage ../all-pkgs/i/isort { };
+
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
 jmespath = callPackage ../all-pkgs/j/jmespath { };

@@ -133,6 +133,8 @@ asciinema = callPackage ../all-pkgs/a/asciinema { };
 
 asn1crypto = callPackage ../all-pkgs/a/asn1crypto { };
 
+astroid = callPackage ../all-pkgs/a/astroid { };
+
 attrs = callPackage ../all-pkgs/a/attrs { };
 
 automat = callPackage ../all-pkgs/a/automat { };

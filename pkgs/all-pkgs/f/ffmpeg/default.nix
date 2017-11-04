@@ -183,9 +183,9 @@ let
 
   sources = {
     "3.3" = {
-      version = "3.3.4";
-      multihash = "QmTkSKW9nBseRrd6mw7JW1aM1Xb2szKZJug2wvZPCaK4XK";
-      sha256 = "98b97e1b908dfeb6aeb6d407e5a5eacdfc253a40c2d195f5867ed2d1d46ea957";
+      version = "3.3.5";
+      multihash = "QmVZNSJaKnWWeNwSPnuojFHwowFC3HedNUh4573nBqk3VA";
+      sha256 = "a893490c3a8a7caaa9c47373b789c0335d0ac3572f2ba61059de842b9e45d802";
     };
     "3.4" = {
       version = "3.4";

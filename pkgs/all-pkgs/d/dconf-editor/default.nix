@@ -2,7 +2,10 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , makeWrapper
+# , meson
+# , ninja
 
 , adwaita-icon-theme
 , appstream-glib
@@ -11,15 +14,22 @@
 , glib
 , gtk
 , libxml2
+, shared-mime-info
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.2";
+      sha256 = "28b453fe49c49d7dfaf07c85c01d7495913f93ab64a0b223c117eb17d1cb8ad1";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "dconf-editor-${source.version}";
@@ -34,6 +44,8 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     makeWrapper
+    # meson
+    # ninja
   ];
 
   buildInputs = [
@@ -45,6 +57,11 @@ stdenv.mkDerivation rec {
     gtk
     libxml2
   ];
+
+  # postPatch = ''
+  #   sed -i meson.build \
+  #     -e '/meson_post_install.py/d'
+  # '';
 
   configureFlags = [
     "--enable-schemas-compile"
@@ -59,6 +76,7 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
@@ -74,7 +92,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Graphical tool for editing the dconf configuration database";
     homepage = https://git.gnome.org/browse/dconf-editor;
     license = licenses.lgpl21Plus;

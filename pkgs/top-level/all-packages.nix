@@ -981,12 +981,12 @@ dconf_0-26 = callPackage ../all-pkgs/d/dconf {
 };
 dconf = callPackageAlias "dconf_0-26" { };
 
-dconf-editor_3-22 = callPackage ../all-pkgs/d/dconf-editor {
-  channel = "3.22";
+dconf-editor_3-26 = callPackage ../all-pkgs/d/dconf-editor {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
-dconf-editor = callPackageAlias "dconf-editor_3-22" { };
+dconf-editor = callPackageAlias "dconf-editor_3-26" { };
 
 ddrescue = callPackage ../all-pkgs/d/ddrescue { };
 

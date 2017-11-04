@@ -9,6 +9,7 @@
 , gdk-pixbuf
 , glib
 , gnome-terminal
+, gobject-introspection
 , gsettings-desktop-schemas
 , gtk_3
 , gvfs
@@ -31,12 +32,14 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     dconf
+    evince
     gdk-pixbuf
     glib
     gnome-terminal
+    gobject-introspection
     gsettings-desktop-schemas
     gtk_3
-    evince
+    gvfs
     nautilus_unwrapped
     totem
   ];
@@ -64,11 +67,8 @@ stdenv.mkDerivation rec {
           "$out/lib/nautilus-${nautilus_unwrapped.version}/extensions-3.0/" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'PATH' : "${bubblewrap}/bin" \
-      --prefix 'PATH' : "${evince}/bin" \
-      --prefix 'PATH' : "${gdk-pixbuf}/bin" \
-      --prefix 'PATH' : "${gnome-terminal}/bin" \
+      --prefix 'PATH' : "${glib}/bin" \
       --prefix 'PATH' : "${gvfs}/bin" \
-      --prefix 'PATH' : "${totem}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "${evince}/share" \

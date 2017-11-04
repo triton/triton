@@ -462,6 +462,8 @@ pykwalify = callPackage ../all-pkgs/p/pykwalify { };
 
 pylast = callPackage ../all-pkgs/p/pylast { };
 
+pylint = callPackage ../all-pkgs/p/pylint { };
+
 pymacaroons-pynacl = callPackage ../all-pkgs/p/pymacaroons-pynacl { };
 
 pymysql = callPackage ../all-pkgs/p/pymysql { };

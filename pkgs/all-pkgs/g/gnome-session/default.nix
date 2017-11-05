@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -15,11 +16,19 @@
 , gtk
 , json-glib
 , libepoxy
+, libice
+, libsm
+, libx11
+, libxau
+, libxcomposite
+, libxext
+, libxrender
 , mutter
 , opengl-dummy
 , systemd_lib
 , upower
 , xorg
+, xtrans
 
 , channel
 }:
@@ -27,12 +36,18 @@
 # FIXME: fix Xsync support
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.1";
+      sha256 = "d9414b368db982d3837ca106e64019f18e6cdd5b13965bea6c7d02ddf5103708";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-session-${source.version}";
@@ -61,20 +76,19 @@ stdenv.mkDerivation rec {
     gtk
     json-glib
     libepoxy
+    libice
+    libsm
+    libx11
+    libxau
+    libxcomposite
+    libxext
+    libxrender
+    xorg.libXtst
     mutter  # gschemas
     opengl-dummy
     systemd_lib
     upower
-  ] ++ optionals (xorg != null) [
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXau
-    xorg.libXcomposite
-    xorg.libXext
-    xorg.libXrender
-    xorg.libXtst
-    xorg.xtrans
+    xtrans
   ];
 
   configureFlags = [
@@ -90,21 +104,26 @@ stdenv.mkDerivation rec {
     "--disable-docbook-docs"
     "--disable-man"
     "--enable-nls"
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--enable-ipv6"
-    "--${boolWt (xorg != null)}-xtrans"
+    "--${boolWt (xtrans != null)}-xtrans"
   ];
 
   preFixup = ''
-    wrapProgram $out/bin/gnome-session \
-      --prefix 'PATH' : "${glib}/bin" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+    for prog in $out/bin/*; do
+      wrapProgram $prog \
+        --set 'GSETTINGS_BACKEND' 'dconf' \
+        --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+        --prefix 'PATH' : "${glib}/bin" \
+        --prefix 'PATH' : "$out/bin" \
+        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+        --prefix 'XDG_DATA_DIRS' : "$out/share"
+    done
 
     wrapProgram $out/libexec/gnome-session-binary \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
-      --prefix 'PATH' : "${gnome-settings-daemon}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
@@ -122,7 +141,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Gnome session manager";
     homepage = https://git.gnome.org/browse/gnome-session;
     license = with licenses; [

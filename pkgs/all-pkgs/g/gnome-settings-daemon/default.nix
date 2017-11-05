@@ -34,6 +34,11 @@
 , libnotify
 , librsvg
 , libwacom
+, libx11
+, libxext
+, libxfixes
+, libxi
+, libxkbfile
 , libxml2
 , networkmanager
 , nss
@@ -44,7 +49,10 @@
 , upower
 , wayland
 , xf86-input-wacom
+, xf86miscproto
+#, xkeyboardconfig
 , xorg
+, xproto
 
 , channel
 }:
@@ -102,7 +110,14 @@ stdenv.mkDerivation rec {
     libnotify
     librsvg
     libwacom
+    libx11
+    libxext
+    libxi
+    libxfixes
+    libxkbfile
     libxml2
+    xorg.libXtst
+    xorg.libXxf86misc
     networkmanager
     nss
     pango
@@ -112,16 +127,9 @@ stdenv.mkDerivation rec {
     upower
     wayland
     xf86-input-wacom
-    xorg.libX11
-    xorg.libXext
-    xorg.libXi
-    xorg.libXfixes
-    xorg.libxkbfile
-    xorg.libXtst
-    xorg.libXxf86misc
-    xorg.xf86miscproto
+    xf86miscproto
     xorg.xkeyboardconfig
-    xorg.xproto
+    xproto
   ];
 
   configureFlags = [
@@ -158,6 +166,13 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
+
+    for testprog in $out/libexec/gsd-test-*; do
+      wrapProgram $testprog \
+        --set 'GSETTINGS_BACKEND' 'dconf' \
+        --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+    done
   '';
 
   passthru = {

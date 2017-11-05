@@ -1526,25 +1526,25 @@ gnome-screenshot_3-22 = callPackage ../all-pkgs/g/gnome-screenshot {
 };
 gnome-screenshot = callPackageAlias "gnome-screenshot_3-22" { };
 
-gnome-session_3-22 = callPackage ../all-pkgs/g/gnome-session {
-  channel = "3.22";
+gnome-session_3-26 = callPackage ../all-pkgs/g/gnome-session {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-gnome-session = callPackageAlias "gnome-session_3-22" { };
+gnome-session = callPackageAlias "gnome-session_3-26" { };
 
-gnome-settings-daemon_3-22 =
+gnome-settings-daemon_3-26 =
   callPackage ../all-pkgs/g/gnome-settings-daemon {
-    channel = "3.22";
+    channel = "3.26";
     adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
     gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
     gnome-desktop = pkgs.gnome-desktop_3-26;
     gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
     gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   };
-gnome-settings-daemon = callPackageAlias "gnome-settings-daemon_3-22" { };
+gnome-settings-daemon = callPackageAlias "gnome-settings-daemon_3-26" { };
 
 gnome-shell = callPackage ../all-pkgs/g/gnome-shell { };
 
@@ -2820,7 +2820,7 @@ mutter_3-26 = callPackage ../all-pkgs/m/mutter {
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
-  #gnome-settings-daemon = pkgs.gnome-settings-daemon_3-22;
+  gnome-settings-daemon = pkgs.gnome-settings-daemon_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
 mutter = callPackageAlias "mutter_3-26" { };

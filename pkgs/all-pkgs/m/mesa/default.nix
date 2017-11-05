@@ -36,10 +36,6 @@
 , xorg
 , zlib
 
-, grsecEnabled ? false
-# Texture floats are patented, see docs/patents.txt
-, enableTextureFloats ? false
-
 , buildConfig
 }:
 
@@ -92,7 +88,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-  ]++ optionals (buildConfig != "opengl-dummy") [
+  ] ++ optionals (buildConfig != "opengl-dummy") [
     bison
     flex
     gettext
@@ -103,6 +99,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    dri2proto
+    dri3proto
     expat
     glproto
     libdrm
@@ -112,12 +110,11 @@ stdenv.mkDerivation rec {
     libxext
     libxfixes
     xorg.libxshmfence
+    xorg.libXxf86vm
     wayland
     wayland-protocols
     zlib
   ] ++ optionals (buildConfig != "opengl-dummy") [
-    dri2proto
-    dri3proto
     elfutils
     libclc
     libffi
@@ -131,7 +128,6 @@ stdenv.mkDerivation rec {
     lm-sensors
     presentproto
     xorg.libXvMC
-    xorg.libXxf86vm
   ];
 
   patches = [
@@ -172,14 +168,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-largefile"
-    # slight performance degradation, enable only for grsec
-    "--${boolEn grsecEnabled}-glx-rts"
+    "--disable-glx-rts"  # grsec
     "--disable-debug"
     "--disable-profile"
     "--${boolEn (buildConfig != "opengl-dummy" && libglvnd != null)}-libglvnd"
     "--disable-mangling"
     "--disable-libunwind"
-    "--${boolEn enableTextureFloats}-texture-float"
+    "--enable-texture-float"
     "--enable-asm"
     # TODO: selinux support
     "--disable-selinux"
@@ -191,11 +186,11 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-gallium-extra-hud"
     "--${boolEn (buildConfig != "opengl-dummy")}-lmsensors"
     "--enable-dri3"
-    "--enable-glx"  # dri|xlib|gallium-xlib
+    "--enable-glx=dri"
     "--disable-osmesa"
     "--${boolEn (buildConfig != "opengl-dummy")}-gallium-osmesa"
     "--enable-egl"
-    "--${boolEn (buildConfig != "opengl-dummy")}-xa" # used in vmware driver
+    "--enable-xa" # used in vmware driver
     "--enable-gbm"
     "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
@@ -208,17 +203,15 @@ stdenv.mkDerivation rec {
     "--disable-opencl-icd"
     "--disable-gallium-tests"
     "--enable-shared-glapi"
-    "--${boolEn (buildConfig != "opengl-dummy")}-driglx-direct"
+    "--enable-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
     "--${boolEn (buildConfig != "opengl-dummy")}-llvm"
     "--disable-valgrind"
 
-    #gl-lib-name=GL
-    #osmesa-libname=OSMesa
     "--${boolWt (buildConfig != "opengl-dummy")}-gallium-drivers${if (buildConfig != "opengl-dummy") then "=svga,i915,nouveau,r300,r600,radeonsi,freedreno,swrast,swr,virgl" else ""}"
     "--${boolWt (buildConfig != "opengl-dummy")}-dri-driverdir${if (buildConfig != "opengl-dummy") then "=$(drivers)/lib/dri" else ""}"
-    "--${boolWt (buildConfig != "opengl-dummy")}-dri-searchpath${if (buildConfig != "opengl-dummy") then "=${driverSearchPath}/lib/dri" else ""}"
+    "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--${boolWt (buildConfig != "opengl-dummy")}-dri-drivers${if (buildConfig != "opengl-dummy") then "=i915,i965,nouveau,radeon,r200,swrast" else ""}"
     "--${boolWt (buildConfig != "opengl-dummy")}-vulkan-drivers${if (buildConfig != "opengl-dummy") then "=intel,radeon" else ""}"
     #"--with-vulkan-icddir=DIR"

@@ -67,11 +67,6 @@ stdenv.mkDerivation rec {
     rm "$out"/lib/bash/Makefile.inc
   '';
 
-  outputs = [
-    "out"
-    "doc"
-  ];
-
   passthru = {
     shellPath = "/bin/bash";
     systemBashrcName = "bash.bashrc";

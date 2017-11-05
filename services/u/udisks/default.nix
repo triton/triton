@@ -39,13 +39,13 @@ with lib;
     '';
 
     services.udev.packages = [ pkgs.udisks ];
-    
+
     systemd.services.udisks = {
       description = "Udisks service";
       serviceConfig = {
         Type = "dbus";
         BusName = "org.freedesktop.UDisks2";
-        ExecStart = "${pkgs.udisks}/libexec/udisks/udisksd --no-debug";
+        ExecStart = "${pkgs.udisks}/libexec/udisks2/udisksd --no-debug";
       };
     };
   };

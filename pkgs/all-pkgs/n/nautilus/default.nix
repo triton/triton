@@ -6,6 +6,7 @@
 , bubblewrap
 , dconf
 , evince
+, file-roller
 , gdk-pixbuf
 , glib
 , gnome-terminal
@@ -34,6 +35,7 @@ stdenv.mkDerivation rec {
     adwaita-icon-theme
     dconf
     evince
+    file-roller
     gdk-pixbuf
     glib
     gnome-terminal
@@ -74,6 +76,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "${evince}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${file-roller}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gdk-pixbuf}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gnome-terminal}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gvfs}/share" \

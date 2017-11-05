@@ -170,20 +170,16 @@ stdenv.mkDerivation rec {
   preFixup =
     /* Add a symlink to make sure the gobject-introspection hook
        adds typelibs to GI_TYPELIB_PATH */ ''
-      if [[ ! -d "$out/lib/girepository-1.0" && -d "$out/lib/mutter" ]] ; then
-        ln -svf \
-          $out/lib/mutter \
-          $out/lib/girepository-1.0
-      fi
-    '' + ''
-      wrapProgram $out/bin/mutter \
-        --set 'GSETTINGS_BACKEND' 'dconf' \
-        --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-        --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
-        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-        --prefix 'XDG_DATA_DIRS' : "$out/share" \
-        --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
-    '';
+    ln -svf $out/lib/mutter $out/lib/girepository-1.0
+  '' + ''
+    wrapProgram $out/bin/mutter \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   passthru = {
     srcVerification = fetchurl {

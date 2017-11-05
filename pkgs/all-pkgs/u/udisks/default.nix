@@ -5,11 +5,15 @@
 , intltool
 , lib
 , libxslt
+, makeWrapper
 
 , acl
+, dosfstools
+, e2fsprogs
 , glib
 , gobject-introspection
 , gnused
+, gptfdisk
 , libatasmart
 , libblockdev
 , libconfig
@@ -17,9 +21,11 @@
 , libstoragemgmt
 , lvm2
 , mdadm
+, ntfs-3g
 , polkit
 , systemd_lib
 , util-linux_full
+, xfsprogs
 }:
 
 stdenv.mkDerivation rec {
@@ -31,6 +37,8 @@ stdenv.mkDerivation rec {
     sha256 = "63694fce27382a868ae32e9cbe4096c4d55c34e3127ed6caf750fa3ad50fd6eb";
   };
 
+  # FIXME:
+  # - hard coded path in etc/systemd/system/zram-setup@.service
   postPatch = ''
     # We need to fix the default path inside of udisks
     grep -q '"/usr/bin:/bin:/usr/sbin:/sbin"' src/main.c
@@ -56,6 +64,7 @@ stdenv.mkDerivation rec {
     docbook-xsl
     intltool
     libxslt
+    makeWrapper
   ];
 
   buildInputs = [
@@ -103,6 +112,18 @@ stdenv.mkDerivation rec {
       "girdir=$out/share/gir-1.0"
       "typelibsdir=$out/lib/girepository-1.0"
     )
+  '';
+
+  preFixup = ''
+    wrapProgram $out/libexec/udisks2/udisksd \
+      --prefix 'PATH' : "${dosfstools}/bin" \
+      --prefix 'PATH' : "${e2fsprogs}/bin" \
+      --prefix 'PATH' : "${gptfdisk}/bin" \
+      --prefix 'PATH' : "${lvm2}/bin" \
+      --prefix 'PATH' : "${mdadm}/bin" \
+      --prefix 'PATH' : "${ntfs-3g}/bin" \
+      --prefix 'PATH' : "${util-linux_full}/bin" \
+      --prefix 'PATH' : "${xfsprogs}/bin"
   '';
 
   meta = with lib; {

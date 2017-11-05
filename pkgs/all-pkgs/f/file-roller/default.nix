@@ -17,7 +17,7 @@
 , libarchive
 , libnotify
 , libxml2
-, pango
+, nautilus
 
 , channel
 }:
@@ -26,7 +26,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./source.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.2";
+      sha256 = "3e677b8e1c2f19aead69cf4fc419a19fc3373aaf5d7bf558b4f077f10bbba8a5";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "file-roller-${source.version}";
@@ -55,12 +61,14 @@ stdenv.mkDerivation rec {
     libarchive
     libnotify
     libxml2
+    nautilus
   ];
 
   configureFlags = [
     "--disable-schemas-compile"
     "--disable-debug"
     "--disable-run-in-place"
+    "--enable-nautilus-actions"
     #"--enable-packagekit"
     "--${boolEn (libnotify != null)}-notification"
     #"--enable-magic"

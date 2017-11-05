@@ -1274,12 +1274,13 @@ fftw_single = callPackage ../all-pkgs/f/fftw {
 
 file = callPackage ../all-pkgs/f/file { };
 
-file-roller_3-22 = callPackage ../all-pkgs/f/file-roller {
-  channel = "3.22";
+file-roller_3-26 = callPackage ../all-pkgs/f/file-roller {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  nautilus = pkgs.nautilus_unwrapped_3-26;
 };
-file-roller = callPackageAlias "file-roller_3-22" { };
+file-roller = callPackageAlias "file-roller_3-26" { };
 
 filezilla = callPackage ../all-pkgs/f/filezilla { };
 

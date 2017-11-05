@@ -30,24 +30,39 @@ with lib;
 
   config = mkIf config.services.udisks.enable {
 
-    environment.systemPackages = [ pkgs.udisks ];
+    environment.etc."libblockdev/conf.d/00-default.cfg".source =
+      "${pkgs.libblockdev}/etc/libblockdev/conf.d/00-default.cfg";
 
-    services.dbus.packages = [ pkgs.udisks ];
+    environment.etc."libblockdev/conf.d/10-lvm-dbus.cfg".source =
+      "${pkgs.libblockdev}/etc/libblockdev/conf.d/10-lvm-dbus.cfg";
+
+    # TODO: make configurable
+    environment.etc."udisks2/udisks2.conf".source =
+      "${pkgs.udisks}/etc/udisks2/udisks2.conf";
+
+    # TODO: make configurable
+    environment.etc."udisks2/modules.conf.d/udisks2_lsm.conf".source =
+      "${pkgs.udisks}/etc/udisks2/modules.conf.d/udisks2_lsm.conf";
+
+    environment.systemPackages = [
+      pkgs.udisks
+    ];
+
+    services.dbus.packages = [
+      pkgs.udisks
+    ];
 
     system.activation.scripts.udisks = ''
       mkdir -m 0755 -p /var/lib/udisks
     '';
 
-    services.udev.packages = [ pkgs.udisks ];
+    systemd.packages = [
+      pkgs.udisks
+    ];
 
-    systemd.services.udisks = {
-      description = "Udisks service";
-      serviceConfig = {
-        Type = "dbus";
-        BusName = "org.freedesktop.UDisks2";
-        ExecStart = "${pkgs.udisks}/libexec/udisks2/udisksd";
-      };
-    };
+    services.udev.packages = [
+      pkgs.udisks
+    ];
   };
 
 }

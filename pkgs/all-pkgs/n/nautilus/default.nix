@@ -16,6 +16,7 @@
 , nautilus_unwrapped
 , shared-mime-info
 , totem
+, tracker
 }:
 
 # NOTE: This wrapper is for working around circular dependencies.
@@ -42,6 +43,7 @@ stdenv.mkDerivation rec {
     gvfs
     nautilus_unwrapped
     totem
+    tracker
   ];
 
   installPhase = ''
@@ -74,8 +76,10 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${evince}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gdk-pixbuf}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gnome-terminal}/share" \
-      --prefix 'XDG_DATA_DIRS' : "${totem}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${gvfs}/share" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${totem}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${tracker}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
 
     wrapProgram $out/bin/nautilus-desktop \

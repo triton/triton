@@ -27,10 +27,8 @@
 , libxdamage
 , libxext
 , libxfixes
-, libxt
 , llvm
 , lm-sensors
-, presentproto
 , wayland
 , wayland-protocols
 , xorg
@@ -123,10 +121,8 @@ stdenv.mkDerivation rec {
     libomxil-bellagio
     libva
     libvdpau
-    libxt
     llvm
     lm-sensors
-    presentproto
     xorg.libXvMC
   ];
 

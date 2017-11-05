@@ -6,6 +6,7 @@
 , gtk-doc
 , intltool
 , itstool
+, lib
 , libtool
 , makeWrapper
 
@@ -20,13 +21,14 @@
 , libnotify
 , libxml2
 , pango
+, shared-mime-info
 , systemd_lib
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     replaceStrings;
 
@@ -85,10 +87,9 @@ stdenv.mkDerivation rec {
     "--disable-documentation"
   ];
 
-  postConfigure =
-    /* https://bugzilla.gnome.org/show_bug.cgi?id=655517 */ ''
-      sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-    '';
+  postConfigure = /* https://bugzilla.gnome.org/show_bug.cgi?id=655517 */ ''
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  '';
 
   preFixup = ''
     wrapProgram $out/bin/bluetooth-sendto \
@@ -97,6 +98,7 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
@@ -112,7 +114,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Bluetooth graphical utilities integrated with GNOME";
     homepage = https://wiki.gnome.org/Projects/GnomeBluetooth;
     license = with licenses; [

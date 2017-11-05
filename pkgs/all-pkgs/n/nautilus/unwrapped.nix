@@ -12,7 +12,6 @@
 , atk
 , bubblewrap
 , dbus-glib
-, dconf
 , exempi
 , gdk-pixbuf
 , glib
@@ -34,8 +33,6 @@
 
 , channel
 }:
-
-# FIXME: remove dconf
 
 let
   inherit (lib)
@@ -73,7 +70,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     atk
     dbus-glib
-    dconf
     exempi
     gdk-pixbuf
     glib

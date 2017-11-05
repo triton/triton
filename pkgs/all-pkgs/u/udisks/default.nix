@@ -3,6 +3,7 @@
 , docbook-xsl
 , fetchurl
 , intltool
+, lib
 , libxslt
 
 , acl
@@ -60,6 +61,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     acl
     glib
+    gobject-introspection
     libatasmart
     libblockdev
     libconfig
@@ -82,6 +84,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--disable-gtk-doc"
     "--enable-man"
+    "--enable-introspection"
     "--enable-lvm2"
     "--enable-lvmcache"
     #"--enable-iscsi"  # TODO: Enable
@@ -97,10 +100,12 @@ stdenv.mkDerivation rec {
     installFlagsArray+=(
       "sysconfdir=$out/etc"
       "localstatedir=$TMPDIR"
+      "girdir=$out/share/gir-1.0"
+      "typelibsdir=$out/lib/girepository-1.0"
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.freedesktop.org/wiki/Software/udisks;
     description = "Daemon & cli utility for querying & manipulating storage devices";
     license = licenses.gpl2;

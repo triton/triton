@@ -57,12 +57,21 @@
 , channel
 }:
 
+# NOTE: Runtime dependency on mutter & gnome-session.
+# FIXME: re-verify actual dependencies.
+
 let
   inherit (lib)
     boolEn
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.2";
+      sha256 = "5a3d156b35e03fa3c28fddd0321f6726082a711973dee2af686370faae2e75e4";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-settings-daemon-${source.version}";
@@ -153,25 +162,12 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    wrapProgram $out/libexec/gnome-settings-daemon \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share" \
-      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
-
-    wrapProgram $out/libexec/gsd-list-wacom \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
-    for testprog in $out/libexec/gsd-test-*; do
-      wrapProgram $testprog \
+    for prog in $out/libexec/*; do
+      wrapProgram $prog \
         --set 'GSETTINGS_BACKEND' 'dconf' \
         --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+        --prefix 'XDG_DATA_DIRS' : "$out/share"
     done
   '';
 

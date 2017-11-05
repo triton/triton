@@ -14,6 +14,7 @@
 , clutter
 , clutter-gst
 , clutter-gtk
+#, cogl
 , dbus-glib
 , dconf
 , gdk-pixbuf
@@ -36,12 +37,14 @@
 , lirc
 , nautilus
 , pango
-, python3Packages
+#, python3Packages
 , shared-mime-info
 , totem-pl-parser
 , tracker
+#, vala
 , xextproto
 , xproto
+#, zeitgeist
 
 , channel
 }:
@@ -83,6 +86,7 @@ stdenv.mkDerivation rec {
     clutter
     clutter-gst
     clutter-gtk
+    #cogl
     dbus-glib
     dconf
     gdk-pixbuf
@@ -102,11 +106,14 @@ stdenv.mkDerivation rec {
     nautilus
     pango
     #python3Packages.pygobject
+    #python3Packages.pylint
     #python3Packages.python
     totem-pl-parser
     tracker
+    #vala
     xextproto
     xproto
+    #zeitgeist
   ];
 
   GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
@@ -118,9 +125,10 @@ stdenv.mkDerivation rec {
     gstreamer
   ];
 
-  postPatch = /* Post install already handled by setup-hooks */ ''
+  postPatch = /* Post install is already handled by setup-hooks */ ''
     sed -i meson.build \
-      -e '/meson_post_install.py/d'
+      -e '/meson_post_install.py/d' \
+      -e '/meson_compile_python.py/d'
   '';
 
   preConfigure = ''

@@ -7,6 +7,7 @@
 , python2Packages
 
 , aalib
+, adwaita-icon-theme
 , alsa-lib
 , atk
 , babl
@@ -165,6 +166,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/bin/gimp-${verMajMin} \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';
 

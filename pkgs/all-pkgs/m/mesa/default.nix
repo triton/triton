@@ -186,7 +186,7 @@ stdenv.mkDerivation rec {
     "--disable-osmesa"
     "--${boolEn (buildConfig != "opengl-dummy")}-gallium-osmesa"
     "--enable-egl"
-    "--enable-xa" # used in vmware driver
+    "--${boolEn (buildConfig != "opengl-dummy")}-xa" # used in vmware driver
     "--enable-gbm"
     "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"

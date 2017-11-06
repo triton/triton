@@ -2005,9 +2005,7 @@ json-c = callPackage ../all-pkgs/j/json-c { };
 
 json-glib = callPackage ../all-pkgs/j/json-glib { };
 
-jsoncpp = callPackage ../all-pkgs/j/jsoncpp {
-  cmake = pkgs.cmake_bootstrap;
-};
+jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
 
 judy = callPackage ../all-pkgs/j/judy { };
 

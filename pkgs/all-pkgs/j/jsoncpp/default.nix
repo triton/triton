@@ -1,34 +1,27 @@
 { stdenv
-, cmake
 , fetchFromGitHub
+, meson
 , ninja
-, python
 }:
 
 let
-  version = "1.8.3";
+  rev = "d61cddedac68f6dd3991d285045a23aeb253aa53";
+  date = "2017-10-29";
 in
 stdenv.mkDerivation rec {
-  name = "jsoncpp-${version}";
+  name = "jsoncpp-${date}";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "open-source-parsers";
     repo = "jsoncpp";
-    rev = version;
-    sha256 = "717c519f06a83992ea80db04355fe7ca06556891cce45281dbeadfb6378997f9";
+    inherit rev;
+    sha256 = "b8618239505f9e587de4be7da1ad94f9b3e88284bfb6fa8ddd0139fe50975821";
   };
 
   nativeBuildInputs = [
-    cmake
+    meson
     ninja
-    python
-  ];
-
-  cmakeFlags = [
-    "-DJSONCPP_LIB_BUILD_SHARED=ON"
-    "-DJSONCPP_LIB_BUILD_STATIC=OFF"
-    "-DJSONCPP_WITH_CMAKE_PACKAGE=ON"
   ];
 
   meta = with stdenv.lib; {

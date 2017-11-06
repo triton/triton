@@ -2738,6 +2738,8 @@ mongodb = callPackage ../all-pkgs/m/mongodb { };
 
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
+mono = callPackage ../all-pkgs/m/mono { };
+
 moolticute = callPackage ../all-pkgs/m/moolticute { };
 
 mosh = callPackage ../all-pkgs/m/mosh { };
@@ -4181,8 +4183,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   java = callPackageAlias "java8" { };
   jdk = pkgs.java // { outputs = [ "out" ]; };
   jre = pkgs.java.jre // { outputs = [ "jre" ]; };
-#
-#  mono = callPackage ../development/compilers/mono { };
 #
 #  lua5_2 = callPackage ../development/interpreters/lua-5/5.2.nix { };
 #  lua5_2_compat = callPackage ../development/interpreters/lua-5/5.2.nix {

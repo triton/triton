@@ -241,11 +241,19 @@ stdenv.mkDerivation rec {
         $out/lib/libXvMC* \
         $out/lib/d3d \
         $out/lib/vdpau \
-        $out/lib/libxatracker*
+        $out/lib/bellagio \
+        $out/lib/libxatracker* \
+        $out/lib/libvulkan_*
+
+      mv $out/lib/dri/* $drivers/lib/dri
+      rmdir "$out/lib/dri"
 
       mkdir -p {$osmesa,$drivers}/lib/pkgconfig
-      mv -t $osmesa/lib/ \
-        $out/lib/libOSMesa*
+      mv -t $osmesa/lib/ $out/lib/libOSMesa*
+
+      # share/vulkan/icd.d/
+      mv $out/share/ $drivers/
+      sed "s,$out,$drivers,g" -i $drivers/share/vulkan/icd.d/*
 
       mv -t $drivers/lib/pkgconfig/ \
         $out/lib/pkgconfig/xatracker.pc

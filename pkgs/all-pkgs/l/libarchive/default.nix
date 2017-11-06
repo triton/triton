@@ -16,15 +16,19 @@
 , zstd
 }:
 
+let
+  rev = "d9d9d1683ec875fdf7abf21e0049bf285d9f9ec1";
+  date = "2017-11-02";
+in
 stdenv.mkDerivation rec {
-  name = "libarchive-2017-08-30";
+  name = "libarchive-${date}";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "libarchive";
     repo = "libarchive";
-    rev = "1f3877960058e7f7b6a79748d73276cece0d5de0";
-    sha256 = "f6ee59b32b3166b0079b066c9530f9c9b4376b7ed9d07e470d1dc8ab18fe7c73";
+    inherit rev;
+    sha256 = "251d1617a2f8f65f8a0bed595f9b4abd6f283387d6296bfc413aaf4a7bae2c21";
   };
 
   nativeBuildInputs = [

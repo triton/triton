@@ -46,6 +46,7 @@
 , linux-headers
 , opengl-dummy
 , pango
+, pipewire
 , systemd_lib
 , upower
 , wayland
@@ -129,6 +130,7 @@ stdenv.mkDerivation rec {
     linux-headers
     opengl-dummy
     pango
+    pipewire
     systemd_lib
     upower
     wayland
@@ -141,18 +143,22 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-nls"
-    "--enable-glibtest"
-    "--enable-schemas-compile"
+    "--disable-glibtest"
+    "--disable-schemas-compile"
     "--enable-verbose-mode"
     "--enable-sm"
     "--${boolEn (libstartup_notification != null)}-startup-notification"
     "--disable-installed-tests"
+    "--${boolEn (pipewire != null)}-remote-desktop"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-native-backend"
+    "--enable-egl-device"
     "--${boolEn (wayland != null)}-wayland"
     "--disable-debug"
     "--enable-compile-warnings"
     "--${boolWt (libcanberra != null)}-libcanberra"
+    "--${boolWt (libwacom != null)}-libwacom"
+    "--${boolWt (libgudev != null)}-gudev"
     "--${boolWt (libx11 != null)}-x"
   ];
 

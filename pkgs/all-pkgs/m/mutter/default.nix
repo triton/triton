@@ -139,14 +139,6 @@ stdenv.mkDerivation rec {
     zenity
   ];
 
-  # patches = [
-  #   (fetchTritonPatch {
-  #     rev = "9e67dfb8cbcb8c314fee112e2b751dd907cec544";
-  #     file = "mutter/x86.patch";
-  #     sha256 = "0f7438b60b8c32b9f788245273081c4181eb529610ca804c5ba46d12338b1475";
-  #   })
-  # ];
-
   configureFlags = [
     "--enable-nls"
     "--enable-glibtest"

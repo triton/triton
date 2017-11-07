@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, fetchpatch
 , lib
 , meson
 , ninja
@@ -52,6 +53,13 @@ stdenv.mkDerivation rec {
     systemd-dummy
     systemd_lib
     v4l_lib
+  ];
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/PipeWire/pipewire/commit/b6ee67905db2124a1105da7da6969200aa305957.patch";
+      sha256 = "c8f90de1392797a14ca9c589aad1ff1ac51e499e9ea3e887c7f95c5d25193e45";
+    })
   ];
 
   postPatch = /* Fix hardcoded systemd unit directory */ ''

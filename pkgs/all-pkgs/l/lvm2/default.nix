@@ -16,16 +16,16 @@ let
     "ftp://sources.redhat.com/pub/lvm2/releases"
   ];
 
-  version = "2.02.175";
+  version = "2.02.176";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
 
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
-    multihash = "QmcuMs9So1yzmAkUig3NxYirkFqb48fkvRRVaC42G3ypxE";
+    multihash = "QmcAqgC8MCmrauBrScsk1uRWAH1Z2sUJc196Fpnkyjfj95";
     hashOutput = false;
-    sha512 = "73837edcad6c4165211be6a3528da62a189f1c97bcdd73a69746df9459d3716c0c44580a654b55e2bcafea48797ce4ecee0f1df22e32e599ddebf942807b2638";
+    sha512 = "eee0b1cc356f0c5ff5dba8efe81af5f0ad446649dc237458bb63419483899becc4fe6912592555f84cf9cb8f9cbdec341d2047db5943ca9a3da5f0af60b70759";
   };
 
   buildInputs = [

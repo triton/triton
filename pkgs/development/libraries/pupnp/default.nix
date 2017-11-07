@@ -1,23 +1,28 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
+let
+  version = "1.6.22";
+in
 stdenv.mkDerivation rec {
-  name = "libupnp-1.6.20";
+  name = "libupnp-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/pupnp/${name}.tar.bz2";
-    sha256 = "ee3537081e3ea56f66ada10387486823989210bc98002f098305551c966e3a63";
+    url = "mirror://sourceforge/pupnp/pupnp/libUPnP%20${version}/${name}.tar.bz2";
+    sha256 = "0bdfacb7fa8d99b78343b550800ff193264f92c66ef67852f87f042fd1a1ebbc";
   };
 
   # Fortify Source breaks compilation
   optimize = false;
   fortifySource = false;
 
-  meta = with stdenv.lib; {
-    description = "libupnp, an open source UPnP development kit for Linux";
+  meta = with lib; {
+    description = "UPnP development kit for Linux";
     homepage = http://pupnp.sourceforge.net/;
     license = "BSD-style";
+    maintainers = with maintainers; [ ];
     platforms = with platforms;
       x86_64-linux;
   };

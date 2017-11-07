@@ -82,10 +82,6 @@ stdenv.mkDerivation rec {
     mkdir -p $out/etc/systemd/system $out/lib/systemd/system-generators
     cp scripts/blk_availability_systemd_red_hat.service $out/etc/systemd/system
     cp scripts/lvm2_activation_generator_systemd_red_hat $out/lib/systemd/system-generators
-
-    # Fix extraneous @RT_LIB@
-    grep -q '@RT_LIB@' "$out"/lib/pkgconfig/devmapper.pc
-    sed -i 's,@RT_LIB@,,g' "$out"/lib/pkgconfig/devmapper.pc
   '';
 
   passthru = {

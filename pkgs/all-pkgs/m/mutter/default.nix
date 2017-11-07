@@ -28,6 +28,7 @@
 , libinput
 , libsm
 , libstartup_notification
+, libwacom
 , libx11
 , libxcb
 , libxcomposite
@@ -108,6 +109,7 @@ stdenv.mkDerivation rec {
     libinput
     libsm
     libstartup_notification
+    libwacom
     libx11
     libxcb
     libxcomposite

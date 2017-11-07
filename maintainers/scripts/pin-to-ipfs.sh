@@ -18,6 +18,10 @@ cleanup() {
 TMPDIR="$(mktemp -d)"
 trap cleanup EXIT HUP INT QUIT PIPE TERM
 
+export CONCURRENT_LOG_DIR=$TMPDIR/logs
+export CONCURRENT_LIMIT=10
+source concurrent.lib.sh
+
 TOPDIR="$(pwd)"
 while [ ! -d "$TOPDIR/pkgs" ]; do
   TOPDIR="$(dirname "$TOPDIR")"
@@ -44,12 +48,16 @@ while read h; do
   current["$h"]=1
 done < <(ipfs pin ls -t recursive | awk '{print $1}' | sort | uniq)
 
+fetch() {
+  ipfs pin add --progress "$1"
+}
+
 ARGS=()
 while read HASH; do
   if [ "${current[$HASH]}" != "1" ]; then
-    ARGS+=("$HASH")
+    ARGS+=("-" "$HASH" "fetch" "$HASH")
   fi
 done < <(cat "$TMPDIR/hashes.tmp")
 if [ "${#ARGS[@]}" -gt "0" ]; then
-  ipfs pin add --progress "${ARGS[@]}"
+  concurrent "${ARGS[@]}"
 fi

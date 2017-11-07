@@ -3711,6 +3711,8 @@ vala_0-36 = callPackage ../all-pkgs/v/vala {
 };
 vala = callPackageAlias "vala_0-36" { };
 
+valgrind = callPackage ../all-pkgs/v/valgrind { };
+
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vcdimager = callPackage ../all-pkgs/v/vcdimager { };
@@ -4216,8 +4218,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
     callPackage ../development/tools/documentation/gnome-doc-utils { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
-#
-  valgrind = callPackage ../development/tools/analysis/valgrind { };
 #
   a52dec = callPackage ../development/libraries/a52dec { };
 #

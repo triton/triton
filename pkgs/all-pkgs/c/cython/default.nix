@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.27.2";
+  version = "0.27.3";
 in
 buildPythonPackage {
   name = "cython-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Cython";
     inherit version;
-    sha256 = "265dacf64ed8c0819f4be9355c39beaa13dc2ad2f85237a2c4e478f5ce644b48";
+    sha256 = "6a00512de1f2e3ce66ba35c5420babaef1fe2d9c43a8faab4080b0dbcc26bc64";
   };
 
   meta = with lib; {

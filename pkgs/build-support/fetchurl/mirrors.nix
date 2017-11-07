@@ -219,10 +219,10 @@ rec {
   sourceforge = [
     # These urls don't allow any redirects and don't fail as often as the redirect ones
     "https://sourceforge.mirrorservice.org/\${base:1:1}/\${base:1:2}"  # http://kent.dl.sourceforge.net
-    http://internode.dl.sourceforge.net/project
+    https://cytranet.dl.sourceforge.net/project
+    https://newcontinuum.dl.sourceforge.net/project
 
     # Fall back to the indexed mirrors when the direct references don't work
-    http://kent.dl.sourceforge.net
     http://downloads.sourceforge.net
   ];
 

@@ -3,15 +3,15 @@
 }:
 
 let
-  version = "0.11.0";
+  version = "0.11.1";
 in
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
 
   src = fetchurl {
     url = "https://download.filezilla-project.org/libfilezilla/${name}.tar.bz2";
-    multihash = "QmYpcRPzLs6SqJuFHmFNFrdKbj4y4QtarfKU1ufPZpdNX7";
-    sha256 = "cc7467241c8905de98773b414ce445d6f9ff3bf3105f2d16cecab76404879ed0";
+    multihash = "QmX5zfiEEXw4ViQoswDk7LtDBF6hLxYNTw48iqx7RB7T3c";
+    sha256 = "ecbaa674c0ad0b63df842b8cde17935a497dd58c3749baa281c67cf5878e64f7";
   };
 
   meta = with stdenv.lib; {

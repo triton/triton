@@ -21,12 +21,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.8";
+  name = "ncmpcpp-0.8.1";
 
   src = fetchurl {
     url = "https://rybczak.net/ncmpcpp/stable/${name}.tar.bz2";
-    multihash = "QmYnG5Y5D6eSfeHZAprKw9g5ztTNnEbRcViandCmASYnRZ";
-    sha256 = "2f0f2a1c0816119430880be6932e5eb356b7875dfa140e2453a5a802909f465a";
+    multihash = "QmbVKv5zNT9cB8WHNiN54pF9rLdTMHbiV1QoBRXnDrwcoV";
+    sha256 = "4df9570a1db4ba2dc9b759aab88b283c00806fb5d2bce5f5d27a2eb10e6888ff";
   };
 
   buildInputs = [

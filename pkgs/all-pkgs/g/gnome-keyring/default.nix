@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , libxslt
 
 , gcr
@@ -13,21 +14,20 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
+
+  channel = "3.20";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "gnome-keyring-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-keyring/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-keyring/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "bc17cecd748a0e46e302171d11c3ae3d76bba5258c441fabec3786f418e7ec99";
+    url = "mirror://gnome/sources/gnome-keyring/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "97964e723f454be509c956ed5e38b5c2fd7363f43bd3f153b94a4a63eb888c8c";
   };
 
   nativeBuildInputs = [
@@ -44,11 +44,18 @@ stdenv.mkDerivation rec {
     pam
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-pkcs11-config=$out/etc/pkcs11/"
+      "--with-pkcs11-modules=$out/lib/pkcs11/"
+    )
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-schemas-compile"
-    (enFlag "pam" (pam != null) null)
+    "--${boolEn (pam != null)}-pam"
     "--enable-ssh-agent"
     "--disable-selinux"
     "--disable-p11-tests"
@@ -58,12 +65,22 @@ stdenv.mkDerivation rec {
     "--disable-valgrind"
     #"--with-dbus-services="
     #"--with-pam-dir="
-    "--with-pkcs11-config=\${out}/etc/pkcs11/"
-    "--with-pkcs11-modules=\${out}/lib/pkcs11/"
-    (wtFlag "libcap-ng" (libcap-ng != null) null)
+    "--${boolWt (libcap-ng != null)}-libcap-ng"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-keyring/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Password and keyring managing daemon";
     homepage = https://wiki.gnome.org/Projects/GnomeKeyring;
     license = with licenses; [

@@ -40,6 +40,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     itstool
+    vala
   ];
 
   buildInputs = [
@@ -55,7 +56,6 @@ stdenv.mkDerivation rec {
     openldap
     openssh
     shared-mime-info
-    vala
   ];
 
   configureFlags = [

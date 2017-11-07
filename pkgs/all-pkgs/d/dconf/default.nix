@@ -33,6 +33,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     makeWrapper
+    vala
   ];
 
   buildInputs = [
@@ -41,7 +42,6 @@ stdenv.mkDerivation rec {
     glib
     gtk3
     libxml2
-    vala
   ];
 
   configureFlags = [

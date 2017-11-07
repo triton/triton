@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     libxslt
+    vala
   ];
 
   buildInputs = [
@@ -51,7 +52,6 @@ stdenv.mkDerivation rec {
     libtasn1
     p11-kit
     pango
-    vala
   ];
 
   configureFlags = [

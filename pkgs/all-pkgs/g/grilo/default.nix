@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
     intltool
     #meson
     #ninja
+    vala
   ];
 
   buildInputs = [
@@ -47,7 +48,6 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     totem-pl-parser
-    vala
   ];
 
   setupHook = ./setup-hook.sh;

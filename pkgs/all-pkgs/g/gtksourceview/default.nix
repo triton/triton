@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -48,7 +49,6 @@ stdenv.mkDerivation rec {
     libxml2
     perl
     gobject-introspection
-    vala
   ];
 
   patches = [

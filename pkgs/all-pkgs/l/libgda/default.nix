@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
     autoreconfHook
     intltool
     itstool
+    vala
   ];
 
   buildInputs = [
@@ -81,7 +82,6 @@ stdenv.mkDerivation rec {
     postgresql
     readline
     sqlite
-    vala
   ];
 
   postPatch = /* Fix building against newer versions of vala */ ''

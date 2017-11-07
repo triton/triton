@@ -83,6 +83,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     libxslt
+    vala
   ];
 
   buildInputs = [
@@ -122,7 +123,6 @@ stdenv.mkDerivation rec {
     readline
     systemd_full
     util-linux_lib
-    vala
     wpa_supplicant
     xz
   ];

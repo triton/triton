@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
     autoconf
     automake
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -52,7 +53,6 @@ stdenv.mkDerivation rec {
     polkit
     sqlite
     systemd_lib
-    vala
   ];
 
   preConfigure = ''

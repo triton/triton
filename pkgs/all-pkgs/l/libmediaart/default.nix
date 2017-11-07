@@ -28,13 +28,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     meson
     ninja
+    #vala
   ];
 
   buildInputs = [
     gdk-pixbuf
     glib
     gobject-introspection
-    #vala
     zlib
   ];
 

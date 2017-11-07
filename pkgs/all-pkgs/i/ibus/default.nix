@@ -44,6 +44,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     makeWrapper
+    vala
   ];
 
   buildInputs = [
@@ -63,7 +64,6 @@ stdenv.mkDerivation rec {
     libxi
     libxkbcommon
     python3Packages.python
-    vala
     wayland
   ];
 

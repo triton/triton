@@ -29,12 +29,12 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    vala
   ];
 
   buildInputs = [
     glib
     gobject-introspection
-    vala
     zlib
   ];
 

@@ -42,6 +42,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     python
+    vala
   ];
 
   buildInputs = [
@@ -50,7 +51,6 @@ stdenv.mkDerivation rec {
     kerberos
     libxml2
     sqlite
-    vala
   ];
 
   postPatch = ''

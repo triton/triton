@@ -40,6 +40,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -53,7 +54,6 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     pango
-    vala
   ];
 
   configureFlags = [

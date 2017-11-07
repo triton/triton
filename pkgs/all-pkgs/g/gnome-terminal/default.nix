@@ -53,6 +53,7 @@ stdenv.mkDerivation rec {
     libxml2
     makeWrapper
     util-linux_lib
+    vala
     which
   ];
 
@@ -64,7 +65,6 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     nautilus
-    vala
     vte
     libx11
   ];

@@ -95,6 +95,7 @@ stdenv.mkDerivation rec {
     libxslt
     makeWrapper
     python3
+    vala
   ];
 
   buildInputs = [
@@ -152,7 +153,6 @@ stdenv.mkDerivation rec {
     #thunderbird
     upower
     util-linux_lib
-    vala
     zlib
   ];
 

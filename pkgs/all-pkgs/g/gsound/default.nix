@@ -26,13 +26,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     libtool
+    vala
   ];
 
   buildInputs = [
     glib
     gobject-introspection
     libcanberra
-    vala
   ];
 
   configureFlags = [

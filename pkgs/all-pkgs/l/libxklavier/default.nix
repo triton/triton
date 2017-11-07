@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     #gtk-doc
+    vala
   ];
 
   buildInputs = [
@@ -36,7 +37,6 @@ stdenv.mkDerivation rec {
     gobject-introspection
     iso-codes
     libxml2
-    vala
     xorg.libX11
     xorg.libXi
     xorg.libxkbfile
@@ -68,4 +68,3 @@ stdenv.mkDerivation rec {
       x86_64-linux;
   };
 }
-

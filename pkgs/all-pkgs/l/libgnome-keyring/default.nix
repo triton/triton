@@ -35,6 +35,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -43,7 +44,6 @@ stdenv.mkDerivation rec {
     gnome-keyring
     gobject-introspection
     libgcrypt
-    vala
   ];
 
   configureFlags = [

@@ -20,13 +20,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    vala
   ];
 
   buildInputs = [
     glib
     gobject-introspection
     libusb
-    vala
   ];
 
   configureFlags = [

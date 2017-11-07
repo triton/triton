@@ -35,10 +35,13 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
+  nativeBuildInputs = [
+    vala
+  ];
+
   buildInputs = [
     glib
     gobject-introspection
-    vala
   ];
 
   patches = [

@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    vala
   ];
 
   buildInputs = [
@@ -36,7 +37,6 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk
     libsoup
-    vala
   ];
 
   configureFlags = [

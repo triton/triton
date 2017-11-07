@@ -31,6 +31,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -44,7 +45,6 @@ stdenv.mkDerivation rec {
     gtk3
     iso-codes
     pango
-    vala
   ];
 
   configureFlags = [

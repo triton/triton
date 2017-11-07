@@ -27,6 +27,10 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
+  nativeBuildInputs = [
+    vala
+  ];
+
   buildInputs = [
     glib
     gobject-introspection
@@ -34,7 +38,6 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     util-linux_lib
-    vala
   ];
 
   configureFlags = [

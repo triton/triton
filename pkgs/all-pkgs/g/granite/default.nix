@@ -34,6 +34,7 @@ stdenv.mkDerivation rec {
     cmake
     gettext
     perl
+    vala
   ];
 
   buildInputs = [
@@ -46,7 +47,6 @@ stdenv.mkDerivation rec {
     gtk3
     hicolor-icon-theme
     pango
-    vala
   ];
 
   preConfigure = ''

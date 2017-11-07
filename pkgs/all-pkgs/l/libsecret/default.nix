@@ -31,13 +31,13 @@ stdenv.mkDerivation rec {
     intltool
     libxslt
     docbook-xsl
+    vala
   ];
 
   buildInputs = [
     glib
     gobject-introspection
     libgcrypt
-    vala
   ];
 
   configureFlags = [

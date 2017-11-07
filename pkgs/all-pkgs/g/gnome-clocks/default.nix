@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
     itstool
     libtool
     makeWrapper
+    vala
   ];
 
   buildInputs = [
@@ -52,7 +53,6 @@ stdenv.mkDerivation rec {
     gtk3
     libgweather
     libxml2
-    vala
   ];
 
   configureFlags = [

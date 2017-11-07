@@ -45,6 +45,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     makeWrapper
+    vala
   ];
 
   buildInputs = [
@@ -61,7 +62,6 @@ stdenv.mkDerivation rec {
     rest
     pango
     telepathy_glib
-    vala
     webkitgtk
     xorg.libX11
   ];

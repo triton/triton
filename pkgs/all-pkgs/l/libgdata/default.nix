@@ -35,6 +35,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -48,7 +49,6 @@ stdenv.mkDerivation rec {
     libxml2
     openssl
     p11-kit
-    vala
   ];
 
   configureFlags = [

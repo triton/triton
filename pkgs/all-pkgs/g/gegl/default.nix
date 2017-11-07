@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
     # to detect libv4l & ffmpeg correctly.
     autoreconfHook
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -77,7 +78,6 @@ stdenv.mkDerivation rec {
     openexr
     pango
     #v4l_lib
-    vala
   ];
 
   configureFlags = [

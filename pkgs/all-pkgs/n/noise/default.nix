@@ -65,6 +65,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     makeWrapper
+    vala
   ];
 
   buildInputs = [
@@ -95,7 +96,6 @@ stdenv.mkDerivation rec {
     libxml2
     shared-mime-info
     taglib
-    vala
     zeitgeist
   ];
 

@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     automake
     intltool
+    vala
   ];
 
   buildInputs = [
@@ -52,7 +53,6 @@ stdenv.mkDerivation rec {
     raptor2
     sqlite
     telepathy_glib
-    vala
   ];
 
   patches = [

@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "2.2.4";
+  version = "2.2.5";
 in
 stdenv.mkDerivation rec {
   name = "expat-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/expat/expat/${version}/${name}.tar.bz2";
-    sha256 = "03ad85db965f8ab2d27328abcf0bc5571af6ec0a414874b2066ee3fdd372019e";
+    sha256 = "d9dc32efba7e74f788fcc4f212a43216fc37cf5f23f4c2339664d473353aedf6";
   };
 
   configureFlags = [

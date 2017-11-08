@@ -23,7 +23,7 @@
 }:
 
 let
-  version = "0.15-rc1";
+  version = "0.15";
 in
 stdenv.mkDerivation rec {
   name = "sway-${version}";
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     owner = "swaywm";
     repo = "sway";
     rev = version;
-    sha256 = "66eff2f5786b57b96b6a6be666b67c000dd6dfaa59f318dd04d64fe7c2d14c9a";
+    sha256 = "ba108b2b855327f03b3452ecc86a44f0a042bf3a52afe45010416265414f7b05";
   };
 
   nativeBuildInputs = [

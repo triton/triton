@@ -20,8 +20,8 @@
 }:
 
 let
-  date = "2017-10-07";
-  rev = "328edc089915aeb5cf26e5fc0e81b307ec707d62";
+  date = "2017-10-14";
+  rev = "e3abf0b2f322b9d376ced452190cd4dd9f6fcb8a";
 in
 stdenv.mkDerivation rec {
   name = "wlc-${date}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "Cloudef";
     repo = "wlc";
     inherit rev;
-    sha256 = "01303544a3ca64e6510eb12d645ee14a879182789c13e861410ca393b6251e95";
+    sha256 = "54aa8a91f26fad6c30ce2f26484b18a40b20aac86de24814b964e7b3d81c8fa8";
   };
 
   nativeBuildInputs = [

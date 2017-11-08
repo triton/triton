@@ -193,9 +193,9 @@ let
       sha256 = "aeee06e4d8b18d852c61ebbfe5e1bb7014b1e118e8728c1c2115f91e51bffbef";
     };
     "9.9" = { # Git
-      version = "2017.11.01";
-      rev = "5ab41a25ba9ce2b3a8b5d22930161042718d7f84";
-      sha256 = "ecf342adce1603c73b269e2f189ace100e8b51cc2c8cfadee539851707894ddb";
+      version = "2017.11.08";
+      rev = "ba79a101a2f938e2d83ccc32aca5df6e27f1d8e6";
+      sha256 = "4a47f4e9dfe375ad8fc6c9cb9318413c2f3ff64433e05bfa545fd736289eed9d";
     };
   };
   source = sources."${channel}";
@@ -226,7 +226,7 @@ assert
 assert
   #opencore-amrnb != null
   #|| opencore-amrwb != null
-  #||
+  #|| libvmaf != null
   samba_client != null
   #|| vo-aacenc != null
   #|| vo-amrwbenc != null

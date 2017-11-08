@@ -4,14 +4,16 @@
 , libcap-ng
 }:
 
+let
+  version = "6.6";
+in
 stdenv.mkDerivation rec {
-  name = "smartmontools-6.5";
+  name = "smartmontools-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/smartmontools/${name}.tar.gz";
+    url = "mirror://sourceforge/smartmontools/smartmontools/${version}/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmW27uSxPozmCPXhwYvmWkVbi6DN37ZDj6ybUkTPZ3qp65";
-    sha256 = "89e8bb080130bc6ce148573ba5bb91bfe30236b64b1b5bbca26515d4b5c945bc";
+    sha256 = "51f43d0fb064fccaf823bbe68cf0d317d0895ff895aa353b3339a3b316a53054";
   };
 
   buildInputs = [
@@ -27,7 +29,7 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "F41F 01FC 0784 4958 4FFC  CF57 DF0F 1A49 C4A4 903A";
+      pgpKeyFingerprint = "887B 8C63 2110 4CA8 4A8E  F91B 18EC DA46 CBF6 BAC6";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

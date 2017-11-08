@@ -4010,6 +4010,8 @@ zfs_dev = callPackage ../all-pkgs/z/zfs {
   spl = null;
 };
 
+zimg = callPackage ../all-pkgs/z/zimg { };
+
 zip = callPackage ../all-pkgs/z/zip { };
 
 zita-convolver = callPackage ../all-pkgs/z/zita-convolver { };

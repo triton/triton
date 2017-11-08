@@ -112,7 +112,6 @@
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
 , libxml2
-, libzimg ? null
 , mfx-dispatcher
 , mmal ? null
 , nvenc ? false
@@ -152,6 +151,7 @@
 , xvidcore
 , xz
 , zeromq4
+, zimg
 , zlib
 #, zvbi
 /*
@@ -403,6 +403,7 @@ stdenv.mkDerivation rec {
     xvidcore
     xz
     zeromq4
+    zimg
     zlib
   ] ++ optionals nonfreeLicensing [
     fdk-aac
@@ -615,7 +616,7 @@ stdenv.mkDerivation rec {
     "--${boolEn libxcbshapeExtlib}-libxcb-shape"
     "--${boolEn (xvidcore != null)}-libxvid"
     (fflag "--${boolEn (libxml2 != null)}-libxml2" "3.4")
-    "--${boolEn (libzimg != null)}-libzimg"
+    "--${boolEn (zimg != null)}-libzimg"
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"

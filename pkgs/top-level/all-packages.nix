@@ -1239,6 +1239,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   xavs = null;
   xvidcore = null;
   zeromq4 = null;
+  zimg = null;
   #zvbi = null;
 } // overrides);
 ffmpeg_3-3 = pkgs.ffmpeg_generic {

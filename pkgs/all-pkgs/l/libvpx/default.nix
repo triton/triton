@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , fetchurl
 , lib
+, nasm
 , perl
 , yasm
 
@@ -53,6 +54,7 @@ let
     versionAtLeast;
 
   sources = {
+    # TODO: remove yasm in next release
     "1.6" = {
       version = "1.6.1";
       sha256 = "1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819";
@@ -60,9 +62,9 @@ let
     # master
     "1.999" = {
       fetchzipversion = 3;
-      version = "2017-09-27";
-      rev = "c493ea1a6b7ade049ac22d8d063b73f12d65bbea";
-      sha256 = "e3379632547091c9d162c0970619ae4c262c8364821439e1c3f1b592e1085e5e";
+      version = "2017-11-06";
+      rev = "6fbc354c97ca45754a76674dba5f6b43c2b0c15a";
+      sha256 = "ac4e1e85b286bf6f730de23656687cfede95c4127246d68d200c0a9dd098cfdd";
     };
   };
   source = sources."${channel}";
@@ -103,8 +105,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     perl
-    yasm
-  ];
+  ] ++ (
+    if versionAtLeast source.version "1.6.2" then [
+      nasm
+    ] else [
+      yasm
+    ]
+  );
 
   postPatch = ''
     patchShebangs ./build/make/rtcd.pl
@@ -136,7 +143,7 @@ stdenv.mkDerivation rec {
     "--${boolEn examplesSupport}-examples"
     "--disable-docs"
     #libc
-    "--as=yasm"
+    "--as=${if versionAtLeast source.version "1.6.2" then "nasm" else "yasm"}"
     "${if (sizeLimit != null) then "--size-limit=${sizeLimit}" else null}"
     "--disable-codec-srcs"
     "--disable-debug-libs"

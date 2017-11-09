@@ -85,11 +85,6 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  outputs = [
-    "out"
-    "doc"
-  ];
-
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

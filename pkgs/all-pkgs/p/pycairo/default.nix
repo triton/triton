@@ -7,18 +7,19 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
-  version = "1.14.0";
+  version = "1.15.4";
 in
 buildPythonPackage rec {
   name = "pycairo-${version}";
 
   src = fetchurl {
-    url = "https:/github.com/pygobject/pycairo/releases/download/v${version}/pycairo-${version}.tar.gz";
+    url = "https:/github.com/pygobject/pycairo/releases/download/v${version}/"
+      + "pycairo-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "6903729a473a3de2c3b914746f737e15890076feb18b59cacdcff6c032225cff";
+    sha256 = "ee4c3068c048230e5ce74bb8994a024711129bde1af1d76e3276c7acd81c4357";
   };
 
   buildInputs = [
@@ -27,7 +28,7 @@ buildPythonPackage rec {
 
   # pkgconfig has a broken prefix
   preFixup = ''
-    sed -i "s,prefix=.*,prefix=$out," $out/lib/pkgconfig/*.pc
+    sed -i "s,prefix=.*,prefix=$out," $out/share/pkgconfig/pycairo.pc
   '';
 
   passthru = {
@@ -40,7 +41,7 @@ buildPythonPackage rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python bindings for the cairo library";
     homepage = http://cairographics.org/pycairo/;
     license = with licenses; [

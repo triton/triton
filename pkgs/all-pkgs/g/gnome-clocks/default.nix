@@ -20,15 +20,16 @@
 , vala
 }:
 
+let
+  channel = "3.20";
+  version = "${channel}.1";
+in
 stdenv.mkDerivation rec {
   name = "gnome-clocks-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-clocks/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-clocks/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/gnome-clocks/${channel}/${name}.tar.xz";
+    hashOutput = false;
     sha256 = "92ad7b409c5118464af49ca28262ae43e9d377435ad2b10048b23e6e11ae476f";
   };
 
@@ -72,6 +73,18 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-clocks/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Clock application designed for GNOME 3";

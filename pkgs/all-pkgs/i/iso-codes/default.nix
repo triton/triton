@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , gettext
 , python3
@@ -8,23 +9,19 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iso-codes-3.74";
+  name = "iso-codes-3.76";
 
   src = fetchurl {
     url = "https://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
-    multihash = "QmXrvkNV4eCdD8pyDRQYd8fPStrN77dWQ7hBNUhDJcBgDC";
+    multihash = "QmTzGpqWkWTkZ4K3TciUBb9KMFsCbgXdw5kFz6cCMtRzao";
     hashOutput = false;
-    sha256 = "21f4f3cea8fe09f5b53784522303a0e1e7d083964ecaf1c75b1441d4d9ec6aee";
+    sha256 = "38ea8c1de7c07d5b4c9603ec65c238c155992a2e2ab0b02725d0926d1ad480c4";
   };
 
   nativeBuildInputs = [
     gettext
     python3
   ];
-
-  postPatch = ''
-    patchShebangs .
-  '';
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -38,7 +35,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Various ISO codes packaged as XML files";
     homepage = https://pkg-isocodes.alioth.debian.org/;
     license = licenses.free;

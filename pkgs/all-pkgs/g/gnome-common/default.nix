@@ -6,14 +6,16 @@
 , automake
 }:
 
+let
+  channel = "3.18";
+  version = "${channel}.0";
+in
 stdenv.mkDerivation rec {
   name = "gnome-common-${version}";
-  versionMajor = "3.18";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-common/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gnome-common/${channel}/${name}.tar.xz";
+    hashOutput = false;
     sha256 = "22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf";
   };
 
@@ -31,6 +33,18 @@ stdenv.mkDerivation rec {
     autoconf
     automake
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-common/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Common files for development of Gnome packages";

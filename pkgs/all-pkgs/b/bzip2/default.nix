@@ -1,102 +1,75 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , static ? true
 , shared ? true
 }:
 
-let
-  inherit (stdenv.lib)
-    optionals
-    optionalString;
-
-  version = "1.0.6";
-in
-
 assert shared || static;
 
+let
+  inherit (stdenv.lib)
+    boolEn;
+
+  version = "1.0.6.0.2";
+in
 stdenv.mkDerivation rec {
   name = "bzip2-${version}";
 
   src = fetchurl {
-    url = "http://www.bzip.org/${version}/${name}.tar.gz";
-    multihash = "Qmdj4eF9zXRyey7hEvGZCvEzumeeiavq4NeFHFYtwaACdk";
-    md5Confirm = "00b516f4704d4a7cb50a1d97e6e8e15b";
-    sha256 = "a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd";
+    #url = "http://www.bzip.org/${version}/${name}.tar.gz";  # upstream
+    # https://github.com/NixOS/nixpkgs/issues/31396#issuecomment-342900842
+    url = "http://ftp.suse.com/pub/people/sbrabec/bzip2/tarballs/${name}.tar.gz";
+    multihash = "QmNXBLhp5sz86D8QzAseNQkxiKuSKU4wK8DnXQY7GbPbmA";
+    sha256 = "167870372e0e1def1de4cea26020a5931cdc07f1075e0d2f797c2fe37665c5b0";
   };
 
-  # The builder also always builds the static library
-  postPatch = ''
-    sed -e 's,\(:.*\)libbz2.a,\1,g' -i Makefile
-  '';
-
-  # The shared library is built from a separate makefile
-  preBuild = optionalString shared ''
-    local actualMakeFlags
-    actualMakeFlags=()
-    local makefile
-    makefile="Makefile-libbz2_so"
-    commonMakeFlags "preBuild"
-    printMakeFlags "preBuild"
-    make "''${actualMakeFlags[@]}"
-
-    # Make sure we have a generic .so
-    test -f "libbz2.so.${version}"
-    ln -sv "libbz2.so.${version}" libbz2.so
-
-    # The output binaries are used as part of the build so allow
-    # them to load the .so
-    export LD_LIBRARY_PATH="$(pwd)"
-  '' + optionalString static ''
-    local actualMakeFlags
-    actualMakeFlags=()
-    local makefile
-    makefile="Makefile"
-    commonMakeFlags "preBuild"
-    actualMakeFlags+=("libbz2.a")
-    printMakeFlags "preBuild"
-    make "''${actualMakeFlags[@]}"
-  '';
-
-  buildFlags = [
-    "bzip2"
-    "bzip2recover"
+  patches = [
+    # Fix buffer overflow in bzip2recover
+    # TODO: cite fedora issue
+    (fetchTritonPatch {
+      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
+      file = "b/bzip2/bzip2-1.0.4-bzip2recover.patch";
+      sha256 = "0585fb92a4b409404147a3f940ed2ca03b3eaed1ec4fb68ae6ad74db668bea83";
+    })
+    # Fix bzgrep compat with POSIX shells
+    (fetchTritonPatch {
+      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
+      file = "b/bzip2/bzip2-1.0.4-POSIX-shell.patch";
+      sha256 = "e8826fedfed105ba52c85a2e43589ba37424513cb932072136ceac01ceb0ec99";
+    })
+    (fetchTritonPatch {
+      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
+      file = "b/bzip2/bzip2-1.0.6-CVE-2016-3189.patch";
+      sha256 = "2ad8ead7e43cb584ea5c1df737394a8ca56ea3cac504756361e507dc5a263325";
+    })
+    # Fix include path
+    (fetchTritonPatch {
+      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
+      file = "b/bzip2/bzip2-1.0.6-mingw.patch";
+      sha256 = "8da568f1d7daac4ac6b9d7946dd3b807e062b5a1710a2548029cc4f158e8d717";
+    })
+    # https://bugs.gentoo.org/show_bug.cgi?id=82192
+    (fetchTritonPatch {
+      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
+      file = "b/bzip2/bzip2-1.0.6-progress.patch";
+      sha256 = "f93e6b50082a8e880ee8436c7ec6a65a8f01e9282436af77f95bb259b1c7f7f7";
+    })
   ];
 
-  linkStatic = !shared;
+  configureFlags = [
+    "--${boolEn static}-static"
+    "--${boolEn shared}-shared"
+  ];
 
-  # The built in installer is a bit wonky so we will do it ourselves
-  installPhase = ''
-    mkdir -p "$out/"{bin,share/man/man1,include,lib}
-
-    chmod +x bzgrep bzmore bzdiff
-    cp bzip2 bzip2recover bzgrep bzmore bzdiff $out/bin
-    ln -sv bzip2 $out/bin/bunzip2
-    ln -sv bzip2 $out/bin/bzcat
-    ln -sv bzgrep $out/bin/bzegrep
-    ln -sv bzgrep $out/bin/bzfgrep
-    ln -sv bzmore $out/bin/bzless
-    ln -sv bzdiff $out/bin/bzcmp
-
-    cp bzlib.h $out/include
-
-    cp bzip2.1 bzgrep.1 bzmore.1 bzdiff.1 $out/share/man/man1
-	  echo ".so man1/bzip2.1" > $out/share/man/man1/bunzip2.1
-	  echo ".so man1/bzip2.1" > $out/share/man/man1/bzcat.1
-	  echo ".so man1/bzgrep.1" > $out/share/man/man1/bzegrep.1
-   	echo ".so man1/bzgrep.1" > $out/share/man/man1/bzfgrep.1
-	  echo ".so man1/bzmore.1" > $out/share/man/man1/bzless.1
-	  echo ".so man1/bzdiff.1" > $out/share/man/man1/bzcmp.1
-  '' + optionalString shared ''
-    cp *.so* $out/lib
-  '' + optionalString static ''
-    cp *.a $out/lib
-  '';
+  disableStatic = (!static);
 
   meta = with stdenv.lib; {
     description = "high-quality data compression program";
-    homepage = "http://www.bzip.org";
-    license = licenses.free; # bzip2
+    # upstream http://www.bzip.org
+    homepage = http://ftp.suse.com/pub/people/sbrabec/bzip2/;
+    license = licenses.free;  # bzip2
     maintainers = with maintainers; [
       wkennington
     ];

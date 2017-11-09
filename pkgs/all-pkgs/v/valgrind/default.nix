@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-ubsan"
+    #"--enable-ubsan"
     "--enable-tls"
   ];
 

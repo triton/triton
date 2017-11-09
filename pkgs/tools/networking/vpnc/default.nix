@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    mv $srcRoot/trunk/* $sourceRoot/.
+    mv $srcRoot/trunk/* $srcRoot/.
     rm -r $srcRoot/{trunk,branches,tags}
   '';
 

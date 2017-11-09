@@ -120,7 +120,7 @@ let
     ] ++ cmakeFlagsAll;
 
     postUnpack = ''
-      srcRoot="$sourceRoot/source"
+      srcRoot="$srcRoot/source"
     '';
 
     postPatch = /* Work around to set version in the compiled binary */ ''
@@ -165,7 +165,7 @@ let
     ] ++ cmakeFlagsAll;
 
     postUnpack = ''
-      srcRoot="$sourceRoot/source"
+      srcRoot="$srcRoot/source"
     '';
 
     postPatch = /* Work around to set version in the compiled binary */ ''
@@ -212,7 +212,7 @@ stdenv.mkDerivation rec {
   ];
 
   postUnpack = ''
-    srcRoot="$sourceRoot/source"
+    srcRoot="$srcRoot/source"
   '';
 
   postPatch = /* Work around to set version in the compiled binary */ ''

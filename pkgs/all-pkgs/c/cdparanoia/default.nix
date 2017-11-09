@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    srcRoot="$(pwd)/$sourceRoot"
+    srcRoot="$(pwd)/$srcRoot"
   '';
 
   patches = [

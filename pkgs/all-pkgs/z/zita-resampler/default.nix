@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    srcRoot="$sourceRoot/libs"
+    srcRoot="$srcRoot/libs"
   '';
 
   postPatch = ''

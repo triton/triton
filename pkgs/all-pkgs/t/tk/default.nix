@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   ];*/
 
   postUnpack = ''
-    srcRoot="$sourceRoot/unix"
+    srcRoot="$srcRoot/unix"
   '';
 
   postInstall = ''

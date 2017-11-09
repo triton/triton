@@ -124,7 +124,7 @@ stdenv.mkDerivation rec {
   '';
 
   cmakeConfigure = false;
-  dontDisableStatic = true; # https://bugzilla.novell.com/show_bug.cgi?id=644723
+  disableStatic = false; # https://bugzilla.novell.com/show_bug.cgi?id=644723
   dontStrip = true;
   buildDirCheck = false;
   dontUseNinja = true;

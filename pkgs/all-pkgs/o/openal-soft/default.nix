@@ -19,14 +19,14 @@ let
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "openal-soft-1.18.1";
+  name = "openal-soft-1.18.2";
 
   src = fetchurl {
     urls = [
       "mirror://gentoo/distfiles/${name}.tar.bz2"
       "http://kcat.strangesoft.net/openal-releases/${name}.tar.bz2"
     ];
-    sha256 = "2d51a6529526ef22484f51567e31a5c346a599767991a3dc9d4dcd9d9cec71dd";
+    sha256 = "9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82";
   };
 
   nativeBuildInputs = [

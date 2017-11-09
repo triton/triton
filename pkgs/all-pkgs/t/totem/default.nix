@@ -77,6 +77,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     meson
     ninja
+    #vala
   ];
 
   buildInputs = [
@@ -110,7 +111,6 @@ stdenv.mkDerivation rec {
     #python3Packages.python
     totem-pl-parser
     tracker
-    #vala
     xextproto
     xproto
     #zeitgeist

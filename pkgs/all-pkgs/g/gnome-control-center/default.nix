@@ -3,10 +3,12 @@
 , fetchTritonPatch
 , fetchurl
 , intltool
+, lib
 , makeWrapper
 
 , accountsservice
 , adwaita-icon-theme
+, at-spi2-core
 , clutter
 , clutter-gtk
 , colord
@@ -39,15 +41,19 @@
 , libnotify
 , libpwquality
 , librsvg
+, libsm
 , libsoup
 , libtool
 , libwacom
+, libx11
+, libxi
+, libxkbfile
 , libxml2
 , libxslt
-, mesa_noglu
 , modemmanager
 , networkmanager
 , networkmanager-applet
+, opengl-dummy
 , polkit
 , pulseaudio_lib
 , python
@@ -59,23 +65,30 @@
 , upower
 , vino
 , xorg
+
+, channel ? "3.26"
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
+  inherit (lib)
+    boolEn
     optionalString;
+
+  sources = {
+    "3.26" = {
+      version = "3.26.2";
+      sha256 = "07aed27d6317f2cad137daa6d94a37ad02c32b958dcd30c8f07d0319abfb04c5";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gnome-control-center-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-control-center-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.sha256sum";
-    sha256 = "ce6474fc60f78ed3cfaf555e55a52ec3ebb6437fa184e08ad6077bbec380a1ed";
+    url = "mirror://gnome/sources/gnome-control-center/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -87,6 +100,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     accountsservice
     adwaita-icon-theme
+    at-spi2-core
     clutter
     clutter-gtk
     colord
@@ -116,15 +130,19 @@ stdenv.mkDerivation rec {
     libnotify
     libpwquality
     librsvg
+    libsm
     libsoup
     libtool
     libwacom
+    libx11
+    libxi
+    libxkbfile
     libxml2
     libxslt
-    mesa_noglu
     modemmanager
     networkmanager
     networkmanager-applet
+    opengl-dummy
     polkit
     pulseaudio_lib
     samba_client
@@ -132,10 +150,6 @@ stdenv.mkDerivation rec {
     systemd_lib
     upower
     vino
-    xorg.libSM
-    xorg.libX11
-    xorg.libXi
-    xorg.libxkbfile
   ];
 
   propagatedUserEnvPkgs = [
@@ -148,16 +162,16 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    (fetchTritonPatch {
-      rev = "453aedffa95d1c459a15a6f1fb8cb9d0ce810803";
-      file = "gnome-control-center/vpn_plugins_path.patch";
-      sha256 = "1e855649929c56466995ed5ace80cbd56617c8855b7d22b4f352c06752c3e126";
-    })
+    # (fetchTritonPatch {
+    #   rev = "453aedffa95d1c459a15a6f1fb8cb9d0ce810803";
+    #   file = "gnome-control-center/vpn_plugins_path.patch";
+    #   sha256 = "1e855649929c56466995ed5ace80cbd56617c8855b7d22b4f352c06752c3e126";
+    # })
     # Patch from Gentoo for making various features optional
     (fetchTritonPatch {
-      rev = "a59629461bca11af9c83259900cae13628f79d79";
-      file = "gnome-control-center/gnome-control-center-3.20.0-goa-optional.patch";
-      sha256 = "b43d9ed2ca08159b9d1629ec0c28ac3853b6d6929a85446840696ef5d37b1eb7";
+      rev = "09b054709e85652d09ea4856f03ef345c7181734";
+      file = "g/gnome-control-center/gnome-control-center-3.23.90-optional.patch";
+      sha256 = "918f160c2d69e82bf81920d4fb77244837b80dafdb00509f570a14090657de36";
     })
   ];
 
@@ -166,9 +180,19 @@ stdenv.mkDerivation rec {
       sed -i panels/info/cc-info-panel.c \
         -e 's|DATADIR "/gnome/gnome-version.xml"|"${gnome-desktop}/share/gnome/gnome-version.xml"|'
     '' + #optionalString (gnome-online-accounts == null)
-    /* Remove unconditional check for gnome-online-accounts */ ''
+        /* Remove unconditional check for gnome-online-accounts */ ''
       sed -i configure.ac \
         -e '/goa-1.0 >=/d'
+    '' + /* Fix hardcoded paths */ ''
+      sed -i panels/datetime/tz.h \
+        -e 's,/usr/share/zoneinfo/zone.tab,${tzdata}/share/zoneinfo/zone.tab,g'
+      sed -i panels/printers/pp-options-dialog.c \
+        -i panels/printers/pp-host.c \
+        -e 's,/usr,${cups},g'
+      # FIXME: assumes this will only be run on a Nix-based system
+      # IMPURE
+      sed -i panels/user-accounts/run-passwd.c \
+        -e 's,/usr/bin/passwd,/var/setuid-wrappers/passwd,'
     '';
 
   configureFlags = [
@@ -176,13 +200,13 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--enable-nls"
     "--disable-documentation"
-    (enFlag "ibus" (ibus != null) null)
+    "--${boolEn (ibus != null)}-ibus"
     # Remove dependency on webkit
-    #(enFlag "goa" (gnome-online-accounts != null) null)
+    #"--${boolEn (gnome-online-accounts != null)}-goa"
     "--disable-goa"
     "--enable-color"
     "--enable-bluetooth"
-    (enFlag "cups" (cups != null) null)
+    "--${boolEn (cups != null)}-cups"
     "--enable-wacom"
     "--enable-kerberos"
     "--disable-update-mimedb"
@@ -191,22 +215,10 @@ stdenv.mkDerivation rec {
     "--without-cheese"
   ];
 
-  preBuild = ''
-    substituteInPlace tz.h \
-      --replace "/usr/share/zoneinfo/zone.tab" "${tzdata}/share/zoneinfo/zone.tab"
-    substituteInPlace panels/datetime/tz.h \
-      --replace "/usr/share/zoneinfo/zone.tab" "${tzdata}/share/zoneinfo/zone.tab"
-
-    # hack to make test-endianess happy
-    mkdir -p $out/share/locale
-    substituteInPlace panels/datetime/test-endianess.c \
-      --replace "/usr/share/locale/" "$out/share/locale/"
-  '';
-
   preFixup = ''
     for i in $out/share/applications/* ; do
-      substituteInPlace $i \
-        --replace "gnome-control-center" "$out/bin/gnome-control-center"
+      sed -i $i \
+        -e "s,gnome-control-center,$out/bin/gnome-control-center,g"
     done
   '' + ''
     wrapProgram $out/bin/gnome-control-center \
@@ -215,13 +227,26 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
 
     wrapProgram $out/libexec/gnome-control-center-search-provider \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-control-center/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Utilities to configure the GNOME desktop";
     homepage = https://git.gnome.org/browse/gnome-control-center/;
     license = licenses.gpl2Plus;

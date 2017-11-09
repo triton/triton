@@ -38,15 +38,15 @@ let
     boolOn
     boolString;
 
-  version = "0.59.0";
+  version = "0.61.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    multihash = "QmVQoPnFRohtQ2ZMEWRE2dtCfUt9NbM82Brc1YeY3GVrkL";
-    sha256 = "a3d626b24cd14efa9864e12584b22c9c32f51c46417d7c10ca17651f297c9641";
+    multihash = "QmPHzySJULEvBarwsvK3rFoFoLABkwtsgrFCarS7cZ1haP";
+    sha256 = "53cde17a2afa3b73eb8b209d24e4369b52bfac444065dbb0a8cbcc7356582b7f";
   };
 
   nativeBuildInputs = [
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     glib
-    #gobject-introspection
+    gobject-introspection
     lcms2
     libjpeg
     libpng
@@ -71,10 +71,6 @@ stdenv.mkDerivation rec {
     qt5
     zlib
   ];
-
-  postUnpack = ''
-    rm -v $srcRoot/configure{,.ac}
-  '';
 
   patches = [
     (fetchTritonPatch {
@@ -93,6 +89,8 @@ stdenv.mkDerivation rec {
     "-DENABLE_CPP=ON"
     "-DENABLE_LIBCURL=${boolOn (curl != null)}"
     "-DENABLE_LIBOPENJPEG=${boolString (openjpeg != null) "openjpeg2" "OFF"}"
+    "-DENABLE_QT4=OFF"
+    "-DENABLE_QT5=${boolOn (qt5 != null)}"
     #"-DENABLE_SPLASH=ON"
     "-DENABLE_UTILS=${boolOn utils}"
     "-DENABLE_XPDF_HEADERS=ON"
@@ -107,7 +105,7 @@ stdenv.mkDerivation rec {
       cairo != null
       && glib != null
       && gobject-introspection != null)}"
-    #"-DWITH_GObjectIntrospection=${boolOn (gobject-introspection != null)}"
+    "-DWITH_GObjectIntrospection=${boolOn (gobject-introspection != null)}"
     #"-DWITH_GTK=${boolOn (gtk3 != null)}"
     "-DWITH_Iconv=ON"
     "-DWITH_JPEG=${boolOn (libjpeg != null)}"
@@ -115,10 +113,6 @@ stdenv.mkDerivation rec {
     "-DWITH_PNG=${boolOn (libpng != null)}"
     "-DWITH_Qt4=OFF"
     "-DWITH_TIFF=${boolOn (libtiff != null)}"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-Wno-deprecated-declarations"
   ];
 
   meta = with lib; {

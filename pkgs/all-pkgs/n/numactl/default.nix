@@ -8,7 +8,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "ftp://oss.sgi.com/www/projects/libnuma/download/${name}.tar.gz";
-    sha256 = "0qbqa9gac2vlahrngi553hws2mqgqdwv2lc69a3yx4gq6l90j325";
+    multihash = "QmaBbbjGZoxP3LoNpkVRy4oNktHtQBCSYxZVKuJDxAavCD";
+    sha256 = "450c091235f891ee874a8651b179c30f57a1391ca5c4673354740ba65e527861";
   };
 
   nativeBuildInputs = [

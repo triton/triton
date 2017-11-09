@@ -53,6 +53,7 @@
 , wayland-protocols
 #, xkeyboardconfig
 , xorg
+, xorg-server
 , xproto
 , zenity
 
@@ -159,6 +160,8 @@ stdenv.mkDerivation rec {
     "--${boolWt (libcanberra != null)}-libcanberra"
     "--${boolWt (libwacom != null)}-libwacom"
     "--${boolWt (libgudev != null)}-gudev"
+    # FIXME
+    "--${boolWt (wayland != null)}-xwayland-path=${xorg-server}/bin/Xwayland"
     "--${boolWt (libx11 != null)}-x"
   ];
 

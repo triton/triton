@@ -46,8 +46,7 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
-  patches = [
-  ] ++ optionals (versionOlder source.version "9.4.0") [
+  patches = optionals (versionOlder source.version "9.4.0") [
 		(fetchTritonPatch {
 			rev = "3ae0a8f2ad3c8518381e400e319e275f4b1dd06e";
 			file = "p/postgresql/disable-resolve_symlinks.patch";

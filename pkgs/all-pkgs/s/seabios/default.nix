@@ -9,12 +9,12 @@
 assert type == "qemu";
 
 stdenv.mkDerivation rec {
-  name = "seabios-1.10.3";
+  name = "seabios-1.11.0";
 
   src = fetchurl {
     url = "https://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
-    multihash = "QmfN3eGMvRWDPsYUeDMAuSrs2vuykBv7Bm7gv76bJvqoNM";
-    sha256 = "273e157f02b68acb110a5004d8f3045b5a1a5ae7e5dcca7557b57531bc3b44e8";
+    multihash = "QmYBzjZ94JDD3jjxtFx2zMEsbpDYMkQkruDVpShScjmF51";
+    sha256 = "622b432ebb8a3b0b13b8accd6d4a196a7eb3af11f243815e5f7d75d9ceb99bf7";
   };
 
   nativeBuildInputs = [

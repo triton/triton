@@ -1,7 +1,7 @@
 {
   "9.3" = {
-    version = "9.3.19";
-    sha256 = "fb9e872cd9e927ba331690d86bc63dcb5a596acb7a536fa0518a3c7d43ac2fb5";
+    version = "9.3.20";
+    sha256 = "eb138ad67075b8acb4fae56e98ca7be5d85f3da0ba658fc48206834598a2e6ca";
   };
   "9.4" = {
     version = "9.4.14";

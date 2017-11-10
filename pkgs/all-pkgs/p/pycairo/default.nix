@@ -28,7 +28,7 @@ buildPythonPackage rec {
 
   # pkgconfig has a broken prefix
   preFixup = ''
-    sed -i "s,prefix=.*,prefix=$out," $out/share/pkgconfig/pycairo.pc
+    sed -i "s,prefix=.*,prefix=$out," $out/share/pkgconfig/py*cairo.pc
   '';
 
   passthru = {

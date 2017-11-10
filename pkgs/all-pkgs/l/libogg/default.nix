@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libogg-1.3.2";
+  name = "libogg-1.3.3";
 
   src = fetchurl {
     url = "mirror://xiph/ogg/${name}.tar.xz";
-    multihash = "QmPMKrTQv2CB3bkrCb38Qky3RS1jHB4wDxyGcEwn67o29A";
-    sha256 = "16z74q422jmprhyvy7c9x909li8cqzmvzyr8cgbm52xcsp6pqs1z";
+    multihash = "QmQfQHGEWrzzUJKWoCH9TNk2LiGPVGB5g4Lq7CL3rY2fri";
+    sha256 = "4f3fc6178a533d392064f14776b23c397ed4b9f48f5de297aba73b643f955c08";
   };
 
   meta = with stdenv.lib; {

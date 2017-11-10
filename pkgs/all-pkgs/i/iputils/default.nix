@@ -1,10 +1,12 @@
 { stdenv
+, docbook-xsl
 , docbook_sgml_dtd_31
 , fetchFromGitHub
+, libxslt
 , perlPackages
 
 , libcap
-, libidn
+, libidn2
 , openssl
 , spCompat
 }:
@@ -12,20 +14,19 @@
 let
 in
 stdenv.mkDerivation rec {
-  name = "iputils-2017-04-14";
+  name = "iputils-2017-11-01";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "iputils";
     repo = "iputils";
-    rev = "1ef0e4c86d358c8e217b90686394196412e184d2";
-    sha256 = "dd4caad57510e33908dee58773d8a1f575663cfdceac973601d53f79ef3d7b91";
+    rev = "b551fb608a1314fce824ca5a437e5381b7bbf95c";
+    sha256 = "578bb59b7db799aa1d770d431bef6cf27823f53776a35a9980e261a20cb6af94";
   };
 
-  postPatch =
-  /* Fix expected filename */ ''
+  postPatch = /* Fix hardcoded xsltproc path */ ''
     sed -i doc/Makefile \
-      -e 's/sgmlspl/sgmlspl.pl/'
+      -e 's,/usr/bin/,,'
   '';
 
   makeFlags = [
@@ -43,13 +44,13 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
-    docbook_sgml_dtd_31
-    perlPackages.SGMLSpm
+    docbook-xsl
+    libxslt
   ];
 
   buildInputs = [
     libcap
-    libidn
+    libidn2
     openssl
     spCompat
   ];

@@ -1556,7 +1556,7 @@ gnome-terminal_3-26 = callPackage ../all-pkgs/g/gnome-terminal {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   nautilus = pkgs.nautilus_unwrapped_3-26;
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
   vte = pkgs.vte_0-50;
 };
 gnome-terminal = callPackageAlias "gnome-terminal_3-26" { };
@@ -1695,7 +1695,7 @@ gsound = callPackage ../all-pkgs/g/gsound { };
 gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
   channel = "1.0";
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
@@ -1833,7 +1833,7 @@ gtksourceview_3-22 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.22";
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
 };
 gtksourceview = callPackageAlias "gtksourceview_3-22" { };
 
@@ -1851,7 +1851,7 @@ gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
   channel = "1.0";
   gssdp = pkgs.gssdp_1-0;
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
 };
 gupnp = callPackageAlias "gupnp_1-0" { };
 
@@ -2188,7 +2188,7 @@ libgdiplus = callPackage ../all-pkgs/l/libgdiplus { };
 
 libgee_0-20 = callPackage ../all-pkgs/l/libgee {
   channel = "0.20";
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
 };
 libgee = callPackageAlias "libgee_0-20" { };
 
@@ -2231,7 +2231,7 @@ libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-36;
+  vala = pkgs.vala_0-38;
 };
 libgweather = callPackageAlias "libgweather_3-24" { };
 
@@ -3706,10 +3706,10 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-36 = callPackage ../all-pkgs/v/vala {
-  channel = "0.36";
+vala_0-38 = callPackage ../all-pkgs/v/vala {
+  channel = "0.38";
 };
-vala = callPackageAlias "vala_0-36" { };
+vala = callPackageAlias "vala_0-38" { };
 
 valgrind = callPackage ../all-pkgs/v/valgrind { };
 

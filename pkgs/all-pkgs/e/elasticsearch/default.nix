@@ -15,12 +15,12 @@ let
 
   sources = {
     "5" = {
-      version = "5.6.2";
-      sha256 = "ef505373fdd85c762dedef0b067ce7b089e177568a57b31e5b4126d8acd47653";
+      version = "5.6.4";
+      sha256 = "1098fc776fae8c74e65f8e17cf2ea244c1d07c4e6711340c9bb9f6df56aa45b0";
     };
     "6" = {
-      version = "6.0.0-beta2";
-      sha256 = "0c200154c4980ad6e278d9c9ee9e2ca22d2c501c4c67e6fe748adde31aa36b0e";
+      version = "6.0.0-rc2";
+      sha256 = "b128ba3d23854510f05e85ee61a276b40cbfffeb5d31d53bea04496afab37424";
     };
   };
   source = sources."${channel}";
@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha1Url = map (n: "${n}.sha1") src.urls;
+      sha512Url = map (n: "${n}.sha512") src.urls;
       failEarly = true;
     };
   };

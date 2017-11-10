@@ -2616,6 +2616,7 @@ linux-headers_4-9 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.9";
 };
 linux-headers = callPackageAlias "linux-headers_4-4" { };
+linux-headers_triton = callPackageAlias = "linux-headers_4-9" { };
 
 lirc = callPackage ../all-pkgs/l/lirc { };
 

@@ -21,7 +21,6 @@
 , gnused
 , gnutls
 , gobject-introspection
-#, inetutils
 , iptables
 , jansson
 , libgcrypt
@@ -35,6 +34,7 @@
 , newt
 , nss
 #, ofono
+, openconnect
 , openresolv
 , perl
 , polkit
@@ -42,6 +42,7 @@
 , python3Packages
 , readline
 , systemd_full
+, tzdata
 , util-linux_lib
 , vala
 , wpa_supplicant
@@ -50,6 +51,8 @@
 , dhcp-client ? "dhclient"
   , dhcp
   , dhcpcd
+
+, findHardcodedPaths ? false  # for derivation testing only
 
 , channel
 }:
@@ -102,7 +105,6 @@ stdenv.mkDerivation rec {
     gnused
     gnutls
     gobject-introspection
-    #inetutils
     iptables
     jansson
     libgcrypt
@@ -137,23 +139,48 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs ./tools/create-exports-NetworkManager.sh
-  '' + /* FIXME: don't use an impure runtime path
-                 fix hardcoded `mobprobe` search path */ ''
-    sed -i src/NetworkManagerUtils.c \
-      -e 's,/sbin/modprobe,/run/current-system/sw/sbin/modprobe,'
-  '' + /* Fix hardcoded paths in source */ /*''
+  '' + /* Fix hardcoded paths in source */ ''
+    # FIXME IMPURE
     sed -i src/devices/nm-device.c \
-      -e 's,/usr/bin/ping,${inetutils}/bin/ping,'
-  '' +*/ /* fix hardcoded paths in udev rules */ ''
+      -e 's,/usr/bin/ping,/var/setuid-wrappers/ping,g'
+    # FIXME IMPURE
+    sed -i src/NetworkManagerUtils.c \
+      -i src/nm-core-utils.c \
+      -e 's,/sbin/modprobe,/run/current-system/sw/bin/modprobe,g'
+    # ???: do we need netconfig
+    sed -i src/dns/nm-dns-manager.c \
+      -e 's,/sbin/resolvconf,${openresolv}/bin/resolvconf,' \
+      -e 's,/non-existent-path/netconfig,,'
+    sed -i clients/common/nm-vpn-helpers.c \
+      -e 's,/usr/sbin/openconnect,${openconnect}/bin/openconnect,'
+    sed -i src/systemd/src/basic/time-util.c \
+      -i src/systemd/src/basic/time-util.c \
+      -e 's,/usr/share/zoneinfo,${tzdata}/share/zoneinfo,g'
+    sed -i src/systemd/src/basic/path-util.c \
+      -e 's,"/.*/true,"${coreutils}/bin/true,g'
+    # Prevent loading from impure paths
+    sed -i src/nm-core-utils.c \
+      -i clients/common/nm-vpn-helpers.c \
+      -e 's,^\s\+"/\(usr\|bin\|sbin\),"/non-existent-path,g'
+    # Prevent loading from impure paths
+    sed -i src/systemd/src/basic/path-util.h \
+      -e 's,/\(usr\|bin\|sbin\),/non-existent-path,g'
+    # FIXME IMPURE
+    sed -i data/NetworkManager.service.in \
+      -e 's,/usr/bin/dbus-send,/run/current-system/sw/bin/dbus-send,' \
+      -e 's,/bin/kill,${coreutils}/bin/kill,'
+    sed -i data/org.freedesktop.NetworkManager.service.in \
+      -e 's,/bin/false,${coreutils}/bin/false,'
     sed -i data/84-nm-drivers.rules \
-      -e 's,/bin/sh,${stdenv.shell},'
-    sed -i data/85-nm-unmanaged.rules \
       -e 's,/bin/sh,${stdenv.shell},' \
-      -e 's,/usr/sbin/ethtool,${ethtool}/sbin/ethtool,' \
+      -e 's,/usr/sbin/ethtool,${ethtool}/bin/ethtool,' \
       -e 's,/bin/sed,${gnused}/bin/sed,'
   '' + /* Fix hardcoded paths in configure script */ ''
     sed -i configure{,.ac} \
       -e 's,/usr/bin/uname,${coreutils}/bin/uname,'
+  '' + optionalString findHardcodedPaths ''
+    rm -rf build-aux configure{,.ac} m4/ man/ docs INSTALL *.m4
+    grep -rP '^(?!#!).*/(usr|bin|sbin).*'; return 1
   '';
 
   preConfigure = ''
@@ -228,7 +255,7 @@ stdenv.mkDerivation rec {
         if dhcpcd != null then "=${dhcpcd}/bin/dhcpcd" else ""}"
     "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd-supports-ipv6"
     "--with-config-dhcp-default=${dhcp-client}"
-    "--with-resolvconf=${openresolv}/sbin/resolvconf"
+    "--with-resolvconf=${openresolv}/bin/resolvconf"
     "--without-netconfig"
     #"--with-config-dns-rc-manager-default=symlink|file|netconfig|resolvconf"
     "--with-iptables=${iptables}/bin/iptables"

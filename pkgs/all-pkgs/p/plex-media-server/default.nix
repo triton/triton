@@ -3,12 +3,18 @@
 , lib
 , makeWrapper
 
+#, boost
 , curl
 , expat
 #, ffmpeg
+#, jemalloc
+, libdrm
 , libnatpmp
+, libusb
+#, libva
 #, libxml2
 #, libxslt
+#, miniupnpc
 , openssl
 #, python2
 , sqlite
@@ -26,7 +32,7 @@ let
   inherit (lib)
     makeSearchPath;
 
-  version = "1.5.3.3580-4b377d295";
+  version = "1.9.6.4429-23901a099";
 in
 stdenv.mkDerivation rec {
   name = "plex-${version}";
@@ -34,8 +40,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://downloads.plex.tv/plex-media-server/${version}/"
       + "plexmediaserver_${version}_amd64.deb";
-    #sha1Confirm = "bc58fa6ab234212737643dd9cad17874c1e1f3b9";
-    sha256 = "983d48597179125c7de3c49f44af7d7cfca0a7bf645c26833c906cbe5e1accd8";
+    sha1Confirm = "0517280a68b39efc199cd3505d2fdf92173f08f4";
+    sha256 = "09586466a00ecc691437446d08252c71f9eb84c79667f70fb43ba6f0fc09bd33";
   };
 
   nativeBuildInputs = [
@@ -43,12 +49,18 @@ stdenv.mkDerivation rec {
   ];
 
   libraryPath = makeSearchPath "lib" [
+    # boost  # older version
     curl
     expat
     # ffmpeg  # Not ABI compatible
+    # jemalloc  # older version
+    libdrm
     libnatpmp
+    libusb
+    # libva  # older version
     # libxml2  # Not ABI compatible
     # libxslt  # Not ABI compatible
+    # miniupnpc  # older version
     openssl
     # python2  # Not ABI compatible
     sqlite
@@ -79,17 +91,16 @@ stdenv.mkDerivation rec {
 
     # Find all shared objects in usr/lib/plexmediaserver
     mapfile -t PlexLibraryList < <(
-      find 'usr/lib/plexmediaserver' -maxdepth 1 -name '*.so*'
+      find 'usr/lib/plexmediaserver' -type f -name '*.so*' -printf '%P\n'
     )
     # Filter out plex libraries if they match system libraries provided
     # in `libraryPath`.
-    for PlexLibrary in "''${PlexLibraryList[@]}" ; do
-      PlexLibraryBase="$(basename "$PlexLibrary")"
+    for PlexLibrary in "''${PlexLibraryList[@]}"; do
       # Read `libraryPath` string into an array
       mapfile -d: -t InputLibraryList < <(echo ${libraryPath})
-      for InputLibrary in "''${InputLibraryList[@]}" ; do
+      for InputLibrary in "''${InputLibraryList[@]}"; do
         # Drop matches from the array
-        if [ -f "$InputLibrary/$PlexLibraryBase" ] ; then
+        if [ -f "$InputLibrary/$PlexLibrary" ]; then
           PlexLibraryList=("''${PlexLibraryList[@]//$PlexLibrary}")
         fi
       done
@@ -100,7 +111,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -pv $out/bin
-    for PlexExecutable in "''${!PlexExecutableList[@]}" ; do
+    for PlexExecutable in "''${!PlexExecutableList[@]}"; do
       install -D -m 755 -v "usr/lib/plexmediaserver/$PlexExecutable" \
         "$out/lib/plexmediaserver/$PlexExecutable"
       ln -sv \
@@ -108,22 +119,19 @@ stdenv.mkDerivation rec {
         "$out/bin/''${PlexExecutableList["$PlexExecutable"]}"
     done
 
-    for PlexLibrary in "''${PlexLibraryList[@]}" ; do
-      if [ -n "$PlexLibrary" ] ; then
-        install -D -m 644 -v "$PlexLibrary" \
-          "$out/lib/plexmediaserver/$(basename "$PlexLibrary")"
+    for PlexLibrary in "''${PlexLibraryList[@]}"; do
+      if [ -n "$PlexLibrary" ]; then
+        install -D -m 644 -v "usr/lib/plexmediaserver/$PlexLibrary" \
+          "$out/lib/plexmediaserver/$PlexLibrary"
       fi
     done
-
-    install -D -m 644 -v 'usr/lib/plexmediaserver/plex-archive-keyring.gpg' \
-      "$out/lib/plexmediaserver/plex-archive-keyring.gpg"
 
     cp -dr --no-preserve='ownership' 'usr/lib/plexmediaserver/Resources' \
       "$out/lib/plexmediaserver"
   '';
 
   preFixup = ''
-    for PlexExecutable in "''${!PlexExecutableList[@]}" ; do
+    for PlexExecutable in "''${!PlexExecutableList[@]}"; do
       patchelf \
         --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
         "$out/lib/plexmediaserver/$PlexExecutable"
@@ -132,15 +140,15 @@ stdenv.mkDerivation rec {
         "$out/lib/plexmediaserver/$PlexExecutable"
     done
 
-    for PlexLibrary in "''${PlexLibraryList[@]}" ; do
+    for PlexLibrary in "''${PlexLibraryList[@]}"; do
       if [ -n "$PlexLibrary" ] ; then
         patchelf \
           --set-rpath "$libraryPath:$out/lib/plexmediaserver" \
-          "$out/lib/plexmediaserver/$(basename "$PlexLibrary")"
+          "$out/lib/plexmediaserver/$PlexLibrary"
       fi
     done
   '' + ''
-    for PlexExecutable in "''${PlexExecutableList[@]}" ; do
+    for PlexExecutable in "''${PlexExecutableList[@]}"; do
       wrapProgram "$out/bin/$PlexExecutable" \
         --set 'PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR' \
           '"''${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR:-${dataDir}}"' \
@@ -160,6 +168,7 @@ stdenv.mkDerivation rec {
         #   fi"
     done
   '' + /*
+    # FIXME: make configurable at runtime
     The search path for the database is hardcoded and since the nix-store is
     read-only we create a symlink to a fixed location and copy the database
     to that location from the nix-store.
@@ -173,10 +182,10 @@ stdenv.mkDerivation rec {
   postFixup = /* Run some tests */ ''
     # Fail if libraries contain broken RPATH's
     local TestLib
-    for TestLib in "''${PlexLibraryList[@]}" ; do
+    for TestLib in "''${PlexLibraryList[@]}"; do
       echo "Testing rpath for: $TestLib"
       if [ -n "$(ldd "$out/lib/plexmediaserver/$(basename "$TestLib")" 2> /dev/null |
-                 grep --only-matching 'not found')" ] ; then
+                 grep --only-matching 'not found')" ]; then
         echo "ERROR: failed to patch RPATH's for:"
         echo "$(basename "$TestLib")"
         ldd "$out/lib/plexmediaserver/$(basename "$TestLib")"
@@ -187,10 +196,10 @@ stdenv.mkDerivation rec {
 
     # Fail if executables contain broken RPATH's
     local executable
-    for executable in "''${!PlexExecutableList[@]}" ; do
+    for executable in "''${!PlexExecutableList[@]}"; do
       echo "Testing rpath for: $executable"
       if [ -n "$(ldd "$out/lib/plexmediaserver/$executable" 2> /dev/null |
-                 grep --only-matching 'not found')" ] ; then
+                 grep --only-matching 'not found')" ]; then
         echo "ERROR: failed to patch RPATH's for:"
         echo "$executable"
         ldd "$out/lib/plexmediaserver/$executable"

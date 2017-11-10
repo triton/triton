@@ -65,6 +65,7 @@ stdenv.mkDerivation rec {
   '' +
   /* iputils does not provide a make install target */ ''
     install -vDm 755 ping $out/bin/ping
+    ln -sv $out/bin/ping $out/bin/ping6
     install -vDm 755 tracepath $out/bin/tracepath
     install -vDm 755 clockdiff $out/bin/clockdiff
     install -vDm 755 arping $out/bin/arping

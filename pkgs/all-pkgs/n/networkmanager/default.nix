@@ -70,7 +70,13 @@ let
     optionalString
     versionAtLeast;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.10" = {
+      version = "1.10.0";
+      sha256 = "8abbd60cf0e56003a7b9428ceb50a58c80e02e045ac31c3399e9227a712e04de";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "NetworkManager-${source.version}";
@@ -137,9 +143,12 @@ stdenv.mkDerivation rec {
     })
   ];*/
 
+  # FIXME: fix hard coded resolvconf paths
   postPatch = ''
     patchShebangs ./tools/create-exports-NetworkManager.sh
   '' + /* Fix hardcoded paths in source */ ''
+    sed -i clients/cli/utils.c \
+      -e 's,/bin/sh,${stdenv.shell},g'
     # FIXME IMPURE
     sed -i src/devices/nm-device.c \
       -e 's,/usr/bin/ping,/var/setuid-wrappers/ping,g'
@@ -150,7 +159,7 @@ stdenv.mkDerivation rec {
     # ???: do we need netconfig
     sed -i src/dns/nm-dns-manager.c \
       -e 's,/sbin/resolvconf,${openresolv}/bin/resolvconf,' \
-      -e 's,/non-existent-path/netconfig,,'
+      -e 's,/sbin/netconfig,/non-existent-path/netconfig,'
     sed -i clients/common/nm-vpn-helpers.c \
       -e 's,/usr/sbin/openconnect,${openconnect}/bin/openconnect,'
     sed -i src/systemd/src/basic/time-util.c \
@@ -173,8 +182,8 @@ stdenv.mkDerivation rec {
       -e 's,/bin/false,${coreutils}/bin/false,'
     sed -i data/84-nm-drivers.rules \
       -e 's,/bin/sh,${stdenv.shell},' \
-      -e 's,/usr/sbin/ethtool,${ethtool}/bin/ethtool,' \
-      -e 's,/bin/sed,${gnused}/bin/sed,'
+      -e 's,ethtool,${ethtool}/bin/ethtool,' \
+      -e 's,sed -n,${gnused}/bin/sed -n,'
   '' + /* Fix hardcoded paths in configure script */ ''
     sed -i configure{,.ac} \
       -e 's,/usr/bin/uname,${coreutils}/bin/uname,'
@@ -225,7 +234,7 @@ stdenv.mkDerivation rec {
     #"--enable-address-sanitizer"
     #"--enable-undefined-sanitizer"
     "--${boolEn (vala != null)}-vala"
-    "--enable-tests"
+    "--disable-tests"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -235,7 +244,7 @@ stdenv.mkDerivation rec {
     "--with-libnm-glib"
     #"--with-hostname-persist=default"
     "--with-systemd-journal"
-    #"--with-config-logging-backend-default="
+    "--with-config-logging-backend-default=journal"
     "--with-systemd-logind"
     "--without-consolekit"
     "--with-session-tracking=systemd"
@@ -249,6 +258,7 @@ stdenv.mkDerivation rec {
     "--with-pppd=${ppp}/bin/pppd"
     "--with-modem-manager-1"
     "--with-ofono"
+    "--with-dhcpcanon"
     "--${boolWt (dhcp != null)}-dhclient${
         if dhcp != null then "=${dhcp}/bin/dhclient" else ""}"
     "--${boolWt (dhcpcd != null)}-dhcpcd${
@@ -262,7 +272,7 @@ stdenv.mkDerivation rec {
     "--with-dnsmasq=${dnsmasq}/bin/dnsmasq"
     #"--with-dnssec-trigger=/path/to/dnssec-trigger-script"
     #"--with-system-ca-path=/path/"
-    # FIXME: fix impure path
+    # FIXME IMPURE
     "--with-kernel-firmware-dir=/run/current-system/firmware"
     #"--with-libpsl"
     "--with-nmcli"

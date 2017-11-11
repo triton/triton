@@ -66,6 +66,10 @@ let
     outputHashMode = "flat";
     outputHash = sha256;
     preferLocalBuild = true;
+
+    passthru = {
+      inherit src;
+    };
   };
 
   nameFunc =
@@ -4915,11 +4919,11 @@ let
 
   ipfs = buildFromGitHub {
     version = 3;
-    rev = "v0.4.12-rc2";
+    rev = "v0.4.12";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "df3e252c4cdb1bcc8097542322ddaf8c3cb62ef23d4a6cfd958a659896dadce5";
-    gxSha256 = "10z6k9197flmzn750f1qv72h4hswfxh386qxz3rvn54rv6vq23wl";
+    sha256 = "093548414c27003d147b232c4be86cc3f8f80cbca7e76c2ae412495af292595b";
+    gxSha256 = "0421qhvb9i5ks5lp45wjlyvvx8izm7m1yhnrf613xb3kn69m77r9";
     nativeBuildInputs = [
       gx-go.bin
     ];

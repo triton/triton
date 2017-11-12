@@ -5,6 +5,7 @@
 , glib
 , ipset
 , iptables
+, json-c
 , libnfnetlink
 , libnl
 , net-snmp
@@ -12,15 +13,15 @@
 }:
 
 let
-  version = "1.3.7";
+  version = "1.3.9";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmeJZoLgSBhyKv1RyWxV1UrTT3YpjnoqhheAQAKRk4SjNQ";
-    sha256 = "0a9f9e5eb598fc63401c90855d9cd0b3cb4345a392dd72e7d0ae559a2ee22f97";
+    multihash = "QmQkPJLuWbH9EtVAqJowM9atAaCKGn1xUgBJu2RSVZSqoJ";
+    sha256 = "d5bdd25530acf60989222fd92fbfd596e06ecc356a820f4c1015708b76a8d4f3";
   };
 
   nativeBuildInputs = [
@@ -31,6 +32,7 @@ stdenv.mkDerivation rec {
     glib
     ipset
     iptables
+    json-c
     libnfnetlink
     libnl
     net-snmp
@@ -39,11 +41,20 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,$(DESTDIR)/usr/share,$out/share,g' Makefile.in
+
+    sed \
+      -e 's,GENL_LIB=.*,GENL_LIB=nl-genl-3,' \
+      -e 's,NL3_LIB=.*,NL3_LIB=nl-3,' \
+      -e 's,ROUTE_LIB=.*,ROUTE_LIB=nl-route-3,' \
+      -i configure
+
+    cat configure
   '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--disable-silent-rules"
     "--enable-snmp"
     "--enable-snmp-vrrp"
     "--enable-snmp-checker"
@@ -52,6 +63,7 @@ stdenv.mkDerivation rec {
     "--enable-snmp-rfcv3"
     "--enable-dbus"
     "--enable-sha1"
+    "--enable-json"
   ];
 
   preInstall = ''

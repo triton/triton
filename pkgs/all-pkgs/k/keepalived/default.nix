@@ -47,8 +47,6 @@ stdenv.mkDerivation rec {
       -e 's,NL3_LIB=.*,NL3_LIB=nl-3,' \
       -e 's,ROUTE_LIB=.*,ROUTE_LIB=nl-route-3,' \
       -i configure
-
-    cat configure
   '';
 
   configureFlags = [
@@ -65,6 +63,12 @@ stdenv.mkDerivation rec {
     "--enable-sha1"
     "--enable-json"
   ];
+
+  # This is a crappy hack to work around how broken the configure script is
+  # at parsing pkgconfig files. This does seem to have no negative side effect.
+  preBuild = ''
+    export NIX_LDFLAGS="$NIX_LDFLAGS -lnl-genl-3 -lnl-route-3 -lssl"
+  '';
 
   preInstall = ''
     installFlagsArray+=(

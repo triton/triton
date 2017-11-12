@@ -124,6 +124,11 @@ in
 
     systemd.services.dbus.restartTriggers = [ configDir ];
 
+    # Fix the lack of directory prior to /var/lib/dbus/machine-id creation
+    systemd.tmpfiles.rules = [
+      "d /var/lib/dbus 0755 root root -"
+    ];
+
     systemd.user = {
       services.dbus = {
         description = "D-Bus User Message Bus";

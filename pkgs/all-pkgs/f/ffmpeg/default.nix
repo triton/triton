@@ -193,9 +193,9 @@ let
       sha256 = "aeee06e4d8b18d852c61ebbfe5e1bb7014b1e118e8728c1c2115f91e51bffbef";
     };
     "9.9" = { # Git
-      version = "2017.11.08";
-      rev = "ba79a101a2f938e2d83ccc32aca5df6e27f1d8e6";
-      sha256 = "4a47f4e9dfe375ad8fc6c9cb9318413c2f3ff64433e05bfa545fd736289eed9d";
+      version = "2017.11.11";
+      rev = "fb94e7b39a170d4b7fdf66e5d997525a76f12ab2";
+      sha256 = "e96d9717b57000627652074fbedd6723cd8507f5ea05788b4b5b48586774f026";
     };
   };
   source = sources."${channel}";
@@ -507,6 +507,9 @@ stdenv.mkDerivation rec {
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
     "--${boolEn nvenc}-nvenc"
+    (fflag "--${boolEn (
+      nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-nvdec" "3.5")
     /**/(fflag "--disable-omx" "3.4")
     /**/(fflag "--disable-omx-rpi" "3.4")
     /**/(fflag "--disable-rkmpp" "3.4")

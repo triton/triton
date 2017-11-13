@@ -7,7 +7,7 @@
 
 , dbus-glib
 , glib
-, gtk_3
+, gtk
 , libgnome-keyring
 , libsecret
 , networkmanager
@@ -15,14 +15,23 @@
 , ppp
 , pptp
 
+, findHardcodedPaths ? false  # for derivation testing only
+
 , channel
 }:
 
 let
   inherit (lib)
-    boolWt;
+    boolWt
+    optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.2" = {
+      version = "1.2.4";
+      sha256 = "bd97ce768c34cce6d5b5d43681149a8300bec754397a3f46a0d8d0aea7030c5e";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "NetworkManager-pptp-${source.version}";
@@ -42,7 +51,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus-glib
     glib
-    gtk_3
+    gtk
     libsecret
     networkmanager
     networkmanager-applet
@@ -50,13 +59,16 @@ stdenv.mkDerivation rec {
     pptp
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "networkmanager/pptp-purity.patch";
-      sha256 = "8d3359767c1acb8cf36eff094763b8f9ce0a860e2b20f585e0922ee2c4750c23";
-    })
-  ];
+  postPatch = /* Fix hardcoded/impure paths */ ''
+    # FIXME IMPURE: modprobe uses an impure path
+    sed -i src/nm-pptp-service.c \
+      -e 's,/\(sbin\|usr\).*/pppd,${ppp}/bin/pppd,g' \
+      -e 's,/\(sbin\|usr\).*/pptp,${pptp}/bin/pptp,g' \
+      -e 's,/sbin/modprobe,/run/current-system/sw/bin/modprobe,'
+  '' + optionalString findHardcodedPaths ''
+    rm -rf build-aux config.{guess,sub} configure{,.ac} ltmain.sh m4/ man/ docs/ INSTALL *.m4
+    grep -rP '^(?!#!).*/(usr|bin|sbin).*'; return 1
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -65,7 +77,7 @@ stdenv.mkDerivation rec {
     "--enable-more-warnings"
     #"--with-pppd-plugin-dir"
     "--${boolWt (
-      gtk_3 != null
+      gtk != null
       && networkmanager-applet != null
       && libsecret != null)}-gnome"
     "--with-libnm-glib"

@@ -21,16 +21,9 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  useDev =
-    if cfgZfs.useDev != null then
-      cfgZfs.useDev
-    else
-      !(kernelPackages.kernel.isCompatibleVersion pkgs.spl.maxLinuxVersion "0"
-      && kernelPackages.kernel.isCompatibleVersion pkgs.zfs.maxLinuxVersion "0");
-
-  splKernelPkg = if useDev then kernelPackages.spl_dev else kernelPackages.spl;
-  zfsKernelPkg = if useDev then kernelPackages.zfs_dev else kernelPackages.zfs;
-  zfsUserPkg = if useDev then pkgs.zfs_dev else pkgs.zfs;
+  splKernelPkg = if cfgZfs.useDev then kernelPackages.spl_dev else kernelPackages.spl;
+  zfsKernelPkg = if cfgZfs.useDev then kernelPackages.zfs_dev else kernelPackages.zfs;
+  zfsUserPkg = if cfgZfs.useDev then pkgs.zfs_dev else pkgs.zfs;
 
   autosnapPkg = pkgs.zfstools.override {
     zfs = zfsUserPkg;

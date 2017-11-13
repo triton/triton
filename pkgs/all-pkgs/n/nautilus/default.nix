@@ -63,6 +63,7 @@ stdenv.mkDerivation rec {
     done
   '';
 
+  # FIXME: make NAUTILUS_EXTENSION_DIR overrideable
   preFixup = ''
     wrapProgram $out/bin/nautilus \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \

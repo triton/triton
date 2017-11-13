@@ -54,7 +54,7 @@ in
   options = {
     boot.zfs = {
       useDev = mkOption {
-        type = types.nullOr types.bool;
+        type = types.bool;
         default = false;
         example = true;
         description = ''

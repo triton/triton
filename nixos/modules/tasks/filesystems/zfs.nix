@@ -62,7 +62,7 @@ in
     boot.zfs = {
       useDev = mkOption {
         type = types.nullOr types.bool;
-        default = null;
+        default = false;
         example = true;
         description = ''
           Use the dev version of the SPL and ZFS packages.

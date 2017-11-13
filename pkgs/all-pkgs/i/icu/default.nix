@@ -10,16 +10,16 @@ let
     "http://download.icu-project.org/files/icu4c/${v}/icu4c-${replaceChars ["."] ["_"] v}-src.tgz"
   ];
 
-  version = "59.1";
+  version = "60.1";
 in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmbipSVYKdxUiT9hexbKw4FkJSCJhtoVmT2h979VP2WjKE";
+    multihash = "QmR4qHjWV6KGoQz5qGhaBeV6uX6A9GfnmkqcSzD5kqPTxd";
     hashOutput = false;
-    sha256 = "7132fdaf9379429d004005217f10e00b7d2319d0fea22bdfddef8991c45b75fe";
+    sha256 = "f8f5a6c8fbf32c015a467972bdb1477dc5f5d5dfea908b6ed218715eeb5ee225";
   };
 
   postUnpack = ''
@@ -36,14 +36,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "59.1";
+      urls = tarballUrls "60.1";
       pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprints = [
-        # Steven R. Loomis
-        "4C95 9C0F 547B D2D8 B783  5B17 AAA9 AE9C 0F0D E47D"
-        "BA90 283A 60D6 7BA0 DD91  0A89 3932 080F 4FB4 19E3"
-      ];
-      outputHash = "7132fdaf9379429d004005217f10e00b7d2319d0fea22bdfddef8991c45b75fe";
+      pgpKeyFingerprint = "9731 166C D8E2 3A83 BEE7  C6D3 ACA5 DBE1 FD8F ABF1";
+      outputHash = "f8f5a6c8fbf32c015a467972bdb1477dc5f5d5dfea908b6ed218715eeb5ee225";
       inherit (src) outputHashAlgo;
     };
   };

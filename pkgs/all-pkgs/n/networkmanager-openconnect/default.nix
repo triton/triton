@@ -21,7 +21,13 @@ let
   inherit (lib)
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.2" = {
+      version = "1.2.4";
+      sha256 = "a177e0cf683b63e225ecc08049a1d57f05868b5660f0907c65d5ecab39474996";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "NetworkManager-openconnect-${source.version}";

@@ -27,13 +27,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.7.2";
+  name = "appstream-glib-0.7.4";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    multihash = "QmewNZ94pNeVyKyJk8put6PvH1a1hbuAtz4CHF7fXDdTjq";
-    sha256 = "c3b95171db6f61e9273c0e1e9341f19e487e20d49c466f56cd87f18c1859b77f";
+    multihash = "QmRWxFeL5AwR5hv7MLBmvdAWtFGvxniiZNn586MNguZDYe";
+    sha256 = "a09d0c0e892f7c142ddaf4dc40c3391f5211beff77307734576fe46911a6c825";
   };
 
   nativeBuildInputs = [

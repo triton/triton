@@ -3787,18 +3787,19 @@ let
   go-oidc = buildFromGitHub {
     version = 3;
     date = "2017-10-26";
-    rev = "77e7f2010a464ade7338597afe650dfcffbe2ca8";
+    rev = "a93f71fdfe73d2c0f5413c0565eea0af6523a6df";
     owner  = "coreos";
     repo   = "go-oidc";
-    sha256 = "0hpxhw8gwkpw52sg9yfkg99k7kn8hif74kfqcnqr3rg3z58iph60";
+    sha256 = "e0370707f20d97f6e8a447de6a6b29564a75cb8a6bd3d8cc992d9996e8b9c78e";
     propagatedBuildInputs = [
       cachecontrol
       clockwork
       go-jose_v2
-      net
       oauth2
       pkg
     ];
+    meta.autoUpdate = false;
+    excludedPackages = "example";
   };
 
   go-okta = buildFromGitHub {
@@ -7818,10 +7819,10 @@ let
 
   teleport = buildFromGitHub {
     version = 3;
-    rev = "v2.3.2";
+    rev = "v2.3.5";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "7ee600d525cbda4893b33556ffa44a92bffe1f2f7a9b6fd6a5ccd5422ab63f58";
+    sha256 = "7f8aa8819d26d371aa75aee0074580334dc6c517aae45021ffc487384e5692a9";
     nativeBuildInputs = [
       pkgs.protobuf-cpp
       protobuf.bin
@@ -8002,7 +8003,9 @@ let
     repo = "toml";
     rev = "v0.3.0";
     sha256 = "1cnryizxrj7si27knhh83dd03abw5r0yhac2vmv861inpl3lflx2";
-    goPackageAliases = [ "github.com/burntsushi/toml" ];
+    goPackageAliases = [
+      "github.com/burntsushi/toml"
+    ];
   };
 
   trace = buildFromGitHub {
@@ -8017,6 +8020,12 @@ let
       logrus
       net
     ];
+    postPatch = ''
+      sed \
+        -e 's,metadata\.FromContext,metadata.FromIncomingContext,' \
+        -e 's,metadata\.NewContext,metadata.NewOutgoingContext,' \
+        -i trail/trail.go
+    '';
   };
 
   tree = buildFromGitHub {

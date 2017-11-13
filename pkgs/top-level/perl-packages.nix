@@ -13341,6 +13341,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
+  XMLSAXExpat = buildPerlPackage rec {
+    name = "XML-SAX-Expat-0.51";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/B/BJ/BJOERN/${name}.tar.gz";
+      sha256 = "4c016213d0ce7db2c494e30086b59917b302db8c292dcd21f39deebd9780c83f";
+    };
+  };
+
   XMLSAXWriter = buildPerlPackage {
     name = "XML-SAX-Writer-0.56";
     src = fetchurl {

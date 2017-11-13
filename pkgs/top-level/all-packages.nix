@@ -912,6 +912,8 @@ colord = callPackage ../all-pkgs/c/colord { };
 
 colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 
+colorhug-client = callPackage ../all-pkgs/c/colorhug-client { };
+
 compositeproto = callPackage ../all-pkgs/c/compositeproto { };
 
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };

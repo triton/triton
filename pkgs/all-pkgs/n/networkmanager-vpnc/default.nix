@@ -1,26 +1,35 @@
 { stdenv
 , fetchurl
 , intltool
-, kmod
 , lib
 , procps
 
 , dbus-glib
 , glib
-, gtk_3
+, gtk
+, kmod
 , libsecret
 , networkmanager
 , networkmanager-applet
 , vpnc
+
+, findHardcodedPaths ? false  # for derivation testing only
 
 , channel
 }:
 
 let
   inherit (lib)
-    boolWt;
+    boolWt
+    optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.2" = {
+      version = "1.2.4";
+      sha256 = "39c7516418e90208cb534c19628ce40fd50eba0a08b2ebaef8da85720b10fb05";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "NetworkManager-vpnc-${source.version}";
@@ -39,7 +48,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus-glib
     glib
-    gtk_3
+    gtk
     libsecret
     networkmanager
     networkmanager-applet
@@ -48,10 +57,15 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     sed -i configure \
-      -e 's,/sbin/sysctl,${procps}/sbin/sysctl,g'
+      -e 's,/sbin/sysctl,${procps}/bin/sysctl,g'
     sed -i src/nm-vpnc-service.c \
-      -e 's,/sbin/vpnc,${vpnc}/sbin/vpnc,g' \
-      -e 's,/sbin/modprobe,${kmod}/sbin/modprobe,g'
+      -e 's,/sbin/vpnc,${vpnc}/bin/vpnc,g' \
+      -e 's,/sbin/modprobe,${kmod}/bin/modprobe,g'
+    sed -i properties/nm-vpnc-editor-plugin.c \
+      -e 's,/usr.*/cisco-decrypt,${vpnc}/bin/cisco-decrypt,g'
+  '' + optionalString findHardcodedPaths ''
+    rm -rf build-aux ChangeLog config.{guess,sub} configure{,.ac} ltmain.sh m4/ man/ docs/ INSTALL *.m4
+    grep -rP '^(?!#!).*/(usr|bin|sbin).*'; return 1
   '';
 
   configureFlags = [
@@ -60,7 +74,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-more-warnings"
     "--${boolWt (
-      gtk_3 != null
+      gtk != null
       && networkmanager-applet != null
       && libsecret != null)}-gnome"
     "--with-libnm-glib"

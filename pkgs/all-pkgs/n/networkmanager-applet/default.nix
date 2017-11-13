@@ -40,7 +40,13 @@ let
     boolEn
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.8" = {
+      version = "1.8.6";
+      sha256 = "01749e2c27d84ac858f59bc923af50860156eb510e2b6cf7d4941f753bef9c30";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${source.version}";

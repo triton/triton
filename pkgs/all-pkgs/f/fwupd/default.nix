@@ -7,6 +7,7 @@
 
 , appstream-glib
 , cairo
+, colord
 , efivar
 , elfutils
 , fontconfig
@@ -34,7 +35,7 @@
 }:
 
 let
-  version = "1.0.0";
+  version = "1.0.2";
 in
 stdenv.mkDerivation rec {
   name = "fwupd-${version}";
@@ -44,11 +45,12 @@ stdenv.mkDerivation rec {
     owner = "hughsie";
     repo = "fwupd";
     rev = version;
-    sha256 = "5779cf25d3cc645bac24e93c44d0db3b7bb4b620c3611587dfcb2152b271067a";
+    sha256 = "59be5b458dc816822e01761ac34eb41bcc4de255d064847a64ae0f631d0b0dd7";
   };
 
   nativeBuildInputs = [
     gettext
+    gobject-introspection
     meson
     ninja
     python3Packages.pygobject
@@ -58,39 +60,35 @@ stdenv.mkDerivation rec {
   buildInputs = [
     appstream-glib
     cairo
-    efivar
+    colord
+    #efivar
     elfutils
     fontconfig
     freetype
     fwupdate
     gcab
-    gdk-pixbuf
+    #gdk-pixbuf
     glib
     gnutls
-    gobject-introspection
     gpgme
     libarchive
     libgpg-error
     libgudev
     libgusb
-    libsmbios
+    #libsmbios
     libsoup
-    libusb
+    #libusb
     pango
     polkit
     sqlite
-    systemd_lib
+    #systemd_lib
     systemd-dummy
     util-linux_lib
   ];
 
-  postPatch = ''
-    patchShebangs po/test-deps
-  '';
-
   mesonFlags = [
-    "-Denable-doc=false"
-    "-Denable-tests=false"
+    "-Dgtkdoc=false"
+    "-Dtests=false"
   ];
 
   meta = with stdenv.lib; {

@@ -14,17 +14,20 @@
 , networkmanager-applet
 , openvpn
 
+, findHardcodedPaths ? false  # for derivation testing only
+
 , channel
 }:
 
 let
   inherit (lib)
-    boolWt;
+    boolWt
+    optionalString;
 
   sources = {
-    "1.2" = {
-      version = "1.2.10";
-      sha256 = "ac86a7a539d78df90095676e9183f2d422fb93dbfe4b3afef22f81825d303d61";
+    "1.8" = {
+      version = "1.8.0";
+      sha256 = "166e1123ade1b322162b83876c605393a8e74240aa908cba934319f312b2e3a4";
     };
   };
   source = sources."${channel}";
@@ -62,6 +65,9 @@ stdenv.mkDerivation rec {
       -e 's,/sbin/modprobe,${kmod}/sbin/modprobe,g'
     sed -i properties/auth-helpers.c \
       -e 's,/sbin/openvpn,${openvpn}/sbin/openvpn,g'
+  '' + optionalString findHardcodedPaths ''
+    rm -rf build-aux config.{guess,sub} configure{,.ac} ltmain.sh m4/ man/ docs INSTALL *.m4
+    grep -rP '^(?!#!).*/(usr|bin|sbin).*'; return 1
   '';
 
   configureFlags = [

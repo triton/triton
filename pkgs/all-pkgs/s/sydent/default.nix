@@ -19,8 +19,8 @@
 }:
 
 let
-  date = "2017-04-25";
-  rev = "3d3ac5ab802ad91bbecfc0cd6a50bdd31875c1fe";
+  date = "2017-11-11";
+  rev = "c3879957b0b7a1e3509f8b727a66bcef4a8cd0c2";
 in
 buildPythonPackage {
   name = "sydent-${date}";
@@ -30,7 +30,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "sydent";
     inherit rev;
-    sha256 = "0912dcbde9a772299d5080eb60e5d24667410c04c5198253d2cf0c79858d7a0c";
+    sha256 = "a82d403bda0f7e880b6ac7651ca8730b4745818b76a850c24b365bc7544b43f9";
   };
 
   buildInputs = [

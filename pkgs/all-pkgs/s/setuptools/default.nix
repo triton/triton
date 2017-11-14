@@ -33,8 +33,11 @@ stdenv.mkDerivation rec {
   installPhase = ''
     dst=$out/${python.sitePackages}
     mkdir -pv $dst
-    export PYTHONPATH="$dst:$PYTHONPATH"
+    export PYTHONPATH="$dst"
     ${python.interpreter} setup.py install --prefix=$out
+  '';
+
+  preFixup = ''
     wrapPythonPrograms
   '';
 

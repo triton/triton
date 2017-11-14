@@ -211,9 +211,11 @@ rec {
   ];
 
   savannah = [
-    https://savannah.nongnu.org/download
-    http://download.savannah.gnu.org/releases
-    http://download-mirror.savannah.gnu.org/releases
+    https://download.savannah.gnu.org/releases
+    https://download-mirror.savannah.gnu.org/releases
+
+    # These redirect to a random mirror
+    http://savannah.nongnu.org/download
   ];
 
   sourceforge = [

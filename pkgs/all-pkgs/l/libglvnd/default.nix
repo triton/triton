@@ -10,15 +10,18 @@
 , xproto
 }:
 
+let
+  version = "1.0.0";
+in
 stdenv.mkDerivation rec {
-  name = "libglvnd-2017-09-13";
+  name = "libglvnd-${version}";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "NVIDIA";
     repo = "libglvnd";
-    rev = "fe4a384094f59374b752faf2230ce810c02d98c3";
-    sha256 = "fc580126c750f7279a65f5f7928997e20242a8c99cdec773d9077a01727d78bf";
+    rev = "v${version}";
+    sha256 = "c0b07535b14c622f64f4ba05d4c31f9d7a19790b6ec18c2d7241c48536bd7870";
   };
 
   nativeBuildInputs = [

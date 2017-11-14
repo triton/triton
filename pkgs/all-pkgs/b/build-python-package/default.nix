@@ -10,6 +10,7 @@
 , pip_bootstrap
 , setuptools
 , unzip
+, wheel
 , wrapPython
 }:
 
@@ -84,6 +85,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   propagatedBuildInputs = propagatedBuildInputs ++ [
     python
     setuptools
+    wheel
   ];
 
   pythonPath = pythonPath;

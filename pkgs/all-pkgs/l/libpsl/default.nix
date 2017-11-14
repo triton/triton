@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , python2Packages
 
 , icu
@@ -8,14 +9,14 @@
 }:
 
 let
-  version = "0.18.0";
+  version = "0.19.1";
 in
 stdenv.mkDerivation rec {
   name = "libpsl-${version}";
 
   src = fetchurl {
     url = "https://github.com/rockdaboot/libpsl/releases/download/${name}/${name}.tar.gz";
-    sha256 = "91b0f7954709ced5d6ad44d0e2b872675300d834573a569bb516eb46916e3102";
+    sha256 = "735146b51bbd3dcb6b0f87819c64bf3115f7fb9fa2e3a7fe9966e3346a8abc79";
   };
 
   nativeBuildInputs = [
@@ -32,7 +33,7 @@ stdenv.mkDerivation rec {
     patchShebangs src/psl-make-dafsa
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

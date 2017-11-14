@@ -33,20 +33,12 @@ stdenv.mkDerivation rec {
   installPhase = ''
     dst=$out/${python.sitePackages}
     mkdir -pv $dst
-    export PYTHONPATH="$dst"
-    ${python.interpreter} setup.py install --prefix=$out
+    PYTHONPATH="$dst" ${python.interpreter} setup.py install --prefix=$out
   '';
 
   preFixup = ''
     wrapPythonPrograms
   '';
-
-  passthru = {
-    inherit version;
-
-    # Hash for pip bootstrap, see pkgs/p/pip/bootstrap.nix
-    bootstrapSha256 = "bae92a71c82f818deb0b60ff1f7d764b8902cfc24187746b1aa6186918a70db3";
-  };
 
   meta = with lib; {
     description = "Utilities to facilitate the installation of Python packages";

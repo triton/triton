@@ -1,21 +1,24 @@
 { stdenv
 , fetchPyPi
+, lib
 , unzip
-, wrapPython
 
 , python
+, wrapPython
 }:
 
+let
+  # Make sure to update passthru.bootstrapSha256 setuptools hash when updating.
+  version = "36.7.2";
+in
 stdenv.mkDerivation rec {
   name = "${python.executable}-setuptools-${version}";
-  # Make sure to update pkgs/p/pip/bootstrap.nix setuptools hash when updating
-  version = "32.3.1";
 
   src = fetchPyPi {
     package = "setuptools";
     inherit version;
     type = ".zip";
-    sha256 = "806bae0840429c13f6e6e44499f7c0b87f3b269fdfbd815d769569c1daa7c351";
+    sha256 = "ad86fd8dd09c285c33b4c5b82bbc21d21883637faef78b0ab58fa9984847220d";
   };
 
   nativeBuildInputs = [
@@ -36,11 +39,13 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    inherit version;
+
     # Hash for pip bootstrap, see pkgs/p/pip/bootstrap.nix
-    bootstrapSha256 = "1876d17325e5157751e004d7911c0a0c3bb257d509d9d23483ff9f2f12c84315";
+    bootstrapSha256 = "bae92a71c82f818deb0b60ff1f7d764b8902cfc24187746b1aa6186918a70db3";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Utilities to facilitate the installation of Python packages";
     homepage = http://pypi.python.org/pypi/setuptools;
     license = licenses.zpt20;

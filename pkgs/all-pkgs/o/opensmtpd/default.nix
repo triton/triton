@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = map (n: "${n}.tar.gz") baseUrls;
+    multihash = "QmTaJoYN8ayemCRNJyobCD94dnAk7hS9AsamymXLFgRNp2";
     hashOutput = false;
     sha256 = "2af9b6d08784c7e546bf124bb61e311a6aa0c9835507710a76f5c242383190ac";
   };

@@ -7,8 +7,10 @@
 { python
 , ensureNewerSourcesHook
 , lib
+, pip
 , setuptools
 , unzip
+, wheel
 , wrapPython
 }:
 
@@ -80,8 +82,10 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   # propagate python/setuptools to active setup-hook in nix-shell
   propagatedBuildInputs = propagatedBuildInputs ++ [
+    pip
     python
     setuptools
+    wheel
   ];
 
   pythonPath = pythonPath;
@@ -105,11 +109,31 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   installPhase = attrs.installPhase or ''
     runHook preInstall
 
-    # setuptools requires the site-prefix to be in PYTHONPATH and for the
-    # directory to exist.
-    mkdir -pv "$out/${python.sitePackages}"
+    # Add current output to PYTHONPATH so applications can be run within the
+    # current derivation.
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
-    ${python.interpreter} setup.py install --prefix=$out --compile
+
+    # Copy the file into the build directory so it's executed relative to
+    # the root of the source.  Many project make assumptions by using
+    # relative paths.
+    cp -v ${./run_setup.py} nix_run_setup.py
+
+    mkdir -pv unique_wheel_dir
+    ${python.interpreter} nix_run_setup.py ${
+      optionalString (configureFlags != []) (
+        "build_ext " + (concatStringsSep " " configureFlags)
+      )
+    } bdist_wheel --dist-dir=unique_wheel_dir
+
+    pip -v install unique_wheel_dir/*.whl \
+      --no-index --prefix="$out" --no-cache --build pipUnpackTmp --no-compile
+
+    # pip hardcodes references to the build directory in compiled files so
+    # we compile all files manually.
+    ${python.interpreter} -c "
+    import compileall
+    compileall.compile_dir('$out/${python.sitePackages}')
+    "
 
     runHook postInstall
   '';
@@ -121,7 +145,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   installCheckPhase = attrs.checkPhase or ''
     runHook preCheck
 
-    ${python.interpreter} setup.py test
+    ${python.interpreter} nix_run_setup.py test
 
     runHook postCheck
   '';
@@ -140,13 +164,13 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
        export PATH="$tmp_path/bin:$PATH"
        export PYTHONPATH="$tmp_path/${python.sitePackages}:$PYTHONPATH"
        mkdir -pv $tmp_path/${python.sitePackages}
-       ''${pip_bootstrap}/bin/pip -v install -e . --prefix $tmp_path
+       pip -v install -e . --prefix $tmp_path
     fi
     ${postShellHook}
   '';
 
   # FIXME: build directory currently gets hardcoded in .pyc files
-  buildDirCheck = attrs.buildDirCheck or false;
+  #buildDirCheck = attrs.buildDirCheck or false;
 
   meta = with lib.maintainers; {
     # default to python's platforms

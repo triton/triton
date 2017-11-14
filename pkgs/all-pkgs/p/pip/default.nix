@@ -3,12 +3,14 @@
 , fetchFromGitHub
 #, fetchPyPi
 , lib
+, python
+, setuptools
 }:
 
 let
   version = "2017-11-12";
 in
-buildPythonPackage rec {
+stdenv.mkDerivation rec {
   name = "pip-${version}";
 
   # FIXME: Revert back to using versioned releases once 10.x is released.
@@ -26,6 +28,21 @@ buildPythonPackage rec {
   #   inherit version;
   #   sha256 = "09f243e1a7b461f654c26a725fa373211bb7ff17a9300058b205c61658ca940d";
   # };
+
+  propagatedBuildInputs = [
+    python
+    setuptools
+  ];
+
+  installPhase = ''
+    mkdir -pv "$out/${python.sitePackages}"
+    export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    ${python.interpreter} setup.py install --prefix=$out
+  '';
+
+  passthru = {
+    inherit version;
+  };
 
   meta = with lib; {
     description = "The PyPA recommended tool for installing Python packages";

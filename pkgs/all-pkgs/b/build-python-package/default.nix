@@ -7,10 +7,8 @@
 { python
 , ensureNewerSourcesHook
 , lib
-, pip_bootstrap
 , setuptools
 , unzip
-, wheel
 , wrapPython
 }:
 
@@ -74,7 +72,6 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   buildInputs = [
     wrapPython
-    pip_bootstrap
   ] ++ [
     (ensureNewerSourcesHook { year = "1980"; })
   ] ++ buildInputs
@@ -85,7 +82,6 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   propagatedBuildInputs = propagatedBuildInputs ++ [
     python
     setuptools
-    wheel
   ];
 
   pythonPath = pythonPath;
@@ -103,31 +99,17 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
-
-    # Copy the file into the build directory so it's executed relative to
-    # the root of the source.  Many project make assumptions by using
-    # relative paths.
-    cp -v ${./run_setup.py} nix_run_setup.py
-
-    ${python.interpreter} nix_run_setup.py ${
-      optionalString (configureFlags != []) (
-        "build_ext " + (concatStringsSep " " configureFlags)
-      )
-    } bdist_wheel
-
     runHook postBuild
   '';
 
   installPhase = attrs.installPhase or ''
     runHook preInstall
 
+    # setuptools requires the site-prefix to be in PYTHONPATH and for the
+    # directory to exist.
     mkdir -pv "$out/${python.sitePackages}"
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
-
-    pushd dist
-      ${pip_bootstrap}/bin/pip -v install ''${pipWhlFile-*}.whl \
-        --no-index --prefix="$out" --no-cache --build pipUnpackTmp
-    popd
+    ${python.interpreter} setup.py install --prefix=$out --compile
 
     runHook postInstall
   '';
@@ -139,7 +121,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   installCheckPhase = attrs.checkPhase or ''
     runHook preCheck
 
-    ${python.interpreter} nix_run_setup.py test
+    ${python.interpreter} setup.py test
 
     runHook postCheck
   '';
@@ -158,7 +140,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
        export PATH="$tmp_path/bin:$PATH"
        export PYTHONPATH="$tmp_path/${python.sitePackages}:$PYTHONPATH"
        mkdir -pv $tmp_path/${python.sitePackages}
-       ${pip_bootstrap}/bin/pip -v install -e . --prefix $tmp_path
+       ''${pip_bootstrap}/bin/pip -v install -e . --prefix $tmp_path
     fi
     ${postShellHook}
   '';

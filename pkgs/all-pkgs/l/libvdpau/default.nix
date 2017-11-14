@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , lib
 
@@ -22,6 +23,14 @@ stdenv.mkDerivation rec {
     dri2proto
     libx11
     libxext
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "091e0ea204a9808a92583eec3e60e7a5eeb554a2";
+      file = "l/libvdpau/libvdpau-1.1.1-mesa_dri2-Add-missing-include-of-config.h-to-define.patch";
+      sha256 = "f9ee2809d65b3384fce2293d500169225f4ea613d673d277798d5d601f9d5eaf";
+    })
   ];
 
   configureFlags = [

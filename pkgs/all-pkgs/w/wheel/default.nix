@@ -1,21 +1,18 @@
 { stdenv
-, buildPythonPackage
 , fetchPyPi
-
-, jsonschema
-
-, coverage
-, pytest
-, pytestcov
+, lib
+, python
+, setuptools
+, unzip
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
   version = "0.29.0";
 in
-buildPythonPackage rec {
+stdenv.mkDerivation rec {
   name = "wheel-${version}";
 
   src = fetchPyPi {
@@ -24,23 +21,24 @@ buildPythonPackage rec {
     sha256 = "1ebb8ad7e26b448e9caa4773d2357849bf80ff9e313964bcaf79cbf0201a1648";
   };
 
-  buildInputs = optionals doCheck [
-    coverage
-    pytest
-    pytestcov
+  nativeBuildInputs = [
+    python
+    setuptools
+    unzip
   ];
 
-  propagatedBuildInputs = [
-    jsonschema
-  ];
+  buildPhase = ''
+    ${python.interpreter} setup.py bdist_wheel
+  '';
 
-  doCheck = false;
+  installPhase = ''
+    pushd dist/
+      mkdir -pv $out/${python.sitePackages}
+      unzip -d $out/${python.sitePackages} wheel-*.whl
+    popd
+  '';
 
-  passthru = {
-    inherit version;
-  };
-
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A built-package format for Python";
     homepage = https://bitbucket.org/pypa/wheel/;
     license = licenses.mit;

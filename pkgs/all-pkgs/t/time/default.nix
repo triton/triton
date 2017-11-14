@@ -1,30 +1,24 @@
 { stdenv
-, fetchTritonPatch
-, fetchzip
+, fetchurl
 }:
 
 stdenv.mkDerivation rec {
-  name = "time-1.7.3-RC1";
+  name = "time-1.8";
 
-  src = fetchzip {
-    version = 2;
-    url = "http://git.savannah.gnu.org/cgit/time.git/snapshot/9cf20c04418e0ac22d077638d935325847368d42.tar.xz";
-    multihash = "Qmds3jGfVTszo8yUFn8Hp1UoZb8wMDousy1F5tt8N7YLUP";
-    sha256 = "c0516c7c162457983ae04d691403f227813d3d22d21046d238b84c83c53ffed2";
+  src = fetchurl {
+    url = "mirror://gnu/time/${name}.tar.gz";
+    hashOutput = false;
+    sha256 = "8a2f540155961a35ba9b84aec5e77e3ae36c74cecb4484db455960601b7a2e1b";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "31c27f1dfcd48150b1b91d5a9dc284679adf66ad";
-      file = "t/time/1.7-Recompute-CPU-usage-at-microsecond-level.patch";
-      sha256 = "ee1141a413d25aae7c9d1bfa9661106b84333ec4494ef20f1fae21e755158af2";
-    })
-    (fetchTritonPatch {
-      rev = "31c27f1dfcd48150b1b91d5a9dc284679adf66ad";
-      file = "t/time/1.7-ru_maxrss-is-in-kilobytes-on-Linux.patch";
-      sha256 = "71318d632ae07020d993b15b42e6573eea0cb1a34a604a9b797015afe7729c74";
-    })
-  ];
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "F576 AAAC 1B0F F849 792D  8CB1 29A7 94FD 2272 BC86";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Tool that runs programs and summarizes the system resources they use";

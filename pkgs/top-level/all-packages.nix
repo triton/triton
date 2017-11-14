@@ -1595,21 +1595,11 @@ gnutar = callPackage ../all-pkgs/g/gnutar { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go_1-8 = callPackage ../all-pkgs/g/go {
-  channel = "1.8";
-};
 go_1-9 = callPackage ../all-pkgs/g/go {
   channel = "1.9";
 };
 go = callPackageAlias "go_1-9" { };
 
-goPackages_1-8 = callPackage ./go-packages.nix {
-  go = callPackageAlias "go_1-8" { };
-  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
-    go = callPackageAlias "go_1-8" { };
-  };
-  overrides = (config.goPackageOverrides or (p: { })) pkgs;
-};
 goPackages_1-9 = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1-9" { };
   buildGoPackage = callPackage ../all-pkgs/b/build-go-package {

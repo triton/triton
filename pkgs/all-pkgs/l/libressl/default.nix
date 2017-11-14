@@ -7,12 +7,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libressl-2.5.5";
+  name = "libressl-2.6.3";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;  # Upstream provides it directly
-    sha256 = "e57f5e3d5842a81fe9351b6e817fcaf0a749ca4ef35a91465edba9e071dce7c4";
+    sha256 = "aead6598263171b96970da0d881e616d0813b69b35ebdc5991f87ff2ea7f5c98";
   };
 
   configureFlags = [
@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrl = map (n: "${n}.asc") src.urls;
-      #sha256Url = "${baseUrl}/SHA256";
-      #pgpsigSha256Url = "${sha256Url}.asc";
+      sha256Url = "${baseUrl}/SHA256";
+      pgpsigSha256Url = "${sha256Url}.asc";
       pgpKeyFile = ./signing.key;
       inherit (src) urls outputHash outputHashAlgo;
     };

@@ -16,12 +16,11 @@
 
 let
   inherit (lib)
-    boolEn
     boolWt
     optionals
     optionalString;
 
-  version = "1.6.3";
+  version = "1.7.0";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -33,7 +32,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "e31eb367beb61a9399d2c78b51c225ab2b1cbd46f364f2d80d97bb422b44101a";
+    sha256 = "042742d6ec67bc6719b69cf38a3fba24fbd120e207e3fdc18530dc730fb6a029";
   };
 
   buildInputs = [
@@ -53,12 +52,12 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolWt (glib != null)}-glib"
-    "--${boolWt (glib != null)}-gobject"
-    "--${boolWt (icu != null)}-icu"
-    "--${boolWt (graphite2 != null)}-graphite2"
-    "--${boolWt (freetype != null)}-freetype"
+    "--enable-introspection"
+    "--with-glib"
+    "--with-gobject"
+    "--with-icu"
+    "--with-graphite2"
+    "--with-freetype"
     "--without-uniscribe"
     "--without-directwrite"
     "--without-coretext"

@@ -68,6 +68,7 @@ stdenv.mkDerivation rec {
       file = "l/libva-vdpau-driver/implement-vaquerysurfaceattributes.patch";
       sha256 = "a91e11d2826715b29c2a08036f0e70ed45df7139987ff37c84b5c04c4a9c132f";
     })
+    # https://github.com/sjnewbury/gentoo-playground/commit/4d1adfacd5aa2acd0317ef2c50dff46dd45b9a93
     # Allow libva-vdpau-driver to work with Chromium/VAAPI by falling back to
     # the exisiting X Display, where the sandbox doesn't allow a new connection.
     (fetchTritonPatch {

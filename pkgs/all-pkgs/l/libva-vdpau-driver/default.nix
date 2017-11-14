@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/vaapi/releases/"
       + "libva-vdpau-driver/${name}.tar.bz2";
-    sha1Url = "${url}.sha1sum";
+    multihash = "QmUtdeAzh4rh4KQCGccv1jGpLA88TjwGGc2AgmnEqW8GDj";
     sha256 = "155c1982f0ac3f5435ba20b221bcaa11be212c37db548cd1f2a030ffa17e9bb9";
   };
 
@@ -57,6 +57,23 @@ stdenv.mkDerivation rec {
       rev = "e2f8724d2135b523b46b009573e25787ac927ad2";
       file = "libva-vdpau-driver/libva-vdpau-driver-0.7.4-nouveau.patch";
       sha256 = "75897391fdcec4cc28f176ed62184fe0042c4abb8f3c80d19d975050ffaa6072";
+    })
+    (fetchTritonPatch {
+      rev = "92b20ced8c77b36c6a8fd2232f7bb5e46418d1ad";
+      file = "l/libva-vdpau-driver/libva-vdpau-driver-0.7.4-missing-sys_time_h.patch";
+      sha256 = "a25fc8d233a0b41116e28410ab134d6acc0974de736a1dbda18e050409871e5b";
+    })
+    (fetchTritonPatch {
+      rev = "92b20ced8c77b36c6a8fd2232f7bb5e46418d1ad";
+      file = "l/libva-vdpau-driver/implement-vaquerysurfaceattributes.patch";
+      sha256 = "a91e11d2826715b29c2a08036f0e70ed45df7139987ff37c84b5c04c4a9c132f";
+    })
+    # Allow libva-vdpau-driver to work with Chromium/VAAPI by falling back to
+    # the exisiting X Display, where the sandbox doesn't allow a new connection.
+    (fetchTritonPatch {
+      rev = "92b20ced8c77b36c6a8fd2232f7bb5e46418d1ad";
+      file = "l/libva-vdpau-driver/libva-vdpau-driver-0.7.4-fallback-x.patch";
+      sha256 = "b923dc60ad49459ca480a56af075d954b2678a8c7f433fd03f1aa49e58cfe838";
     })
   ];
 

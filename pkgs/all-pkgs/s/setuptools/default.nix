@@ -10,6 +10,14 @@
 }:
 
 let
+  setuptools_wheel = fetchPyPi {
+    package = "setuptools";
+    #inherit (setuptools) version;
+    inherit version;
+    type = "-py2.py3-none-any.whl";
+    sha256 = "bae92a71c82f818deb0b60ff1f7d764b8902cfc24187746b1aa6186918a70db3";
+  };
+
   version = "36.7.2";
 in
 stdenv.mkDerivation rec {
@@ -45,16 +53,20 @@ stdenv.mkDerivation rec {
         zipfile.ZipFile('unique_wheel_dir/' + file).extractall('bootstrap_tmp_dir')
     "
 
-    # Use --upgrade to prevent pip from failing silently due to dependency
-    # already satisfied.
-    PYTHONPATH="bootstrap_tmp_dir/" ${pip_egg}/bin/pip -v \
-      install unique_wheel_dir/*.whl \
-      --upgrade \
-      --no-index \
-      --prefix="$out" \
-      --no-cache \
-      --build pipUnpackTmp \
-      --no-compile
+    # # Use --upgrade to prevent pip from failing silently due to dependency
+    # # already satisfied.
+    # PYTHONPATH="bootstrap_tmp_dir/" ${pip_egg}/bin/pip -v \
+    #   install ${setuptools_wheel} \
+    #   --upgrade \
+    #   --no-index \
+    #   --prefix="$out" \
+    #   --no-cache \
+    #   --build pipUnpackTmp \
+    #   --no-compile
+
+    # FIXME: using prebuilt wheel until bootstraping is fixed
+    mkdir -pv $out/${python.sitePackages}
+    unzip -d $out/${python.sitePackages} ${setuptools_wheel}
 
     ${python.interpreter} -c "
     import compileall

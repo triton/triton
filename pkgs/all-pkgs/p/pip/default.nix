@@ -7,6 +7,7 @@
 , python
 , setuptools
 , wheel
+, wrapPython
 }:
 
 let
@@ -35,6 +36,7 @@ stdenv.mkDerivation rec {
     python
     setuptools
     wheel
+    wrapPython
   ];
 
   installPhase = ''
@@ -75,6 +77,10 @@ stdenv.mkDerivation rec {
     except:
       compileall.compile_dir('$out/${python.sitePackages}')
     "
+  '';
+
+  preFixup = ''
+    wrapPythonPrograms
   '';
 
   passthru = {

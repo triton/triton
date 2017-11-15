@@ -31,12 +31,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mariadb-10.2.9";
+  name = "mariadb-10.2.10";
 
   src = fetchurl {
     url = "mirror://mariadb/${name}/source/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "12e0a01c52591ee77cf0f940fe65df024457fa16c70f08c6116048d576096124";
+    sha256 = "5c7b83c4d2f7501ef9f187d8c97688a24fd3e53dc43bb388f8e1cead61a92fc2";
   };
 
   nativeBuildInputs = [
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     numactl
     openssl
     pam
-    pcre
+    #pcre
     snappy
     systemd_lib
     xz
@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
     "-DWITH_READLINE=ON"
     "-DWITH_ZLIB=system"
     "-DWITH_SSL=system"
-    "-DWITH_PCRE=system"
+    #"-DWITH_PCRE=system"  # Temporarily disabled due to bugs
     "-DWITH_LIBARCHIVE=ON"
     "-DWITH_EXTRA_CHARSETS=complex"
     "-DWITH_EMBEDDED_SERVER=ON"

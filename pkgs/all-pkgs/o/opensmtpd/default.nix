@@ -7,7 +7,7 @@
 , libasr
 , libbsd
 , libevent
-, openssl
+, libressl
 , pam
 , zlib
 }:
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     libasr
     libbsd
     libevent
-    openssl
+    libressl
     pam
     zlib
   ];

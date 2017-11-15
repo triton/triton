@@ -11,15 +11,16 @@
 , fftw_single
 , libsamplerate
 , ncurses
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-utils-1.1.3";
+  name = "alsa-utils-1.1.5";
 
   src = fetchurl {
     url = "mirror://alsa/utils/${name}.tar.bz2";
-    multihash = "QmZ2iyPWGzod3MdnUpgFju76q9y64TaWRonTT7KRa1txW9";
-    sha256 = "127217a54eea0f9a49700a2f239a2d4f5384aa094d68df04a8eb80132eb6167c";
+    multihash = "QmaKgJYXDqGWmyDmLUyqLS83j8rUXrtPL6NmwfRNVqGkrN";
+    sha256 = "320bd285e91db6e7fd7db3c9ec6f55b02f35449ff273c7844780ac6a5a3de2e8";
   };
 
   nativeBuildInputs = [

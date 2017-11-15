@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-lib-1.1.4.1";
+  name = "alsa-lib-1.1.5";
 
   src = fetchurl {
     url = "mirror://alsa/lib/${name}.tar.bz2";
-    multihash = "QmcC8xCtnwT2HaCLzoVgMKk46NwBuZeU9VqY6rAoJCT6PT";
-    sha256 = "91bb870c14d1c7c269213285eeed874fa3d28112077db061a3af8010d0885b76";
+    multihash = "QmUUtUSuJV7QACXoXr3vMGYaYqrnKqdEJwwabjqGksd6CU";
+    sha256 = "f4f68ad3c6da36b0b5241ac3c798a7a71e0e97d51f972e9f723b3f20a9650ae6";
   };
 
   patches = [

@@ -1018,6 +1018,11 @@ diffutils = callPackage ../all-pkgs/d/diffutils { };
 
 ding-libs = callPackage ../all-pkgs/d/ding-libs { };
 
+discord = callPackage ../all-pkgs/d/discord { };
+discord_canary = callPackage ../all-pkgs/d/discord {
+  channel = "canary";
+};
+
 dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 dmidecode = callPackage ../all-pkgs/d/dmidecode { };

@@ -197,7 +197,6 @@ stdenv.mkDerivation rec {
     #       chrome's internal sub-pixel rendering, it will sometimes cause
     #       hinting to fail completely.
     wrapProgram "$out/bin/google-chrome${channame}" \
-      --add-flags '--disable-lcd-text' \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix LD_LIBRARY_PATH : "${chromeLibPath}" \
       --prefix PATH : "${chromeBinPath}" \

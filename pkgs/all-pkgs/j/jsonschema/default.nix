@@ -1,12 +1,17 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy2
+, lib
 
 , functools32
 , vcversioner
 }:
 
 let
+  inherit (lib)
+    optionals;
+
   version = "2.6.0";
 in
 buildPythonPackage rec {
@@ -22,11 +27,11 @@ buildPythonPackage rec {
     vcversioner
   ];
 
-  propagatedBuildInputs = [
+  propagatedBuildInputs = optionals isPy2 [
     functools32
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

@@ -27,11 +27,6 @@ buildPythonPackage rec {
     zope-event
   ];
 
-  # pip breaks importing with python2 due to nested install directories.
-  postInstall = ''
-    touch $out/${python.sitePackages}/zope/__init__.py
-  '';
-
   doCheck = true;
 
   meta = with lib; {

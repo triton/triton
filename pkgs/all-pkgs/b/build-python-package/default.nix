@@ -132,7 +132,11 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     # we compile all files manually.
     ${python.interpreter} -c "
     import compileall
-    compileall.compile_dir('$out/${python.sitePackages}')
+    try:
+      # Python 3.2+ support optimization
+      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
+    except:
+      compileall.compile_dir('$out/${python.sitePackages}')
     "
 
     runHook postInstall

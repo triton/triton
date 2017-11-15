@@ -11,12 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-plugins-1.1.1";
+  name = "alsa-plugins-1.1.5";
 
   src = fetchurl {
     url = "mirror://alsa/plugins/${name}.tar.bz2";
-    multihash = "QmXoLUNpmc8QLw37jPvDMYqCb15QfmtqjYp2PeA1VWXaeu";
-    sha256 = "8ea4d1e082c36528a896a2581e5eb62d4dc2683238e353050d0d624e65f901f1";
+    multihash = "QmcqwpskPPY7WBKqi69PDXbfkACgWdtdHfpSuVFMCUbuuK";
+    sha256 = "797da5f8f53379fbea28817bc466de16affd2c07849e84f1af8d5e22f7bb7f1c";
   };
 
   buildInputs = [

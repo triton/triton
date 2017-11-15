@@ -6,6 +6,7 @@
 , setuptools
 , unzip
 , wheel_egg
+, wrapPython
 }:
 
 let
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
     setuptools
     unzip
     wheel_egg
+    wrapPython
   ];
 
   installPhase = ''
@@ -50,6 +52,10 @@ stdenv.mkDerivation rec {
     except:
       compileall.compile_dir('$out/${python.sitePackages}')
     "
+  '';
+
+  preFixup = ''
+    wrapPythonPrograms
   '';
 
   passthru = {

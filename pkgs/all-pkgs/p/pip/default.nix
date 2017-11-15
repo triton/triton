@@ -3,8 +3,10 @@
 , fetchFromGitHub
 #, fetchPyPi
 , lib
+, pip_egg
 , python
 , setuptools
+, wheel
 }:
 
 let
@@ -32,12 +34,47 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     python
     setuptools
+    wheel
   ];
 
   installPhase = ''
-    mkdir -pv "$out/${python.sitePackages}"
-    export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
-    ${python.interpreter} setup.py install --prefix=$out
+    mkdir -pv unique_wheel_dir
+    ${python.interpreter} setup.py bdist_wheel --dist-dir=unique_wheel_dir
+
+    # Unpack into a tmp directory because `pip --upgrade` will try to remove
+    # the files.
+    ${python.interpreter} -c "
+    import fnmatch
+    import os
+    import zipfile
+
+    for file in os.listdir('unique_wheel_dir/'):
+      if fnmatch.fnmatch(file, '*.whl'):
+        zipfile.ZipFile('unique_wheel_dir/' + file).extractall('bootstrap_tmp_dir')
+    "
+
+    # Use --upgrade to prevent pip from failing silently due to dependency
+    # already satisfied.
+    PYTHONPATH="${setuptools}/${python.sitePackages}:bootstrap_tmp_dir/" \
+      ${pip_egg}/bin/pip -v \
+        install unique_wheel_dir/*.whl \
+        --upgrade \
+        --no-index \
+        --prefix="$out" \
+        --no-cache \
+        --build pipUnpackTmp \
+        --no-compile
+
+    # pip hardcodes references to the build directory in compiled files so
+    # we compile all files manually.
+    ${python.interpreter} -c "
+    import compileall
+    try:
+      # Python 3.2+ support optimization
+      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
+    except:
+      compileall.compile_dir('$out/${python.sitePackages}')
+    "
   '';
 
   passthru = {

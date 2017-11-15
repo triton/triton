@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
-, fetchPyPi
+, fetchFromGitHub
+, isPy2
 , isPy3
 , lib
+, python
 , pythonOlder
 
 , apscheduler
 , beautifulsoup
-, cheroot
 , cherrypy
 , colorclass
 , deluge
@@ -26,7 +27,6 @@
 , pathlib
 , pathpy
 , pkgs
-, portend
 #, progressbar
 , pynzb
 , pyparsing
@@ -46,24 +46,24 @@ let
     optionals
     optionalString;
 
-  version = "2.10.104";
+  version = "2.10.109";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
 
-  src = fetchPyPi {
-    package = "FlexGet";
-    inherit version;
-    sha256 = "ae600707556fa59f8eff8704da1557785eb3ddc74e4a78ab50795091dd199c15";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "flexget";
+    repo = "flexget";
+    rev = version;
+    sha256 = "ca2a0169b84322ca7b732bf40d56a9f0afe5093181867b930026c82209a279f2";
   };
 
   propagatedBuildInputs = [
     apscheduler
     beautifulsoup
-    cheroot
     cherrypy
     colorclass
-    deluge
     feedparser
     flask
     flask-compress
@@ -77,7 +77,6 @@ buildPythonPackage rec {
     jinja2
     jsonschema
     pathpy
-    portend
     pynzb
     pyparsing
     pyrss2gen
@@ -89,6 +88,8 @@ buildPythonPackage rec {
     terminaltables
     transmissionrpc
     zxcvbn-python
+  ] ++ optionals isPy2 [
+    deluge
   ] ++ optionals (pythonOlder "3.4") [
     pathlib
   ];
@@ -102,9 +103,12 @@ buildPythonPackage rec {
   '' + /* Fix discover plugin not respecting limit */ ''
     sed -i flexget/plugins/input/discover.py \
       -e '/>\s500/,+2d'
+  '' + optionalString isPy3 /* Fix python2 only requirements */ ''
+    sed -i setup.cfg \
+      -e '/python-tag/d'
+    sed -i requirements.txt \
+      -e '/pathlib/d'
   '';
-
-  disabled = isPy3;
 
   meta = with lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";

@@ -1,9 +1,9 @@
 { stdenv
 , fetchurl
 , lib
-, makeDesktopItem
 , makeWrapper
 
+, adwaita-icon-theme
 , alsa-lib
 , atk
 , cairo
@@ -13,9 +13,9 @@
 , fontconfig
 , freetype
 , gconf
-, gdk-pixbuf
 , gdk-pixbuf_unwrapped
 , glib
+, gnome-themes-standard
 , gtk2
 , libnotify
 , libx11
@@ -82,7 +82,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-
+    adwaita-icon-theme
+    gnome-themes-standard
   ];
 
   libPath = makeSearchPath "lib" [
@@ -136,10 +137,9 @@ stdenv.mkDerivation rec {
 
     wrapProgram $out/share/discord/Discord${nameexe} \
       --prefix LD_LIBRARY_PATH : "${libPath}" \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
+      --run "$DEFAULT_GTK2_RC_FILES"
 
     ln -sv $out/share/discord/Discord${nameexe} \
       $out/bin/discord${nameext}

@@ -1,8 +1,5 @@
 { stdenv
 , fetchurl
-
-, libevent
-, openssl
 }:
 
 let
@@ -17,9 +14,8 @@ stdenv.mkDerivation rec {
     sha256 = "e5684a08d5eb61d68a94a24688f23bee8785c8a51a1bd34c88cae5aee5aa6da2";
   };
 
-  buildInputs = [
-    libevent
-    openssl
+  configureFlags = [
+    "--with-ca-file=/etc/ssl/certs/ca-certificates.crt"
   ];
 
   meta = with stdenv.lib; {

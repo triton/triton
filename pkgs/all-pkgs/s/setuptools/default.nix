@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+, pip_egg
 , python
 , setuptools_egg
 , unzip
@@ -32,19 +33,36 @@ stdenv.mkDerivation rec {
     mkdir -pv unique_wheel_dir
     ${python.interpreter} setup.py bdist_wheel --dist-dir=unique_wheel_dir
 
-    # We can't use pip because it will detect setuptools_egg and not install
-    # anything because the dependency is already satisfied.
+    # Unpack into a tmp directory because `pip --upgrade` will try to remove
+    # the files.
     ${python.interpreter} -c "
-    import compileall
     import fnmatch
     import os
     import zipfile
 
     for file in os.listdir('unique_wheel_dir/'):
       if fnmatch.fnmatch(file, '*.whl'):
-        zipfile.ZipFile('unique_wheel_dir/' + file).extractall('$out/${python.sitePackages}')
+        zipfile.ZipFile('unique_wheel_dir/' + file).extractall('bootstrap_tmp_dir')
+    "
 
-    compileall.compile_dir('$out/${python.sitePackages}')
+    # Use --upgrade to prevent pip from failing silently due to dependency
+    # already satisfied.
+    PYTHONPATH="bootstrap_tmp_dir/" ${pip_egg}/bin/pip -v \
+      install unique_wheel_dir/*.whl \
+      --upgrade \
+      --no-index \
+      --prefix="$out" \
+      --no-cache \
+      --build pipUnpackTmp \
+      --no-compile
+
+    ${python.interpreter} -c "
+    import compileall
+    try:
+      # Python 3.2+ support optimization
+      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
+    except:
+      compileall.compile_dir('$out/${python.sitePackages}')
     "
   '';
 

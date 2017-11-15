@@ -1,12 +1,17 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy2
 , lib
+, python
 
 , zope-event
 }:
 
 let
+  inherit (lib)
+    optionals;
+
   version = "4.4.3";
 in
 buildPythonPackage rec {
@@ -18,9 +23,16 @@ buildPythonPackage rec {
     sha256 = "d6d26d5dfbfd60c65152938fcb82f949e8dada37c041f72916fef6621ba5c5ce";
   };
 
-  buildInputs = [
+  nativeBuildInputs = optionals doCheck [
     zope-event
   ];
+
+  # pip breaks importing with python2 due to nested install directories.
+  postInstall = ''
+    touch $out/${python.sitePackages}/zope/__init__.py
+  '';
+
+  doCheck = true;
 
   meta = with lib; {
     description = "Interfaces for Python";

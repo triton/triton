@@ -179,7 +179,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     "
   '' + /* Fail if two packages with the same name are found in the closure */ ''
     ${python.interpreter} ${./catch_conflicts.py}
-  '' + optionalString isPy2
+  '' + optionalString (isPy2 && appdirs != null)
     /* FIXME: codyopel
        I seem to have broken pth loading for python 2 and possibly python 3
        and I haven't figured out why yet. As a result namespaced packages fail

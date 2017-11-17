@@ -1,4 +1,10 @@
-{ pkgs, stdenv, python, self }:
+{ pkgs
+, python
+, self
+, stdenv
+
+, newBootstrap ? false
+}:
 
 with pkgs.lib;
 
@@ -31,29 +37,57 @@ let
 
   buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
-      appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
-      packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
-        inherit
-          pyparsing
-          six;
-      };
-      pip = callPackage ../all-pkgs/p/pip/bootstrap.nix {
-        inherit
-          setuptools;
-      };
-      pyparsing = callPackage ../all-pkgs/p/pyparsing/bootstrap.nix { };
-      setuptools = callPackage ../all-pkgs/s/setuptools/bootstrap.nix {
+      appdirs =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/a/appdirs/bootstrap.nix { }
+        else
+          null;
+      packaging =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/p/packaging/bootstrap.nix {
+            inherit
+              pyparsing
+              six;
+          }
+        else
+          null;
+      pip =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/p/pip/bootstrap.nix {
+            inherit
+              setuptools;
+          }
+        else
+          callPackage ../all-pkgs/p/pip/bootstrap_wheel.nix { };
+      pyparsing =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/p/pyparsing/bootstrap.nix { }
+        else
+          null;
+      setuptools =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/s/setuptools/bootstrap.nix {
         inherit
           appdirs
           packaging
           pyparsing
           six;
-      };
-      six = callPackage ../all-pkgs/s/six/bootstrap.nix { };
-      wheel = callPackage ../all-pkgs/w/wheel/bootstrap.nix {
-        inherit
-          setuptools;
-      };
+      }
+        else
+          callPackage ../all-pkgs/s/setuptools/bootstrap_wheel.nix { };
+      six =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/s/six/bootstrap.nix { }
+        else
+          null;
+      wheel =
+        if newBootstrap == true then
+          callPackage ../all-pkgs/w/wheel/bootstrap.nix {
+            inherit
+              setuptools;
+          }
+        else
+          null;
     }
   );
 

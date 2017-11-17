@@ -10,7 +10,6 @@
 , lib
 , pip
 , setuptools
-, unzip
 , wheel
 , wrapPython
 
@@ -92,8 +91,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   buildInputs = [
     (ensureNewerSourcesHook { year = "1980"; })
   ] ++ buildInputs
-    ++ pythonPath
-    ++ (optional (hasSuffix "zip" attrs.src.name or "") unzip);
+    ++ pythonPath;
 
   # propagate python/setuptools to active setup-hook in nix-shell
   propagatedBuildInputs = [

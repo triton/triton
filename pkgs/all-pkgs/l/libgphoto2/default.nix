@@ -18,7 +18,7 @@ let
   inherit (lib)
     boolWt;
 
-  version = "2.5.14";
+  version = "2.5.16";
 in
 stdenv.mkDerivation rec {
   name = "libgphoto2-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/gphoto/libgphoto/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "d3ce70686fb87d6791b9adcbb6e5693bfbe1cfef9661c23c75eb8a699ec4e274";
+    sha256 = "e757416d1623e01a9d0d294b2e790162e434c0964f50d3b7ff1a3424b62a2906";
   };
 
   nativeBuildInputs = [

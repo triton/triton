@@ -140,13 +140,15 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
     # TODO: install wheel file to another output
 
-    pip -v install unique_dist_dir/*.whl \
+    pushd unique_dist_dir/
+    ${python.interpreter} -m pip -v install *.whl \
       --root=/ \
       --prefix=$out \
       --build pipUnpackTmp \
       --no-cache \
       --no-compile \
       --no-index
+    popd
 
     runHook postInstall
   '';

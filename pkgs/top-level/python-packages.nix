@@ -30,7 +30,31 @@ let
     };
 
   buildPythonPackage = makeOverridable (
-    callPackage ../all-pkgs/b/build-python-package { }
+    callPackage ../all-pkgs/b/build-python-package rec {
+      appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
+      packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
+        inherit
+          pyparsing
+          six;
+      };
+      pip = callPackage ../all-pkgs/p/pip/bootstrap.nix {
+        inherit
+          setuptools;
+      };
+      pyparsing = callPackage ../all-pkgs/p/pyparsing/bootstrap.nix { };
+      setuptools = callPackage ../all-pkgs/s/setuptools/bootstrap.nix {
+        inherit
+          appdirs
+          packaging
+          pyparsing
+          six;
+      };
+      six = callPackage ../all-pkgs/s/six/bootstrap.nix { };
+      wheel = callPackage ../all-pkgs/w/wheel/bootstrap.nix {
+        inherit
+          setuptools;
+      };
+    }
   );
 
   callPackage = pkgs.newScope (self // {
@@ -403,7 +427,6 @@ phonenumbers = callPackage ../all-pkgs/p/phonenumbers { };
 pillow = callPackage ../all-pkgs/p/pillow { };
 
 pip = callPackage ../all-pkgs/p/pip { };
-pip_egg = callPackage ../all-pkgs/p/pip/egg.nix { };
 
 ply = callPackage ../all-pkgs/p/ply { };
 
@@ -571,7 +594,6 @@ secretstorage = callPackage ../all-pkgs/s/secretstorage { };
 service-identity = callPackage ../all-pkgs/s/service-identity { };
 
 setuptools = callPackage ../all-pkgs/s/setuptools { };
-setuptools_egg = callPackage ../all-pkgs/s/setuptools/egg.nix { };
 
 setuptools-scm = callPackage ../all-pkgs/s/setuptools-scm { };
 
@@ -640,7 +662,6 @@ webob = callPackage ../all-pkgs/w/webob { };
 werkzeug = callPackage ../all-pkgs/w/werkzeug { };
 
 wheel = callPackage ../all-pkgs/w/wheel { };
-wheel_egg = callPackage ../all-pkgs/w/wheel/egg.nix { };
 
 wrapt = callPackage ../all-pkgs/w/wrapt { };
 

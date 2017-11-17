@@ -6,6 +6,7 @@
 
 { python
 , ensureNewerSourcesHook
+, isPy2
 , lib
 , pip
 , setuptools
@@ -18,6 +19,8 @@
 
 # package name prefix, e.g. `python3.3-`${name}
 , namePrefix ? python.libPrefix + "-"
+
+, nativeBuildInputs ? [ ]
 
 , buildInputs ? [ ]
 
@@ -72,21 +75,23 @@ in
 python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] // {
   name = namePrefix + name;
 
-  buildInputs = [
+  nativeBuildInputs = [
+    pip
+    setuptools
+    wheel
     wrapPython
-  ] ++ [
+  ] ++ nativeBuildInputs;
+
+  buildInputs = [
     (ensureNewerSourcesHook { year = "1980"; })
   ] ++ buildInputs
     ++ pythonPath
     ++ (optional (hasSuffix "zip" attrs.src.name or "") unzip);
 
   # propagate python/setuptools to active setup-hook in nix-shell
-  propagatedBuildInputs = propagatedBuildInputs ++ [
-    pip
+  propagatedBuildInputs = [
     python
-    setuptools
-    wheel
-  ];
+  ] ++ propagatedBuildInputs;
 
   pythonPath = pythonPath;
 
@@ -98,46 +103,45 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     # See python-2.7-deterministic-build.patch for more information.
     export DETERMINISTIC_BUILD=1
 
+    # A lot of projects make the assumption that the install directory in
+    # is included in the site prefix at install time.
+    export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+
     runHook postConfigure
   '';
 
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
+
+    # Copy the file into the build directory so it's executed relative to
+    # the root of the source.  Many project make assumptions by using
+    # relative paths.
+    # NOTE: This just imports setuptools for every setup.py file so that we
+    #       don't use distutils even if it hardcoded in the setup.py.
+    cp -v ${./run_setup.py} nix_run_setup.py
+
+    mkdir -pv unique_dist_dir
+    ${python.interpreter} nix_run_setup.py ${
+      optionalString (configureFlags != []) (
+        "build_ext " + (concatStringsSep " " configureFlags)
+      )
+    } bdist_wheel --dist-dir=unique_dist_dir/
+
     runHook postBuild
   '';
 
   installPhase = attrs.installPhase or ''
     runHook preInstall
 
-    # Add current output to PYTHONPATH so applications can be run within the
-    # current derivation.
-    export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    # TODO: install wheel file to another output
 
-    # Copy the file into the build directory so it's executed relative to
-    # the root of the source.  Many project make assumptions by using
-    # relative paths.
-    cp -v ${./run_setup.py} nix_run_setup.py
-
-    mkdir -pv unique_wheel_dir
-    ${python.interpreter} nix_run_setup.py ${
-      optionalString (configureFlags != []) (
-        "build_ext " + (concatStringsSep " " configureFlags)
-      )
-    } bdist_wheel --dist-dir=unique_wheel_dir
-
-    pip -v install unique_wheel_dir/*.whl \
-      --no-index --prefix="$out" --no-cache --build pipUnpackTmp --no-compile
-
-    # pip hardcodes references to the build directory in compiled files so
-    # we compile all files manually.
-    ${python.interpreter} -c "
-    import compileall
-    try:
-      # Python 3.2+ support optimization
-      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
-    except:
-      compileall.compile_dir('$out/${python.sitePackages}')
-    "
+    pip -v install unique_dist_dir/*.whl \
+      --root=/ \
+      --prefix=$out \
+      --build pipUnpackTmp \
+      --no-cache \
+      --no-compile \
+      --no-index
 
     runHook postInstall
   '';
@@ -156,9 +160,41 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   postFixup = attrs.postFixup or ''
     wrapPythonPrograms
-
-    # Fail if two packages with the same name are found in the closure.
+  '' + /* pip hardcodes references to the build directory in compiled files
+          so we compile all files manually. */ ''
+    ${python.interpreter} -c "
+    import compileall
+    try:
+      # Python 3.2+ support optimization
+      compileall.compile_dir('$out/${python.sitePackages}', optimize=1)
+    except:
+      compileall.compile_dir('$out/${python.sitePackages}')
+    "
+  '' + /* Fail if two packages with the same name are found in the closure */ ''
     ${python.interpreter} ${./catch_conflicts.py}
+  '' + optionalString isPy2
+    /* FIXME: codyopel
+       I seem to have broken pth loading for python 2 and possibly python 3
+       and I haven't figured out why yet. As a result namespaced packages fail
+       to load on python 2 because they rely on setuptools' pth shim file to
+       set syspath. This is a hack in the meantime to write __init__.py files
+       in the directories of packages returned by setup.py's
+       namespace_packages to fix importing with python 2.  Python 3 supports
+       implicit namespaces so it isn't obvious if pth loading is broken on
+       python 3. */ ''
+    if grep -q 'namespace_packages=' setup.py; then
+    ${python.interpreter} -c "
+    import os
+
+    # FIXME: could be cleaner if there is a way to use setuptools to
+    #        return this list.
+    $(grep -oP 'namespace_packages=.*]' setup.py)  # returns namespace_packages=[]
+    for package in namespace_packages:
+      initfile = '$out/${python.sitePackages}/' + package + '/__init__.py'
+      if not os.path.exists(initfile):
+        open(initfile, 'a').close()
+    "
+    fi
   '';
 
   shellHook = attrs.shellHook or ''
@@ -172,9 +208,6 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     fi
     ${postShellHook}
   '';
-
-  # FIXME: build directory currently gets hardcoded in .pyc files
-  #buildDirCheck = attrs.buildDirCheck or false;
 
   meta = with lib.maintainers; {
     # default to python's platforms

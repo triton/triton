@@ -1,21 +1,18 @@
 { stdenv
+, buildPythonPackage
 , fetchPyPi
 , lib
-, pip_egg
 , python
-, setuptools
-, unzip
-, wheel_egg
-, wrapPython
 }:
 
 let
   inherit (lib)
+    makeSearchPath
     optionals;
 
   version = "0.30.0";
 in
-stdenv.mkDerivation rec {
+buildPythonPackage rec {
   name = "wheel-${version}";
 
   src = fetchPyPi {
@@ -24,38 +21,29 @@ stdenv.mkDerivation rec {
     sha256 = "9515fe0a94e823fd90b08d22de45d7bde57c90edce705b22f5e1ecf7e1b653c8";
   };
 
-  nativeBuildInputs = [
-    pip_egg
-    python
-    setuptools
-    unzip
-    wheel_egg
-    wrapPython
-  ];
-
   installPhase = ''
-    mkdir -pv unique_wheel_dir
-    ${python.interpreter} setup.py bdist_wheel --dist-dir=unique_wheel_dir
-
-    # Clear PYTHONPATH so pip doesn't report wheel as being already satisfied
-    # by wheel_egg.
-    PYTHONPATH="${setuptools}/${python.sitePackages}" pip -v install unique_wheel_dir/*.whl \
-      --no-index --prefix="$out" --no-cache --build pipUnpackTmp --no-compile
-
-    # pip hardcodes references to the build directory in compiled files so
-    # we compile all files manually.
+    # Unpack into a tmp directory because `pip --upgrade` will try to remove
+    # the files.
     ${python.interpreter} -c "
-    import compileall
-    try:
-      # Python 3.2+ support optimization
-      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
-    except:
-      compileall.compile_dir('$out/${python.sitePackages}')
+    import fnmatch
+    import os
+    import zipfile
+    for file in os.listdir('unique_dist_dir/'):
+      if fnmatch.fnmatch(file, '*.whl'):
+        zipfile.ZipFile('unique_dist_dir/' + file).extractall('bootstrap_source_unpack')
     "
-  '';
 
-  preFixup = ''
-    wrapPythonPrograms
+    # Use --upgrade to prevent pip from failing silently due to dependency
+    # already satisfied.
+    PYTHONPATH="bootstrap_source_unpack/:$PYTHONPATH" \
+      ${python.interpreter} -m pip -v \
+        install unique_dist_dir/*.whl \
+        --upgrade \
+        --no-index \
+        --prefix="$out" \
+        --no-cache \
+        --build pipUnpackTmp \
+        --no-compile
   '';
 
   passthru = {

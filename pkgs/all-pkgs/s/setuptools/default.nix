@@ -2,27 +2,23 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-, pip_egg
 , python
-, setuptools_egg
 , unzip
-, wheel_egg
-, wrapPython
+
+, appdirs
+, packaging
+, pyparsing
+, six
 }:
 
 let
-  setuptools_wheel = fetchPyPi {
-    package = "setuptools";
-    #inherit (setuptools) version;
-    inherit version;
-    type = "-py2.py3-none-any.whl";
-    sha256 = "bae92a71c82f818deb0b60ff1f7d764b8902cfc24187746b1aa6186918a70db3";
-  };
+  inherit (lib)
+    makeSearchPath;
 
   version = "36.7.2";
 in
-stdenv.mkDerivation rec {
-  name = "setuptools-${version}";
+buildPythonPackage rec {
+  name = "${python.executable}-setuptools-${version}";
 
   src = fetchPyPi {
     package = "setuptools";
@@ -32,56 +28,45 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python
-    setuptools_egg
     unzip
-    wheel_egg
-    wrapPython
   ];
 
-  installPhase = ''
-    mkdir -pv unique_wheel_dir
-    ${python.interpreter} setup.py bdist_wheel --dist-dir=unique_wheel_dir
+  propagatedBuildInputs = [
+    appdirs
+    packaging
+    pyparsing
+    six
+  ];
 
+  postPatch = /* Remove vendored sources, otherwise no errors are returned */ ''
+    rm -rv pkg_resources/_vendor/
+  '' + ''
+    sed -i '/pip.main(args)/d' bootstrap.py
+  '';
+
+  installPhase = ''
     # Unpack into a tmp directory because `pip --upgrade` will try to remove
     # the files.
     ${python.interpreter} -c "
     import fnmatch
     import os
     import zipfile
-
-    for file in os.listdir('unique_wheel_dir/'):
+    for file in os.listdir('unique_dist_dir/'):
       if fnmatch.fnmatch(file, '*.whl'):
-        zipfile.ZipFile('unique_wheel_dir/' + file).extractall('bootstrap_tmp_dir')
+        zipfile.ZipFile('unique_dist_dir/' + file).extractall('bootstrap_source_unpack')
     "
 
-    # # Use --upgrade to prevent pip from failing silently due to dependency
-    # # already satisfied.
-    # PYTHONPATH="bootstrap_tmp_dir/" ${pip_egg}/bin/pip -v \
-    #   install ${setuptools_wheel} \
-    #   --upgrade \
-    #   --no-index \
-    #   --prefix="$out" \
-    #   --no-cache \
-    #   --build pipUnpackTmp \
-    #   --no-compile
-
-    # FIXME: using prebuilt wheel until bootstraping is fixed
-    mkdir -pv $out/${python.sitePackages}
-    unzip -d $out/${python.sitePackages} ${setuptools_wheel}
-
-    ${python.interpreter} -c "
-    import compileall
-    try:
-      # Python 3.2+ support optimization
-      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
-    except:
-      compileall.compile_dir('$out/${python.sitePackages}')
-    "
-  '';
-
-  preFixup = ''
-    wrapPythonPrograms
+    # Use --upgrade to prevent pip from failing silently due to dependency
+    # already satisfied.
+    PYTHONPATH="bootstrap_source_unpack/:$PYTHONPATH" \
+      ${python.interpreter} -m pip -v \
+        install unique_dist_dir/*.whl \
+        --upgrade \
+        --no-index \
+        --prefix="$out" \
+        --no-cache \
+        --build pipUnpackTmp \
+        --no-compile
   '';
 
   passthru = {
@@ -98,4 +83,5 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
+
 }

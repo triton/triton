@@ -3,17 +3,13 @@
 , fetchFromGitHub
 #, fetchPyPi
 , lib
-, pip_egg
 , python
-, setuptools
-, wheel
-, wrapPython
 }:
 
 let
   version = "2017-11-12";
 in
-stdenv.mkDerivation rec {
+buildPythonPackage rec {
   name = "pip-${version}";
 
   # FIXME: Revert back to using versioned releases once 10.x is released.
@@ -32,55 +28,29 @@ stdenv.mkDerivation rec {
   #   sha256 = "09f243e1a7b461f654c26a725fa373211bb7ff17a9300058b205c61658ca940d";
   # };
 
-  propagatedBuildInputs = [
-    python
-    setuptools
-    wheel
-    wrapPython
-  ];
-
   installPhase = ''
-    mkdir -pv unique_wheel_dir
-    ${python.interpreter} setup.py bdist_wheel --dist-dir=unique_wheel_dir
-
     # Unpack into a tmp directory because `pip --upgrade` will try to remove
     # the files.
     ${python.interpreter} -c "
     import fnmatch
     import os
     import zipfile
-
-    for file in os.listdir('unique_wheel_dir/'):
+    for file in os.listdir('unique_dist_dir/'):
       if fnmatch.fnmatch(file, '*.whl'):
-        zipfile.ZipFile('unique_wheel_dir/' + file).extractall('bootstrap_tmp_dir')
+        zipfile.ZipFile('unique_dist_dir/' + file).extractall('bootstrap_source_unpack')
     "
 
     # Use --upgrade to prevent pip from failing silently due to dependency
     # already satisfied.
-    PYTHONPATH="${setuptools}/${python.sitePackages}:bootstrap_tmp_dir/" \
-      ${pip_egg}/bin/pip -v \
-        install unique_wheel_dir/*.whl \
+    PYTHONPATH="bootstrap_source_unpack/:$PYTHONPATH" \
+      ${python.interpreter} -m pip -v \
+        install unique_dist_dir/*.whl \
         --upgrade \
         --no-index \
         --prefix="$out" \
         --no-cache \
         --build pipUnpackTmp \
         --no-compile
-
-    # pip hardcodes references to the build directory in compiled files so
-    # we compile all files manually.
-    ${python.interpreter} -c "
-    import compileall
-    try:
-      # Python 3.2+ support optimization
-      compileall.compile_dir('$out/${python.sitePackages}', optimize=2)
-    except:
-      compileall.compile_dir('$out/${python.sitePackages}')
-    "
-  '';
-
-  preFixup = ''
-    wrapPythonPrograms
   '';
 
   passthru = {

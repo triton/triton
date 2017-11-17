@@ -189,16 +189,18 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
        namespace_packages to fix importing with python 2.  Python 3 supports
        implicit namespaces so it isn't obvious if pth loading is broken on
        python 3. */ ''
-    if grep -q 'namespace_packages=' setup.py; then
+    if grep -q 'namespace_packages=' setup.py && \
+        [ -n "$(grep -oP 'namespace_packages=\[.*\]' setup.py)" ]; then
     ${python.interpreter} -c "
     import os
 
     # FIXME: could be cleaner if there is a way to use setuptools to
     #        return this list.
-    $(grep -oP 'namespace_packages=.*]' setup.py)  # returns namespace_packages=[]
+    $(grep -oP 'namespace_packages=\[.*\]' setup.py)  # returns namespace_packages=[]
     for package in namespace_packages:
-      initfile = '$out/${python.sitePackages}/' + package + '/__init__.py'
-      if not os.path.exists(initfile):
+      moduledir = '$out/${python.sitePackages}/' + package
+      initfile = moduledir + '/__init__.py'
+      if not os.path.exists(initfile) and os.path.isdir(moduledir):
         open(initfile, 'a').close()
     "
     fi

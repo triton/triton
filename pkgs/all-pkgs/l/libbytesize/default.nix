@@ -13,17 +13,17 @@
 }:
 
 let
-  version = "0.10";
+  version = "1.2";
 in
 stdenv.mkDerivation rec {
   name = "libbytesize-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
-    owner = "rhinstaller";
+    version = 3;
+    owner = "storaged-project";
     repo = "libbytesize";
     rev = version;
-    sha256 = "cd4c2780e80dbe8d9bb911ceafd65707ec80c9f07e6a8e37e98407b8ba0cf79e";
+    sha256 = "ad557593e12521d13ea2dbf64ddee906535ddeba8712c0aca3f9dbda06da94de";
   };
 
   nativeBuildInputs = [

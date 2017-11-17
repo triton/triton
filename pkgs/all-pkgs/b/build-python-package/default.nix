@@ -13,6 +13,13 @@
 , unzip
 , wheel
 , wrapPython
+
+# These interfaces are only here so that they could be declared
+# in buildPythonPackage's callPackage. Do NOT use here.
+, appdirs
+, packaging
+, pyparsing
+, six
 }:
 
 { name

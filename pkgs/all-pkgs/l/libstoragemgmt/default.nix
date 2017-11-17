@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, perl
 , python2Packages
 
 , glib
@@ -12,17 +13,18 @@
 }:
 
 let
-  version = "1.4.0";
+  version = "1.6.1";
 in
 stdenv.mkDerivation rec {
   name = "libstoragemgmt-${version}";
 
   src = fetchurl {
     url = "https://github.com/libstorage/libstoragemgmt/releases/download/${version}/${name}.tar.gz";
-    sha256 = "a820f6bf987dc72498f25cd0bfa226a922ccdfa9a445c1c7c430e3a4cd29d7ee";
+    sha256 = "89d48eefe8981e8484e21f2dd9bebabeaffb18635b25f2d31dfc3a6e431b4cde";
   };
 
   nativeBuildInputs = [
+    perl
     python2Packages.python
   ];
 

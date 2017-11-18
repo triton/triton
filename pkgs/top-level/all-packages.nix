@@ -1386,6 +1386,8 @@ gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-36" { };
 gdk-pixbuf_2-36 = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
 gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
 
+gdl = callPackage ../all-pkgs/g/gdl { };
+
 gdm = callPackage ../all-pkgs/g/gdm { };
 
 geoclue = callPackage ../all-pkgs/g/geoclue { };

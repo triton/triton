@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchFromGitHub
 , isPy3
-, pythonPackages
+, lib
 
 , acme
 , ConfigArgParse
@@ -20,9 +20,11 @@
 , zope-interface
 }:
 
+let
+  version = "0.8.1";
+in
 buildPythonPackage rec {
   name = "certbot-${version}";
-  version = "0.8.1";
 
   src = fetchFromGitHub {
     version = 1;
@@ -52,7 +54,7 @@ buildPythonPackage rec {
   disabled = isPy3;
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "EFF's tool to obtain certs from Let's Encrypt";
     homepage = https://github.com/certbot/certbot;
     license = licenses.asl20;

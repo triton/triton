@@ -4,7 +4,6 @@
 , isPy3
 , lib
 , pythonOlder
-, pythonPackages
 
 , enum34
 , funcsigs
@@ -27,10 +26,11 @@
 let
   inherit (lib)
     optionals;
+
+  version = "3.3.1";
 in
 buildPythonPackage rec {
   name = "apscheduler-${version}";
-  version = "3.3.1";
 
   src = fetchPyPi {
     package = "APScheduler";

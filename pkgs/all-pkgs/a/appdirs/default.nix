@@ -2,7 +2,6 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-, python
 }:
 
 let

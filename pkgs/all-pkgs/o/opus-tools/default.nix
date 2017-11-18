@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , flac
 , libogg
@@ -9,13 +10,11 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
+    boolEn
     elem
-    enFlag
-    platforms
-    wtFlag;
+    platforms;
 in
-
 stdenv.mkDerivation rec {
   name = "opus-tools-0.1.10";
 
@@ -37,10 +36,10 @@ stdenv.mkDerivation rec {
     "--disable-assertions"
     "--disable-oggtest"
     "--disable-opustest"
-    (enFlag "sse" (elem targetSystem platforms.x86_64) null)
+    "--${boolEn (elem targetSystem platforms.x86_64)}-sse"
     "--enable-stack-protector"
     "--enable-pie"
-    (wtFlag "flac" (flac != null) null)
+    "--with-flac"
   ];
 
   passthru = {
@@ -51,7 +50,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Tools to work with opus encoded audio streams";
     homepage = http://www.opus-codec.org/;
     license = licenses.bsd2;

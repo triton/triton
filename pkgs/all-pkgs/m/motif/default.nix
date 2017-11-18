@@ -1,17 +1,25 @@
 { stdenv
 , fetchurl
 , flex
+, lib
 
 , fontconfig
+, libice
 , libjpeg
 , libpng
+, libsm
+, libx11
+, libxext
+, libxft
+, libxmu
+, libxp
+, libxt
+, printproto
+, xextproto
 , xorg
+, xproto
 }:
 
-let
-  inherit (stdenv.lib)
-    enFlag;
-in
 stdenv.mkDerivation rec {
   name = "motif-2.3.6";
 
@@ -26,20 +34,20 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     fontconfig
+    libice
     libjpeg
     libpng
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXext
-    xorg.libXft
-    xorg.libXmu
-    xorg.libXp
-    xorg.libXt
-    xorg.printproto
+    libsm
+    libx11
+    libxext
+    libxft
+    libxmu
+    libxp
+    libxt
+    printproto
     xorg.xbitmaps
-    xorg.xproto
-    xorg.xextproto
+    xextproto
+    xproto
   ];
 
   configureFlags = [
@@ -48,13 +56,13 @@ stdenv.mkDerivation rec {
     "--enable-motif22-compatibility"
     "--enable-utf8"
     "--enable-printing"
-    (enFlag "xft" (xorg.libXft != null) null)
-    (enFlag "jpeg" (libjpeg != null) null)
-    (enFlag "png" (libpng != null) null)
-    (enFlag "x" (xorg != null) null)
+    "--enable-xft"
+    "--enable-jpeg"
+    "--enable-png"
+    "--enable-x"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The Motif user interface component toolkit";
     homepage = https://motif.ics.com/;
     license = with licenses; [

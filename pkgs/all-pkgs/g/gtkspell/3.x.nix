@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 
 , aspell
 , atk
@@ -16,9 +17,6 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-
   version = "3.0.7";
 in
 stdenv.mkDerivation rec {
@@ -48,18 +46,18 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "gtk2" (gtk2 != null) null)
-    (enFlag "gtk3" (gtk3 != null) null)
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--enable-gtk2"
+    "--enable-gtk3"
+    "--enable-introspection"
+    "--enable-vala"
     "--enable-nls"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "iso-codes" (iso-codes != null) null)
+    "--enable-iso-codes"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Word-processor-style highlighting GtkTextView widget";
     homepage = "http://gtkspell.sourceforge.net/";
     license = licenses.gpl2Plus;

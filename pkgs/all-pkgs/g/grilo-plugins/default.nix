@@ -30,11 +30,8 @@
 }:
 
 let
-  inherit (lib)
-    enFlag;
-
-    channel = "0.3";
-    version = "${channel}.5";
+  channel = "0.3";
+  version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";

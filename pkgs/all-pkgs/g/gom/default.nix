@@ -2,29 +2,23 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gobject-introspection
-, python3
 , python3Packages
 , sqlite
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  channel = "0.3";
+  version = "${channel}.2";
 in
-
 stdenv.mkDerivation rec {
   name = "gom-${version}";
-  versionMajor = "0.3";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gom/${versionMajor}/" +
-          "${name}.tar.xz";
+    url = "mirror://gnome/sources/gom/${channel}/${name}.tar.xz";
     sha256 = "1zaqqwwkyiswib3v1v8wafpbifpbpak0nn2kp13pizzn9bwz1s5w";
   };
 
@@ -36,10 +30,16 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    python3
+    python3Packages.python
     python3Packages.pygobject
     sqlite
   ];
+
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-pythondir=$out/${python3Packages.python.sitePackages}"
+    )
+  '';
 
   configureFlags = [
     "--enable-compile-warnings"
@@ -49,14 +49,13 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "python" (python3 != null) null)
-    (wtFlag "pythondir" (python3 != null) "\${out}/lib/${python3.libPrefix}/site-packages")
+    "--enable-introspection"
+    "--enable-python"
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GObject to SQLite object mapper library";
     homepage = https://wiki.gnome.org/Projects/Gom;
     license = licenses.lgpl2Plus;

@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gnome-online-accounts
@@ -13,18 +14,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  channel = "0.0";
+  version = "${channel}.3";
 in
-
 stdenv.mkDerivation rec {
   name = "libzapojit-${version}";
-  versionMajor = "0.0";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libzapojit/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libzapojit/${channel}/${name}.tar.xz";
     sha256 = "0zn3s7ryjc3k1abj4k55dr2na844l451nrg9s6cvnnhh569zj99x";
   };
 
@@ -46,14 +43,14 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
     "--enable-nls"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GLib/GObject wrapper for SkyDrive and Hotmail REST APIs";
     homepage = https://git.gnome.org/browse/libzapojit;
     license = licenses.lgpl21;

@@ -1,15 +1,12 @@
 { stdenv
 , fetchurl
+, lib
 
 , libimobiledevice
 , libplist
 , libusb
 }:
 
-let
-  inherit (stdenv.lib)
-    wtFlag;
-in
 stdenv.mkDerivation rec {
   name = "usbmuxd-1.1.0";
 
@@ -34,7 +31,7 @@ stdenv.mkDerivation rec {
     "--without-systemdsystemunitdir"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "USB multiplex daemon for Apple iPhone/iPod Touch devices";
     homepage = http://www.libimobiledevice.org/;
     # http://marcansoft.com/blog/iphonelinux/usbmuxd/

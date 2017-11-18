@@ -1,17 +1,12 @@
 { stdenv
 , fetchurl
+, lib
 
 , alsa-lib
 , flac
 , libogg
 , libvorbis
 }:
-
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionalString;
-in
 
 stdenv.mkDerivation rec {
   name = "libsndfile-1.0.28";
@@ -55,7 +50,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A C library for reading and writing files containing sampled sound";
     homepage = http://www.mega-nerd.com/libsndfile/;
     license = licenses.lgpl2Plus;

@@ -4,6 +4,7 @@
 , fetchTritonPatch
 , fetchurl
 , gettext
+, lib
 
 , glib
 , gobject-introspection
@@ -14,19 +15,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    optionals;
-
-  versionMajor = "0.2";
-  versionMinor = "4";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "0.2";
+  version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "gupnp-igd-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp-igd/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gupnp-igd/${channel}/${name}.tar.xz";
     sha256 = "38c4a6d7718d17eac17df95a3a8c337677eda77e58978129ad3182d769c38e44";
   };
 
@@ -58,13 +54,13 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
     # TODO: python support
     #(enFlag "python" (python != null) null)
     "--disable-python"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "";
     homepage = http://www.gupnp.org/;
     license = licenses.lgpl21;

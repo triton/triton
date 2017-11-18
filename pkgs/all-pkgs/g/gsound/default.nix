@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , libtool
+, lib
 
 , glib
 , gobject-introspection
@@ -9,18 +10,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
-
+  channel = "1.0";
+  version = "${channel}.2";
+in  
 stdenv.mkDerivation rec {
   name = "gsound-${version}";
-  versionMajor = "1.0";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gsound/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gsound/${channel}/${name}.tar.xz";
     sha256 = "0lwfwx2c99qrp08pfaj59pks5dphsnxjgrxyadz065d8xqqgza5v";
   };
 
@@ -42,11 +39,11 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--enable-introspection"
+    "--enable-vala"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GObject wrapper around the libcanberra sound event library";
     homepage = https://wiki.gnome.org/Projects/GSound;
     license = licenses.lgpl21Plus;

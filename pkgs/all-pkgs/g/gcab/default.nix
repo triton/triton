@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gobject-introspection
@@ -10,18 +11,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    optionalString;
-
-  versionMajor = "0.7";
-  versionMinor = null;
+  channel = "0.7";
+  version = "${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gcab-${versionMajor}${optionalString (versionMinor != null) ".${versionMinor}"}";
+  name = "gcab-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gcab/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gcab/${channel}/${name}.tar.xz";
     hashOutput = false;
     sha256 = "a16e5ef88f1c547c6c8c05962f684ec127e078d302549f3dfd2291e167d4adef";
   };
@@ -43,7 +40,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
     "--enable-nls"
     "--enable-glibtest"
   ];
@@ -60,7 +57,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library and tool for Microsoft Cabinet (CAB) files";
     homepage = https://wiki.gnome.org/msitools;
     license = licenses.lgpl21Plus;
@@ -70,5 +67,4 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-
 }

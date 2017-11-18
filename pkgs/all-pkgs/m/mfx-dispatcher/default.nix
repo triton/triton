@@ -1,16 +1,13 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
 
 , libva
 }:
 
 # Do NOT use cmake, the cmake file is incomplete upstream
 
-let
-  inherit (stdenv.lib)
-    wtFlag;
-in
 stdenv.mkDerivation rec {
   name = "mfx_dispatch-2016-03-17";
 
@@ -32,8 +29,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-shared"
-    (wtFlag "libva_drm" (libva != null) null)
-    (wtFlag "libva_x11" (libva != null) null)
+    "--with-libva_drm"
+    "--with-libva_x11"
   ];
 
   CXXFLAGS = [
@@ -41,7 +38,7 @@ stdenv.mkDerivation rec {
     "-Werror"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Intel media sdk dispatcher";
     homepage = https://github.com/lu-zero/mfx_dispatch;
     license = licenses.bsd3;

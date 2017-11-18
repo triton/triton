@@ -5,6 +5,7 @@
 , fetchTritonPatch
 , gettext
 , intltool
+, lib
 , libtool
 
 , dbus-glib
@@ -18,13 +19,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    wtFlag;
+  version = "0.9.8.7";
 in
-
 stdenv.mkDerivation rec {
   name = "NetworkManager-l2tp-${version}";
-  version = "0.9.8.7";
 
   src = fetchFromGitHub {
     version = 1;
@@ -59,21 +57,18 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  preConfigure =
-    /* upstrem autogen.sh enables maintainer mode */ ''
-      autoreconf --install --symlink
-      intltoolize --force
-      autoreconf
-    '';
+  preConfigure = /* upstrem autogen.sh enables maintainer mode */ ''
+    autoreconf --install --symlink
+    intltoolize --force
+    autoreconf
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-more-warnings"
     #"--with-pppd-plugin-dir"
-    (wtFlag "gnome" (
-      gtk3 != null
-      && libgnome-keyring != null) null)
+    "--with-gnome"
   ];
 
   postConfigure = ''
@@ -81,7 +76,7 @@ stdenv.mkDerivation rec {
       -e 's/-Werror//g'
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "L2TP plugin for NetworkManager";
     homepage = https://github.com/seriyps/NetworkManager-l2tp;
     license = licenses.gpl2;

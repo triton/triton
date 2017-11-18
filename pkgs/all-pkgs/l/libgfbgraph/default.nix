@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 
 , glib
 , gnome-online-accounts
@@ -11,19 +12,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-
-  versionMajor = "0.2";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "0.2";
+  version = "${channel}.3";
 in
-
 stdenv.mkDerivation rec {
   name = "gfbgraph-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gfbgraph/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gfbgraph/${channel}/${name}.tar.xz";
     sha256 = "1dp0v8ia35fxs9yhnqpxj3ir5lh018jlbiwifjfn8ayy7h47j4fs";
   };
 
@@ -40,10 +36,10 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A GObject library for Facebook Graph API";
     homepage = https://git.gnome.org/browse/libgfbgraph/;
     license = licenses.lgpl21Plus;

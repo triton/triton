@@ -40,8 +40,6 @@ buildPythonPackage rec {
 
   postPatch = /* Remove vendored sources, otherwise no errors are returned */ ''
     rm -rv pkg_resources/_vendor/
-  '' + ''
-    sed -i '/pip.main(args)/d' bootstrap.py
   '';
 
   preBuild = ''

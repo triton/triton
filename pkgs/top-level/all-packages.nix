@@ -1103,14 +1103,14 @@ enca = callPackage ../all-pkgs/e/enca { };
 
 enchant = callPackage ../all-pkgs/e/enchant { };
 
-eog_3-24 = callPackage ../all-pkgs/e/eog {
-  channel = "3.24";
+eog_3-26 = callPackage ../all-pkgs/e/eog {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-eog = callPackageAlias "eog_3-24" { };
+eog = callPackageAlias "eog_3-26" { };
 
 erlang = callPackage ../all-pkgs/e/erlang { };
 

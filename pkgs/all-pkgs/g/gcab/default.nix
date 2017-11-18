@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gcab/${versionMajor}/"
+      sha256Url = "https://download.gnome.org/sources/gcab/${channel}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

@@ -80,7 +80,6 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   nativeBuildInputs = [
     pip
-    setuptools
     wheel
     wrapPython
   ] ++ nativeBuildInputs;
@@ -92,6 +91,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   propagatedBuildInputs = [
     python
+    setuptools  # Required by namespaced packages at runtime.
   ] ++ propagatedBuildInputs;
 
   pythonPath = pythonPath;

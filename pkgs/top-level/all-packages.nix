@@ -2305,10 +2305,7 @@ libmpc = callPackage ../all-pkgs/l/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/l/libmpdclient { };
 
-libmpeg2 = callPackage ../all-pkgs/l/libmpeg2 {
-  libSDL = null;
-  xorg = null;
-};
+libmpeg2 = callPackage ../all-pkgs/l/libmpeg2 { };
 
 libmtp = callPackage ../all-pkgs/l/libmtp { };
 

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "3.13.1";
+  version = "3.19.0";
 in
 buildPythonPackage rec {
   name = "fonttools-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
     package = "fonttools";
     inherit version;
     type = ".zip";
-    sha256 = "ded1f9a6cdd6ed19a3df05ae40066d579ffded17369b976f9e701cf31b7b1f2d";
+    sha256 = "8d1dcb1ff3665b69e52d020590e20c460445b7d80b5cb573832cf97ec97c74af";
   };
 
   nativeBuildInputs = [

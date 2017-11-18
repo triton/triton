@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+, unzip
 }:
 
 let
@@ -16,6 +17,10 @@ buildPythonPackage rec {
     type = ".zip";
     sha256 = "ded1f9a6cdd6ed19a3df05ae40066d579ffded17369b976f9e701cf31b7b1f2d";
   };
+
+  nativeBuildInputs = [
+    unzip
+  ];
 
   meta = with lib; {
     description = "Library for manipulating fonts";

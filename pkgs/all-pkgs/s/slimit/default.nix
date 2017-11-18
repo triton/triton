@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+, unzip
 
 , ply
 }:
@@ -18,6 +19,10 @@ buildPythonPackage rec {
     type = ".zip";
     sha256 = "f433dcef899f166b207b67d91d3f7344659cb33b8259818f084167244e17720b";
   };
+
+  nativeBuildInputs = [
+    unzip
+  ];
 
   propagatedBuildInputs = [
     ply

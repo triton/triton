@@ -1,6 +1,8 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
+, unzip
 
 , cyrus-sasl
 , openldap
@@ -22,7 +24,11 @@ buildPythonPackage {
     sha256 = "40f563e1f7a7b80dc5a4e76ad75c23da53d62f1e15e6e517293b04e1f84ead7c";
   };
 
-  meta = with stdenv.lib; {
+  nativeBuildInputs = [
+    unzip
+  ];
+
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -70,32 +70,16 @@ let
   buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
       stage = 2;
-      appdirs =
-        if newBootstrap == true then
-          self.appdirs
-        else
-          null;
-      packaging =
-        if newBootstrap == true then
-          self.packaging
-        else
-          null;
+      appdirs = self.appdirs;
+      packaging = self.packaging;
       pip = self.pip;
-      pyparsing =
-        if newBootstrap == true then
-          self.pyparsing
-        else
-          null;
+      pyparsing = self.pyparsing;
       setuptools =
         if newBootstrap == true then
           self.setuptools
         else
-          callPackage ../all-pkgs/s/setuptools/bootstrap_wheel.nix { };
-      six =
-        if newBootstrap == true then
-          self.six
-        else
-          null;
+          callPackage ../all-pkgs/s/setuptools/bootstrap.nix { };
+      six = self.six;
       wheel = self.wheel;
     }
   );

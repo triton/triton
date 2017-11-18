@@ -61,20 +61,16 @@
 
 , ... } @ attrs:
 
+assert disabled ->
+  throw "`${name}` is not supported for interpreter `${python.executable}`";
+
 let
   inherit (lib)
     concatStringsSep
     hasSuffix
     optional
     optionalString;
-in
 
-# Keep extra attributes from `attrs`, e.g., `patchPhase', etc.
-
-assert disabled ->
-  throw "`${name}` is not supported for interpreter `${python.executable}`";
-
-let
   # For backwards compatibility, let's use an alias
   doInstallCheck = doCheck;
 in
@@ -94,7 +90,6 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   ] ++ buildInputs
     ++ pythonPath;
 
-  # propagate python/setuptools to active setup-hook in nix-shell
   propagatedBuildInputs = [
     python
   ] ++ propagatedBuildInputs;
@@ -109,8 +104,8 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     # See python-2.7-deterministic-build.patch for more information.
     export DETERMINISTIC_BUILD=1
 
-    # A lot of projects make the assumption that the install directory in
-    # is included in the site prefix at install time.
+    # A lot of projects make the assumption that the install site-packages
+    # directory has already been added to the site path.
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
 
     runHook postConfigure
@@ -123,7 +118,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     # the root of the source.  Many project make assumptions by using
     # relative paths.
     # NOTE: This just imports setuptools for every setup.py file so that we
-    #       don't use distutils even if it hardcoded in the setup.py.
+    #       don't use distutils even if it is hardcoded in the setup.py.
     cp -v ${./run_setup.py} nix_run_setup.py
 
     mkdir -pv unique_dist_dir

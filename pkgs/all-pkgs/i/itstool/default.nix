@@ -1,38 +1,31 @@
 { stdenv
-, fetchurl
-, pythonPackages
+, buildPythonPackage
+, fetchPyPi
+, isPy3
+, lib
 
 , libxml2
 }:
 
-stdenv.mkDerivation rec {
-  name = "itstool-2.0.2";
+let
+  version = "2.0.4";
+in
+buildPythonPackage rec {
+  name = "itstool-${version}";
 
-  src = fetchurl rec {
-    url = "http://files.itstool.org/itstool/${name}.tar.bz2";
-    sha256Url = "${url}.sha256sum";
-    multihash = "QmdREXRdirzgfKR9cXpkuL8VmoeGq3XrPfp2moi8fC78Ug";
-    sha256 = "bf909fb59b11a646681a8534d5700fec99be83bb2c57badf8c1844512227033a";
+  src = fetchPyPi {
+    package = "itstool";
+    inherit version;
+    sha256 = "e62b224d679aaa5f445255eee9893917f5f0ef1023010b8b57c3634fc588829d";
   };
 
-  nativeBuildInputs = [
-    pythonPackages.python
-    pythonPackages.wrapPython
-  ];
-
-  buildInputs = [
+  propagatedBuildInputs = [
     libxml2
   ];
 
-  pythonPath = [
-    libxml2
-  ];
+  disabled = isPy3;
 
-  preFixup = ''
-    wrapPythonPrograms $out/bin
-  '';
-
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://itstool.org/;
     description = "XML to PO and back again";
     license = licenses.gpl3Plus;

@@ -1980,7 +1980,7 @@ isl = callPackageAlias "isl_0-18" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
-itstool = callPackage ../all-pkgs/i/itstool { };
+itstool = python2Packages.itstool;
 
 iw = callPackage ../all-pkgs/i/iw { };
 

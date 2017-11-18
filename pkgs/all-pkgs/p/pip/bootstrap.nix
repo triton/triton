@@ -18,8 +18,9 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    PYTHONPATH="${setuptools}/${python.sitePackages}:${setuptools.depsSearchPath}" \
-      ${python.interpreter} setup.py install --root=/ --prefix=$out --no-compile
+    PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    mkdir -pv $out/${python.sitePackages}
+    ${python.interpreter} setup.py install --prefix=$out --no-compile
   '';
 
   preFixup = ''

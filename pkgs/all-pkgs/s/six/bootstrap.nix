@@ -9,6 +9,6 @@ stdenv.mkDerivation rec {
   inherit (six) meta src;
 
   installPhase = ''
-    ${python.interpreter} setup.py install --root=/ --prefix=$out --no-compile
+    ${python.interpreter} setup.py install --prefix=$out --no-compile
   '';
 }

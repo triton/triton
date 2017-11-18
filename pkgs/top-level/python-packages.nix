@@ -106,6 +106,7 @@ in {
     isPy2
     isPyPy
     isPy3
+    newBootstrap
     python
     pythonAtLeast
     pythonOlder;

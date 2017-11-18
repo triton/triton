@@ -38,6 +38,7 @@ let
   # Builds basic egg dists
   buildBootstrapPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
+      stage = 1;
       namePrefix = python.libPrefix + "-stage2-";
       appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
       packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
@@ -68,6 +69,7 @@ let
   # Builds final wheel dists
   buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
+      stage = 2;
       appdirs =
         if newBootstrap == true then
           self.appdirs

@@ -14,6 +14,8 @@
 , wheel
 , wrapPython
 
+, stage
+
 # package name prefix, e.g. `python3.3-`${name}
 , namePrefix ? python.libPrefix + "-"
 
@@ -69,6 +71,7 @@ let
     concatStringsSep
     hasSuffix
     optional
+    optionals
     optionalString;
 
   # For backwards compatibility, let's use an alias
@@ -82,6 +85,8 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     pip
     wheel
     wrapPython
+  ] ++ optionals (stage == 1) [
+    setuptools
   ] ++ nativeBuildInputs;
 
   buildInputs = [
@@ -91,6 +96,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   propagatedBuildInputs = [
     python
+  ] ++ optionals (stage == 2) [
     setuptools  # Required by namespaced packages at runtime.
   ] ++ propagatedBuildInputs;
 

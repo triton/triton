@@ -143,11 +143,12 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
     pushd unique_dist_dir/
     ${python.interpreter} -m pip -v install *.whl \
-      --root=/ \
       --prefix=$out \
       --build pipUnpackTmp \
+      --ignore-installed \
       --no-cache \
       --no-compile \
+      --no-deps \
       --no-index
     popd
 

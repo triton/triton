@@ -3,7 +3,6 @@
 , fetchFromGitHub
 #, fetchPyPi
 , lib
-, python
 }:
 
 let
@@ -27,31 +26,6 @@ buildPythonPackage rec {
   #   inherit version;
   #   sha256 = "09f243e1a7b461f654c26a725fa373211bb7ff17a9300058b205c61658ca940d";
   # };
-
-  installPhase = ''
-    # Unpack into a tmp directory because `pip --upgrade` will try to remove
-    # the files.
-    ${python.interpreter} -c "
-    import fnmatch
-    import os
-    import zipfile
-    for file in os.listdir('unique_dist_dir/'):
-      if fnmatch.fnmatch(file, '*.whl'):
-        zipfile.ZipFile('unique_dist_dir/' + file).extractall('bootstrap_source_unpack')
-    "
-
-    # Use --upgrade to prevent pip from failing silently due to dependency
-    # already satisfied.
-    PYTHONPATH="bootstrap_source_unpack/:$PYTHONPATH" \
-      ${python.interpreter} -m pip -v \
-        install unique_dist_dir/*.whl \
-        --upgrade \
-        --no-index \
-        --prefix="$out" \
-        --no-cache \
-        --build pipUnpackTmp \
-        --no-compile
-  '';
 
   passthru = {
     inherit version;

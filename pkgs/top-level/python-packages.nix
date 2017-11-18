@@ -35,59 +35,66 @@ let
       inherit sha256;
     };
 
-  buildPythonPackage = makeOverridable (
+  # Builds basic egg dists
+  buildBootstrapPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
-      appdirs =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/a/appdirs/bootstrap.nix { }
-        else
-          null;
-      packaging =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/p/packaging/bootstrap.nix {
-            inherit
-              pyparsing
-              six;
-          }
-        else
-          null;
-      pip =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/p/pip/bootstrap.nix {
-            inherit
-              setuptools;
-          }
-        else
-          callPackage ../all-pkgs/p/pip/bootstrap_wheel.nix { };
-      pyparsing =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/p/pyparsing/bootstrap.nix { }
-        else
-          null;
-      setuptools =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/s/setuptools/bootstrap.nix {
+      namePrefix = python.libPrefix + "-stage2-";
+      appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
+      packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
+        inherit
+          pyparsing
+          six;
+      };
+      pip = callPackage ../all-pkgs/p/pip/bootstrap.nix {
+        inherit
+          setuptools;
+      };
+      pyparsing = callPackage ../all-pkgs/p/pyparsing/bootstrap.nix { };
+      setuptools = callPackage ../all-pkgs/s/setuptools/bootstrap.nix {
         inherit
           appdirs
           packaging
           pyparsing
           six;
-      }
+      };
+      six = callPackage ../all-pkgs/s/six/bootstrap.nix { };
+      wheel = callPackage ../all-pkgs/w/wheel/bootstrap.nix {
+        inherit
+          setuptools;
+      };
+    }
+  );
+
+  # Builds final wheel dists
+  buildPythonPackage = makeOverridable (
+    callPackage ../all-pkgs/b/build-python-package rec {
+      appdirs =
+        if newBootstrap == true then
+          self.appdirs_stage2
+        else
+          null;
+      packaging =
+        if newBootstrap == true then
+          self.packaging_stage2
+        else
+          null;
+      pip = self.pip_stage2;
+      pyparsing =
+        if newBootstrap == true then
+          self.pyparsing_stage2
+        else
+          null;
+      setuptools =
+        if newBootstrap == true then
+          self.setuptools_stage2
         else
           callPackage ../all-pkgs/s/setuptools/bootstrap_wheel.nix { };
       six =
         if newBootstrap == true then
-          callPackage ../all-pkgs/s/six/bootstrap.nix { }
+          self.six_stage2
         else
           null;
-      wheel =
-        if newBootstrap == true then
-          callPackage ../all-pkgs/w/wheel/bootstrap.nix {
-            inherit
-              setuptools;
-          }
-        else
-          null;
+      wheel = self.wheel_stage2;
     }
   );
 
@@ -101,6 +108,7 @@ let
 in {
 
   inherit
+    buildBootstrapPythonPackage
     buildPythonPackage
     fetchPyPi
     isPy2
@@ -155,6 +163,35 @@ in {
   # specials
 
   recursivePthLoader = callPackage ../all-pkgs/r/recursive-pth-loader { };
+
+  # Bootstrap packages
+  appdirs_stage2 = callPackage ../all-pkgs/a/appdirs {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+  };
+  packaging_stage2 = callPackage ../all-pkgs/p/packaging {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+    pyparsing = self.pyparsing_stage2;
+    six = self.six_stage2;
+  };
+  pip_stage2 = callPackage ../all-pkgs/p/pip {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+  };
+  pyparsing_stage2 = callPackage ../all-pkgs/p/pyparsing {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+  };
+  setuptools_stage2 = callPackage ../all-pkgs/s/setuptools {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+    appdirs = self.appdirs_stage2;
+    packaging = self.packaging_stage2;
+    pyparsing = self.pyparsing_stage2;
+    six = self.six_stage2;
+  };
+  six_stage2 = callPackage ../all-pkgs/s/six {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+  };
+  wheel_stage2 = callPackage ../all-pkgs/w/wheel {
+    buildPythonPackage = self.buildBootstrapPythonPackage;
+  };
 
 ################################################################################
 ################################################################################

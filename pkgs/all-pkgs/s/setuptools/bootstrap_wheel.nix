@@ -8,16 +8,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "${python.executable}-setuptools-${setuptools.version}";
-  # # Make sure to update pkgs/p/pip/bootstrap.nix setuptools hash when updating
-  # version = "32.3.1";
-  #
-  # src = fetchPyPi {
-  #   package = "setuptools";
-  #   inherit version;
-  #   type = ".zip";
-  #   sha256 = "806bae0840429c13f6e6e44499f7c0b87f3b269fdfbd815d769569c1daa7c351";
-  # };
+  name = "${python.executable}-setuptools-bootstrap-wheel-${setuptools.version}";
 
   inherit (setuptools) meta src;
 

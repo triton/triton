@@ -38,7 +38,13 @@ let
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.2";
+      sha256 = "b53e3d4dfa7d0085b829a5fb95f148a099803c00ef276be7685efd5ec38807ad";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "eog-${source.version}";
@@ -89,7 +95,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-nls"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--disable-installed-tests"
     "--${boolWt (libexif != null)}-libexif"
     "--${boolWt (libx11 != null && lcms2 != null)}-cms"

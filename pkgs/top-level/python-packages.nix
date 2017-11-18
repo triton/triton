@@ -70,31 +70,31 @@ let
     callPackage ../all-pkgs/b/build-python-package rec {
       appdirs =
         if newBootstrap == true then
-          self.appdirs_stage2
+          self.appdirs
         else
           null;
       packaging =
         if newBootstrap == true then
-          self.packaging_stage2
+          self.packaging
         else
           null;
-      pip = self.pip_stage2;
+      pip = self.pip;
       pyparsing =
         if newBootstrap == true then
-          self.pyparsing_stage2
+          self.pyparsing
         else
           null;
       setuptools =
         if newBootstrap == true then
-          self.setuptools_stage2
+          self.setuptools
         else
           callPackage ../all-pkgs/s/setuptools/bootstrap_wheel.nix { };
       six =
         if newBootstrap == true then
-          self.six_stage2
+          self.six
         else
           null;
-      wheel = self.wheel_stage2;
+      wheel = self.wheel;
     }
   );
 
@@ -164,35 +164,6 @@ in {
 
   recursivePthLoader = callPackage ../all-pkgs/r/recursive-pth-loader { };
 
-  # Bootstrap packages
-  appdirs_stage2 = callPackage ../all-pkgs/a/appdirs {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-  };
-  packaging_stage2 = callPackage ../all-pkgs/p/packaging {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-    pyparsing = self.pyparsing_stage2;
-    six = self.six_stage2;
-  };
-  pip_stage2 = callPackage ../all-pkgs/p/pip {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-  };
-  pyparsing_stage2 = callPackage ../all-pkgs/p/pyparsing {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-  };
-  setuptools_stage2 = callPackage ../all-pkgs/s/setuptools {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-    appdirs = self.appdirs_stage2;
-    packaging = self.packaging_stage2;
-    pyparsing = self.pyparsing_stage2;
-    six = self.six_stage2;
-  };
-  six_stage2 = callPackage ../all-pkgs/s/six {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-  };
-  wheel_stage2 = callPackage ../all-pkgs/w/wheel {
-    buildPythonPackage = self.buildBootstrapPythonPackage;
-  };
-
 ################################################################################
 ################################################################################
 ################################################################################
@@ -217,7 +188,9 @@ ansible = callPackage ../all-pkgs/a/ansible { };
 
 apache-libcloud = callPackage ../all-pkgs/a/apache-libcloud { };
 
-appdirs = callPackage ../all-pkgs/a/appdirs { };
+appdirs = callPackage ../all-pkgs/a/appdirs {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+};
 
 apscheduler = callPackage ../all-pkgs/a/apscheduler { };
 
@@ -478,7 +451,11 @@ oslo-serialization = callPackage ../all-pkgs/o/oslo-serialization { };
 
 oslo-utils = callPackage ../all-pkgs/o/oslo-utils { };
 
-packaging = callPackage ../all-pkgs/p/packaging { };
+packaging = callPackage ../all-pkgs/p/packaging {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+  pyparsing = self.pyparsing;
+  six = self.six;
+};
 
 paramiko = callPackage ../all-pkgs/p/paramiko { };
 
@@ -498,7 +475,9 @@ phonenumbers = callPackage ../all-pkgs/p/phonenumbers { };
 
 pillow = callPackage ../all-pkgs/p/pillow { };
 
-pip = callPackage ../all-pkgs/p/pip { };
+pip = callPackage ../all-pkgs/p/pip {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+};
 
 ply = callPackage ../all-pkgs/p/ply { };
 
@@ -568,7 +547,9 @@ pyodbc = callPackage ../all-pkgs/p/pyodbc { };
 
 pyopenssl = callPackage ../all-pkgs/p/pyopenssl { };
 
-pyparsing = callPackage ../all-pkgs/p/pyparsing { };
+pyparsing = callPackage ../all-pkgs/p/pyparsing {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+};
 
 pyrax = callPackage ../all-pkgs/p/pyrax { };
 
@@ -665,7 +646,13 @@ secretstorage = callPackage ../all-pkgs/s/secretstorage { };
 
 service-identity = callPackage ../all-pkgs/s/service-identity { };
 
-setuptools = callPackage ../all-pkgs/s/setuptools { };
+setuptools = callPackage ../all-pkgs/s/setuptools {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+  appdirs = self.appdirs;
+  packaging = self.packaging;
+  pyparsing = self.pyparsing;
+  six = self.six;
+};
 
 setuptools-scm = callPackage ../all-pkgs/s/setuptools-scm { };
 
@@ -677,7 +664,9 @@ simplejson = callPackage ../all-pkgs/s/simplejson { };
 
 singledispatch = callPackage ../all-pkgs/s/singledispatch { };
 
-six = callPackage ../all-pkgs/s/six { };
+six = callPackage ../all-pkgs/s/six {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+};
 
 slimit = callPackage ../all-pkgs/s/slimit { };
 
@@ -733,7 +722,9 @@ webob = callPackage ../all-pkgs/w/webob { };
 
 werkzeug = callPackage ../all-pkgs/w/werkzeug { };
 
-wheel = callPackage ../all-pkgs/w/wheel { };
+wheel = callPackage ../all-pkgs/w/wheel {
+  buildPythonPackage = self.buildBootstrapPythonPackage;
+};
 
 wrapt = callPackage ../all-pkgs/w/wrapt { };
 

@@ -3,7 +3,7 @@
 , lib
 
 , fontforge
-, pythonPackages
+, python2Packages
 }:
 
 let
@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     fontforge
-    pythonPackages.fonttools
-    pythonPackages.python
+    python2Packages.fonttools
+    python2Packages.python
   ];
 
   preBuild = ''

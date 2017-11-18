@@ -2884,10 +2884,10 @@ networkmanager-openconnect_1-2 =
 networkmanager-openconnect =
   callPackageAlias "networkmanager-openconnect_1-2" { };
 
-networkmanager-openvpn_1-2 = callPackage ../all-pkgs/n/networkmanager-openvpn {
-  channel = "1.2";
+networkmanager-openvpn_1-8 = callPackage ../all-pkgs/n/networkmanager-openvpn {
+  channel = "1.8";
 };
-networkmanager-openvpn = callPackageAlias "networkmanager-openvpn_1-2" { };
+networkmanager-openvpn = callPackageAlias "networkmanager-openvpn_1-8" { };
 
 networkmanager-pptp_1-2 = callPackage ../all-pkgs/n/networkmanager-pptp {
   channel = "1.2";

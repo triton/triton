@@ -13,6 +13,8 @@
 , wheel
 , wrapPython
 
+, namePrefix ? python.libPrefix + "-"
+
 # These interfaces are only here so that they could be declared
 # in buildPythonPackage's callPackage. Do NOT use here.
 , appdirs
@@ -24,7 +26,6 @@
 { name
 
 # package name prefix, e.g. `python3.3-`${name}
-, namePrefix ? python.libPrefix + "-"
 
 , nativeBuildInputs ? [ ]
 

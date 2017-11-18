@@ -14,6 +14,7 @@
 , wheel
 , wrapPython
 
+# package name prefix, e.g. `python3.3-`${name}
 , namePrefix ? python.libPrefix + "-"
 
 # These interfaces are only here so that they could be declared
@@ -25,8 +26,6 @@
 }:
 
 { name
-
-# package name prefix, e.g. `python3.3-`${name}
 
 , nativeBuildInputs ? [ ]
 

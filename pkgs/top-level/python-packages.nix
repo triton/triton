@@ -39,7 +39,7 @@ let
   buildBootstrapPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
       stage = 1;
-      namePrefix = python.libPrefix + "-stage2-";
+      namePrefix = python.libPrefix + "-stage1-";
       appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
       packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
         inherit

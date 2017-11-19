@@ -72,17 +72,18 @@ let
   buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
       stage = 2;
-      appdirs = self.appdirs;
-      packaging = self.packaging;
-      pip = self.pip;
-      pyparsing = self.pyparsing;
+      inherit (self)
+        packaging
+        pip
+        pyparsing
+        # setuptools
+        six
+        wheel;
       setuptools =
         if newBootstrap == true then
           self.setuptools
         else
           callPackage ../all-pkgs/s/setuptools/bootstrap.nix { };
-      six = self.six;
-      wheel = self.wheel;
     }
   );
 
@@ -445,8 +446,9 @@ oslo-utils = callPackage ../all-pkgs/o/oslo-utils { };
 
 packaging = callPackage ../all-pkgs/p/packaging {
   buildPythonPackage = self.buildBootstrapPythonPackage;
-  pyparsing = self.pyparsing;
-  six = self.six;
+  inherit (self)
+    pyparsing
+    six;
 };
 
 paramiko = callPackage ../all-pkgs/p/paramiko { };
@@ -640,10 +642,11 @@ service-identity = callPackage ../all-pkgs/s/service-identity { };
 
 setuptools = callPackage ../all-pkgs/s/setuptools {
   buildPythonPackage = self.buildBootstrapPythonPackage;
-  appdirs = self.appdirs;
-  packaging = self.packaging;
-  pyparsing = self.pyparsing;
-  six = self.six;
+  inherit (self)
+    appdirs
+    packaging
+    pyparsing
+    six;
 };
 
 setuptools-scm = callPackage ../all-pkgs/s/setuptools-scm { };

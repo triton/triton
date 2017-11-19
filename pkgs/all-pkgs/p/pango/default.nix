@@ -61,7 +61,6 @@ stdenv.mkDerivation rec {
   # '';
 
   doCheck = false;  # FIXME: files missing from release
-  buildDirCheck = false; # FIXME
 
   passthru = {
     srcVerification = fetchurl {

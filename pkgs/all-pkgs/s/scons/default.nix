@@ -1,30 +1,23 @@
 { stdenv
 , buildPythonPackage
 , fetchurl
+, lib
 }:
 
 let
-  version = "3.0.0";
+  version = "3.0.1";
 in
 buildPythonPackage rec {
   name = "scons-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/scons/scons/${version}/${name}.tar.gz";
-    sha256 = "0f532f405b98c60b731d231b3c503ab5bf47d89a6f66f70cb62c9249e9f45216";
+    sha256 = "24475e38d39c19683bc88054524df018fe6949d70fbd4c69e298d39a0269f173";
   };
-
-  # Fix for python2 compatability
-  postPatch = ''
-    grep -q 'from __future__ import print_function' \
-      engine/SCons/Script/SConscript.py
-    sed -i '/from __future__ import print_function/d' \
-      engine/SCons/Script/SConscript.py
-  '';
 
   setupHook = ./setup-hook.sh;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "http://scons.org/";
     description = "An improved, cross-platform substitute for Make";
     license = licenses.mit;

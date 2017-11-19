@@ -393,6 +393,9 @@ m2crypto = callPackage ../all-pkgs/m/m2crypto { };
 
 m2r = callPackage ../all-pkgs/m/m2r { };
 
+mako = callPackage ../all-pkgs/m/mako { };
+Mako = callPackageAlias "mako" { };  # DEPRECATED
+
 markupsafe = callPackage ../all-pkgs/m/markupsafe { };
 
 matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };
@@ -1117,22 +1120,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
        description = "Approximate and phonetic matching of strings";
        maintainers = with maintainers; [ ];
      };
-   };
-
-   Mako = buildPythonPackage rec {
-     name = "Mako-${version}";
-     version = "1.0.7";
-
-     src = fetchPyPi {
-        package = "Mako";
-        inherit version;
-       sha256 = "4e02fde57bd4abb5ec400181e4c314f56ac3e49ba4fb8b0d50bba18cb27d25ae";
-     };
-
-     buildInputs = with self; [
-       markupsafe
-     ];
-
    };
 
    mock = buildPythonPackage rec {

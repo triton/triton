@@ -35,11 +35,13 @@ let
       inherit sha256;
     };
 
-  # Builds basic egg dists
+  # Stage 1 pkgs, builds wheel dists
   buildBootstrapPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
       stage = 1;
       namePrefix = python.libPrefix + "-stage1-";
+
+      # Stage 0 pkgs, builds basic egg dists
       appdirs = callPackage ../all-pkgs/a/appdirs/bootstrap.nix { };
       packaging = callPackage ../all-pkgs/p/packaging/bootstrap.nix {
         inherit
@@ -66,7 +68,7 @@ let
     }
   );
 
-  # Builds final wheel dists
+  # Stage 2 pkgs, builds final wheel dists
   buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package rec {
       stage = 2;
@@ -1477,6 +1479,7 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
      };
    };
 
+   # DEPRECATED: required by testtools, remove this package if the dependency is dropped
    unittest2 = buildPythonPackage rec {
      version = "1.1.0";
      name = "unittest2-${version}";

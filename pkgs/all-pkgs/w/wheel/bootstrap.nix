@@ -1,5 +1,4 @@
 { stdenv
-, fetchPyPi
 , lib
 , python
 , setuptools

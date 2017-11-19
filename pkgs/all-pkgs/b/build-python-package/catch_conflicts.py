@@ -2,6 +2,10 @@ import pkg_resources
 import collections
 import sys
 
+# https://github.com/NixOS/nixpkgs/pull/23600
+if '/nix/store' in sys.path:
+  sys.path.remove('/nix/store')
+
 do_abort = False
 packages = collections.defaultdict(list)
 

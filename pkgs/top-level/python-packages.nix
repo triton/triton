@@ -765,15 +765,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
      disabled = isPy3;
    };
 
-   argparse = buildPythonPackage rec {
-     name = "argparse-1.4.0";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/a/argparse/${name}.tar.gz";
-       sha256 = "1r6nznp64j68ih1k537wms7h57nvppq0szmwsaf99n71bfjqkc32";
-     };
-   };
-
    audioread = buildPythonPackage rec {
      name = "audioread-${version}";
      version = "2.1.5";
@@ -1511,14 +1502,17 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
      # # 1.0.0 and up create a circle dependency with traceback2/pbr
 
-     patchPhase = ''
+     postPatch = ''
        # # fixes a transient error when collecting tests, see https://bugs.launchpad.net/python-neutronclient/+bug/1508547
        sed -i '510i\        return None, False' unittest2/loader.py
        # https://github.com/pypa/packaging/pull/36
        sed -i 's/version=VERSION/version=str(VERSION)/' setup.py
+     '' + /* argparse is part of the standard library */ ''
+       sed -i setup.py \
+        -e "s/'argparse',//"
      '';
 
-     propagatedBuildInputs = with self; [ six argparse traceback2 ];
+     propagatedBuildInputs = with self; [ six traceback2 ];
 
      meta = {
        description = "A backport of the new features added to the unittest testing framework";

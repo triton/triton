@@ -94,7 +94,6 @@ stdenv.mkDerivation rec {
     which
     yasm
   ] ++ optionals (versionAtLeast version "9.0.2") [
-    pythonPackages.argparse
     pythonPackages.setuptools
     #pythonPackages.sphinx # Used for docs
   ] ++ optionals (versionAtLeast version "10.0.2") [

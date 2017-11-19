@@ -10,7 +10,6 @@
 
 , mock
 , nose
-, unittest2
 }:
 
 let
@@ -31,8 +30,13 @@ buildPythonPackage rec {
   buildInputs = optionals doCheck [
     mock
     nose
-    unittest2
   ];
+
+  postPatch = /* unittest2 is a backport for python <2.7 */ ''
+    grep -q 'unittest2' setup.py
+    sed -i setup.py \
+      -e "s/'unittest2',//"
+  '';
 
   propagatedBuildInputs = [
     blinker

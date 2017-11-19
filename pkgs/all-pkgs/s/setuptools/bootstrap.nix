@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
-    PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    PYTHONPATH="$out/${python.sitePackages}${PYTHONPATH:+:}$PYTHONPATH"
     mkdir -pv $out/${python.sitePackages}
     ${python.interpreter} bootstrap.py
     ${python.interpreter} setup.py install --prefix=$out --no-compile

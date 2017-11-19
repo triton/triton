@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    PYTHONPATH="$out/${python.sitePackages}${PYTHONPATH:+:}$PYTHONPATH"
     mkdir -pv $out/${python.sitePackages}
     ${python.interpreter} setup.py install --prefix=$out --no-compile
   '';

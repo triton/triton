@@ -110,7 +110,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
     # A lot of projects make the assumption that the install site-packages
     # directory has already been added to the site path.
-    export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
+    export PYTHONPATH="$out/${python.sitePackages}${PYTHONPATH:+:}$PYTHONPATH"
 
     runHook postConfigure
   '';

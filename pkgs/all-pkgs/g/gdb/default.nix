@@ -3,17 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gdb-7.12";
+  name = "gdb-8.0.1";
 
   src = fetchurl {
     url = "mirror://gnu/gdb/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "834ff3c5948b30718343ea57b11cbc3235d7995c6a4f3a5cecec8c8114164f94";
+    sha256 = "3dbd5f93e36ba2815ad0efab030dcd0c7b211d7b353a40a53f4c02d7d56295e3";
   };
-
-  configureFlags = [
-    "--help"
-  ];
 
   passthru = {
     srcVerification = fetchurl {

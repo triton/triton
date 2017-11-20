@@ -1,5 +1,4 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 
 , jbigkit
@@ -9,15 +8,15 @@
 }:
 
 let
-  version = "4.0.8";
+  version = "4.0.9";
 in
 stdenv.mkDerivation rec {
   name = "libtiff-${version}";
 
   src = fetchurl {
     url = "http://download.osgeo.org/libtiff/tiff-${version}.tar.gz";
-    multihash = "QmVMYvrfQ6YZGXLJwZwpN8kdJKUmHdME2h3YXLxj57FwdK";
-    sha256 = "59d7a5a8ccd92059913f246877db95a2918e6c04fb9d43fd74e5c3390dac2910";
+    multihash = "QmQCAPYk7dbLjNhJrQ9X8jvztSsLQ62hkqtEZqB8mBByVQ";
+    sha256 = "6e7bdeec2c310734e734d19aae3a71ebe37a4d842e0e23dbb1b8921c0026cfcd";
   };
 
   buildInputs = [
@@ -25,14 +24,6 @@ stdenv.mkDerivation rec {
     libjpeg
     xz
     zlib
-  ];
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "2b7cc8e18285cab70d998e70481ab7e9add51c03";
-      file = "l/libtiff/CVE-2016-10095.patch";
-      sha256 = "36063a31e9317c3745b5e03b210c948586ea469205b06d3dde2e1b2493f18d81";
-    })
   ];
 
   meta = with stdenv.lib; {

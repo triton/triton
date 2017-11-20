@@ -10,7 +10,7 @@ let
     "mirror://gnu/nettle/nettle-${version}.tar.gz"
   ];
 
-  version = "3.3";
+  version = "3.4";
 in
 stdenv.mkDerivation rec {
   name = "nettle-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "46942627d5d0ca11720fec18d81fc38f7ef837ea4197c1f630e71ce0d470b11e";
+    sha256 = "ae7a42df026550b85daca8389b6a60ba6313b0567f374392e54918588a411e94";
   };
 
   nativeBuildInputs = [
@@ -34,11 +34,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.3";
+      urls = tarballUrls "3.4";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "343C 2FF0 FBEE 5EC2 EDBE  F399 F359 9FF8 28C6 7298";
       inherit (src) outputHashAlgo;
-      outputHash = "46942627d5d0ca11720fec18d81fc38f7ef837ea4197c1f630e71ce0d470b11e";
+      outputHash = "ae7a42df026550b85daca8389b6a60ba6313b0567f374392e54918588a411e94";
     };
   };
 

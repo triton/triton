@@ -1,5 +1,7 @@
 { stdenv
 , fetchurl
+, perl
+, texinfo
 }:
 
 stdenv.mkDerivation rec {
@@ -10,6 +12,17 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "3dbd5f93e36ba2815ad0efab030dcd0c7b211d7b353a40a53f4c02d7d56295e3";
   };
+
+  nativeBuildInputs = [
+    perl
+    texinfo
+  ];
+
+  # The install junks up lib / include with some static library
+  # files from the build. We don't want these.
+  postInstall = ''
+    rm -r "$out"/{include,lib}
+  '';
 
   passthru = {
     srcVerification = fetchurl {

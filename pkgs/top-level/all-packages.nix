@@ -3017,9 +3017,6 @@ opengl-headers = callPackage ../all-pkgs/o/opengl-headers { };
 
 openh264 = callPackage ../all-pkgs/o/openh264 { };
 
-openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "1.5";
-};
 openjpeg = callPackage ../all-pkgs/o/openjpeg { };
 
 openldap = callPackage ../all-pkgs/o/openldap { };

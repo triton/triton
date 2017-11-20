@@ -39,7 +39,7 @@ assert opjViewerSupport -> wxGTK != null;
 assert (openjpegJarSupport || jpipLibSupport) -> jdk != null;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolOn
     optional
     optionals
@@ -47,12 +47,6 @@ let
     versionAtLeast;
 
   sources = {
-    # FIXME: drop 1.x when ffmpeg supports 2.x+
-    "1.5" = {
-      fetchzipversion = 2;
-      version = "1.5.2";
-      sha256 = "3ced2c9e5292024b045052385ae98127d786c76fe3b7289ab02ccb46d087bb34";
-    };
     "2.3" = {
       fetchzipversion = 3;
       version = "2.3.0";
@@ -67,8 +61,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = source.fetchzipversion;
     url = "https://github.com/uclouvain/openjpeg/archive/"
-      + "${if versionAtLeast channel "2.1" then "v" else "version."}"
-      + "${source.version}.tar.gz";
+      + "v${source.version}.tar.gz";
     inherit (source) sha256;
   };
 

@@ -11,7 +11,7 @@ let
     "mirror://gnupg/libassuan/libassuan-${version}.tar.bz2"
   ];
 
-  version = "2.4.3";
+  version = "2.4.4";
 in
 stdenv.mkDerivation rec {
   name = "libassuan-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "22843a3bdb256f59be49842abf24da76700354293a066d82ade8134bb5aa2b71";
+    sha256 = "9e69a102272324de0bb56025779f84fd44901afcc6eac51505f6a63ea5737ca1";
   };
 
   buildInputs = [
@@ -27,18 +27,13 @@ stdenv.mkDerivation rec {
     pth
   ];
 
-  # Make sure includes are fixed for callers who don't use libassuan-config
-  postInstall = ''
-    sed -i 's,#include <gpg-error.h>,#include "${libgpg-error}/include/gpg-error.h",g' $out/include/assuan.h
-  '';
-
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.4.3";
+      urls = tarballUrls "2.4.4";
       pgpsigUrls = map (n: "${n}.sig") urls;
       inherit (gnupg.srcVerification) pgpKeyFingerprints;
-      outputHash = "22843a3bdb256f59be49842abf24da76700354293a066d82ade8134bb5aa2b71";
+      outputHash = "9e69a102272324de0bb56025779f84fd44901afcc6eac51505f6a63ea5737ca1";
       inherit (src) outputHashAlgo;
     };
   };

@@ -5,6 +5,8 @@
 , itstool
 , lib
 , makeWrapper
+# , meson
+# , ninja
 
 , adwaita-icon-theme
 , atk
@@ -30,12 +32,11 @@
 , channel
 }:
 
-assert !gtk.x11_backend -> libx11 == null;
-
 let
   inherit (lib)
     boolEn
     boolWt
+    boolTf
     optionals;
 
   sources = {
@@ -60,6 +61,8 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     makeWrapper
+    # meson
+    # ninja
   ];
 
   buildInputs = [
@@ -85,6 +88,11 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  # postPatch = /* handled by setup-hooks */ ''
+  #   sed -i meson.build \
+  #     -e '/meson_post_install.py/d'
+  # '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-compile-warnings"
@@ -104,6 +112,17 @@ stdenv.mkDerivation rec {
     "--${boolWt (librsvg != null)}-librsvg"
     "--${boolWt (gtk.x11_backend && libx11 != null)}-x"
   ];
+
+  # mesonFlags = [
+  #   "-Dlibexif=${boolTf (libexif != null)}"
+  #   "-Dcms=${boolTf (libx11 != null && lcms2 != null)}"
+  #   "-Dxmp=${boolTf (exempi != null)}"
+  #   "-Dlibjpeg=${boolTf (libjpeg != null)}"
+  #   "-Dlibrsvg=${boolTf (librsvg != null)}"
+  #   "-Dgtk_doc=false"
+  #   "-Dintrospection=${boolTf (gobject-introspection != null)}"
+  #   "-Dinstalled_tests=valse"
+  # ];
 
   preFixup = ''
     wrapProgram $out/bin/eog \

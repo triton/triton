@@ -24,9 +24,9 @@ let
 
   sources = {
     "4.9" = {
-      version = "4.9.63";
+      version = "4.9.64";
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "bcd440b398c8ab8158d91fa7245d583ed00203caba4f0751293687305e570eb1";
+      patchSha256 = "e17b3219b2b9ebdeb180e509b3a1a6eb46d957d6a95c17f4e6b6b7199067949a";
     };
     "4.13" = {
       version = "4.13.14";

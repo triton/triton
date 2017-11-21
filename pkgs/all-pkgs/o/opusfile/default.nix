@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "opusfile-0.8";
+  name = "opusfile-0.10";
 
   src = fetchurl {
     url = "mirror://xiph/opus/${name}.tar.gz";
-    sha256Url = "mirror://xiph/opus/SHA256SUMS.txt";
-    sha256 = "2c231ed3cfaa1b3173f52d740e5bbd77d51b9dfecb87014b404917fba4b855a4";
+    hashOutput = false;
+    sha256 = "48e03526ba87ef9cf5f1c47b5ebe3aa195bd89b912a57060c36184a6cd19412f";
   };
 
   buildInputs = [
@@ -25,11 +25,19 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--disable-assertions"
     "--enable-http"
-    "--disable-fixed-point"
+    "--enable-fixed-point"
     "--enable-float"
-    "--enable-examples"
+    "--disable-examples"
     "--disable-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha256Url = "mirror://xiph/opus/SHA256SUMS.txt";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "High-level API for decoding and seeking in .opus files";

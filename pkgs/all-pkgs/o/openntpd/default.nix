@@ -7,16 +7,16 @@
 
 let
   baseUrl = "mirror://openbsd/OpenNTPD";
-
-  version = "6.2p3";
 in
+
 stdenv.mkDerivation rec {
   name = "openntpd-${version}";
+  version = "6.0p1";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;  # Upstream provides it directly
-    sha256 = "7b02691524197e01ba6b1b4b7595b33956e657ba6d5c4cf2fc20ea3f4914c13a";
+    sha256 = "b1ab80094788912adb12b33cb1f251cc58db39294c1b5c6376972f5f7ba577e8";
   };
 
   nativeBuildInputs = [

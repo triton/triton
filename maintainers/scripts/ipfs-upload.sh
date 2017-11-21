@@ -80,7 +80,11 @@ fetch() {
   local n="$1"
   local url="$2"
 
-  curl -v -L "$url" -o "$TMPDIR/$n"
+  if [ "${url:0:1}" = "/" ]; then
+    cp "$url" "$TMPDIR/$n"
+  else
+    curl -v -L "$url" -o "$TMPDIR/$n"
+  fi
 }
 
 upload_fail() {

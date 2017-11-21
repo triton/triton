@@ -2652,6 +2652,8 @@ m4 = callPackageAlias "gnum4" { };
 
 mac = callPackage ../all-pkgs/m/mac { };
 
+madns = pkgs.goPackages.go-multiaddr-dns.bin // { outputs = [ "bin" ]; };
+
 man = callPackage ../all-pkgs/m/man { };
 
 man-db = callPackage ../all-pkgs/m/man-db { };

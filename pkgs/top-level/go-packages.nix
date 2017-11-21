@@ -3692,6 +3692,18 @@ let
     ];
   };
 
+  go-multiaddr-dns = buildFromGitHub {
+    version = 3;
+    rev = "d974dec81f5fcad4c29a427d327afb5bc6c0f39a";
+    date = "2017-08-06";
+    owner  = "multiformats";
+    repo   = "go-multiaddr-dns";
+    sha256 = "0xxpvzr7n9r26hl1lld2zpmiln95fhd4w48c8mdbh9q0c7fxzba8";
+    propagatedBuildInputs = [
+      go-multiaddr
+    ];
+  };
+
   go-multiaddr-net = buildFromGitHub {
     version = 3;
     rev = "376ba58703c84bfff9ca6e0057adf38ad48d3de5";

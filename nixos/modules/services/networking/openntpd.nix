@@ -13,7 +13,7 @@ let
   '';
 
   cmdline = [
-    "@${package}/sbin/ntpd" "openntpd"
+    "${package}/sbin/ntpd"
     "-d"
     "-f" cfgFile
   ] ++ cfg.extraCmdline;
@@ -69,7 +69,9 @@ in
     ];
 
     # Add ntpctl to the environment for status checking
-    environment.systemPackages = [ package ];
+    environment.systemPackages = [
+      package
+    ];
 
     services.ntp.providers = [
       "openntpd"
@@ -77,9 +79,15 @@ in
 
     systemd.services.openntpd = {
       description = "OpenNTP Server";
-      wantedBy = [ "multi-user.target" ];
-      wants = [ "network-online.target" ];
-      after = [ "dnsmasq.service" "bind.service" "network-online.target" ];
+      wantedBy = [
+        "multi-user.target"
+      ];
+      wants = [
+        "network-online.target"
+      ];
+      after = [
+        "network-online.target"
+      ];
       serviceConfig.ExecStart = concatStringsSep " " cmdline;
     };
 

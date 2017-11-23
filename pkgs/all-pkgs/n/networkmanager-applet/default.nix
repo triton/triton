@@ -115,8 +115,6 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = /* handled by setup-hooks */ ''
-    # Upstream doesn't understand how meson.add_install_script works and
-    # are trying to pass the datadir and sysconfdir as scripts.
     sed -i meson.build \
       -e '/meson_post_install.py/d' \
       -e '/[^(]\snma_datadir,/d' \

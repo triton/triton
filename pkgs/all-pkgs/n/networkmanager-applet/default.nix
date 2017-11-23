@@ -1,14 +1,19 @@
 { stdenv
+, coreutils
+, fetchFromGitHub  # FIXME: remove this next release
 , fetchurl
 , intltool
 , lib
 , makeWrapper
+, meson
+, ninja
 
 , adwaita-icon-theme
 , atk
 , dbus-glib
 , dconf
 , gconf
+, gcr
 , gdk-pixbuf
 , glib
 , glib-networking
@@ -24,6 +29,7 @@
 , libgudev
 , libnotify
 , libsecret
+, libselinux
 , mobile_broadband_provider_info
 , modemmanager
 , networkmanager
@@ -37,26 +43,35 @@
 
 let
   inherit (lib)
-    boolEn
-    boolWt;
+    boolTf;
 
-  sources = {
-    "1.8" = {
-      version = "1.8.6";
-      sha256 = "01749e2c27d84ac858f59bc923af50860156eb510e2b6cf7d4941f753bef9c30";
-    };
-  };
-  source = sources."${channel}";
+  # sources = {
+  #   "1.8" = {
+  #     version = "1.8.6";
+  #     sha256 = "01749e2c27d84ac858f59bc923af50860156eb510e2b6cf7d4941f753bef9c30";
+  #   };
+  # };
+  # source = sources."${channel}";
+  source.version = "2017-11-15";
 in
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${source.version}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/network-manager-applet/${channel}/"
-      + "${name}.tar.xz";
-    hashOutput = false;
-    inherit (source) sha256;
+  # Meson is completely broken in 1.8.6, but will be fixed in the next release
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "gnome";
+    repo = "network-manager-applet";
+    rev = "00c808c41084b23dcfcab839c6c1ea7d3d6c3796";
+    sha256 = "fb332426b6195cd17f1e6da00c94daa043ec7d8c383960e44a931d6680055442";
   };
+
+  # src = fetchurl {
+  #   url = "mirror://gnome/sources/network-manager-applet/${channel}/"
+  #     + "${name}.tar.xz";
+  #   hashOutput = false;
+  #   inherit (source) sha256;
+  # };
 
   propagatedUserEnvPkgs = [
     gconf
@@ -67,6 +82,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -76,6 +93,7 @@ stdenv.mkDerivation rec {
     dconf
     gdk-pixbuf
     gconf
+    gcr
     glib
     libgnome-keyring
     gobject-introspection
@@ -88,6 +106,7 @@ stdenv.mkDerivation rec {
     libgudev
     libnotify
     libsecret
+    libselinux
     modemmanager
     networkmanager
     pango
@@ -95,32 +114,35 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
-  configureFlags = [
-    "--sysconfdir=/etc"
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--${boolEn (iso-codes != null)}-iso-codes"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-schemas-compile"
-    "--enable-more-warnings"
-    #"--enable-lto"
-    #"--enable-ld-gc"
-    #"--with-appindicator"
-    "--${boolWt (modemmanager != null)}-wwan"
-    /**/"--without-selinux"
-    #"--${boolWt (libselinux != null)}-selinux"
-    #"--with-team"
-    #"--with-gcr"
-    "--with-more-asserts=0"
-  ];
-
-  makeFlags = [
-    ''CFLAGS=-DMOBILE_BROADBAND_PROVIDER_INFO=\"${mobile_broadband_provider_info}/share/mobile-broadband-provider-info/serviceproviders.xml\"''
-  ];
-
-  preInstall = ''
-    installFlagsArray+=("sysconfdir=$out/etc")
+  postPatch = /* handled by setup-hooks */ ''
+    # Upstream doesn't understand how meson.add_install_script works and
+    # are trying to pass the datadir and sysconfdir as scripts.
+    sed -i meson.build \
+      -e '/meson_post_install.py/d' \
+      -e '/[^(]\snma_datadir,/d' \
+      -e "s,[^(]\snma_sysconfdir,'$(type -P true)',"
+  '' +  /* mobile_broadband_provider_info and network-manager-applet do not
+           share the same prefix. */ ''
+    grep -q 'MOBILE_BROADBAND_PROVIDER_INFO DATADIR"' src/libnm-gtk/nm-mobile-providers.c
+    grep -q 'MOBILE_BROADBAND_PROVIDER_INFO DATADIR"' src/libnma/nma-mobile-providers.c
+    sed -i src/libnm-gtk/nm-mobile-providers.c \
+     -i src/libnma/nma-mobile-providers.c \
+     -e 's,MOBILE_BROADBAND_PROVIDER_INFO DATADIR",MOBILE_BROADBAND_PROVIDER_INFO "${mobile_broadband_provider_info}/share,g'
   '';
+
+  mesonFlags = [
+    #"-Dlibnm_gtk=${boolTf }"
+    #"-Dappindicator=${boolTf }"
+    "-Dwwan=${boolTf (modemmanager != null)}"
+    "-Dselinux=${boolTf (libselinux != null)}"
+    "-Dteam=${boolTf (jansson != null)}"
+    "-Dgcr=${boolTf (gcr != null)}"
+    "-Dmore_asserts=no"
+    "-Diso_codes=${boolTf (iso-codes != null)}"
+    #"-Dld_gc=${boolTf }"
+    "-Dgtk_doc=false"
+    "-Dintrospection=${boolTf (gobject-introspection != null)}"
+  ];
 
   preFixup = ''
     wrapProgram "$out/bin/nm-applet" \

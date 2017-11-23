@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.7.2";
+  version = "1.7.4";
 in
 buildPythonPackage {
   name = "webob-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "WebOb";
     inherit version;
-    sha256 = "0dc8b30bdbf15d8fd1a967e30ece3357f2f468206354f69213e57b30a63f0039";
+    sha256 = "8d10af182fda4b92193113ee1edeb687ab9dc44336b37d6804e413f0240d40d9";
   };
 
   meta = with lib; {

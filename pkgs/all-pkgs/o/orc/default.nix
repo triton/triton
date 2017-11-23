@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "orc-0.4.27";
+  name = "orc-0.4.28";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/orc/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "51e53e58fc8158e5986a1f1a49a6d970c5b16493841cf7b9de2c2bde7ce36b93";
+    sha256 = "bfcd7c6563b05672386c4eedfc4c0d4a0a12b4b4775b74ec6deb88fc2bcd83ce";
   };
 
   buildInputs = [
@@ -45,6 +45,8 @@ stdenv.mkDerivation rec {
         "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
         # Tim-Philipp Müller
         "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+        # Edward Hervey
+        "D78B C13E 3280 CB8A FDE2  78EA 032D 3D83 3A0B A62A"
       ];
       failEarly = true;
     };

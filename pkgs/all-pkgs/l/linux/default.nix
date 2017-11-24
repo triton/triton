@@ -3,6 +3,7 @@
 , fetchFromGitHub
 , fetchurl
 , git
+, lib
 , perl
 
 , # Overrides to the kernel config.
@@ -65,95 +66,34 @@ let
   inherit (source)
     version;
 
+  inherit (import ./source.nix { inherit lib fetchurl fetchFromGitHub source; })
+    src
+    srcsVerification
+    patch;
+
   inherit (builtins)
     substring;
 
-  inherit (stdenv.lib)
+  inherit (lib)
+    addPassthru
     any
-    elemAt
+    concatStringsSep
     head
+    length
     optionals
     splitString
     tail
-    toInt
     versionAtLeast
     versionOlder;
 
   needsGitPatch = source.needsGitPatch or false;
 
-  unpatchedVersion =
-    let
-      rclist = splitString "-" version;
-      isRC = [ ] != tail rclist;
-      vlist = splitString "." (head rclist);
-      minorInt = toInt (elemAt vlist 1);
-      correctMinor = if isRC then minorInt - 1 else minorInt;
-    in "${elemAt vlist 0}.${toString correctMinor}";
-
-  directoryUrls = [
-    "mirror://kernel/linux/kernel/v4.x"
-    "mirror://kernel/linux/kernel/v4.x/testing"
-  ];
-
-  src = if source ? rev then
-    fetchFromGitHub {
-      inherit (source)
-        owner
-        repo
-        rev
-        sha256;
-    }
-  else
-    fetchurl {
-      urls =
-        let
-          version' = if source ? baseSha256 then unpatchedVersion else version;
-        in source.baseUrls or (source.urls or (map (n: "${n}/linux-${version'}.tar.xz") directoryUrls));
-      hashOutput = false;
-      sha256 = source.baseSha256 or source.sha256;
-    };
-
-  patch = if source ? patchSha256 && source.patchSha256 != null then
-    fetchurl {
-      urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") directoryUrls);
-      hashOutput = false;
-      sha256 = source.patchSha256;
-    }
-  else
-    null;
-
-  srcsVerification = [
-    (fetchurl {
-      failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}/linux-${if source ? baseSha256 then unpatchedVersion else version}.tar.sign") directoryUrls;
-      pgpKeyFingerprints = [
-        "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
-        "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
-    })
-  ] ++ optionals (patch != null) [
-    (fetchurl {
-      failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}/patch-${version}.sign") directoryUrls;
-      pgpKeyFingerprints = [
-        "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
-        "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
-      ];
-      inherit (patch) urls outputHash outputHashAlgo;
-    })
-  ];
-
-  lib = stdenv.lib;
-
   modDirVersion = let
-    rcSplit = lib.splitString "-" version;
-    vSplit = lib.splitString "." (lib.head rcSplit);
-    vSplit' = if lib.length vSplit == 2 then vSplit ++ [ "0" ] else vSplit;
-    rcSplit' = [ (lib.concatStringsSep "." vSplit') ] ++ tail rcSplit;
-  in lib.concatStringsSep "-" rcSplit';
+    rcSplit = splitString "-" version;
+    vSplit = splitString "." (head rcSplit);
+    vSplit' = if length vSplit == 2 then vSplit ++ [ "0" ] else vSplit;
+    rcSplit' = [ (concatStringsSep "." vSplit') ] ++ tail rcSplit;
+  in concatStringsSep "-" rcSplit';
 
   common = import ./common.nix { inherit stdenv; };
 
@@ -161,7 +101,7 @@ let
     let
       configFromPatches =
         map ({extraConfig ? "", ...}: extraConfig) kernelPatches;
-    in lib.concatStringsSep "\n" ([baseConfig] ++ configFromPatches);
+    in concatStringsSep "\n" ([baseConfig] ++ configFromPatches);
 
   configfile = stdenv.mkDerivation {
     inherit ignoreConfigErrors;
@@ -251,7 +191,7 @@ let
   config = import ./common-config.nix
     { inherit stdenv version extraConfig; };
 
-  nativeDrv = lib.addPassthru kernel.nativeDrv passthru;
+  nativeDrv = addPassthru kernel.nativeDrv passthru;
 
-  crossDrv = lib.addPassthru kernel.crossDrv passthru;
-in if kernel ? crossDrv then nativeDrv // { inherit nativeDrv crossDrv; } else lib.addPassthru kernel passthru
+  crossDrv = addPassthru kernel.crossDrv passthru;
+in if kernel ? crossDrv then nativeDrv // { inherit nativeDrv crossDrv; } else addPassthru kernel passthru

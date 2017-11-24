@@ -2,8 +2,10 @@
 , buildPythonPackage
 , fetchFromGitHub
 , fetchPyPi
+, isPy2
 , isPy3
 , lib
+, python
 
 , apache-libcloud
 , cherrypy
@@ -45,17 +47,34 @@
 , channel
 }:
 
+# NOTE:
+# - Modules distributed with salt that require third-party modules or other
+#   external commands are not supported by this build.  It is recommeneded
+#   that you distribute the modules via salt.utils.sync_* methods by your
+#   own means.  Most of the modules would require significat patching and
+#   would add hundreds of dependencies to this build to make them work.
+#   This way there are no silent failures and salt will return an explicit
+#   error that the requested module does not exist.  This leaves a minimal
+#   salt build with only core functionality.  Anything that cannot be
+#   configured by the user however has been left in place and may break at
+#   runtime (e.g. auth/cache/config/fileserver/queues/runners).
+
+# FIXME: unvendor salt/ext/* modules.
+
 let
+  inherit (lib)
+    optionals;
+
   # https://docs.saltstack.com/en/latest/topics/releases/index.html
   # https://saltstack.com/product-support-lifecycle/
   sources = {
     "2016.11" = {
-      version = "2016.11.6";
-      sha256 = "9031af68d31d0416fe3161526ef122a763afc6182bd63fe48b6c4d0a16a0703a";
+      version = "2016.11.8";
+      sha256 = "e75f4178465d9198fcd5822643460c94d63de6221316367d5b85356ef8b1994a";
     };
     "2017.7" = {
-      version = "2017.7.1";
-      sha256 = "fe868415d0e1162157186f4c5263e9af902b0571870ad2da210e7edf5ff5331d";
+      version = "2017.7.2";
+      sha256 = "ff3bc7de5abf01b8acbd144db5811b00867179b2353f5c6f7f19241e2eff2840";
     };
     head = {
       fetchzipversion = 2;
@@ -86,49 +105,51 @@ buildPythonPackage rec {
   postPatch = /* Salt looks for openssl in salt's installation prefix */ ''
     sed -i salt/utils/rsax931.py \
       -e "s,find_library('crypto'),'${openssl}/lib/libcrypto.so',"
+  '' + /* Remove third-party modules, see note above */ ''
+    ${python.interpreter} ${./remove-modules.py}
   '';
 
-  propagatedBuildInputs = [
-    apache-libcloud
-    cherrypy
-    #dnspython  # states/Network NTP
-    futures
-    #ioflo  # Salt RAET transport
+  # auth/cache/config/fileserver/queues/runners
+
+  propagatedBuildInputs = /* Required */ ([
     jinja2
-    #keyring
-    #libnacl  # Salt RAET transport
-    #libvirt-python
-    #m2crypto
-    Mako  # states parser
     markupsafe
     msgpack-python
-    #mysql-python
-    netaddr  # states/Network NTP
-    openssl
-    pycrypto  # Salt ZeroMQ transport
-    #pygit2
-    pymongo  # states/Mongodb Users
-    pyopenssl
-    #python-croniter  # states/Scheduler
-    python-dateutil  # states/Scheduler
-    #python-gnupg  # states/Pkg repos (APT/YUM)
-    python-ldap
-    #python-neutronclient
-    #python-novaclient
     pyyaml
-    pyzmq  # Salt ZeroMQ transport
-    #raet  # Salt RAET transport
-    #redis-py
     requests
-    #salt-vim
-    #selinux-salt
-    #systemd
-    #timelib
     tornado
+  ] ++ optionals isPy2 [
+    futures
+  ]) ++ /* ZeroMQ */ [
+    pycrypto
+    pyzmq
+  ] ++ /* Raet */ [  # TODO
+    # ioflo
+    # libnacl
+    # raet
+  ] ++ /* Optional */ [
+    cherrypy
+    #libnacl
+    #mysql-python
+    #python-gnupg
+    #python-novaclient
+    #python-neutronclient
+    #timelib
     #yappi
   ];
 
-  disabled = isPy3;
+  checkPhase = /* Basic test to make sure we have necessary modules */ ''
+    for i in $out/bin/s*; do
+      # github.com/saltstack/salt/commit/d405e1c81ecb5634aa0493a4ecc34c792f608120
+      if [ "$i" == "$out/bin/salt-cloud" ] || \
+         [ "$i" == "$out/bin/salt-unity" ]; then
+        continue
+      fi
+      $i -h >/dev/null
+    done
+  '';
+
+  doCheck = true;
 
   meta = with lib; {
     description = "Distributed, remote execution & configuration management system";

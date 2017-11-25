@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "17.2.1";
+  version = "17.3.1";
 in
 buildPythonPackage rec {
   name = "hyperlink-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "hyperlink";
     inherit version;
-    sha256 = "2c74b35662416f44823d50e59305f761a933723ae6528cc5b0d711361453f28b";
+    sha256 = "bc4ffdbde9bdad204d507bd8f554f16bba82dd356f6130cb16f41422909c33bc";
   };
 
   meta = with lib; {

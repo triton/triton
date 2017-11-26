@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.17";
+  version = "2.18";
 in
 buildPythonPackage {
   name = "pycparser-${version}";
@@ -13,10 +13,8 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pycparser";
     inherit version;
-    sha256 = "0aac31e917c24cb3357f5a4d5566f2cc91a19ca41862f6c3c22dc60a629673b6";
+    sha256 = "99a8ca03e29851d96616ad0404b4aad7d9ee16f25c9f9708a11faf2810f7b226";
   };
-
-  buildDirCheck = false;
 
   meta = with lib; {
     maintainers = with maintainers; [

@@ -4,18 +4,18 @@
 }:
 
 let
-  version = "2017-07-07";
+  version = "2017-11-17";
   version' = stdenv.lib.replaceStrings ["-"] [""] version;
-  id = "26925";
+  id = "27337";
 in
 stdenv.mkDerivation rec {
   name = "intel-microcode-${version}";
 
   src = fetchurl {
     url = "https://downloadmirror.intel.com/${id}/eng/microcode-${version'}.tgz";
-    multihash = "Qma7iqTTHuFpJhjE6CdhbPfuRD7kdXwENzarnojJG3KFxb";
+    multihash = "QmTmhQvsG9HLLvGjCpiEEp4MR1Um6x9W9cXRjMFScdAdyz";
     hashOutput = false;
-    sha256 = "4fd44769bf52a7ac11e90651a307aa6e56ca6e1a814e50d750ba8207973bee93";
+    sha256 = "93bd1da9fa58ece0016702e657f708b7e496e56da637a3fe9a6d21f1d6f524dc";
   };
 
   nativeBuildInputs = [
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      md5Confirm = "fe4bcb12e4600629a81fb65208c34248";
+      md5Confirm = "b294245d1f7f6c20f01edba53185f258";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -107,6 +107,9 @@ buildPythonPackage rec {
       -e "s,find_library('crypto'),'${openssl}/lib/libcrypto.so',"
   '' + /* Remove third-party modules, see note above */ ''
     ${python.interpreter} ${./remove-modules.py}
+  '' + /* _property_entry_points are clobbering _property_scripts */ ''
+    sed -i setup.py \
+      -e '/salt.scripts:salt_unity/d'
   '';
 
   # auth/cache/config/fileserver/queues/runners
@@ -140,11 +143,6 @@ buildPythonPackage rec {
 
   checkPhase = /* Basic test to make sure we have necessary modules */ ''
     for i in $out/bin/s*; do
-      # github.com/saltstack/salt/commit/d405e1c81ecb5634aa0493a4ecc34c792f608120
-      if [ "$i" == "$out/bin/salt-cloud" ] || \
-         [ "$i" == "$out/bin/salt-unity" ]; then
-        continue
-      fi
       $i -h >/dev/null
     done
   '';

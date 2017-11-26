@@ -112,8 +112,6 @@ buildPythonPackage rec {
       -e '/salt.scripts:salt_unity/d'
   '';
 
-  # auth/cache/config/fileserver/queues/runners
-
   propagatedBuildInputs = /* Required */ ([
     jinja2
     markupsafe

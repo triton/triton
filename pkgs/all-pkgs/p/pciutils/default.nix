@@ -3,11 +3,12 @@
 , which
 
 , kmod
+, systemd_lib
 , zlib
 }:
 
 let
-  name = "pciutils-3.5.5"; # with database from 2016-01
+  name = "pciutils-3.5.6"; # with database from 2017-11
 
   tarballUrls = [
     "mirror://kernel/software/utils/pciutils/${name}.tar"
@@ -18,8 +19,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
-    hashOutput = true;
-    sha256 = "1d62f8fa192f90e61c35a6fc15ff3cb9a7a792f782407acc42ef67817c5939f5";
+    hashOutput = false;
+    sha256 = "f346eeb90cce0910c05b877fe49eadc760fa084c0455fd313e39d4b2c2d4bb21";
   };
 
   nativeBuildInputs = [
@@ -28,15 +29,19 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     kmod
+    systemd_lib
     zlib
   ];
 
   preBuild = ''
-    makeFlagsArray+=(
-      "SHARED=yes"
-      "PREFIX=$out"
-    )
+    makeFlagsArray+=("PREFIX=$out")
   '';
+
+  makeFlags = [
+    "SHARED=yes"
+    "ZLIB=yes"
+    "DNS=yes"
+  ];
 
   installTargets = [
     "install"

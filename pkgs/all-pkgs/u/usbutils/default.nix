@@ -11,7 +11,7 @@ let
     "mirror://kernel/linux/utils/usb/usbutils/usbutils-${version}.tar"
   ];
 
-  version = "008";
+  version = "009";
 in
 stdenv.mkDerivation rec {
   name = "usbutils-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "132clk14j4nm8crln2jymdbbc2vhzar2j2hnxyh05m79pbq1lx24";
+    sha256 = "8bbff0e54cb5f65a52be4feb9162fc0b022a97eb841b44784f7a89a9ea567160";
   };
 
   buildInputs = [

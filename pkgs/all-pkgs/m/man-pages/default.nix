@@ -3,7 +3,7 @@
 }:
 
 let
-  name = "man-pages-4.08";
+  name = "man-pages-4.14";
 
   tarballUrls = [
     "mirror://kernel/linux/docs/man-pages/${name}.tar"
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "2c6e7db4d76014dc21b1068df372f325e863318c32056369eca2f169519c62b4";
+    sha256 = "3052b87898c313c089848a913e5cf44a0565cc4d21d94119ef6586d971f5c971";
   };
 
   preBuild = ''

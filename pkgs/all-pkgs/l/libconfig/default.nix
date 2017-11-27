@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "1.6";
+  version = "1.7.1";
 in
 stdenv.mkDerivation rec {
   name = "libconfig-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "hyperrealm";
     repo = "libconfig";
     rev = "v${version}";
-    sha256 = "3ab6e31c0d975e52bc37eae86e3bce2e57441895f728188ad6deb2bcbb39f09c";
+    sha256 = "a09bcd3728025388c85b178706ab5f9ab2714980737227da3dd8099d4ac491d7";
   };
 
   nativeBuildInputs = [
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     rm lib/grammar.{h,c} lib/scanner.c
-    rm -r m4 aux-build aclocal.m4 config.* configure ac_config.h.in
+    rm -r m4 aux-build config.* ac_config.h.in
     find . -name Makefile.in -delete
   '';
 

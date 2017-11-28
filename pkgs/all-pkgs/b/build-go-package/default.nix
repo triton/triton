@@ -18,7 +18,7 @@
 # IE: programs coupled with the compiler
 , allowGoReference ? false
 
-, meta ? {}, ... } @ args':
+, meta ? {}, ... } @ args:
 
 if disabled
   then throw "${name} not supported for go ${go.meta.branch}"
@@ -38,8 +38,6 @@ let
     optionalString
     ;
 
-  args = filterAttrs (name: _: name != "extraSrcs") args';
-
   removeReferences = [
     go
   ];
@@ -55,12 +53,12 @@ let
     }
   ] ++ extraSrcs;
 
-  srcPathsExpr = concatStringsSep "\\|" (map ({ src, goPackagePath }: goPackagePath) srcList);
+  srcPathsExpr = concatStringsSep "\\|" (map ({ src, goPackagePath, ... }: goPackagePath) srcList);
 
   goInputs = filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]));
 in
 go.stdenv.mkDerivation (
-  (builtins.removeAttrs args [ "goPackageAliases" "disabled" ]) // {
+  (builtins.removeAttrs args [ "extraSrcs" "goPackageAliases" "disabled" ]) // {
 
   name = "go${go.meta.branch}-${name}";
   nativeBuildInputs = [ go parallel ]
@@ -114,7 +112,7 @@ go.stdenv.mkDerivation (
     if [ -z "$allowVendoredSources" ]; then
       find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
     fi
-  '' + flip concatMapStrings extraSrcs ({ src, goPackagePath }: ''
+  '' + flip concatMapStrings extraSrcs ({ src, goPackagePath, ... }: ''
     mkdir extraSrc
     (cd extraSrc; unpackFile "${src}")
     mkdir -p "go/src/$(dirname "${goPackagePath}")"
@@ -461,7 +459,9 @@ go.stdenv.mkDerivation (
 
   disallowedReferences = optional (!allowGoReference) go;
 
-  passthru = passthru // optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; };
+  passthru = passthru // optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; } // {
+    inherit extraSrcs;
+  };
 
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];

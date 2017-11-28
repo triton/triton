@@ -6,7 +6,7 @@
 , makeWrapper
 , meson
 , ninja
-, python3
+, python3Packages
 
 , adwaita-icon-theme
 , appstream-glib
@@ -18,7 +18,6 @@
 , librsvg
 , libx11
 , mpv
-, python2Packages
 , shared-mime-info
 , wayland
 }:
@@ -27,7 +26,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2017-10-23";
+  version = "2017-11-25";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
@@ -36,7 +35,7 @@ stdenv.mkDerivation rec {
     version = 3;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "0f3c23f0d752af1eff7dec7ca95143e4b4f1eb97";
+    rev = "dd21665e39a04bd184f7da7a37abc2ee126e6af9";
     sha256 = "acdf223aad33b507732d5d67838070ddec360d31ce6132a4d5bcd90711310443";
   };
 
@@ -46,7 +45,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     meson
     ninja
-    python3
+    python3Packages.python
   ];
 
   buildInputs = [
@@ -60,7 +59,7 @@ stdenv.mkDerivation rec {
     librsvg
     libx11
     mpv
-    python2Packages.youtube-dl
+    python3Packages.youtube-dl
     shared-mime-info
     wayland
   ];

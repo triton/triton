@@ -53,7 +53,7 @@ assert editedCabalFile != null -> revision != null;
 let
 
   inherit (stdenv.lib) optional optionals optionalString versionOlder
-                       concatStringsSep enFlag optionalAttrs toUpper;
+                       concatStringsSep optionalAttrs toUpper boolEn;
 
   isGhcjs = ghc.isGhcjs or false;
 
@@ -86,17 +86,13 @@ let
     (optionalString (enableSharedExecutables) "--ghc-option=-optl=-Wl,-rpath=$out/lib/${ghc.name}/${pname}-${version}")
     (optionalString enableParallelBuilding "--ghc-option=-j$NIX_BUILD_CORES")
     (optionalString useCpphs "--with-cpphs=${cpphs}/bin/cpphs --ghc-options=-cpp --ghc-options=-pgmP${cpphs}/bin/cpphs --ghc-options=-optP--cpp")
-    (enFlag "split-objs" enableSplitObjs null)
-    (enFlag "library-profiling" enableLibraryProfiling null)
-    (enFlag (
-      if versionOlder ghc.version "8" then
-        "executable-profiling"
-      else
-        "profiling") enableExecutableProfiling null)
-    (enFlag "shared" enableSharedLibraries null)
-    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enFlag "library-vanilla" enableStaticLibraries null))
-    (optionalString (isGhcjs || versionOlder "7.4" ghc.version) (enFlag "executable-dynamic" enableSharedExecutables null))
-    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enFlag "tests" doCheck null))
+    "--${boolEn enableSplitObjs}-split-objs"
+    "--${boolEn enableLibraryProfiling}-library-profiling"
+    "--${boolEn enableExecutableProfiling}-${if versionOlder ghc.version "8" then "executable-profiling" else "profiling"}"
+    "--${boolEn enableSharedLibraries}-shared"
+    (optionalString (isGhcjs || versionOlder "7" ghc.version) "--${boolEn enableStaticLibraries}-library-vanilla")
+    (optionalString (isGhcjs || versionOlder "7.4" ghc.version) "--${boolEn enableSharedExecutables}-executable-dynamic")
+    (optionalString (isGhcjs || versionOlder "7" ghc.version) "--${boolEn doCheck}-tests")
   ] ++ optionals isGhcjs [
     "--with-hsc2hs=${ghc.nativeGhc}/bin/hsc2hs"
     "--ghcjs"

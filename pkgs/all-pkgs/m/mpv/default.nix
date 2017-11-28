@@ -41,7 +41,7 @@
 , openal
 , opengl-dummy
 , pulseaudio_lib
-, pythonPackages
+, python3Packages
 , rubberband
 , samba_client
 , sdl
@@ -111,8 +111,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     makeWrapper
     perl
-    pythonPackages.python
-    pythonPackages.docutils
+    python3Packages.python
+    python3Packages.docutils
     waf
     which
   ];
@@ -156,7 +156,7 @@ stdenv.mkDerivation rec {
     openal
     opengl-dummy
     pulseaudio_lib
-    pythonPackages.youtube-dl
+    python3Packages.youtube-dl
     rubberband
     samba_client
     sdl
@@ -311,7 +311,7 @@ stdenv.mkDerivation rec {
 
   preFixup = /* Ensure youtube-dl is available in $PATH for MPV */ ''
     wrapProgram $out/bin/mpv \
-      --prefix PATH : "${pythonPackages.youtube-dl}/bin"
+      --prefix PATH : "${python3Packages.youtube-dl}/bin"
   '';
 
   meta = with lib; {

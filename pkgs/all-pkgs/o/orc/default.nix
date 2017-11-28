@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 , lib
+# , meson
+# , ninja
 
 , xz
 }:
@@ -14,9 +16,20 @@ stdenv.mkDerivation rec {
     sha256 = "bfcd7c6563b05672386c4eedfc4c0d4a0a12b4b4775b74ec6deb88fc2bcd83ce";
   };
 
+  # nativeBuildInputs = [
+  #   meson
+  #   ninja
+  # ];
+
   buildInputs = [
     xz
   ];
+
+  # mesonFlags = [
+  #   "-Denable-backend=all"
+  #   "-Ddisable_gtkdoc=true"
+  #   "-Ddisable_tests=true"
+  # ];
 
   postPatch = /* Completely disable examples */ ''
     sed -i Makefile.{am,in} \

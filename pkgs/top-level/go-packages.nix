@@ -1505,6 +1505,9 @@ let
     owner  = "miekg";
     repo   = "dns";
     sha256 = "0fkm3z7pw85qk0yvbp7jl06iyxg0nx2dmm8p1v9rhybshib2nfxm";
+    propagatedBuildInputs = [
+      crypto
+    ];
   };
 
   dnsimple-go = buildFromGitHub {
@@ -3245,6 +3248,7 @@ let
     propagatedBuildInputs = [
       go-floodsub
       go-homedir
+      go-ipfs-cmdkit
       go-libp2p-peer
       go-libp2p-pubsub
       go-multiaddr
@@ -3256,6 +3260,19 @@ let
     date = "2017-11-23";
   };
 
+  go-ipfs-cmdkit = buildFromGitHub {
+    version = 3;
+    rev = "f3631e8ddde711a7aefed041806902d907a1f9ae";
+    owner  = "ipfs";
+    repo   = "go-ipfs-cmdkit";
+    sha256 = "0yav7n572glmwnzahksgz98yf4zaf5lhqlbijc4i0kidkzrdgx0y";
+    date = "2017-11-20";
+    propagatedBuildInputs = [
+      go-ipfs-util
+      sys
+    ];
+  };
+
   go-ipfs-util = buildFromGitHub {
     version = 3;
     rev = "ca91b45d2e776e6e066151f7b65a3984c87e9fbb";
@@ -3263,7 +3280,7 @@ let
     repo   = "go-ipfs-util";
     sha256 = "1ri1f5n5m1bdyjzigqygblim9hvf60bh49pd03819hny1wjz1660";
     date = "2017-07-10";
-    buildInputs = [
+    propagatedBuildInputs = [
       go-base58
       go-multihash
     ];
@@ -4382,9 +4399,11 @@ let
     subPackages = [
       "."
       "balancer"
+      "balancer/roundrobin"
       "codes"
       "connectivity"
       "credentials"
+      "encoding"
       "grpclb/grpc_lb_v1"
       "grpclb/grpc_lb_v1/messages"
       "grpclog"
@@ -4394,6 +4413,8 @@ let
       "naming"
       "peer"
       "resolver"
+      "resolver/dns"
+      "resolver/passthrough"
       "stats"
       "status"
       "tap"
@@ -6810,6 +6831,7 @@ let
     propagatedBuildInputs = [
       go-shared
       logrus
+      yaml_v2
     ];
   };
 

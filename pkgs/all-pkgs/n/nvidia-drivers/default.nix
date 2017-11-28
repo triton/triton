@@ -66,14 +66,14 @@ let
       versionMinor = "22";
       sha256i686   = "39544f0a677838a4fb09668d48b91eadd6ba5babecb0aa0cef41c303b0a4649b";
       sha256x86_64 = "2056b386f619ed096ee3c2267c495c6b00d1a2a4c933f0635befcf4e69c3856c";
-      maxLinuxVersion = "4.13";
+      maxLinuxVersion = "4.14";
       maxXorgVersion = "1.19";
     };
     short-lived = {
       versionMajor = "387";
       versionMinor = "34";
-      sha256i686   = "7b7dd6ee1c871dc5367fc207bba65077c3820a683decbfe6126fc70c0d1b9d08";
-      sha256x86_64 = "2056b386f619ed096ee3c2267c495c6b00d1a2a4c933f0635befcf4e69c3856c";
+      sha256i686   = "b8babd2c7128233d83cc3bae0ee04c80580e9098849864e7b9bc3217609958c1";
+      sha256x86_64 = "d540908e76aeecb1f4a2812acf5ad37346934a6b7c8043c8b3ce230a48ceb440";
       maxLinuxVersion = "4.13";
       maxXorgVersion = "1.19";
     };

@@ -4890,12 +4890,12 @@ let
   };
 
   internal = buildFromGitHub {
-    version = 1;
-    rev = "fbe290d56cdd8bb25347df893b14e3454f07bf7a";
+    version = 3;
+    rev = "4747030f7cf2f4c0a01512b00cd68734b167ac3b";
     owner  = "cznic";
     repo   = "internal";
-    sha256 = "0x80s83nq75xajyqspzcgj2mq5gxw9psxghvb676q8y96jn1n10k";
-    date = "2016-07-19";
+    sha256 = "0kmsbgr8qjqxbzymnb0hyk7xickqddzlmffpl7rjw88jmpafks0a";
+    date = "2017-09-05";
     buildInputs = [
       fileutil
       mathutil
@@ -5368,16 +5368,8 @@ let
       sortutil
     ];
     extraSrcs = [
-      {
-        inherit (internal)
-          goPackagePath
-          src;
-      }
-      {
-        inherit (zappy)
-          goPackagePath
-          src;
-      }
+      internal
+      zappy
     ];
     meta.useUnstable = true;
     date = "2016-11-02";
@@ -8636,21 +8628,17 @@ let
   };
 
   zappy = buildFromGitHub {
-    version = 1;
+    version = 3;
     date = "2016-07-23";
-    rev = "2533cb5b45cc6c07421468ce262899ddc9d53fba";
+    rev = "2533cb5b45cc6c07421468ce262899ddc9d53fb7";
     owner = "cznic";
     repo = "zappy";
-    sha256 = "1fn4kqiggz6b5srkqhn37nwsi381x6hx3n83cbg0fxcb7zb3b6xl";
+    sha256 = "1lvc4gi9h8xbgjq6x2bvxnq9pxh707zlgccpwmycpzx86gfvigmh";
     buildInputs = [
       mathutil
     ];
     extraSrcs = [
-      {
-        inherit (internal)
-          goPackagePath
-          src;
-      }
+      internal
     ];
   };
 }; in self

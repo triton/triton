@@ -21,12 +21,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "upower-0.99.6";
+  name = "upower-0.99.7";
 
   src = fetchurl {
     url = "https://upower.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmYevSLJTwpBEQn83QaCCd2YgKCyRi2ZrxfToapuvvT1T4";
-    sha256 = "b194d1f227ed33e76ae29aa5c11acabad334938f2726b8c7903fac07a1335015";
+    multihash = "QmcPxNxvv94cTCpmgLpjMWH3wfBZduqaz6jWStUtXfwBYA";
+    sha256 = "24bcc2f6ab25a2533bac70b587bcb019e591293076920f5b5e04bdedc140a401";
   };
 
   nativeBuildInputs = [

@@ -4,23 +4,23 @@
 , ninja
 
 , curl
-, googletest
-, openssl_1-0-2
+, openssl
 , xorg
 }:
 
 let
-  version = "1.8.8";
+  version = "2.0.0";
+  rev = "0bd448d5ca320dd5fdb9467a7a4a17ff11cce539";
 in
 stdenv.mkDerivation {
   name = "synergy-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "symless";
-    repo = "synergy";
+    repo = "synergy-core";
     rev = "v${version}-stable";
-    sha256 = "728e85364246dec4102d861b419e47cdc678a490ddae08b4e4f1f0c06488f803";
+    sha256 = "eaa7f6e101dca6d6bc9e0fa8771c7e199a401feeed11779d1fada64c398d7fac";
   };
 
   nativeBuildInputs = [
@@ -30,8 +30,7 @@ stdenv.mkDerivation {
 
   buildInputs = [
     curl
-    googletest
-    openssl_1-0-2
+    openssl
     xorg.fixesproto
     xorg.inputproto
     xorg.kbproto
@@ -43,10 +42,15 @@ stdenv.mkDerivation {
     xorg.libXi
     xorg.libXinerama
     xorg.libXrandr
+    xorg.libXrender
     xorg.libXtst
+    xorg.randrproto
+    xorg.renderproto
     xorg.xproto
     xorg.xextproto
   ];
+
+  GIT_COMMIT = rev;
 
   postPatch = ''
     # Don't run or build tests
@@ -55,16 +59,17 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p "$out"
-    cd ../synergy-*
 
-    mv bin "$out"
+    mv -v bin "$out"
+
+    cd ../synergy-core-*
 
     mkdir -p "$out"/share/man/man1
-    mv doc/synergyc.man "$out"/share/man/man1/synergyc.1
-    mv doc/synergys.man "$out"/share/man/man1/synergys.1
+    mv -v doc/synergyc.man "$out"/share/man/man1/synergyc.1
+    mv -v doc/synergys.man "$out"/share/man/man1/synergys.1
 
     mkdir -p "$out"/etc
-    cp doc/*.conf* "$out"/etc
+    cp -v doc/*.conf* "$out"/etc
   '';
 
   meta = with stdenv.lib; {

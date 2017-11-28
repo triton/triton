@@ -80,7 +80,8 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
     allBuildInputs = pkg: pkg.buildInputs
       ++ pkg.nativeBuildInputs
       ++ pkg.propagatedBuildInputs
-      ++ pkg.propagatedNativeBuildInputs;
+      ++ pkg.propagatedNativeBuildInputs
+      ++ pkg.extraSrcs;
     listPkgAndDeps = pkg:
       if pkg ? goPackagePath then
         pkgs.lib.foldl

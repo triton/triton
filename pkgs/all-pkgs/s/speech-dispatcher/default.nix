@@ -5,6 +5,7 @@
 , lib
 , libtool
 , python3Packages
+, texinfo
 
 , alsa-lib
 , dotconf
@@ -24,15 +25,15 @@ let
     boolEn
     boolWt;
 
-  version = "0.8.7";
+  version = "0.8.8";
 in
 stdenv.mkDerivation rec {
   name = "speech-dispatcher-${version}";
 
   src = fetchurl {
-    url = "https://www.freebsoft.org/pub/projects/speechd/${name}.tar.gz";
-    multihash = "QmQh9t5jShS5VFDftqmczeVYeF2oGW3ajrv6yLZFELbWjJ";
-    sha256 = "200be1adb054dd14bfbc46e798ac6a7c0d4abaa13343fb987312c5265e4cb134";
+    url = "http://www.freebsoft.org/pub/projects/speechd/${name}.tar.gz";
+    multihash = "QmXBDrN2CUrQ8L64T8xTqrX3z8TJgKbj4MDFfydN86ajqh";
+    sha256 = "3c2a89800d73403192b9d424a604f0e614c58db390428355a3b1c7c401986cf3";
   };
 
   nativeBuildInputs = [
@@ -40,6 +41,7 @@ stdenv.mkDerivation rec {
     intltool
     libtool
     python3Packages.pyxdg
+    texinfo
   ];
 
   buildInputs = [

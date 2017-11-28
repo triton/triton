@@ -70,11 +70,11 @@ let
       maxXorgVersion = "1.19";
     };
     short-lived = {
-      versionMajor = "381";
-      versionMinor = "22";
+      versionMajor = "387";
+      versionMinor = "34";
       sha256i686   = "7b7dd6ee1c871dc5367fc207bba65077c3820a683decbfe6126fc70c0d1b9d08";
-      sha256x86_64 = "c2468130af124bfe748bdf2bc4c08952a81b35d2bdb87d1217717e6a576217e8";
-      maxLinuxVersion = "4.12";
+      sha256x86_64 = "2056b386f619ed096ee3c2267c495c6b00d1a2a4c933f0635befcf4e69c3856c";
+      maxLinuxVersion = "4.13";
       maxXorgVersion = "1.19";
     };
     beta = {
@@ -86,7 +86,7 @@ let
       maxXorgVersion = "1.19";
     };
     # Update to which ever channel has the latest release at the time.
-    latest = long-lived;
+    latest = short-lived;
   };
   source = sources."${channel}";
 
@@ -541,9 +541,9 @@ stdenv.mkDerivation {
 
     srcVerification = fetchurl {
       urls = [
-        ("mirror://nvidia/XFree86/Linux-x86/${version}/"
+        ("https://download.nvidia.com/XFree86/Linux-x86/${version}/"
             + "NVIDIA-Linux-x86-${version}.run")
-        ("mirror://nvidia/XFree86/Linux-x86_64/${version}/"
+        ("https://download.nvidia.com/XFree86/Linux-x86_64/${version}/"
             + "NVIDIA-Linux-x86_64-${version}"
             + "${if channel == "tesla" then "" else "-no-compat32"}.run")
       ];

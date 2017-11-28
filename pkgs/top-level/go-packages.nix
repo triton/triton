@@ -634,13 +634,13 @@ let
     version = 3;
     owner = "russross";
     repo = "blackfriday";
-    rev = "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c";
-    sha256 = "ddb0f4a4debe1ad4a210213c95fdf3c08cc21f18fd6a7cc3b76ed45228d57781";
+    rev = "6d1ef893fcb01b4f50cb6e57ed7df3e2e627b6b2";
+    sha256 = "0wdsyblcch0yk0hzr57m6mapfjdifp7zs9lk2ivvi891rfznc9mi";
     propagatedBuildInputs = [
       sanitized-anchor-name
     ];
-    # V2 breaks goorgeus/go-md2man right now
-    meta.autoUpdate = false;
+    meta.useUnstable = true;
+    date = "2017-10-11";
   };
 
   blake2b-simd = buildFromGitHub {
@@ -1034,8 +1034,8 @@ let
     version = 3;
     owner = "spf13";
     repo = "cobra";
-    rev = "v0.0.1";
-    sha256 = "1ddhvj9h2k8pc4ffxpn4qbvk14h2czqivd605lc87ab3f59ql4j9";
+    rev = "1be1d2841c773c01bee8289f55f7463b6e2c2539";
+    sha256 = "0jcmkxw3kcg4n5093dpyx2rcwxbwawc6f98zf89d922bwkkkdszv";
     propagatedBuildInputs = [
       go-homedir
       go-md2man
@@ -1044,6 +1044,8 @@ let
       viper
       yaml_v2
     ];
+    meta.useUnstable = true;
+    date = "2017-11-23";
   };
 
   cockroach-go = buildFromGitHub {
@@ -1700,8 +1702,8 @@ let
     version = 3;
     owner = "coreos";
     repo = "etcd";
-    rev = "6e116542c234350aa20621eb501ff4ea314f83d1";
-    sha256 = "11qgc1ykswa1ngqm9dwp2mcpr7z2lh7anlil9c5w0rw1rg2fip5c";
+    rev = "614ef75c01a566a1154b0f5d5ea4c47abc34f508";
+    sha256 = "0gi1xni9in5nf9kq415hizv56hslg9mfjxgfak4c1m3glhvrs04x";
     propagatedBuildInputs = [
       bbolt
       btree
@@ -2340,11 +2342,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 3;
-    date = "2017-11-27";
-    rev = "e943e4a209a366ebdb8f5cbdb2b726a2116e1967";
+    date = "2017-11-28";
+    rev = "28b507a1143b9134490384bc95088187dde1b96a";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "01dhlrdyf6bvssx9x0siw22chmprw6gbpgc8fjsplshxlib7ag94";
+    sha256 = "1w9pnmij47f3qpdq8dlqbrvbcy1xxvvd69p7l23kcr3hmj2q95gn";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -2595,14 +2597,16 @@ let
 
   goorgeous = buildFromGitHub {
     version = 3;
-    rev = "v2.0.0";
+    rev = "dcf1ef873b8987bf12596fe6951c48347986eb2f";
     owner = "chaseadamsio";
     repo = "goorgeous";
-    sha256 = "0pamhar56hpq9riiwsr9lm4rms3q7rb3w4nf1y32racp4as1hgfy";
+    sha256 = "012d2j1gxzw4d1vkmbf85gy66v1ynd7mvagfick5h6b32c8mgsz1";
     propagatedBuildInputs = [
       blackfriday
       sanitized-anchor-name
     ];
+    meta.useUnstable = true;
+    date = "2017-11-26";
   };
 
   gopass = buildFromGitHub {
@@ -3567,11 +3571,13 @@ let
     version = 3;
     owner = "cpuguy83";
     repo = "go-md2man";
-    rev = "v1.0.7";
-    sha256 = "0inhyhb0ia3d018nq5lgayk9r0qa2x3g5wpsr7z0rh7sra1jiaks";
+    rev = "1d903dcb749992f3741d744c0f8376b4bd7eb3e1";
+    sha256 = "0l5fl6c8g5dnwklp8q6qp2n2s8r1zj7ssbw5h9k809nl82irbssi";
     propagatedBuildInputs = [
       blackfriday
     ];
+    meta.useUnstable = true;
+    date = "2017-08-27";
   };
 
   go-memdb = buildFromGitHub {

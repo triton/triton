@@ -1,23 +1,28 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, ninja
 
 , openssl
 }:
 
+let
+  version = "1.10";
+in
 stdenv.mkDerivation {
-  name = "civetweb-2016-04-20";
+  name = "civetweb-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 3;
     owner = "civetweb";
     repo = "civetweb";
-    rev = "47e1dc92ac12e02eabb407418c13586243de90ef";
-    sha256 = "ef8ab78403e65d814f7fccffe64a463bc880f13ebf3ed8e050dbd4fcbc7de442";
+    rev = "v${version}";
+    sha256 = "5fab1d15fd2f6c7433528e82243bd47e6d90a032e96da8524d499ec37a932fcf";
   };
 
   nativeBuildInputs = [
     cmake
+    ninja
   ];
 
   buildInputs = [
@@ -26,10 +31,10 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     "-DBUILD_TESTING=OFF"
-    "-DCIVETWEB_ALLOW_WARNINGS=ON"
     "-DCIVETWEB_ENABLE_CXX=ON"
     "-DCIVETWEB_ENABLE_IPV6=ON"
     "-DCIVETWEB_ENABLE_WEBSOCKETS=ON"
+    "-DCIVETWEB_ENABLE_SERVER_STATS=ON"
   ];
 
   meta = with stdenv.lib; {

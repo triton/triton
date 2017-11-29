@@ -2362,6 +2362,7 @@ let
       grpc
       net
       oauth2
+      opencensus
       pprof
       protobuf
       sync
@@ -6297,6 +6298,30 @@ let
     sha256 = "0jcqdiczz94xkw0xcq97adfc9nk3wgy67l419811q8j7caqim7jv";
     propagatedBuildInputs = [
       go-querystring
+    ];
+  };
+
+  opencensus = buildFromGitHub {
+    version = 3;
+    owner = "census-instrumentation";
+    repo = "opencensus-go";
+    rev = "8876b526caaa296141eaffa9cac9f6442d5ee6a1";
+    date = "2017-11-28";
+    sha256 = "1577sd1gg2lhdpbwbgfhz96g1dpcdliwx3j9jj63km7s9lcpqn39";
+    goPackagePath = "go.opencensus.io";
+    subPackages = [
+      "internal/tagencoding"
+      "plugin/grpc"
+      "plugin/grpc/grpcstats"
+      "plugin/grpc/grpctrace"
+      "stats"
+      "tag"
+      "trace"
+      "trace/propagation"
+    ];
+    propagatedBuildInputs = [
+      grpc
+      net
     ];
   };
 

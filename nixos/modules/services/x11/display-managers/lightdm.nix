@@ -119,6 +119,11 @@ in
     environment.etc."lightdm/lightdm.conf".source = lightdmConf;
     environment.etc."lightdm/users.conf".source = usersConf;
 
+    # For tools like dm-tool
+    environment.systemPackages = [
+      lightdm
+    ];
+
     services.dbus.enable = true;
     services.dbus.packages = [ lightdm ];
 

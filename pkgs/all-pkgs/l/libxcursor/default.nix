@@ -11,11 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libXcursor-1.1.14";
+  name = "libXcursor-1.1.15";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
-    sha256 = "9bc6acb21ca14da51bda5bc912c8955bc6e5e433f0ab00c5e8bef842596c33df";
+    hashOutput = false;
+    sha256 = "294e670dd37cd23995e69aae626629d4a2dfe5708851bbc13d032401b7a3df6b";
   };
 
   nativeBuildInputs = [
@@ -34,6 +35,21 @@ stdenv.mkDerivation rec {
     "--enable-maintainer-mode"
     "--without-lint"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprints = [
+        # Matthieu Herrb
+        "C41C 985F DCF1 E536 4576  638B 6873 93EE 37D1 28F8"
+      ];
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "X.org libXcursor library";

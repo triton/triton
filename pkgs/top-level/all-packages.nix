@@ -3831,6 +3831,8 @@ xfconf = callPackageAlias "xfconf_4-12" { };
 
 xfe = callPackage ../all-pkgs/x/xfe { };
 
+xfs = callPackage ../all-pkgs/x/xfs { };
+
 xfsprogs = callPackage ../all-pkgs/x/xfsprogs { };
 
 xfsprogs_lib = pkgs.xfsprogs.lib;
@@ -3947,6 +3949,7 @@ xorg = recurseIntoAttrs (
       xf86driproto
       xf86miscproto
       xf86vidmodeproto
+      xfs
       xineramaproto
       xorg-server
       xproto

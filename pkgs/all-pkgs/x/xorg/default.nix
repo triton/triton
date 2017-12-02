@@ -64,6 +64,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xf86driproto
 , xf86miscproto
 , xf86vidmodeproto
+, xfs
 , xineramaproto
 , xorg-server
 , xproto
@@ -126,6 +127,7 @@ let
       xf86driproto
       xf86miscproto
       xf86vidmodeproto
+      xfs
       xineramaproto
       xproto
       xrefresh
@@ -1262,17 +1264,6 @@ let
     buildInputs = [ fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ];
 
   }) // {inherit fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ;};
-
-  xfs = (mkDerivation "xfs" {
-    name = "xfs-1.1.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xfs-1.1.4.tar.bz2;
-      sha256 = "1ylz4r7adf567rnlbb52yi9x3qi4pyv954kkhm7ld4f0fkk7a2x4";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libXfont xproto xtrans ];
-
-  }) // {inherit libXfont xproto xtrans ;};
 
   xhost = (mkDerivation "xhost" {
     name = "xhost-1.0.7";

@@ -2358,6 +2358,8 @@ libossp-uuid = callPackage ../all-pkgs/l/libossp-uuid { };
 
 libpcap = callPackage ../all-pkgs/l/libpcap { };
 
+libpciaccess = callPackage ../all-pkgs/l/libpciaccess { };
+
 libpeas_1-22 = callPackage ../all-pkgs/l/libpeas {
   channel = "1.22";
 };
@@ -3865,6 +3867,7 @@ xorg = recurseIntoAttrs (
       libdrm
       libevdev
       libinput
+      libpciaccess
       libpng
       libtool
       libunwind

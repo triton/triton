@@ -20,6 +20,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libdmx
 , libfontenc
 , libice
+, libpciaccess
 , libpthread-stubs
 , libsm
 , libx11
@@ -105,6 +106,7 @@ let
       kbproto
       libdmx
       libfontenc
+      libpciaccess
       libxcb
       libxkbfile
       presentproto
@@ -864,17 +866,6 @@ let
     buildInputs = [ libX11 libXext xextproto xf86vidmodeproto xproto ];
 
   }) // {inherit libX11 libXext xextproto xf86vidmodeproto xproto ;};
-
-  libpciaccess = (mkDerivation "libpciaccess" {
-    name = "libpciaccess-0.14";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libpciaccess-0.14.tar.bz2;
-      sha256 = "3df543e12afd41fea8eac817e48cbfde5aed8817b81670a4e9e493bb2f5bf2a4";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ zlib ];
-
-  }) // {inherit zlib ;};
 
   libxshmfence = (mkDerivation "libxshmfence" {
     name = "libxshmfence-1.2";

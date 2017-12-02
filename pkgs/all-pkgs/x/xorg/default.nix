@@ -59,6 +59,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xcb-proto
 , xcmiscproto
 , xextproto
+, xf86-video-intel
 , xf86bigfontproto
 , xf86dgaproto
 , xf86driproto
@@ -159,6 +160,7 @@ let
     libXv = libxv;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
+    xf86videointel = xf86-video-intel;
     xorgserver = xorg-server;
 
 ################################################################################
@@ -1198,17 +1200,6 @@ let
     buildInputs = [ fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];
 
   }) // {inherit fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
-
-  xf86videointel = (mkDerivation "xf86videointel" {
-    name = "xf86-video-intel-2.99.917";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-intel-2.99.917.tar.bz2;
-      sha256 = "1jb7jspmzidfixbc0gghyjmnmpqv85i7pi13l4h2hn2ml3p83dq0";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ cairo dri2proto dri3proto fontsproto intelgputools libdrm libpng systemd_lib libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ];
-
-  }) // {inherit cairo dri2proto dri3proto fontsproto intelgputools libdrm libpng systemd_lib libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ;};
 
   xf86videomodesetting = (mkDerivation "xf86videomodesetting" {
     name = "xf86-video-modesetting-0.9.0";

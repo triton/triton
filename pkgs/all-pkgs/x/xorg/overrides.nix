@@ -152,24 +152,6 @@ in
     '';
   };
 
-  xf86videointel = attrs: attrs // {
-    name = "xf86-video-intel-2017-03-25";
-    src = fetchzip {
-      version = 2;
-      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/cb6ba2da056f3298a765b4da5cd626343c00a533.tar.gz";
-      sha256 = "715befebf83791e3f3aeab0159baad3526d61ef5f153845b777e9ef90b574090";
-    };
-    nativeBuildInputs = attrs.nativeBuildInputs ++ [
-      args.autoreconfHook
-      xorg.utilmacros
-    ];
-    buildInputs = attrs.buildInputs ++ [
-      xorg.libXfont
-      xorg.libXv
-    ];
-    bindnow = false;
-  };
-
   xrdb = attrs: attrs // {
     configureFlags = [
       "--with-cpp=${args.mcpp}/bin/mcpp"

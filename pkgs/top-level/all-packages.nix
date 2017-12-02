@@ -3814,6 +3814,8 @@ xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
 
 xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 
+xf86-video-intel = callPackage ../all-pkgs/x/xf86-video-intel { };
+
 xf86bigfontproto = callPackage ../all-pkgs/x/xf86bigfontproto { };
 
 xf86dgaproto = callPackage ../all-pkgs/x/xf86dgaproto { };
@@ -3944,6 +3946,7 @@ xorg = recurseIntoAttrs (
       xcb-proto
       xcmiscproto
       xextproto
+      xf86-video-intel
       xf86bigfontproto
       xf86dgaproto
       xf86driproto

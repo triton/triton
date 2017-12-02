@@ -1,12 +1,13 @@
 { stdenv
 , fetchFromGitHub
+, lib
 , meson
 , ninja
 }:
 
 let
-  rev = "d61cddedac68f6dd3991d285045a23aeb253aa53";
-  date = "2017-10-29";
+  rev = "7c979e86610f48fa50e740854bcfce170b50fb46";
+  date = "2017-11-16";
 in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${date}";
@@ -24,7 +25,7 @@ stdenv.mkDerivation rec {
     ninja
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A simple API to manipulate JSON data in C++";
     homepage = https://github.com/open-source-parsers/jsoncpp;
     license = licenses.mit;

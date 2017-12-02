@@ -25,8 +25,8 @@ let
       sha256 = "ab85c10fd2683481dfef672a77fe60e6a2039558cbc0e9bf56b5e1df471c93d0";
     };
     "2" = {
-      version = "2.0.2";
-      sha256 = "94088d3b87f7d42c7116d9adaad155859e93330c6e47f5989f2de600b9a6c111";
+      version = "2.0.3";
+      sha256 = "0e8ab7fd737ccdfe87e1f02b55f221f0bd4503a1c5f28be4ed6a54586bac9c4e";
     };
   };
 
@@ -89,6 +89,8 @@ stdenv.mkDerivation rec {
         "C383 B778 2556 13DF DB40  9D91 DB22 1A69 0000 0011"
         # Matt Turner
         "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
+        # Matthieu Herrb
+        "C41C 985F DCF1 E536 4576  638B 6873 93EE 37D1 28F8"
       ];
       failEarly = true;
     };

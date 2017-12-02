@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "xxx";
+    description = "X Font Server";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

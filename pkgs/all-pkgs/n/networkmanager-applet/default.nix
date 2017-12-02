@@ -1,5 +1,4 @@
 { stdenv
-, coreutils
 , fetchFromGitHub  # FIXME: remove this next release
 , fetchurl
 , intltool

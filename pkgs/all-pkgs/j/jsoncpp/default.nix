@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "open-source-parsers";
     repo = "jsoncpp";
     inherit rev;
-    sha256 = "b8618239505f9e587de4be7da1ad94f9b3e88284bfb6fa8ddd0139fe50975821";
+    sha256 = "ba28bbe4022a945fc5d752723966cef02ca1a7d6106d748b0fe418c5db233e8a";
   };
 
   nativeBuildInputs = [

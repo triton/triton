@@ -2893,6 +2893,8 @@ ncurses = callPackage ../all-pkgs/g/gpm-ncurses { };
 
 ndisc6 = callPackage ../all-pkgs/n/ndisc6 { };
 
+netperf = callPackage ../all-pkgs/n/netperf { };
+
 net-snmp = callPackage ../all-pkgs/n/net-snmp { };
 
 net-tools = callPackage ../all-pkgs/n/net-tools { };

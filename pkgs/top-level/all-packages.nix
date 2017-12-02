@@ -1986,6 +1986,11 @@ itstool = pkgs.python2Packages.itstool;
 
 iw = callPackage ../all-pkgs/i/iw { };
 
+jack2_full = callPackage ../all-pkgs/j/jack2 { };
+jack2_lib = callPackageAlias "jack2_full" {
+  prefix = "lib";
+};
+
 jam = callPackage ../all-pkgs/j/jam { };
 
 jansson = callPackage ../all-pkgs/j/jansson { };
@@ -4677,11 +4682,6 @@ telepathy_mission_control =
 #
   dblatex = callPackage ../tools/typesetting/tex/dblatex {
     enableAllFeatures = false;
-  };
-#
-  jack2_full = callPackage ../misc/jackaudio { };
-  jack2_lib = callPackageAlias "jack2_full" {
-    prefix = "lib";
   };
 #
 # All the new TeX Live is inside. See description in default.nix.

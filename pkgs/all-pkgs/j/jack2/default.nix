@@ -2,7 +2,6 @@
 , fetchFromGitHub
 , lib
 , makeWrapper
-, python
 
 , bash
 , expat
@@ -28,7 +27,7 @@ let
 
   libOnly = prefix == "lib";
 
-  version = "2017-05-18";
+  version = "2017-09-15";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";
@@ -37,18 +36,16 @@ stdenv.mkDerivation rec {
     version = 3;
     owner = "jackaudio";
     repo = "jack2";
-    rev = "31d4ae97f296fe1c954cbb51e50d5e60578260b8";
-    sha256 = "c357e5e8384231dab58e8070c9fc7515e6975f1fa61c98e7231bd3dbb3964cf5";
+    rev = "c44a220fbe5775653fc981334ae3d2cfffddc421";
+    sha256 = "f6aaa792fc3d7173c278900409c472489481e85107a235241495cad13488fb07";
   };
 
   nativeBuildInputs = [
-    python
+    pythonPackages.python
     makeWrapper
   ];
 
   buildInputs = [
-    python
-
     expat
     libsamplerate
     libsndfile
@@ -59,22 +56,17 @@ stdenv.mkDerivation rec {
   ] ++ optionals (!libOnly) [
     alsa-lib
     ffado_lib
+    pythonPackages.python
     pythonPackages.dbus
   ];
 
   postPatch = ''
     sed -i svnversion_regenerate.sh \
       -e 's,/bin/bash,${bash}/bin/bash,'
-
-    # FIXME: disable tests to work around bug with gcc7
-    ## if not bld.env['IS_WINDOWS']:
-    ##   bld.recurse('tests')
-    sed -i wscript \
-      -e 's/not bld.env/bld.env/'
   '';
 
   configurePhase = ''
-    python waf configure --prefix=$out \
+    ${pythonPackages.python.interpreter} waf configure --prefix=$out \
       --dbus \
       --classic \
       ${optionalString (!libOnly) "--firewire"} \

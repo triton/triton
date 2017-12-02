@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "17.4.0";
+  version = "17.5.0";
 in
 buildPythonPackage {
   name = "pyOpenSSL-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pyOpenSSL";
     inherit version;
-    sha256 = "2d96b6a3d768bf466c56240d6dd6f035cc8e9c356d20da0583886e77ce9cf6ab";
+    sha256 = "2c10cfba46a52c0b0950118981d61e72c1e5b1aac451ca1bc77de1a679456773";
   };
 
   propagatedBuildInputs = [

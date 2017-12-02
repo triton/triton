@@ -59,6 +59,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xcb-proto
 , xcmiscproto
 , xextproto
+, xf86-video-amdgpu
 , xf86-video-intel
 , xf86bigfontproto
 , xf86dgaproto
@@ -160,6 +161,7 @@ let
     libXv = libxv;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
+    xf86videoamdgpu = xf86-video-amdgpu;
     xf86videointel = xf86-video-intel;
     xorgserver = xorg-server;
 
@@ -1178,17 +1180,6 @@ let
     buildInputs = [ fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ];
 
   }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
-
-  xf86videoamdgpu = (mkDerivation "xf86videoamdgpu" {
-    name = "xf86-video-amdgpu-1.3.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-amdgpu-1.3.0.tar.bz2;
-      sha256 = "c1630f228938be949273f72b29ae70822dde064ad79c3ccb14d55f427e3f4e70";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto opengl-dummy glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];
-
-  }) // {inherit fontsproto opengl-dummy glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
     name = "xf86-video-ati-7.9.0";

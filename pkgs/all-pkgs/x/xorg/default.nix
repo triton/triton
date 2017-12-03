@@ -167,16 +167,16 @@ let
 
 ################################################################################
 
-  # bdftopcf = (mkDerivation "bdftopcf" {
-  #   name = "bdftopcf-1.0.5";
-  #   src = fetchurl {
-  #     url = mirror://xorg/individual/app/bdftopcf-1.0.5.tar.bz2;
-  #     sha256 = "09i03sk878cmx2i40lkpsysn7zqcvlczb30j7x3lryb11jz4gx1q";
-  #   };
-  #   nativeBuildInputs = [ utilmacros ];
-  #   buildInputs = [ libXfont ];
-  #
-  # }) // {inherit libXfont ;};
+  bdftopcf = (mkDerivation "bdftopcf" {
+    name = "bdftopcf-1.0.5";
+    src = fetchurl {
+      url = mirror://xorg/individual/app/bdftopcf-1.0.5.tar.bz2;
+      sha256 = "09i03sk878cmx2i40lkpsysn7zqcvlczb30j7x3lryb11jz4gx1q";
+    };
+    nativeBuildInputs = [ utilmacros ];
+    buildInputs = [ libXfont ];
+
+  }) // {inherit libXfont ;};
 
   # encodings = (mkDerivation "encodings" {
   #   name = "encodings-1.0.4";

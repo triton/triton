@@ -167,38 +167,38 @@ let
 
 ################################################################################
 
-  bdftopcf = (mkDerivation "bdftopcf" {
-    name = "bdftopcf-1.0.5";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/bdftopcf-1.0.5.tar.bz2;
-      sha256 = "09i03sk878cmx2i40lkpsysn7zqcvlczb30j7x3lryb11jz4gx1q";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libXfont ];
+  # bdftopcf = (mkDerivation "bdftopcf" {
+  #   name = "bdftopcf-1.0.5";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/bdftopcf-1.0.5.tar.bz2;
+  #     sha256 = "09i03sk878cmx2i40lkpsysn7zqcvlczb30j7x3lryb11jz4gx1q";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libXfont ];
+  #
+  # }) // {inherit libXfont ;};
 
-  }) // {inherit libXfont ;};
+  # encodings = (mkDerivation "encodings" {
+  #   name = "encodings-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/encodings-1.0.4.tar.bz2;
+  #     sha256 = "0ffmaw80vmfwdgvdkp6495xgsqszb6s0iira5j0j6pd4i0lk3mnf";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ ];
+  #
+  # }) // {inherit ;};
 
-  encodings = (mkDerivation "encodings" {
-    name = "encodings-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/encodings-1.0.4.tar.bz2;
-      sha256 = "0ffmaw80vmfwdgvdkp6495xgsqszb6s0iira5j0j6pd4i0lk3mnf";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ ];
-
-  }) // {inherit ;};
-
-  evieext = (mkDerivation "evieext" {
-    name = "evieext-1.1.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/proto/evieext-1.1.1.tar.bz2;
-      sha256 = "1zik4xcvm6hppd13irn9520ip8rblcw682x9fxjzb6bd8ca43xqw";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ ];
-
-  }) // {inherit ;};
+  # evieext = (mkDerivation "evieext" {
+  #   name = "evieext-1.1.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/proto/evieext-1.1.1.tar.bz2;
+  #     sha256 = "1zik4xcvm6hppd13irn9520ip8rblcw682x9fxjzb6bd8ca43xqw";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ ];
+  #
+  # }) // {inherit ;};
 
   fontadobe100dpi = (mkDerivation "fontadobe100dpi" {
     name = "font-adobe-100dpi-1.0.3";
@@ -224,41 +224,41 @@ let
 
   }) // {inherit ;};
 
-  fontadobeutopia100dpi = (mkDerivation "fontadobeutopia100dpi" {
-    name = "font-adobe-utopia-100dpi-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2;
-      sha256 = "19dd9znam1ah72jmdh7i6ny2ss2r6m21z9v0l43xvikw48zmwvyi";
-    };
-    nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontadobeutopia100dpi = (mkDerivation "fontadobeutopia100dpi" {
+  #   name = "font-adobe-utopia-100dpi-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2;
+  #     sha256 = "19dd9znam1ah72jmdh7i6ny2ss2r6m21z9v0l43xvikw48zmwvyi";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontadobeutopia75dpi = (mkDerivation "fontadobeutopia75dpi" {
+  #   name = "font-adobe-utopia-75dpi-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-adobe-utopia-75dpi-1.0.4.tar.bz2;
+  #     sha256 = "152wigpph5wvl4k9m3l4mchxxisgsnzlx033mn5iqrpkc6f72cl7";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontadobeutopia75dpi = (mkDerivation "fontadobeutopia75dpi" {
-    name = "font-adobe-utopia-75dpi-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-adobe-utopia-75dpi-1.0.4.tar.bz2;
-      sha256 = "152wigpph5wvl4k9m3l4mchxxisgsnzlx033mn5iqrpkc6f72cl7";
-    };
-    nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontadobeutopiatype1 = (mkDerivation "fontadobeutopiatype1" {
-    name = "font-adobe-utopia-type1-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-adobe-utopia-type1-1.0.4.tar.bz2;
-      sha256 = "0xw0pdnzj5jljsbbhakc6q9ha2qnca1jr81zk7w70yl9bw83b54p";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontadobeutopiatype1 = (mkDerivation "fontadobeutopiatype1" {
+  #   name = "font-adobe-utopia-type1-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-adobe-utopia-type1-1.0.4.tar.bz2;
+  #     sha256 = "0xw0pdnzj5jljsbbhakc6q9ha2qnca1jr81zk7w70yl9bw83b54p";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   fontalias = (mkDerivation "fontalias" {
     name = "font-alias-1.0.3";
@@ -271,17 +271,17 @@ let
 
   }) // {inherit ;};
 
-  fontarabicmisc = (mkDerivation "fontarabicmisc" {
-    name = "font-arabic-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-arabic-misc-1.0.3.tar.bz2;
-      sha256 = "1x246dfnxnmflzf0qzy62k8jdpkb6jkgspcjgbk8jcq9lw99npah";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontarabicmisc = (mkDerivation "fontarabicmisc" {
+  #   name = "font-arabic-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-arabic-misc-1.0.3.tar.bz2;
+  #     sha256 = "1x246dfnxnmflzf0qzy62k8jdpkb6jkgspcjgbk8jcq9lw99npah";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   fontbh100dpi = (mkDerivation "fontbh100dpi" {
     name = "font-bh-100dpi-1.0.3";
@@ -295,17 +295,17 @@ let
 
   }) // {inherit ;};
 
-  fontbh75dpi = (mkDerivation "fontbh75dpi" {
-    name = "font-bh-75dpi-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bh-75dpi-1.0.3.tar.bz2;
-      sha256 = "073jmhf0sr2j1l8da97pzsqj805f7mf9r2gy92j4diljmi8sm1il";
-    };
-    nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontbh75dpi = (mkDerivation "fontbh75dpi" {
+  #   name = "font-bh-75dpi-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bh-75dpi-1.0.3.tar.bz2;
+  #     sha256 = "073jmhf0sr2j1l8da97pzsqj805f7mf9r2gy92j4diljmi8sm1il";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   fontbhlucidatypewriter100dpi = (mkDerivation "fontbhlucidatypewriter100dpi" {
     name = "font-bh-lucidatypewriter-100dpi-1.0.3";
@@ -343,77 +343,77 @@ let
 
   }) // {inherit ;};
 
-  fontbhtype1 = (mkDerivation "fontbhtype1" {
-    name = "font-bh-type1-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bh-type1-1.0.3.tar.bz2;
-      sha256 = "1hb3iav089albp4sdgnlh50k47cdjif9p4axm0kkjvs8jyi5a53n";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontbhtype1 = (mkDerivation "fontbhtype1" {
+  #   name = "font-bh-type1-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bh-type1-1.0.3.tar.bz2;
+  #     sha256 = "1hb3iav089albp4sdgnlh50k47cdjif9p4axm0kkjvs8jyi5a53n";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontbitstream100dpi = (mkDerivation "fontbitstream100dpi" {
+  #   name = "font-bitstream-100dpi-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2;
+  #     sha256 = "1kmn9jbck3vghz6rj3bhc3h0w6gh0qiaqm90cjkqsz1x9r2dgq7b";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontbitstream100dpi = (mkDerivation "fontbitstream100dpi" {
-    name = "font-bitstream-100dpi-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2;
-      sha256 = "1kmn9jbck3vghz6rj3bhc3h0w6gh0qiaqm90cjkqsz1x9r2dgq7b";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontbitstream75dpi = (mkDerivation "fontbitstream75dpi" {
+  #   name = "font-bitstream-75dpi-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bitstream-75dpi-1.0.3.tar.bz2;
+  #     sha256 = "13plbifkvfvdfym6gjbgy9wx2xbdxi9hfrl1k22xayy02135wgxs";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontbitstreamspeedo = (mkDerivation "fontbitstreamspeedo" {
+  #   name = "font-bitstream-speedo-1.0.2";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bitstream-speedo-1.0.2.tar.bz2;
+  #     sha256 = "0qv7sxrvfgzjplj0czq8vzf425w6iapl8n5mhb08hywl8q0gw207";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontbitstream75dpi = (mkDerivation "fontbitstream75dpi" {
-    name = "font-bitstream-75dpi-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bitstream-75dpi-1.0.3.tar.bz2;
-      sha256 = "13plbifkvfvdfym6gjbgy9wx2xbdxi9hfrl1k22xayy02135wgxs";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontbitstreamtype1 = (mkDerivation "fontbitstreamtype1" {
+  #   name = "font-bitstream-type1-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-bitstream-type1-1.0.3.tar.bz2;
+  #     sha256 = "1256z0jhcf5gbh1d03593qdwnag708rxqa032izmfb5dmmlhbsn6";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
-
-  fontbitstreamspeedo = (mkDerivation "fontbitstreamspeedo" {
-    name = "font-bitstream-speedo-1.0.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bitstream-speedo-1.0.2.tar.bz2;
-      sha256 = "0qv7sxrvfgzjplj0czq8vzf425w6iapl8n5mhb08hywl8q0gw207";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontbitstreamtype1 = (mkDerivation "fontbitstreamtype1" {
-    name = "font-bitstream-type1-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-bitstream-type1-1.0.3.tar.bz2;
-      sha256 = "1256z0jhcf5gbh1d03593qdwnag708rxqa032izmfb5dmmlhbsn6";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontcronyxcyrillic = (mkDerivation "fontcronyxcyrillic" {
-    name = "font-cronyx-cyrillic-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-cronyx-cyrillic-1.0.3.tar.bz2;
-      sha256 = "0ai1v4n61k8j9x2a1knvfbl2xjxk3xxmqaq3p9vpqrspc69k31kf";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontcronyxcyrillic = (mkDerivation "fontcronyxcyrillic" {
+  #   name = "font-cronyx-cyrillic-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-cronyx-cyrillic-1.0.3.tar.bz2;
+  #     sha256 = "0ai1v4n61k8j9x2a1knvfbl2xjxk3xxmqaq3p9vpqrspc69k31kf";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   fontcursormisc = (mkDerivation "fontcursormisc" {
     name = "font-cursor-misc-1.0.3";
@@ -427,113 +427,113 @@ let
 
   }) // {inherit ;};
 
-  fontdaewoomisc = (mkDerivation "fontdaewoomisc" {
-    name = "font-daewoo-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-daewoo-misc-1.0.3.tar.bz2;
-      sha256 = "1s2bbhizzgbbbn5wqs3vw53n619cclxksljvm759h9p1prqdwrdw";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontdaewoomisc = (mkDerivation "fontdaewoomisc" {
+  #   name = "font-daewoo-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-daewoo-misc-1.0.3.tar.bz2;
+  #     sha256 = "1s2bbhizzgbbbn5wqs3vw53n619cclxksljvm759h9p1prqdwrdw";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontdecmisc = (mkDerivation "fontdecmisc" {
+  #   name = "font-dec-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-dec-misc-1.0.3.tar.bz2;
+  #     sha256 = "0yzza0l4zwyy7accr1s8ab7fjqkpwggqydbm2vc19scdby5xz7g1";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontdecmisc = (mkDerivation "fontdecmisc" {
-    name = "font-dec-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-dec-misc-1.0.3.tar.bz2;
-      sha256 = "0yzza0l4zwyy7accr1s8ab7fjqkpwggqydbm2vc19scdby5xz7g1";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontibmtype1 = (mkDerivation "fontibmtype1" {
+  #   name = "font-ibm-type1-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-ibm-type1-1.0.3.tar.bz2;
+  #     sha256 = "1pyjll4adch3z5cg663s6vhi02k8m6488f0mrasg81ssvg9jinzx";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontisasmisc = (mkDerivation "fontisasmisc" {
+  #   name = "font-isas-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-isas-misc-1.0.3.tar.bz2;
+  #     sha256 = "0rx8q02rkx673a7skkpnvfkg28i8gmqzgf25s9yi0lar915sn92q";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontibmtype1 = (mkDerivation "fontibmtype1" {
-    name = "font-ibm-type1-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-ibm-type1-1.0.3.tar.bz2;
-      sha256 = "1pyjll4adch3z5cg663s6vhi02k8m6488f0mrasg81ssvg9jinzx";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontjismisc = (mkDerivation "fontjismisc" {
+  #   name = "font-jis-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-jis-misc-1.0.3.tar.bz2;
+  #     sha256 = "0rdc3xdz12pnv951538q6wilx8mrdndpkphpbblszsv7nc8cw61b";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontmicromisc = (mkDerivation "fontmicromisc" {
+  #   name = "font-micro-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-micro-misc-1.0.3.tar.bz2;
+  #     sha256 = "1dldxlh54zq1yzfnrh83j5vm0k4ijprrs5yl18gm3n9j1z0q2cws";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontisasmisc = (mkDerivation "fontisasmisc" {
-    name = "font-isas-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-isas-misc-1.0.3.tar.bz2;
-      sha256 = "0rx8q02rkx673a7skkpnvfkg28i8gmqzgf25s9yi0lar915sn92q";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontmisccyrillic = (mkDerivation "fontmisccyrillic" {
+  #   name = "font-misc-cyrillic-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-misc-cyrillic-1.0.3.tar.bz2;
+  #     sha256 = "0q2ybxs8wvylvw95j6x9i800rismsmx4b587alwbfqiw6biy63z4";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontmiscethiopic = (mkDerivation "fontmiscethiopic" {
+  #   name = "font-misc-ethiopic-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-misc-ethiopic-1.0.3.tar.bz2;
+  #     sha256 = "19cq7iq0pfad0nc2v28n681fdq3fcw1l1hzaq0wpkgpx7bc1zjsk";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontjismisc = (mkDerivation "fontjismisc" {
-    name = "font-jis-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-jis-misc-1.0.3.tar.bz2;
-      sha256 = "0rdc3xdz12pnv951538q6wilx8mrdndpkphpbblszsv7nc8cw61b";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontmicromisc = (mkDerivation "fontmicromisc" {
-    name = "font-micro-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-micro-misc-1.0.3.tar.bz2;
-      sha256 = "1dldxlh54zq1yzfnrh83j5vm0k4ijprrs5yl18gm3n9j1z0q2cws";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontmisccyrillic = (mkDerivation "fontmisccyrillic" {
-    name = "font-misc-cyrillic-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-misc-cyrillic-1.0.3.tar.bz2;
-      sha256 = "0q2ybxs8wvylvw95j6x9i800rismsmx4b587alwbfqiw6biy63z4";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontmiscethiopic = (mkDerivation "fontmiscethiopic" {
-    name = "font-misc-ethiopic-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-misc-ethiopic-1.0.3.tar.bz2;
-      sha256 = "19cq7iq0pfad0nc2v28n681fdq3fcw1l1hzaq0wpkgpx7bc1zjsk";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontmiscmeltho = (mkDerivation "fontmiscmeltho" {
-    name = "font-misc-meltho-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-misc-meltho-1.0.3.tar.bz2;
-      sha256 = "148793fqwzrc3bmh2vlw5fdiwjc2n7vs25cic35gfp452czk489p";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontmiscmeltho = (mkDerivation "fontmiscmeltho" {
+  #   name = "font-misc-meltho-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-misc-meltho-1.0.3.tar.bz2;
+  #     sha256 = "148793fqwzrc3bmh2vlw5fdiwjc2n7vs25cic35gfp452czk489p";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   fontmiscmisc = (mkDerivation "fontmiscmisc" {
     name = "font-misc-misc-1.1.2";
@@ -547,76 +547,76 @@ let
 
   }) // {inherit ;};
 
-  fontmuttmisc = (mkDerivation "fontmuttmisc" {
-    name = "font-mutt-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-mutt-misc-1.0.3.tar.bz2;
-      sha256 = "13qghgr1zzpv64m0p42195k1kc77pksiv059fdvijz1n6kdplpxx";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontmuttmisc = (mkDerivation "fontmuttmisc" {
+  #   name = "font-mutt-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-mutt-misc-1.0.3.tar.bz2;
+  #     sha256 = "13qghgr1zzpv64m0p42195k1kc77pksiv059fdvijz1n6kdplpxx";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontschumachermisc = (mkDerivation "fontschumachermisc" {
+  #   name = "font-schumacher-misc-1.1.2";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-schumacher-misc-1.1.2.tar.bz2;
+  #     sha256 = "0nkym3n48b4v36y4s927bbkjnsmicajarnf6vlp7wxp0as304i74";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontschumachermisc = (mkDerivation "fontschumachermisc" {
-    name = "font-schumacher-misc-1.1.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-schumacher-misc-1.1.2.tar.bz2;
-      sha256 = "0nkym3n48b4v36y4s927bbkjnsmicajarnf6vlp7wxp0as304i74";
-    };
-    nativeBuildInputs = [ bdftopcf fontutil mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontscreencyrillic = (mkDerivation "fontscreencyrillic" {
+  #   name = "font-screen-cyrillic-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-screen-cyrillic-1.0.4.tar.bz2;
+  #     sha256 = "0yayf1qlv7irf58nngddz2f1q04qkpr5jwp4aja2j5gyvzl32hl2";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
+  # fontsonymisc = (mkDerivation "fontsonymisc" {
+  #   name = "font-sony-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-sony-misc-1.0.3.tar.bz2;
+  #     sha256 = "1xfgcx4gsgik5mkgkca31fj3w72jw9iw76qyrajrsz1lp8ka6hr0";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  fontscreencyrillic = (mkDerivation "fontscreencyrillic" {
-    name = "font-screen-cyrillic-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-screen-cyrillic-1.0.4.tar.bz2;
-      sha256 = "0yayf1qlv7irf58nngddz2f1q04qkpr5jwp4aja2j5gyvzl32hl2";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontsunmisc = (mkDerivation "fontsunmisc" {
+  #   name = "font-sun-misc-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-sun-misc-1.0.3.tar.bz2;
+  #     sha256 = "1q6jcqrffg9q5f5raivzwx9ffvf7r11g6g0b125na1bhpz5ly7s8";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
-
-  fontsonymisc = (mkDerivation "fontsonymisc" {
-    name = "font-sony-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-sony-misc-1.0.3.tar.bz2;
-      sha256 = "1xfgcx4gsgik5mkgkca31fj3w72jw9iw76qyrajrsz1lp8ka6hr0";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fontsunmisc = (mkDerivation "fontsunmisc" {
-    name = "font-sun-misc-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-sun-misc-1.0.3.tar.bz2;
-      sha256 = "1q6jcqrffg9q5f5raivzwx9ffvf7r11g6g0b125na1bhpz5ly7s8";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
-
-  fonttosfnt = (mkDerivation "fonttosfnt" {
-    name = "fonttosfnt-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/fonttosfnt-1.0.4.tar.bz2;
-      sha256 = "157mf1j790pnsx2lhybkpcpmprpx83fjbixxp3lwgydkk6samsiz";
-    };
-    nativeBuildInputs = [ ];
-    buildInputs = [ libfontenc freetype xproto ];
-
-  }) // {inherit libfontenc freetype xproto ;};
+  # fonttosfnt = (mkDerivation "fonttosfnt" {
+  #   name = "fonttosfnt-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/fonttosfnt-1.0.4.tar.bz2;
+  #     sha256 = "157mf1j790pnsx2lhybkpcpmprpx83fjbixxp3lwgydkk6samsiz";
+  #   };
+  #   nativeBuildInputs = [ ];
+  #   buildInputs = [ libfontenc freetype xproto ];
+  #
+  # }) // {inherit libfontenc freetype xproto ;};
 
   fontutil = (mkDerivation "fontutil" {
     name = "font-util-1.3.1";
@@ -629,29 +629,29 @@ let
 
   }) // {inherit ;};
 
-  fontwinitzkicyrillic = (mkDerivation "fontwinitzkicyrillic" {
-    name = "font-winitzki-cyrillic-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-winitzki-cyrillic-1.0.3.tar.bz2;
-      sha256 = "181n1bgq8vxfxqicmy1jpm1hnr6gwn1kdhl6hr4frjigs1ikpldb";
-    };
-    nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  # fontwinitzkicyrillic = (mkDerivation "fontwinitzkicyrillic" {
+  #   name = "font-winitzki-cyrillic-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-winitzki-cyrillic-1.0.3.tar.bz2;
+  #     sha256 = "181n1bgq8vxfxqicmy1jpm1hnr6gwn1kdhl6hr4frjigs1ikpldb";
+  #   };
+  #   nativeBuildInputs = [ bdftopcf mkfontdir utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
-  }) // {inherit ;};
-
-  fontxfree86type1 = (mkDerivation "fontxfree86type1" {
-    name = "font-xfree86-type1-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/font/font-xfree86-type1-1.0.4.tar.bz2;
-      sha256 = "0jp3zc0qfdaqfkgzrb44vi9vi0a8ygb35wp082yz7rvvxhmg9sya";
-    };
-    nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
-    buildInputs = [ ];
-    configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
-
-  }) // {inherit ;};
+  # fontxfree86type1 = (mkDerivation "fontxfree86type1" {
+  #   name = "font-xfree86-type1-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/font/font-xfree86-type1-1.0.4.tar.bz2;
+  #     sha256 = "0jp3zc0qfdaqfkgzrb44vi9vi0a8ygb35wp082yz7rvvxhmg9sya";
+  #   };
+  #   nativeBuildInputs = [ mkfontdir mkfontscale utilmacros ];
+  #   buildInputs = [ ];
+  #   configureFlags = [ "--with-fontrootdir=$(out)/lib/X11/fonts" ];
+  #
+  # }) // {inherit ;};
 
   glamoregl = (mkDerivation "glamoregl" {
     name = "glamor-egl-0.6.0";
@@ -675,16 +675,16 @@ let
 
   }) // {inherit libICE xproto ;};
 
-  ico = (mkDerivation "ico" {
-    name = "ico-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/ico-1.0.4.tar.bz2;
-      sha256 = "141mqphg9sfz7x1gfiqpkjkqkiqq1b5zxw67l0ls2p7rk1q7cci9";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xproto ];
-
-  }) // {inherit libX11 xproto ;};
+  # ico = (mkDerivation "ico" {
+  #   name = "ico-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/ico-1.0.4.tar.bz2;
+  #     sha256 = "141mqphg9sfz7x1gfiqpkjkqkiqq1b5zxw67l0ls2p7rk1q7cci9";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libX11 xproto ];
+  #
+  # }) // {inherit libX11 xproto ;};
 
   imake = (mkDerivation "imake" {
     name = "imake-1.0.7";
@@ -708,27 +708,27 @@ let
 
   }) // {inherit cairo dri2proto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ;};
 
-  libFS = (mkDerivation "libFS" {
-    name = "libFS-1.0.7";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libFS-1.0.7.tar.bz2;
-      sha256 = "1wy4km3qwwajbyl8y9pka0zwizn7d9pfiyjgzba02x3a083lr79f";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto xproto xtrans ];
+  # libFS = (mkDerivation "libFS" {
+  #   name = "libFS-1.0.7";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libFS-1.0.7.tar.bz2;
+  #     sha256 = "1wy4km3qwwajbyl8y9pka0zwizn7d9pfiyjgzba02x3a083lr79f";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ fontsproto xproto xtrans ];
+  #
+  # }) // {inherit fontsproto xproto xtrans ;};
 
-  }) // {inherit fontsproto xproto xtrans ;};
-
-  libXTrap = (mkDerivation "libXTrap" {
-    name = "libXTrap-1.0.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXTrap-1.0.1.tar.bz2;
-      sha256 = "0bi5wxj6avim61yidh9fd3j4n8czxias5m8vss9vhxjnk1aksdwg";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ trapproto libX11 libXext xextproto libXt ];
-
-  }) // {inherit trapproto libX11 libXext xextproto libXt ;};
+  # libXTrap = (mkDerivation "libXTrap" {
+  #   name = "libXTrap-1.0.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libXTrap-1.0.1.tar.bz2;
+  #     sha256 = "0bi5wxj6avim61yidh9fd3j4n8czxias5m8vss9vhxjnk1aksdwg";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ trapproto libX11 libXext xextproto libXt ];
+  #
+  # }) // {inherit trapproto libX11 libXext xextproto libXt ;};
 
   libXaw = (mkDerivation "libXaw" {
     name = "libXaw-1.0.13";
@@ -752,16 +752,16 @@ let
 
   }) // {inherit libX11 libXext libXmu libXpm xproto libXt ;};
 
-  libXevie = (mkDerivation "libXevie" {
-    name = "libXevie-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXevie-1.0.3.tar.bz2;
-      sha256 = "0wzx8ic38rj2v53ax4jz1rk39idy3r3m1apc7idmk3z54chkh2y0";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ evieext libX11 libXext xextproto xproto ];
-
-  }) // {inherit evieext libX11 libXext xextproto xproto ;};
+  # libXevie = (mkDerivation "libXevie" {
+  #   name = "libXevie-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libXevie-1.0.3.tar.bz2;
+  #     sha256 = "0wzx8ic38rj2v53ax4jz1rk39idy3r3m1apc7idmk3z54chkh2y0";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ evieext libX11 libXext xextproto xproto ];
+  #
+  # }) // {inherit evieext libX11 libXext xextproto xproto ;};
 
   libXfontcache = (mkDerivation "libXfontcache" {
     name = "libXfontcache-1.0.5";
@@ -785,16 +785,16 @@ let
 
   }) // {inherit libX11 libXext xextproto xproto libXt ;};
 
-  libXp = (mkDerivation "libXp" {
-    name = "libXp-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXp-1.0.3.tar.bz2;
-      sha256 = "0mwc2jwmq03b1m9ihax5c6gw2ln8rc70zz4fsj3kb7440nchqdkz";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ printproto libX11 libXau libXext xextproto ];
-
-  }) // {inherit printproto libX11 libXau libXext xextproto ;};
+  # libXp = (mkDerivation "libXp" {
+  #   name = "libXp-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libXp-1.0.3.tar.bz2;
+  #     sha256 = "0mwc2jwmq03b1m9ihax5c6gw2ln8rc70zz4fsj3kb7440nchqdkz";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ printproto libX11 libXau libXext xextproto ];
+  #
+  # }) // {inherit printproto libX11 libXau libXext xextproto ;};
 
   libXpm = (mkDerivation "libXpm" {
     name = "libXpm-3.5.12";
@@ -807,27 +807,27 @@ let
 
   }) // {inherit libX11 libXext xextproto xproto libXt ;};
 
-  libXprintAppUtil = (mkDerivation "libXprintAppUtil" {
-    name = "libXprintAppUtil-1.0.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXprintAppUtil-1.0.1.tar.bz2;
-      sha256 = "198ad7pmkp31vcs0iwd8z3vw08p69hlyjmzgk7sdny9k01368q14";
-    };
-    nativeBuildInputs = [ ];
-    buildInputs = [ printproto libX11 libXau libXp libXprintUtil xproto ];
+  # libXprintAppUtil = (mkDerivation "libXprintAppUtil" {
+  #   name = "libXprintAppUtil-1.0.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libXprintAppUtil-1.0.1.tar.bz2;
+  #     sha256 = "198ad7pmkp31vcs0iwd8z3vw08p69hlyjmzgk7sdny9k01368q14";
+  #   };
+  #   nativeBuildInputs = [ ];
+  #   buildInputs = [ printproto libX11 libXau libXp libXprintUtil xproto ];
+  #
+  # }) // {inherit printproto libX11 libXau libXp libXprintUtil xproto ;};
 
-  }) // {inherit printproto libX11 libXau libXp libXprintUtil xproto ;};
-
-  libXprintUtil = (mkDerivation "libXprintUtil" {
-    name = "libXprintUtil-1.0.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXprintUtil-1.0.1.tar.bz2;
-      sha256 = "0v3fh9fqgravl8xl509swwd9a2v7iw38szhlpraiyq5r402axdkj";
-    };
-    nativeBuildInputs = [ ];
-    buildInputs = [ printproto libX11 libXau libXp libXt ];
-
-  }) // {inherit printproto libX11 libXau libXp libXt ;};
+  # libXprintUtil = (mkDerivation "libXprintUtil" {
+  #   name = "libXprintUtil-1.0.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/lib/libXprintUtil-1.0.1.tar.bz2;
+  #     sha256 = "0v3fh9fqgravl8xl509swwd9a2v7iw38szhlpraiyq5r402axdkj";
+  #   };
+  #   nativeBuildInputs = [ ];
+  #   buildInputs = [ printproto libX11 libXau libXp libXt ];
+  #
+  # }) // {inherit printproto libX11 libXau libXp libXt ;};
 
   libXvMC = (mkDerivation "libXvMC" {
     name = "libXvMC-1.0.10";
@@ -895,16 +895,16 @@ let
 
   }) // {inherit xproto ;};
 
-  luit = (mkDerivation "luit" {
-    name = "luit-1.1.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/luit-1.1.1.tar.bz2;
-      sha256 = "0dn694mk56x6hdk6y9ylx4f128h5jcin278gnw2gb807rf3ygc1h";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libfontenc ];
-
-  }) // {inherit libfontenc ;};
+  # luit = (mkDerivation "luit" {
+  #   name = "luit-1.1.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/luit-1.1.1.tar.bz2;
+  #     sha256 = "0dn694mk56x6hdk6y9ylx4f128h5jcin278gnw2gb807rf3ygc1h";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libfontenc ];
+  #
+  # }) // {inherit libfontenc ;};
 
   makedepend = (mkDerivation "makedepend" {
     name = "makedepend-1.0.5";
@@ -1060,38 +1060,38 @@ let
 
   }) // {inherit libXcomposite libXdamage libXext libXfixes libXrender ;};
 
-  xcursorgen = (mkDerivation "xcursorgen" {
-    name = "xcursorgen-1.0.6";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xcursorgen-1.0.6.tar.bz2;
-      sha256 = "0v7nncj3kaa8c0524j7ricdf4rvld5i7c3m6fj55l5zbah7r3j1i";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libpng libX11 libXcursor ];
+  # xcursorgen = (mkDerivation "xcursorgen" {
+  #   name = "xcursorgen-1.0.6";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/xcursorgen-1.0.6.tar.bz2;
+  #     sha256 = "0v7nncj3kaa8c0524j7ricdf4rvld5i7c3m6fj55l5zbah7r3j1i";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libpng libX11 libXcursor ];
+  #
+  # }) // {inherit libpng libX11 libXcursor ;};
 
-  }) // {inherit libpng libX11 libXcursor ;};
+  # xcursorthemes = (mkDerivation "xcursorthemes" {
+  #   name = "xcursor-themes-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/data/xcursor-themes-1.0.4.tar.bz2;
+  #     sha256 = "11mv661nj1p22sqkv87ryj2lcx4m68a04b0rs6iqh3fzp42jrzg3";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libXcursor ];
+  #
+  # }) // {inherit libXcursor ;};
 
-  xcursorthemes = (mkDerivation "xcursorthemes" {
-    name = "xcursor-themes-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/data/xcursor-themes-1.0.4.tar.bz2;
-      sha256 = "11mv661nj1p22sqkv87ryj2lcx4m68a04b0rs6iqh3fzp42jrzg3";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libXcursor ];
-
-  }) // {inherit libXcursor ;};
-
-  xf86dga = (mkDerivation "xf86dga" {
-    name = "xf86dga-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xf86dga-1.0.3.tar.bz2;
-      sha256 = "0lm2wrsgzc1g97phm428bkn42zm0np77prdp6dpxnplx0h8p9n5l";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXxf86dga ];
-
-  }) // {inherit libX11 libXxf86dga ;};
+  # xf86dga = (mkDerivation "xf86dga" {
+  #   name = "xf86dga-1.0.3";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/xf86dga-1.0.3.tar.bz2;
+  #     sha256 = "0lm2wrsgzc1g97phm428bkn42zm0np77prdp6dpxnplx0h8p9n5l";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libX11 libXxf86dga ];
+  #
+  # }) // {inherit libX11 libXxf86dga ;};
 
   xf86inputevdev = (mkDerivation "xf86inputevdev" {
     name = "xf86-input-evdev-2.10.5";
@@ -1159,27 +1159,27 @@ let
 
   }) // {inherit inputproto libevdev randrproto recordproto libX11 libXi xorgserver xproto libXtst ;};
 
-  xf86inputvmmouse = (mkDerivation "xf86inputvmmouse" {
-    name = "xf86-input-vmmouse-13.1.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-vmmouse-13.1.0.tar.bz2;
-      sha256 = "06ckn4hlkpig5vnivl0zj8a7ykcgvrsj8b3iccl1pgn1gaamix8a";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ inputproto systemd_lib randrproto xorgserver xproto ];
+  # xf86inputvmmouse = (mkDerivation "xf86inputvmmouse" {
+  #   name = "xf86-input-vmmouse-13.1.0";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/driver/xf86-input-vmmouse-13.1.0.tar.bz2;
+  #     sha256 = "06ckn4hlkpig5vnivl0zj8a7ykcgvrsj8b3iccl1pgn1gaamix8a";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ inputproto systemd_lib randrproto xorgserver xproto ];
+  #
+  # }) // {inherit inputproto systemd_lib randrproto xorgserver xproto ;};
 
-  }) // {inherit inputproto systemd_lib randrproto xorgserver xproto ;};
-
-  xf86videoamd = (mkDerivation "xf86videoamd" {
-    name = "xf86-video-amd-2.7.7.7";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-amd-2.7.7.7.tar.bz2;
-      sha256 = "1pp9d3vpyj7iz5iz2wzvb2awmpiw1xdf2lff64nkkilbi01pqqrz";
-    };
-    nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ];
-
-  }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
+  # xf86videoamd = (mkDerivation "xf86videoamd" {
+  #   name = "xf86-video-amd-2.7.7.7";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/driver/xf86-video-amd-2.7.7.7.tar.bz2;
+  #     sha256 = "1pp9d3vpyj7iz5iz2wzvb2awmpiw1xdf2lff64nkkilbi01pqqrz";
+  #   };
+  #   nativeBuildInputs = [ ];
+  #   buildInputs = [ fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ];
+  #
+  # }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
     name = "xf86-video-ati-7.9.0";
@@ -1214,38 +1214,38 @@ let
 
   }) // {inherit dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
 
-  xf86videonv = (mkDerivation "xf86videonv" {
-    name = "xf86-video-nv-2.1.20";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-nv-2.1.20.tar.bz2;
-      sha256 = "1gqh1khc4zalip5hh2nksgs7i3piqq18nncgmsx9qvzi05azd5c3";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];
+  # xf86videonv = (mkDerivation "xf86videonv" {
+  #   name = "xf86-video-nv-2.1.20";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/driver/xf86-video-nv-2.1.20.tar.bz2;
+  #     sha256 = "1gqh1khc4zalip5hh2nksgs7i3piqq18nncgmsx9qvzi05azd5c3";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ fontsproto libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];
+  #
+  # }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
 
-  }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
+  # xf86videov4l = (mkDerivation "xf86videov4l" {
+  #   name = "xf86-video-v4l-0.2.0";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/driver/xf86-video-v4l-0.2.0.tar.bz2;
+  #     sha256 = "0pcjc75hgbih3qvhpsx8d4fljysfk025slxcqyyhr45dzch93zyb";
+  #   };
+  #   nativeBuildInputs = [ ];
+  #   buildInputs = [ randrproto videoproto xorgserver xproto ];
+  #
+  # }) // {inherit randrproto videoproto xorgserver xproto ;};
 
-  xf86videov4l = (mkDerivation "xf86videov4l" {
-    name = "xf86-video-v4l-0.2.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-v4l-0.2.0.tar.bz2;
-      sha256 = "0pcjc75hgbih3qvhpsx8d4fljysfk025slxcqyyhr45dzch93zyb";
-    };
-    nativeBuildInputs = [ ];
-    buildInputs = [ randrproto videoproto xorgserver xproto ];
-
-  }) // {inherit randrproto videoproto xorgserver xproto ;};
-
-  xf86videovmware = (mkDerivation "xf86videovmware" {
-    name = "xf86-video-vmware-13.2.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-vmware-13.2.1.tar.bz2;
-      sha256 = "e2f7f7101fba7f53b268e7a25908babbf155b3984fb5268b3d244eb6c11bf62b";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ];
-
-  }) // {inherit fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ;};
+  # xf86videovmware = (mkDerivation "xf86videovmware" {
+  #   name = "xf86-video-vmware-13.2.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/driver/xf86-video-vmware-13.2.1.tar.bz2;
+  #     sha256 = "e2f7f7101fba7f53b268e7a25908babbf155b3984fb5268b3d244eb6c11bf62b";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ];
+  #
+  # }) // {inherit fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ;};
 
   xhost = (mkDerivation "xhost" {
     name = "xhost-1.0.7";
@@ -1302,16 +1302,16 @@ let
 
   }) // {inherit libxcb ;};
 
-  xman = (mkDerivation "xman" {
-    name = "xman-1.1.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xman-1.1.4.tar.bz2;
-      sha256 = "0afzhiygy1mdxyr22lhys5bn94qdw3qf8vhbxclwai9p7wp9vymk";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libXaw xproto libXt ];
-
-  }) // {inherit libXaw xproto libXt ;};
+  # xman = (mkDerivation "xman" {
+  #   name = "xman-1.1.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/xman-1.1.4.tar.bz2;
+  #     sha256 = "0afzhiygy1mdxyr22lhys5bn94qdw3qf8vhbxclwai9p7wp9vymk";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libXaw xproto libXt ];
+  #
+  # }) // {inherit libXaw xproto libXt ;};
 
   xmessage = (mkDerivation "xmessage" {
     name = "xmessage-1.0.4";
@@ -1324,16 +1324,16 @@ let
 
   }) // {inherit libXaw libXt ;};
 
-  xmodmap = (mkDerivation "xmodmap" {
-    name = "xmodmap-1.0.9";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xmodmap-1.0.9.tar.bz2;
-      sha256 = "0y649an3jqfq9klkp9y5gj20xb78fw6g193f5mnzpl0hbz6fbc5p";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xproto ];
-
-  }) // {inherit libX11 xproto ;};
+  # xmodmap = (mkDerivation "xmodmap" {
+  #   name = "xmodmap-1.0.9";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/xmodmap-1.0.9.tar.bz2;
+  #     sha256 = "0y649an3jqfq9klkp9y5gj20xb78fw6g193f5mnzpl0hbz6fbc5p";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libX11 xproto ];
+  #
+  # }) // {inherit libX11 xproto ;};
 
   xorgcffiles = (mkDerivation "xorgcffiles" {
     name = "xorg-cf-files-1.0.6";
@@ -1346,16 +1346,16 @@ let
 
   }) // {inherit ;};
 
-  xpr = (mkDerivation "xpr" {
-    name = "xpr-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xpr-1.0.4.tar.bz2;
-      sha256 = "1dbcv26w2yand2qy7b3h5rbvw1mdmdd57jw88v53sgdr3vrqvngy";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXmu xproto ];
-
-  }) // {inherit libX11 libXmu xproto ;};
+  # xpr = (mkDerivation "xpr" {
+  #   name = "xpr-1.0.4";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/app/xpr-1.0.4.tar.bz2;
+  #     sha256 = "1dbcv26w2yand2qy7b3h5rbvw1mdmdd57jw88v53sgdr3vrqvngy";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libX11 libXmu xproto ];
+  #
+  # }) // {inherit libX11 libXmu xproto ;};
 
   xprop = (mkDerivation "xprop" {
     name = "xprop-1.2.2";
@@ -1368,16 +1368,16 @@ let
 
   }) // {inherit libX11 xproto ;};
 
-  xpyb = (mkDerivation "xpyb" {
-    name = "xpyb-1.3.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/xcb/xpyb-1.3.1.tar.bz2;
-      sha256 = "0rkkk2n9g2n2cslvdnb732zwmiijlgn7i9il6w296f5q0mxqfk7x";
-    };
-    nativeBuildInputs = [ python ];
-    buildInputs = [ libxcb xcbproto ];
-
-  }) // {inherit libxcb xcbproto ;};
+  # xpyb = (mkDerivation "xpyb" {
+  #   name = "xpyb-1.3.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/xcb/xpyb-1.3.1.tar.bz2;
+  #     sha256 = "0rkkk2n9g2n2cslvdnb732zwmiijlgn7i9il6w296f5q0mxqfk7x";
+  #   };
+  #   nativeBuildInputs = [ python ];
+  #   buildInputs = [ libxcb xcbproto ];
+  #
+  # }) // {inherit libxcb xcbproto ;};
 
   xrandr = (mkDerivation "xrandr" {
     name = "xrandr-1.5.0";
@@ -1423,15 +1423,15 @@ let
 
   }) // {inherit libX11 xbitmaps libXcursor libXmu xproto ;};
 
-  xts = (mkDerivation "xts" {
-    name = "xts-0.99.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/test/xts-0.99.1.tar.bz2;
-      sha256 = "08sanl2nhbbscid767i5zwk0nv2q3ds89w96ils8qfigd57kacc5";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ];
-
-  }) // {inherit libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ;};
+  # xts = (mkDerivation "xts" {
+  #   name = "xts-0.99.1";
+  #   src = fetchurl {
+  #     url = mirror://xorg/individual/test/xts-0.99.1.tar.bz2;
+  #     sha256 = "08sanl2nhbbscid767i5zwk0nv2q3ds89w96ils8qfigd57kacc5";
+  #   };
+  #   nativeBuildInputs = [ utilmacros ];
+  #   buildInputs = [ libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ];
+  #
+  # }) // {inherit libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ;};
 
 }; in xorg

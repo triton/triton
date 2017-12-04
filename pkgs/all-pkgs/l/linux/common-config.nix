@@ -105,6 +105,10 @@ with stdenv.lib;
   HOTPLUG_PCI_ACPI y
   HOTPLUG_PCI_CPCI y
 
+  ${optionalString (versionAtLeast version "4.15") ''
+    #CPU_ISOLATION y
+    CHECKPOINT_RESTORE y
+  ''}
   GCC_PLUGINS y
   CPU_FREQ_STAT y
   PCIE_DPC y
@@ -346,6 +350,9 @@ with stdenv.lib;
   XFS_QUOTA y
   XFS_POSIX_ACL y
   XFS_RT y # XFS Realtime subvolume support
+  ${optionalString (versionAtLeast version "4.15") ''
+    XFS_ONLINE_SCRUB y
+  ''}
   OCFS2_DEBUG_MASKLOG n
   BTRFS_FS_POSIX_ACL y
   F2FS_FS_SECURITY y
@@ -366,6 +373,9 @@ with stdenv.lib;
   UBIFS_ATIME_SUPPORT y
   ${optionalString (versionAtLeast version "4.10") ''
     UBIFS_FS_ENCRYPTION y
+  ''}
+  ${optionalString (versionAtLeast version "4.15") ''
+    CRAMFS_MTD y
   ''}
   FAT_DEFAULT_UTF8 y
   JFFS2_FS_XATTR y
@@ -423,6 +433,9 @@ with stdenv.lib;
   SECURITY_YAMA y
   DEFAULT_SECURITY_DAC y
   SECURITY_DMESG_RESTRICT y
+  ${optionalString (versionAtLeast version "4.15") ''
+    SIGNED_PE_FILE_VERIFICATION y
+  ''}
 
   # Microcode loading support
   MICROCODE y
@@ -430,6 +443,7 @@ with stdenv.lib;
   MICROCODE_AMD y
 
   # Misc. options.
+  HWSPINLOCK y
   EARLY_PRINTK_DBGP n
   EARLY_PRINTK_EFI y
   EXPERT y
@@ -466,7 +480,9 @@ with stdenv.lib;
   BT_HCIUART_ATH3K y
   BT_HCIUART_3WIRE y
   BT_HCIUART_INTEL y
-  BT_HCIUART_BCM y
+  ${optionalString (versionOlder version "4.15") ''
+    BT_HCIUART_BCM y
+  ''}
   BT_HCIUART_QCA y
   BT_HCIUART_AG6XX y
   BT_HCIUART_MRVL y
@@ -522,6 +538,9 @@ with stdenv.lib;
   DM_MQ_DEFAULT y
   DM_UEVENT y
   DM_VERITY_FEC y
+  ${optionalString (versionAtLeast version "4.15") ''
+    NVME_MULTIPATH y
+  ''}
   SCSI_SCAN_ASYNC y
   SCSI_DH y
   SCSI_LOGGING y # SCSI logging facility
@@ -596,6 +615,9 @@ with stdenv.lib;
     UPROBES y
     UPROBE_EVENTS y
   ''}
+  ${optionalString (versionAtLeast version "4.15") ''
+    PREEMPTIRQ_EVENTS y
+  ''}
   FUNCTION_PROFILER y
   RING_BUFFER_BENCHMARK n
 
@@ -611,6 +633,12 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.14") ''
     AMD_MEM_ENCRYPT y
+  ''}
+  ${optionalString (versionAtLeast version "4.15") ''
+    # DRM_AMD_DC_PRE_VEGA y
+    # DRM_AMD_DC_FBC y
+    # DRM_AMD_DC_DCN1_0 y
+    CHASH_STATS y
   ''}
 
   PREEMPT y

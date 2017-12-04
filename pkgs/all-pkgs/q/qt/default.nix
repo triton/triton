@@ -310,7 +310,7 @@ stdenv.mkDerivation rec {
     description = "Cross-platform toolkit for embedded & desktop";
     homepage = https://www.qt.io;
     license = with licenses; [
-      fdl
+      fdl13
       gpl3
       lgpl3
     ];

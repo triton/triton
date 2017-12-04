@@ -217,7 +217,7 @@ rec {
 
   fdl13 = {
     spdxId = "GFDL-1.3";
-    fullName = "GNU Free Documentation License v1.2";
+    fullName = "GNU Free Documentation License v1.3";
   };
 
   free = {

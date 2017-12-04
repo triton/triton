@@ -79,7 +79,7 @@ with stdenv.lib;
   SCHEDSTATS n
   DETECT_HUNG_TASK y
   ${optionalString (versionAtLeast version "4.10") ''
-    # BUG_ON_DATA_CORRUPTION y
+    #BUG_ON_DATA_CORRUPTION y
   ''}
 
   # Unix domain sockets.
@@ -635,9 +635,9 @@ with stdenv.lib;
     AMD_MEM_ENCRYPT y
   ''}
   ${optionalString (versionAtLeast version "4.15") ''
-    # DRM_AMD_DC_PRE_VEGA y
-    # DRM_AMD_DC_FBC y
-    # DRM_AMD_DC_DCN1_0 y
+    #DRM_AMD_DC_PRE_VEGA y
+    #DRM_AMD_DC_FBC y
+    #DRM_AMD_DC_DCN1_0 y
     CHASH_STATS y
   ''}
 

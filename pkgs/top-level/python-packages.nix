@@ -359,7 +359,8 @@ iotop = callPackage ../all-pkgs/i/iotop { };
 
 imagesize = callPackage ../all-pkgs/i/imagesize { };
 
-ip-associations-python-novaclient-ext = callPackage ../all-pkgs/i/ip-associations-python-novaclient-ext { };
+ip-associations-python-novaclient-ext =
+  callPackage ../all-pkgs/i/ip-associations-python-novaclient-ext { };
 
 ipaddress = callPackage ../all-pkgs/i/ipaddress { };
 
@@ -432,11 +433,14 @@ oauthlib = callPackage ../all-pkgs/o/oauthlib { };
 
 olefile = callPackage ../all-pkgs/o/olefile { };
 
-os-diskconfig-python-novaclient-ext = callPackage ../all-pkgs/o/os-diskconfig-python-novaclient-ext { };
+os-diskconfig-python-novaclient-ext =
+  callPackage ../all-pkgs/o/os-diskconfig-python-novaclient-ext { };
 
-os-networksv2-python-novaclient-ext = callPackage ../all-pkgs/o/os-networksv2-python-novaclient-ext { };
+os-networksv2-python-novaclient-ext =
+  callPackage ../all-pkgs/o/os-networksv2-python-novaclient-ext { };
 
-os-virtual-interfacesv2-python-novaclient-ext = callPackage ../all-pkgs/o/os-virtual-interfacesv2-python-novaclient-ext { };
+os-virtual-interfacesv2-python-novaclient-ext =
+  callPackage ../all-pkgs/o/os-virtual-interfacesv2-python-novaclient-ext { };
 
 oslo-i18n = callPackage ../all-pkgs/o/oslo-i18n { };
 
@@ -591,15 +595,18 @@ pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 
 pyzmq = callPackage ../all-pkgs/p/pyzmq { };
 
-rackspace-auth-openstack = callPackage ../all-pkgs/r/rackspace-auth-openstack { };
+rackspace-auth-openstack =
+  callPackage ../all-pkgs/r/rackspace-auth-openstack { };
 
 rackspace-novaclient = callPackage ../all-pkgs/r/rackspace-novaclient { };
 
 rarfile = callPackage ../all-pkgs/r/rarfile { };
 
-rax-default-network-flags-python-novaclient-ext = callPackage ../all-pkgs/r/rax-default-network-flags-python-novaclient-ext { };
+rax-default-network-flags-python-novaclient-ext =
+  callPackage ../all-pkgs/r/rax-default-network-flags-python-novaclient-ext { };
 
-rax-scheduled-images-python-novaclient-ext = callPackage ../all-pkgs/r/rax-scheduled-images-python-novaclient-ext { };
+rax-scheduled-images-python-novaclient-ext =
+  callPackage ../all-pkgs/r/rax-scheduled-images-python-novaclient-ext { };
 
 rebulk = callPackage ../all-pkgs/r/rebulk { };
 
@@ -671,7 +678,8 @@ speedtest-cli = callPackage ../all-pkgs/s/speedtest-cli { };
 
 sphinx = callPackage ../all-pkgs/s/sphinx { };
 
-sphinxcontrib-websupport = callPackage ../all-pkgs/s/sphinxcontrib-websupport { };
+sphinxcontrib-websupport =
+  callPackage ../all-pkgs/s/sphinxcontrib-websupport { };
 
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
@@ -692,6 +700,9 @@ terminaltables = callPackage ../all-pkgs/t/terminaltables { };
 tmdb3 = callPackage ../all-pkgs/t/tmdb3 { };
 
 tornado = callPackage ../all-pkgs/t/tornado { };
+
+transmission-remote-gnome =
+  callPackage ../all-pkgs/t/transmission-remote-gnome { };
 
 transmissionrpc = callPackage ../all-pkgs/t/transmissionrpc { };
 

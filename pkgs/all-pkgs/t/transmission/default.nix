@@ -41,7 +41,20 @@ let
     optionalString
     platforms;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2" = {
+      fetchzipversion = 2;
+      version = "2.92";
+      sha256 = "0332041863191f1890cd7570a5028cbb0d792e7a96882d1799a6ec20d0e3d513";
+    };
+    "head" = {
+      fetchzipversion = 2;
+      version = "2017-12-02";
+      rev = "ffcca3964dc9190f75e0b5f1077e190e91ddc8d2";
+      sha256 = "4c7b2d92fea49dab9e0ae59fc70b55eb98e43395c8f8d58786ac5f5f897f6cbe";
+    };
+  };
+  source = sources."${channel}";
 
   # Transmission vendors patched libutp sources required for building.
   libutp =
@@ -159,10 +172,12 @@ stdenv.mkDerivation rec {
   postPatch = /* FIXME: remove in 2.93+ */ ''
     sed -i CMakeLists.txt \
       -e 's/libsystemd-daemon/libsystemd/'
+  '' + /* Make sure no vendored code is used */ ''
+    rm -rfv third-party/
   '' + optionalString useStableVersionUserAgent ''
     sed -i CMakeLists.txt \
-      -e '/TR_USER_AGENT_PREFIX/s/+//' \
-      -e '/TR_PEER_ID_PREFIX/s/Z/0/'
+      -e '/TR_USER_AGENT_PREFIX/ s/+//' \
+      -e '/TR_PEER_ID_PREFIX/ s/Z/0/'
   '';
 
   cmakeFlags = [
@@ -213,8 +228,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "";
-    homepage = "";
+    description = "Fast, easy, and free BitTorrent client";
+    homepage = https://transmissionbt.com/;
     license = with licenses; [
       gpl2
       gpl3

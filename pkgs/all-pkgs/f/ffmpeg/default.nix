@@ -193,9 +193,9 @@ let
       sha256 = "aeee06e4d8b18d852c61ebbfe5e1bb7014b1e118e8728c1c2115f91e51bffbef";
     };
     "9.9" = { # Git
-      version = "2017.11.11";
-      rev = "fb94e7b39a170d4b7fdf66e5d997525a76f12ab2";
-      sha256 = "e96d9717b57000627652074fbedd6723cd8507f5ea05788b4b5b48586774f026";
+      version = "2017.12.05";
+      rev = "c8bd2c7d09bfc71795e91f0a9aeb4b8a6833eff2";
+      sha256 = "9d4aef0488e5744247c890194e1c5b5bba90182bbc2234dac72f43cf7a2f3a3b";
     };
   };
   source = sources."${channel}";
@@ -410,14 +410,6 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
-  patches = optionals (!versionOlder channel "3.5") [
-    (fetchTritonPatch {
-      rev = "7deabe056f426f80c70a73b0bc310cfbf53d0231";
-      file = "f/ffmpeg/ffmpeg-3.5.dev-revert-libva2-uncompat-changes.patch";
-      sha256 = "84c6302fd49203735c4286acf5310b47504e6cbf39ba7fb8d388265a4c635acc";
-    })
-  ];
-
   postPatch = ''
     patchShebangs .
   '' + optionalString (frei0r-plugins != null) ''
@@ -489,6 +481,7 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
+    (fflag "--disable-amf" "3.5")  # macOS
     "--disable-audiotoolbox"  # macOS
     "--${boolEn (
       nvidia-cuda-toolkit != null
@@ -623,6 +616,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"
+    /**/(fflag "--disable-lv2" "3.4")
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"

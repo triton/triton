@@ -1,8 +1,11 @@
 { stdenv
+, systemd_full
 }:
 
 stdenv.mkDerivation {
   name = "systemd-dummy";
+
+  version = systemd_full.upstreamVersion;
 
   unpackPhase = "true";
 

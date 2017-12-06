@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "0.16.0";
+  version = "0.17.0";
 in
 stdenv.mkDerivation {
   name = "sddm-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.xz";
     hashOutput = false;  # https://github.com/sddm/sddm/releases
-    sha256 = "e9138a23e7f0846f7dcb925964d301f1a597fae2047b373d7dbe4cd5340f8e3b";
+    sha256 = "13ec3e04ecdb0ab83a6ae62c734fdf86f86c1851a90b06f85f5bf8776fcb0632";
   };
 
   nativeBuildInputs = [
@@ -38,16 +38,6 @@ stdenv.mkDerivation {
     systemd-dummy
     xorg.libxcb
   ];
-
-  postPatch = ''
-    # Fix systemd journal dependency
-    grep -q 'libsystemd-journal' CMakeLists.txt
-    sed -i 's,libsystemd-journal,libsystemd,' CMakeLists.txt
-
-    # Fix broken man page
-    grep -q '\*\*@SYSTEM_CONFIG_DIR@\*$' data/man/sddm.conf.rst.in
-    sed -i '/SYSTEM_CONFIG_DIR/s,@\*$,@**,' data/man/sddm.conf.rst.in
-  '';
 
   preConfigure = ''
     touch "$TMPDIR/login.defs"

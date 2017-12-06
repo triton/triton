@@ -108,10 +108,15 @@
 , libvorbis
 , libvpx
 , libwebp
+, libx11
+, libxcb
 , libxcbshmExtlib ? true
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
+, libxext
+, libxfixes
 , libxml2
+, libxv
 , mfx-dispatcher
 , mmal ? null
 , nvenc ? false
@@ -147,7 +152,7 @@
 , x264
 , x265
 , xavs
-, xorg
+, xproto
 , xvidcore
 , xz
 , zeromq4
@@ -280,9 +285,9 @@ assert swscaleLibrary -> avutilLibrary;
  *  External libraries
  */
 assert flite != null -> alsa-lib != null;
-assert libxcbshmExtlib -> xorg.libxcb != null;
-assert libxcbxfixesExtlib -> xorg.libxcb != null;
-assert libxcbshapeExtlib -> xorg.libxcb != null;
+assert libxcbshmExtlib -> libxcb != null;
+assert libxcbxfixesExtlib -> libxcb != null;
+assert libxcbshapeExtlib -> libxcb != null;
 assert gnutls != null -> openssl == null;
 assert openssl != null -> gnutls == null;
 
@@ -369,7 +374,13 @@ stdenv.mkDerivation rec {
     libvorbis
     libvpx
     libwebp
+    libx11
+    libxcb
+    libxext
+    libxfixes
     libxml2
+    libxv
+    #xorg.libXvMC
     mfx-dispatcher
     nvidia-cuda-toolkit
     nvidia-drivers
@@ -393,13 +404,7 @@ stdenv.mkDerivation rec {
     x264
     x265
     xavs
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXv
-    #xorg.libXvMC
-    xorg.xproto
+    xproto
     xvidcore
     xz
     zeromq4
@@ -606,7 +611,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (x264 != null)}-libx264"
     "--${boolEn (x265 != null)}-libx265"
     "--${boolEn (xavs != null)}-libxavs"
-    #"--${boolEn (xorg.libxcb != null)}-libxcb"
+    #"--${boolEn (libxcb != null)}-libxcb"
     "--${boolEn libxcbshmExtlib}-libxcb-shm"
     "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"
     "--${boolEn libxcbshapeExtlib}-libxcb-shape"
@@ -634,7 +639,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (sdl != null)}-sdl"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-securetransport"
-    #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"
+    #"--${boolEn (libx11 != null && libxv != null)}-xlib"
     "--${boolEn (zlib != null)}-zlib"
     /*
      *  Developer flags

@@ -7,15 +7,15 @@
 }:
 
 let
-  version = "0.18.5";
+  version = "0.18.6";
 in
 stdenv.mkDerivation rec {
   name = "libraw-${version}";
 
   src = fetchurl {
     url = "https://www.libraw.org/data/LibRaw-${version}.tar.gz";
-    multihash = "QmcPDdXRYh5YSgaZvaExrTBVEDxqvcam39uipbPyTFnVLJ";
-    sha256 = "fa2a7d14d9dfaf6b368f958a76d79266b3f58c2bc367bebab56e11baa94da178";
+    multihash = "QmPNa7C3A1LEoBzkjEjynZwr8SYZ8WU4kJWnDUhRV8betv";
+    sha256 = "e5b8acca558aa457bc9214802004320c5610d1434c2adb1f3ea367f026afa53b";
   };
 
   buildInputs = [

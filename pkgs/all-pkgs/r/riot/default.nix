@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.13.2";
+  version = "0.13.3";
 in
 stdenv.mkDerivation rec {
   name = "riot-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/vector-im/riot-web/releases/download/v${version}/riot-v${version}.tar.gz";
     hashOutput = false;
-    sha256 = "cb5275d8a9a30780863861de87e76a53abdae1695434f58cb7c23624009ba3bb";
+    sha256 = "bcd6c2f4be018612ac76a71b58749a5edab1e02de7d145a22d9b9aa6e6a89129";
   };
 
   installPhase = ''

@@ -370,6 +370,8 @@ isort = callPackage ../all-pkgs/i/isort { };
 
 itstool = callPackage ../all-pkgs/i/itstool { };
 
+jaraco-classes = callPackage ../all-pkgs/j/jaraco-classes { };
+
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
 jmespath = callPackage ../all-pkgs/j/jmespath { };

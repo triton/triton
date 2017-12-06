@@ -4,6 +4,7 @@
 , lib
 
 , cheroot
+, jaraco-classes
 , portend
 , setuptools-scm
 , six
@@ -23,6 +24,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     cheroot
+    jaraco-classes
     portend
     setuptools-scm
     six

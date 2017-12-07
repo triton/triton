@@ -23,9 +23,9 @@ let
     };
     "head" = {
       fetchzipverion = 3;
-      version = "2017-09-20";
-      rev = "e2e35b82738dc9d5e5229477d49d557cadad4dc7";
-      sha256 = "1e0ffb7262e425afd9b1ac3d5c7b43ff6992c0bd1d9904b80a5884d088ed2316";
+      version = "2017-11-20";
+      rev = "56c717e223a161b11f523de97dae51c5cccd6b52";
+      sha256 = "7b2866d33d0c012b2817fa34da9c8a77c828d8078745b7ee95e938c12a972da3";
     };
   };
   source = sources."${channel}";

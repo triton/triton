@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2017-11-12";
+  version = "2017-12-02";
 in
 buildPythonPackage rec {
   name = "pip-${version}";
@@ -17,8 +17,8 @@ buildPythonPackage rec {
     version = 3;
     owner = "pypa";
     repo = "pip";
-    rev = "8f6b4c9b2d014b9a646585074612cecf51e1cc88";
-    sha256 = "caeba3de3afc8ab3dfec48f6a536fe5145ac332178640956b6bad46c6cc8bb0b";
+    rev = "ce674d2ca1dfae136fb33df914085e56d100bc57";
+    sha256 = "05f07d0364f7e4fd8de28d750359ce457b801843810ddbe335f5289363a42664";
   };
 
   # src = fetchPyPi {

@@ -33,9 +33,9 @@ let
 
   sources = {
     "stable" = {
-      version = "2.5";
-      multihash = "QmSsqLD2yPEuf9CDKgMFEBNSpHYzpE8K2cr6d8aV2icLfB";
-      sha256 = "2e53259b504a7edb9b21b9800163b1ff4c90e60c74e23e7001d423c69c5d3d17";
+      version = "2.6";
+      multihash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH";
+      sha256 = "1bf0036415996af841884802161065b9e6be74f5f6808ac04831363e2549cdbf";
     };
     "head" = {
       fetchzipversion = 3;

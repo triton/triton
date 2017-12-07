@@ -31,9 +31,9 @@ let
     };
     "head" = {
       fetchzipversion = 3;
-      version = "2017-10-08";
-      rev = "43dfdc08ba57ce164e99e11226bcfad31db413e4";
-      sha256 = "3ae356d19d0b6248615088ad36b3dad3c05114b787828c94eb17872bc2171fac";
+      version = "2017-11-16";
+      rev = "eee689824288c905eadffe9aef04bfc0c4753485";
+      sha256 = "2bd7600603835bbfd173bee869b3b2baee0135f112b6eeb243754e1cc3d7a6ff";
     };
   };
   source = sources."${channel}";

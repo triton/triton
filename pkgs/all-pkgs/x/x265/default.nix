@@ -3,6 +3,7 @@
 , fetchFromBitbucket
 , fetchurl
 , lib
+, nasm
 , ninja
 , yasm
 
@@ -39,9 +40,9 @@ let
     };
     "head" = {
       fetchzipversion = 3;
-      version = "2017-09-11";
-      rev = "f8ae7afc1f61ed0db3b2f23f5d581706fe6ed677";
-      sha256 = "8f844abe9495f6b610c952c14919e9e91cdc440a3d8d6936877daed0148f7452";
+      version = "2017-12-04";
+      rev = "7bd8751a81830815cdc8e4dfc88cad2c8ca15ca7";
+      sha256 = "c9a8b0f1646b90e19e393fd309bdb61c671da087c079f9cc0f8b7e63a5a5a0f2";
     };
   };
   source = sources."${channel}";
@@ -131,8 +132,13 @@ let
     nativeBuildInputs = [
       cmake
       ninja
-      yasm
-    ];
+    ] ++ (
+      if (channel == "head") then [
+        nasm
+      ] else [
+        yasm  # Remove for > 2.6
+      ]
+    );
 
     buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
@@ -176,8 +182,13 @@ let
     nativeBuildInputs = [
       cmake
       ninja
-      yasm
-    ];
+    ] ++ (
+      if (channel == "head") then [
+        nasm
+      ] else [
+        yasm  # Remove for > 2.6
+      ]
+    );
 
     buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
@@ -201,8 +212,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     ninja
-    yasm
-  ];
+    ] ++ (
+      if (channel == "head") then [
+        nasm
+      ] else [
+        yasm  # Remove for > 2.6
+      ]
+    );
 
   buildInputs = [
     libx265-10

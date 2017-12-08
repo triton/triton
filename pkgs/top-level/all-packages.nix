@@ -773,6 +773,7 @@ brotli_0-6-0 = callPackage ../all-pkgs/b/brotli {
   version = "0.6.0";
 };
 brotli = callPackageAlias "brotli_0-6-0" { };
+brotli_dist = callPackage ../all-pkgs/b/brotli/dist.nix { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 

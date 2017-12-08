@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, texinfo
 }:
 
 stdenv.mkDerivation rec {
@@ -11,10 +10,6 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "ffadc4f56be1bc0d3ae155ec4527bd003133bdc703a753b2cc683f610e646ba9";
   };
-
-  nativeBuildInputs = [
-    texinfo
-  ];
 
   configureFlags = [
     "CPPFLAGS=-DNDEBUG"

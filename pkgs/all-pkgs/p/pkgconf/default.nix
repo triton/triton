@@ -3,24 +3,25 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pkgconf-1.3.7";
+  name = "pkgconf-1.3.12";
 
   src = fetchurl {
     url = "https://distfiles.dereferenced.org/pkgconf/${name}.tar.xz";
-    multihash = "QmayvLtv4JqVM7H1zf47TctQodNK3WFzmmAcMANkwMzqzt";
-    sha256 = "1be7e40900c7467893c65f810211b1e68da3f8d5e70fddb883fc24839cad0339";
+    multihash = "QmarREGNC3fjSYC5MtUptVVcTt9xice7vrPssYhoSX9Uo9";
+    sha256 = "9fa878a21fec186af095a2f47e8f249fcf4645ed969aba4cdd7ed9031fe7ae30";
   };
 
   postInstall = ''
     # The install is broken and is missing libpkgconfig/config.h
-    cp -v libpkgconf/config.h $out/include/pkgconf
+    cp -v libpkgconf/config.h "$out"/include/pkgconf
 
     # The header files expect themselves to be in libpkgconf
     # however they are installed to pkgconf
-    ln -sv pkgconf $out/include/libpkgconf
+    test -d "$out"/include/pkgconf
+    ln -sv pkgconf "$out"/include/libpkgconf
 
     # We want compatability with pkg-config
-    ln -sv pkgconf $out/bin/pkg-config
+    ln -sv pkgconf "$out"/bin/pkg-config
   '';
 
   meta = with stdenv.lib; {

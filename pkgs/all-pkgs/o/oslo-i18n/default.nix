@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.18.0";
+  version = "3.19.0";
 in
 buildPythonPackage {
   name = "oslo.i18n-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "oslo.i18n";
     inherit version;
-    sha256 = "3624459ae0635188645c7f6b61ae0ac8032df3c44e9076d8bdcf215468e486a7";
+    sha256 = "9711548b5a7c18a2b41f5d91f2f907f93b396b8a6c9b5b2aaf2b63560a768ba2";
   };
 
   propagatedBuildInputs = [

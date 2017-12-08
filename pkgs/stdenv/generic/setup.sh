@@ -368,11 +368,11 @@ _defaultUnpack() {
   else
     case "$fn" in
       *.tar.brotli | *.tar.bro | *.tar.br)
-        brotli --decompress --input "$fn" | tar xf -
+        brotli -d < "$fn" | tar x
         ;;
       *.tar.xz | *.tar.lzma)
         # Don't rely on tar knowing about .xz.
-        xz -d < "$fn" | tar xf -
+        xz -d < "$fn" | tar x
         ;;
       *.tar | *.tar.* | *.tgz | *.tbz2)
         # GNU tar can automatically select the decompression method

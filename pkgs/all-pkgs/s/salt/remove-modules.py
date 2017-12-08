@@ -72,6 +72,7 @@ whitelisted_modules = [
   'saltcloudmod',  # ???
   'saltutil',
   'schedule',
+  'sdb',
   'selinux',
   'service',
   'smbios',

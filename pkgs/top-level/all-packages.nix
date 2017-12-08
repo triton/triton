@@ -763,16 +763,19 @@ borgbackup = pkgs.python3Packages.borgbackup;
 
 borgmatic = pkgs.python3Packages.borgmatic;
 
-brotli_0-4-0 = callPackage ../all-pkgs/b/brotli {
+brotli_0-4-0 = callPackage ../all-pkgs/b/brotli/old.nix {
   version = "0.4.0";
 };
-brotli_0-5-2 = callPackage ../all-pkgs/b/brotli {
+brotli_0-5-2 = callPackage ../all-pkgs/b/brotli/old.nix {
   version = "0.5.2";
 };
-brotli_0-6-0 = callPackage ../all-pkgs/b/brotli {
+brotli_0-6-0 = callPackage ../all-pkgs/b/brotli/old.nix {
   version = "0.6.0";
 };
-brotli = callPackageAlias "brotli_0-6-0" { };
+brotli_1-0-2 = callPackage ../all-pkgs/b/brotli {
+  version = "1.0.2";
+};
+brotli = callPackageAlias "brotli_1-0-2" { };
 brotli_dist = callPackage ../all-pkgs/b/brotli/dist.nix { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };

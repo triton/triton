@@ -1,51 +1,22 @@
 { stdenv
 , fetchurl
 
-, version ? "0.6.0"
+, version
 }:
 
 let
-  inherit (stdenv.lib)
-    optionalString
-    versionAtLeast
-    versionOlder;
-
   sha256s = {
-    "0.6.0" = "93555277a19e56025a8fecbe8bf3d6034f18d8a655816fba94067d75f9f3a9ed";
-    "0.5.2" = "60453b0d24a7dbff802b92c6e1d244d986ea517b3edb9eb71c39aa53f05cb144";
-    "0.4.0" = "d6a06624eece91f54e4b22b8088ce0090565c7d3f121386dc007b6d2723397ac";
+    "1.0.2" = "65bd21eca1532d7e18e22d733e1c604bfb1f51321712781bb7b81410ea77e35a";
   };
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = "brotli-${version}";
 
   src = fetchurl {
-    url = "https://github.com/google/brotli/releases/download/v${version}/Brotli-${version}.tar.gz";
+    url = "https://github.com/triton/brotli/releases/download/v${version}/brotli-${version}.tar.xz";
+    hashOutput = false;
     sha256 = sha256s."${version}";
   };
-
-  postPatch = optionalString (versionOlder version "0.5.0") ''
-    cd tools
-  '';
-
-  # Only ships with cmake / bazel now but it simple enough to build our own
-  buildPhase = optionalString (versionAtLeast version "0.6.0") ''
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$(pwd)/include"
-  '' + optionalString (versionAtLeast version "0.5.0") ''
-    readarray -t cfiles < <(find . -name \*.c)
-    args=()
-    for cfile in "''${cfiles[@]}"; do
-      ( set -x; gcc -O2 -c -o "''${cfile%.c}.o" "$cfile" ) &
-      args+=("''${cfile%.c}.o")
-    done
-    wait
-    ( set -x; gcc -o bro "''${args[@]}" -lm )
-  '';
-
-  installPhase = ''
-    install -D -m 755 -v 'bro' "$out/bin/bro"
-    ln -sv "$out/bin/bro" "$out/bin/brotli"
-  '';
 
   passthru = {
     inherit version;
@@ -64,4 +35,3 @@ stdenv.mkDerivation rec {
       ++ x86_64-linux;
   };
 }
-

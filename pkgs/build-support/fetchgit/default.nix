@@ -2,6 +2,7 @@
 , brotli_0-4-0
 , brotli_0-5-2
 , brotli_0-6-0
+, brotli_1-0-2
 , curl
 , git
 , gnutar_1-29
@@ -55,7 +56,7 @@ in
 
 assert sha256 != "";
 assert deepClone -> leaveDotGit;
-assert version != null || throw "Missing fetchzip version. The latest version is 3.";
+assert version != null || throw "Missing fetchzip version. The latest version is 4.";
 
 let
   versions = {
@@ -69,6 +70,10 @@ let
     };
     "3" = {
       brotli = brotli_0-6-0;
+      tar = gnutar_1-29;
+    };
+    "4" = {
+      brotli = brotli_1-0-2;
       tar = gnutar_1-29;
     };
   };

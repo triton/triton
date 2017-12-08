@@ -7,8 +7,8 @@ if [ "0" -eq "$#" ]; then
 fi
 
 # Parameters to conform to fetchzip versioning
-FETCHZIP_VERSION=3
-FETCHZIP_BROTLI=brotli_0-6-0
+FETCHZIP_VERSION=4
+FETCHZIP_BROTLI=brotli_1-0-2
 FETCHZIP_TAR=gnutar_1-29
 
 # Setup the temporary storage area

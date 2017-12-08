@@ -17,9 +17,9 @@
 let
   sources = {
     "0.15" = {
-      version = "0.15.36";
-      sha256_alpha = "9fc0fa814c127e2668653a333e38149d667d15f259eaa582fe2605524b9cff02";
-      sha256_headless = "a74d9155e826ce7518893cff9df760375b73a073a1c5ee27324cb2753672a599";
+      version = "0.15.40";
+      sha256_alpha = "94121fe3437891927a9ecabb4772dd2ed3e9df31b46e0a80abb761803ac245c4";
+      sha256_headless = "1041ef61ea4aecd1f425e6030a909f0c349a9c01d1b3324d84a61b1cfef5ba6c";
     };
   };
   source = sources."${channel}";
@@ -31,8 +31,8 @@ in
 stdenv.mkDerivation rec {
   name = "factorio${if type != "" then "-${type}" else ""}-${source.version}";
 
-  # NOTE: You need to login and fetch the tarball manually
-  # Then run the script at pkgs/all-pkgs/f/factorio/inject-tar <game-tar>
+  # NOTE: You need to login and fetch the tarball manually. Then run the
+  #       script `inject-tar <game-tar>`.
   src = fetchurl {
     name = "${name}.tar.xz";
     url = "http://www.factorio.com/get-download/${source.version}/"

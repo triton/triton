@@ -3,42 +3,26 @@
 
 , gnutls
 , libgcrypt
-, openssl
-, zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.57";
+  name = "libmicrohttpd-0.9.58";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "dec1a76487d7e48ad74b468a888bfda1c05731f185ff950f1e363ca9d39caf4e";
+    sha256 = "7a11e1376c62ff95bd6d2dfe6799d57ac7cdbcb32f70bfbd5e47c71f373e01f3";
   };
 
   buildInputs = [
     gnutls
     libgcrypt
-    openssl
-    zlib
   ];
 
   configureFlags = [
-    "--with-threads=posix"
-    "--enable-doc"
     "--disable-examples"
-    "--enable-poll=auto"
-    "--enable-epoll=auto"
-    "--enable-socketpair"
-    "--disable-curl"
-    "--enable-spdy"
-    "--enable-messages"
-    "--enable-postprocessor"
-    "--with-gnutls"
+    "--disable-curl"  # Testcases
     "--enable-https"
-    "--enable-bauth"
-    "--enable-dauth"
-    "--disable-coverage"
   ];
 
   passthru = {

@@ -79,6 +79,10 @@ let
         # setuptools
         six
         wheel;
+      # Upstream setuptools bug breaks namespaced packages when install to
+      # a wheel dist from a wheel dist.
+      # Upstream fix for installing to an egg dist from a wheel.
+      # https://github.com/pypa/setuptools/commit/b9df5fd4d08347b9db0e486af43d08978cb9f4bc
       setuptools =
         if newBootstrap == true then
           self.setuptools

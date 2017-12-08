@@ -2,6 +2,8 @@
 , fetchurl
 , intltool
 , lib
+# , meson
+# , ninja
 
 , glib
 , gnutls
@@ -14,12 +16,13 @@
 
 let
   inherit (lib)
-    boolWt;
+    boolWt
+    boolTf;
 
   sources = {
-    "2.50" = {
-      version = "2.50.0";
-      sha256 = "3f1a442f3c2a734946983532ce59ed49120319fdb10c938447c373d5e5286bee";
+    "2.54" = {
+      version = "2.54.1";
+      sha256 = "eaa787b653015a0de31c928e9a17eb57b4ce23c8cf6f277afaec0d685335012f";
     };
   };
 
@@ -36,6 +39,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    # meson
+    # ninja
   ];
 
   buildInputs = [
@@ -45,6 +50,11 @@ stdenv.mkDerivation rec {
     libproxy
     p11-kit
   ];
+
+  # postPatch = /* handled by setup-hooks */ ''
+  #   sed -i meson.build \
+  #     -e '/meson_post_install.py/d'
+  # '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -60,6 +70,16 @@ stdenv.mkDerivation rec {
     "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
     "--${boolWt (p11-kit != null)}-pkcs11"
   ];
+
+  # mesonFlags = [
+  #   "-Dlibproxy_support=${boolTf (libproxy != null)}"
+  #   "-Dgnome_proxy_support=true"
+  #   "-Dtls_support=${boolTf (gnutls != null)}"
+  #   # FIXME IMPURE
+  #   "-Dca_certificates_path=/etc/ssl/certs/ca-certificates.crt"
+  #   "-Dpkcs11_support=${boolTf (p11-kit != null)}"
+  #   "-Dinstalled_tests=false"
+  # ];
 
   preBuild = ''
     sed -i $(find . -name Makefile) \

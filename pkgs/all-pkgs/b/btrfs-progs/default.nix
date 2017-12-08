@@ -13,10 +13,11 @@
 , lzo
 , util-linux_lib
 , zlib
+, zstd
 }:
 
 let
-  version = "4.13.3";
+  version = "4.14";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -28,7 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "805bdb0031c21a0a5d2ba295a8c9bdd8ba831a68c3fa801aab85677ec902d783";
+    sha256 = "09095cbc3bc2b6aa9d09c93146fb4d7437c51d2572f6918b74fe990fcdcb91af";
   };
 
   nativeBuildInputs = [
@@ -46,6 +47,7 @@ stdenv.mkDerivation rec {
     lzo
     util-linux_lib
     zlib
+    zstd
   ];
 
   passthru = {

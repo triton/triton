@@ -5,13 +5,13 @@
 }:
 
 buildPythonPackage rec {
-  name = "mercurial-4.4.1";
+  name = "mercurial-4.4.2";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
-    multihash = "QmXSn7X4hkLAzy8kzSGwCnSJZBbeC7i9kNRQ8PWcJF6sfA";
+    multihash = "QmcuLEmrmntW2SHSkpxQaPAwescUZ1wLUmnZnGTVgnHtT6";
     hashOutput = false;
-    sha256 = "8f2a5512d6cc2ffb08988aef639330a2f0378e4ac3ee0e1fbbdb64d9fff56246";
+    sha256 = "dc2f72caccd6b760226753d48c2f4e8889fe176a6b23ef50775caac55ce28b85";
   };
 
   passthru = {

@@ -55,9 +55,12 @@ stdenv.mkDerivation {
   ];
 
   preBuild = ''
-    sed -i 's,\(grpc++.*\.so\.\)4,\11,g' Makefile
-
+    sed -i 's,\(grpc++.*\.so\.\)5,\11,g' Makefile
     makeFlagsArray+=("prefix=$out")
+  '';
+
+  postInstall = ''
+    test -e "$out"/lib/libgrpc++.so.1
   '';
 
   meta = with stdenv.lib; {

@@ -12,9 +12,9 @@
 let
   sources = {
     "1.0.2" = {
-      version = "1.0.2m";
-      multihash = "QmadqkiZoGyUAULXrX9cQCGRwdbJwTBPRcdEsqQDjTGmUL";
-      sha256 = "8c6ff15ec6b319b50788f42c7abc2890c08ba5a1cdcd3810eb9092deada37b0f";
+      version = "1.0.2n";
+      multihash = "QmbC8S6Y6cUzGMfYfqBeAAKfccsosH8HDA35XBKvn7KAL6";
+      sha256 = "370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe";
       patches = [
         (fetchTritonPatch {
            rev = "f2bfa2d2db51744e6fcb5677543b3bce8504bf82";
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.1.0g";
+      urls = tarballUrls "1.0.2n";
       pgpsigUrls = map (n: "${n}.asc") urls;
       sha256Urls = map (n: "${n}.sha256") urls;
       pgpKeyFingerprints = [
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
         "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
       ];
       inherit (src) outputHashAlgo;
-      outputHash = "57be8618979d80c910728cfc99369bf97b2a1abd8f366ab6ebdee8975ad3874c";
+      outputHash = "370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe";
     };
   };
 

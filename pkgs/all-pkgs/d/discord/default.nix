@@ -62,8 +62,8 @@ let
       sha256 = "dfc17ac6f683a45f896a4f881b900b2d46d74b0625cb661db1bfe39b33a06769";
     };
     "canary" = {
-      version = "0.0.29";
-      sha256 = "e0461d1a425a9705c15a7852dba60231637a72a003df4e3be2fd355032d3d43d";
+      version = "0.0.32";
+      sha256 = "19699f619b473cf462c0ae1029a16c4abf78b99650e488e7013049091a7c528f";
     };
   };
   source = sources."${channel}";

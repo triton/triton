@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libnetfilter_queue-1.0.2";
+  name = "libnetfilter_queue-1.0.3";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnetfilter_queue/files/${name}.tar.bz2";
+    multihash = "QmaDZBqPMAzfwcTZ8tHNWm15inKsCZNBdSZ5XmSRt7BHYP";
     hashOutput = false;
-    multihash = "Qme5Q661vr7KKaaRcz1VgpgBKMK8wwmpm6r7vAzpHNTLyS";
-    sha256 = "0chsmj9ky80068vn458ijz9sh4sk5yc08dw2d6b8yddybpmr1143";
+    sha256 = "9859266b349d74c5b1fdd59177d3427b3724cd72a97c49cc2fffe3b55da8e774";
   };
 
   buildInputs = [

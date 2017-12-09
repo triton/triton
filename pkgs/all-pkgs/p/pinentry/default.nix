@@ -32,12 +32,12 @@ let
 in
 assert isNox || isGtk || isQt;
 stdenv.mkDerivation rec {
-  name = "pinentry-1.0.0";
+  name = "pinentry-1.1.0";
 
   src = fetchurl {
     url = "mirror://gnupg/pinentry/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "1672c2edc1feb036075b187c0773787b2afd0544f55025c645a71b4c2f79275a";
+    sha256 = "68076686fa724a290ea49cdf0d1c0c1500907d1b759a3bcbfbec0293e8f56570";
   };
 
   nativeBuildInputs = [

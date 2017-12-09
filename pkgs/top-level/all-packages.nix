@@ -1348,6 +1348,8 @@ freetype = callPackage ../all-pkgs/f/freetype {
 
 frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
+fribidi = callPackage ../all-pkgs/f/fribidi { };
+
 fs-repo-migrations = pkgs.goPackages.fs-repo-migrations.bin // { outputs = [ "bin" ]; };
 
 fstrm = callPackage ../all-pkgs/f/fstrm { };
@@ -4282,8 +4284,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
         fontconfig
         fontDirectories;
     };
-
-  fribidi = callPackage ../development/libraries/fribidi { };
 #
   giblib = callPackage ../development/libraries/giblib { };
 #

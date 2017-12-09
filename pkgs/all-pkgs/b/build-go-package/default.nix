@@ -130,7 +130,7 @@ go.stdenv.mkDerivation (
     args=()
     decompress() {
       echo "Decompressing $1" >&2
-      brotli --decompress --input "$1/files.tar.br" | tar x
+      brotli -d < "$1/files.tar.br" | tar x
     }
     export -f decompress
     for path in $GOPATH; do
@@ -439,7 +439,7 @@ go.stdenv.mkDerivation (
     tar --sort=name --owner=0 --group=0 --numeric-owner \
       --mode=go=rX,u+rw,a-s \
       --mtime=@946713600 \
-      -c "${name}" | brotli --quality 6 --output "$out/share/go/files.tar.br"
+      -c "${name}" | brotli -6 > "$out/share/go/files.tar.br"
     popd >/dev/null
 
     mkdir -p $bin

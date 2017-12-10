@@ -7,7 +7,7 @@
 , pulseaudio_lib }:
 
 let
-  version = "1.1.7";
+  version = "1.1.8";
 in
 stdenv.mkDerivation  rec {
   name = "fluidsynth-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation  rec {
     owner = "FluidSynth";
     repo = "fluidsynth";
     rev = "v${version}";
-    sha256 = "10301f5f845db5e7b1bd3da4f0a02fc84face2293f8974def45c7d3388be6233";
+    sha256 = "f7084a7d7953b15f1281d6f23a2e021f25123a8743538d6134cc8d3d28846a30";
   };
 
   nativeBuildInputs = [

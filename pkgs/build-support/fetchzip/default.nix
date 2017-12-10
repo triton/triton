@@ -65,6 +65,12 @@ let
 
   tarball = args.name or (baseNameOf (lib.head urls'));
 
+  brotliFlags =
+    if lib.versionAtLeast brotli.version "1.0.0" then
+      [ "-6" "-o" ]
+    else
+      [ "--quality" "6" "--output" ];
+
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in
 
@@ -122,7 +128,7 @@ lib.overrideDerivation (fetchurl (rec {
       --no-acls --no-selinux --no-xattrs \
       --mode=go=rX,u+rw,a-s \
       --clamp-mtime --mtime=@$mtime \
-      -c "${name'}" | ${brotli}/bin/brotli --quality 6 --output "$out"
+      -c "${name'}" | ${brotli}/bin/brotli ${lib.concatStringsSep " " brotliFlags} "$out"
   '';
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too

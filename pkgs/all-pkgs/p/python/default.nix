@@ -120,13 +120,7 @@ stdenv.mkDerivation rec {
     xz
   ];
 
-  setupHook = stdenv.mkDerivation {
-    name = "python-${channel}-setup-hook";
-    buildCommand = ''
-      sed 's,@VERSION_MAJOR@,${channel},g' ${./setup-hook.sh.in} > $out
-    '';
-    preferLocalBuild = true;
-  };
+  setupHook = ./setup-hook.sh;
 
   patches = optionals isPy2 [
     # Patch python to put zero timestamp into pyc
@@ -324,12 +318,15 @@ stdenv.mkDerivation rec {
   # Used by python-2.7-deterministic-build.patch
   DETERMINISTIC_BUILD = 1;
 
+  # Needed for the setup hook
+  inherit
+    channel;
+
   passthru = rec {
     inherit
       isPy2
       isPy3
-      version
-      channel;
+      version;
 
     dbSupport = db != null;
     opensslSupport = openssl != null;

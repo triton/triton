@@ -139,7 +139,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     sed -i $out/share/applications/atom${source.suffix}.desktop \
-      -e "s,/usr/share/atom${source.suffix},$out/bin,"
+      -e "s,/usr/share/atom${source.suffix}/atom,$out/bin/atom${source.suffix},"
 
     # Replace vendored git binary
     atom_git=$out/share/atom${source.suffix}/resources/app${if channel == "beta" then ".asar.unpacked" else ""}/node_modules/dugite/git

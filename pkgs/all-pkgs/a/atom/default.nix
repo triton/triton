@@ -142,7 +142,7 @@ stdenv.mkDerivation rec {
       -e "s,/usr/share/atom${source.suffix}/atom,$out/bin/atom${source.suffix},"
 
     # Replace vendored git binary
-    atom_git=$out/share/atom${source.suffix}/resources/app${if channel == "beta" then ".asar.unpacked" else ""}/node_modules/dugite/git
+    atom_git=$out/share/atom${source.suffix}/resources/app.asar.unpacked/node_modules/dugite/git
     rm -fv $atom_git/bin/git
     ln -sv ${git}/bin/git \
       $atom_git/bin/git

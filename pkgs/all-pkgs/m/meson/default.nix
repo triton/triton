@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.43.0";
+  version = "0.44.0";
 in
 buildPythonPackage {
   name = "meson-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "meson";
     inherit version;
-    sha256 = "c1e05a84e7ba34922562b638dbf85ceec817830ec78c776c8d7954b5bf87c562";
+    sha256 = "16d3481ae9e3a8a2eee06f4963d682e4080503743e0ed8dcee24efc563baf8e6";
   };
 
   propagatedBuildInputs = [
@@ -32,6 +32,15 @@ buildPythonPackage {
   setupHook = ./setup-hook.sh;
 
   disabled = !isPy3;
+
+  # Meson tries to find its python executable in the path
+  # Since we have a wrapper around the actual executable it fails
+  # to run since meson expects to be calling a python executable
+  # HACK: Return the python executable directly in this function
+  postInstall = ''
+    sed -i "/def detect_meson_py_location()/a\    return '$out/bin/.meson-wrapped'" \
+      $(find "$out" -name mesonlib.py)
+  '';
 
   meta = with lib; {
     maintainers = with maintainers; [

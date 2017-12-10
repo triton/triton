@@ -19,12 +19,6 @@ mesonConfigurePhase() {
       mesonBuildDir="$(pwd)"
     fi
 
-    # Meson requires a python executable for itself in the build directory
-    for bin in $(ls "$(dirname "$(type -tP meson)")"/meson*); do
-      echo "from subprocess import call; import sys; exit(call(['$bin'] + sys.argv[1:]))" \
-        >"$mesonBuildDir"/"$(basename "$bin")"
-    done
-
     # Build always Release, to ensure optimisation flags
     mesonFlagsArray+=(
       "--buildtype" "${mesonBuildType-release}"
@@ -32,8 +26,14 @@ mesonConfigurePhase() {
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"
 
-    export LC_ALL='en_US.UTF-8'
-    meson $mesonFlags "${mesonFlagsArray[@]}" "${mesonSrcDir}" "${mesonBuildDir}"
+    # Meson expect the local to be a unicode variant but
+    # our default builder local is ANSI compatible. We need this
+    # to be set during every stage of the build process since meson
+    # is called from the generated build files.
+    export LC_ALL="en_US.UTF-8"
+
+    meson $mesonFlags "${mesonFlagsArray[@]}" \
+      "${mesonSrcDir}" "${mesonBuildDir}"
 
     eval "$postConfigure"
 }

@@ -1,26 +1,43 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, docbook_xml_dtd_45
+, docbook-xsl
+, fetchFromGitHub
+, libxml2
+, libxslt
 
-, pythonPackages
+, python2Packages
 }:
 
 let
-  version = "8.6.9";
+  version = "8.6.10";
 in
 stdenv.mkDerivation rec {
   name = "asciidoc-${version}";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/asciidoc/asciidoc/${version}/${name}.tar.gz";
-    sha256 = "78db9d0567c8ab6570a6eff7ffdf84eadd91f2dfc0a92a2d0105d323cab4e1f0";
+  src = fetchFromGitHub {
+    version = 4;
+    owner = "asciidoc";
+    repo = "asciidoc";
+    rev = version;
+    sha256 = "6534194fe2de087eb6e9fb3ab6ac393e3690380ee9ec8a18b9dc46171a0e3691";
   };
 
-  buildInputs = [
-    pythonPackages.python
+  nativeBuildInputs = [
+    autoreconfHook
+    docbook_xml_dtd_45
+    docbook-xsl
+    libxml2
+    libxslt
   ];
 
-  parallelBuild = false;
-  parallelInstall = false;
+  buildInputs = [
+    python2Packages.python
+  ];
+
+  postPatch = ''
+    patchShebangs asciidoc.py
+  '';
 
   meta = with stdenv.lib; {
     description = "A plain text human readable/writable document format";

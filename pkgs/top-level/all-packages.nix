@@ -2100,6 +2100,8 @@ libass = callPackage ../all-pkgs/l/libass { };
 
 libassuan = callPackage ../all-pkgs/l/libassuan { };
 
+libargon2 = callPackage ../all-pkgs/l/libargon2 { };
+
 libatasmart = callPackage ../all-pkgs/l/libatasmart { };
 
 libatomic_ops = callPackage ../all-pkgs/l/libatomic_ops { };

@@ -4,21 +4,22 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "json-c-0.12.1";
+  name = "json-c-0.13";
 
   src = fetchurl {
     url = "https://s3.amazonaws.com/json-c_releases/releases/${name}-nodoc.tar.gz";
-    multihash = "QmYuLUUv4TTfurajXeMsRAYTw5aJbmutgdDr1jFTga5B1H";
-    sha256 = "5a617da9aade997938197ef0f8aabd7f97b670c216dc173977e1d56eef9e1291";
+    multihash = "QmXX4CdLoBynvztrGnqwYvBsYwHtJBRBLK3QQRNwTZBLqV";
+    sha256 = "8572760646e9d23ee68f967ca62fa134a97b931665fd9af562192b7788c95a06";
   };
 
   nativeBuildInputs = [
     autoconf
   ];
 
-  postPatch = ''
-    sed -i 's,-Werror ,,g' Makefile.in
-  '';
+  configureFlags = [
+    "--enable-threading"
+    "--enable-rdrand"
+  ];
 
   meta = with stdenv.lib; {
     description = "A JSON implementation in C";

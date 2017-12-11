@@ -1445,11 +1445,11 @@ glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };
 
-glib-networking_2-50 = callPackage ../all-pkgs/g/glib-networking {
-  channel = "2.50";
+glib-networking_2-54 = callPackage ../all-pkgs/g/glib-networking {
+  channel = "2.54";
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-glib-networking = callPackageAlias "glib-networking_2-50" { };
+glib-networking = callPackageAlias "glib-networking_2-54" { };
 
 glibmm_2-52 = callPackage ../all-pkgs/g/glibmm {
   channel = "2.52";

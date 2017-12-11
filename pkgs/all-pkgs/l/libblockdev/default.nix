@@ -21,17 +21,17 @@
 }:
 
 let
-  version = "2.14";
+  version = "2.15";
 in
 stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 4;
     owner = "storaged-project";
     repo = "libblockdev";
     rev = "${version}-1";
-    sha256 = "59e296b8a37ab3e4c3774e5337f90c1c39dd65fec993631d612c09ac71e9e6ab";
+    sha256 = "afe068a7d248699c1f5fa7e72bdbcc7f0055edd4eed31bf97dc930b57bc1e053";
   };
 
   nativeBuildInputs = [

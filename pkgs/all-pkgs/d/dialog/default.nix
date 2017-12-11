@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dialog-1.3-20170509";
+  name = "dialog-1.3-20171209";
 
   src = fetchurl {
-    url = "ftp://invisible-island.net/dialog/${name}.tgz";
-    multihash = "QmRG5VR19eTAj78VKEmwWJXis8mELsWrftGqYMuBKXZ5R5";
+    url = "https://invisible-mirror.net/archives/dialog/${name}.tgz";
+    multihash = "QmRGktegXLbQ5VK4ryaYwQXWw5N1KViLZjQduPCVoxr7av";
     hashOutput = false;
-    sha256 = "2ff1ba74c632b9d13a0d0d2c942295dd4e8909694eeeded7908a467d0bcd4756";
+    sha256 = "20139442119e2eff5c35236e8e5e313c901539008d9cccf8c8ab3851b41267e6";
   };
 
   nativeBuildInputs = [
@@ -25,10 +25,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-rpath-hacks"
     "--with-libtool"
-    "--with-libtool-opts=-shared"
+    "--with-shared"
+    "--enable-rpath"
     "--with-ncursesw"
+    "--disable-rpath-hacks"
   ];
 
   installTargets = [

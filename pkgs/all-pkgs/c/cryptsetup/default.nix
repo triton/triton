@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 
+, json-c
+, libargon2
 , lvm2
 , openssl
 , popt
@@ -9,8 +11,8 @@
 }:
 
 let
-  major = "1.7";
-  patch = "5";
+  major = "2.0";
+  patch = "0";
 
   version = "${major}.${patch}";
 
@@ -22,10 +24,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "2b30cd1d0dd606a53ac77b406e1d37798d4b0762fa89de6ea546201906a251bd";
+    sha256 = "adc623b9e3e3ab5c14145b8baf21b741e513ee5bf90d2b4d85a745c2f05da199";
   };
 
   buildInputs = [
+    json-c
+    libargon2
     lvm2
     openssl
     popt
@@ -34,9 +38,9 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-cryptsetup-reencrypt"
-    "--with-crypto_backend=openssl"
+    "--enable-libargon2"
     "--enable-python"
+    "--with-crypto_backend=openssl"
   ];
 
   passthru = {

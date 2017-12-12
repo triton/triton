@@ -346,10 +346,6 @@ in
       wireless.enable = false;
     };
 
-    powerManagement.resumeCommands = ''
-      ${config.systemd.package}/bin/systemctl restart NetworkManager
-    '';
-
     security.polkit.extraConfig = polkitConf;
 
     services.dbus.packages = cfg.packages;

@@ -218,7 +218,7 @@ generate_hash() {
     --no-acls --no-selinux --no-xattrs \
     --mode=go=rX,u+rw,a-s \
     --clamp-mtime --mtime=@$mtime \
-    -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.br"
+    -c "$name" | brotli -6 -o "$tmp/$name.tar.br"
 
   HASH="$(nix-prefetch-url "file://$tmp/$name.tar.br" 2>/dev/null)"
   rm -r "$tmp"

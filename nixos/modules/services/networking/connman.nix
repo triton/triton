@@ -108,9 +108,5 @@ in {
       networkmanager.enable = false;
     };
 
-    powerManagement.resumeCommands = ''
-      systemctl restart connman
-    '';
-
   };
 }

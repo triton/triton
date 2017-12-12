@@ -11,12 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gpgme-1.9.0";
+  name = "gpgme-1.10.0";
 
   src = fetchurl {
     url = "mirror://gnupg/gpgme/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "1b29fedb8bfad775e70eafac5b0590621683b2d9869db994568e6401f4034ceb";
+    sha256 = "1a8fed1197c3b99c35f403066bb344a26224d292afc048cfdfc4ccd5690a0693";
   };
 
   nativeBuildInputs = [
@@ -30,6 +30,11 @@ stdenv.mkDerivation rec {
     libassuan
     libgpg-error
   ];
+
+  # HACK: Disable building tests during the build phase since we don't run them
+  postPatch = ''
+    find . -name Makefile.in -exec sed -i '/^SUBDIRS =/s, \(tests\|''${tests}\),,' {} \;
+  '';
 
   configureFlags = [
     "--enable-fixed-path=${gnupg}/bin"

@@ -11,28 +11,20 @@ let
   inherit (lib)
     boolWt;
 
-  version = "2.8";
+  version = "2.9";
 in
 stdenv.mkDerivation rec {
   name = "lcms-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/lcms/lcms/${version}/lcms2-${version}.tar.gz";
-    sha256 = "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22";
+    sha256 = "48c6fdf98396fa245ed86e622028caf49b96fa22f3e5734f853f806fbc8e7d20";
   };
 
   buildInputs = [
     libtiff
     libjpeg
     zlib
-  ];
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--${boolWt (libjpeg != null)}-jpeg"
-    "--${boolWt (libtiff != null)}-tiff"
-    "--${boolWt (zlib != null)}-zlib"
-    "--with-threads"  # POSIX threads
   ];
 
   meta = with lib; {

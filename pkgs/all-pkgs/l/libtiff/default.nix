@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , jbigkit
@@ -24,6 +25,14 @@ stdenv.mkDerivation rec {
     libjpeg
     xz
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "1573e5285d1efb2e011b02dc29cf545a2dfc0d23";
+      file = "l/libtiff/CVE-2017-9935.patch";
+      sha256 = "a18bd3e28931a723639e51bb3386ab6b710f5ca0930b6d85c7123e898190f31e";
+    })
   ];
 
   meta = with stdenv.lib; {

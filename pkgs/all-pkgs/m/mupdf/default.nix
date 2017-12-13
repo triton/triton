@@ -1,12 +1,10 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , lib
 
 , curl
 , freeglut
 , freetype
-, glfw
 , glu
 , harfbuzz_lib
 , jbig2dec
@@ -22,21 +20,21 @@
 }:
 
 let
-  version = "1.11";
+  version = "1.12.0";
 in
 stdenv.mkDerivation rec {
   name = "mupdf-${version}";
 
   src = fetchurl {
-    url = "https://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "209474a80c56a035ce3f4958a63373a96fad75c927c7b1acdc553fc85855f00a";
+    url = "https://mupdf.com/downloads/archive/${name}-source.tar.xz";
+    multihash = "QmckdELFTNVgMdvRdvcpTBCMeqYALcPnH1CGkpzE1Y2xfF";
+    sha256 = "577b3820c6b23d319be91e0e06080263598aa0662d9a7c50af500eb6f003322d";
   };
 
   buildInputs = [
     curl
     freeglut
     freetype
-    glfw
     glu
     harfbuzz_lib
     jbig2dec
@@ -51,23 +49,13 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "10ac760ba2be89414f80c09f12081f311032a4d8";
-      file = "m/mupdf/fix-openjpeg.patch";
-      sha256 = "899ca42045806f69919929c2af1921868c053441648524212aa386c7f14bae4f";
-    })
-  ];
-
-  postPatch = /* Fix include to use current openjpeg release */ ''
-    sed -i source/fitz/load-jpx.c \
-      -e '/openjpeg-/ s/[0-9]\.[0-9]/${openjpeg.channel}/'
+  postPatch = /* Remove any unused third party utils*/ ''
+    rm -r thirdparty
+  '' + /* Remove test junk from the build */ ''
+    sed -i '/INSTALL_APPS/ s,$(MUJSTEST),,g' Makefile
   '';
 
   preBuild = ''
-    rm -rf thirdparty
-
-    sed -i '/INSTALL_APPS/ s,$(MUJSTEST),,g' Makefile
     makeFlagsArray+=(
       "MUJS_CFLAGS= -I${mujs}/include"
       "MUJS_LIBS= -lmujs"
@@ -76,8 +64,15 @@ stdenv.mkDerivation rec {
       "verbose=yes"
       "prefix=$out"
     )
+  '';
 
-    sed -e "s/libopenjpeg1/libopenjp2/" -i Makerules
+  failureHook = ''
+    export NIX_DEBUG=1
+    export buildParallel=
+    local actualMakeFlags
+    commonMakeFlags 'build'
+    printMakeFlags 'build'
+    make "''${actualMakeFlags[@]}"
   '';
 
   postInstall = ''

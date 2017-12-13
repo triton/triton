@@ -1,4 +1,5 @@
 { stdenv
+, fetchpatch
 , fetchurl
 , python2
 
@@ -32,6 +33,13 @@ stdenv.mkDerivation rec {
     nss
     nspr
     util-linux_lib
+  ];
+
+  patches = [
+    (fetchpatch {
+      url = "https://pagure.io/volume_key/c/ecef526a51c5a276681472fd6df239570c9ce518.patch";
+      sha256 = "b64ce41f959838165ab3608b9870fc04220533369657af194a10ab7918aa951e";
+    })
   ];
 
   postPatch = ''

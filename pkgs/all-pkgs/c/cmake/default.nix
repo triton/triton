@@ -2,6 +2,7 @@
 , cmake
 , fetchTritonPatch
 , fetchurl
+, ninja
 
 , bzip2
 , curl
@@ -45,6 +46,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = optionals (!bootstrap) [
     cmake
+    ninja
   ];
 
   buildInputs = optionals (!bootstrap) [

@@ -8,9 +8,8 @@
 , libxi
 , libxinerama
 , libxrandr
-, xorg
 
-, channel ? "0.15"
+, channel
 , type ? "alpha"
 }:
 
@@ -20,6 +19,11 @@ let
       version = "0.15.40";
       sha256_alpha = "94121fe3437891927a9ecabb4772dd2ed3e9df31b46e0a80abb761803ac245c4";
       sha256_headless = "1041ef61ea4aecd1f425e6030a909f0c349a9c01d1b3324d84a61b1cfef5ba6c";
+    };
+    "0.16" = {
+      version = "0.16.0";
+      sha256_alpha = "274303f6180156745beb5625b7ccdf105c8847f1b8f008291f6bfbbef32de341";
+      sha256_headless = "d580e916f211e3bf371ed5b330114074322315cae34c4a5dcef1e3550fe91882";
     };
   };
   source = sources."${channel}";

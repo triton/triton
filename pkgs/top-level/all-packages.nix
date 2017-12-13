@@ -1171,10 +1171,24 @@ f2fs-tools = callPackage ../all-pkgs/f/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/f/faac { };
 
-factorio = callPackage ../all-pkgs/f/factorio { };
-factorio_headless = callPackage ../all-pkgs/f/factorio {
-  type = "headless";
+
+
+factorio_0-15 = callPackage ../all-pkgs/f/factorio {
+  channel = "0.15";
 };
+factorio_headless_0-15 = callPackage ../all-pkgs/f/factorio {
+  type = "headless";
+  channel = "0.15";
+};
+factorio_0-16 = callPackage ../all-pkgs/f/factorio {
+  channel = "0.16";
+};
+factorio_headless_0-16 = callPackage ../all-pkgs/f/factorio {
+  type = "headless";
+  channel = "0.16";
+};
+factorio = callPackageAlias "factorio_0-15" { };
+factorio_headless = callPackageAlias "factorio_headless_0-15" { };
 
 fbterm = callPackage ../all-pkgs/f/fbterm { };
 

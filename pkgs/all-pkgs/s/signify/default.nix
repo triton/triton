@@ -5,17 +5,17 @@
 }:
 
 let
-  version = "20";
+  version = "23";
 in
 stdenv.mkDerivation {
   name = "signify-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 4;
     owner = "aperezdc";
     repo = "signify";
     rev = "v${version}";
-    sha256 = "e4461b7dfd3ff9c306d897466c65991f92e77add3d4be831709f39ef86ad3537";
+    sha256 = "3563da3d5a41e08f9de7a10cfa44f914fe75ae4f1405fb660ebbe02b25d1e170";
   };
 
   buildInputs = [

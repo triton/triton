@@ -4,14 +4,17 @@
 , lib
 
 , curl
+, freeglut
 , freetype
 , glfw
+, glu
 , harfbuzz_lib
 , jbig2dec
 , libjpeg
 , libx11
 , libxext
 , mujs
+, opengl-dummy
 , openjpeg
 , openssl_1-0-2
 , xproto
@@ -31,16 +34,19 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     curl
+    freeglut
     freetype
     glfw
+    glu
     harfbuzz_lib
     jbig2dec
     libjpeg
-    mujs
-    openjpeg
-    openssl_1-0-2
     libx11
     libxext
+    mujs
+    opengl-dummy
+    openjpeg
+    openssl_1-0-2
     xproto
     zlib
   ];

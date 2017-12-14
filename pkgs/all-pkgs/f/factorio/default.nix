@@ -21,9 +21,9 @@ let
       sha256_headless = "1041ef61ea4aecd1f425e6030a909f0c349a9c01d1b3324d84a61b1cfef5ba6c";
     };
     "0.16" = {
-      version = "0.16.1";
-      sha256_alpha = "cf893dc2863b6441034ada7bda84ee0e6eb70c4b40bfdd353c08651270811075";
-      sha256_headless = "b3ca5f5676efe06bcd43f71dbf0227011e5d845a366becf3f07a825e7d6f4de3";
+      version = "0.16.2";
+      sha256_alpha = "a9e2fa4ead5817ed39c96b8e70006874c9f41f0055a50a4f4931631c6feaa928";
+      sha256_headless = "1bcd388534cb240d6e584f1bc49be9ecd83851b772778e39133872ad6805d6c4";
     };
   };
   source = sources."${channel}";
@@ -60,20 +60,27 @@ stdenv.mkDerivation rec {
     mv doc-html "$out"/share/doc/factorio
   '' + ''
     mv data "$out"/share/factorio
+
     sed ${./factorio.sh} \
       -e "s,@sed@,$(dirname "$(type -tP sed)")," \
       -e "s,@factorio@,$out/bin/x64/factorio," \
       >bin/factorio
-    chmod +x bin/factorio
+    chmod 755 bin/factorio
+
     cp -r bin "$out"
+
     patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$out"/bin/x64/factorio
     patchelf --set-rpath "$(echo -n "$libs" | tr ' ' '\n' | sed 's,.*,\0/lib,' | tr '\n' ':')" "$out"/bin/x64/factorio
     if ldd "$out"/bin/x64/factorio | grep -v 'libGL.so.1' | grep -q 'not found'; then
       ldd "$out"/bin/x64/factorio
       exit 1
     fi
-    echo "config-path=~/.local/share/factorio" >> "$out"/config-path.cfg
-    echo "use-system-read-write-data-directories=false" >> "$out"/config-path.cfg
+
+    cat > "$out"/config-path.cfg <<'EOF'
+    config-path=~/.local/share/factorio
+    use-system-read-write-data-directories=false
+
+    EOF
   '';
 
   dontStrip = true;

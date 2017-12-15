@@ -19,8 +19,8 @@ let
 
   sources = {
     "1.12" = {
-      version = "1.12.3";
-      sha256 = "5139949d20274fdd702492438eeab2c9e55aa82f60aca17db27ebd3faf08489e";
+      version = "1.12.4";
+      sha256 = "f9da9dfe6e5d6f5ba3b38c5752b42d3f927715904942b405c2924d3cb77afba1";
     };
   };
 

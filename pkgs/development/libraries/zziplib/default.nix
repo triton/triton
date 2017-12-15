@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
-  parallelCheck = false;
+  checkParallel = false;
 
   meta = with lib; {
     description = "Library to extract data from files archived in a zip file";

@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Fails for 2.4.0
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "A language independent, scalable, open extension to CG";

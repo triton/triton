@@ -96,7 +96,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Parallel Building works fine but Parallel Install fails
-  parallelInstall = false;
+  installParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

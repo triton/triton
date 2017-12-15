@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     "--without-dxdir"  # windows
   ];
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with lib; {
     description = "Portable cross-platform Audio API";

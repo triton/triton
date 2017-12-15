@@ -141,7 +141,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Sometimes throws weird errors for 9.18
-  parallelInstall = false;
+  installParallel = false;
 
   passthru = {
     inherit version fonts;

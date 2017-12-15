@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Fails to build the bind library if run in parallel
-  parallelBuild = false;
+  buildParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

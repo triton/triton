@@ -35,8 +35,8 @@ stdenv.mkDerivation rec {
   ];
 
   # Parallel make is broken
-  parallelBuild = false;
-  parallelInstall = false;
+  buildParallel = false;
+  installParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("PREFIX=$out")
   '';
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "Extremely fast compression algorithm";

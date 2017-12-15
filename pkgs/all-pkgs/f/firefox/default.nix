@@ -243,7 +243,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  #parallelBuild = false;
+  #buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "Firefox Web Browser";

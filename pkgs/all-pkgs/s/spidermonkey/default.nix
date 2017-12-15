@@ -108,8 +108,8 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  parallelBuild = versionAtLeast version "45.0.0";
-  parallelInstall = false;
+  buildParallel = versionAtLeast version "45.0.0";
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "Mozilla's JavaScript engine written in C/C++";

@@ -57,8 +57,8 @@ stdenv.mkDerivation rec {
     "--with-saslauthd=/run/saslauthd"
   ];
 
-  #parallelBuild = false;
-  parallelInstall = false;
+  #buildParallel = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "Library for authentication to connection-based protocols";

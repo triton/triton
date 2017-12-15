@@ -169,7 +169,7 @@ stdenv.mkDerivation rec {
   };
 
   # Sometimes fails
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.postgresql.org/;

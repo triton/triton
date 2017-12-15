@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     rm -r $out/share/doc
   '';
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/groff/;

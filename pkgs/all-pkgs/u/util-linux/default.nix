@@ -122,7 +122,7 @@ stdenv.mkDerivation rec {
     "install-pkgconfigDATA"
   ];
 
-  parallelInstall = false;
+  installParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

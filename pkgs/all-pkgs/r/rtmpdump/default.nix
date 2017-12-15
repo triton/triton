@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     "CRYPTO=OPENSSL"
   ] ++ optional stdenv.cc.isClang "CC=clang";
 
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "Toolkit for RTMP streams";

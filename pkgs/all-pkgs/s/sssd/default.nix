@@ -140,7 +140,7 @@ stdenv.mkDerivation rec {
   '';
 
   # There be dragons here
-  parallelInstall = false;
+  installParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

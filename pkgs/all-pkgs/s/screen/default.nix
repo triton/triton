@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   doCheck = true;
 
   # Some generated headers are not ready when needed
-  parallelBuild = false;
+  buildParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

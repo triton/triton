@@ -114,7 +114,7 @@ stdenv.mkDerivation rec {
   addPrefix = false;
 
   # This is broken with make 4.2 and perl 5.22.1
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "The Perl 5 programmming language";

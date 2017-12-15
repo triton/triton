@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   # Sometimes fails to generate libidnkit.so
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     homepage = https://www.nic.ad.jp/ja/idn/idnkit;

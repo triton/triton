@@ -4,7 +4,7 @@ ninjaCommonMakeFlags() {
     phaseName=$1
 
     local parallelVar
-    parallelVar="parallel${phaseName^}"
+    parallelVar="${phaseName}Parallel"
 
     actualMakeFlags=()
     if [ -n "$makefile" ]; then

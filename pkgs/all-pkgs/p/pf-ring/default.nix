@@ -49,8 +49,8 @@ stdenv.mkDerivation {
   '';
 
   # Parallel building is broken
-  parallelBuild = false;
-  parallelInstall = false;
+  buildParallel = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

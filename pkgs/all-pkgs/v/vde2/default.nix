@@ -37,8 +37,8 @@ stdenv.mkDerivation rec {
   '';
 
   # Dependencies are not fully specified
-  parallelBuild = false;
-  parallelInstall = false;
+  buildParallel = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

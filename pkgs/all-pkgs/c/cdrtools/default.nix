@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   '';
 
   # cdda2wav fails if > -j1, it tries to link/copy files out of order.
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with lib; {
     description = "Portable CD/DVD/BluRay command line recording software";

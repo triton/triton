@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
     "install-dev"
   ];
 
-  parallelInstall = false;
+  installParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
   '';
 
   # This fails randomly otherwise
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

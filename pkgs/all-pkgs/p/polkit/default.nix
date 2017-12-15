@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/wiki/Software/polkit;

@@ -68,8 +68,8 @@ stdenv.mkDerivation rec {
   optimize = false;
 
   # Broken in the makefile
-  parallelBuild = false;
-  parallelInstall = false;
+  buildParallel = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.syslinux.org/;

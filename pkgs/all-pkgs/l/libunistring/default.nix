@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   # One of the tests fails to compile for 0.9.6 when run in parallel
   doCheck = true;
-  parallelCheck = false;
+  checkParallel = false;
 
   passthru = {
     srcVerification = fetchurl rec {

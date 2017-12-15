@@ -11,10 +11,10 @@ stdenv.mkDerivation rec {
   };
 
   # Fails with -> pth_uctx.c:31:19: fatal error: pth_p.h: No such file or directory
-  parallelBuild = false;
+  buildParallel = false;
 
   # Fails with -> cp: cannot create regular file '/nix/store/h73i6pkzd1md8d90gp9x7wc65kj7hp3f-pth-2.0.7/bin/#INST@10865#': No such file or directory
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "The GNU Portable Threads library";

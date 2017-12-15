@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Fails for 1.0.5
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "State-of-the-art C library that implements a sparse dynamic array";

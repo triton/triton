@@ -4,7 +4,7 @@ sconsCommonMakeFlags() {
     phaseName=$1
 
     local parallelVar
-    parallelVar="parallel${phaseName^}"
+    parallelVar="${phaseName}Parallel"
 
     actualMakeFlags=()
     if [ -n "${!parallelVar-true}" ]; then

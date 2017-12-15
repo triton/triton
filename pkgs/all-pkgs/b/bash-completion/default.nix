@@ -16,9 +16,9 @@ stdenv.mkDerivation rec {
   };
 
   doCheck = true;
-  parallelBuild = false;
-  parallelInstall = false;
-  parallelCheck = false;
+  buildParallel = false;
+  installParallel = false;
+  checkParallel = false;
 
   meta = with lib; {
     description = "Programmable completion for the bash shell";

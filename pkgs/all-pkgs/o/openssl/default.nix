@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
-  parallelInstall = false;
+  installParallel = false;
 
   # If we built shared objects don't include static
   postInstall = ''

@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Parallel building fails without fedora-fixes.patch
-  parallelBuild = true;
+  buildParallel = true;
 
   meta = with stdenv.lib; {
     description = "Implementation of the OpenMAX Integration Layer";

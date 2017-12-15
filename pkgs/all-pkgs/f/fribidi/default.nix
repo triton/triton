@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     autoreconfHook
   ];
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with lib; {
     description = "GNU implementation of the Unicode Bidirectional Algorithm";

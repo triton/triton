@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
   # doesn't expand environment variables such as `$HOME'.
 
   # Parallel building is horribly broken
-  parallelBuild = false;
-  parallelInstall = false;
+  buildParallel = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     description = "Spell checker for many languages";

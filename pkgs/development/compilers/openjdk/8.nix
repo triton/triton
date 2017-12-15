@@ -276,9 +276,9 @@ let
     optimize = false;
 
     # Explicitly does not support parallel building at all
-    parallelBuild = false;
-    parallelCheck = false;
-    parallelInstall = false;
+    buildParallel = false;
+    checkParallel = false;
+    installParallel = false;
 
     passthru = {
       inherit architecture;

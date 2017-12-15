@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   # Fails to install correctly in parallel
-  parallelInstall = false;
+  installParallel = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/mtools/;

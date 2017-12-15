@@ -84,7 +84,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Throws lots of errors as of 3.23
-  parallelBuild = false;
+  buildParallel = false;
 
   passthru = {
     inherit version;

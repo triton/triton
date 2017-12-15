@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Sometimes breaks building nft.c before xtables-config-parser.h
-  parallelBuild = false;
+  buildParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
       -e 's/-DG_DISABLE_DEPRECATED//'
   '';
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "A a CORBA 2.4-compliant Object Request Broker";

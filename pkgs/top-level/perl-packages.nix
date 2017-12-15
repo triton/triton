@@ -3287,7 +3287,7 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/T/TI/TIMB/${name}.tar.gz";
       sha256 = "8f7ddce97c04b4b7a000e65e5d05f679c964d62c8b02c94c1a7d815bb2dd676c";
     };
-    parallelBuild = false;
+    buildParallel = false;
     meta = {
       homepage = http://dbi.perl.org/;
       description = "Database independent interface for Perl";
@@ -10116,7 +10116,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/R/RA/RAAB/SGMLSpm-1.1.tar.gz;
       sha256 = "1gdjf3mcz2bxir0l9iljxiz6qqqg3a9gg23y5wjg538w552r432m";
     };
-    parallelInstall = false;
+    installParallel = false;
   };
 
   SignalMask = buildPerlPackage {

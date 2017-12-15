@@ -190,7 +190,7 @@ stdenv.mkDerivation rec {
   '';
 
   # The build is very fragile so don't even try
-  parallelBuild = false;
+  buildParallel = false;
 
   installPhase = ''
     mkdir -p "$out/"{bin,include,lib,share/man/man{3,5,8}}

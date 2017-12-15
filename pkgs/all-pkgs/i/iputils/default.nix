@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
     runHook 'postInstall'
   '';
 
-  parallelBuild = false;
+  buildParallel = false;
 
   meta = with stdenv.lib; {
     description = "Network monitoring tools including ping and ping6";

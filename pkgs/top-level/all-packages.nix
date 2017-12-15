@@ -1266,9 +1266,6 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   zimg = null;
   #zvbi = null;
 } // overrides);
-ffmpeg_3-3 = pkgs.ffmpeg_generic {
-  channel = "3.3";
-};
 ffmpeg_3-4 = pkgs.ffmpeg_generic {
   channel = "3.4";
 };

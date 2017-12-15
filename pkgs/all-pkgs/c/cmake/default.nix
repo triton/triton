@@ -24,7 +24,7 @@ let
     optionalString;
 
   majorVersion = "3.10";
-  minorVersion = "0";
+  minorVersion = "1";
   version = "${majorVersion}.${minorVersion}";
 in
 stdenv.mkDerivation rec {
@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
-    multihash = "QmTJw6hcnomaqzkxyK5Ehnqferxm1kJ39mLTFXzensQNN6";
-    sha256 = "b3345c17609ea0f039960ef470aa099de9942135990930a57c14575aae884987";
+    multihash = "QmWRSUqLEDWGiHcdgYyUbe8bpMLN6EE7BCa9h8m7eMfQi8";
+    sha256 = "7be36ee24b0f5928251b644d29f5ff268330a916944ef4a75e23ba01e7573284";
   };
 
   patches = [

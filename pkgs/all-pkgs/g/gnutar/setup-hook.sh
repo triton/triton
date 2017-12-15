@@ -1,4 +1,4 @@
-if ! type -t gnutarUnpackGenerator; then
+if ! type -t gnutarUnpackGenerator >/dev/null; then
   unpackCmdGenerators+=(gnutarUnpackGenerator)
 fi
 

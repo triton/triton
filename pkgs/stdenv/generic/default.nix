@@ -4,9 +4,8 @@
 , hostSystem
 , name ? "stdenv"
 , preHook ? ""
+, bash
 , initialPath
-, cc
-, shell
 , allowedRequisites ? null
 , extraArgs ? { }
 , extraAttrs ? { }
@@ -119,10 +118,8 @@ let
     ../../build-support/setup-hooks/patch-shebangs.sh
     ../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
     ../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
-    ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
     ../../build-support/setup-hooks/compress-man-pages.sh
     ../../build-support/setup-hooks/build-dir-check.sh
-    cc
   ] ++ extraBuildInputs;
 
   # Add a utility function to produce derivations that use this
@@ -253,7 +250,7 @@ let
           ) (propagatedBuildInputs ++ propagatedNativeBuildInputs)
         );
     in {
-      builder = attrs.realBuilder or shell;
+      builder = attrs.realBuilder or bash;
       args = attrs.args or ["-e" (attrs.builder or ./default-builder.sh)];
       stdenv = result;
       system = result.system;
@@ -322,12 +319,12 @@ let
 
       system = targetSystem;
 
-      builder = shell;
+      builder = bash;
 
-      args = [ "-e" ./builder.sh ];
+      args = [ ./builder.sh ];
 
       setup = [
-        setupScript
+        ./lib/00-preamble.sh
         ./lib/50-build.sh
         ./lib/50-dist.sh
         ./lib/50-check.sh
@@ -336,12 +333,13 @@ let
         ./lib/50-configure.sh
         ./lib/50-patch.sh
         ./lib/50-unpack.sh
+        ./lib/70-source-date-epoch.sh
+        setupScript
       ];
 
       inherit
         preHook
         initialPath
-        shell
         defaultNativeBuildInputs;
     }
     // extraArgs)
@@ -358,8 +356,6 @@ let
       inherit lib;
 
       inherit overrides;
-
-      inherit cc;
     }
 
     # Propagate any extra attributes.  For instance, we use this to

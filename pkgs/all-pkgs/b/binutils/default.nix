@@ -51,14 +51,13 @@ stdenv.mkDerivation rec {
   # We don't need to provide any packages to the bootstrap
   nativeBuildInputs = [
     autotools
+    #bison
+    #flex
+    #gnum4
     gnumake
     gnupatch
     gnutar
     xz
-  ] ++ optionals (!bootstrap) [
-    bison
-    flex
-    gnum4
   ];
 
   # We don't need to provide any packages to the bootstrap
@@ -128,9 +127,9 @@ stdenv.mkDerivation rec {
     "--enable-64-bit-archive"
   ];
 
-  preBuild = ''
-    makeFlagsArray+=("tooldir=$out")
-  '';
+  #preBuild = ''
+  #  makeFlagsArray+=("tooldir=$out")
+  #'';
 
   preFixup = optionalString bootstrap ''
     find "$out" -not -name bin -and -not -name share -mindepth 1 -maxdepth 1 | xargs -r rm -r

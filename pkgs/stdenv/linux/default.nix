@@ -54,12 +54,12 @@ let
     langVhdl = false;
   };
 
-  bootstrap-shell = "${bootstrap-tools}/bin/bash";
+  bootstrap-bash = "${bootstrap-tools}/bin/bash";
 
   bootstrap-hook = { name, bin, setupHook, extraCmd ? "" }: derivation {
     name = "bootstrap-tools-${name}";
 
-    builder = bootstrap-shell;
+    builder = bootstrap-bash;
     bootstrap = bootstrap-tools;
 
     args = [
@@ -77,7 +77,7 @@ let
   bootstrap-stdenv-tools = derivation {
     name = "bootstrap-stdenv-tools";
 
-    builder = bootstrap-shell;
+    builder = bootstrap-bash;
     bootstrap = bootstrap-tools;
 
     args = [
@@ -96,7 +96,7 @@ let
   };
 
   commonBootstrapOptions = a: a // {
-    shell = bootstrap-shell;
+    bash = bootstrap-bash;
     initialPath = [
       bootstrap-stdenv-tools
     ];
@@ -123,7 +123,6 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
       name = "bootstrap-stdenv-linux-stage0";
 
-      cc = null;
       hostSystem = bootstrapSystem;
       targetSystem = bootstrapSystem;
 
@@ -211,16 +210,8 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
       name = "bootstrap-stdenv-linux-stage1";
 
-      cc = stage0Pkgs.gcc;
       hostSystem = bootstrapSystem;
       targetSystem = bootstrapSystem;
-
-
-      extraAttrs = {
-        # stdenv.libc is used by GCC build to figure out the system-level
-        # /usr/include directory.
-        libc = stage1Pkgs.stdenv.cc.libc;
-      };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit (pkgs)

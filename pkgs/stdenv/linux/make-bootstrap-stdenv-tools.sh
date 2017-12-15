@@ -16,11 +16,13 @@ link() {
 }
 
 link 'awk'
+link 'basename'
 link 'cat'
 link 'chattr' || true
 link 'chmod'
 link 'cp'
 link 'date'
+link 'dirname'
 link 'env'
 link 'find'
 link 'grep'

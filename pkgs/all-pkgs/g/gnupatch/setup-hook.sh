@@ -1,4 +1,4 @@
-if ! type -t gnupatchPatchGenerator; then
+if ! type -t gnupatchPatchGenerator >/dev/null; then
   patchCmdGenerators+=(gnupatchPatchGenerator)
 fi
 

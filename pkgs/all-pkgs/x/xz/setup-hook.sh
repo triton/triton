@@ -1,4 +1,4 @@
-if ! type -t xzUnpackGenerator; then
+if ! type -t xzUnpackGenerator >/dev/null; then
   unpackCmdGenerators+=(xzUnpackGenerator)
 fi
 
@@ -11,7 +11,7 @@ xzUnpackGenerator() {
   srcFile="${srcFile:0:-3}"
 }
 
-if ! type -t xzPatchGenerator; then
+if ! type -t xzPatchGenerator >/dev/null; then
   patchCmdGenerators+=(xzPatchGenerator)
 fi
 

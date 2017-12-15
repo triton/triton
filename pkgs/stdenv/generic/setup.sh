@@ -1,8 +1,3 @@
-set -e
-set -o pipefail
-
-trap "exitHandler" EXIT
-
 ################################ Hook handling #################################
 
 # Run all hooks with the specified name in the order in which they
@@ -126,6 +121,8 @@ exitHandler() {
 
   exit "$exitCode"
 }
+trap "exitHandler" EXIT
+
 
 ############################### Helper functions ###############################
 
@@ -342,6 +339,7 @@ _addToCrossEnv() {
 fixupPhase() {
   runHook 'preFixup'
 
+  set -x
   # Apply fixup to each output.
   local output
   for output in $outputs; do
@@ -480,13 +478,6 @@ PATH_DELIMITER=':'
 
 nestingLevel=0
 
-# Set a fallback default value for SOURCE_DATE_EPOCH, used by some
-# build tools to provide a deterministic substitute for the "current"
-# time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it
-# confuses some applications.
-export SOURCE_DATE_EPOCH
-: ${SOURCE_DATE_EPOCH:=1}
-
 # Wildcard expansions that don't match should expand to an empty list.
 # This ensures that, for instance, "for i in *; do ...; done" does the
 # right thing.
@@ -502,14 +493,6 @@ if [ "$NIX_DEBUG" = 1 ]; then
   echo "initial path: $PATH"
 fi
 
-# Check that the pre-hook initialised SHELL.
-if [ -z "$SHELL" ]; then
-  echo "SHELL not set"
-  exit 1
-fi
-BASH="$SHELL"
-export CONFIG_SHELL="$SHELL"
-
 # Set the TZ (timezone) environment variable, otherwise commands like
 # `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
 # be set--see zic manual page 2004').
@@ -518,10 +501,6 @@ export TZ='UTC'
 # Before doing anything else, state the build time
 NIX_BUILD_START="$(date '+%s')"
 
-# Execute the pre-hook.
-if [ -z "$shell" ]; then
-  export shell=$SHELL
-fi
 runHook 'preHook'
 
 # Allow the caller to augment buildInputs (it's not always possible to

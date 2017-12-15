@@ -40,13 +40,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.9.3";
+  name = "libinput-1.9.4";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    multihash = "QmQEw17KddM4VcQLhpfY9NiYjd4nrimSAq9ghF9pTtHT5K";
+    multihash = "QmUyQ9Z5pQLYP6xRuKEVn84LpA3Cp188NxELCYyYVRCY6W";
     hashOutput = false;
-    sha256 = "240d2c9d605b33358d81324e2c1c2fe3a33f0aeac43bce905162868971619327";
+    sha256 = "0bcdbd4c4e3c2a2db322fbdf2ef3284f2e6d6fb7be3af80e6d8de7783f675190";
   };
 
   nativeBuildInputs = [

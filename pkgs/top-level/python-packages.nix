@@ -1260,13 +1260,13 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    pycurl = buildPythonPackage (rec {
      name = "pycurl-${version}";
-     version = "7.43.0";
+     version = "7.43.0.1";
      disabled = isPyPy; # https://github.com/pycurl/pycurl/issues/208
 
      src = fetchPyPi {
        package = "pycurl";
        inherit version;
-       sha256 = "aa975c19b79b6aa6c0518c0cc2ae33528900478f0b500531dbcdbf05beec584c";
+       sha256 = "43231bf2bafde923a6d9bb79e2407342a5f3382c1ef0a3b2e491c6a4e50b91aa";
      };
 
      propagatedBuildInputs = with self; [ pkgs.curl pkgs.openssl ];

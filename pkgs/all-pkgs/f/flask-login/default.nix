@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.4.0";
+  version = "0.4.1";
 in
 buildPythonPackage rec {
   name = "flask-login-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Flask-Login";
     inherit version;
-    sha256 = "d25e356b14a59f52da0ab30c31c2ad285fa23a840f0f6971df7ed247c77082a7";
+    sha256 = "c815c1ac7b3e35e2081685e389a665f2c74d7e077cb93cecabaea352da4752ec";
   };
 
   buildInputs = [

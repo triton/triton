@@ -177,23 +177,6 @@ addToSearchPath() {
   addToSearchPathWithCustomDelimiter "${PATH_DELIMITER}" "$@"
 }
 
-ensureDir() {
-  echo "warning: ‘ensureDir’ is deprecated; use ‘mkdir’ instead" >&2
-
-  local dir
-
-  for dir in "$@"; do
-    if ! [ -x "$dir" ]; then
-      mkdir -p "$dir"
-    fi
-  done
-}
-
-installBin() {
-  mkdir -p "$out/bin"
-  cp "$@" "$out/bin"
-}
-
 ######################## Textual substitution functions ########################
 
 substitute() {
@@ -328,10 +311,6 @@ _addToCrossEnv() {
   # Run the package-specific hooks set by the setup-hook scripts.
   runHook 'crossEnvHook' "$pkg"
 }
-
-# Dummy implementation of the paxmark function. On Linux, this is
-# overwritten by paxctl's setup hook.
-paxmark() { true; }
 
 ############################### Generic builder ################################
 

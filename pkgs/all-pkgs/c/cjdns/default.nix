@@ -36,8 +36,8 @@ stdenv.mkDerivation {
   '';
 
   installPhase = ''
-    installBin cjdroute makekeys privatetopublic publictoip6
-    mkdir -p $out/share/cjdns
+    mkdir -p "$out"/{bin,share/cjdns}
+    cp installBin cjdroute makekeys privatetopublic publictoip6 "$out"/bin
     cp -R contrib tools node_build node_modules $out/share/cjdns
   '';
 

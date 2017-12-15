@@ -1,5 +1,5 @@
 defaultDistAction() {
-  echo "Nothing to dist"
+  return 0
 }
 if [ -z "$distAction" ]; then
   distAction='defaultDistAction'

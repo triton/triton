@@ -22,7 +22,6 @@ fi
 
 unpackActionDefault() {
   if [ -z "$srcs" ]; then
-    echo 'Nothing to unpack'
     return 0
   fi
 

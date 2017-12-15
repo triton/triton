@@ -12,8 +12,6 @@
 , overrides ? (pkgs: { })
 , config
 
-, setupScript ? ./setup.sh
-
 , extraBuildInputs ? [ ]
 , __stdenvImpureHostDeps ? [ ]
 , __extraImpureHostDeps ? [ ]
@@ -323,6 +321,13 @@ let
 
       args = [ ./builder.sh ];
 
+      inherit
+        initialPath;
+
+      preHook = ''
+        defaultNativeBuildInputs='${lib.concatStringsSep " " defaultNativeBuildInputs}'
+      '' + preHook;
+
       setup = [
         ./lib/00-preamble.sh
         ./lib/50-build.sh
@@ -334,13 +339,8 @@ let
         ./lib/50-patch.sh
         ./lib/50-unpack.sh
         ./lib/70-source-date-epoch.sh
-        setupScript
+        ./setup.sh
       ];
-
-      inherit
-        preHook
-        initialPath
-        defaultNativeBuildInputs;
     }
     // extraArgs)
 

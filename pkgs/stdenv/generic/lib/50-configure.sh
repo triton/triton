@@ -12,7 +12,7 @@ configureBuildRoot() {
 }
 
 defaultConfigureAction() {
-  echo "Nothing to configure"
+  return 0
 }
 if [ -z "$configureAction" ]; then
   configureAction='defaultConfigureAction'

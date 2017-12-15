@@ -1,5 +1,5 @@
 defaultInstallAction() {
-  echo "Nothing to install"
+  return 0
 }
 if [ -z "$installAction" ]; then
   installAction='defaultInstallAction'

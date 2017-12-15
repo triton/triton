@@ -1,5 +1,5 @@
 defaultBuildAction() {
-  echo "Nothing to build"
+  return 0
 }
 if [ -z "$buildAction" ]; then
   buildAction='defaultBuildAction'

@@ -1,18 +1,21 @@
+# We need common utilities
+# Since we are building a standard environment, our initialPath
+# will contain these tools so we can use that
 export PATH=""
 for i in $initialPath; do
   PATH="$PATH${PATH:+:}$i/bin"
 done
 
-mkdir -p "$out"
+set -x
 
-echo "initialPath=\"$initialPath\"" >>"$out"/setup
-echo "defaultNativeBuildInputs=\"$defaultNativeBuildInputs\"" >>"$out"/setup
-echo "$preHook" >>"$out"/setup
+stdenvDir="$out"/share/stdenv
+preFile="$stdenvDir"/10-pre.sh
+
+mkdir -p "$stdenvDir"
+echo "initialPath=\"$initialPath\"" >>"$preFile"
+echo "$preHook" >>"$preFile"
 for src in $setup; do
-  cat "$src" >>"$out"/setup
+  # We want to get the actual filename without the nix hash
+  name="$(basename "$src" | sed 's,^[^-]*-\(.*\)$,\1,')"
+  cp -v "$src" "$stdenvDir"/"$name"
 done
-
-# Allow the user to install stdenv using nix-env and get the packages
-# in stdenv.
-mkdir -p "$out"/nix-support
-echo $propagatedUserEnvPkgs >"$out"/nix-support/propagated-user-env-packages

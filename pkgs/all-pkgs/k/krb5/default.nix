@@ -24,17 +24,17 @@ let
 
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
-  major = "1.15";
-  patch = "2";
+  major = "1.16";
+  patch = null;
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "Qmcqo8RvhJmEmpDwh3maAUonESoyZFT64EsBJECDmdv4mh";
+    multihash = "Qmadfnh36K2WJ96CvwV48WBjT95CTZCmqxeJUFE4jYTNRK";
     hashOutput = false;
-    sha256 = "1639e392edf25e3b6cfec2ae68f97eb53e07c2dbe74bfeede0108465d5d1c87e";
+    sha256 = "faeb125f83b0fb4cdb2f99f088140631bb47d975982de0956d18c85842969e08";
   };
 
   prePatch= ''
@@ -62,7 +62,6 @@ stdenv.mkDerivation rec {
     "--disable-athena"
     "--without-vague-errors"
     "--with-crypto-impl=openssl"
-    "--with-pkinit-crypto-impl=openssl"
     "--with-tls-impl=openssl"
     #"--enable-asan"  # FIXME: causes undefined reference errors
     "--enable-aesni"
@@ -108,13 +107,13 @@ stdenv.mkDerivation rec {
   passthru = rec {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.15" "2";
+      urls = tarballUrls "1.16" null;
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprints = [
         "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305"
         "C449 3CB7 39F4 A89F 9852  CBC2 0CBA 0857 5F83 72DF"
       ];
-      sha256 = "1639e392edf25e3b6cfec2ae68f97eb53e07c2dbe74bfeede0108465d5d1c87e";
+      sha256 = "faeb125f83b0fb4cdb2f99f088140631bb47d975982de0956d18c85842969e08";
     };
   };
 

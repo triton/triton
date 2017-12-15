@@ -18,8 +18,7 @@
 }:
 
 let
-  channel = "0.4";
-  version = "${channel}.1";
+  version = "0.5";
 in
 stdenv.mkDerivation rec {
   name = "granite-${version}";
@@ -27,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 3;
     url = "https://github.com/elementary/granite/archive/${version}.tar.gz";
-    sha256 = "21d4e6e1ab5280fbe627f5b01c5f8f0e7cc606328ef7a7c17343a9ea463f7039";
+    sha256 = "8b44bf680e2d53f2fb00dea9be48a0706cd1d9017b636dc9c96e4bee77782f6b";
   };
 
   nativeBuildInputs = [

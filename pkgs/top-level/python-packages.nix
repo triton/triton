@@ -726,6 +726,11 @@ unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
 urllib3 = callPackage ../all-pkgs/u/urllib3 { };
 
+vapoursynth = callPackage ../all-pkgs/v/vapoursynth { };
+vapoursynth_head = callPackage ../all-pkgs/v/vapoursynth {
+  channel = "head";
+};
+
 vcversioner = callPackage ../all-pkgs/v/vcversioner { };
 
 webencodings = callPackage ../all-pkgs/w/webencodings { };

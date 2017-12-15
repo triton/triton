@@ -123,13 +123,6 @@ stdenv.mkDerivation rec {
     popd
   '';
 
-  preFixup = ''
-    ${python.interpreter} -c "
-    import compileall
-    compileall.compile_dir('$out/${python.sitePackages}', optimize=1)
-    "
-  '';
-
   meta = with lib; {
     description = "A video processing framework";
     homepage = https://github.com/vapoursynth/vapoursynth;

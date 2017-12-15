@@ -54,29 +54,35 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    mkdir -p "$out"/share
+    mkdir -pv "$out"/{bin,share/factorio/}
   '' + optionalString (type != "headless") ''
-    mkdir -p "$out"/share/doc
-    mv doc-html "$out"/share/doc/factorio
+    mkdir -pv "$out"/share/doc
+    mv -v doc-html/ "$out"/share/doc/factorio/
   '' + ''
-    mv data "$out"/share/factorio
+    mv -v data/ "$out"/share/factorio/
 
     sed ${./factorio.sh} \
       -e "s,@sed@,$(dirname "$(type -tP sed)")," \
-      -e "s,@factorio@,$out/bin/x64/factorio," \
-      >bin/factorio
-    chmod 755 bin/factorio
+      -e "s,@factorio@,$out/share/factorio/bin/x64/factorio," \
+      > $out/bin/factorio
+    chmod 755 $out/bin/factorio
 
-    cp -r bin "$out"
+    cp -rv bin/ "$out"/share/factorio/
 
-    patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$out"/bin/x64/factorio
-    patchelf --set-rpath "$(echo -n "$libs" | tr ' ' '\n' | sed 's,.*,\0/lib,' | tr '\n' ':')" "$out"/bin/x64/factorio
-    if ldd "$out"/bin/x64/factorio | grep -v 'libGL.so.1' | grep -q 'not found'; then
-      ldd "$out"/bin/x64/factorio
+    patchelf \
+      --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+      "$out"/share/factorio/bin/x64/factorio
+    patchelf \
+      --set-rpath "$(echo -n "$libs" | tr ' ' '\n' | sed 's,.*,\0/lib,' | tr '\n' ':')" \
+      "$out"/share/factorio/bin/x64/factorio
+
+    if ldd "$out"/share/factorio/bin/x64/factorio |
+           grep -v 'libGL.so.1' | grep -q 'not found'; then
+      ldd "$out"/share/factorio/bin/x64/factorio
       exit 1
     fi
 
-    cat > "$out"/config-path.cfg <<'EOF'
+    cat > "$out"/share/factorio/config-path.cfg <<'EOF'
     config-path=~/.local/share/factorio
     use-system-read-write-data-directories=false
 

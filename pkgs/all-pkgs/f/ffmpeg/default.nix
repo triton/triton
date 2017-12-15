@@ -621,7 +621,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"
-    /**/(fflag "--disable-lv2" "3.4")
+    /**/(fflag "--disable-lv2" "3.5")
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"

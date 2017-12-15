@@ -193,9 +193,9 @@ let
       sha256 = "5a77278a63741efa74e26bf197b9bb09ac6381b9757391b922407210f0f991c0";
     };
     "9.9" = { # Git
-      version = "2017.12.05";
-      rev = "c8bd2c7d09bfc71795e91f0a9aeb4b8a6833eff2";
-      sha256 = "9d4aef0488e5744247c890194e1c5b5bba90182bbc2234dac72f43cf7a2f3a3b";
+      version = "2017.12.15";
+      rev = "3c6dc270355f27645cf931fae1ed2dc1405507f8";
+      sha256 = "64f9b15adaf585ddca918db9bb6e202ccc795c56579ce70b2f9fe075d5c043fa";
     };
   };
   source = sources."${channel}";
@@ -481,7 +481,7 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    (fflag "--disable-amf" "3.5")  # macOS
+    (fflag "--disable-amf" "3.5")
     "--disable-audiotoolbox"  # macOS
     "--${boolEn (
       nvidia-cuda-toolkit != null
@@ -593,7 +593,8 @@ stdenv.mkDerivation rec {
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"
-    "--${boolEn (v4l_lib != null)}-v4l2_m2m"
+    (deprfflag "--${boolEn (v4l_lib != null)}-v4l2_m2m" null "3.4")
+    (fflag "--${boolEn (v4l_lib != null)}-v4l2-m2m" "3.5")
     "--${boolEn (vid-stab != null)}-libvidstab"
     /**/"--disable-libvmaf"
     "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.12.2";
+  version = "0.13";
 in
 buildPythonPackage {
   name = "werkzeug-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Werkzeug";
     inherit version;
-    sha256 = "903a7b87b74635244548b30d30db4c8947fe64c5198f58899ddcd3a13c23bb26";
+    sha256 = "6246e5fc98a505824113fb6aca993d45ea284a2bcffdc2c65d0c538e53e4abd3";
   };
 
   meta = with lib; {

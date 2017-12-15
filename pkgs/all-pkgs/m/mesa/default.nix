@@ -61,7 +61,7 @@ let
     optionalString
     splitString;
 
-  version = "17.2.6";
+  version = "17.3.0";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -79,19 +79,19 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmTtyKmEnNhW7pMUJcaBU3rsxo94zJ6Fh7f5L2QdvriMBG";
+    multihash = "QmeY8h2gdqj5ZBS4E3JMe6tafnwNivtqoeGJLMkx2Pkg8i";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "6ad85224620330be26ab68c8fc78381b12b38b610ade2db8716b38faaa8f30de";
+    sha256 = "29a0a3a6c39990d491a1a58ed5c692e596b3bfc6c01d0b45e0b787116c50c6d9";
   };
 
   nativeBuildInputs = [
     autoreconfHook
+    python2Packages.python
   ] ++ optionals (buildConfig != "opengl-dummy") [
     bison
     flex
     gettext
     intltool
-    python2Packages.python
     python2Packages.Mako
     xorg.makedepend
   ];
@@ -191,7 +191,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
     "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
-    "--${boolEn (buildConfig != "opengl-dummy")}-omx"
+    "--${boolEn (buildConfig != "opengl-dummy")}-omx-bellagio"
     "--${boolEn (buildConfig != "opengl-dummy")}-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang

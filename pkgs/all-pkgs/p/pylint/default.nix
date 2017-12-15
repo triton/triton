@@ -19,7 +19,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "1.7.4";
+  version = "1.7.5";
 in
 buildPythonPackage rec {
   name = "pylint-${version}";
@@ -27,7 +27,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pylint";
     inherit version;
-    sha256 = "1f65b3815c3bf7524b845711d54c4242e4057dd93826586620239ecdfe591fb1";
+    sha256 = "dd20d6f17e7ea9d3a3a35c5d56ba2c50fdfdb7192096a1095f1791d072bc59a1";
   };
 
   propagatedBuildInputs = [

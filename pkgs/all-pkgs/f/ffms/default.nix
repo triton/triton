@@ -1,6 +1,6 @@
 { stdenv
 , autoreconfHook
-, fetchzip
+, fetchFromGitHub
 , lib
 
 , ffmpeg
@@ -8,15 +8,17 @@
 }:
 
 let
-  version = "2.23";
+  version = "2017-11-21";
 in
 stdenv.mkDerivation rec {
   name = "ffms-${version}";
 
-  src = fetchzip {
-    version = 2;
-    url = "https://github.com/FFMS/ffms2/archive/${version}.tar.gz";
-    sha256 = "8a40f22a28e15c974906a222b44b6df29d9c50d34f41ded1ab1ad6edd6711a8d";
+  src = fetchFromGitHub {
+    version = 4;
+    owner = "ffms";
+    repo = "ffms2";
+    rev = "c71cade921072bce46289635ed0780e5ce01beab";
+    sha256 = "3cddcca60423fa7ba0b293e888632b541940ac63a4e14a3703acfa6f904aab77";
   };
 
   nativeBuildInputs = [
@@ -27,6 +29,10 @@ stdenv.mkDerivation rec {
     ffmpeg
     zlib
   ];
+
+  preAutoreconf = ''
+    mkdir -pv src/config
+  '';
 
   configureFlags = [
     "--disable-debug"

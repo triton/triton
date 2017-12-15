@@ -3,12 +3,6 @@
 , fetchPyPi
 , isPy3
 , lib
-
-, isort
-, mccabe
-, pytest-runner
-, singledispatch
-, six
 }:
 
 let
@@ -22,10 +16,6 @@ buildPythonPackage rec {
     inherit version;
     sha256 = "5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a";
   };
-
-  propagatedBuildInputs = [
-    func
-  ];
 
   disabled = isPy3;  # FIXME: < 3.5
 

@@ -54,10 +54,13 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  NIX_CFLAGS_COMPILE = [
-    # Gstreamer lags behind FFmpeg and may use functions marked as deprecated.
-    "-Wno-deprecated-declarations"
-  ];
+  postUnpack = /* gst-libav vendors outdated ffmpeg sources */ ''
+    pushd $srcRoot/gst-libs/ext/
+      rm -rfv libav/
+      tar -xf ${ffmpeg.src}
+      mv ffmpeg-*/ libav/
+    popd
+  '';
 
   passthru = {
     srcVerification = fetchurl {

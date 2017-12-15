@@ -2,13 +2,15 @@
 , fetchTritonPatch
 , fetchurl
 , lib
-#, pkgs
+#, meson
 #, ninja
 
 , gst-plugins-base
 , gstreamer
 , ncurses
-, pythonPackages
+, pygobject
+, python
+, wrapPython
 
 , channel
 }:
@@ -16,8 +18,8 @@
 let
   sources = {
     "1.12" = {
-      version = "1.12.3";
-      sha256 = "c3f529dec1294633132690806703b80bad5752eff482eaf81f209c2aba012ba7";
+      version = "1.12.4";
+      sha256 = "20ce6af6615c9a440c1928c31259a78226516d06bf1a65f888c6d109826fa3ea";
     };
   };
 
@@ -36,7 +38,7 @@ stdenv.mkDerivation rec {
   };
 
   # nativeBuildInputs = [
-  #   pkgs.meson
+  #   meson
   #   ninja
   # ];
 
@@ -44,9 +46,9 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gstreamer
     ncurses
-    pythonPackages.python
-    pythonPackages.pygobject
-    pythonPackages.wrapPython
+    python
+    pygobject
+    wrapPython
   ];
 
   patches = [
@@ -60,14 +62,14 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     configureFlagsArray+=(
       # Fix overrides site directory
-      "--with-pygi-overrides-dir=$out/lib/${pythonPackages.python.libPrefix}/site-packages/gi/overrides"
+      "--with-pygi-overrides-dir=$out/lib/${python.libPrefix}/site-packages/gi/overrides"
     )
   '';
 
   # preConfigure = ''
   #   mesonFlagsArray+=(
   #     # Fix overrides site directory
-  #     "-Dpygi-overrides-dir=$out/lib/${pythonPackages.python.libPrefix}/site-packages/gi/overrides"
+  #     "-Dpygi-overrides-dir=$out/lib/${python.libPrefix}/site-packages/gi/overrides"
   #   )
   # '';
 

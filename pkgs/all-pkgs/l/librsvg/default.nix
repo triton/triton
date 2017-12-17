@@ -22,7 +22,7 @@ let
   loadersCachePath = "lib/gdk-pixbuf-2.0/2.10.0";
 
   versionMajor = "2.40";
-  versionMinor = "19";
+  versionMinor = "20";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "612b4d8b8609036f5d899be3fe70d9866b5f6ac5c971154c1c0ef7242216c1f7";
+    sha256 = "cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b";
   };
 
   buildInputs = [

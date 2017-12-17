@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.23.0";
+  version = "0.24.0";
 in
 buildPythonPackage rec {
   name = "asn1crypto-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "asn1crypto";
     inherit version;
-    sha256 = "0874981329cfebb366d6584c3d16e913f2a0eb026c9463efcc4aaf42a9d94d70";
+    sha256 = "9d5c20441baf0cb60a4ac34cc447c6c189024b6b4c6cd7877034f4965c464e49";
   };
 
   meta = with lib; {

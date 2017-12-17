@@ -2,22 +2,24 @@
 , bison
 , fetchurl
 , flex
+, lib
 , meson
 , ninja
 
+, libxcb
 , wayland
 , wayland-protocols
 , xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxkbcommon-0.7.2";
+  name = "libxkbcommon-0.8.0";
 
   src = fetchurl {
     url = "https://xkbcommon.org/download/${name}.tar.xz";
-    multihash = "QmZFWeRWKZQxRxVDa3Hswd6QQn5YtJXMM4PW5PWEDA1ha2";
+    multihash = "QmekLKEnvMuurHJ1JbaiZ4LCJUg39CwTR6RkryLDPN12bU";
     hashOutput = false;
-    sha256 = "28a4dc2735863bec2dba238de07fcdff28c5dd2300ae9dfdb47282206cd9b9d8";
+    sha256 = "e829265db04e0aebfb0591b6dc3377b64599558167846c3f5ee5c5e53641fe6d";
   };
 
   nativeBuildInputs = [
@@ -28,9 +30,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libxcb
     wayland
     wayland-protocols
-    xorg.libxcb
     xorg.xkeyboardconfig
   ];
 
@@ -38,7 +40,7 @@ stdenv.mkDerivation rec {
     "-Denable-docs=false"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library to handle keyboard descriptions";
     homepage = https://xkbcommon.org;
     license = licenses.mit;
@@ -49,4 +51,3 @@ stdenv.mkDerivation rec {
       x86_64-linux;
   };
 }
-

@@ -71,9 +71,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "d6105b421c56c0d4d641e067e31d1df85c32830d";
+      rev = "00d5c4fbda40189954ea0c893655e6447c66b890";
       file = "b/binutils/0000-upstream-fixes.patch";
-      sha256 = "2daf618eee6de07d9b769bd3f5a29c73ed53e3044b100b137a015ec59a081e97";
+      sha256 = "3883fb078e6fd777584daf48b2cccfd594604e6e4a87c948148f16f14d11f6b9";
     })
     (fetchTritonPatch {
       rev = "a03cde5368a0265105fe8be99ef193585334cb37";

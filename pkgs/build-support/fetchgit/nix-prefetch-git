@@ -300,16 +300,7 @@ clone_user_rev() {
 
     echo "Building Archive $out" >&2
     cd "$tmpdir"
-    local BROTLI_FLAGS=()
-    if @brotli@/bin/brotli -V >/dev/null 2>&1; then
-      BROTLI_FLAGS+=("-6" "-o")
-    else
-      BROTLI_FLAGS+=("--quality" "6" "--output")
-    fi
-    @tar@/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
-      --mode=go=rX,u+rw,a-s \
-      --mtime=@946713600 \
-      -c "$name" | @brotli@/bin/brotli "${BROTLI_FLAGS[@]}" "$out"
+    SOURCE_DATE_EPOCH=946713600 deterministic-zip "$name" >"$out"
 }
 
 if test -z "$branchName"; then

@@ -37,6 +37,10 @@ let
   tarball = args.name or (baseNameOf (lib.head urls'));
 
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
+
+  deterministic-zip' = deterministic-zip.override {
+    inherit version;
+  };
 in
 
 lib.overrideDerivation (fetchurl (rec {
@@ -89,7 +93,7 @@ lib.overrideDerivation (fetchurl (rec {
     date -d "@$SOURCE_DATE_EPOCH" --utc >&2
   '' + ''
     echo "Building Archive ${name}" >&2
-    ${deterministic-zip.override { inherit version; }}/bin/deterministic-zip "${name'}" >"$out"
+    ${deterministic-zip'}/bin/deterministic-zip "${name'}" >"$out"
   '';
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
@@ -98,5 +102,6 @@ lib.overrideDerivation (fetchurl (rec {
     unzip
   ];
 }) // {
-  inherit deterministic-zip purgeTimestamps;
+  inherit purgeTimestamps;
+  deterministic-zip = deterministic-zip';
 }

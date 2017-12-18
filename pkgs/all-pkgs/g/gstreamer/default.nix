@@ -74,13 +74,6 @@ stdenv.mkDerivation rec {
     "-Ddisable_libunwind=false"
   ];
 
-  preFixup =
-    /* Needed for orc-using gst plugins on hardened/PaX systems */ ''
-      paxmark m \
-        $out/bin/gst-launch* \
-        $out/libexec/gstreamer-1.0/gst-plugin-scanner
-    '';
-
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

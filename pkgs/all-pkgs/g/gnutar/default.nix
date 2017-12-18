@@ -14,12 +14,12 @@ let
     versionOlder;
 
   tarballUrls = version: [
-    "mirror://gnu/tar/tar-${version}.tar.bz2"
+    "mirror://gnu/tar/tar-${version}.tar.xz"
   ];
 
   sha256s = {
-    "1.29" = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
-    "1.30" = "87592b86cb037c554375f5868bdd3cc57748aef38d6cb741c81065f0beac63b7";
+    "1.29" = "402dcfd0022fd7a1f2c5611f5c61af1cd84910a760a44a688e18ddbff4e9f024";
+    "1.30" = "f1bf92dbb1e1ab27911a861ea8dde8208ee774866c46c0bb6ead41f4d1f4d2d3";
   };
 in
 stdenv.mkDerivation rec {
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "325F 650C 4C2B 6AD5 8807  327A 3602 B07F 55D0 C732";
       inherit (src) outputHashAlgo;
-      outputHash = "87592b86cb037c554375f5868bdd3cc57748aef38d6cb741c81065f0beac63b7";
+      outputHash = "f1bf92dbb1e1ab27911a861ea8dde8208ee774866c46c0bb6ead41f4d1f4d2d3";
     };
   };
 

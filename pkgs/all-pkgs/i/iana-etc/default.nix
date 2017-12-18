@@ -1,24 +1,43 @@
 { stdenv
-, fetchFromGitHub
+, lib
+, fetchurl
 }:
 
 let
-  date = "2017-05-12";
-  rev = "8835bcd122cd7d2702905a8ededde30a5428d524";
+  inherit (lib)
+    flip
+    mapAttrsToList;
+
+  date = "2017-12-18";
+
+  files = {
+    "services" = {
+      upstreamUrl = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml";
+      multihash = "QmdqX5ka9BK4V9mcUqX84G5rNLbVbmKvkFJggcX2jmcYQg";
+      sha256 = "c769e1773a90dc86a6b479b54c17c4cdf265ea83ac7a3f0e15542f26d4173e40";
+    };
+    "protocols" = {
+      upstreamUrl = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml";
+      multihash = "QmcND9WWoYMiw8yX2V2J6qNZwikjtMYe2pK57ssXo3DqZk";
+      sha256 = "4992fbc5453d0feb48492e6abda96bf9285ff4d2516f6924a0f92f773dc4cea2";
+    };
+  };
 in
 stdenv.mkDerivation rec {
   name = "iana-etc-${date}";
 
-  # The upstream repo is generated from:
-  #   https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
-  #   https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "wkennington";
-    repo = "iana-etc";
-    inherit rev;
-    sha256 = "59c914bdfaff170c9342387216c3f95e9cbca2bba194d21a1fc40826d6b2dfb5";
-  };
+  srcs = flip mapAttrsToList files (_: { upstreamUrl, multihash, sha256 }: fetchurl {
+    name = baseNameOf upstreamUrl;
+    inherit
+      multihash
+      sha256;
+  });
+
+  unpackPhase = ''
+    cp $srcs .
+    mv *service-names-port-numbers.xml service-names-port-numbers.xml
+    mv *protocol-numbers.xml protocol-numbers.xml
+  '';
 
   buildPhase = ''
     awk '

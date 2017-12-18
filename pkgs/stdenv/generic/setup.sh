@@ -199,6 +199,19 @@ addToSearchPath() {
   addToSearchPathWithCustomDelimiter "${PATH_DELIMITER}" "$@"
 }
 
+hasOutput() {
+  local target="$1"
+
+  local output
+  for output in ${outputs}; do
+    if [ "$target" = "$output" ]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
 ######################## Textual substitution functions ########################
 
 substitute() {

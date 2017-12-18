@@ -22,7 +22,7 @@ let
     };
     "0.16" = {
       version = "0.16.5";
-      sha256_alpha = "5756bcace32e3a950f013ba9febba46cfbc23c19800eefde646d25c2361e32a8";
+      sha256_alpha = "a848fcfc9d71e34b95bcfa2fa296e0bb035f01247c6ba561ff3b51154962cebd";
       sha256_headless = "5756bcace32e3a950f013ba9febba46cfbc23c19800eefde646d25c2361e32a8";
     };
   };

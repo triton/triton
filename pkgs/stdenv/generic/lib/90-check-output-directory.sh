@@ -21,14 +21,26 @@ checkOutputDir() {
 
   local file
   for file in $(find "$prefix"); do
+    local fileIsValid=0
     runHook "checkOutput${output^}"
   done
 }
 
 checkOutputOut() {
-  local file="$1"
+  if [ "$fileIsValid" -eq "1" ]; then
+    return 0
+  fi
 
-  echo "$file"
+  case "$file" in
+    "$prefix")
+      return 0
+      ;;
+    */nix-support|*/nix-support/*)
+      return 0
+      ;;
+  esac
+
+  echo "Output 'out' should not contain a: $file"
   return 1
 }
 

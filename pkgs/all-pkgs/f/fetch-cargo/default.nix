@@ -2,11 +2,13 @@
 , brotli_0-4-0
 , brotli_0-5-2
 , brotli_0-6-0
+, brotli_1-0-2
 , cargo
 , fetchFromGitHub
 , fetchzip
 , git
 , gnutar_1-29
+, gnutar_1-30
 }:
 
 { package
@@ -34,6 +36,10 @@ let
     "3" = {
       brotli = brotli_0-6-0;
       tar = gnutar_1-29;
+    };
+    "5" = {
+      brotli = brotli_1-0-2;
+      tar = gnutar_1-30;
     };
   };
 

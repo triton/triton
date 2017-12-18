@@ -12,6 +12,7 @@
 , brotli_0-6-0
 , brotli_1-0-2
 , gnutar_1-29
+, gnutar_1-30
 , unzip
 }:
 
@@ -24,7 +25,7 @@
 , version ? null
 , ... } @ args:
 
-assert version != null || throw "Missing fetchzip version. The latest version is 4.";
+assert version != null || throw "Missing fetchzip version. The latest version is 5.";
 
 let
   removeTarZip = l:
@@ -54,6 +55,10 @@ let
     "4" = {
       brotli = brotli_1-0-2;
       tar = gnutar_1-29;
+    };
+    "5" = {
+      brotli = brotli_1-0-2;
+      tar = gnutar_1-30;
     };
   };
 

@@ -6,6 +6,7 @@
 , curl
 , git
 , gnutar_1-29
+, gnutar_1-30
 , openssl
 }: let
   urlToName = url: rev: let
@@ -56,7 +57,7 @@ in
 
 assert sha256 != "";
 assert deepClone -> leaveDotGit;
-assert version != null || throw "Missing fetchzip version. The latest version is 4.";
+assert version != null || throw "Missing fetchzip version. The latest version is 5.";
 
 let
   versions = {
@@ -75,6 +76,10 @@ let
     "4" = {
       brotli = brotli_1-0-2;
       tar = gnutar_1-29;
+    };
+    "5" = {
+      brotli = brotli_1-0-2;
+      tar = gnutar_1-30;
     };
   };
 

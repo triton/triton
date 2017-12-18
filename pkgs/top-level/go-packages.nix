@@ -39,29 +39,29 @@ let
       echo "Environment:" >&2
       echo "  IPFS_API: $IPFS_API" >&2
 
-      mtime=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-      if [ "$start" -lt "$mtime" ]; then
+      SOURCE_DATE_EPOCH=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+      if [ "$start" -lt "$SOURCE_DATE_EPOCH" ]; then
         str="The newest file is too close to the current date:\n"
-        str+="  File: $(date -u -d "@$mtime")\n"
+        str+="  File: $(date -u -d "@$SOURCE_DATE_EPOCH")\n"
         str+="  Current: $(date -u)\n"
         echo -e "$str" >&2
         exit 1
       fi
       echo -n "Clamping to date: " >&2
-      date -d "@$mtime" --utc >&2
+      date -d "@$SOURCE_DATE_EPOCH" --utc >&2
 
       gx --verbose install --global
 
       echo "Building GX Archive" >&2
       cd "$unpackDir"
-      ${src.tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
-        --no-acls --no-selinux --no-xattrs \
-        --mode=go=rX,u+rw,a-s \
-        --clamp-mtime --mtime=@$mtime \
-        -c . | ${src.brotli}/bin/brotli --quality 6 --output "$out"
+      deterministic-zip '.' >"$out"
     '';
 
-    buildInputs = [ gx.bin ];
+    buildInputs = [
+      src.deterministic-zip
+      gx.bin
+    ];
+
     outputHashAlgo = "sha256";
     outputHashMode = "flat";
     outputHash = sha256;

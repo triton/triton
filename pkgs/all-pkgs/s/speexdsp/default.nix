@@ -2,6 +2,7 @@
 , autoreconfHook
 , fetchFromGitHub
 , fetchTritonPatch
+, lib
 
 , fftw_single
 }:
@@ -16,15 +17,15 @@ let
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "speexdsp-2016-09-22";
+  name = "speexdsp-2017-08-08";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 4;
     owner = "xiph";
     repo = "speexdsp";
     # Upstream has not tagged a release since 2014
-    rev = "76c944d24ba07c7a19725f951acb1d481546e1e3";
-    sha256 = "d7aea033cce23c911cfcd49a280864f21339df2d4edc76032a1a1ef39b834113";
+    rev = "85e8ad5432eb9333f727e7b18c97995317eabf02";
+    sha256 = "5bfd04cffc5c855abebb042e5882bda8cf9b38cf90eb580328c34c7e1ea4052c";
   };
 
   nativeBuildInputs = [
@@ -64,7 +65,7 @@ stdenv.mkDerivation rec {
     "--with-fft=gpl-fftw3"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An audio compression format designed for speech";
     hompage = http://www.speex.org/;
     license = licenses.bsd3;

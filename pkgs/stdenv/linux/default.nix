@@ -87,12 +87,14 @@ let
     system = bootstrapSystem;
   };
 
+  srcOnly = pkg: {
+    inherit (pkg)
+      src;
+  };
+
   commonStdenvOptions = a: a // {
     inherit
       config;
-    preHook = (a.preHook or "") + ''
-      export NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY:-1}"
-    '';
   };
 
   commonBootstrapOptions = a: a // {
@@ -100,14 +102,6 @@ let
     initialPath = [
       bootstrap-stdenv-tools
     ];
-    extraBuildInputs = [
-      bootstrap-stdenv-tools
-    ];
-
-    # We cant patch shebangs or we will retain references to the bootstrap
-    preHook = (a.preHook or "") + ''
-      export dontPatchShebangs=1
-    '';
   };
 
   # This is not a real set of packages or stdenv.
@@ -135,8 +129,6 @@ let
           gcc_unwrapped;
 
         fetchurl = pkgs.fetchurl.override {
-          inherit
-            lib;
           inherit (finalPkgs)
             stdenv
             curl
@@ -221,6 +213,10 @@ let
           gcc_unwrapped;
 
         gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
+          gmp = srcOnly pkgs.gmp;
+          isl = srcOnly pkgs.isl_0-18;
+          mpc = srcOnly pkgs.mpc;
+          mpfr = srcOnly pkgs.mpfr;
           bootstrap = true;
           outputSystem = hostSystem;
         };
@@ -229,7 +225,7 @@ let
           impureLibc = null;
           impurePrefix = null;
           cc = gcc_unwrapped_7;
-          libc = glibc;
+          libc = bootstrap-tools.glibc;
           binutils = binutils;
           coreutils = bootstrap-tools;
           name = "bootstrap-cc-wrapper-stage1";
@@ -238,17 +234,7 @@ let
             lib;
         };
 
-        # Only the sources of these packages should be used by gcc
-        inherit (pkgs)
-          gmp
-          isl
-          isl_0-18
-          mpc
-          mpfr;
-
         # These should not be used outside of the bootstrapping binutils / gcc
-        inherit (bootstrap-tools)
-          glibc;
         inherit (stage0Pkgs)
           fetchurl
           fetchTritonPatch

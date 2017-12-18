@@ -108,16 +108,16 @@ let
     license.shortName or "unknown";
 
   defaultNativeBuildInputs = [
-    ../../build-support/setup-hooks/move-docs.sh
-    ../../build-support/setup-hooks/move-sbin.sh
-    ../../build-support/setup-hooks/move-lib64.sh
-    ../../build-support/setup-hooks/pkgconfig.sh
-    ../../build-support/setup-hooks/strip.sh
-    ../../build-support/setup-hooks/patch-shebangs.sh
-    ../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
-    ../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
-    ../../build-support/setup-hooks/compress-man-pages.sh
-    ../../build-support/setup-hooks/build-dir-check.sh
+    #../../build-support/setup-hooks/move-docs.sh
+    #../../build-support/setup-hooks/move-sbin.sh
+    #../../build-support/setup-hooks/move-lib64.sh
+    #../../build-support/setup-hooks/pkgconfig.sh
+    #../../build-support/setup-hooks/strip.sh
+    #../../build-support/setup-hooks/patch-shebangs.sh
+    #../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
+    #../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
+    #../../build-support/setup-hooks/compress-man-pages.sh
+    #../../build-support/setup-hooks/build-dir-check.sh
   ] ++ extraBuildInputs;
 
   # Add a utility function to produce derivations that use this
@@ -339,6 +339,8 @@ let
         ./lib/50-patch.sh
         ./lib/50-unpack.sh
         ./lib/70-source-date-epoch.sh
+        ./lib/70-output-directory-fixup.sh
+        ./lib/90-check-output-directory.sh
         ./setup.sh
       ];
     }

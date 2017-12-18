@@ -339,7 +339,6 @@ _addToCrossEnv() {
 fixupPhase() {
   runHook 'preFixup'
 
-  set -x
   # Apply fixup to each output.
   local output
   for output in $outputs; do

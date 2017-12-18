@@ -1,4 +1,5 @@
 export NIX_CC=@out@
+export NIX_ENFORCE_PURITY=${NIX_ENFORCE_PURITY-1}
 
 addCVars () {
     if [ -d $1/include ]; then

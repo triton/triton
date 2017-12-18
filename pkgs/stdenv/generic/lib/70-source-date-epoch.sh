@@ -1,11 +1,11 @@
-# Set a fallback default value for SOURCE_DATE_EPOCH, used by some
-# build tools to provide a deterministic substitute for the "current"
-# time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it
-# confuses some applications.
-export SOURCE_DATE_EPOCH
-: ${SOURCE_DATE_EPOCH:=1}
+if ! type -t determineSourceDateEpoch >/dev/null; then
+  # Set a fallback default value for SOURCE_DATE_EPOCH, used by some
+  # build tools to provide a deterministic substitute for the "current"
+  # time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it
+  # confuses some applications.
+  export SOURCE_DATE_EPOCH
+  : ${SOURCE_DATE_EPOCH:=1}
 
-if ! type -t determineSourceDateEpoch; then
   postUnpackHooks+=(determineSourceDateEpoch)
 fi
 

@@ -6,13 +6,8 @@
 # in timestamps).
 
 { lib
+, deterministic-zip
 , fetchurl
-, brotli_0-4-0
-, brotli_0-5-2
-, brotli_0-6-0
-, brotli_1-0-2
-, gnutar_1-29
-, gnutar_1-30
 , unzip
 }:
 
@@ -39,42 +34,9 @@ let
         rest = if item == "tar" then lib.tail rest' else rest';
       in list ++ removeTarZip rest;
 
-  versions = {
-    "1" = {
-      brotli = brotli_0-4-0;
-      tar = gnutar_1-29;
-    };
-    "2" = {
-      brotli = brotli_0-5-2;
-      tar = gnutar_1-29;
-    };
-    "3" = {
-      brotli = brotli_0-6-0;
-      tar = gnutar_1-29;
-    };
-    "4" = {
-      brotli = brotli_1-0-2;
-      tar = gnutar_1-29;
-    };
-    "5" = {
-      brotli = brotli_1-0-2;
-      tar = gnutar_1-30;
-    };
-  };
-
-  inherit (versions."${toString version}")
-    brotli
-    tar;
-
   urls' = (if url != null then [ url ] else [ ]) ++ urls;
 
   tarball = args.name or (baseNameOf (lib.head urls'));
-
-  brotliFlags =
-    if lib.versionAtLeast brotli.version "1.0.0" then
-      [ "-6" "-o" ]
-    else
-      [ "--quality" "6" "--output" ];
 
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in
@@ -114,26 +76,22 @@ lib.overrideDerivation (fetchurl (rec {
   '') + extraPostFetch + ''
     cd "$TMPDIR"
   '' + (if purgeTimestamps then ''
-    mtime="946713600"
+    SOURCE_DATE_EPOCH="946713600"
   '' else ''
-    mtime=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-    if [ "$NIX_BUILD_START" -lt "$mtime" ]; then
+    SOURCE_DATE_EPOCH=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+    if [ "$NIX_BUILD_START" -lt "$SOURCE_DATE_EPOCH" ]; then
       str="The newest file is too close to the current date:\n"
-      str+="  File: $(date -d "@$mtime")\n"
+      str+="  File: $(date -d "@$SOURCE_DATE_EPOCH")\n"
       str+="  Build Start: $NIX_BUILD_START\n"
       echo -e "$str" >&2
       exit 1
     fi
   '') + ''
     echo -n "Clamping to date: " >&2
-    date -d "@$mtime" --utc >&2
+    date -d "@$SOURCE_DATE_EPOCH" --utc >&2
   '' + ''
     echo "Building Archive ${name}" >&2
-    ${tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
-      --no-acls --no-selinux --no-xattrs \
-      --mode=go=rX,u+rw,a-s \
-      --clamp-mtime --mtime=@$mtime \
-      -c "${name'}" | ${brotli}/bin/brotli ${lib.concatStringsSep " " brotliFlags} "$out"
+    ${deterministic-zip.override { inherit version; }}/bin/deterministic-zip "${name'}" >"$out"
   '';
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
@@ -142,5 +100,5 @@ lib.overrideDerivation (fetchurl (rec {
     unzip
   ];
 }) // {
-  inherit brotli tar purgeTimestamps;
+  inherit deterministic-zip purgeTimestamps;
 }

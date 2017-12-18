@@ -1,4 +1,4 @@
-{ go, parallel, lib }:
+{ deterministic-zip, go, parallel, lib }:
 
 { name, buildInputs ? [], nativeBuildInputs ? [], passthru ? {}, preFixup ? ""
 
@@ -61,7 +61,7 @@ go.stdenv.mkDerivation (
   (builtins.removeAttrs args [ "extraSrcs" "goPackageAliases" "disabled" ]) // {
 
   name = "go${go.meta.branch}-${name}";
-  nativeBuildInputs = [ go parallel ]
+  nativeBuildInputs = [ deterministic-zip go parallel ]
     ++ nativeBuildInputs;
   buildInputs = [ go ] ++ buildInputs;
 
@@ -436,10 +436,7 @@ go.stdenv.mkDerivation (
 
     pushd "$NIX_BUILD_TOP" >/dev/null
     mkdir -p "$out/share/go"
-    tar --sort=name --owner=0 --group=0 --numeric-owner \
-      --mode=go=rX,u+rw,a-s \
-      --mtime=@946713600 \
-      -c "${name}" | brotli -6 > "$out/share/go/files.tar.br"
+    deterministic-zip "${name}" >"$out"/share/go/files.tar.br
     popd >/dev/null
 
     mkdir -p $bin

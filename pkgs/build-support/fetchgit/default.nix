@@ -52,7 +52,6 @@ in
 
 assert sha256 != "";
 assert deepClone -> leaveDotGit;
-assert version != null || throw "Missing fetchzip version. The latest version is 5.";
 
 let
   mirrors = import ../fetchurl/mirrors.nix;

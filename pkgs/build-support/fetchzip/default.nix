@@ -20,8 +20,6 @@
 , version ? null
 , ... } @ args:
 
-assert version != null || throw "Missing fetchzip version. The latest version is 5.";
-
 let
   removeTarZip = l:
     if l == [ ] then

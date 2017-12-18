@@ -1,14 +1,9 @@
 { stdenv
-, brotli_0-4-0
-, brotli_0-5-2
-, brotli_0-6-0
-, brotli_1-0-2
 , cargo
+, deterministic-zip
 , fetchFromGitHub
 , fetchzip
 , git
-, gnutar_1-29
-, gnutar_1-30
 }:
 
 { package
@@ -21,32 +16,7 @@
 , version ? null
 }:
 
-assert version != null || throw "Missing fetchzip version. The latest version is 3.";
-
 let
-  versions = {
-    "1" = {
-      brotli = brotli_0-4-0;
-      tar = gnutar_1-29;
-    };
-    "2" = {
-      brotli = brotli_0-5-2;
-      tar = gnutar_1-29;
-    };
-    "3" = {
-      brotli = brotli_0-6-0;
-      tar = gnutar_1-29;
-    };
-    "5" = {
-      brotli = brotli_1-0-2;
-      tar = gnutar_1-30;
-    };
-  };
-
-  inherit (versions."${toString version}")
-    brotli
-    tar;
-
   index = fetchFromGitHub {
     version = 2;
     owner = "rust-lang";
@@ -60,6 +30,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     cargo
+    (deterministic-zip.override { inherit version; })
     git
   ];
 
@@ -104,10 +75,7 @@ stdenv.mkDerivation {
     # Remove all of the git directories for determinism
     find fetch-cargo -name .git | xargs rm -rf
 
-    ${tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
-      --mode=go=rX,u+rw,a-s \
-      --mtime=@946713600 \
-      -c fetch-cargo | ${brotli}/bin/bro --quality 6 --output "$out"
+    SOURCE_DATE_EPOCH=946713600 deterministic-zip 'fetch-cargo' >"$out"
   '';
 
   preferLocalBuild = true;

@@ -23,10 +23,6 @@ autotoolsConfigureAction() {
     done
   fi
 
-  if [ -n "${addPrefix-true}" ]; then
-    configureFlagsArray+=("${prefixKey:---prefix=}$prefix")
-  fi
-
   # Add --disable-dependency-tracking to speed up some builds.
   if [ -n "${addDisableDepTrack-true}" ]; then
     if grep -q dependency-tracking "$configureScript" 2>/dev/null; then
@@ -39,6 +35,24 @@ autotoolsConfigureAction() {
     if grep -q enable-static "$configureScript" 2>/dev/null; then
       configureFlagsArray+=("--disable-static")
     fi
+  fi
+
+  # If we have multiple outputs, have the build do the right thing
+  if [ "$outputs" != "out" ]; then
+    configureFlagsArray+=("--prefix=$aux")
+    configureFlagsArray+=("--exec-pefix=$bin")
+    configureFlagsArray+=("--libdir=$dev/lib")
+    configureFlagsArray+=("--includedir=$dev/include")
+    configureFlagsArray+=("--mandir=$man/share/man")
+    configureFlagsArray+=("--infodir=$man/share/info")
+  else
+    configureFlagsArray+=("--prefix=$out")
+  fi
+
+  # Use global state and configuration by default
+  if [ -n "${useGlobalState-1}" ]; then
+    configureFlagsArray+=("--sysconfdir=/etc")
+    configureFlagsArray+=("--localstatedir=/var")
   fi
 
   local flags

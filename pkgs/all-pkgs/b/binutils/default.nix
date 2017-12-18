@@ -2,6 +2,7 @@
 , lib
 , autotools
 , bison
+, cc
 , fetchTritonPatch
 , fetchurl
 , flex
@@ -122,7 +123,7 @@ stdenv.mkDerivation rec {
     "--enable-deterministic-archives"
     "--${if !bootstrap then "with" else "without"}-system-zlib"
   ] ++ optionals bootstrap [
-    "--target=${stdenv.cc.platformTuples."${outputSystem}-boot"}"  # Always treat bootstrapping like cross compiling
+    "--target=${cc.platformTuples."${outputSystem}-boot"}"  # Always treat bootstrapping like cross compiling
   ] ++ optionals (elem stdenv.targetSystem bit64) [
     "--enable-64-bit-archive"
   ];
@@ -150,6 +151,8 @@ stdenv.mkDerivation rec {
   passthru = {
     inherit version;
   };
+
+  outputs = autotools.commonOutputs;
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";

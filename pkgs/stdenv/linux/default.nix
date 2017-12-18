@@ -213,6 +213,7 @@ let
           gcc_unwrapped;
 
         gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
+          cc = stage0Pkgs.cc;
           gmp = srcOnly pkgs.gmp;
           isl = srcOnly pkgs.isl_0-18;
           mpc = srcOnly pkgs.mpc;
@@ -245,6 +246,7 @@ let
         inherit (pkgs)
           autotools;
         binutils = pkgs.binutils.override {
+          cc = stage0Pkgs.cc;
           bootstrap = true;
           outputSystem = hostSystem;
         };

@@ -221,8 +221,6 @@ stdenv.mkDerivation rec {
     popd
   '' + ''
     touch $out/lib/python${channel}/test/__init__.py
-  '' + ''
-    paxmark E $out/bin/python${channel}
   '' + optionalString isPy3
     /* Some programs look for libpython<major>.<minor>.so */ ''
     if [ ! -f "$out/lib/libpython${channel}.so" ] ; then

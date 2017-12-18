@@ -1004,6 +1004,8 @@ desktop-file-utils = callPackage ../all-pkgs/d/desktop-file-utils { };
 # Deprecated alias
 desktop_file_utils = callPackageAlias "desktop-file-utils" { };
 
+deterministic-zip = callPackage ../all-pkgs/d/deterministic-zip { };
+
 devil_nox = callPackageAlias "devil" {
   xorg = null;
   mesa = null;

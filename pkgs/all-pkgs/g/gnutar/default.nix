@@ -10,9 +10,7 @@
 
 let
   inherit (lib)
-    optional
     optionals
-    versionAtLeast
     versionOlder;
 
   tarballUrls = version: [
@@ -24,7 +22,7 @@ let
     "1.30" = "87592b86cb037c554375f5868bdd3cc57748aef38d6cb741c81065f0beac63b7";
   };
 in
-stdenv.mkDerivation (rec {
+stdenv.mkDerivation rec {
   name = "gnutar-${version}";
 
   src = fetchurl {
@@ -32,6 +30,10 @@ stdenv.mkDerivation (rec {
     hashOutput = false;
     sha256 = sha256s."${version}";
   };
+
+  buildInputs = [
+    acl
+  ];
 
   patches = optionals (versionOlder version "1.30") [
     (fetchTritonPatch {
@@ -68,8 +70,4 @@ stdenv.mkDerivation (rec {
       x86_64-linux
       ++ i686-linux;
   };
-} // (if versionAtLeast version "1.30" then {
-  buildInputs = [
-    acl
-  ];
-} else { }))
+}

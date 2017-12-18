@@ -1,20 +1,30 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
-, version ? "1.29"
+, acl
+
+, version
 }:
 
 let
+  inherit (lib)
+    optional
+    optionals
+    versionAtLeast
+    versionOlder;
+
   tarballUrls = version: [
     "mirror://gnu/tar/tar-${version}.tar.bz2"
   ];
 
   sha256s = {
     "1.29" = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
+    "1.30" = "87592b86cb037c554375f5868bdd3cc57748aef38d6cb741c81065f0beac63b7";
   };
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (rec {
   name = "gnutar-${version}";
 
   src = fetchurl {
@@ -23,7 +33,7 @@ stdenv.mkDerivation rec {
     sha256 = sha256s."${version}";
   };
 
-  patches = [
+  patches = optionals (versionOlder version "1.30") [
     (fetchTritonPatch {
       rev = "dc35113b79d1abbcf4d498e7ac2d469e1787cf0c";
       file = "gnutar/fix-longlink.patch";
@@ -39,15 +49,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.29";
+      urls = tarballUrls "1.30";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "325F 650C 4C2B 6AD5 8807  327A 3602 B07F 55D0 C732";
       inherit (src) outputHashAlgo;
-      outputHash = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
+      outputHash = "87592b86cb037c554375f5868bdd3cc57748aef38d6cb741c81065f0beac63b7";
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.gnu.org/software/tar/;
     description = "GNU implementation of the `tar' archiver";
     license = licenses.gpl3Plus;
@@ -58,4 +68,8 @@ stdenv.mkDerivation rec {
       x86_64-linux
       ++ i686-linux;
   };
-}
+} // (if versionAtLeast version "1.30" then {
+  buildInputs = [
+    acl
+  ];
+} else { }))

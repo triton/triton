@@ -1617,7 +1617,10 @@ gnused = callPackage ../all-pkgs/g/gnused { };
 gnutar_1-29 = callPackage ../all-pkgs/g/gnutar {
   version = "1.29";
 };
-gnutar = callPackage ../all-pkgs/g/gnutar { };
+gnutar_1-30 = callPackage ../all-pkgs/g/gnutar {
+  version = "1.30";
+};
+gnutar = callPackageAlias "gnutar_1-29" { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 

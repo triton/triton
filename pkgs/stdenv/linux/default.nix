@@ -221,7 +221,7 @@ let
         pkgs = stage3Pkgs;
         inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
-        inherit (pkgs) stdenv gcc xz zlib attr acl gmp coreutils binutils
+        inherit (pkgs) stdenv lib gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
           openssl_1-0-2 openssl c-ares curl libsigsegv pcre findutils diffutils
           gnused gnugrep gawk gnutar gnutar_1-29 gzip brotli brotli_1-0-2 bzip2

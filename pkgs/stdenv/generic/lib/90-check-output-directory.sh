@@ -33,7 +33,7 @@ defaultCheckOutputDir() {
   fi
 
   case "$file" in
-    "$prefix"/bin|"$prefix"/bin/*)
+    "$prefix"/bin|"$prefix"/bin/*[^/])
       if [ "$output" = "bin" ]; then
         fileIsValid=1
       fi
@@ -41,7 +41,18 @@ defaultCheckOutputDir() {
         fileIsValid=1
       fi
       ;;
-     "$prefix"/lib/*.so*)
+    "$prefix"/lib)
+      if [ "$output" = "lib" ]; then
+        fileIsValid=1
+      fi
+      if [ "$output" = "dev" ]; then
+        fileIsValid=1
+      fi
+      if [ "$output" = "out" ]; then
+        fileIsValid=1
+      fi
+       ;;
+    "$prefix"/lib/lib*[^/].so*[^/])
       if [ "$output" = "lib" ]; then
         fileIsValid=1
       fi
@@ -49,7 +60,7 @@ defaultCheckOutputDir() {
         fileIsValid=1
       fi
       ;;
-    "$prefix"/lib|"$prefix"/lib/*)
+    "$prefix"/lib/*)
       if [ "$output" = "dev" ]; then
         fileIsValid=1
       fi

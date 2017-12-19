@@ -17,7 +17,7 @@ determineSourceDateEpoch() {
   # Get the last modification time of all regular files, sort them,
   # and get the most recent. Maybe we should use
   # https://github.com/0-wiz-0/findnewest here.
-  local -a res=($(find "$path" -type f -print0 | xargs -0 -r stat -c '%Y %n' | sort -n | tail -n1))
+  local -a res=($(find "$srcRoot" -type f -print0 | xargs -0 -r stat -c '%Y %n' | sort -n | tail -n1))
   local time="${res[0]}"
   local newestFile="${res[1]}"
 

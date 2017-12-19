@@ -152,7 +152,7 @@ stdenv.mkDerivation rec {
     inherit version;
   };
 
-  outputs = autotools.commonOutputs;
+  outputs = if bootstrap then [ "out" ] else autotools.commonOutputs;
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";

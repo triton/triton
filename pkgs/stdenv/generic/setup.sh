@@ -202,14 +202,7 @@ addToSearchPath() {
 hasOutput() {
   local target="$1"
 
-  local output
-  for output in ${outputs}; do
-    if [ "$target" = "$output" ]; then
-      return 0
-    fi
-  done
-
-  return 1
+  [ "${outputsHash["$target"]}" = "1" ]
 }
 
 ######################## Textual substitution functions ########################
@@ -476,6 +469,10 @@ genericBuild() {
 ################################ Initialisation ################################
 
 : ${outputs:=out}
+declare -A outputsHash
+for output in $outputs; do
+  outputsHash["$output"]=1
+done
 
 # Array handling, we need to turn some variables into arrays
 prePhases=($prePhases)

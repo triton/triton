@@ -63,7 +63,7 @@ autotoolsConfigureAction() {
 
   printFlags 'autotools' flags
   pushd "$buildRoot" >/dev/null
-  $configureScript "${flags[@]}"
+  PATH="@bindir@:$PATH" $configureScript "${flags[@]}"
   popd >/dev/null
 }
 

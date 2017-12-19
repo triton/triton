@@ -100,6 +100,17 @@ defaultCheckOutputDir() {
         fileIsValid=0
       fi
       ;;
+    "$prefix"/share)
+      if [ "$output" = "man" ]; then
+        fileIsValid=1
+      fi
+      if [ "$output" = "aux" ]; then
+        fileIsValid=1
+      fi
+      if [ "$output" = "out" ] && ! hasOutput 'aux'; then
+        fileIsValid=1
+      fi
+      ;;
     "$prefix"/share/man|"$prefix"/share/man/*)
       if [ "$output" = "man" ]; then
         fileIsValid=1

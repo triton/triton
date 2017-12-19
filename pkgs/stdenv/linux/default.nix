@@ -249,6 +249,7 @@ let
           gnutar
           xz;
         cc = stage0Pkgs.gcc;
+        coreutils = bootstrap-tools;
         inherit (pkgs)
           autotools;
       };

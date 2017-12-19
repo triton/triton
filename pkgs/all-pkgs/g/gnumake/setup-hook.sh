@@ -8,8 +8,11 @@ makeCommonFlags() {
   local -n phaseFlagsArrRef="${phaseName}FlagsArray"
 
   if [ -z "$buildRoot" ]; then
-    echo "Make requires a buildRoot to be set"
-    exit 1
+    if [ -z "$srcRoot" ]; then
+      echo "Make requires a buildRoot or srcRoot to be set"
+      exit 1
+    fi
+    buildRoot="$srcRoot"
   fi
 
   flagsRef+=("--directory=$buildRoot")

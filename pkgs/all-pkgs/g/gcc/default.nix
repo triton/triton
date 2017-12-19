@@ -1,6 +1,7 @@
 { stdenv
 , bison
 , binutils
+, cc
 , fetchTritonPatch
 , fetchurl
 , flex
@@ -37,7 +38,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation (rec {
-  name = "${optionalString bootstrap "bootstrap-"}gcc-${version}";
+  name = "gcc-${version}";
 
   src = fetchurl {
     url = "mirror://gnu/gcc/gcc-${version}/gcc-${version}.tar.xz";
@@ -45,7 +46,7 @@ stdenv.mkDerivation (rec {
   };
 
   nativeBuildInputs = [
-    binutils
+    cc
   ] ++ optionals (!bootstrap) [
     bison
     flex
@@ -102,7 +103,7 @@ stdenv.mkDerivation (rec {
 
   configureFlags = [
     # Always treat bootstrapping as cross compiling
-    (if bootstrap then "--target=${stdenv.cc.platformTuples."${outputSystem}-boot"}" else null)
+    (if bootstrap then "--target=${cc.platformTuples."${outputSystem}-boot"}" else null)
     "--enable-static"
     "--${if !bootstrap then "enable" else "disable"}-shared"
     "--with-pic"

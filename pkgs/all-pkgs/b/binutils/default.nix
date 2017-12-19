@@ -41,7 +41,7 @@ let
   version = "2.29.1";
 in
 stdenv.mkDerivation rec {
-  name = "${if bootstrap then "bootstrap-" else ""}binutils-${version}";
+  name = "binutils-${version}";
 
   src = fetchurl {
     url = "mirror://gnu/binutils/binutils-${version}.tar.xz";
@@ -53,6 +53,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autotools
     #bison
+    cc
     #flex
     #gnum4
     gnumake

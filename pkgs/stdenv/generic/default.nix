@@ -2,6 +2,7 @@
 
 { targetSystem
 , hostSystem
+, prefix ? null
 , name ? "stdenv"
 , preHook ? ""
 , bash
@@ -248,6 +249,7 @@ let
           ) (propagatedBuildInputs ++ propagatedNativeBuildInputs)
         );
     in {
+      name = "${lib.optionalString (prefix != null) "${prefix}-"}${attrs.name}";
       builder = attrs.realBuilder or bash;
       args = attrs.args or ["-e" (attrs.builder or ./default-builder.sh)];
       stdenv = result;
@@ -312,8 +314,7 @@ let
         allowedRequisites ++
         defaultNativeBuildInputs;
      }) // {
-      inherit
-        name;
+      name = "${lib.optionalString (prefix != null) "${prefix}-"}${name}";
 
       system = targetSystem;
 

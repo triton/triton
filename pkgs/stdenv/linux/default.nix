@@ -115,7 +115,8 @@ let
     targetSystem = bootstrapSystem;
 
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
-      name = "bootstrap-stdenv-linux-stage0";
+      prefix = "bootstrap-stage0";
+      name = "stdenv-linux";
 
       hostSystem = bootstrapSystem;
       targetSystem = bootstrapSystem;
@@ -125,8 +126,14 @@ let
           stdenv
           lib
           fetchTritonPatch
-          gcc
-          gcc_unwrapped;
+          gcc;
+
+        cc = gcc;
+        libc = bootstrap-tools.glibc;
+
+        cc-wrapper = pkgs.cc-wrapper.override {
+          cc = null;
+        };
 
         fetchurl = pkgs.fetchurl.override {
           inherit (finalPkgs)
@@ -172,19 +179,9 @@ let
           setupHook = pkgs.xz.setupHook;
         };
 
-        gcc_unwrapped_7 = bootstrap-tools;
-
-        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
-          name = "bootstrap-cc-wrapper-stage0";
-          impureLibc = null;
-          impurePrefix = null;
-          cc = gcc_unwrapped_7;
+        gcc_7 = cc-wrapper {
+          cc = bootstrap-tools;
           libc = bootstrap-tools.glibc;
-          binutils = bootstrap-tools;
-          coreutils = bootstrap-tools;
-          inherit
-            stdenv
-            lib;
         };
       };
     }));
@@ -200,7 +197,8 @@ let
     targetSystem = bootstrapSystem;
 
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
-      name = "bootstrap-stdenv-linux-stage1";
+      prefix = "bootstrap-stage1";
+      name = "stdenv-linux";
 
       hostSystem = bootstrapSystem;
       targetSystem = bootstrapSystem;
@@ -212,7 +210,12 @@ let
           gcc
           gcc_unwrapped;
 
+        coreutils = bootstrap-tools;
+        cc = gcc;
+        libc = bootstrap-tools.glibc;
+
         binutils = pkgs.binutils.override {
+          cc = stage0Pkgs.cc;
           bootstrap = true;
           outputSystem = hostSystem;
         };
@@ -227,17 +230,12 @@ let
           outputSystem = hostSystem;
         };
 
-        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
-          impureLibc = null;
-          impurePrefix = null;
+        gcc_7 = cc-wrapper {
           cc = gcc_unwrapped_7;
-          libc = bootstrap-tools.glibc;
-          binutils = binutils;
-          coreutils = bootstrap-tools;
-          name = "bootstrap-cc-wrapper-stage1";
-          inherit
-            stdenv
-            lib;
+          libc = null;
+          wrappedPackages = [
+            binutils
+          ];
         };
 
         # These should not be used outside of the bootstrapping binutils / gcc
@@ -248,10 +246,11 @@ let
           gnupatch
           gnutar
           xz;
-        cc = stage0Pkgs.gcc;
-        coreutils = bootstrap-tools;
         inherit (pkgs)
           autotools;
+        cc-wrapper = pkgs.cc-wrapper.override {
+          cc = stage0Pkgs.cc;
+        };
       };
     }));
   };

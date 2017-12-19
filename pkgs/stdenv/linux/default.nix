@@ -163,7 +163,7 @@ let
         gnutar = bootstrap-hook {
           name = "gnutar";
           bin = "tar";
-          setupHook = pkgs.gnutar.setupHook;
+          setupHook = pkgs.gnutar_1-30.setupHook;
         };
 
         xz = bootstrap-hook {
@@ -212,6 +212,11 @@ let
           gcc
           gcc_unwrapped;
 
+        binutils = pkgs.binutils.override {
+          bootstrap = true;
+          outputSystem = hostSystem;
+        };
+
         gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
           cc = stage0Pkgs.cc;
           gmp = srcOnly pkgs.gmp;
@@ -243,13 +248,9 @@ let
           gnupatch
           gnutar
           xz;
+        cc = stage0Pkgs.gcc;
         inherit (pkgs)
           autotools;
-        binutils = pkgs.binutils.override {
-          cc = stage0Pkgs.cc;
-          bootstrap = true;
-          outputSystem = hostSystem;
-        };
       };
     }));
   };

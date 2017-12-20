@@ -3560,6 +3560,8 @@ swig_3 = callPackage ../all-pkgs/s/swig {
 };
 swig = callPackageAlias "swig_3" { };
 
+sxiv = callPackage ../all-pkgs/s/sxiv { };
+
 sydent = pkgs.python2Packages.sydent;
 
 synapse = pkgs.python2Packages.synapse;

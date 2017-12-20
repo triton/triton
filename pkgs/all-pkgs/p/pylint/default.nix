@@ -13,13 +13,11 @@
 , six
 }:
 
-# FIXME: fix for python2
-
 let
   inherit (lib)
     optionals;
 
-  version = "1.7.5";
+  version = "1.8.0";
 in
 buildPythonPackage rec {
   name = "pylint-${version}";
@@ -27,7 +25,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pylint";
     inherit version;
-    sha256 = "dd20d6f17e7ea9d3a3a35c5d56ba2c50fdfdb7192096a1095f1791d072bc59a1";
+    sha256 = "d24f38e876a88e8aa1efccc65af78cafcc790c2f561f49d30b91192af6ab6086";
   };
 
   propagatedBuildInputs = [

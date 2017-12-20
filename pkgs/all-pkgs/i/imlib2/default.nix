@@ -13,14 +13,14 @@
 }:
 
 let
-  version = "1.4.9";
+  version = "1.4.10";
 in
 stdenv.mkDerivation rec {
   name = "imlib2-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/enlightenment/imlib2-src/${version}/${name}.tar.bz2";
-    sha256 = "7d2864972801823ce44ca8d5584a67a88f0e54e2bf47fa8cf4a514317b4f0021";
+    sha256 = "3f698cd285cbbfc251c1d6405f249b99fafffafa5e0a5ecf0ca7ae49bbc0a272";
   };
 
   buildInputs = [

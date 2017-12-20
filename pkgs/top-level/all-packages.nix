@@ -3700,6 +3700,8 @@ uhub = callPackage ../all-pkgs/u/uhub { };
 
 uid_wrapper = callPackage ../all-pkgs/u/uid_wrapper { };
 
+umurmur = callPackage ../all-pkgs/u/umurmur { };
+
 unbound = callPackage ../all-pkgs/u/unbound { };
 
 unicode-character-database =

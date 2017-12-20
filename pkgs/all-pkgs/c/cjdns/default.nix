@@ -14,11 +14,11 @@ stdenv.mkDerivation {
   name = "cjdns-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "cjdelisle";
     repo = "cjdns";
     rev = "cjdns-v${version}";
-    sha256 = "42b60b266ecf5e0b246afbbea71dabed8222d21e524aed3907e9bba3c5036623";
+    sha256 = "9120712da9653ec75f49f15d5e975ce0a0468b24aa46b00221eb7604b9362f44";
   };
 
   nativeBuildInputs = [
@@ -37,7 +37,7 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p "$out"/{bin,share/cjdns}
-    cp installBin cjdroute makekeys privatetopublic publictoip6 "$out"/bin
+    cp cjdroute makekeys privatetopublic publictoip6 "$out"/bin
     cp -R contrib tools node_build node_modules $out/share/cjdns
   '';
 

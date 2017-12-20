@@ -1950,6 +1950,8 @@ idnkit = callPackage ../all-pkgs/i/idnkit { };
 
 iftop = callPackage ../all-pkgs/i/iftop { };
 
+ilmbase = callPackage ../all-pkgs/i/ilmbase { };
+
 imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
 imlib2 = callPackage ../all-pkgs/i/imlib2 { };
@@ -4317,8 +4319,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   gsl = callPackage ../development/libraries/gsl { };
 #
   gts = callPackage ../development/libraries/gts { };
-#
-  ilmbase = callPackage ../development/libraries/ilmbase { };
 #
   ijs = callPackage ../development/libraries/ijs { };
 #

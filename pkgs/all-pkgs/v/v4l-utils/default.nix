@@ -4,7 +4,7 @@
 , perl
 
 , alsa-lib
-, libjpeg-turbo_1-4
+, libjpeg-turbo
 , libx11
 , qt5
 
@@ -28,12 +28,12 @@ assert any (n: n == channel) [
 # See libv4l in all-packages.nix for the libs only (overrides alsa, libX11 & QT)
 
 stdenv.mkDerivation rec {
-  name = "v4l-utils-1.12.5";
+  name = "v4l-utils-1.12.6";
 
   src = fetchurl {
     url = "https://linuxtv.org/downloads/v4l-utils/${name}.tar.bz2";
-    multihash = "QmPN2qMtk72HxzEN7kPzWoEUdYrZQuY4WeGaCcFQNJUNXL";
-    sha256 = "0618162ddb0b57fe7c45407d4d66ed79e3a134cdbc9e72598d34e61d3359e20d";
+    multihash = "QmVfyxtJPBRu5yPod7sdrs7ALpTx8GsGnmJTb8uFLkHkL2";
+    sha256 = "74da1040284eaba48277ad051ffe1fca0ee05c5591bb01179d928def6d0a4561";
   };
 
   nativeBuildInputs = [
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     libx11
     qt5
   ] ++ [
-    libjpeg-turbo_1-4
+    libjpeg-turbo
   ];
 
   postPatch = ''

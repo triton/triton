@@ -17,11 +17,11 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "libwebp-0.6.0";
+  name = "libwebp-0.6.1";
 
   src = fetchurl {
     url = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/${name}.tar.gz";
-    sha256 = "c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40";
+    sha256 = "06503c782d9f151baa325591c3579c68ed700ffc62d4f5a32feead0ff017d8ab";
   };
 
   configureFlags = [

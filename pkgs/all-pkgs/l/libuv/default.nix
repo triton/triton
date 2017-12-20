@@ -12,11 +12,11 @@ stdenv.mkDerivation rec {
   name = "libuv-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "libuv";
     repo = "libuv";
     rev = "v${version}";
-    sha256 = "c87e7b3e49e6a57ca27b77325cee307c38b762d639500ff1c151eb34f324b2a2";
+    sha256 = "6ca0634daf0b442f1f2077c5b590c9c8d7faef9f55ad2f16ac231f959f145dfb";
   };
 
   nativeBuildInputs = [

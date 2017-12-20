@@ -2,17 +2,6 @@
 set -e
 set -o pipefail
 
-RW_GATEWAYS=(
-  "https://ipfs.works"
-  "https://ipfs.work"
-)
-RO_GATEWAYS=(
-  "${RW_GATEWAYS[@]}"
-  "https://ipfs.io"
-  "https://hardbin.com"
-  "https://ipfs.wak.io"
-)
-
 # Save our arguments usefully
 SCRIPT="$(readlink -f "$0")"
 URLS=("$@")
@@ -22,6 +11,8 @@ if [ "${#URLS[@]}" -eq "0" ]; then
   echo "Usage: $SCRIPT [urls to add...]" >&2
   exit 1
 fi
+
+source "$(dirname "$0")"/ipfs-common.sh
 
 # Setup the temporary storage area
 TMPDIR=""

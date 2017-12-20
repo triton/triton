@@ -1,0 +1,10 @@
+RW_GATEWAYS=(
+  "https://ipfs.works"
+  "https://ipfs.work"
+)
+RO_GATEWAYS=(
+  "${RW_GATEWAYS[@]}"
+  "https://ipfs.io"
+  "https://hardbin.com"
+  "https://ipfs.wak.io"
+)

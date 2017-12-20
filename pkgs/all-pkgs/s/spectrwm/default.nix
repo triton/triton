@@ -13,7 +13,7 @@
 , libxrandr
 , libxrender
 , libxt
-#, libxtst
+, libxtst
 , randrproto
 , renderproto
 , which
@@ -22,14 +22,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "spectrwm-2017-10-03";
+  name = "spectrwm-2017-10-14";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 5;
     owner = "conformal";
     repo = "spectrwm";
-    rev = "81a78469359435f1cb9f38632aafad1cf8833640";
-    sha256 = "cbac32e175ef3a4616d20141bdf7b6436a6782cd75dca0dccbc08b9445713d7d";
+    rev = "ea3e6da62247572e92c4ba00f70eab73f6254adf";
+    sha256 = "de6c2c7d9931d228a8ac0827c6a484b62ed8e1b990f75806af42419f5a242015";
   };
 
   nativeBuildInputs = [
@@ -46,8 +46,7 @@ stdenv.mkDerivation rec {
     libxrandr
     libxrender
     libxt
-    #libxtst
-    xorg.libXtst
+    libxtst
     randrproto
     renderproto
     xorg.xcbutil

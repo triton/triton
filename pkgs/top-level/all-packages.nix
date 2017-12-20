@@ -3048,6 +3048,8 @@ opencv_3 = callPackage ../all-pkgs/o/opencv {
 };
 opencv = callPackageAlias "opencv_3" { };
 
+openexr = callPackage ../all-pkgs/o/openexr { };
+
 opengl-dummy = callPackage ../all-pkgs/m/mesa {
   buildConfig = "opengl-dummy";
 };
@@ -4391,8 +4393,6 @@ libstartup_notification =
   };
 #
   newt = callPackage ../development/libraries/newt { };
-#
-  openexr = callPackage ../development/libraries/openexr { };
 #
   phonon = callPackage ../development/libraries/phonon/qt4 {};
 #

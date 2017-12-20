@@ -7,7 +7,7 @@
 
 , libexif
 , libgd
-, libjpeg-turbo_1-4
+, libjpeg-turbo
 #, libltdl
 , libusb
 , libxml2
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libexif
     libgd
-    libjpeg-turbo_1-4
+    libjpeg-turbo
     libusb
     libxml2
     #lockdev
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--disable-internal-docs"
     "--disable-docs"
-    "--${boolWt (libjpeg-turbo_1-4 != null)}-jpeg"
+    "--${boolWt (libjpeg-turbo != null)}-jpeg"
     "--with-camlibs=all"
   ];
 

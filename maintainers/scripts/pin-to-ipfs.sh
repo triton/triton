@@ -29,6 +29,12 @@ cleanup() {
 TMPDIR="$(mktemp -d)"
 trap cleanup EXIT HUP INT QUIT PIPE TERM
 
+for var in "$@"; do
+  if [ "$var" = "update" ]; then
+    UPDATE_HASHLIST=1
+  fi
+done
+
 export CONCURRENT_LOG_DIR=$TMPDIR/logs
 export CONCURRENT_LIMIT=10
 source concurrent.lib.sh
@@ -47,7 +53,7 @@ done < <(git rev-list "$REV"..HEAD --objects | grep '\.nix$' | awk '{print $1}')
 popd >/dev/null
 cat "$TMPDIR/hashes" | sort | uniq > "$TMPDIR/hashes.tmp"
 
-if [ "update" = "$1" ]; then
+if [ "$UPDATE_HASHLIST" = "1" ]; then
   if ! diff -q "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes >/dev/null 2>&1; then
     cp "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes
     git rev-list HEAD^..HEAD > pin-to-ipfs-rev

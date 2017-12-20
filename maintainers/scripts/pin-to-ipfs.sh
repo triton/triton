@@ -3,6 +3,7 @@ set -e
 set -o pipefail
 
 cd "$(dirname "$(readlink -f "$0")")"
+source ./ipfs-common.sh
 
 if ! ipfs >/dev/null 2>&1; then
   echo "Missing ipfs command"
@@ -62,10 +63,39 @@ fetch() {
   ipfs pin add --progress "$1"
 }
 
+cache() {
+  local hash="$1"
+  local gw="$2"
+
+  set -x
+  local out
+  out="$(curl -L -N "$gw"/ipfs/"$hash" 2>&1 >&- || true)"
+  if ! echo "$out" | grep -q 'Failed writing body (0 !='; then
+    echo "$out"
+    return 1
+  fi
+}
+
 ARGS=()
+pin_count=0
 while read HASH; do
   if [ "${current[$HASH]}" != "1" ]; then
-    ARGS+=("-" "$HASH" "fetch" "$HASH")
+    pin_name="Pin   $HASH"
+    ARGS+=("-" "$pin_name" "fetch" "$HASH")
+    for gw in "${RO_GATEWAYS[@]}"; do
+      cache_name="Cache $HASH $gw"
+      ARGS+=(
+        "-" "$cache_name" "cache" "$HASH" "$gw"
+        "--require" "$cache_name"
+        "--before" "$pin_name"
+      )
+    done
+    pin_count=$(( $pin_count + 1 ))
+  fi
+  if [ "$pin_count" -ge "20" ]; then
+    concurrent "${ARGS[@]}"
+    ARGS=()
+    pin_count=0
   fi
 done < <(cat "$TMPDIR/hashes.tmp")
 if [ "${#ARGS[@]}" -gt "0" ]; then

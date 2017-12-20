@@ -3,7 +3,6 @@ RW_GATEWAYS=(
   "https://ipfs.work"
 )
 RO_GATEWAYS=(
-  "${RW_GATEWAYS[@]}"
   "https://ipfs.io"
   "https://hardbin.com"
   "https://ipfs.wak.io"

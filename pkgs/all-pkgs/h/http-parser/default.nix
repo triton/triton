@@ -3,22 +3,19 @@
 }:
 
 let
-  version = "2.7.1";
+  date = "2017-11-29";
+  rev = "b11de0f5c65bcc1b906f85f4df58883b0c133e7b";
 in
 stdenv.mkDerivation {
-  name = "http-parser-${version}";
+  name = "http-parser-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 5;
     owner = "nodejs";
     repo = "http-parser";
-    rev = "v${version}";
-    sha256 = "c59677ccb370d91732ddc2510f372360aa97ff36a974643ec0cb1d3384207d43";
+    inherit rev;
+    sha256 = "91a55f9b7449d20d9357e9898b38b89a05ffd43ef5b71a188597eea77730b47e";
   };
-
-  postPatch = ''
-    sed -i 's, -Werror,,g' Makefile
-  '';
 
   preBuild = ''
     makeFlagsArray+=(

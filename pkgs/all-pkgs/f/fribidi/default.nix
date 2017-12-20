@@ -11,11 +11,11 @@ stdenv.mkDerivation rec {
   name = "fribidi-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "fribidi";
     repo = "fribidi";
     rev = "0efbaa9052320a951823a6e776b30a580e3a2b4e";
-    sha256 = "44d67067d76179546e5af2bf8d73beafcd2f5068ddfc84cb3427fb25be7b3c51";
+    sha256 = "f62f9292d55f476208a356bb616549b39bdbacdfcba7e2b72815462b1a809be7";
   };
 
   nativeBuildInputs = [

@@ -33,6 +33,9 @@ for var in "$@"; do
   if [ "$var" = "update" ]; then
     UPDATE_HASHLIST=1
   fi
+  if [ "$var" = "nocache" ]; then
+    NOCACHE=1
+  fi
 done
 
 export CONCURRENT_LOG_DIR=$TMPDIR/logs
@@ -92,14 +95,16 @@ while true; do
   if [ "${current[$HASH]}" != "1" ]; then
     pin_name="Pin   $HASH"
     ARGS+=("-" "$pin_name" "fetch" "$HASH")
-    for gw in "${RO_GATEWAYS[@]}"; do
-      cache_name="Cache $HASH $gw"
-      ARGS+=(
-        "-" "$cache_name" "cache" "$HASH" "$gw"
-        "--require" "$cache_name"
-        "--before" "$pin_name"
-      )
-    done
+    if [ "$NOCACHE" != "1" ]; then
+      for gw in "${RO_GATEWAYS[@]}"; do
+        cache_name="Cache $HASH $gw"
+        ARGS+=(
+          "-" "$cache_name" "cache" "$HASH" "$gw"
+          "--require" "$cache_name"
+          "--before" "$pin_name"
+        )
+      done
+    fi
     pin_count=$(( $pin_count + 1 ))
   fi
   if [ "$pin_count" -ge "20" ]; then

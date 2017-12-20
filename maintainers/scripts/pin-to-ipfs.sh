@@ -78,7 +78,11 @@ cache() {
 
 ARGS=()
 pin_count=0
-while read HASH; do
+exec 3< "$TMPDIR/hashes.tmp"
+while true; do
+  if ! read HASH <&3; then
+    break
+  fi
   if [ "${current[$HASH]}" != "1" ]; then
     pin_name="Pin   $HASH"
     ARGS+=("-" "$pin_name" "fetch" "$HASH")
@@ -97,7 +101,8 @@ while read HASH; do
     ARGS=()
     pin_count=0
   fi
-done < <(cat "$TMPDIR/hashes.tmp")
+done
+exec 3<&-
 if [ "${#ARGS[@]}" -gt "0" ]; then
   concurrent "${ARGS[@]}"
 fi

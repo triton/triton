@@ -59,6 +59,7 @@ stdenv.mkDerivation rec {
     "--enable-confdir=/etc"
   ] ++ optionals libOnly [
     "--disable-usb"
+    "--disable-libsystemd"
   ] ++ optionals (!libOnly) [
     "--enable-libudev"
     "--enable-polkit"

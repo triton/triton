@@ -2301,13 +2301,9 @@ libisoburn = callPackage ../all-pkgs/l/libisoburn { };
 libisofs = callPackage ../all-pkgs/l/libisofs { };
 
 libjpeg_original = callPackage ../all-pkgs/l/libjpeg { };
-libjpeg-turbo_1-4 = callPackage ../all-pkgs/l/libjpeg-turbo {
-  channel = "1.4";
-};
-libjpeg-turbo_1-5 = callPackage ../all-pkgs/l/libjpeg-turbo {
-  channel = "1.5";
-};
-libjpeg-turbo = callPackageAlias "libjpeg-turbo_1-5" { };
+
+libjpeg-turbo = callPackage ../all-pkgs/l/libjpeg-turbo { };
+
 libjpeg = callPackageAlias "libjpeg-turbo" { };
 
 libkate = callPackage ../all-pkgs/l/libkate { };

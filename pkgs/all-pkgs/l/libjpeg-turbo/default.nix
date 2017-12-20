@@ -1,23 +1,18 @@
 { stdenv
 , fetchurl
 , nasm
-
-, channel ? null
 }:
 
 let
-  sources = import ./sources.nix;
-  source = sources."${channel}";
-  version = "${channel}.${source.versionPatch}";
+  version = "1.5.3";
 in
-
 stdenv.mkDerivation rec {
   name = "libjpeg-turbo-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${version}/${name}.tar.gz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523";
   };
 
   nativeBuildInputs = [
@@ -26,6 +21,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     type = "turbo";
+
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
@@ -40,6 +36,7 @@ stdenv.mkDerivation rec {
     license = licenses.ijg;
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

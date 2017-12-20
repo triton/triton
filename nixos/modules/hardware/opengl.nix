@@ -15,7 +15,6 @@ let
     paths =
       [ p.mesa_drivers
         p.mesa_noglu # mainly for libGL
-        (if cfg.s3tcSupport then p.libtxc_dxtn else p.libtxc_dxtn_s2tc)
       ];
     passthru = p.mesa_drivers.passthru // p.mesa_noglu.passthru;
   };
@@ -61,17 +60,6 @@ in
         supported for the <literal>nvidia</literal> and 
         <literal>ati_unfree</literal> drivers, as well as
         <literal>Mesa</literal>.
-      '';
-    };
-
-    hardware.opengl.s3tcSupport = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Make S3TC(S3 Texture Compression) via libtxc_dxtn available
-        to OpenGL drivers instead of the patent-free S2TC replacement.
-
-        Using this library may require a patent license depending on your location.
       '';
     };
 

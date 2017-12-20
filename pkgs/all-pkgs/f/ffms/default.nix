@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "2017-11-21";
+  version = "2017-12-16";
 in
 stdenv.mkDerivation rec {
   name = "ffms-${version}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "ffms";
     repo = "ffms2";
-    rev = "c71cade921072bce46289635ed0780e5ce01beab";
-    sha256 = "3cddcca60423fa7ba0b293e888632b541940ac63a4e14a3703acfa6f904aab77";
+    rev = "c5bec2e3d5236a48d6e681b369766a0460baa786";
+    sha256 = "762d9a16e0c9d06bbbc7a5ed774bec84f07d92316c50a65198fc3cd3578166b9";
   };
 
   nativeBuildInputs = [

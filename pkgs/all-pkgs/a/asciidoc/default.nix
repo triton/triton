@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   name = "asciidoc-${version}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "asciidoc";
     repo = "asciidoc";
     rev = version;

@@ -10,11 +10,11 @@ stdenv.mkDerivation {
   name = "libargon2-${date}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "P-H-C";
     repo = "phc-winner-argon2";
     inherit rev;
-    sha256 = "2a916746b074633b58faae148da485443b6a7753da200f2ad5c6661dac1017ee";
+    sha256 = "b2f6707abe57f588c3ded6c576ad3b12ad2edede990187288d49a2b279c179b0";
   };
 
   preBuild = ''

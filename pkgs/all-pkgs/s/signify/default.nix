@@ -11,7 +11,7 @@ stdenv.mkDerivation {
   name = "signify-${version}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "aperezdc";
     repo = "signify";
     rev = "v${version}";

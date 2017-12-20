@@ -34,15 +34,15 @@ let
 
   sources = {
     "stable" = {
-      fetchzipversion = 4;
+      fetchzipversion = 5;
       version = "40";
       sha256 = "947ab7b430008036b965c9cf2d7f13994f30472b059d417dba4452ac00cfc24d";
     };
     "head" = {
-      fetchzipversion = 4;
+      fetchzipversion = 5;
       version = "2017-12-13";
       rev = "8aa4a2d4e47de2df0300074bffce7a4133544911";
-      sha256 = "8594b9aa1d2349e3472327a7d17aaa4b106371e7e2f51bd4514bc84231661c3b";
+      sha256 = "d31479bd671358a90e7eece26b6119cc8c0951a21ac4745cb4d291a0ebba313b";
     };
   };
   source = sources."${channel}";

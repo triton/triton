@@ -193,10 +193,10 @@ let
       sha256 = "5a77278a63741efa74e26bf197b9bb09ac6381b9757391b922407210f0f991c0";
     };
     "9.9" = { # Git
-      fetchzipversion = 4;
+      fetchzipversion = 5;
       version = "2017.12.15";
       rev = "3c6dc270355f27645cf931fae1ed2dc1405507f8";
-      sha256 = "7cacf3bf3cd433a5dd5777217e717851056994d5671076a76b0f6960e2fcc2ee";
+      sha256 = "7583460004a078dfe8e3590f4e50be250640c6ef31738516cf67a5db23454c41";
     };
   };
   source = sources."${channel}";

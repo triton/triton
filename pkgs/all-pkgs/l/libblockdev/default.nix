@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "storaged-project";
     repo = "libblockdev";
     rev = "${version}-1";

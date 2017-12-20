@@ -17,10 +17,10 @@ stdenv.mkDerivation {
   name = "wireguard-${date}${optionalString (kernel != null) "-${kernel.version}"}";
 
   src = fetchzip {
-    version = 4;
+    version = 5;
     url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
     multihash = "QmWsiMvbUVn3uacGA5JCN1H3oRNtfefs9pb6Qe9TtaKKia";
-    sha256 = "031df9491929c26c633a0519c324bf57c332698dd026049213e3c6d3ebf17e80";
+    sha256 = "a786782340d33678ee252c6b569dbe6c065e4fd9b15fa7c1a57d54014d3eef55";
   };
 
   buildInputs = optionals (kernel == null) [

@@ -10,7 +10,7 @@ stdenv.mkDerivation {
   name = "mujs-${version}";
 
   src = fetchFromGitHub {
-    version = 4;
+    version = 5;
     owner = "ccxvii";
     repo = "mujs";
     rev = "${version}";

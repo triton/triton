@@ -25,10 +25,6 @@ let
       brotli = brotli_0-6-0;
       tar = gnutar_1-29;
     };
-    "4" = {
-      brotli = brotli_1-0-2;
-      tar = gnutar_1-29;
-    };
     "5" = {
       brotli = brotli_1-0-2;
       tar = gnutar_1-30;

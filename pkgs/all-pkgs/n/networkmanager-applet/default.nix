@@ -44,33 +44,23 @@ let
   inherit (lib)
     boolTf;
 
-  # sources = {
-  #   "1.8" = {
-  #     version = "1.8.6";
-  #     sha256 = "01749e2c27d84ac858f59bc923af50860156eb510e2b6cf7d4941f753bef9c30";
-  #   };
-  # };
-  # source = sources."${channel}";
-  source.version = "2017-11-15";
+  sources = {
+    "1.8" = {
+      version = "1.8.10";
+      sha256 = "0adc4bfae8b49f7a1d929c22ef20933bd41fb4a8b458280f44c65f9e45b4c9c3";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${source.version}";
 
-  # Meson is completely broken in 1.8.6, but will be fixed in the next release
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "gnome";
-    repo = "network-manager-applet";
-    rev = "00c808c41084b23dcfcab839c6c1ea7d3d6c3796";
-    sha256 = "fb332426b6195cd17f1e6da00c94daa043ec7d8c383960e44a931d6680055442";
+  src = fetchurl {
+    url = "mirror://gnome/sources/network-manager-applet/${channel}/"
+      + "${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
-
-  # src = fetchurl {
-  #   url = "mirror://gnome/sources/network-manager-applet/${channel}/"
-  #     + "${name}.tar.xz";
-  #   hashOutput = false;
-  #   inherit (source) sha256;
-  # };
 
   propagatedUserEnvPkgs = [
     gconf

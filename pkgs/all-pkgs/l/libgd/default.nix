@@ -3,10 +3,12 @@
 
 , freetype
 , fontconfig
+, libimagequant
 , libjpeg
 , libpng
 , libtiff
 , libvpx
+, libwebp
 , xorg
 , zlib
 }:
@@ -25,10 +27,12 @@ stdenv.mkDerivation rec {
   buildInputs = [
     freetype
     fontconfig
+    libimagequant
     libjpeg
     libpng
     libtiff
     #libvpx  # This is broken
+    libwebp
     xorg.libXpm
     zlib
   ];

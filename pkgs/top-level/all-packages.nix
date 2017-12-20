@@ -2284,6 +2284,8 @@ libidn = callPackage ../all-pkgs/l/libidn { };
 
 libidn2 = callPackage ../all-pkgs/l/libidn2 { };
 
+libimagequant = callPackage ../all-pkgs/l/libimagequant { };
+
 libimobiledevice = callPackage ../all-pkgs/l/libimobiledevice { };
 
 libiodbc = callPackage ../all-pkgs/l/libiodbc {

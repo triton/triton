@@ -341,6 +341,7 @@ let
         ./lib/50-unpack.sh
         ./lib/70-source-date-epoch.sh
         ./lib/70-output-directory-fixup.sh
+        ./lib/90-check-empty.sh
         ./lib/90-check-output-directory.sh
         ./setup.sh
       ];

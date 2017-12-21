@@ -8,25 +8,26 @@
 , libnfsidmap
 , libtirpc
 , lvm2
+, openldap
 , sqlite
 , util-linux_lib
 }:
 
 let
-  version = "2.1.1";
+  version = "2.3.1";
   name = "nfs-utils-${version}";
 
   baseTarballs = [
-    "mirror://sourceforge/nfs/${version}/${name}.tar"
+    "mirror://sourceforge/nfs/nfs-utils/${version}/${name}.tar"
   ];
 in
 stdenv.mkDerivation rec {
   inherit name;
 
   src = fetchurl {
-    urls = map (n: "${n}.bz2") baseTarballs;
+    urls = map (n: "${n}.xz") baseTarballs;
     hashOutput = false;
-    sha256 = "0a28416948516c26f3bfe90425b0de09b79364dc1f508bf1dda8de66e1edbb09";
+    sha256 = "245ec2f9abb51bcc233b64f6f3e9ac8e5cd16ffd35dba9450f83ce2803844cda";
   };
 
   buildInputs = [
@@ -37,6 +38,7 @@ stdenv.mkDerivation rec {
     libnfsidmap
     libtirpc
     lvm2
+    openldap
     sqlite
     util-linux_lib
   ];
@@ -44,6 +46,8 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i 's,/usr/sbin,/run/current-system/sw/bin,g' utils/statd/statd.c
     sed -i "s,/usr/lib/systemd,$out/lib/systemd,g" systemd/Makefile.in
+
+    sed -i 's,chmod 4511,chmod 0511,' utils/mount/Makefile.in
   '';
 
   preConfigure = ''
@@ -55,7 +59,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-svcgss"
+    #"--enable-svcgss"
     "--enable-libmount-mount"
     "--with-statduser=rpcuser"
     "--with-start-statd=/run/current-system/bin/start-statd"

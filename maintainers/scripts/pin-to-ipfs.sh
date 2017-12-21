@@ -49,6 +49,11 @@ done
 
 cp pin-to-ipfs-hashes "$TMPDIR/hashes"
 REV="$(cat pin-to-ipfs-rev)"
+if ! git rev-list "$REV"..HEAD >/dev/null 2>&1; then
+  echo "Bad cached revision: $REV"
+  exit 1
+fi
+
 pushd "$TOPDIR" >/dev/null
 while read obj; do
   echo "$obj" | git cat-file --batch | sed -n 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,p' >> "$TMPDIR/hashes"

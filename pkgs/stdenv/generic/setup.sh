@@ -374,8 +374,10 @@ fixupPhase() {
     fi
     local setupHook
     for setupHook in "${setupHooks[@]}"; do
-      substituteAll "$setupHook" setup-hook-tmp
-      cat setup-hook-tmp >> "$out"/nix-support/setup-hook
+      local setupHookTmp="$TMPDIR"/setup-hook-tmp
+      substituteAll "$setupHook" "$setupHookTmp"
+      cat "$setupHookTmp" >> "$out"/nix-support/setup-hook
+      rm "$setupHookTmp"
     done
   fi
 

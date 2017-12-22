@@ -443,7 +443,6 @@ with stdenv.lib;
   MICROCODE_AMD y
 
   # Misc. options.
-  HWSPINLOCK y
   EARLY_PRINTK_DBGP n
   EARLY_PRINTK_EFI y
   EXPERT y

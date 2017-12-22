@@ -18,7 +18,7 @@ let
     boolEn
     boolWt;
 
-  version  = "1.0.0";
+  version  = "1.0.2";
 in
 stdenv.mkDerivation rec {
   name = "libbluray-${version}";
@@ -26,40 +26,33 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libbluray/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "f7e3add335c7bbef45824fcd2249a9bf293868598c13f8479352c44ec95374cc";
+    sha256 = "6d9e7c4e416f664c330d9fa5a05ad79a3fb39b95adfc3fd6910cbed503b7aeff";
   };
 
   nativeBuildInputs = [
     #ant
-    autoreconfHook
+    #autoreconfHook
   ];
 
   buildInputs = [
     fontconfig
     freetype
     #jdk
-    libaacs
     libxml2
   ];
 
-  postPatch = ''
+  /*postPatch = ''
     # Fix search path for BDJ jarfile
     # See triton-patches "libbluray/BDJ-JARFILE-path.patch"
     sed -i configure.ac \
       -e "/\[JDK_HOME\], \[\"\$JDK_HOME\"\]/a CPPFLAGS=\"''${CPPFLAGS} -DJARDIR='\\\\\"\\\$(datadir)/java\\\\\"'\""
     sed -i src/libbluray/bdj/bdj.c \
       -e 's|/usr/share/java/" BDJ_JARFILE|JARDIR "/" BDJ_JARFILE|'
-  '';
+  '';*/
 
   configureFlags = [
-    "--disable-werror"
-    "--enable-extra-warnings"
-    "--enable-optimizations"
     "--disable-examples"
-    /**/"--disable-bdjava"  # FIXME: Fix BDJ search path
-    #"--${boolEn (jdk != null)}-bdjava"
-    "--enable-udf"
-    /**/"--disable-bdjava-jar"  # FIXME: Fix BDJ search path
+    "--disable-bdjava-jar"  # FIXME: Fix BDJ search path
     #"--${boolEn (jdk != null)}-bdjava-jar"
     "--disable-doxygen-doc"
     "--disable-doxygen-dot"
@@ -71,9 +64,6 @@ stdenv.mkDerivation rec {
     "--disable-doxygen-html"
     "--disable-doxygen-ps"
     "--disable-doxygen-pdf"
-    "--${boolWt (libxml2 != null)}-libxml2"
-    "--${boolWt (freetype != null)}-freetype"
-    "--${boolWt (fontconfig != null)}-fontconfig"
     "--with-bdj-type=j2se"  # j2me
     #"--with-bdj-bootclasspath="
   ];
@@ -85,9 +75,9 @@ stdenv.mkDerivation rec {
     "-lbdplus"
   ];
 
-  # preConfigure = ''
-  #   export JDK_HOME="${jdk.home}"
-  # '';
+  #preConfigure = ''
+  #  export JDK_HOME="${jdk.home}"
+  #'';
 
   passthru = {
     srcVerification = fetchurl {

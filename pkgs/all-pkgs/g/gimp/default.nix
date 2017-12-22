@@ -57,22 +57,19 @@
 }:
 
 let
-  version = "2.9.6";
-  verMajMin =
-    # Handle possible double digit minor version
-    if builtins.substring 3 1 version == "." then
-      builtins.substring 0 3 version  # single
-    else
-      builtins.substring 0 4 version;  # double
+  major = "2.9";
+  patch = "8";
+
+  version = "${major}.${patch}";
 in
 stdenv.mkDerivation rec {
-  name = "gimp-2.9.6";
+  name = "gimp-${version}";
 
   src = fetchurl rec {
-    url = "https://download.gimp.org/pub/gimp/v${verMajMin}/${name}.tar.bz2";
-    multihash = "Qman1jmYyoHRXpJLTvRgeyGBrrVUpATSDUtTpafrXEPozS";
+    url = "https://download.gimp.org/pub/gimp/v${major}/${name}.tar.bz2";
+    multihash = "QmcJnieMv2BAESLYgzaN7npxGaLqRZvaSk9uwzSVEyu3R4";
     hashOutput = false;
-    sha256 = "b46f31d822a33ab416dcb15e33e10b5b98430814fa34f5ea4036230e845dfc9f";
+    sha256 = "a94983ea4ab230629ae2515506917a49d1df62816d8fac0cf60ef548ea3d9162";
   };
 
   nativeBuildInputs = [
@@ -160,11 +157,11 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     wrapPythonPrograms
-    ln -sv gimp-${verMajMin} $out/bin/gimp
+    ln -sv gimp-${major} $out/bin/gimp
   '';
 
   preFixup = ''
-    wrapProgram $out/bin/gimp-${verMajMin} \
+    wrapProgram $out/bin/gimp-${major} \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --run "$DEFAULT_GTK2_RC_FILES"

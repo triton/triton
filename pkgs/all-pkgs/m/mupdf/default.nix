@@ -75,15 +75,6 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  failureHook = ''
-    export NIX_DEBUG=1
-    export buildParallel=
-    local actualMakeFlags
-    commonMakeFlags 'build'
-    printMakeFlags 'build'
-    make "''${actualMakeFlags[@]}"
-  '';
-
   postInstall = ''
     mkdir -p "$out/lib/pkgconfig"
     cat >"$out/lib/pkgconfig/mupdf.pc" <<EOF

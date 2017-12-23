@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , lib
 
@@ -47,6 +48,14 @@ stdenv.mkDerivation rec {
     openssl_1-0-2
     xproto
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "21df51a39447ab99518058ddb37e245af246f15c";
+      file = "m/mupdf/fix-openjpeg.patch";
+      sha256 = "6a9088440cf12362b4292274e8eab8f509dd0b599a0ef548a4cc36d533c410f1";
+    })
   ];
 
   postPatch = /* Remove any unused third party utils*/ ''

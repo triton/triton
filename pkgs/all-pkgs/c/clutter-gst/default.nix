@@ -66,6 +66,8 @@ stdenv.mkDerivation rec {
 
   postBuild = "rm -rvf $out/share/gtk-doc";
 
+  buildParallel = false;
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

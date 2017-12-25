@@ -7,7 +7,6 @@
 , fribidi
 , harfbuzz_lib
 
-, rasterizerSupport ? true # Internal rasterizer
 , largeTilesSupport ? false # Use larger tiles in the rasterizer
 }:
 
@@ -15,7 +14,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "0.13.7";
+  version = "0.14.0";
 in
 stdenv.mkDerivation rec {
   name = "libass-${version}";
@@ -23,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libass/libass/releases/download/${version}/"
       + "${name}.tar.xz";
-    sha256 = "7065e5f5fb76e46f2042a62e7c68d81e5482dbeeda24644db1bd066e44da7e9d";
+    sha256 = "881f2382af48aead75b7a0e02e65d88c5ebd369fe46bc77d9270a94aa8fd38a2";
   };
 
   nativeBuildInputs = [
@@ -38,19 +37,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--${boolEn doCheck}-test"
-    "--disable-profile"
-    "--${boolEn (fontconfig != null)}-fontconfig"
-    "--disable-directwrite" # Windows
-    "--disable-coretext" # OSX
-    "--enable-require-system-font-provider"
-    "--${boolEn (harfbuzz_lib != null)}-harfbuzz"
-    "--${boolEn (nasm != null)}-asm"
-    "--${boolEn rasterizerSupport}-rasterizer"
     "--${boolEn largeTilesSupport}-large-tiles"
   ];
-
-  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Library for SSA/ASS subtitles rendering";

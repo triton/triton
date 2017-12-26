@@ -1,6 +1,5 @@
 { stdenv
 , bison
-, binutils
 , cc
 , fetchTritonPatch
 , fetchurl
@@ -17,7 +16,7 @@
 , zlib
 
 , channel
-# This is the platform the binutils can generate binaries for
+# This is the platform the gcc can generate binaries for
 , outputSystem ? stdenv.targetSystem
 , bootstrap ? false
 }:

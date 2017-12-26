@@ -1027,6 +1027,9 @@ diffutils = callPackage ../all-pkgs/d/diffutils { };
 ding-libs = callPackage ../all-pkgs/d/ding-libs { };
 
 discord = callPackage ../all-pkgs/d/discord { };
+discord_ptb = callPackage ../all-pkgs/d/discord {
+  channel = "ptb";
+};
 discord_canary = callPackage ../all-pkgs/d/discord {
   channel = "canary";
 };

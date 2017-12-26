@@ -48,22 +48,30 @@ let
   nameext =
     if channel == "canary" then
       "-canary"
+    else if channel == "ptb" then
+      "-ptb"
     else
       "";
   nameexe =
     if channel == "canary" then
       "Canary"
+    else if channel == "ptb" then
+      "PTB"
     else
       "";
 
   sources = {
     "stable" = {
-      version = "0.0.2";
-      sha256 = "dfc17ac6f683a45f896a4f881b900b2d46d74b0625cb661db1bfe39b33a06769";
+      version = "0.0.3";
+      sha256 = "d02d809fe1756c6345815531d291bd65769ffc27dc464e56988ffe7270f2bdfb";
+    };
+    "ptb" = {
+      version = "0.0.5";
+      sha256 = "64f7a5d7d4e6116297a8979cb4723d1a9e576c5e4c564915c8e0309b9c98ba04";
     };
     "canary" = {
-      version = "0.0.32";
-      sha256 = "19699f619b473cf462c0ae1029a16c4abf78b99650e488e7013049091a7c528f";
+      version = "0.0.44";
+      sha256 = "c0388dfb2b61b02e29a917aa19a7b319372f5009db85a74cac2d72d86363c7af";
     };
   };
   source = sources."${channel}";
@@ -124,8 +132,8 @@ stdenv.mkDerivation rec {
   installPhase = ''
     install -D -m 644 -v discord.png $out/share/pixmaps/discord.png
 
-    #install -D -m 644 -v discord${nameext}.desktop \
-    #  $out/share/applications/discord${nameext}.desktop
+    install -D -m 644 -v discord${nameext}.desktop \
+     $out/share/applications/discord${nameext}.desktop
 
     mkdir -pv $out/{bin,share/{discord,pixmaps}}
     mv * $out/share/discord

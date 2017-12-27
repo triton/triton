@@ -9,11 +9,11 @@ stdenv.mkDerivation rec {
   name = "lz4-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "lz4";
     repo = "lz4";
     rev = "v${version}";
-    sha256 = "f69f9004072636f0e9575da7c3dd87b89c04e77d6d9e7a8ae6fa0330506065c6";
+    sha256 = "b5b0694504a78bb4179dd8fec27e7ba8003edf4f094c3cb5eafbb9e14ecb2d0e";
   };
 
   preBuild = ''

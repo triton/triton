@@ -6,15 +6,19 @@
 , boost
 }:
 
+let
+  rev = "86ae3a5aa7e2109d849b2df89176d6432a35265d";
+  date = "2017-11-29";
+in
 stdenv.mkDerivation rec {
-  name = "yaml-cpp-2017-04-03";
+  name = "yaml-cpp-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 5;
     owner = "jbeder";
     repo = "yaml-cpp";
-    rev = "11607eb5bf1258641d80f7051e7cf09e317b4746";
-    sha256 = "d435525d5b2761d4b2212177e3ba78d88db956611c26b9c41af4af66f05cbf80";
+    inherit rev;
+    sha256 = "6b48a37f85f5033d5ebb03caa1f2e2b587fd9543c2a882f16aec69f42b2b97b6";
   };
 
   nativeBuildInputs = [

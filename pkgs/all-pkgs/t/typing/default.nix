@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "3.6.1";
+  version = "3.6.2";
 in
 buildPythonPackage {
   name = "typing-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "typing";
     inherit version;
-    sha256 = "c36dec260238e7464213dcd50d4b5ef63a507972f5780652e835d0228d0edace";
+    sha256 = "d514bd84b284dd3e844f0305ac07511f097e325171f6cc4a20878d11ad771849";
   };
 
   meta = with stdenv.lib; {

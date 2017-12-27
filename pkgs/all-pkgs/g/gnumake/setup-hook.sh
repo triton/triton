@@ -22,7 +22,7 @@ makeCommonFlags() {
   if [ -n "${parallelRef-1}" ]; then
     flagsRef+=("-j$NIX_BUILD_CORES" "-l$NIX_BUILD_CORES" "-O")
   fi
-  flagsRef+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
+  flagsRef+=("SHELL=$bash") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
   flagsRef+=($makeFlags)
   flagsRef+=("${makeFlagsArray[@]}")
   flagsRef+=($phaseFlagsRef)

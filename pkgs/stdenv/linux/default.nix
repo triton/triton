@@ -56,14 +56,14 @@ let
 
   bootstrap-bash = "${bootstrap-tools}/bin/bash";
 
-  bootstrap-hook = { name, bin, setupHook, extraCmd ? "" }: derivation {
-    name = "bootstrap-tools-${name}";
+  bootstrap-drv = { name, bin ? null, setupHook ? null, extraCmd ? "" }: derivation {
+    name = "bootstrap-drv-${name}";
 
     builder = bootstrap-bash;
     bootstrap = bootstrap-tools;
 
     args = [
-      ./make-bootstrap-hook.sh
+      ./make-bootstrap-drv.sh
     ];
 
     inherit
@@ -74,17 +74,49 @@ let
     system = bootstrapSystem;
   };
 
-  bootstrap-stdenv-tools = derivation {
-    name = "bootstrap-stdenv-tools";
+  bootstrap-stdenv-tools = bootstrap-drv {
+    name = "stdenv-tools";
 
-    builder = bootstrap-bash;
-    bootstrap = bootstrap-tools;
+    extraCmd = ''
+      link 'awk'
+      link 'basename'
+      link 'cat'
+      link 'chattr' || true
+      link 'chmod'
+      link 'cp'
+      link 'date'
+      link 'dirname'
+      link 'env'
+      link 'find'
+      link 'grep'
+      link 'head'
+      link 'install'
+      link 'ln'
+      link 'mkdir'
+      link 'nproc' || true
+      link 'readlink'
+      link 'rm'
+      link 'stat'
+      link 'sed'
+      link 'sort'
+      link 'tail'
+      link 'tr'
+      link 'xargs'
+    '';
+  };
 
-    args = [
-      ./make-bootstrap-stdenv-tools.sh
-    ];
+  bootstrap-cc = bootstrap-drv {
+    name = "cc";
 
-    system = bootstrapSystem;
+    extraCmd = ''
+      link 'ar'
+      link 'as'
+      link 'cpp'
+      link 'gcc'
+      link 'g++'
+      link 'ld'
+      link 'strip'
+    '';
   };
 
   srcOnly = pkg: {
@@ -145,7 +177,7 @@ let
             signify;
         };
 
-        bison = bootstrap-hook {
+        bison = bootstrap-drv {
           name = "bison";
           bin = "bison";
           setupHook = pkgs.bison.setupHook;
@@ -155,32 +187,32 @@ let
           '';
         };
 
-        gnumake = bootstrap-hook {
+        gnumake = bootstrap-drv {
           name = "gnumake";
           bin = "make";
           setupHook = pkgs.gnumake.setupHook;
         };
 
-        gnupatch = bootstrap-hook {
+        gnupatch = bootstrap-drv {
           name = "gnupatch";
           bin = "patch";
           setupHook = pkgs.gnupatch.setupHook;
         };
 
-        gnutar = bootstrap-hook {
+        gnutar = bootstrap-drv {
           name = "gnutar";
           bin = "tar";
           setupHook = pkgs.gnutar_1-30.setupHook;
         };
 
-        xz = bootstrap-hook {
+        xz = bootstrap-drv {
           name = "xz";
           bin = "xz";
           setupHook = pkgs.xz.setupHook;
         };
 
         gcc_7 = cc-wrapper {
-          cc = bootstrap-tools;
+          cc = bootstrap-cc;
           libc = bootstrap-tools.glibc;
         };
       };

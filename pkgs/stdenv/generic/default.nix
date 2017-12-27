@@ -327,6 +327,7 @@ let
 
       preHook = ''
         defaultNativeBuildInputs='${lib.concatStringsSep " " defaultNativeBuildInputs}'
+        bash='${bash}'
       '' + preHook;
 
       setup = [

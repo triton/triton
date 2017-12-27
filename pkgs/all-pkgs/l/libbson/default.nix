@@ -24,6 +24,14 @@ stdenv.mkDerivation rec {
     "--disable-tests"
   ];
 
+  # Builders don't respect the nested include dir
+  postInstall = ''
+    incdir="$(echo "$out"/include/*)"
+    mv "$incdir"/* "$out/include"
+    rmdir "$incdir"
+    ln -sv . "$incdir"
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

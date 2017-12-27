@@ -1,13 +1,16 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
-, scons
+, pythonPackages
 
 , boost
 , cyrus-sasl
 , gperftools
+, icu
+, libbson
 , libpcap
-, openssl_1-0-2
+, mongo-c-driver
+, openssl
 , pcre
 , snappy
 , wiredtiger
@@ -16,29 +19,38 @@
 }:
 
 let
-  version = "3.4.9";
+  version = "3.6.1";
 
   inherit (stdenv.lib)
-    concatStringsSep;
+    concatMap
+    concatStringsSep
+    flip;
 in
 stdenv.mkDerivation rec {
   name = "mongodb-${version}";
 
   src = fetchurl {
     url = "https://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "2fd0f47a5f9175e71d3d381e81a1b6a2500c9c414dd6ae0940ad6194a0e85549";
+    sha256 = "59c646453120778911cc0d300b7da17e21765270d4575118bd4aa43ea1bf1e75";
   };
 
   nativeBuildInputs = [
-    scons
+    pythonPackages.cheetah
+    pythonPackages.pyyaml
+    pythonPackages.regex
+    pythonPackages.scons
+    pythonPackages.typing
   ];
 
   buildInputs = [
     boost
     cyrus-sasl
     gperftools
+    #icu
+    libbson
     libpcap
-    openssl_1-0-2
+    mongo-c-driver
+    openssl
     pcre
     snappy
     wiredtiger
@@ -46,31 +58,22 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  patches = [
-    # Hopefully remove this in 3.4.7+
-    (fetchTritonPatch {
-      rev = "2e0d2f49a92924986bacbcf32c1594d834336095";
-      file = "m/mongodb/0001-boost-1.60.patch";
-      sha256 = "0e9da35f4303e53daf51e78961c517895f2d12f4fa49298f01e1665e15246d73";
-    })
-    (fetchTritonPatch {
-      rev = "2e0d2f49a92924986bacbcf32c1594d834336095";
-      file = "m/mongodb/0002-boost-1.62.patch";
-      sha256 = "8ad9640407be6f945b38275ff75014c8ba2c6118a25fba63a490c640267b4b66";
-    })
-    (fetchTritonPatch {
-      rev = "2e0d2f49a92924986bacbcf32c1594d834336095";
-      file = "m/mongodb/0003-fix-scons-boost.patch";
-      sha256 = "200abbd070d5fad9f894375fcd2810008b33985112392f2e00929933347eea0d";
-    })
-  ];
-
   # Fix environment variable reading and reduces file size generation by removing debugging symbols
   postPatch = ''
+    grep -q '\-ggdb' SConstruct
+    grep -q 'env = Environment(' SConstruct
     sed \
       -e '/-ggdb/d' \
       -e 's#env = Environment(#env = Environment(ENV = os.environ,#' \
       -i SConstruct
+  '';
+
+  NIX_LDFLAGS = flip concatMap buildInputs (n: [
+    "-rpath" "${n.lib or n}/lib"
+  ]);
+
+  preConfigure = ''
+    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $(cat $NIX_CC/nix-support/orig-cc)/lib"
   '';
 
   makeFlags = [
@@ -79,31 +82,25 @@ stdenv.mkDerivation rec {
     "--wiredtiger=on"
     "--js-engine=mozjs"
     "--use-sasl-client"
+    "--use-system-tcmalloc"
     "--use-system-pcre"
     "--use-system-wiredtiger"
     "--use-system-boost"
     "--use-system-snappy"
-    "--use-system-zlib"
     # "--use-system-valgrind"
+    "--use-system-zlib"
     # "--use-system-stemmer"
     "--use-system-yaml"
     # "--use-system-asio"
+    # "--use-system-icu"
     # "--use-system-intel_decimal128"
-    "--use-system-tcmalloc"
     "--disable-warnings-as-errors"
-    "VARIANT_DIR=nixos" # Needed so we don't produce argument lists that are too long for gcc / ld
+    "VARIANT_DIR=triton" # Needed so we don't produce argument lists that are too long for gcc / ld
   ];
-  
+
   buildFlags = [
     "core"
   ];
-
-  preBuild = ''
-    makeFlagsArray+=(
-      "CCFLAGS=${concatStringsSep " " (map (input: "-I${input}/include") buildInputs)}"
-      "LINKFLAGS=${concatStringsSep " " (map (input: "-L${input}/lib") buildInputs)}"
-    )
-  '';
 
   preInstall = ''
     installFlagsArray+=("--prefix=$out")

@@ -5,6 +5,8 @@
 , cyrus-sasl
 , libbson
 , openssl
+, snappy
+, zlib
 }:
 
 let
@@ -27,12 +29,28 @@ stdenv.mkDerivation rec {
     cyrus-sasl
     libbson
     openssl
+    snappy
+    zlib
   ];
 
   configureFlags = [
     "--disable-examples"
     "--disable-tests"
+    "--enable-sasl=yes"
+    "--enable-ssl=openssl"
+    "--enable-crypto-system-profile"
+    "--with-libbson=system"
+    "--with-snappy=system"
+    "--with-zlib=system"
   ];
+
+  # Builders don't respect the nested include dir
+  postInstall = ''
+    incdir="$(echo "$out"/include/*)"
+    mv "$incdir"/* "$out/include"
+    rmdir "$incdir"
+    ln -sv . "$incdir"
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

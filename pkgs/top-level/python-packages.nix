@@ -248,6 +248,8 @@ characteristic = callPackage ../all-pkgs/c/characteristic { };
 
 chardet = callPackage ../all-pkgs/c/chardet { };
 
+cheetah = callPackage ../all-pkgs/c/cheetah { };
+
 cheroot = callPackage ../all-pkgs/c/cheroot { };
 
 cherrypy = callPackage ../all-pkgs/c/cherrypy { };

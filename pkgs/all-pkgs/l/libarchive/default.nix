@@ -17,18 +17,18 @@
 }:
 
 let
-  rev = "d9d9d1683ec875fdf7abf21e0049bf285d9f9ec1";
-  date = "2017-11-02";
+  rev = "9155c1013007031bce566b76b2a301bdcc041533";
+  date = "2017-11-21";
 in
 stdenv.mkDerivation rec {
   name = "libarchive-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "libarchive";
     repo = "libarchive";
     inherit rev;
-    sha256 = "251d1617a2f8f65f8a0bed595f9b4abd6f283387d6296bfc413aaf4a7bae2c21";
+    sha256 = "96a009c97d27675bc2be76412cd14e2e9ca7577179ec9963d84bd65857710672";
   };
 
   nativeBuildInputs = [

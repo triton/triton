@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libzip-1.3.0";
+  name = "libzip-1.3.2";
 
   src = fetchurl {
     url = "https://www.nih.at/libzip/${name}.tar.xz";
-    multihash = "QmfBKAT8MbgGGB5QzYFN7XjtFn8F1oVLYE4WCXtBCd8of6";
-    sha256 = "aa936efe34911be7acac2ab07fb5c8efa53ed9bb4d44ad1fe8bff19630e0d373";
+    multihash = "Qmf1txkDK5y8ARKb9LDi2jxYLcvsLh3zJVEwpSSYWFjhzs";
+    sha256 = "6277845010dbc20e281a77e637c97765c1323d67df4d456fd942f525ea86e185";
   };
 
   nativeBuildInputs = [

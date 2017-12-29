@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "parallel-20171122";
+  name = "parallel-20171222";
 
   src = fetchurl {
     url = "mirror://gnu/parallel/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "41b46add38eecad3026e0086c1fb01cfa13c7cc24ecf91cd595e22f83fca82a6";
+    sha256 = "9bc8c7fd2420ee9c6f4eeaf11d08c77682dbb02dc64d64881f38110f693379dc";
   };
 
   nativeBuildInputs = [

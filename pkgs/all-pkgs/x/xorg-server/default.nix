@@ -75,12 +75,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xorg-server-1.19.5";
+  name = "xorg-server-1.19.6";
 
   src = fetchurl {
     url = "mirror://xorg/individual/xserver/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "18fffa8eb93d06d2800d06321fc0df4d357684d8d714315a66d8dfa7df251447";
+    sha256 = "a732502f1db000cf36a376cd0c010ffdbf32ecdd7f1fa08ba7f5bdf9601cc197";
   };
 
   nativeBuildInputs = [

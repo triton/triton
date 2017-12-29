@@ -21,9 +21,9 @@ let
       sha256_headless = "1041ef61ea4aecd1f425e6030a909f0c349a9c01d1b3324d84a61b1cfef5ba6c";
     };
     "0.16" = {
-      version = "0.16.7";
-      sha256_alpha = "8af63e2d96d101c35b91c73a73f908dad076f863ae54ecd5a585c78feebaa069";
-      sha256_headless = "e6a76447584d15a07a9f27bd852f21c3dd314dd480a9edee10c67c061372389e";
+      version = "0.16.8";
+      sha256_alpha = "a05b226c5438a85387bac396bbf2ebc393a1436ec12e6cd46bd806290b7fecb6";
+      sha256_headless = "22e6eb25cfeb0da33ee96b691fd41ec0dd1b8646a8fb00dceebf7ded932d0bac";
     };
   };
   source = sources."${channel}";

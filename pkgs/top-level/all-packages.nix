@@ -2129,6 +2129,8 @@ libatomic_ops = callPackage ../all-pkgs/l/libatomic_ops { };
 
 libavc1394 = callPackage ../all-pkgs/l/libavc1394 { };
 
+libb2 = callPackage ../all-pkgs/l/libb2 { };
+
 libb64 = callPackage ../all-pkgs/l/libb64 { };
 
 libblockdev = callPackage ../all-pkgs/l/libblockdev { };

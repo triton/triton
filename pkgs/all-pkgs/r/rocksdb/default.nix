@@ -14,17 +14,17 @@
 }:
 
 let
-  version = "5.8.8";
+  version = "5.9.2";
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "5376d269206fc315a7f4494b66b15f48bf18028eecfdf9c059ada9728a1f1672";
+    sha256 = "5846b0abe2c0cbeae2ab162d62d26c9fd63cd30a425437c15827429cd3ece18e";
   };
 
   nativeBuildInputs = [

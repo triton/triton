@@ -18,7 +18,7 @@ let
       sha256 = "407af1de167477d598bd6166d84459a3bdccc2fb349360706154e646a9620ffa";
     };
     "8.6" = {
-      sha256 = "c65d6c00a7c8826069979b9d57332227e0b69d741b48093a13ac9ed6bea74304";
+      sha256 = "49e7bca08dde95195a27f594f7c850b088be357a7c7096e44e1158c7a5fd7b33";
     };
   };
   source = sources."${channel}";
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   name = "tk-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/tcl/tk${version}-src.tar.gz";
+    url = "mirror://sourceforge/tcl/Tcl/${version}/tk${version}-src.tar.gz";
     inherit (source) sha256;
   };
 

@@ -5,14 +5,16 @@
 , setuptools-scm
 
 , acl
+, libb2
 , llfuse
 , lz4
 , msgpack-python
 , openssl
+, zstd
 }:
 
 let
-  version = "1.1.3";
+  version = "1.1.4";
 in
 buildPythonPackage rec {
   name = "borgbackup-${version}";
@@ -20,7 +22,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "borgbackup";
     inherit version;
-    sha256 = "cc2a329956dc42e7e461d2f506a28e398c4cc6dc53a67cc2c8a17dcacc4276e7";
+    sha256 = "22a4a53840886180e87de5636356f29e491209365861007c31d7f18220c72cb2";
   };
 
   nativeBuildInputs = [
@@ -29,8 +31,10 @@ buildPythonPackage rec {
 
   buildInputs = [
     acl
+    libb2
     lz4
     openssl
+    zstd
   ];
 
   propagatedBuildInputs = [
@@ -38,14 +42,20 @@ buildPythonPackage rec {
     llfuse
   ];
 
+  BORG_LIBB2_PREFIX = libb2;
+  BORG_LIBLZ4_PREFIX = lz4;
+  BORG_LIBZSTD_PREFIX = zstd;
+  BORG_OPENSSL_PREFIX = openssl;
+
   postPatch = ''
+    # Remove bundling
+    rm -r src/borg/algorithms/{blake2,lz4,zstd}
+
+    # Fix searching in /usr or /opt
     sed -i setup.py \
       -e 's,/usr,/non-existant-path,g' \
       -e 's,/opt,/non-existant-path,g'
   '';
-
-  BORG_LZ4_PREFIX = lz4;
-  BORG_OPENSSL_PREFIX = openssl;
 
   disabled = pythonOlder "3.5";
 

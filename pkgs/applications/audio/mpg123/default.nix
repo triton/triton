@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "1.25.7";
+  version = "1.25.8";
 in
 stdenv.mkDerivation rec {
   name = "mpg123-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/mpg123/mpg123/${version}/${name}.tar.bz2";
-    sha256 = "31b15ebcf26111b874732e07c8e60de5053ee555eea15fb70c657a4f9f0344f3";
+    sha256 = "79da51efae011814491f07c95cb5e46de0476aca7a0bf240ba61cfc27af8499b";
   };
 
   buildInputs = [

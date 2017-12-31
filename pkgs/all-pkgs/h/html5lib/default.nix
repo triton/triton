@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , six
 , webencodings
 }:
 
 let
-  version = "0.999999999";
+  version = "1.0.1";
 in
 buildPythonPackage {
   name = "html5lib-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "html5lib";
     inherit version;
-    sha256 = "ee747c0ffd3028d2722061936b5c65ee4fe13c8e4613519b4447123fc4546298";
+    sha256 = "66cb0dcfdbbc4f9c3ba1a63fdb511ffdbd4f513b2b6d81b80cd26ce6b3fb3736";
   };
 
   buildInputs = [
@@ -26,7 +27,7 @@ buildPythonPackage {
     webencodings
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

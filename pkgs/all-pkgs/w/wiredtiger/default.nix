@@ -1,5 +1,8 @@
 { stdenv
-, fetchurl
+, autoconf
+, automake
+, fetchFromGitHub
+, libtool
 
 , bzip2
 , db
@@ -12,15 +15,25 @@
 }:
 
 let
-  version = "2.9.3";
+  rev = "d8f244717b6338063e0c20628bfa4bb65a821e0c";
+  date = "2017-12-06";
 in
 stdenv.mkDerivation rec {
-  name = "wiredtiger-${version}";
+  name = "wiredtiger-${date}";
 
-  src = fetchurl {
-    url = "https://github.com/wiredtiger/wiredtiger/releases/download/${version}/${name}.tar.bz2";
-    sha256 = "2502a90d6b3d3cae0b1bf221cbfe13999d3bcb7f8bb9fa795ad870be4fc0e1e7";
+  src = fetchFromGitHub {
+    version = 5;
+    owner = "wiredtiger";
+    repo = "wiredtiger";
+    inherit rev;
+    sha256 = "90b9be2a1baccd57b194e51af18d58cd6edbff1173e7d1c92427967badff708d";
   };
+
+  nativeBuildInputs = [
+    autoconf
+    automake
+    libtool
+  ];
 
   buildInputs = [
     bzip2
@@ -32,6 +45,10 @@ stdenv.mkDerivation rec {
     zlib
     zstd
   ];
+
+  preConfigure = ''
+    ./autogen.sh
+  '';
 
   configureFlags = [
     "--enable-leveldb"

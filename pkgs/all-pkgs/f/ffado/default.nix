@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 , makeWrapper
 , python
 , scons
@@ -34,7 +35,7 @@ let
     optionalString
     platforms;
 
-  version = "2.3.0";
+  version = "2.4.0";
 
   gcc-warnings_patch =
     (fetchTritonPatch {
@@ -48,8 +49,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.ffado.org/files/libffado-${version}.tgz";
-    multihash = "Qmdhm6mWmGbguNFibZYhW2eQHYovjGGkQCydShQ8Af93yj";
-    sha256 = "18e3c7e610b7cee58b837c921ebb985e324cb2171f8d130f79de02a3fc435f88";
+    multihash = "QmfDoK6vRALc6h8zHe62NqZDdJrzPLdSLBzRTRjiL4mCct";
+    sha256 = "8e380032816e6fd93bd42dca8bf1828965d1befc1f4049677afb3ed018cd3793";
   };
 
   nativeBuildInputs = [
@@ -133,7 +134,7 @@ stdenv.mkDerivation rec {
       "$PYTHONPATH:$PYDIR:$out/share/libffado/python"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.ffado.org;
     description = "FireWire audio drivers";
     license = licenses.gpl3;

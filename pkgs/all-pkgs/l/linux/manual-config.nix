@@ -1,4 +1,4 @@
-{ stdenv, runCommand, git, bc, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, git, bc, elfutils, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -221,6 +221,8 @@ let
       # Remove build directory impurities
       preFixup = ''
         find "$dev" -name '*.s' -exec sed -i '/-fdebug-prefix-map/d' {} \;
+        find "$dev" -name '*.cmd' -delete
+        find "$dev" -name '*.d' -exec sed -i "s,$TMPDIR,/no-such-path,g" {} \;
       '';
 
       # !!! This leaves references to gcc in $dev
@@ -254,9 +256,13 @@ stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) con
   name = "linux-${version}";
 
   # GMP / MPFR / libmpc is a hack that should be fixed in gcc
-  nativeBuildInputs = [ perl bc openssl ]
+  nativeBuildInputs = [ perl bc elfutils openssl ]
     ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ]
     ++ stdenv.lib.optionals needsGitPatch [ git ];
+
+  preBuild = ''
+    chmod +x ./tools/objtool/sync-check.sh || true
+  '';
 
   makeFlags = commonMakeFlags ++ [
     "ARCH=${common.kernelArch}"

@@ -10,7 +10,7 @@ let
     "mirror://gnu/mpfr/mpfr-${version}.tar.xz"
   ];
 
-  version = "3.1.6";
+  version = "4.0.0";
 
   inherit (stdenv.lib)
     flip
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "7a62ac1a04408614fccdc506e4844b10cf0ad2c2b1677097f8f35d3a1344a950";
+    sha256 = "fbe2cd1418b321f5c899ce4f0f0f4e73f5ecc7d02145b0e1fd096f5c3afb8a1d";
   };
 
   patches = flip mapAttrsToList patchSha256s (n: { multihash, sha256 }: fetchurl {
@@ -45,11 +45,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.1.6";
+      urls = tarballUrls "4.0.0";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "07F3 DBBE CC1A 3960 5078  094D 980C 1976 98C3 739D";
       inherit (src) outputHashAlgo;
-      outputHash = "7a62ac1a04408614fccdc506e4844b10cf0ad2c2b1677097f8f35d3a1344a950";
+      outputHash = "fbe2cd1418b321f5c899ce4f0f0f4e73f5ecc7d02145b0e1fd096f5c3afb8a1d";
     };
   };
 

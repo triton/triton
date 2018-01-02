@@ -1,4 +1,5 @@
 { stdenv
+, elfutils
 , fetchzip
 
 , kernel
@@ -22,6 +23,10 @@ stdenv.mkDerivation {
     multihash = "QmVLJccyxovsfih86xQxmeqX7uNYEhWzdKkC3ixxKmyuwz";
     sha256 = "d41c6ef623016adcf879b7449ee4886ffac388ec10f438b626adc70e76019664";
   };
+
+  nativeBuildInputs = optionals (kernel != null) [
+    elfutils
+  ];
 
   buildInputs = optionals (kernel == null) [
     libmnl

@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "flashrom-0.9.9";
+  name = "flashrom-1.0";
 
   src = fetchurl {
-    url = "http://download.flashrom.org/releases/${name}.tar.bz2";
-    multihash = "QmduQg4FtuWiFXGee4Ktj3NmW4A4uYFYD7MLWVzGhyBCaK";
+    url = "https://download.flashrom.org/releases/${name}.tar.bz2";
+    multihash = "QmZ3ZZdrjPAjf3bvWSounRTZSJ26uvFfKmsoazjo3CKf74";
     hashOutput = false;
-    sha256 = "cb3156b0f63eb192024b76c0814135930297aac41f80761a5d293de769783c45";
+    sha256 = "3702fa215ba5fb5af8e54c852d239899cfa1389194c1e51cb2a170c4dc9dee64";
   };
 
   buildInputs = [

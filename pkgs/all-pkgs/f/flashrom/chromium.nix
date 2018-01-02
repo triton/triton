@@ -8,19 +8,19 @@
 }:
 
 let
-  date = "2017-04-06";
-  rev = "342740e71571ec249a7150f7b31359d55990b9d3";
+  date = "2017-11-03";
+  rev = "831c609f0faf5dc565d1415b6fe851c85e8c6b46";
 in
 stdenv.mkDerivation rec {
   name = "flashrom-chromium-${date}";
 
   src = fetchzip {
-    version = 2;
+    version = 5;
     stripRoot = false;
     purgeTimestamps = true;
     url = "https://chromium.googlesource.com/chromiumos/third_party/flashrom/+archive/${rev}.tar.gz";
-    multihash = "QmXsFsjC5fEyH1dPXhraMf1mfWWe1A3Mwivq2meFpMf7t2";
-    sha256 = "6015a091c06214cccdb9854ae81a3241df3dcf99bb621a45f098065316e57c8f";
+    multihash = "Qmf2MyLaW6CvKm7RcvbQoXQeWGRW9RFqGQw2rKPBhjgHGZ";
+    sha256 = "9ba0e4c16dd260698a37d295fb44f6b5a98430f65b7bd6933312ac921d572b59";
   };
 
   buildInputs = [
@@ -29,6 +29,11 @@ stdenv.mkDerivation rec {
     libusb-compat
     pciutils
   ];
+
+  postPatch = ''
+    grep -q 'CFLAGS += -Werror' Makefile
+    sed -i '/CFLAGS += -Werror/d' Makefile
+  '';
 
   preBuild = ''
     makeFlagsArray+=(

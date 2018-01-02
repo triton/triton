@@ -1,6 +1,7 @@
 { stdenv
 , autoconf
 , automake
+, elfutils
 , fetchFromGitHub
 , fetchTritonPatch
 , libtool
@@ -62,6 +63,8 @@ stdenv.mkDerivation rec {
     automake
     libtool
     nukeReferences
+  ] ++ optionals buildKernel [
+    elfutils
   ];
 
   buildInputs = optionals buildKernel [

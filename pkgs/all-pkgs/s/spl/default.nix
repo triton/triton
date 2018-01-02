@@ -1,6 +1,7 @@
 { stdenv
 , autoconf
 , automake
+, elfutils
 , fetchFromGitHub
 , fetchTritonPatch
 , libtool
@@ -44,10 +45,12 @@ stdenv.mkDerivation rec {
     version = source.fetchzipVersion;
   };
 
-  buildInputs = [
+  nativeBuildInputs = [
     autoconf
     automake
     libtool
+  ] ++ optionals buildKernel [
+    elfutils
   ];
 
   patches = [

@@ -1,4 +1,5 @@
 { stdenv
+, elfutils
 , fetchurl
 
 , kernel
@@ -39,12 +40,15 @@ stdenv.mkDerivation rec {
     inherit urls md5Confirm sha256;
   };
 
+  nativeBuildInputs = optionals (kernel != null) [
+    elfutils
+  ];
+
   preBuild = optionalString (kernel != null) ''
     ar vx SDEBS/*
     tar xf data.tar.gz
 
     cd usr/src/*
-    cat Makefile
 
     makeFlagsArray+=("INSTALL_MOD_PATH=$out")
   '';

@@ -68,6 +68,14 @@ defaultCheckOutputDir() {
         fileIsValid=1
       fi
       ;;
+    "$prefix"/include|"$prefix"/include/*)
+      if [ "$output" = "dev" ]; then
+        fileIsValid=1
+      fi
+      if [ "$output" = "out" ] && ! hasOutput 'dev'; then
+        fileIsValid=1
+      fi
+      ;;
     "$prefix"/libexec|"$prefix"/libexec/*)
       if [ "$output" = "bin" ]; then
         fileIsValid=1

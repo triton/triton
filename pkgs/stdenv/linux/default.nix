@@ -56,7 +56,7 @@ let
 
   bootstrap-bash = "${bootstrap-tools}/bin/bash";
 
-  bootstrap-drv = { name, bin ? null, setupHook ? null, extraCmd ? "" }: derivation {
+  bootstrap-drv = { name, setupHook ? null, extraCmd ? "" }: derivation {
     name = "bootstrap-drv-${name}";
 
     builder = bootstrap-bash;
@@ -67,7 +67,6 @@ let
     ];
 
     inherit
-      bin
       extraCmd
       setupHook;
 
@@ -92,6 +91,7 @@ let
       link 'head'
       link 'install'
       link 'ln'
+      link 'ls'
       link 'mkdir'
       link 'nproc' || true
       link 'readlink'
@@ -116,6 +116,30 @@ let
       link 'g++'
       link 'ld'
       link 'strip'
+
+      source '${../../all-pkgs/c/cc-wrapper/lib.sh}'
+
+      shopt -s nullglob
+      deepLink "$bootstrap"/lib/gcc/*/* "$out"
+      deepLink "$bootstrap"/libexec/gcc/*/* "$out"
+      ln -sv "${bootstrap-tools.glibc}"/include "$out"
+      for file in "$bootstrap"/lib/{lib{c,gcc_s}.so*,crt*.o,ld*.so}; do
+        ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
+      done
+
+      mkdir -p "$out"/nix-support
+      echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f "$out"/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export CC='$out/bin/gcc'" >>"$out"/nix-support/setup-hook
+      source "$out"/nix-support/setup-hook
+
+      # Test that our compiler works as expected
+      echo "#include <stdlib.h>" >main.c
+      echo "int main() { return EXIT_SUCCESS; }" >>main.c
+      "$CC" $CFLAGS -v -o main main.c $LDFLAGS
+      ls -la main
+      ./main
     '';
   };
 
@@ -179,9 +203,9 @@ let
 
         bison = bootstrap-drv {
           name = "bison";
-          bin = "bison";
           setupHook = pkgs.bison.setupHook;
           extraCmd = ''
+            link 'bison'
             mkdir -p "$out"/share
             ln -sv "${bootstrap-tools}"/share/bison "$out"/share
           '';
@@ -189,26 +213,34 @@ let
 
         gnumake = bootstrap-drv {
           name = "gnumake";
-          bin = "make";
           setupHook = pkgs.gnumake.setupHook;
+          extraCmd = ''
+            link 'make'
+          '';
         };
 
         gnupatch = bootstrap-drv {
           name = "gnupatch";
-          bin = "patch";
           setupHook = pkgs.gnupatch.setupHook;
+          extraCmd = ''
+            link 'patch'
+          '';
         };
 
         gnutar = bootstrap-drv {
           name = "gnutar";
-          bin = "tar";
           setupHook = pkgs.gnutar_1-30.setupHook;
+          extraCmd = ''
+            link 'tar'
+          '';
         };
 
         xz = bootstrap-drv {
           name = "xz";
-          bin = "xz";
           setupHook = pkgs.xz.setupHook;
+          extraCmd = ''
+            link 'xz'
+          '';
         };
 
         gcc_7 = cc-wrapper {

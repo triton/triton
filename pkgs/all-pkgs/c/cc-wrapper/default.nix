@@ -18,6 +18,7 @@ in
 
 let
   inherit (lib)
+    any
     concatStringsSep
     head
     optionalString
@@ -43,9 +44,10 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     gnumake
     gnutar
+    hostCc
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
     cc
   ] ++ wrappedPackages;
 
@@ -59,26 +61,35 @@ stdenv.mkDerivation {
   TARGET_LINKER = "binutils";
   TARGET_ARCH = optionalString (hostCc != null) outputTuple;
 
-  CFLAGS = optionals (hostCc == null) [
-    "-idirafter" "${libc.dev or libc}/include"
-  ];
-
-  preConfigure = ''
-    type -P cc && export CC="cc" || true
-    type -P gcc && export CC="gcc" || true
-    type -P clang && export CC="clang" || true
-
-    export CFLAGS="$CFLAGS -idirafter $(echo ${cc.dev or cc}/lib/gcc/*/*/include-fixed)"
-  '';
-
   configureAction = ''
     pushd "$srcRoot" >/dev/null
     PREFIX="$out" ./configure
     popd >/dev/null
   '';
 
+  postInstall = ''
+    source '${./lib.sh}'
+    deepLink '${cc.dev or cc}'/lib/gcc/*/* "$out"
+    deepLink '${cc.bin or cc}'/libexec/gcc/*/* "$out"
+    ln -sv '${libc.dev or libc}'/include "$out"
+  '';
+
+  doInstallCheck = true;
+
+  installCheckAction = ''
+    # Test that our compiler works as expected
+    echo "#include <stdlib.h>" >main.c
+    echo "int main() { return EXIT_SUCCESS; }" >>main.c
+    env -i "$out"/bin/gcc $CFLAGS -v -o main main.c $LDFLAGS
+    ls -la main
+    ./main
+  '';
+
   passthru = {
-    inherit platformTuples;
+    inherit
+      cc
+      libc
+      platformTuples;
   };
 
   meta = with lib; {

@@ -20,10 +20,6 @@ if [ -n "$setupHook" ]; then
   sed "s,@out@,$out," <"$setupHook" >"$out"/nix-support/setup-hook
 fi
 
-if [ -n "$bin" ]; then
-  link "$bin"
-fi
-
 if [ -n "$extraCmd" ]; then
   eval "$extraCmd"
 fi

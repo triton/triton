@@ -19,6 +19,7 @@ in
 let
   inherit (lib)
     any
+    concatMapStrings
     concatStringsSep
     head
     optionalString
@@ -35,6 +36,12 @@ let
   };
 
   outputTuple = platformTuples."${outputSystem}";
+
+  buildInputs = [
+    cc
+  ] ++ wrappedPackages;
+
+  binDirList = map (n: "${n.bin or n}/bin") buildInputs;
 in
 stdenv.mkDerivation {
   name = "cc-wrapper";
@@ -47,16 +54,14 @@ stdenv.mkDerivation {
     hostCc
   ];
 
-  buildInputs = [
-    cc
-  ] ++ wrappedPackages;
+  inherit buildInputs;
 
   postPatch = ''
     echo "Patching /usr/bin/env shebangs"
     find "$srcRoot" -name \*.sh -or -name configure -type f | xargs sed -i "1i#! $bash"
   '';
 
-  TARGET_PATH = concatStringsSep ":" (map (n: "${n}/bin") ([ cc ] ++ wrappedPackages));
+  TARGET_PATH = concatStringsSep ":" binDirList;
   TARGET_COMPILER = "gcc";
   TARGET_LINKER = "binutils";
   TARGET_ARCH = optionalString (hostCc != null) outputTuple;
@@ -72,6 +77,13 @@ stdenv.mkDerivation {
     deepLink '${cc.dev or cc}'/lib/gcc/*/* "$out"
     deepLink '${cc.bin or cc}'/libexec/gcc/*/* "$out"
     ln -sv '${libc.dev or libc}'/include "$out"
+
+    for file in ${concatMapStrings (n: "'${n}'/* ") binDirList}; do
+      if [ -e "$out/bin/$(basename "$file")" ]; then
+        continue
+      fi
+      ln -sv "$file" "$out"/bin
+    done
   '';
 
   doInstallCheck = true;

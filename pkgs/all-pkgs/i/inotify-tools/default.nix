@@ -7,11 +7,11 @@ stdenv.mkDerivation rec {
   name = "inotify-tools-2014-11-06";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 5;
     owner = "rvoicilas";
     repo = "inotify-tools";
     rev = "1df9af4d6cd0f4af4b1b19254bcf056aed4ae395";
-    sha256 = "d82dfd75c9403559755555adeca3f742833e7a318956bdf4994ff0ca1f766230";
+    sha256 = "f26ea3b1b95f6ab428ee225455421c1a72532dd30d0c9845ab793624d9a88235";
   };
 
   nativeBuildInputs = [

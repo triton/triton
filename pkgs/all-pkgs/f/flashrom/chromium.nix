@@ -30,17 +30,14 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
-  postPatch = ''
-    grep -q 'CFLAGS += -Werror' Makefile
-    sed -i '/CFLAGS += -Werror/d' Makefile
-  '';
+  makeFlags = [
+    "CONFIG_LINUX_I2C=y"
+    "CONFIG_LINUX_MTD=y"
+    "WARNERROR=no"
+  ];
 
   preBuild = ''
-    makeFlagsArray+=(
-      "CONFIG_LINUX_I2C=y"
-      "CONFIG_LINUX_MTD=y"
-      "PREFIX=$out"
-    )
+    makeFlagsArray+=("PREFIX=$out")
   '';
 
   meta = with stdenv.lib; {

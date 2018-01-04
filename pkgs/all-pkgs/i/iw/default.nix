@@ -8,21 +8,21 @@ let
   baseUrl = "mirror://kernel/software/network/iw";
 in
 stdenv.mkDerivation rec {
-  name = "iw-4.9";
+  name = "iw-4.14";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "324cc805fad52cba2c16b9ab569906889fb645cc962aac4cfda1db85d2de97ce";
+    sha256 = "f01671c0074bfdec082a884057edba1b9efd35c89eda554638496f03b769ad89";
   };
 
   buildInputs = [
     libnl
   ];
 
-  makeFlags = [
-    "PREFIX=\${out}"
-  ];
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
 
   passthru = {
     srcVerification = fetchurl {

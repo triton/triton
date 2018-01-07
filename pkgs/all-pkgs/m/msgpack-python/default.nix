@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.4.8";
+  version = "0.5.0";
 in
 buildPythonPackage {
   name = "msgpack-python-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "msgpack-python";
     inherit version;
-    sha256 = "1a2b19df0f03519ec7f19f826afb935b202d8979b0856c6fb3dc28955799f886";
+    sha256 = "cb31b95ed684e9b2bee184ea58bcbb27ba008123cf8c62a4bb8c281af79ecd89";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

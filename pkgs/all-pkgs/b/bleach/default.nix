@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.1.1";
+  version = "2.1.2";
 in
 buildPythonPackage {
   name = "bleach-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "bleach";
     inherit version;
-    sha256 = "760a9368002180fb8a0f4ea48dc6275378e6f311c39d0236d7b904fca1f5ea0d";
+    sha256 = "38fc8cbebea4e787d8db55d6f324820c7f74362b70db9142c1ac7920452d1a19";
   };
 
   propagatedBuildInputs = [

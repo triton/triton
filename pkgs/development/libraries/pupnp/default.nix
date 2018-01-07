@@ -4,14 +4,14 @@
 }:
 
 let
-  version = "1.6.22";
+  version = "1.6.24";
 in
 stdenv.mkDerivation rec {
   name = "libupnp-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/pupnp/pupnp/libUPnP%20${version}/${name}.tar.bz2";
-    sha256 = "0bdfacb7fa8d99b78343b550800ff193264f92c66ef67852f87f042fd1a1ebbc";
+    sha256 = "7d83d79af3bb4062e5c3a58bf2e90d2da5b8b99e2b2d57c23b5b6f766288cf96";
   };
 
   # Fortify Source breaks compilation

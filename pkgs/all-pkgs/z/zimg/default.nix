@@ -15,17 +15,17 @@ let
     optionalString
     platforms;
 
-  version = "2017-12-14";
+  version = "2017-12-20";
 in
 stdenv.mkDerivation rec {
   name = "zimg-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "sekrit-twc";
     repo = "zimg";
-    rev = "f57888977ee68598110f6c4c8964b98af53d3461";
-    sha256 = "5cfe8b5f4cd57f422c4f7245b3247e7d3d5a2d0e58c608aec8b7cd5b2773009f";
+    rev = "8e87f5a4b88e16ccafb2e7ade8ef454aeac19094";
+    sha256 = "4845bbecbd6ba3704b612c4bce0c1d4bfc7ff5acd36691a30fd5463e5f56b9c1";
   };
 
   nativeBuildInputs = [

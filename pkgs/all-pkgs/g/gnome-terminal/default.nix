@@ -69,6 +69,11 @@ stdenv.mkDerivation rec {
     libx11
   ];
 
+  postPatch = /* Remove pointless "Copy as HTML" context option */ ''
+    sed -i src/terminal.xml \
+      -e '/CopyHTML"/d'
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"

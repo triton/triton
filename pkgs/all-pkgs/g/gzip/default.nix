@@ -7,7 +7,7 @@ let
     "mirror://gnu/gzip/gzip-${version}.tar.xz"
   ];
 
-  version = "1.8";
+  version = "1.9";
 in
 stdenv.mkDerivation rec {
   name = "gzip-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "ff1767ec444f71e5daf8972f6f8bf68cfcca1d2f76c248eb18e8741fc91dbbd3";
+    sha256 = "ae506144fc198bd8f81f1f4ad19ce63d5a2d65e42333255977cf1dcf1479089a";
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
@@ -27,10 +27,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.8";
+      urls = tarballUrls "1.9";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
-      outputHash = "ff1767ec444f71e5daf8972f6f8bf68cfcca1d2f76c248eb18e8741fc91dbbd3";
+      outputHash = "ae506144fc198bd8f81f1f4ad19ce63d5a2d65e42333255977cf1dcf1479089a";
       inherit (src) outputHashAlgo;
     };
   };

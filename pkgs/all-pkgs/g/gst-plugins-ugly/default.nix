@@ -17,7 +17,7 @@
 , libmpeg2
 , mpg123
 , orc
-, x264
+#, x264
 
 , channel
 }:
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     libmpeg2
     mpg123
     orc
-    x264
+    #x264  # FIXME: re-enable once compatible with api version 153+
   ];
 
   mesonFlags = [

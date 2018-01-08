@@ -36,7 +36,7 @@
 , ffmpegProgram ? true
 , ffplayProgram ? true
 , ffprobeProgram ? true
-, ffserverProgram ? true
+, ffserverProgram ? false  # DEPRECATED
 , qtFaststartProgram ? true
 /*
  *  Library options
@@ -45,7 +45,6 @@
 , avdeviceLibrary ? true
 , avfilterLibrary ? true
 , avformatLibrary ? true
-, avresampleLibrary ? false  # Libav api compatibility library
 , avutilLibrary ? true
 , postprocLibrary ? true
 , swresampleLibrary ? true
@@ -194,9 +193,9 @@ let
     };
     "9.9" = { # Git
       fetchzipversion = 5;
-      version = "2017.12.15";
-      rev = "3c6dc270355f27645cf931fae1ed2dc1405507f8";
-      sha256 = "7583460004a078dfe8e3590f4e50be250640c6ef31738516cf67a5db23454c41";
+      version = "2018.01.08";
+      rev = "ed03fad2cc523480a7ec385fb3e9bf876769acce";
+      sha256 = "722809dfde1e91ce0e49577dd0c1ac2046eb567bc22a8c8d1bd8b46766b27939";
     };
   };
   source = sources."${channel}";
@@ -264,7 +263,7 @@ assert ffplayProgram ->
 assert ffprobeProgram ->
   avcodecLibrary
   && avformatLibrary;
-assert ffserverProgram -> avformatLibrary;
+assert ffserverProgram -> avformatLibrary;  # DEPRECATED
 /*
  *  Library dependencies
  */
@@ -276,7 +275,6 @@ assert avdeviceLibrary ->
 assert avformatLibrary ->
   avcodecLibrary
   && avutilLibrary;
-assert avresampleLibrary -> avutilLibrary;
 assert postprocLibrary -> avutilLibrary;
 assert swresampleLibrary -> soxr != null;
 assert swscaleLibrary -> avutilLibrary;
@@ -457,7 +455,7 @@ stdenv.mkDerivation rec {
     "--${boolEn ffmpegProgram}-ffmpeg"
     "--${boolEn ffplayProgram}-ffplay"
     "--${boolEn ffprobeProgram}-ffprobe"
-    "--${boolEn ffserverProgram}-ffserver"
+    (deprfflag "--${boolEn ffserverProgram}-ffserver" null "3.4")
     /*
      *  Library flags
      */
@@ -465,7 +463,7 @@ stdenv.mkDerivation rec {
     "--${boolEn avdeviceLibrary}-avdevice"
     "--${boolEn avfilterLibrary}-avfilter"
     "--${boolEn avformatLibrary}-avformat"
-    "--${boolEn avresampleLibrary}-avresample"
+    "--disable-avresample"
     "--${boolEn avutilLibrary}-avutil"
     "--${boolEn (postprocLibrary && gplLicensing)}-postproc"
     "--${boolEn swresampleLibrary}-swresample"
@@ -594,6 +592,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (tesseract != null)}-libtesseract"
     /**/"--disable-libtesseract"
     "--${boolEn (libtheora != null)}-libtheora"
+    /**/"--disable-libtls"  # libressl
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"

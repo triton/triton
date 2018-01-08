@@ -202,6 +202,9 @@ let
   source = sources."${channel}";
 in
 
+# FIXME: reminder to fix this
+assert source.version == "3.4.2" -> throw "Remove x264 hack";
+
 /*
  *  Licensing dependencies
  */
@@ -603,7 +606,13 @@ stdenv.mkDerivation rec {
     "--${boolEn (libvpx != null)}-libvpx"
     "--${boolEn (wavpack != null)}-libwavpack"
     "--${boolEn (libwebp != null)}-libwebp"
-    "--${boolEn (x264 != null)}-libx264"
+    # FIXME: remove hack for 3.4.2+
+    (
+      if compareVersions "3.4.2" source.version != 1 then
+        "--${boolEn (x264 != null)}-libx264"
+      else
+        "--disable-libx264"
+    )
     "--${boolEn (x265 != null)}-libx265"
     "--${boolEn (xavs != null)}-libxavs"
     #"--${boolEn (libxcb != null)}-libxcb"

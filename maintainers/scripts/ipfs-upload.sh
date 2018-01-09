@@ -78,12 +78,12 @@ fetch() {
   fi
 }
 
-upload_fail() {
+upload_curl_fail() {
   echo "$gw failed" >&3
   write_status "$gw failed to upload $url"
 }
 
-upload() {
+upload_curl() {
   local n="$1"
   local url="$2"
 
@@ -91,16 +91,16 @@ upload() {
   for gw in "${RW_GATEWAYS[@]}"; do
     local output
     if ! output="$(curl -svL "$gw/ipfs/" -X POST --data-binary "@$TMPDIR/$n" 2>&1)"; then
-      upload_fail
+      upload_curl_fail
       continue
     fi
     local mh
     if ! mh="$(echo "$output" | grep '^< ipfs-hash: ' | tr -d '\r' | awk '{print $3}')"; then
-      upload_fail
+      upload_curl_fail
       continue
     fi
     if [ -z "$mh" ]; then
-      upload_fail
+      upload_curl_fail
       continue
     fi
 
@@ -110,6 +110,50 @@ upload() {
   done
   return 1
 }
+
+upload_ipfs() {
+  local n="$1"
+  local url="$2"
+
+  echo "BUTTTS"
+
+  local output
+  if ! output="$(ipfs add "$TMPDIR/$n" 2>/dev/null)"; then
+    echo "'ipfs add' failed" >&2
+    return 1
+  fi
+
+  local mh
+  if ! mh="$(echo "$output" | grep '^added' | awk '{print $2}')"; then
+    echo "'ipfs add' failed" >&2
+    return 1
+  fi
+
+  write_hash "$n" "$mh"
+}
+
+upload=''
+if [ -z "$upload" ]; then
+  if can_use_ipfs; then
+    upload='upload_ipfs'
+    echo "Uploading with local ipfs" >&2
+  else
+    echo "Cannot use local ipfs, falling back to curl method" >&2
+  fi
+fi
+if [ -z "$upload" ]; then
+  if [ "${#RW_GATEWAYS[@]}" -gt "0" ]; then
+    upload='upload_curl'
+    echo "Uploading with curl method" >&2
+  else
+    echo "No RW_GATEWAYS defined" >&2
+    echo "Not using curl uploader" >&2
+  fi
+fi
+if [ -z "$upload" ]; then
+  echo "Faild to pick an uploader" >&2
+  exit 1
+fi
 
 verify() {
   local n="$1"
@@ -136,7 +180,7 @@ for url in "${URLS[@]}"; do
   f="Fetch $url"
   ARGS+=("-" "$f" fetch "$n" "$url")
   u="Upload $url"
-  ARGS+=("-" "$u" upload "$n" "$url")
+  ARGS+=("-" "$u" "$upload" "$n" "$url")
   ARGS+=("--require" "$f" "--before" "$u")
   for gw in "${RO_GATEWAYS[@]}"; do
     v="Verify $url $gw"

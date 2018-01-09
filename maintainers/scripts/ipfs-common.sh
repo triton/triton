@@ -1,6 +1,6 @@
 RW_GATEWAYS=(
-  "https://ipfs.works"
-  "https://ipfs.work"
+  #"https://ipfs.works"
+  #"https://ipfs.work"
 )
 RO_GATEWAYS=(
   "https://ipfs.io"

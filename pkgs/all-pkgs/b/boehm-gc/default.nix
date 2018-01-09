@@ -5,15 +5,16 @@
 }:
 
 let
-  version = "7.6.0";
+  version = "7.6.2";
 in
 stdenv.mkDerivation rec {
   name = "boehm-gc-${version}";
 
   src = fetchurl {
-    url = "http://www.hboehm.info/gc/gc_source/gc-${version}.tar.gz";
-    multihash = "QmV6pGGQW7HvkyAXnE8D8SEwp2B9u75PefYjHBUgYJiU5Z";
-    sha256 = "a14a28b1129be90e55cd6f71127ffc5594e1091d5d54131528c24cd0c03b7d90";
+    url = "https://github.com/ivmai/bdwgc/releases/download/v${version}/gc-${version}.tar.gz";
+    # We need the multihash because they delete old releases
+    multihash = "QmQk6ZAat55XZWmDAekm9yNazs7unB68ocjWUA7VwKqHzE";
+    sha256 = "bd112005563d787675163b5afff02c364fc8deb13a99c03f4e80fdf6608ad41e";
   };
 
   buildInputs = [

@@ -5,20 +5,7 @@ set -o pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 source ./ipfs-common.sh
 
-if ! ipfs >/dev/null 2>&1; then
-  echo "Missing ipfs command"
-  exit 1
-fi
-
-if ! ipfs swarm peers >/dev/null 2>&1; then
-  echo "Ipfs daemon is not running"
-  exit 1
-fi
-
-if ipfs pin ls -t direct | grep -q 'api version mismatch'; then
-  echo "Got ipfs version mismatch" >&2
-  exit 1
-fi
+can_use_ipfs
 
 cleanup() {
   CODE=$?

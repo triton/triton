@@ -592,7 +592,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (tesseract != null)}-libtesseract"
     /**/"--disable-libtesseract"
     "--${boolEn (libtheora != null)}-libtheora"
-    /**/"--disable-libtls"  # libressl
+    /**/(fflag "--disable-libtls" "3.5")  # libressl
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"

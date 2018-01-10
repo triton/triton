@@ -18,13 +18,17 @@
 , inputproto
 , libx11
 , libxcomposite
+, libxcursor
+, libxdamage
 , libxext
 , libxfixes
-, libxdamage
+, libxi
+, libxinerama
 , libxkbcommon
+, libxrandr
+, libxrender
 , pango
 , shared-mime-info
-, xorg
 }:
 
 let
@@ -68,17 +72,17 @@ stdenv.mkDerivation rec {
     inputproto
     libx11
     libxcomposite
+    libxcursor
+    libxdamage
     libxext
     libxfixes
-    libxdamage
+    libxi
+    libxinerama
     libxkbcommon
+    libxrandr
+    libxrender
     pango
     shared-mime-info
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
   ];
 
   autoreconfPhase = ''
@@ -95,9 +99,9 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--${boolEn (xorg.libXext != null)}-shm"
+    "--${boolEn (libxext != null)}-shm"
     "--${boolEn (libxkbcommon != null)}-xkb"
-    "--${boolEn (xorg.libXinerama != null)}-xinerama"
+    "--${boolEn (libxinerama != null)}-xinerama"
     "--enable-rebuilds"
     "--enable-visibility"
     "--enable-explicit-deps"
@@ -112,7 +116,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-man"
-    "--${boolWt (xorg.libXi != null)}-xinput"
+    "--${boolWt (libxi != null)}-xinput"
     "--${boolWt (libx11 != null)}-gdktarget${
       boolString (libx11 != null) "=x11" ""}"
     #"--with-gdktarget=directfb"

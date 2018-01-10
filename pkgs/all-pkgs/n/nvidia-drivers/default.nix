@@ -79,10 +79,10 @@ let
       maxXorgVersion = "1.19";
     };
     beta = {
-      versionMajor = "384";
-      versionMinor = "47";
-      sha256i686   = "433917c5feca240abd936eecfbbd020b3773afead083802afee3b56d8a5bc256";
-      sha256x86_64 = "5bcdcda592c5463bf9c19918253ae07c37169a2c75cbedcd868d1206c2f7f286";
+      versionMajor = "390";
+      versionMinor = "12";
+      sha256i686   = "bf534c7ddeb24fed49af7285e31ae8a58dd52220870796b28078ba1f773f76da";
+      sha256x86_64 = "68c744abc7f42eaa9e640d90ecd3c7691a74b84584b83b776488ef1916f8eb43";
       maxLinuxVersion = "4.12";
       maxXorgVersion = "1.19";
     };

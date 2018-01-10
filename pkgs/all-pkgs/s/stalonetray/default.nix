@@ -2,7 +2,12 @@
 , fetchurl
 , lib
 
+, libice
+, libsm
+, libx11
+#, libxpm
 , xorg
+, xproto
 }:
 
 stdenv.mkDerivation rec {
@@ -15,11 +20,11 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
+    libice
+    libsm
+    libx11
     xorg.libXpm
-    xorg.xproto
+    xproto
   ];
 
   configureFlags = [

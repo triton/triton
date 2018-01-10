@@ -1,4 +1,5 @@
 { stdenv
+, elfutils  # FIXME: are any utilities actually used?
 , fetchTritonPatch
 , fetchurl
 , lib
@@ -62,10 +63,10 @@ let
       maxXorgVersion = "1.19";
     };
     long-lived = {
-      versionMajor = "387";
-      versionMinor = "22";
-      sha256i686   = "39544f0a677838a4fb09668d48b91eadd6ba5babecb0aa0cef41c303b0a4649b";
-      sha256x86_64 = "2056b386f619ed096ee3c2267c495c6b00d1a2a4c933f0635befcf4e69c3856c";
+      versionMajor = "384";
+      versionMinor = "111";
+      sha256i686   = "89fff5466abd0ad212bedd9587cc86d617b70ad23aaebad424e0ae63e1f1948f";
+      sha256x86_64 = "56b8c993c697aa37fe9ab1b6764304b82c86d5c745cd98dd8492be27f596ead7";
       maxLinuxVersion = "4.14";
       maxXorgVersion = "1.19";
     };
@@ -143,6 +144,7 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
+    elfutils
     makeWrapper
     nukeReferences
   ];

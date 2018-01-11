@@ -58,10 +58,10 @@ let
 
   sources = {
     "git" = {
-      fetchzipversion = 3;
-      version = "2017-11-26";
-      rev = "48f3eb94ee2c7b47c616c3ce846ed16463c52ce8";
-      sha256 = "ee1e49660f1616aa6f163c88ff08132c886ebb6e29a9743d235eee161773816c";
+      fetchzipversion = 5;
+      version = "2018-01-08";
+      rev = "28a8e64569aeba0eb06969540103aa1c4387a519";
+      sha256 = "b46f2fe2e4edfe6962f3cb288209b90987f9acd07b1182ac61a88697a5d2875e";
     };
   };
   source = sources."${channel}";

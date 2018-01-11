@@ -129,6 +129,7 @@ upload_ipfs() {
     return 1
   fi
 
+  echo "$mh" >&3
   write_hash "$n" "$mh"
 }
 

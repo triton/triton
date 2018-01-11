@@ -162,7 +162,8 @@ in
       conflicts = [ "ntpd.service" "systemd-timesyncd.service" ];
 
       preStart = ''
-        mkdir -m 0755 -p ${stateDir}
+        mkdir -m 0755 -p "${stateDir}"
+        chown chrony "${stateDir}"
       '';
 
       serviceConfig = {

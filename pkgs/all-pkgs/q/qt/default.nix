@@ -48,7 +48,7 @@
 , mariadb-connector-c
 , mtdev
 , opengl-dummy
-, openssl_1-0-2
+, openssl
 , pciutils
 , pcre2
 , postgresql
@@ -70,8 +70,8 @@
 }:
 
 let
-  channel = "5.9";
-  version = "${channel}.3";
+  channel = "5.10";
+  version = "${channel}.0";
 
   inherit (lib)
     optionals;
@@ -81,11 +81,11 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://download.qt.io/official_releases/qt/${channel}/${version}"
-      + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
+      + "/single/qt-everywhere-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "eae2435509493a2084405714e0a9bdf9";
-    sha1Confirm = "c0ab983275e9dd7229193930ee53e118c30d56b3";
-    sha256 = "57acd8f03f830c2d7dc29fbe28aaa96781b2b9bdddce94196e6761a0f88c6046";
+    md5Confirm = "c5e275ab0ed7ee61d0f4b82cd471770d";
+    sha1Confirm = "6b7d291a7f3a95161e681e38297df6fec0275add";
+    sha256 = "936d4cf5d577298f4f9fdb220e85b008ae321554a5fcd38072dc327a7296230e";
   };
 
   nativeBuildInputs = [
@@ -129,7 +129,7 @@ stdenv.mkDerivation rec {
     mariadb-connector-c
     mtdev
     opengl-dummy
-    openssl_1-0-2
+    openssl
     pcre2
     postgresql
     pulseaudio_lib

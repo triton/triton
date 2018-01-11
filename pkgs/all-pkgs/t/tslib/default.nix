@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "1.14";
+  version = "1.15";
 in
 stdenv.mkDerivation rec {
   name = "tslib-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/kergoth/tslib/releases/download/${version}/"
       + "${name}.tar.xz";
     hashOutput = false;
-    sha256 = "56ce7adfb896442001938470a7f946cc029bfb03ed74e7f62db92d9c9ba83df4";
+    sha256 = "7ce48807cab655076d71a1ceef3ed0ab8a25df98074981d4a8fd1477ee5f710c";
   };
 
   passthru = {

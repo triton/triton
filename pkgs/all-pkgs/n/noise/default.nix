@@ -47,17 +47,17 @@ let
     makeSearchPath;
 
   channel = "0.4";
-  version = "${channel}.1";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "noise-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "elementary";
     repo = "music";
     rev = "${version}";
-    sha256 = "822ff3fcebc180c52cad1509c222f1a541d343bf33dff0445ae546c6b58dd8b0";
+    sha256 = "86b83925906836446195f4c2b9b8f4cb6c9115dc06262694b0b0a843d92806e9";
   };
 
   nativeBuildInputs = [

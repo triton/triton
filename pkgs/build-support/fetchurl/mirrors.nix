@@ -259,8 +259,7 @@ rec {
 
   xorg = [
     https://www.x.org/releases
-    http://mirror.us.leaseweb.net/xorg
-    http://xorg.freedesktop.org/releases
-    http://ftp.x.org/pub
+    http://xorg.mirrors.pair.com
+    http://mirror.csclub.uwaterloo.ca/x.org/
   ];
 }

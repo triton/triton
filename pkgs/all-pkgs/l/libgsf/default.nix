@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , perl
 
 , bzip2
@@ -17,12 +18,18 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.14" = {
+      version = "1.14.42";
+      sha256 = "29fffb87b278b3fb1b8ae9138c3b4529c1fce664f1f94297c146a8563df80dc2";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libgsf-${source.version}";
@@ -87,7 +94,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNOME's Structured File Library";
     homepage = https://www.gnome.org/projects/libgsf;
     license = with licenses; [

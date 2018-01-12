@@ -260,6 +260,6 @@ rec {
   xorg = [
     https://www.x.org/releases
     http://xorg.mirrors.pair.com
-    http://mirror.csclub.uwaterloo.ca/x.org/
+    http://mirror.csclub.uwaterloo.ca/x.org
   ];
 }

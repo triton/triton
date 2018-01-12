@@ -2,6 +2,7 @@
 , fetchurl
 , intltool
 , itstool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -13,6 +14,7 @@
 , gsettings-desktop-schemas
 , gtk
 , gtksourceview
+, libmpc
 , librsvg
 , libsoup
 , libxml2
@@ -23,7 +25,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "62215b37fcd73a6bbb106ebd0f25051c81ff0cf6ad84fd4a3ea176bceb5863c7";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-calculator-${source.version}";
@@ -53,6 +61,7 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     gtksourceview
+    libmpc
     librsvg
     libsoup
     libxml2
@@ -89,7 +98,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A calculator application for GNOME";
     homepage = https://wiki.gnome.org/Apps/Calculator;
     license = licenses.gpl2;

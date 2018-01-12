@@ -1503,8 +1503,8 @@ gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
 };
 gnome-bluetooth = callPackageAlias "gnome-bluetooth_3-20" { };
 
-gnome-calculator_3-22 = callPackage ../all-pkgs/g/gnome-calculator {
-  channel = "3.22";
+gnome-calculator_3-26 = callPackage ../all-pkgs/g/gnome-calculator {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
@@ -1512,7 +1512,7 @@ gnome-calculator_3-22 = callPackage ../all-pkgs/g/gnome-calculator {
   gtksourceview = pkgs.gtksourceview_3-24;
   libsoup = pkgs.libsoup_2-60;
 };
-gnome-calculator = callPackageAlias "gnome-calculator_3-22" { };
+gnome-calculator = callPackageAlias "gnome-calculator_3-26" { };
 
 gnome-clocks = callPackage ../all-pkgs/g/gnome-clocks { };
 

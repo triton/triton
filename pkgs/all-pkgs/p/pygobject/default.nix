@@ -33,8 +33,8 @@ let
       fetchzipversion = 2;
     };
     "3.26" = {
-      version = "3.26.0";
-      sha256 = "7411acd600c8cb6f00d2125afa23303f2104e59b83e0a4963288dbecc3b029fa";
+      version = "3.26.1";
+      sha256 = "f5577b9b9c70cabb9a60d81b855d488b767c66f867432e7fb64aa7269b04d1a9";
     };
   };
   source = sources."${channel}";

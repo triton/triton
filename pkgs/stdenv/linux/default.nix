@@ -223,7 +223,7 @@ let
         inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv lib gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
-          openssl_1-0-2 openssl c-ares curl libsigsegv pcre findutils diffutils
+          openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
           gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-2 bzip2
           gnumake gnupatch pkgconf pkgconfig patchelf mpfr;
 
@@ -303,7 +303,7 @@ let
       inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc7 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
-        openssl_1-0-2 openssl c-ares curl libsigsegv pcre findutils diffutils
+        openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
         gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-2 bzip2
         gnumake gnupatch pkgconf pkgconfig patchelf mpfr;
     };

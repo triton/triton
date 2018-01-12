@@ -29,17 +29,17 @@
 }:
 
 let
-  version = "0.25.1";
+  version = "0.26.0";
 in
 buildPythonPackage {
   name = "synapse-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";
-    sha256 = "3df597c482ef1ed418213e82a595da03355b3f36f5682132c64cfa2519b22f44";
+    sha256 = "b8d926a26aec011851d3ca33a45824ed331b6a3433e7173ef1d3875783b9a81c";
   };
 
   propagatedBuildInputs = [

@@ -1549,13 +1549,13 @@ gnome-online-accounts = callPackageAlias "gnome-online-accounts_3-22" { };
 
 gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
-gnome-screenshot_3-22 = callPackage ../all-pkgs/g/gnome-screenshot {
-  channel = "3.22";
+gnome-screenshot_3-26 = callPackage ../all-pkgs/g/gnome-screenshot {
+  channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-gnome-screenshot = callPackageAlias "gnome-screenshot_3-22" { };
+gnome-screenshot = callPackageAlias "gnome-screenshot_3-26" { };
 
 gnome-session_3-26 = callPackage ../all-pkgs/g/gnome-session {
   channel = "3.26";

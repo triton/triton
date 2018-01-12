@@ -1,26 +1,36 @@
 { stdenv
+, appstream-glib
 , fetchurl
-, intltool
-, itstool
+, gettext
 , lib
 , makeWrapper
+, meson
+, ninja
 
 , adwaita-icon-theme
 , dconf
 , gdk-pixbuf
 , glib
+, gobject-introspection
 , gsettings-desktop-schemas
 , gtk
 , libcanberra
 , libx11
 , libxext
+, libxml2
 , shared-mime-info
 
 , channel
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "1bbc11595d3822f4b92319cdf9ba49dd00f5471b6046c590847dc424a874c8bb";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-screenshot-${source.version}";
@@ -33,9 +43,11 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    intltool
-    itstool
+    appstream-glib
+    gettext
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -43,17 +55,19 @@ stdenv.mkDerivation rec {
     dconf
     gdk-pixbuf
     glib
+    gobject-introspection
     gsettings-desktop-schemas
     gtk
     libcanberra
     libx11
     libxext
+    libxml2
   ];
 
-  configureFlags = [
-    "--enable-nls"
-    "--enable-schemas-compile"
-  ];
+  postPatch = /* Disable post-install hook, already handled by setup-hooks */ ''
+    sed -i meson.build \
+      -e '/postinstall.py/d'
+  '';
 
   preFixup = ''
     wrapProgram $out/bin/gnome-screenshot \

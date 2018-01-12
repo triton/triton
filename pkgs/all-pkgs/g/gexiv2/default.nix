@@ -16,7 +16,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "0.10" = {
+      version = "0.10.7";
+      sha256 = "8bbd6dce0d558ac572385d8d726c4ba5caba1da411977806ade7f0e7bf08e3b8";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gexiv2-${source.version}";

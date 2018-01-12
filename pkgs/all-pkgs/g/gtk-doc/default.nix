@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , which
 
 , perl
@@ -15,13 +16,15 @@
 , itstool
 }:
 
+let
+  version = "1.26";
+in
 stdenv.mkDerivation rec {
   name = "gtk-doc-${version}";
-  version = "1.25";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk-doc/${version}/${name}.tar.xz";
-    sha256 = "1ea46ed400e6501f975acaafea31479cea8f32f911dca4dff036f59e6464fd42";
+    sha256 = "bff3f44467b1d39775e94fad545f050faa7e8d68dc6a31aef5024ba3c2d7f2b7";
   };
 
   preConfigure =
@@ -61,7 +64,19 @@ stdenv.mkDerivation rec {
     itstool
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gtk-doc/${version}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Tools for documentation embedded in GTK+/GNOME source code";
     homepage = http://www.gtk.org/gtk-doc;
     license = licenses.gpl2;

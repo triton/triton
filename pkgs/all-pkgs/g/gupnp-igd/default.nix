@@ -16,14 +16,15 @@
 
 let
   channel = "0.2";
-  version = "${channel}.4";
+  version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
   name = "gupnp-igd-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp-igd/${channel}/${name}.tar.xz";
-    sha256 = "38c4a6d7718d17eac17df95a3a8c337677eda77e58978129ad3182d769c38e44";
+    hashOutput = false;
+    sha256 = "8b4a1aa38bacbcac2c1755153147ead7ee9af7d4d1f544b6577cfc35e10e3b20";
   };
 
   nativeBuildInputs = [
@@ -56,9 +57,21 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-introspection"
     # TODO: python support
-    #(enFlag "python" (python != null) null)
+    #"--${boolEn (python != null)}-python"
     "--disable-python"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gupnp-igd/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "";

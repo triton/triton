@@ -1509,7 +1509,7 @@ gnome-calculator_3-22 = callPackage ../all-pkgs/g/gnome-calculator {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  gtksourceview = pkgs.gtksourceview_3-22;
+  gtksourceview = pkgs.gtksourceview_3-24;
   libsoup = pkgs.libsoup_2-60;
 };
 gnome-calculator = callPackageAlias "gnome-calculator_3-22" { };
@@ -1853,13 +1853,13 @@ gtkmm_3-22 = callPackage ../all-pkgs/g/gtkmm {
 };
 gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
 
-gtksourceview_3-22 = callPackage ../all-pkgs/g/gtksourceview {
-  channel = "3.22";
+gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
+  channel = "3.24";
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   vala = pkgs.vala_0-38;
 };
-gtksourceview = callPackageAlias "gtksourceview_3-22" { };
+gtksourceview = callPackageAlias "gtksourceview_3-24" { };
 
 gtkspell_2 = callPackage ../all-pkgs/g/gtkspell/2.x.nix { };
 gtkspell_3 = callPackage ../all-pkgs/g/gtkspell/3.x.nix { };
@@ -3551,7 +3551,7 @@ sushi_3-22 = callPackage ../all-pkgs/s/sushi {
   channel = "3.21";
   atk = pkgs.atk_2-26;
   gjs = pkgs.gjs_1-46;
-  gtksourceview = pkgs.gtksourceview_3-22;
+  gtksourceview = pkgs.gtksourceview_3-24;
 };
 sushi = callPackageAlias "sushi_3-22" { };
 

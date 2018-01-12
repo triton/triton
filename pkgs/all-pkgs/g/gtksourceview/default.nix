@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , atk
 , cairo
@@ -19,10 +20,16 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.6";
+      sha256 = "7aa6bdfebcdc73a763dddeaa42f190c40835e6f8495bb9eb8f78587e2577c188";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gtksourceview-${source.version}";
@@ -64,7 +71,6 @@ stdenv.mkDerivation rec {
     "--enable-compile-warnings"
     "--enable-Werror"
     "--enable-deprecations"
-    "--enable-completion-providers"
     "--disable-glade-catalog"
     "--enable-nls"
     "--enable-rpath"
@@ -94,7 +100,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A text widget for syntax highlighting and other features";
     homepage = https://wiki.gnome.org/Projects/GtkSourceView;
     license = with licenses; [

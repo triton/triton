@@ -13,17 +13,16 @@ let
   inherit (lib)
     boolEn;
 
-  versionMajor = "0.8";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "0.8";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "rest-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/rest/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/rest/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "e7b89b200c1417073aef739e8a27ff2ab578056c27796ec74f5886a5e0dff647";
+    sha256 = "0513aad38e5d3cedd4ae3c551634e3be1b9baaa79775e53b2dba9456f15b01c9";
   };
 
   nativeBuildInputs = [
@@ -56,7 +55,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/rest/${versionMajor}/"
+      sha256Url = "https://download.gnome.org/sources/rest/${channel}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

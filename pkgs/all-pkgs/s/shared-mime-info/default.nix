@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://freedesktop.org/~hadess/${name}.tar.xz";
-    multihash = "QmeixzYsCLRNL4JyjYcdLXjmMVBiEJUQhfE1rvX8mVqAZQ";
+    multihash = "QmRuSuazf3cvmybato9Ks23rGLEpT4KXEryPPAPDCAEuyD";
     sha256 = "5c0133ec4e228e41bdf52f726d271a2d821499c2ab97afd3aa3d6cf43efcdc83";
   };
 

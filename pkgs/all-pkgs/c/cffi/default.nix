@@ -17,7 +17,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "1.11.2";
+  version = "1.11.3";
 in
 buildPythonPackage rec {
   name = "cffi-${version}";
@@ -25,7 +25,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "cffi";
     inherit version;
-    sha256 = "ab87dd91c0c4073758d07334c1e5f712ce8fe48f007b86f8238773963ee700a6";
+    sha256 = "8456abb0f892eb7d545f9ce94f4ba78d651365b1a59f9ce9ae7b5325a95dc698";
   };
 
   propagatedBuildInputs = [

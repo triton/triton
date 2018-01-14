@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, swig
 
 , openssl
 , typing
 }:
 
 let
-  version = "0.26.0";
+  version = "0.27.0";
 in
 buildPythonPackage {
   name = "M2Crypto-${version}";
@@ -15,8 +16,12 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "M2Crypto";
     inherit version;
-    sha256 = "05d94fd9b2dae2fb8e072819a795f0e05d3611b09ea185f68e1630530ec09ae8";
+    sha256 = "82317459d653322d6b37f122ce916dc91ddcd9d1b814847497ac796c4549dd68";
   };
+
+  nativeBuildInputs = [
+    swig
+  ];
 
   buildInputs = [
     openssl

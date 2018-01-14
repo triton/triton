@@ -5,15 +5,19 @@
 }:
 
 let
-  version = "1.0.3";
+  fileUrls = version: [
+    "mirror://gnu/mpc/mpc-${version}.tar.gz"
+  ];
+
+  version = "1.1.0";
 in
 stdenv.mkDerivation rec {
   name = "libmpc-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/mpc/mpc-${version}.tar.gz";
+    urls = fileUrls version;
     hashOutput = false;
-    sha256 = "1hzci2zrrd7v3g1jk35qindq05hbl0bhjcyyisq9z209xb3fqzb1";
+    sha256 = "6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e";
   };
 
   buildInputs = [
@@ -24,11 +28,13 @@ stdenv.mkDerivation rec {
   doCheck = true;
 
   passthru = {
-    srcVerification = fetchurl {
+    srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
-      inherit (src) urls outputHash outputHashAlgo;
+      urls = fileUrls "1.1.0";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "AD17 A21E F8AE D8F1 CC02  DBD9 F7D5 C9BF 765C 61E3";
+      inherit (src) outputHashAlgo;
+      outputHash = "6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e";
     };
   };
 

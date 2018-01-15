@@ -8,6 +8,7 @@
 , docbook_xml_dtd_43
 , docbook-xsl
 , gettext
+, glib
 , gnome_doc_utils
 , itstool
 , libxml2
@@ -66,6 +67,7 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedBuildInputs = [
+    glib
     python3Packages.six
   ];
 

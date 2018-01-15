@@ -3263,6 +3263,10 @@ python36 = hiPrio (callPackage ../all-pkgs/p/python {
   channel = "3.6";
   self = callPackageAlias "python36" { };
 });
+python37 = hiPrio (callPackage ../all-pkgs/p/python {
+  channel = "3.7";
+  self = callPackageAlias "python36" { };
+});
 #pypy = callPackage ../all-pkgs/p/pypy {
 #  self = callPackageAlias "pypy" { };
 #};

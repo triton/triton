@@ -1,9 +1,10 @@
 { stdenv
 , autoreconfHook
 , fetchurl
-, gtk-doc
-
 , gnome-common
+, gtk-doc
+, lib
+
 , gtk_2
 }:
 
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Image viewer widget for GTK+";
     homepage = https://projects.gnome.org/gtkimageview/;
     license = licenses.lgpl2Plus;

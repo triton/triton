@@ -2810,11 +2810,18 @@ mpv_generics = overrides: callPackage ../all-pkgs/m/mpv ({
   rubberband = null;
   samba_client = null;
 } // overrides);
-mpv = pkgs.mpv_generics { };
+mpv_0-27 = pkgs.mpv_generics {
+  channel = "0.27";
+};
+mpv_0-28 = pkgs.mpv_generics {
+  channel = "0.28";
+  ffmpeg = pkgs.ffmpeg_head;  # Requires 3.5+
+};
 mpv_head = pkgs.mpv_generics {
   channel = "999";
   ffmpeg = pkgs.ffmpeg_head;  # Requires newer than latest release
 };
+mpv = callPackageAlias "mpv_0-27" { };
 
 ms-sys = callPackage ../all-pkgs/m/ms-sys { };
 

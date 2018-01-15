@@ -53,7 +53,7 @@
 , xorg
 , zlib
 
-, channel ? "stable"
+, channel
 }:
 
 let
@@ -83,11 +83,17 @@ let
       null;
 
   sources = {
-    "stable" = {
+    "0.27" = {
       fetchzipversion = 3;
       version = "0.27.0";
       rev = "v0.27.0";
       sha256 = "d80c86af466589d610a522b0ab20ee7b13630418d846d78bbfeb55930e5ecd59";
+    };
+    "0.28" = {
+      fetchzipversion = 5;
+      version = "0.28.0";
+      rev = "v0.28.0";
+      sha256 = "ecf49d5cfbc5851a1c62b93da43cce7ee365969d699bab84aa8b8ea742b688d9";
     };
     "999" = {
       fetchzipversion = 5;

@@ -90,10 +90,10 @@ let
       sha256 = "d80c86af466589d610a522b0ab20ee7b13630418d846d78bbfeb55930e5ecd59";
     };
     "999" = {
-      fetchzipversion = 3;
-      version = "2017-11-01";
-      rev = "09c61347a8481cfb42bfc381880bd3fe93c4e744";
-      sha256 = "5708ddd576ca9a5839c1c9191ef71a37d6ec883e4b4b8a6fa1dcd7fe007cf486";
+      fetchzipversion = 5;
+      version = "2018-01-15";
+      rev = "e2a176ede267d93df94b04b5bd7659cf96f954e0";
+      sha256 = "26277743ff2f253450902326460aaf275546a3cdb87fa8c394e3f8a75625e316";
     };
   };
   source = sources."${channel}";
@@ -171,7 +171,7 @@ stdenv.mkDerivation rec {
   ];
 
   wafFlags = [
-    (strNew "--disable-lgpl" "0.28.0")  # Enables GPL
+    (strNew "--disable-lgpl" "0.28.0")
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -187,11 +187,12 @@ stdenv.mkDerivation rec {
     ###"--enable-asm"
     "--disable-test"
     "--disable-clang-database"
+    "--disable-android"  # Android
     "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
-    "--disable-termios"
-    #"--disable-shm"
+    (strDepr "--disable-termios" null "0.28.0")
+    (strDepr "--disable-shm" null "0.28.0")
     "--${boolEn (samba_client != null)}-libsmbclient"
     #"--${boolEn (lua != null)}-lua"
     /**/"--disable-lua"  # FIXME: need lua 5.2
@@ -213,9 +214,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-lazy"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
-    ###"--enable-libaf"
     "--${boolEn (libarchive != null)}-libarchive"
-    (strNew "--enable-ffmpeg-upstream" "0.28.0")  # Upstream fucked up hard
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-sdl1"
@@ -270,15 +269,17 @@ stdenv.mkDerivation rec {
     "--${boolEn (libcaca != null)}-caca"
     "--${boolEn (libjpeg != null)}-jpeg"
     "--disable-direct3d"  # Windows
-    "--disable-android"  # Android
+    /**/(strNew "--disable-shaderc" "0.28.0")
+    /**/(strNew "--disable-crossc" "0.28.0")
+    /**/(strNew "--disable-d3d11" "0.28.0")  # Windows
     "--disable-rpi"  # FIXME: add raspberry pi support
     "--disable-ios-gl"  # iOS
     "--disable-plain-gl"
+    (strNew "--enable-gl" "0.28.0")
     "--disable-mali-fbdev"
     "--${boolEn (opengl-dummy != null)}-gl"
-    #(strNew "--${boolEn (vulkan-headers != null)}-vulkan" "0.28.0")
+    (strNew "--${boolEn (vulkan-headers != null)}-vulkan" "0.28.0")
     /**/(strNew "--disable-vulkan" "0.28.0")
-    /**/(strNew "--disable-shaderc" "0.28.0")
     #(strDepr "--${boolEn (libva != null)}-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
     (strDepr "--disable-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
     (strDepr "--disable-videotoolbox-hwaccel-new" null "0.27.0")  # macOS

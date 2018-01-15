@@ -122,6 +122,8 @@ stdenv.mkDerivation rec {
   # defined in lists.  The help info is static and does not always
   # represent current options. See CMDLINE_SELECT in the configure script.
   configureFlags = [
+    "--disable-avx512"  # FIXME: libvpx will not compile on CPU's without all
+                        #        features present.
     "--enable-dependency-tracking"
     #external_build
     "--enable-extra-warnings"

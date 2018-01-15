@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.6.0";
+  version = "2.7.1";
 in
 stdenv.mkDerivation rec {
   name = "fish-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "7ee5bbd671c73e5323778982109241685d58a836e52013e18ee5d9f2e638fdfb";
+    sha256 = "e42bb19c7586356905a58578190be792df960fa81de35effb1ca5a5a981f0c5a";
   };
 
   nativeBuildInputs = [
@@ -29,7 +29,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--with-gettext"
     "--without-included-pcre2"
   ];
 

@@ -121,9 +121,10 @@ stdenv.mkDerivation rec {
   # uses FFmpeg's shell configure script and actual optionals are
   # defined in lists.  The help info is static and does not always
   # represent current options. See CMDLINE_SELECT in the configure script.
-  configureFlags = [
+  configureFlags = optionals (versionAtLeast source.version "1.6.2") [
     "--disable-avx512"  # FIXME: libvpx will not compile on CPU's without all
                         #        features present.
+  ] ++ [
     "--enable-dependency-tracking"
     #external_build
     "--enable-extra-warnings"

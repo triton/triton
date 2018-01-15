@@ -195,7 +195,7 @@ let
       fetchzipversion = 5;
       version = "2018.01.15";
       rev = "cbbb2067341d7c2d98f560f81c6fb103af33a490";
-      sha256 = "722809dfde1e91ce0e49577dd0c1ac2046eb567bc22a8c8d1bd8b46766b27939";
+      sha256 = "2c9336fa0718b6f9196c14baca41719794db1f707f79aff4c00dea85983c39c8";
     };
   };
   source = sources."${channel}";

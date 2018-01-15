@@ -3,17 +3,17 @@
 , lib
 , which
 
-, perl
-, python
-, libxml2
-, libxslt
-, docbook_xml_dtd_43
-, docbook-xsl
-, gnome_doc_utils
 # TODO: reenable once texlive is fixed
 #, dblatex
+, docbook_xml_dtd_43
+, docbook-xsl
 , gettext
+, gnome_doc_utils
 , itstool
+, libxml2
+, libxslt
+, perl
+, python3Packages
 }:
 
 let
@@ -53,16 +53,20 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    perl
-    python
-    libxml2
-    libxslt
+    #dblatex
     docbook_xml_dtd_43
     docbook-xsl
-    gnome_doc_utils
-    #dblatex
     gettext
+    gnome_doc_utils
     itstool
+    libxml2
+    libxslt
+    perl
+    python3Packages.python
+  ];
+
+  propagatedBuildInputs = [
+    python3Packages.six
   ];
 
   passthru = {

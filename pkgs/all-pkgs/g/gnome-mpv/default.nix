@@ -26,17 +26,17 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2017-11-25";
+  version = "2018-01-13";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "dd21665e39a04bd184f7da7a37abc2ee126e6af9";
-    sha256 = "6d7ab0f1130e84eb4ff3b5b8a7c2b245b8e16877c06495e82cc79a03a298bde8";
+    rev = "945609109aae0291c293fbcca390568a6058e219";
+    sha256 = "ec499afa5998d0a3787690368b6ea13e62e06b0af58d99785e725b346b974828";
   };
 
   nativeBuildInputs = [

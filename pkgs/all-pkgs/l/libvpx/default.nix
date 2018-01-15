@@ -61,10 +61,10 @@ let
     };
     # master
     "1.999" = {
-      fetchzipversion = 3;
-      version = "2017-11-06";
-      rev = "6fbc354c97ca45754a76674dba5f6b43c2b0c15a";
-      sha256 = "ac4e1e85b286bf6f730de23656687cfede95c4127246d68d200c0a9dd098cfdd";
+      fetchzipversion = 5;
+      version = "2018-01-12";
+      rev = "f915e6d4afafabed8281b172f93502acbe101f3a";
+      sha256 = "137725fe8510ca855da293bd1794a9500aeaf90d34c01e323f992af560dc6769";
     };
   };
   source = sources."${channel}";

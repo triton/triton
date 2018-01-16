@@ -6,18 +6,18 @@
 }:
 
 let
-  rev = "7c979e86610f48fa50e740854bcfce170b50fb46";
-  date = "2017-11-16";
+  rev = "2f227cb122584989a61278e93f9a26b1a7e3d1bf";
+  date = "2017-12-23";
 in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "open-source-parsers";
     repo = "jsoncpp";
     inherit rev;
-    sha256 = "ba28bbe4022a945fc5d752723966cef02ca1a7d6106d748b0fe418c5db233e8a";
+    sha256 = "c710bf96f2f77b27dff4eeb274939ef0e41e144854892b185356fe3b7cde9763";
   };
 
   nativeBuildInputs = [

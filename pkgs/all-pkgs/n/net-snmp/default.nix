@@ -4,7 +4,10 @@
 , file
 , perlPackages
 
+, libnl
+, lm-sensors
 , openssl
+, pciutils
 }:
 
 let
@@ -26,7 +29,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libnl
+    lm-sensors
     openssl
+    pciutils
   ];
 
   patches = [
@@ -49,12 +55,15 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--enable-ucd-snmp-compatibility"
+    "--disable-des"
+    "--disable-md5"
+    "--disable-embedded-perl"
     "--with-default-snmp-version=3"
     "--with-sys-location=Unknown"
     "--with-sys-contact=root@unknown"
-    "--with-logfile=/var/log/net-snmpd.log"
-    "--with-persistent-directory=/var/lib/net-snmp"
-    "--with-openssl=${openssl}"
+    "--with-logfile=/var/log/snmpd.log"
+    "--with-persistent-directory=/var/lib/snmp"
     "--with-mnttab=/proc/mounts"
   ];
 

@@ -1,5 +1,4 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , pythonPackages
 

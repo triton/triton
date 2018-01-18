@@ -14,6 +14,7 @@
 , gsettings-desktop-schemas
 , gtk_3
 , gvfs
+, librsvg
 , nautilus_unwrapped
 , shared-mime-info
 , totem

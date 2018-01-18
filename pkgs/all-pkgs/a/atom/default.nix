@@ -13,7 +13,6 @@
 , freetype
 , gconf
 , gdk-pixbuf
-, gdk-pixbuf
 , git
 , glib
 , gnome-themes-standard
@@ -91,7 +90,6 @@ stdenv.mkDerivation rec {
     freetype
     gconf
     gdk-pixbuf
-    gdk-pixbuf
     glib
     gnome-themes-standard
     gtk_2
@@ -160,6 +158,7 @@ stdenv.mkDerivation rec {
       -e 's,$(basename $0),atom${source.suffix},'
 
     wrapProgram $out/bin/atom${source.suffix} \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --set 'GTK2_RC_FILES' \
           '${gnome-themes-standard}/share/themes/Adwaita/gtk-2.0/gtkrc' \
       --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \

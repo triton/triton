@@ -16,7 +16,6 @@
 , freetype
 , gconf
 , gdk-pixbuf
-, gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
 , gtk_2
@@ -100,7 +99,6 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gconf
-    gdk-pixbuf
     gdk-pixbuf
     glib
     gsettings-desktop-schemas
@@ -192,12 +190,8 @@ stdenv.mkDerivation rec {
       "$out/share/google/chrome${channame}/google-chrome${channame}" \
       "$out/bin/google-chrome${channame}"
 
-    # NOTE: --disable-lcd-text
-    #       When sub-pixel rendering is enabled in both freetype/fontconfig and
-    #       chrome's internal sub-pixel rendering, it will sometimes cause
-    #       hinting to fail completely.
     wrapProgram "$out/bin/google-chrome${channame}" \
-      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix LD_LIBRARY_PATH : "${chromeLibPath}" \
       --prefix PATH : "${chromeBinPath}" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

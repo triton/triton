@@ -10,8 +10,8 @@
 , gconf
 , glib
 , gobject-introspection
-, gtk2
-, gtk3
+, gtk_2
+, gtk_3
 , iso-codes
 , json-glib
 , libnotify
@@ -53,8 +53,8 @@ stdenv.mkDerivation rec {
     dconf
     gconf
     gobject-introspection
-    gtk2
-    gtk3
+    gtk_2
+    gtk_3
     iso-codes
     json-glib
     libnotify

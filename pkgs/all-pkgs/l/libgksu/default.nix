@@ -8,6 +8,7 @@
 , makeWrapper
 
 , gconf
+, gdk-pixbuf
 , gnome-themes-standard
 , gtk_2
 , libglade
@@ -117,7 +118,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram "$out/bin/gksu-properties" \
-      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';

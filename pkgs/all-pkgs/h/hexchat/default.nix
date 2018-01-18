@@ -63,10 +63,6 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
-  preBuild = ''
-    export XDG_DATA_DIRS='${shared-mime-info}/share'
-  '';
-
   postPatch = ''
     links="$(find . -type l)"
     for link in $links; do
@@ -91,8 +87,14 @@ stdenv.mkDerivation rec {
     "--disable-lua"
   ];
 
+  preBuild = ''
+    export GDK_PIXBUF_MODULE_FILE='${gdk-pixbuf.loaders.cache}'
+    export XDG_DATA_DIRS='${shared-mime-info}/share'
+  '';
+
   preFixup = ''
     wrapProgram $out/bin/hexchat \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';

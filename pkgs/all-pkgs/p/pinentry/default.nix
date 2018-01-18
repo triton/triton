@@ -5,6 +5,7 @@
 , makeWrapper
 
 , gcr
+, gdk-pixbuf
 , gnome-themes-standard
 , gtk_2
 , libassuan
@@ -85,6 +86,7 @@ stdenv.mkDerivation rec {
 
   preFixup = optionalString isGtk ''
     wrapProgram $out/bin/pinentry-gtk-2 \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';

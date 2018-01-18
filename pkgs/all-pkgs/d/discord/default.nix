@@ -16,7 +16,7 @@
 , gdk-pixbuf
 , glib
 , gnome-themes-standard
-, gtk2
+, gtk_2
 , libnotify
 , libx11
 , libxcb
@@ -106,7 +106,7 @@ stdenv.mkDerivation rec {
     gconf
     gdk-pixbuf
     glib
-    gtk2
+    gtk_2
     libnotify
     libx11
     libxcb
@@ -144,7 +144,8 @@ stdenv.mkDerivation rec {
       $out/share/discord/Discord${nameexe}
 
     wrapProgram $out/share/discord/Discord${nameexe} \
-      --prefix LD_LIBRARY_PATH : "${libPath}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
+      --prefix 'LD_LIBRARY_PATH' : "${libPath}" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --run "$DEFAULT_GTK2_RC_FILES"

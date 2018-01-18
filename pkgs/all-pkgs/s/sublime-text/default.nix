@@ -5,6 +5,7 @@
 
 , bzip2
 , cairo
+, gdk-pixbuf
 , gksu
 , glib
 , gnome-themes-standard
@@ -90,6 +91,7 @@ stdenv.mkDerivation rec {
     cp -prvd * $out/share/sublime-text/
   '' + ''
     wrapProgram $out/share/sublime-text/sublime_text \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --run "$DEFAULT_GTK2_RC_FILES" \
       --set LD_PRELOAD '${libredirect}/lib/libredirect.so' \

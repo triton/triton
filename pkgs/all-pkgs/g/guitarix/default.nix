@@ -15,7 +15,7 @@
 , gdk-pixbuf
 , glib
 , glibmm
-, gtk2
+, gtk_2
 , gtkmm_2
 , jack2_lib
 , ladspa-sdk
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     fftw
     glib
     glibmm
-    gtk2
+    gtk_2
     gtkmm_2
     jack2_lib
     ladspa-sdk
@@ -115,6 +115,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/guitarix \
+      --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'PATH' : "${qjackctl}/bin"
   '';
 

@@ -72,8 +72,8 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-glibtest"
     "--disable-tests"
-    "--${boolEn (gtk2 != null)}-gtk2"
-    "--${boolEn (gtk3 != null)}-gtk3"
+    "--${boolEn (gtk_2 != null)}-gtk2"
+    "--${boolEn (gtk_3 != null)}-gtk3"
     "--enable-xim"
     "--${boolEn (wayland != null)}-wayland"
     "--enable-appindicator"
@@ -112,7 +112,7 @@ stdenv.mkDerivation rec {
       wrapProgram "$f" \
         --prefix XDG_DATA_DIRS : "$out/share:$GSETTINGS_SCHEMAS_PATH" \
         --prefix PYTHONPATH : "$(toPythonPath ${python3Packages.pygobject})" \
-        --prefix LD_LIBRARY_PATH : "${gtk3}/lib:${atk}/lib:$out/lib" \
+        --prefix LD_LIBRARY_PATH : "${gtk_3}/lib:${atk}/lib:$out/lib" \
         --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH:$out/lib/girepository-1.0" \
         --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules"
     done

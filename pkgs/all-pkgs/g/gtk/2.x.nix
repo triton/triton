@@ -83,6 +83,18 @@ stdenv.mkDerivation rec {
     shared-mime-info
   ];
 
+  postPatch = /* Our gdk-pixbuf does not include loaders.cache so one must be provided. */ ''
+    sed -i gtk/Makefile.am \
+      -e 's,$(gtk_update_icon_cache_program),GDK_PIXBUF_MODULE_FILE="${gdk-pixbuf.loaders.cache}" $(gtk_update_icon_cache_program),'
+  '' + /* Don't waste time building demos and examples */ ''
+    rm -rfv {demos,examples}/
+    sed -i configure.ac \
+      -i Makefile.am \
+      -e '/demos\//d' \
+      -e 's/\sdemos\s/ /' \
+      -e '/examples\//d'
+  '';
+
   autoreconfPhase = ''
     gtkdocize --copy
 

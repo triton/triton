@@ -87,16 +87,21 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/gdk-pixbuf-csource \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/share/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/gdk-pixbuf-pixdata \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/share/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/gdk-pixbuf-thumbnailer \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/share/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+
+    # Build a loaders.cache just for gdk-pixbuf in a non-standard location.
+    export GDK_PIXBUF_MODULE_FILE='loaders.cache'
+    $out/bin/gdk-pixbuf-query-loaders --update-cache $out/${loadersCachePath}/*.so
+    install -vD -m 644 loaders.cache $out/share/${loadersCacheFile}
   '';
 
   doCheck = false;

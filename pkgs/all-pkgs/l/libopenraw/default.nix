@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://libopenraw.freedesktop.org/download/${name}.tar.bz2";
-    multihash = "";
+    multihash = "QmXSnWJQFb5cLNYiSqYH9GhFf8TCVY3VmYbQRDAtBZifoq";
     hashOutput = false;
     sha256 = "d15e86141add6a652f316ab8884895d8399d37c17510b34f61e266f906a99683";
   };

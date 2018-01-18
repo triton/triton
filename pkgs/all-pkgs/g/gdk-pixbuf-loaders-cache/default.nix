@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
     local -a loaderDirs=() loaderObjects=() loaderObjectsTmp
     local loaderDir loaderObject
-    mapfile -t -d: loaderDirs < <(printf '%s' "$loadersSearchPath")
+    mapfile -t -d: loaderDirs < <(printf '%s' "$loadersSearchPath/loaders")
     for loaderDir in "''${loaderDirs[@]}"; do
       mapfile -t loaderObjectsTmp < <(find "$loaderDir" -name '*.so' -printf '%P\n')
       for loaderObject in "''${loaderObjectsTmp[@]}"; do

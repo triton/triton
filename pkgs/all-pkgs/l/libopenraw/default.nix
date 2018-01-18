@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   postPatch = /* Fix loader hardcoded install path to not use gdk-pixbuf prefix */ ''
     sed -i configure{,.ac} \
-      -e "s,GDK_PIXBUF_DIR=.*,GDK_PIXBUF_DIR=$out/${gdk-pixbuf.loadersCachePath},"
+      -e "s,GDK_PIXBUF_DIR=.*,GDK_PIXBUF_DIR=$out/${gdk-pixbuf.loadersCachePath}/loaders,"
   '';
 
   configureFlags = [

@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--disable-static-boost"
     "--enable-gnome"
-    "--disable-asan"  # Clang
+    #"--enable-asan"  # Clang
     "--without-darwinports"  # Darwin
     "--without-fink"  # Darwin
   ];

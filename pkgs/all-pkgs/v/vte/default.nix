@@ -5,7 +5,7 @@
 , lib
 
 , atk
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glib
 , gnutls
 , gobject-introspection
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     atk
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     gnutls
     gtk

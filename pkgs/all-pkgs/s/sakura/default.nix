@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/sakura \
-      --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE" \
+      --set GDK_PIXBUF_MODULE_FILE "${gdk-pixbuf.loaders.cache}" \
       --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
   '';
 

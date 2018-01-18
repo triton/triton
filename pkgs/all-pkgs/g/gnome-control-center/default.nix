@@ -222,7 +222,7 @@ stdenv.mkDerivation rec {
     done
   '' + ''
     wrapProgram $out/bin/gnome-control-center \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

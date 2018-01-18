@@ -3,7 +3,7 @@
 , lib
 
 , boost
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glib
 , libjpeg
 , libxml2
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     boost
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     libjpeg
     libxml2
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   postPatch = /* Fix loader hardcoded install path to not use gdk-pixbuf prefix */ ''
     sed -i configure{,.ac} \
-      -e "s,GDK_PIXBUF_DIR=.*,GDK_PIXBUF_DIR=$out/${gdk-pixbuf_unwrapped.loadersCachePath},"
+      -e "s,GDK_PIXBUF_DIR=.*,GDK_PIXBUF_DIR=$out/${gdk-pixbuf.loadersCachePath},"
   '';
 
   configureFlags = [

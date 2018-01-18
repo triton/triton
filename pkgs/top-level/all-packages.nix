@@ -1395,20 +1395,15 @@ gdb = callPackage ../all-pkgs/g/gdb { };
 
 gdbm = callPackage ../all-pkgs/g/gdbm { };
 
-# Combined gdk-pixbuf loaders.cache
-gdk-pixbuf_wrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf {
-  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
-};
-gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
-
-# Actual gdk-pixbuf
-gdk-pixbuf_unwrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
+gdk-pixbuf_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf {
   channel = "2.36";
+  gdk-pixbuf-loaders-cache = callPackageAlias "gdk-pixbuf-loaders-cache" {
+    gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  };
 };
-gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-36" { };
+gdk-pixbuf = callPackageAlias "gdk-pixbuf_2-36" { };
 
-gdk-pixbuf_2-36 = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
-gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
+gdk-pixbuf-loaders-cache = callPackage ../all-pkgs/g/gdk-pixbuf-loaders-cache { };
 
 gdl = callPackage ../all-pkgs/g/gdl { };
 
@@ -2878,7 +2873,7 @@ nasm = callPackage ../all-pkgs/n/nasm { };
 nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
   channel = "3.26";
   atk = pkgs.atk_2-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_unwrapped_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-34;
@@ -3798,7 +3793,7 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 vte_0-50 = callPackage ../all-pkgs/v/vte {
   channel = "0.50";
   atk = pkgs.atk_2-26;
-  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 vte = callPackageAlias "vte_0-50" { };
 

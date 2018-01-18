@@ -5,7 +5,7 @@
 
 , atkmm
 , cairomm
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glibmm
 , gtk_2
 , pangomm
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     atkmm
     cairomm
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glibmm
     gtk_2
     pangomm

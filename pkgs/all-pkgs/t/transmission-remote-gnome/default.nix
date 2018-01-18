@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
     export PYTHONPATH
     wrapProgram $out/bin/transmission-remote-gnome \
       --prefix 'PYTHONPATH' : "$PYTHONPATH" \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'LD_LIBRARY_PATH' : "${makeSearchPath "lib" propagatedBuildInputs}" \

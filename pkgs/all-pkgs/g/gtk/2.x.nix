@@ -11,7 +11,7 @@
 , cairo
 , cups
 , fontconfig
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
     cairo
     cups
     fontconfig
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     gdk-pixbuf
     glib
     gobject-introspection

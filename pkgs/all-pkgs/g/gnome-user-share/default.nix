@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram "$out/libexec/gnome-user-share-webdav" \
-      --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE" \
+      --set GDK_PIXBUF_MODULE_FILE "${gdk-pixbuf.loaders.cache}" \
       --prefix XDG_DATA_DIRS : "$out/share" \
       --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"

@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   # FIXME: make NAUTILUS_EXTENSION_DIR overrideable
   preFixup = ''
     wrapProgram $out/bin/nautilus \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --set 'NAUTILUS_EXTENSION_DIR' \
           "$out/lib/nautilus-${nautilus_unwrapped.version}/extensions-3.0/" \
@@ -81,6 +81,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${gdk-pixbuf}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gnome-terminal}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gvfs}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${librsvg}/share" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "${totem}/share" \
       --prefix 'XDG_DATA_DIRS' : "${tracker}/share" \

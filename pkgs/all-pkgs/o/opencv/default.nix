@@ -9,7 +9,7 @@
 , cairo
 , ffmpeg
 #, gdal
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glib
 , gtk_2
 , gtk_3
@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
     bzip2
     cairo
     ffmpeg
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     gtk_2
     gtk_3

@@ -13,7 +13,7 @@
 , fontconfig
 , freetype
 , gconf
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glib
 , gnome-themes-standard
 , gtk2
@@ -104,7 +104,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gconf
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     gtk2
     libnotify

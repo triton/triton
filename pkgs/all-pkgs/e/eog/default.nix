@@ -126,7 +126,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/eog \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \

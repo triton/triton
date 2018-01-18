@@ -6,7 +6,7 @@
 , perl
 
 , bzip2
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , glib
 , gobject-introspection
 , imagemagick
@@ -49,13 +49,13 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     gobject-introspection
     libxml2
     python
     zlib
-  ] ++ optionals (gdk-pixbuf_unwrapped == null) [
+  ] ++ optionals (gdk-pixbuf == null) [
     imagemagick
   ];
 
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--${boolWt (zlib != null)}-zlib"
     "--${boolWt (bzip2 != null)}-bz2"
-    "--${boolEn (gdk-pixbuf_unwrapped != null)}-gdk-pixbuf"
+    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
   ];
 
   preCheck = "patchShebangs ./tests/";

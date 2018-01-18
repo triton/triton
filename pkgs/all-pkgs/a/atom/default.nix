@@ -13,7 +13,7 @@
 , freetype
 , gconf
 , gdk-pixbuf
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , git
 , glib
 , gnome-themes-standard
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     freetype
     gconf
     gdk-pixbuf
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     glib
     gnome-themes-standard
     gtk_2

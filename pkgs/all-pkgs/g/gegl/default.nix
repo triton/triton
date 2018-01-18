@@ -8,7 +8,7 @@
 , cairo
 , exiv2
 , ffmpeg
-, gdk-pixbuf_unwrapped
+, gdk-pixbuf
 , gexiv2
 , glib
 , gobject-introspection
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     cairo
     exiv2
     ffmpeg
-    gdk-pixbuf_unwrapped
+    gdk-pixbuf
     gexiv2
     glib
     gobject-introspection
@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (cairo != null)}-cairo"
     "--${boolWt (pango != null)}-pango"
     "--${boolWt (pango != null)}-pangocairo"
-    "--${boolWt (gdk-pixbuf_unwrapped != null)}-gdk-pixbuf"
+    "--${boolWt (gdk-pixbuf != null)}-gdk-pixbuf"
     "--without-lensfun"
     "--${boolWt (librsvg != null)}-librsvg"
     # Requires --with-libv4l

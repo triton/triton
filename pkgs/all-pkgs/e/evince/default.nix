@@ -166,7 +166,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/evince \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'PATH' : "${gvfs}/bin" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
@@ -177,7 +177,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/evince-previewer \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix 'PATH' : "${gvfs}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"

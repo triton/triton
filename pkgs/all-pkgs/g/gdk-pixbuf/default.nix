@@ -1,92 +1,131 @@
 { stdenv
+, fetchurl
+, gettext
 , lib
 , makeWrapper
+, meson
+, ninja
+, python3
 
-, gdk-pixbuf_unwrapped
-, librsvg
+, glib
+, gobject-introspection
+, libtiff
+, libjpeg
+, libpng
+, libx11
+, jasper
 , shared-mime-info
+
+, channel
+, gdk-pixbuf-loaders-cache
 }:
 
-# This is a meta package for all gdk-pixbuf loaders, see
-# gdk-pixbuf_unwrapped for the actual gdk-pixbuf package.
+let
+  loadersCachePath = "lib/gdk-pixbuf-2.0/2.10.0";
+  loadersCacheFile = "${loadersCachePath}/loaders.cache";
 
+  sources = {
+    "2.36" = {
+      version = "2.36.11";
+      sha256 = "ae62ab87250413156ed72ef756347b10208c00e76b222d82d9ed361ed9dde2f3";
+    };
+  };
+  source = sources."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gdk-pixbuf_wrapped-${gdk-pixbuf_unwrapped.version}";
+  name = "gdk-pixbuf-${source.version}";
 
-  setupHook = ./setup-hook.sh;
-
-  unpackPhase = ":";
+  src = fetchurl {
+    url = "mirror://gnome/sources/gdk-pixbuf/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
+  };
 
   nativeBuildInputs = [
+    gettext
     makeWrapper
+    meson
+    ninja
+    python3
   ];
 
-  propagatedBuildInputs = [
-    gdk-pixbuf_unwrapped
-    librsvg
+  buildInputs = [
+    glib
+    gobject-introspection
+    jasper
+    libjpeg
+    libpng
+    libtiff
+    libx11
+    shared-mime-info
   ];
 
-  loadersCache = gdk-pixbuf_unwrapped.loadersCache;
-
-  configurePhase = ":";
-
-  buildPhase = /* Generate combined loaders cache */ ''
-    export GDK_PIXBUF_MODULE_FILE='loaders.cache'
-
-    echo "Generating loaders.cache"
-    gdk-pixbuf-query-loaders --update-cache \
-      ${gdk-pixbuf_unwrapped}/${gdk-pixbuf_unwrapped.loadersCachePath}/loaders/*.so \
-      ${librsvg}/${librsvg.loadersCachePath}/loaders/*.so
-  '' + /* Generate combined thumbnailer */ ''
-    install -D -m 644 -v \
-      ${gdk-pixbuf_unwrapped}/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer \
-      $out/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
-
-    librsvgmimetypes="$(
-      cat ${librsvg}/share/thumbnailers/librsvg.thumbnailer |
-        grep -oP '(?<=MimeType=).*'
-    )"
-    sed -i $out/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer \
-      -e "/^MimeType=/ s,;$,;$librsvgmimetypes," \
-      -e "s,${gdk-pixbuf_unwrapped},$out,"
+  postPatch = ''
+    sed -i build-aux/gen-installed-test.py \
+      -i build-aux/gen-resources.py \
+      -i build-aux/gen-thumbnailer.py \
+      -e 's,^#!.*,#!${python3}/bin/python3,g'
+  '' + /* Remove hardcoded references to build directory */ ''
+    sed -i gdk-pixbuf/gdk-pixbuf-enum-types.h.template \
+      -e '/@filename@/d'
   '';
 
-  installPhase = ''
-    install -vD -m 644 loaders.cache \
-      $out/${gdk-pixbuf_unwrapped.loadersCache}
+  mesonFlags = [
+    "-Denable_png=true"
+    "-Denable_tiff=true"
+    "-Denable_jpeg=true"
+    "-Denable_jasper=true"
+    "-Dbuiltin_loaders=none"
+    "-Dwith_docs=false"
+    "-Dwith_gir=true"
+    "-Dwith_man=false"
+    "-Denable_relocatable=false"
+    "-Denable_native_windows_loaders=false"
+  ];
 
-    mkdir -pv $out/bin
-    ln -sv ${gdk-pixbuf_unwrapped}/bin/gdk-pixbuf-csource $out/bin/
-    ln -sv ${gdk-pixbuf_unwrapped}/bin/gdk-pixbuf-pixdata $out/bin/
-    ln -sv ${gdk-pixbuf_unwrapped}/bin/gdk-pixbuf-thumbnailer $out/bin/
-  '';
+  postInstall = "rm -rvf $out/share/gtk-doc";
 
   preFixup = ''
     wrapProgram $out/bin/gdk-pixbuf-csource \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCache}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/gdk-pixbuf-pixdata \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCache}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/gdk-pixbuf-thumbnailer \
-      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCache}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$out/${loadersCacheFile}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
-  dontStrip = true;
+  doCheck = false;
 
   passthru = {
-    inherit (gdk-pixbuf_unwrapped)
-      loadersCache
+    inherit
+      loadersCacheFile
       loadersCachePath;
+
+    loaders = gdk-pixbuf-loaders-cache;
+
+    inherit (source) version;
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gdk-pixbuf/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
   meta = with lib; {
     description = "A library for image loading and manipulation";
     homepage = http://library.gnome.org/devel/gdk-pixbuf/;
-    maintainers = with maintainers; [
+    license = licenses.lgpl2Plus;
+    maintainers = [
       codyopel
     ];
     platforms = with platforms;

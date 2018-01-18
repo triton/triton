@@ -23,7 +23,7 @@
 , libxi
 , opengl-dummy
 , opus
-, openssl_1-0-2
+, openssl
 , portaudio
 , protobuf-cpp
 , pulseaudio_lib
@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     avahi
     boost
-    openssl_1-0-2
+    openssl
     protobuf-cpp
     qt5
   ] ++ optionals (config == "mumble") [

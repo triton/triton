@@ -1540,6 +1540,8 @@ gnome-online-accounts = callPackageAlias "gnome-online-accounts_3-22" { };
 
 gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
+gnome-raw-thumbnailer = callPackage ../all-pkgs/g/gnome-raw-thumbnailer { };
+
 gnome-screenshot_3-26 = callPackage ../all-pkgs/g/gnome-screenshot {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;

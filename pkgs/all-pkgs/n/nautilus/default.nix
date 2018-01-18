@@ -9,6 +9,7 @@
 , file-roller
 , gdk-pixbuf
 , glib
+, gnome-raw-thumbnailer
 , gnome-terminal
 , gobject-introspection
 , gsettings-desktop-schemas
@@ -80,6 +81,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${evince}/share" \
       --prefix 'XDG_DATA_DIRS' : "${file-roller}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gdk-pixbuf}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${gnome-raw-thumbnailer}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gnome-terminal}/share" \
       --prefix 'XDG_DATA_DIRS' : "${gvfs}/share" \
       --prefix 'XDG_DATA_DIRS' : "${librsvg}/share" \

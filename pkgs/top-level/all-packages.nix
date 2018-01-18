@@ -531,10 +531,6 @@ let  # BEGIN let/in 1
   findXMLCatalogs =
     makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
 
-  wrapGAppsHook = makeSetupHook {
-    deps = [ makeWrapper ];
-  } ../build-support/setup-hooks/wrap-gapps-hook.sh;
-
   separateDebugInfo =
     makeSetupHook { } ../build-support/setup-hooks/separate-debug-info.sh;
 
@@ -1593,10 +1589,6 @@ gnome-themes-standard_3-22 = callPackage ../all-pkgs/g/gnome-themes-standard {
 gnome-themes-standard = callPackageAlias "gnome-themes-standard_3-22" { };
 
 gnome-user-share = callPackage ../all-pkgs/g/gnome-user-share { };
-
-gnome-wrapper = makeSetupHook {
-  deps = [ makeWrapper ];
-} ../build-support/setup-hooks/gnome-wrapper.sh;
 
 gnu-efi = callPackage ../all-pkgs/g/gnu-efi { };
 

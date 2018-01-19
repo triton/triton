@@ -2,6 +2,7 @@
 , cmake
 , fetchTritonPatch
 , fetchurl
+, lib
 , ninja
 
 , bzip2
@@ -19,21 +20,20 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 
-  majorVersion = "3.10";
-  minorVersion = "1";
-  version = "${majorVersion}.${minorVersion}";
+  channel = "3.10";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
-    url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
-    multihash = "QmWRSUqLEDWGiHcdgYyUbe8bpMLN6EE7BCa9h8m7eMfQi8";
-    sha256 = "7be36ee24b0f5928251b644d29f5ff268330a916944ef4a75e23ba01e7573284";
+    url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
+    multihash = "QmcXWA1sGdfRLTg3YudQNgEq5qnMcAhWohNP7KAFEDykHQ";
+    sha256 = "80d0faad4ab56de07aa21a7fc692c88c4ce6156d42b0579c6962004a70a3218b";
   };
 
   patches = [
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
   selfApplySetupHook = true;
   cmakeConfigure = !bootstrap;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Cross-Platform Makefile Generator";
     homepage = http://www.cmake.org/;
     license = licenses.free; # cmake

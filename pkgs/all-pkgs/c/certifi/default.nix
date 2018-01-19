@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2017.7.27";
+  version = "2018.1.18";
 in
 buildPythonPackage rec {
   name = "certifi-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "certifi";
     inherit version;
-    sha256 = "a7e03cbaf96baad108e34602848d0e4f04e59185325a61e63c96fcf67cee5fcd";
+    sha256 = "edbc3f203427eef571f79a7692bb160a2b0f7ccaa31953e99bd17e307cf63f7d";
   };
 
   meta = with lib; {

@@ -2,13 +2,14 @@
 , bison
 , fetchurl
 , flex
+, lib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     replaceChars;
 
-  version = "2017-11-10";
+  version = "2018-01-05";
   version' = replaceChars ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
@@ -16,8 +17,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://acpica.org/sites/acpica/files/acpica-unix-${version'}.tar.gz";
-    multihash = "QmdYk4mcdETNo9jVzJdjhEwrbkREWGC2bbyFySLsFojNAz";
-    sha256 = "56ac1f870db698fc46f9be0698abe6f4b5bf189bfb12cf982302c0a8f920856a";
+    multihash = "QmfUsRmpEeySggPuuYUcq8NRJmBG7E2CjTDdrYpFz9NVbm";
+    sha256 = "414f843ac6c7c53bbd2a830b092a2a27c49172b0878fd27fe306dd526b78b921";
   };
 
   nativeBuildInputs = [
@@ -36,7 +37,7 @@ stdenv.mkDerivation rec {
     install generate/unix/bin*/iasl $out/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Intel ACPI Compiler";
     homepage = http://www.acpica.org/;
     license = licenses.iasl;

@@ -48,10 +48,10 @@ let
       sha256 = "0332041863191f1890cd7570a5028cbb0d792e7a96882d1799a6ec20d0e3d513";
     };
     "head" = {
-      fetchzipversion = 2;
-      version = "2017-12-02";
-      rev = "ffcca3964dc9190f75e0b5f1077e190e91ddc8d2";
-      sha256 = "4c7b2d92fea49dab9e0ae59fc70b55eb98e43395c8f8d58786ac5f5f897f6cbe";
+      fetchzipversion = 5;
+      version = "2018-01-15";
+      rev = "eb5d1a79cbe1b9bc5b22fdcc598694ecd4d02f43";
+      sha256 = "f1c3546bf160c12a535c92ecee48309271dc74fdeb5495fa280da6f17d47d4f0";
     };
   };
   source = sources."${channel}";
@@ -62,9 +62,9 @@ let
       name = "libutp-transmission-7c4f19abdf";
 
       src = fetchzip {
-        version = 2;
+        version = 5;
         url = "https://github.com/transmission/libutp/archive/7c4f19abdf.tar.gz";
-        sha256 = "bf84efa7d760a33ff46849599032675ff6cfae09453d4af54e476af1e002d7eb";
+        sha256 = "7102572f3cc6b4d2aebc770ea0828729c92215bc91d5151f6392fe26d6dc2238";
       };
 
       nativeBuildInputs = [

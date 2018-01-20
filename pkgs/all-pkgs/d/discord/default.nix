@@ -62,16 +62,16 @@ let
 
   sources = {
     "stable" = {
-      version = "0.0.3";
-      sha256 = "d02d809fe1756c6345815531d291bd65769ffc27dc464e56988ffe7270f2bdfb";
+      version = "0.0.4";
+      sha256 = "8b62e49088d3bf525ab07ba6a64ec3f1c8c7c252a9c13178d060efb0674e9caa";
     };
     "ptb" = {
-      version = "0.0.5";
-      sha256 = "64f7a5d7d4e6116297a8979cb4723d1a9e576c5e4c564915c8e0309b9c98ba04";
+      version = "0.0.7";
+      sha256 = "c0636961f4b3bf484c81f283873572cf526ad36fd6ff423c31bdfea010211d50";
     };
     "canary" = {
-      version = "0.0.44";
-      sha256 = "c0388dfb2b61b02e29a917aa19a7b319372f5009db85a74cac2d72d86363c7af";
+      version = "0.0.45";
+      sha256 = "fa9d48626334434f3f306c42c694d1f22ca8ee0668fc0fddc42fe85f475d0a4a";
     };
   };
   source = sources."${channel}";

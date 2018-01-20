@@ -16,7 +16,7 @@ let
       [ p.mesa_drivers
         p.mesa # mainly for libGL
       ];
-    passthru = p.mesa_drivers.passthru // p.mesa_noglu.passthru;
+    passthru = p.mesa_drivers.passthru // p.mesa.passthru;
   };
 
   package = pkgs.buildEnv {

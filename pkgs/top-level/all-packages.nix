@@ -2702,7 +2702,7 @@ mesa = callPackage ../all-pkgs/m/mesa {
   libglvnd = null;
   buildConfig = "full";
 };
-mesa_drivers = pkgs.mesa_noglu.drivers;
+mesa_drivers = pkgs.mesa.drivers;
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 

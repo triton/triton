@@ -75,7 +75,7 @@ let
       versionMinor = "34";
       sha256i686   = "b8babd2c7128233d83cc3bae0ee04c80580e9098849864e7b9bc3217609958c1";
       sha256x86_64 = "d540908e76aeecb1f4a2812acf5ad37346934a6b7c8043c8b3ce230a48ceb440";
-      maxLinuxVersion = "4.13";
+      maxLinuxVersion = "4.14";
       maxXorgVersion = "1.19";
     };
     beta = {
@@ -83,11 +83,11 @@ let
       versionMinor = "12";
       sha256i686   = "bf534c7ddeb24fed49af7285e31ae8a58dd52220870796b28078ba1f773f76da";
       sha256x86_64 = "68c744abc7f42eaa9e640d90ecd3c7691a74b84584b83b776488ef1916f8eb43";
-      maxLinuxVersion = "4.12";
+      maxLinuxVersion = "4.14";
       maxXorgVersion = "1.19";
     };
     # Update to which ever channel has the latest release at the time.
-    latest = short-lived;
+    latest = beta;
   };
   source = sources."${channel}";
 

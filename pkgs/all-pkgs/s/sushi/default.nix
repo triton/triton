@@ -22,9 +22,9 @@
 , gtksourceview
 , json-glib
 , libmusicbrainz
+, libx11
 , pango
 , webkitgtk
-, xorg
 
 , channel
 }:
@@ -72,9 +72,9 @@ stdenv.mkDerivation rec {
     gtksourceview
     json-glib
     libmusicbrainz
+    libx11
     pango
     webkitgtk
-    xorg.libX11
   ];
 
   configureFlags = [

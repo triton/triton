@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , atk
 , clutter
@@ -18,14 +19,24 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals
     strings;
 
   is3x = strings.substring 0 1 channel == "3";
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.0" = {
+      version = "2.0.16";
+      sha256 = "0f90fkywwn9ww6a8kfjiy4xx65b09yaj771jlsmj2w4khr0zhi59";
+    };
+    "3.0" = {
+      version = "3.0.24";
+      sha256 = "e9f1c87d8f4c47062e952fb8008704f8942cf2d6f290688f3f7d13e83578cc6c";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "clutter-gst-${source.version}";
@@ -80,7 +91,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GStreamer bindings for clutter";
     homepage = http://www.clutter-project.org/;
     license = licenses.lgpl2Plus;

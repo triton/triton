@@ -14,7 +14,7 @@ let
     name = "mesa-drivers+txc-${p.mesa_drivers.version}";
     paths =
       [ p.mesa_drivers
-        p.mesa_noglu # mainly for libGL
+        p.mesa # mainly for libGL
       ];
     passthru = p.mesa_drivers.passthru // p.mesa_noglu.passthru;
   };

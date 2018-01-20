@@ -1463,7 +1463,6 @@ glog = callPackage ../all-pkgs/g/glog { };
 glproto = callPackage ../all-pkgs/g/glproto { };
 
 glu = callPackage ../all-pkgs/g/glu { };
-mesa_glu =  callPackageAlias "glu" { };  # DEPRECATED
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
@@ -2699,16 +2698,11 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 
 mercurial = pkgs.python2Packages.mercurial;
 
-mesa_noglu = callPackage ../all-pkgs/m/mesa {
+mesa = callPackage ../all-pkgs/m/mesa {
   libglvnd = null;
   buildConfig = "full";
 };
 mesa_drivers = pkgs.mesa_noglu.drivers;
-mesa = pkgs.buildEnv {
-  name = "mesa-${pkgs.mesa_noglu.version}";
-  paths = with pkgs; [ mesa_noglu mesa_glu ];
-  passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
-};
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 

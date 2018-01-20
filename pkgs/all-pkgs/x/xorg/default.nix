@@ -1211,7 +1211,7 @@ let
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];
-
+    bindnow = false;
   }) // {inherit dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
 
   # xf86videonv = (mkDerivation "xf86videonv" {

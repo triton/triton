@@ -6,7 +6,7 @@
 
 , atk
 , clutter
-, clutter-gst_2
+, clutter-gst
 , clutter-gtk
 , cogl
 , dconf
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     atk
     clutter
-    clutter-gst_2
+    clutter-gst
     clutter-gtk
     cogl
     dconf

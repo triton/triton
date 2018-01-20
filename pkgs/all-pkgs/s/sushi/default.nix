@@ -30,7 +30,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.0";
+      sha256 = "f90bb95172664486f8d529995007fd12f0df9d0c998e20658b6203f46ce70d48";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "sushi-${source.version}";

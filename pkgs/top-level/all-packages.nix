@@ -3543,13 +3543,13 @@ subversion = callPackageAlias "subversion_1-9" { };
 
 sudo = callPackage ../all-pkgs/s/sudo { };
 
-sushi_3-22 = callPackage ../all-pkgs/s/sushi {
-  channel = "3.21";
+sushi_3-24 = callPackage ../all-pkgs/s/sushi {
+  channel = "3.24";
   atk = pkgs.atk_2-26;
   gjs = pkgs.gjs_1-46;
   gtksourceview = pkgs.gtksourceview_3-24;
 };
-sushi = callPackageAlias "sushi_3-22" { };
+sushi = callPackageAlias "sushi_3-24" { };
 
 svrcore = callPackage ../all-pkgs/s/svrcore { };
 

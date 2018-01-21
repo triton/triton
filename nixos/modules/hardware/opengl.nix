@@ -107,8 +107,8 @@ in
   config = mkIf cfg.enable {
 
     assertions = lib.singleton {
-      assertion = cfg.driSupport32Bit -> pkgs.stdenv.isx86_64;
-      message = "Option driSupport32Bit only makes sense on a 64-bit system.";
+      assertion = cfg.driSupport32Bit -> lib.elem pkgs.stdenv.targetSystem lib.platforms.bit64;
+      message = "Option driSupport32Bit is only supported on 64-bit systems.";
     };
 
     system.activation.scripts.setup-opengl =

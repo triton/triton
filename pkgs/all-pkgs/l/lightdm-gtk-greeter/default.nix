@@ -7,6 +7,7 @@
 
 , at-spi2-core
 , exo
+, gdk-pixbuf
 , glib
 , gobject-introspection
 , gtk_3
@@ -82,6 +83,7 @@ stdenv.mkDerivation rec {
     sed -i "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
       -e "s,Exec=lightdm-gtk-greeter,Exec=$out/sbin/lightdm-gtk-greeter,"
     wrapProgram "$out/sbin/lightdm-gtk-greeter" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix XDG_DATA_DIRS ':' "${hicolor-icon-theme}/share" \
       --prefix XDG_DATA_DIRS ':' "${shared-mime-info}/share"
   '';

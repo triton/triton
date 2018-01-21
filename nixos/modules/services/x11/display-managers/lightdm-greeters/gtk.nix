@@ -22,7 +22,7 @@ let
 
     buildCommand = ''
       # This wrapper ensures that we actually get themes
-      makeWrapper ${pkgs.lightdm-gtk-greeter}/sbin/lightdm-gtk-greeter \
+      makeWrapper ${pkgs.lightdm-gtk-greeter}/bin/lightdm-gtk-greeter \
         $out/greeter \
         --prefix PATH : "${pkgs.glibc}/bin" \
         --set GTK_PATH "${theme}:${pkgs.gtk3}" \

@@ -12,10 +12,10 @@ let
 
   makePackage = p: pkgs.buildEnv {
     name = "mesa-drivers+txc-${p.mesa_drivers.version}";
-    paths =
-      [ p.mesa_drivers
-        p.mesa # mainly for libGL
-      ];
+    paths = [
+      p.mesa_drivers
+      p.mesa
+    ];
     passthru = p.mesa_drivers.passthru // p.mesa.passthru;
   };
 
@@ -57,7 +57,7 @@ in
       description = ''
         On 64-bit systems, whether to support Direct Rendering for
         32-bit applications (such as Wine).  This is currently only
-        supported for the <literal>nvidia</literal> and 
+        supported for the <literal>nvidia</literal> and
         <literal>ati_unfree</literal> drivers, as well as
         <literal>Mesa</literal>.
       '';
@@ -111,14 +111,13 @@ in
       message = "Option driSupport32Bit is only supported on 64-bit systems.";
     };
 
-    system.activation.scripts.setup-opengl =
-      ''
-        find /run -maxdepth 1 -name opengl-driver\* -exec rm -rf {} \;
-        ln -sfn ${package} ${package.driverSearchPath}
-        ${optionalString cfg.driSupport32Bit ''
-          ln -sfn ${package32} ${package.driverSearchPath}
-        ''}
-      '';
+    system.activation.scripts.setup-opengl = ''
+      find /run -maxdepth 1 -name opengl-driver\* -exec rm -rf {} \;
+      ln -sfn ${package} ${package.driverSearchPath}
+      ${optionalString cfg.driSupport32Bit ''
+        ln -sfn ${package32} ${package.driverSearchPath}
+      ''}
+    '';
 
     environment.sessionVariables.LD_LIBRARY_PATH = [
       "${package.driverSearchPath}/lib"
@@ -129,6 +128,7 @@ in
     hardware.opengl.package = mkDefault (makePackage pkgs);
     hardware.opengl.package32 = mkDefault (makePackage pkgs_32);
 
-    boot.extraModulePackages = optional (elem "virtualbox" videoDrivers) kernelPackages.virtualboxGuestAdditions;
+    boot.extraModulePackages =
+      optional (elem "virtualbox" videoDrivers) kernelPackages.virtualboxGuestAdditions;
   };
 }

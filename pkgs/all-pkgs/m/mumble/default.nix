@@ -14,7 +14,6 @@
 , grpc
 , ice
 , inputproto
-, jack2_lib
 , libcap
 , libsndfile
 , libx11
@@ -97,7 +96,6 @@ stdenv.mkDerivation rec {
     alsa-lib
     fixesproto
     inputproto
-    jack2_lib
     libsndfile
     libx11
     libxext
@@ -115,10 +113,6 @@ stdenv.mkDerivation rec {
     grpc
     ice
     libcap
-  ];
-
-  patches = optionals (jack2_lib != null) [
-    ./mumble-jack-support.patch
   ];
 
   postPatch = optionalString (config == "mumble") ''
@@ -147,7 +141,6 @@ stdenv.mkDerivation rec {
   ] ++ optionals (config == "mumble") [
     "${boolNo (alsa-lib != null)}alsa"
     "no-directsound"
-    "${boolNo (jack2_lib != null)}jackaudio"
     "no-oss"
     "${boolNo (portaudio != null)}portaudio"
     "no-wasapi"

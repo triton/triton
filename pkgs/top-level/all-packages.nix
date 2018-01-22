@@ -2815,7 +2815,6 @@ mtools = callPackage ../all-pkgs/m/mtools { };
 mtr = callPackage ../all-pkgs/m/mtr { };
 
 mumble_generics = overrides: callPackage ../all-pkgs/m/mumble ({
-  jack2_lib = null;
   portaudio = null;
   pulseaudio_lib = null;
   speech-dispatcher = null;

@@ -12,17 +12,15 @@ let
   inherit (lib)
     boolOn;
 
-  version = "1.4.2";
+  version = "1.4.3";
 in
 stdenv.mkDerivation rec {
   name = "chromaprint-${version}";
 
   src = fetchurl {
-    urls = [
-      "https://bitbucket.org/acoustid/chromaprint/downloads/${name}.tar.gz"
-      "mirror://gentoo/distfiles/${name}.tar.gz"
-    ];
-    sha256 = "989609a7e841dd75b34ee793bd1d049ce99a8f0d444b3cea39d57c3e5d26b4d4";
+    url = "https://github.com/acoustid/chromaprint/releases/download/"
+      + "v${version}/${name}.tar.gz";
+    sha256 = "ea18608b76fb88e0203b7d3e1833fb125ce9bb61efe22c6e169a50c52c457f82";
   };
 
   nativeBuildInputs = [

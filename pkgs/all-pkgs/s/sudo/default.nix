@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sudo-1.8.21p2";
+  name = "sudo-1.8.22";
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
-    multihash = "QmNhhtk4UmfSe1SH5yG4L1JnRQ6AZuVQL5Q7jHBBfmgG32";
+    multihash = "QmehajcT5ftGezND5gGxr7dSoARUMAZhBhRGeu8LKYZPoc";
     hashOutput = false;
-    sha256 = "74c5746cd33a814e2431c39faf0d76f7f8a697379bd073862e3b156cf0d76368";
+    sha256 = "7256cb27c20883b14360eddbd17f98922073d104b214cf65aeacf1d9c9b9fd02";
   };
 
   nativeBuildInputs = [
@@ -84,7 +84,11 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "CCB2 4BE9 E948 1B15 D341  5953 5A89 DFA2 7EE4 70C4";
+      pgpKeyFingerprints = [
+        # Todd C. Miller
+        "59D1 E9CC BA2B 3767 04FD  D35B A9F4 C021 CEA4 70FB"
+        "CCB2 4BE9 E948 1B15 D341  5953 5A89 DFA2 7EE4 70C4"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

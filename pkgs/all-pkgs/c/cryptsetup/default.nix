@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , json-c
 , libargon2
@@ -11,12 +12,10 @@
 }:
 
 let
-  major = "2.0";
-  patch = "0";
+  channel = "2.0";
+  version = "${channel}.1";
 
-  version = "${major}.${patch}";
-
-  baseUrl = "mirror://kernel/linux/utils/cryptsetup/v${major}";
+  baseUrl = "mirror://kernel/linux/utils/cryptsetup/v${channel}";
 in
 stdenv.mkDerivation rec {
   name = "cryptsetup-${version}";
@@ -24,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "adc623b9e3e3ab5c14145b8baf21b741e513ee5bf90d2b4d85a745c2f05da199";
+    sha256 = "41d188092c52e23d576af41cf0cfe0555d8f7efa21598d4c57c56ea1b6d9c975";
   };
 
   buildInputs = [
@@ -53,7 +52,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "LUKS for dm-crypt";
     homepage = http://code.google.com/p/cryptsetup/;
     license = licenses.gpl2;

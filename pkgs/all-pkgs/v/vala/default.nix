@@ -17,8 +17,8 @@
 let
   sources = {
     "0.38" = {
-      version = "0.38.4";
-      sha256 = "2cb33a63bd17737e72f5f4f9ca4109f398500ee1f17a01ff4ef94139b07ae5e9";
+      version = "0.38.5";
+      sha256 = "5852c47f50efe1d7ddf3de13b4eb3091ea3e1547e2469ce10a37d4b85fdd332a";
     };
   };
   source = sources."${channel}";

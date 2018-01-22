@@ -1,6 +1,7 @@
 { stdenv
 , bison
 , docbook2x
+, docbook_xml_dtd_45
 , fetchurl
 , flex
 
@@ -12,18 +13,19 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "nftables-0.8";
+  name = "nftables-0.8.2";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nftables/files/${name}.tar.bz2";
-    multihash = "QmP72Q17QGWm9K14mQgXtJ3NgCRHWrLqrTqLAs5MENfuwh";
+    multihash = "Qmf8DA2sbUY6J6WXAfaauaj1TSqj4DdrrBm9yku9D5bj1K";
     hashOutput = false;
-    sha256 = "3f5b88e7b163bb46aa39e89419686b98f9316606a05865c3856dc68e414f389a";
+    sha256 = "675f0aaf88f11e7eacef63dc89cb65d207d9e09c3ea6d518f0ebbb013f0767ec";
   };
 
   nativeBuildInputs = [
     bison
     docbook2x
+    docbook_xml_dtd_45
     flex
   ];
 

@@ -22,12 +22,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "wget-1.19.2";
+  name = "wget-1.19.4";
 
   src = fetchurl {
     url = "mirror://gnu/wget/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "d59a745ad2c522970660bb30d38601f9457b151b322e01fa20a5a0da0f55df07";
+    sha256 = "2fc0ffb965a8dc8f1e4a89cbe834c0ae7b9c22f559ebafc84c7874ad1866559a";
   };
 
   nativeBuildInputs = [
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1CB2 7DBC 9861 4B2D 5841  646D 0830 2DB6 A267 0428";
+      pgpKeyFingerprint = "7845 120B 07CB D8D6 ECE5  FF2B 2A17 43ED A91A 35B6";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

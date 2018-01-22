@@ -8,6 +8,7 @@
 , libxi
 , libxinerama
 , libxrandr
+, openssl_1-0-2
 
 , channel
 , type ? "alpha"
@@ -51,6 +52,8 @@ stdenv.mkDerivation rec {
     libxi
     libxinerama
     libxrandr
+  ] ++ [
+    openssl_1-0-2
   ];
 
   installPhase = ''

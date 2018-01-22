@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     json-c
     libnfnetlink
     libnl
-    net-snmp
+    #net-snmp
     openssl
   ];
 
@@ -53,12 +53,12 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-silent-rules"
-    "--enable-snmp"
-    "--enable-snmp-vrrp"
-    "--enable-snmp-checker"
-    "--enable-snmp-rfc"
-    "--enable-snmp-rfcv2"
-    "--enable-snmp-rfcv3"
+    #"--enable-snmp"
+    #"--enable-snmp-vrrp"
+    #"--enable-snmp-checker"
+    #"--enable-snmp-rfc"
+    #"--enable-snmp-rfcv2"
+    #"--enable-snmp-rfcv3"
     "--enable-dbus"
     "--enable-sha1"
     "--enable-json"

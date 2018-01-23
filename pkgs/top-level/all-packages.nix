@@ -3363,6 +3363,8 @@ rpm = callPackage ../all-pkgs/r/rpm { };
 
 rrdtool = callPackage ../all-pkgs/r/rrdtool { };
 
+rsync = callPackage ../all-pkgs/r/rsync { };
+
 rtkit = callPackage ../all-pkgs/r/rtkit { };
 
 rtmpdump = callPackage ../all-pkgs/r/rtmpdump { };
@@ -4678,8 +4680,6 @@ google_talk_plugin =
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #
   mujs = callPackage ../all-pkgs/m/mujs { };
-#
-  rsync = callPackage ../applications/networking/sync/rsync { };
 #
 #
   #spotify = callPackage ../applications/audio/spotify { };

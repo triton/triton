@@ -816,6 +816,14 @@ cdparanoia = callPackage ../all-pkgs/c/cdparanoia { };
 
 cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 
+celt_0-7 = callPackage ../all-pkgs/c/celt {
+  channel = "0.7";
+};
+
+celt_0-5 = callPackage ../all-pkgs/c/celt {
+  channel = "0.5";
+};
+
 # Only ever add ceph LTS releases
 # The default channel should be the latest LTS
 # Dev should always point to the latest versioned release
@@ -4265,10 +4273,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   a52dec = callPackage ../development/libraries/a52dec { };
 #
   aalib = callPackage ../development/libraries/aalib { };
-#
-  celt = callPackage ../development/libraries/celt {};
-  celt_0_7 = callPackage ../development/libraries/celt/0.7.nix {};
-  celt_0_5_1 = callPackage ../development/libraries/celt/0.5.1.nix {};
 #
   faad2 = callPackage ../development/libraries/faad2 { };
 #

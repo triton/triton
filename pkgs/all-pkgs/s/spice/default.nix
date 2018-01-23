@@ -2,7 +2,7 @@
 , fetchurl
 , python3Packages
 
-, celt_0_5_1
+, celt_0-5
 , cyrus-sasl
 , glib
 , gstreamer
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    celt_0_5_1
+    celt_0-5
     cyrus-sasl
     glib
     gstreamer

@@ -2,8 +2,6 @@
 , fetchurl
 , lib
 
-, libogg
-
 , channel
 }:
 
@@ -41,10 +39,6 @@ stdenv.mkDerivation rec {
     url = "mirror://xiph/celt/${name}.tar.gz";
     inherit (source) sha256;
   };
-
-  buildInputs = [
-    libogg
-  ];
 
   configureFlags = optionals (versionAtLeast source.version "0.11") [
     "--enable-custom-modes"

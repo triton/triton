@@ -46,7 +46,7 @@ let
     optionalString;
 
   # Use stable patch releases, e.g. -10
-  version = "7.0.7-21";
+  version = "7.0.7-22";
 in
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     hashOutput = false;
-    sha256 = "3b2783a845279f76a4250f2c3caf04af22766e2d5f084bde589ebd73de6a0019";
+    sha256 = "49de9e08ea255a1f939158d85d50dfa29285bccbdcb7fee0fe4309061d438489";
   };
 
   buildInputs = [

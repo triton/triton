@@ -1042,6 +1042,8 @@ dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
 dnstop = callPackage ../all-pkgs/d/dnstop { };
 
+docbook2x = callPackage ../all-pkgs/d/docbook2x { };
+
 docbook-xsl = callPackage ../all-pkgs/d/docbook-xsl { };
 
 docbook-xsl-ns = callPackageAlias "docbook-xsl" {
@@ -4079,8 +4081,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 ################################################################################
 ################################################################################
 ################################################################################
-#
-  docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #
   liboauth = callPackage ../development/libraries/liboauth { };
 #

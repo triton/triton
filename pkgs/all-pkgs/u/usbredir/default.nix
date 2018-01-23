@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "usbredir-0.7";
+  name = "usbredir-0.7.1";
 
   src = fetchurl {
     url = "https://www.spice-space.org/download/usbredir/${name}.tar.bz2";
-    multihash = "QmNMnW9zA1xLKLMYPw3msDwTHeo555WBKVJjtNqBmA8Man";
-    sha256 = "0a63a0712b5dc62be9cca44f97270fea5d1ec1fe7dde0c11dc74a01c8e2006aa";
+    multihash = "QmXhMC78U1DDnwiCBdeEmNEMYghBtp9NPKrvwmroCPSWMS";
+    sha256 = "407e9e27a1369f01264d5501ffbe88935ddd7d5de675f5835db05dc9c9ac56f3";
   };
 
   buildInputs = [

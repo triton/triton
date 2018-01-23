@@ -816,13 +816,16 @@ cdparanoia = callPackage ../all-pkgs/c/cdparanoia { };
 
 cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 
-celt_0-7 = callPackage ../all-pkgs/c/celt {
-  channel = "0.7";
-};
-
 celt_0-5 = callPackage ../all-pkgs/c/celt {
   channel = "0.5";
 };
+celt_0-7 = callPackage ../all-pkgs/c/celt {
+  channel = "0.7";
+};
+celt_0-11 = callPackage ../all-pkgs/c/celt {
+  channel = "0.11";
+};
+celt = callPackageAlias "celt_0-11" { };
 
 # Only ever add ceph LTS releases
 # The default channel should be the latest LTS

@@ -30,8 +30,6 @@ stdenv.mkDerivation rec {
     qt5
   ];
 
-  setupHook = ./setup-hook.sh;
-
   postPatch = /* Install styles in the correct prefix */ ''
     sed -i style/CMakeLists.txt \
       -e 's,''${QT_PLUGINS_DIR},''${CMAKE_INSTALL_PREFIX}/${qt5.plugindir},'

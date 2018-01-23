@@ -109,8 +109,7 @@ stdenv.mkDerivation rec {
 
   preFixup = optionalString guiSupport ''
     wrapProgram $out/bin/qbittorrent \
-      --prefix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH" \
-      --run "$DEFAULT_QT_STYLE_OVERRIDE"
+      --suffix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH"
   '';
 
   passthru = {

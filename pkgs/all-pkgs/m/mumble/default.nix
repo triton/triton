@@ -206,8 +206,7 @@ stdenv.mkDerivation rec {
 
   preFixup = optionalString (config == "mumble") ''
     wrapProgram $out/bin/mumble \
-      --prefix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH" \
-      --run "$DEFAULT_QT_STYLE_OVERRIDE"
+      --suffix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH"
   '';
 
   meta = with lib; {

@@ -21,17 +21,17 @@
 }:
 
 let
-  version = "0.1.7";
+  version = "0.1.8";
 in
 stdenv.mkDerivation rec {
   name = "pipewire-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "PipeWire";
     repo = "pipewire";
     rev = "${version}";
-    sha256 = "3a4030216b8418bae7954a8634fc5bc231d141a83f61a399511a5eeec7e61bac";
+    sha256 = "00157a62685f4b04b58a802c5c61b974a50c7e47c9a1a5ac3c4af44463602485";
   };
 
   nativeBuildInputs = [

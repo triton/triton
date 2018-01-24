@@ -7,21 +7,26 @@
 , kbproto
 , libx11
 , libxext
+, libxi
+, libxinerama
+, libxrandr
+, libxrender
 , ncurses
 , randrproto
 , systemd_lib
-, xproto
 , xorg
+, xorg-server
+, xproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "xf86-input-wacom-0.35.0";
+  name = "xf86-input-wacom-0.36.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/${name}.tar.bz2";
-    multihash = "QmPA6Kjv4JcADphnrnk4VSwssCQXyp8dKsMm7EmH9JnrC7";
+    multihash = "QmQfPzFwv15U2sEA193SZdQdfmxouboKSTXg2p97hFtCnk";
     hashOutput = false;
-    sha256 = "55f60a71e81ef5544885652069a4f52b5cbaceabba53a28ac1397ec0ac26447d";
+    sha256 = "eae7c5d2872b1433c8d679bb42b00213403eb2a0544c514f4df2b586284c23f6";
   };
 
   buildInputs = [
@@ -31,13 +36,13 @@ stdenv.mkDerivation rec {
     kbproto
     libx11
     libxext
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
+    libxi
+    libxinerama
+    libxrandr
+    libxrender
     xorg.pixman
     randrproto
-    xorg.xorgserver
+    xorg-server
     xproto
   ];
 

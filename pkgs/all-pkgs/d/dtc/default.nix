@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.4.5";
+  version = "1.4.6";
 
   tarballUrls = [
     "mirror://kernel/software/utils/dtc/dtc-${version}.tar"
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "042c7164806af34069d13ede59d85b8156d09f179f721c516dc37712d3a0f621";
+    sha256 = "382302bfcc3c40734be80ac620983971d911ec4cde798f551873f3eb008c7b7e";
   };
 
   nativeBuildInputs = [

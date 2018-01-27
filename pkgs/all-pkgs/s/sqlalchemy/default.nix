@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.2.1";
+  version = "1.2.2";
 in
 buildPythonPackage rec {
   name = "sqlalchemy-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "SQLAlchemy";
     inherit version;
-    sha256 = "9ede7070d6fd18f28058be88296ed67893e2637465516d6a596cd9afea97b154";
+    sha256 = "64b4720f0a8e033db0154d3824f5bf677cf2797e11d44743cf0aebd2a0499d9d";
   };
 
   meta = with lib; {

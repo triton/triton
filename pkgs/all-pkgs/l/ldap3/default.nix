@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2.4";
+  version = "2.4.1";
 in
 buildPythonPackage {
   name = "ldap3-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "ldap3";
     inherit version;
-    sha256 = "888015f849eb33852583bbaf382f61593b03491cdac6098fd5d4d0252e0e7e66";
+    sha256 = "e8fe0d55a8cecb725748c831ffac2873df94c05b2d7eb867ea167c0500bbc6a8";
   };
 
   buildInputs = [

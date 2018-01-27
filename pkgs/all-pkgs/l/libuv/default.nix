@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.18.0";
+  version = "1.19.1";
 in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "libuv";
     repo = "libuv";
     rev = "v${version}";
-    sha256 = "6ca0634daf0b442f1f2077c5b590c9c8d7faef9f55ad2f16ac231f959f145dfb";
+    sha256 = "9dee5554cbd9af4e3f038b94e6bd4aa377b296bd19797572fefe8a59ff8d43a6";
   };
 
   nativeBuildInputs = [

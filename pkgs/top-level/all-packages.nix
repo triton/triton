@@ -2537,6 +2537,9 @@ libvorbis = callPackage ../all-pkgs/l/libvorbis { };
 libvpx_1-6 = callPackage ../all-pkgs/l/libvpx {
   channel = "1.6";
 };
+libvpx_1-7 = callPackage ../all-pkgs/l/libvpx {
+  channel = "1.7";
+};
 libvpx_head = callPackage ../all-pkgs/l/libvpx {
   channel = "1.999";
 };

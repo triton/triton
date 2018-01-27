@@ -59,6 +59,13 @@ let
       version = "1.6.1";
       sha256 = "1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819";
     };
+    # Upstream did not create a release tarball
+    "1.7" = {
+      fetchzipversion = 5;
+      version = "1.7.0";
+      rev = "v1.7.0";
+      sha256 = "909bfc0fde23940450ba0b1ebc6f0f4d3dc9ecc3c8f5281b8be53275a5c84348";
+    };
     # master
     "1.999" = {
       fetchzipversion = 5;
@@ -89,7 +96,7 @@ stdenv.mkDerivation rec {
   name = "libvpx-${source.version}";
 
   src =
-    if versionAtLeast channel "1.999" then
+    if versionAtLeast channel "1.7" then
       fetchFromGitHub {
         version = source.fetchzipversion;
         owner = "webmproject";
@@ -122,8 +129,7 @@ stdenv.mkDerivation rec {
   # defined in lists.  The help info is static and does not always
   # represent current options. See CMDLINE_SELECT in the configure script.
   configureFlags = optionals (versionAtLeast source.version "1.6.2") [
-    "--disable-avx512"  # FIXME: libvpx will not compile on CPU's without all
-                        #        features present.
+    "--disable-avx512"  # FIXME: our glibc/binutils are to old..
   ] ++ [
     "--enable-dependency-tracking"
     #external_build

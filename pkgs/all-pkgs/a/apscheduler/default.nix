@@ -27,7 +27,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "3.3.1";
+  version = "3.5.1";
 in
 buildPythonPackage rec {
   name = "apscheduler-${version}";
@@ -35,7 +35,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "APScheduler";
     inherit version;
-    sha256 = "f68874dff1bdffcc6ce3adb7840c1e4d162c609a3e3f831351df30b75732767b";
+    sha256 = "952c8f46a11f32b9d5bfbe3e347dac2cdf0680d8b4799590dc9c3a9865b73b65";
   };
 
   propagatedBuildInputs = [

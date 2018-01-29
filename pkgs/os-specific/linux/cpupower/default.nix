@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchurl
 , gettext
 
@@ -7,6 +8,11 @@
 , pciutils
 }:
 
+let
+  inherit (lib)
+    optionalString
+    versionOlder;
+in
 stdenv.mkDerivation {
   name = "cpupower-${kernel.version}";
 
@@ -25,7 +31,9 @@ stdenv.mkDerivation {
 
     # Patch the build to use the correct tooling
     grep -q '/bin/true' Makefile
+  '' + optionalString (versionOlder kernel.version "4.15") ''
     grep -q '/bin/pwd' Makefile
+  '' + ''
     grep -q '/usr/bin/install' Makefile
     sed \
       -e 's,/bin/true,${coreutils}/bin/true,g' \
@@ -53,7 +61,7 @@ stdenv.mkDerivation {
     "install-man"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Tool to examine and tune power saving features";
     homepage = https://www.kernel.org.org/;
     license = licenses.gpl2;

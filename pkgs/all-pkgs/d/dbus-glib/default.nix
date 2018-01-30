@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , dbus
 , expat
@@ -8,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-glib-0.108";
+  name = "dbus-glib-0.110";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus-glib/${name}.tar.gz";
-    multihash = "QmSJoCBLa7mMCHW5JXZBrt8tE4nurAJ7mECH9FBFVu559T";
+    multihash = "QmaZ6RSk5gT5mDk8cTz82XeXxgiA28QPv9eMUrCQ87gT9c";
     hashOutput = false;
-    sha256 = "9f340c7e2352e9cdf113893ca77ca9075d9f8d5e81476bf2bf361099383c602c";
+    sha256 = "7ce4760cf66c69148f6bd6c92feaabb8812dee30846b24cd0f7395c436d7e825";
   };
 
   nativeBuildInputs = [
@@ -52,7 +53,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GLib bindings for D-Bus";
     homepage = http://dbus.freedesktop.org;
     license = licenses.gpl2;

@@ -1,27 +1,28 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
 }:
 
 let
-  version = "1.6.11";
+  version = "1.6.12";
 in
 stdenv.mkDerivation rec {
   name = "geoip-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "maxmind";
     repo = "geoip-api-c";
     rev = "v${version}";
-    sha256 = "40b289dc9ce7ad9a509fc3f4c5c9a5727ad591be28818f3f3173b24d9a317996";
+    sha256 = "f4c92ebaf787b0329c7a3549ec250c7c60904d579dc2324d3e14e550c408d37e";
   };
 
   nativeBuildInputs = [
     autoreconfHook
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Geolocation API";
     license = licenses.lgpl21;
     maintainers = with maintainers; [

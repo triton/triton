@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xvidcore-1.3.4";
+  name = "xvidcore-1.3.5";
 
   src = fetchurl {
     url = "http://downloads.xvid.org/downloads/${name}.tar.bz2";
-    sha256 = "1xwbmp9wqshc0ckm970zdpi0yvgqxlqg0s8bkz98mnr8p2067bsz";
+    sha256 = "7c20f279f9d8e89042e85465d2bcb1b3130ceb1ecec33d5448c4589d78f010b4";
   };
 
   postUnpack = ''
@@ -44,4 +44,3 @@ stdenv.mkDerivation rec {
       x86_64-linux;
   };
 }
-

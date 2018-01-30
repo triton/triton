@@ -5,7 +5,8 @@
 
 , c-ares
 , libidn2
-#, libpsl
+, libpsl
+, libunistring
 , lzip
 , openssl
 , pcre
@@ -38,7 +39,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     c-ares
     libidn2
-    #libpsl  # FIXME: libpsl propagates libunistring causing libidn2 to be linked twice
+    libpsl
+    libunistring
     lzip
     openssl
     pcre
@@ -50,6 +52,10 @@ stdenv.mkDerivation rec {
     perlPackages.LWP
     python3
   ];
+
+  # The configure.ac is bad and doesn't set the rpath
+  # even though it uses libidn2
+  NIX_LDFLAGS = "-rpath ${libidn2}/lib";
 
   postPatch = ''
     for i in "doc/texi2pod.pl" "util/rmold.pl" ; do
@@ -78,14 +84,11 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--enable-iri"
     "--enable-pcre"
-    "--enable-xattr"
-    "--without-libpsl"  # FIXME
     "--with-ssl=openssl"
     "--with-zlib"
     "--with-metalink"
     "--with-cares"
     "--with-openssl"
-    "--with-libidn"
     "--with-libuuid"
   ];
 

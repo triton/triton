@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2017-12-05";
+  version = "2018-01-28";
 in
 stdenv.mkDerivation rec {
   name = "fribidi-${version}";
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
     version = 5;
     owner = "fribidi";
     repo = "fribidi";
-    rev = "0efbaa9052320a951823a6e776b30a580e3a2b4e";
-    sha256 = "f62f9292d55f476208a356bb616549b39bdbacdfcba7e2b72815462b1a809be7";
+    rev = "d18badec88bca8f6f4149156ebe7f1c6467a7bd8";
+    sha256 = "b61899c1bb39ad2270b23d81d3d18af8a164ff6635aa4f034cda4316e2ef296e";
   };
 
   nativeBuildInputs = [

@@ -11,12 +11,15 @@
 
 
 stdenv.mkDerivation rec {
-  name = "rsync-3.1.3pre1";
+  name = "rsync-3.1.3";
 
   src = fetchurl {
-    url = "mirror://samba/rsync/src-previews/${name}.tar.gz";
+    urls = [
+      "mirror://samba/rsync/src/${name}.tar.gz"
+      "mirror://samba/rsync/src-previews/${name}.tar.gz"
+    ];
     hashOutput = false;
-    sha256 = "6337962632006f9e8664d759cd2bbe5958e4e20a12a72a05c9dbcad0b955faf5";
+    sha256 = "55cc554efec5fdaad70de921cd5a5eeb6c29a95524c715f3bbf849235b0800c0";
   };
 
   nativeBuildInputs = [

@@ -5,7 +5,7 @@
 
 , c-ares
 , libidn2
-, libpsl
+#, libpsl
 , lzip
 , openssl
 , pcre
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     c-ares
     libidn2
-    libpsl
+    #libpsl  # FIXME: libpsl propagates libunistring causing libidn2 to be linked twice
     lzip
     openssl
     pcre
@@ -78,6 +78,8 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--enable-iri"
     "--enable-pcre"
+    "--enable-xattr"
+    "--without-libpsl"  # FIXME
     "--with-ssl=openssl"
     "--with-zlib"
     "--with-metalink"

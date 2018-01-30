@@ -7,21 +7,19 @@
 }:
 
 let
-  major = "2.9";
-  patch = "2";
-
-  version = "${major}.${patch}";
+  channel = "2.9";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "nano-${version}";
 
   src = fetchurl {
     urls = [
-      "https://www.nano-editor.org/dist/v${major}/${name}.tar.xz"
+      "https://www.nano-editor.org/dist/v${channel}/${name}.tar.xz"
       "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "4eccb7451b5729ce8abae8f9a5679f32e41ae58df73ea86b850ec45b10a83d55";
+    sha256 = "7783bcfd4b2d5dc0bf64d4bd07b1a19e7ba3c91da881a4249772a36b972d4012";
   };
 
   nativeBuildInputs = [
@@ -48,8 +46,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    homepage = http://www.nano-editor.org/;
     description = "A small, user-friendly console text editor";
+    homepage = http://www.nano-editor.org/;
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

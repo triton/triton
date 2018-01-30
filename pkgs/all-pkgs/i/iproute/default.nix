@@ -2,13 +2,14 @@
 , bison
 , fetchurl
 , flex
+, lib
 
 , db
 , iptables
 }:
 
 let
-  version = "4.14.1";
+  version = "4.15.0";
 
   tarballUrls = [
     "mirror://kernel/linux/utils/net/iproute2/iproute2-${version}.tar"
@@ -20,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "d43ac068afcc350a448f4581b6e292331ef7e4e7aa746e34981582d5fdb10067";
+    sha256 = "48d4616a99d7b609b7b795c0ae8ec57099fb0271ed89253e8772c02327798355";
   };
 
   nativeBuildInputs = [
@@ -64,7 +65,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2;
     description = "A collection of utilities for controlling TCP/IP networking and traffic control in Linux";
     license = licenses.gpl2;

@@ -3,6 +3,7 @@
 , gettext
 , lib
 
+, c-ares
 , libidn2
 , libpsl
 , lzip
@@ -35,6 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    c-ares
     libidn2
     libpsl
     lzip
@@ -79,6 +81,7 @@ stdenv.mkDerivation rec {
     "--with-ssl=openssl"
     "--with-zlib"
     "--with-metalink"
+    "--with-cares"
     "--with-openssl"
     "--with-libidn"
     "--with-libuuid"

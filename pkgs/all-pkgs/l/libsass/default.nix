@@ -5,17 +5,17 @@
 }:
 
 let
-  version = "3.4.6";
+  version = "3.4.8";
 in
 stdenv.mkDerivation rec {
   name = "libsass-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "sass";
     repo = "libsass";
     rev = "${version}";
-    sha256 = "20d6aac044d85d8e085fccb6e15c5127bda89e5c80a956bf37b314bf4699d1f4";
+    sha256 = "2d0b9903bf67205459199db7f9e4a0e0e490017861091db2cb78ac735f8adb70";
   };
 
   postPatch = ''

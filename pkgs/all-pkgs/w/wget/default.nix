@@ -1,11 +1,12 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , libidn2
 , libpsl
 , lzip
-, openssl_1-0-2
+, openssl
 , pcre
 , util-linux_lib
 , zlib
@@ -16,11 +17,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 in
-
 stdenv.mkDerivation rec {
   name = "wget-1.19.4";
 
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     libidn2
     libpsl
     lzip
-    openssl_1-0-2
+    openssl
     pcre
     util-linux_lib
     zlib
@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Tool for retrieving files using HTTP, HTTPS, and FTP";
     homepage = http://www.gnu.org/software/wget/;
     license = licenses.gpl3Plus;

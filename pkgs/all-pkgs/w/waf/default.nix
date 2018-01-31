@@ -16,6 +16,14 @@ let
     multihash = "Qmbztdz9ry33VWVtgzASTbXDwcwxKtmFBZ1y5nsHA1rE97";
     sha256 = "6cecb0c26bcbe046f8ef4742ae46834518dabff59dfab68dd2ae1f9704b193bd";
   };
+  lv2 = fetchurl {
+    # r101
+    # See autowaf note.
+    url = "http://svn.drobilla.net/autowaf/lv2.py";
+    multihash = "QmSkRjCoADgQ5EDDPrQVDWYfMZCkx9rsYMiHHoE6mYsDfU";
+    sha256 = "12ce4d81d9bf32283324c26db40c4ab459b61bc24891969708ec0eeaf96f902d";
+  };
+
   sources = {
     "1.9" = {
       version = "1.9.15";
@@ -58,7 +66,8 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     cp -v ${autowaf} autowaf.py
-    ./waf-light build --tools=$(pwd)/autowaf.py
+    cp -v ${lv2} lv2.py
+    ./waf-light build --tools=$(pwd)/autowaf.py,$(pwd)/lv2.py
   '';
 
   installPhase = ''

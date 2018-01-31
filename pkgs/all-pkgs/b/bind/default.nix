@@ -16,7 +16,7 @@
 , mariadb-connector-c
 , ncurses
 , openldap
-, openssl_1-0-2
+, openssl
 , postgresql
 , protobuf-c
 , pythonPackages
@@ -33,16 +33,16 @@ let
     optionals
     optionalString;
 
-  version = "9.11.2-P1";
+  version = "9.12.0";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmSvhppMPkAR76qgMwL9xDVMfSgpYnt7hgiZwyTuDZVfVk";
+    multihash = "QmUxfY25Ra6LbJyhyakP61whVEdGghRKH8Lj7pN9KBwreD";
     hashOutput = false;
-    sha256 = "cec31548832fca3f85d95178d4019b7d702039e8595d4c93914feba337df1212";
+    sha256 = "29870e9bf9dcc31ead3793ca754a7b0236a0785a7a9dc0f859a0bc42e19b3c82";
   };
 
   nativeBuildInputs = [
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     libxml2
     lmdb
     ncurses
-    openssl_1-0-2
+    openssl
     pythonPackages.python
     pythonPackages.ply
     readline
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     "--with-gssapi=${kerberos}"
     "--with-libtool"
     "--disable-native-pkcs11"
-    "--with-openssl=${openssl_1-0-2}"
+    "--with-openssl=${openssl}"
     "--with-pkcs11"
     "--with-ecdsa"
     "--without-gost"  # Insecure cipher
@@ -117,7 +117,6 @@ stdenv.mkDerivation rec {
     "--disable-fixed-rrset"
     "--enable-rpz-nsip"
     "--enable-rpz-nsdname"
-    "--enable-filter-aaaa"
     "--with-docbook-xsl=${docbook-xsl-ns}/share/xsl/docbook"
     "--with-idn=${idnkit}"
     "--without-atf"

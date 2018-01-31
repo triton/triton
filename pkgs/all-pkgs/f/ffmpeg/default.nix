@@ -193,8 +193,8 @@ let
     };
     "9.9" = { # Git
       fetchzipversion = 5;
-      version = "2018.01.15";
-      rev = "cbbb2067341d7c2d98f560f81c6fb103af33a490";
+      version = "2018.01.30";
+      rev = "fe1e6c06d03432c3e9208f019533c1d701f485d0";
       sha256 = "2c9336fa0718b6f9196c14baca41719794db1f707f79aff4c00dea85983c39c8";
     };
   };

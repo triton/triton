@@ -1,27 +1,47 @@
 { stdenv
 , fetchurl
+, lib
 
-, python2
+, python3
+
+, channel
 }:
 
+let
+  sources = {
+    "1.9" = {
+      version = "1.9.15";
+      multihash = "QmaXJ7fQJTfM77DNnEg4HH6b6odMYtKpHhVVEiqmZV5EQh";
+      sha256 = "4b7b92aaf90828853d57bed9a89a7c0e965d5af3c03717b970d67ff3ae4f2483";
+    };
+    "2.0" = {
+      version = "2.0.4";
+      multihash = "QmPysbZWegyPT8GMZo8StwN69g8okQ6xYX5CtwrTvGLtYB";
+      sha256 = "36aaa3ee6aff75058a694b6c53c3cdf3080c882e134811dd8d4716ccd8e3b67e";
+    };
+  };
+  source = sources."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "waf-1.9.3";
+  name = "waf-${source.version}";
 
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
-    multihash = "QmerWxk5w69MvZLaEdMrW827cP2tZKDi9zSzqQG2bBAdXY";
-    #hashOutput = false;
-    sha256 = "1799bf4a4782552f673084a9a08ea29b4f16cb06b24b1f643dd7799332c6eac7";
+    hashOutput = false;
+    inherit (source)
+      multihash
+      sha256;
   };
 
   buildInputs = [
-    python2
+    python3
   ];
 
   setupHook = ./setup-hook.sh;
 
   postPatch = ''
-    patchShebangs ./waf-light
+    sed -i waf-light -e 's,env python,env python3,'
+    patchShebangs waf-light
   '';
 
   configurePhase = ''
@@ -44,11 +64,12 @@ stdenv.mkDerivation rec {
         urls;
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "";
+      # Thomas Nagy
+      pgpKeyFingerprint = "8AF2 2DE5 A068 22E3 474F  3C70 49B4 C67C 0527 7AAA";
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Meta build system";
     homepage = https://waf.io/;
     license = licenses.bsd3;

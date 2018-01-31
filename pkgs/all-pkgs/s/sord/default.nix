@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , waf
 
 , serd
@@ -39,7 +40,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A lightweight C library for storing RDF data in memory";
     homepage = https://drobilla.net/software/sord;
     license = licenses.mit;

@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, python
+, waf
 
 , serd
 }:
@@ -14,27 +14,17 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python
+    waf
   ];
 
   buildInputs = [
     serd
   ];
 
-  postPatch = ''
-    patchShebangs ./waf
-  '';
-
-  configurePhase = ''
-    ./waf configure --prefix=$out
-  '';
-
-  buildPhase = ''
-    ./waf
-  '';
-
-  installPhase = ''
-    ./waf install
+  postPatch = /* Fix compatibility with newer autowaf */ ''
+    sed -i wscript \
+      -e 's/test=True/debug_by_default=False/' \
+      -e 's/Options.options.build_tests/True/'
   '';
 
   passthru = {

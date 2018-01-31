@@ -1,6 +1,6 @@
 { stdenv
 , buildPythonPackage
-, fetchPyPi
+, fetchurl
 , lib
 
 , dbus
@@ -8,21 +8,34 @@
 }:
 
 let
-  version = "1.2.4";
+  version = "1.2.6";
 in
-buildPythonPackage {
+buildPythonPackage rec {
   name = "dbus-python-${version}";
 
-  src = fetchPyPi {
-    package = "dbus-python";
-    inherit version;
-    sha256 = "e2f1d6871f74fba23652e51d10873e54f71adab0525833c19bad9e99b1b2f9cc";
+  src = fetchurl {
+    url = "https://dbus.freedesktop.org/releases/dbus-python/${name}.tar.gz";
+    multihash = "QmUzysEv7fQZwPgLiK61CdzwkGKvYdkqvHr3T5HfNwy988";
+    sha256 = "32f29c17172cdb9cb61c68b1f1a71dfe7351506fc830869029c47449bd04faeb";
   };
 
   buildInputs = [
     dbus
     dbus-glib
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprints = [
+        # Simon McVittie
+        "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90"
+        "3C86 72A0 F496 37FE 064A  C30F 52A4 3A1E 4B77 B059"
+      ];
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with lib; {
     maintainers = with maintainers; [

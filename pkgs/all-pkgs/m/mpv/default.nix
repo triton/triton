@@ -97,9 +97,9 @@ let
     };
     "999" = {
       fetchzipversion = 5;
-      version = "2018-01-15";
-      rev = "e2a176ede267d93df94b04b5bd7659cf96f954e0";
-      sha256 = "26277743ff2f253450902326460aaf275546a3cdb87fa8c394e3f8a75625e316";
+      version = "2018-01-30";
+      rev = "7f3c7100d518f5f2fc961275178e04b0cabb5b5c";
+      sha256 = "bb3fda44181ab8eea4f5deaed22ca9ad17bce30c1019220490b23f85b4042d75";
     };
   };
   source = sources."${channel}";

@@ -53,9 +53,9 @@ download_from_bash() {
   curl -O -L "https://ftp.gnu.org/gnu/bash/$1"
 }
 
-gpg2 -o "key.gpg" --dearmor "$NIX_DIR/gpgkey.asc" 2>/dev/null
+gpg -o "key.gpg" --dearmor "$NIX_DIR/gpgkey.asc" 2>/dev/null
 validate_and_hash() {
-  gpg2 --no-default-keyring --keyring "./key.gpg" --verify "$1"{.sig,}
+  gpg --no-default-keyring --keyring "./key.gpg" --verify "$1"{.sig,}
   HASH="$(nix-hash --flat --type sha256 --base32 "$1")"
 
   exec 3<>"$2.lock"

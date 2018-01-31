@@ -73,29 +73,12 @@ stdenv.mkDerivation rec {
     xdg-utils
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "584cf8c80a7323ba45b31f5da22580e4f9493cf2";
-      file = "f/ffado/cpuinfo-parsing.patch";
-      sha256 = "5d4b20e177549a4b3e8a0a0d8eaffee9e39c1aa5810d3670dde729be12487989";
-    })
-    (fetchTritonPatch {
-      rev = "584cf8c80a7323ba45b31f5da22580e4f9493cf2";
-      file = "f/ffado/fix-build.patch";
-      sha256 = "15fe33c2b1bb6bfb687df27816df4179feb56112f83afc8dfefb44915b5f848c";
-    })
-    (fetchTritonPatch {
-      rev = "584cf8c80a7323ba45b31f5da22580e4f9493cf2";
-      file = "f/ffado/gcc6.patch";
-      sha256 = "2b4681a780ee6af1db56444edaa172d01df391d723ac946a25a1e774db59a77f";
-    })
-  ];
-
-  postPatch = ''
-    patch -Np3 -i "${gcc-warnings_patch}"
-
-    # SConstruct checks cpuinfo and an objdump of /bin/mount to determine the appropriate arch
-    # Let's just skip this and tell it which to build
+  postPatch = /* Missing sys import, fixed in next release */ ''
+    sed -i SConstruct \
+      -e '/import re/a import sys'
+  '' + ''
+    # SConstruct checks cpuinfo and an objdump of /bin/mount to determine the
+    # appropriate arch.  Let's just skip this and tell it which to build.
     sed '/def is_userspace_32bit(cpuinfo):/a\
         return ${if (elem targetSystem platforms.bit64) then "False" else "True"}' -i SConstruct
   '';

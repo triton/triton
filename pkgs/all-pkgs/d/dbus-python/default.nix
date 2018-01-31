@@ -2,15 +2,17 @@
 , buildPythonPackage
 , fetchurl
 , lib
+, python
 
 , dbus
 , dbus-glib
+, glib
 }:
 
 let
   version = "1.2.6";
 in
-buildPythonPackage rec {
+stdenv.mkDerivation rec {
   name = "dbus-python-${version}";
 
   src = fetchurl {
@@ -21,7 +23,8 @@ buildPythonPackage rec {
 
   buildInputs = [
     dbus
-    dbus-glib
+    glib
+    python
   ];
 
   passthru = {

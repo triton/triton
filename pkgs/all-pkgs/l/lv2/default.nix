@@ -1,21 +1,22 @@
 { stdenv
 , fetchurl
-, python
+, waf
 
 , gtk2
 , libsndfile
 }:
 
 stdenv.mkDerivation rec {
-  name = "lv2-1.12.0";
+  name = "lv2-1.14.0";
 
   src = fetchurl {
     url = "http://lv2plug.in/spec/${name}.tar.bz2";
-    sha256 = "7a4a53138f10ed997174c8bc5a8573d5f5a5d8441aaac2de6cf2178ff90658e9";
+    hashOutput = false;
+    sha256 = "b8052683894c04efd748c81b95dd065d274d4e856c8b9e58b7c3da3db4e71d32";
   };
 
   nativeBuildInputs = [
-    python
+    waf
   ];
 
   buildInputs = [
@@ -23,20 +24,10 @@ stdenv.mkDerivation rec {
     libsndfile
   ];
 
-  postPatch = ''
-    patchShebangs ./waf
-  '';
-
-  configurePhase = ''
-    ./waf configure --prefix=$out
-  '';
-
-  buildPhase = ''
-    ./waf
-  '';
-
-  installPhase = ''
-    ./waf install
+  postPatch = /* Fix compatibility with newer autowaf */ ''
+    sed -i wscript \
+      -e 's/False, True/False/' \
+      -e 's/Options.platform/"random string"/'
   '';
 
   passthru = {
@@ -46,7 +37,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "907D 226E 7E13 FA33 7F01  4A08 3672 782A 9BF3 68F3";
     };
   };

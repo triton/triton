@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , lib
 , makeWrapper
+, waf
 
 , bash
 , expat
@@ -11,6 +12,7 @@
 
 # Optional Dependencies
 , alsa-lib
+, celt
 , dbus
 , ffado_lib
 , opus
@@ -26,6 +28,7 @@ let
     optionalString;
 
   libOnly = prefix == "lib";
+  libBool = if libOnly then "no" else "yes";
 
   version = "2017-12-20";
 in
@@ -41,8 +44,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
     makeWrapper
+    waf
   ];
 
   buildInputs = [
@@ -51,41 +54,52 @@ stdenv.mkDerivation rec {
     libsndfile
     readline
 
+    celt
     dbus
     opus
   ] ++ optionals (!libOnly) [
     alsa-lib
     ffado_lib
     pythonPackages.python
-    pythonPackages.dbus
+    pythonPackages.dbus-python
   ];
 
   postPatch = ''
     sed -i svnversion_regenerate.sh \
       -e 's,/bin/bash,${bash}/bin/bash,'
+  '' + /* Remove vendored WAF */ ''
+    rm -rfv waflib/
+    sed -i wscript -e '/xcode/d'
   '';
 
-  configurePhase = ''
-    ${pythonPackages.python.interpreter} waf configure --prefix=$out \
-      --dbus \
-      --classic \
-      ${optionalString (!libOnly) "--firewire"} \
-      ${optionalString (!libOnly) "--alsa"} \
-      --autostart=dbus \
-  '';
-
-  buildPhase = ''
-    python waf build
-  '';
+  wafFlags = [
+    "--classic"
+    "--dbus"
+    "--autostart=dbus"
+    "--doxygen=no"
+    "--alsa=${libBool}"
+    "--firewire=${libBool}"
+    #"--freebob=${libBool}"  # TODO
+    #"--iio=${libBool}"  # TODO
+    "--winmme=no"  # Windows?
+    "--celt=yes"
+    "--opus=yes"
+    "--samplerate=yes"
+    "--sndfile=yes"
+    "--readline=yes"
+  ];
 
   installPhase = ''
     python waf install
-  '' + (if libOnly then ''
-    rm -rf $out/{bin,share}
-    rm -rf $out/lib/{jack,libjacknet*,libjackserver*}
-  '' else ''
-    wrapProgram $out/bin/jack_control --set PYTHONPATH $PYTHONPATH
-  '');
+  '' + (
+    if libOnly then ''
+      rm -rfv $out/{bin,share}
+      rm -rfv $out/lib/{jack,libjacknet*,libjackserver*}
+    '' else ''
+      wrapProgram $out/bin/jack_control \
+        --set 'PYTHONPATH' "$PYTHONPATH"
+    ''
+  );
 
   meta = with lib; {
     description = "JACK audio connection kit, version 2 with jackdbus";

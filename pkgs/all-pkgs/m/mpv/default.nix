@@ -197,8 +197,8 @@ stdenv.mkDerivation rec {
     "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
-    (strDepr "--disable-termios" null "0.28.0")
-    (strDepr "--disable-shm" null "0.28.0")
+    (strDepr "--disable-termios" null "0.27.0")
+    (strDepr "--disable-shm" null "0.27.0")
     "--${boolEn (samba_client != null)}-libsmbclient"
     #"--${boolEn (lua != null)}-lua"
     /**/"--disable-lua"  # FIXME: need lua 5.2

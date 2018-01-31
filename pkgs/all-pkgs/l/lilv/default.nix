@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, python
+, lib
+, waf
 
 , lv2
 , serd
@@ -9,16 +10,15 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lilv-${version}";
-  version = "0.22.0";
+  name = "lilv-0.24.0";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${name}.tar.bz2";
-    sha256 = "cd279321223ef11ca01551767d3c16d68cb31f689e02320a0b2e37b4f7d17ab4";
+    sha256 = "fa60de536d3648aa3b1a445261fd77bd80d0246a071eed2e7ca51ea91a27fb9e";
   };
 
   nativeBuildInputs = [
-    python
+    waf
   ];
 
   buildInputs = [
@@ -28,20 +28,9 @@ stdenv.mkDerivation rec {
     sratom
   ];
 
-  postPatch = ''
-    patchShebangs ./waf
-  '';
-
-  configurePhase = ''
-    ./waf configure --prefix=$out
-  '';
-
-  buildPhase = ''
-    ./waf
-  '';
-
-  installPhase = ''
-    ./waf install
+  postPatch = /* Fix compatibility with newer autowaf */ ''
+    sed -i wscript \
+      -e 's/test=True/debug_by_default=False/'
   '';
 
   passthru = {
@@ -56,7 +45,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A C library to make the use of LV2 plugins";
     homepage = https://drobilla.net/software/lilv;
     license = licenses.mit;

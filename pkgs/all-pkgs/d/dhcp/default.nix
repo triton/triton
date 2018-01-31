@@ -14,15 +14,16 @@
 }:
 
 let
-  version = "4.3.6";
+  version = "4.4.0";
 in
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
+    multihash = "Qmb7wcUA5NjnWMKWK5TUNwzKpkmyQLpFqNH2dgRTuX2vuC";
     hashOutput = false;
-    sha256 = "a41eaf6364f1377fe065d35671d9cf82bbbc8f21207819b2b9f33f652aec6f1b";
+    sha256 = "4a90be0f22ad81c987f5584661b60a594f1b21c581b82bfba3ae60f89ae44397";
   };
 
   nativeBuildInputs = [
@@ -54,13 +55,15 @@ stdenv.mkDerivation rec {
     "--enable-tracing"
     "--enable-delayed-ack"
     "--enable-dhcpv6"
+    "--enable-dhcpv4o6"
+    "--enable-relay-port"
     "--enable-paranoia"
     "--enable-early-chroot"
     "--enable-ipv4-pktinfo"
     "--disable-use-sockets"
-    "--disable-secs-byteorder"
     "--disable-log-pid"
     "--enable-binary-leases"
+    #"--enable-libtool"
     "--without-libbind"
     "--with-ldap"
     "--with-ldapcrypto"
@@ -104,7 +107,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";
     homepage = http://www.isc.org/products/DHCP/;
-    license = licenses.isc;
+    license = licenses.mpl2;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -1,19 +1,20 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchzip
 , lib
 , ninja
 }:
 
 let
-  version = "1.2.2";
+  version = "1.2.4";
 in
 stdenv.mkDerivation rec {
   name = "libebur128-${version}";
 
-  src = fetchurl {
+  src = fetchzip {
+    version = 5;
     url = "https://github.com/jiixyj/libebur128/archive/v${version}.tar.gz";
-    sha256 = "1d0d7e855da04010a2432e11fbc596502caf11b61c3b571ccbcb10095fe44b43";
+    sha256 = "4ee70ac0aa4feefd17dfa48b9d9229e97b1ba4069b6b336215e142e0b2acdddc";
   };
 
   nativeBuildInputs = [

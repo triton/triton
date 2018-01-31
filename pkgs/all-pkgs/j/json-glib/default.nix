@@ -10,18 +10,14 @@
 }:
 
 let
-  inherit (lib)
-    boolEn;
-
-  versionMajor = "1.4";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "1.4";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/json-glib/${channel}/${name}.tar.xz";
     sha256 = "2d7709a44749c7318599a6829322e081915bdc73f5be5045882ed120bb686dc8";
   };
 
@@ -52,7 +48,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/json-glib/${versionMajor}/"
+      sha256Url = "https://download.gnome.org/sources/json-glib/${channel}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

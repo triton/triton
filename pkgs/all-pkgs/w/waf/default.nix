@@ -8,6 +8,14 @@
 }:
 
 let
+  autowaf = fetchurl {
+    # r101
+    # This is not a persistent URL since it is the SVN repo, so we rely on
+    # using the multihash.
+    url = "http://svn.drobilla.net/autowaf/autowaf.py";
+    multihash = "Qmbztdz9ry33VWVtgzASTbXDwcwxKtmFBZ1y5nsHA1rE97";
+    sha256 = "6cecb0c26bcbe046f8ef4742ae46834518dabff59dfab68dd2ae1f9704b193bd";
+  };
   sources = {
     "1.9" = {
       version = "1.9.15";
@@ -49,7 +57,8 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    ./waf-light build
+    cp -v ${autowaf} autowaf.py
+    ./waf-light build --tools=$(pwd)/autowaf.py
   '';
 
   installPhase = ''

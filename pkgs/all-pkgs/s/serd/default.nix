@@ -1,40 +1,29 @@
 { stdenv
 , fetchurl
-, python
+, waf
 
 , pcre
 }:
 
 stdenv.mkDerivation rec {
-  name = "serd-0.24.0";
+  name = "serd-0.28.0";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${name}.tar.bz2";
-    sha256 = "8cfb8ade8d9a6f784da6e00ac05a28b7de440df5d2513796cd34aaa2754f6a6c";
+    sha256 = "1df21a8874d256a9f3d51a18b8c6e2539e8092b62cc2674b110307e93f898aec";
   };
 
   nativeBuildInputs = [
-    python
+    waf
   ];
 
   buildInputs = [
     pcre
   ];
 
-  postPatch = ''
-    patchShebangs ./waf
-  '';
-
-  configurePhase = ''
-    ./waf configure --prefix=$out
-  '';
-
-  buildPhase = ''
-    ./waf
-  '';
-
-  installPhase = ''
-    ./waf install
+  postPatch = /* Fix compatibility with newer autowaf */ ''
+    sed -i wscript \
+      -e 's/test=True/debug_by_default=False/'
   '';
 
   passthru = {

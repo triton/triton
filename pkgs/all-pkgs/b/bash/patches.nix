@@ -11,4 +11,10 @@
   "bash44-010" = "01lfhrkdsdkdz8ypzapr614ras23x7ckjnr60aa5bzkaqprccrc4";
   "bash44-011" = "038p7mhnq9m65g505hi3827jkf9f35nd1cy00w8mwafpyxp44mnx";
   "bash44-012" = "0gh6lbb1rwpk44pvbamm6vzdfi50xnwkqd9v7s8cjwk3pz973hps";
+  "bash44-013" = "1djkx0w9v62q78gz3jsvamj1jq53i6hbfrfhhsw86ihwpjnfy98v";
+  "bash44-014" = "0z5ikcq9zyxw79d0z36r5p0mspnb5piavbv03jmlan1wnknmrxx7";
+  "bash44-015" = "09n307fi1j257abhm295k6ksmnzw47ka2zhnr0i5lbdnpvn04xnk";
+  "bash44-016" = "1cgi1y6mifm8hsgv4avj5ih76535js3qba1sqwbfvp7si76927sh";
+  "bash44-017" = "0w6jpj2giakji1ir83rpkx1y7n7xqppah3j748m6dm38hywr0gvp";
+  "bash44-018" = "1k58h4wxbsg7r4rwhrvzx5hfbapba2nxjysbhh6qp6ki5ys99i2v";
 }

@@ -7,6 +7,9 @@
 
 , alsa-lib
 , libftdi
+, libice
+, libsm
+, libx11
 , libusb-compat
 , linux-headers
 , portaudio
@@ -20,14 +23,14 @@
 # TODO: usb support
 
 let
-  version = "0.9.4d";
+  version = "0.10.1";
 in
 stdenv.mkDerivation rec {
   name = "lirc-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/lirc/LIRC/${version}/${name}.tar.bz2";
-    sha256 = "c68f18c35b489b865c0a741d119b136e8702191538cd3551b977a7af6c4e41ab";
+    sha256 = "8b753c60df2a7f5dcda2db72c38e448ca300c3b4f6000c1501fcb0bd5df414f2";
   };
 
   nativeBuildInputs = [
@@ -40,17 +43,19 @@ stdenv.mkDerivation rec {
   buildInputs = [
     alsa-lib
     libftdi
+    libice
+    libsm
     libusb-compat
+    libx11
     linux-headers
     portaudio
     systemd_lib
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
   ];
 
   postPatch = ''
     patchShebangs .
+    sed -i 's,^PYTHONPATH *=,PYTHONPATH := $(PYTHONPATH):,' \
+      Makefile.in
     sed -i "s,PYTHONPATH=,PYTHONPATH=$(toPythonPath ${python3Packages.pyyaml}):," \
       doc/Makefile.in
     sed -i "s,/usr/include/linux,${linux-headers}/include/linux,g" \

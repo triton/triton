@@ -3557,6 +3557,8 @@ subversion = callPackageAlias "subversion_1-9" { };
 
 sudo = callPackage ../all-pkgs/s/sudo { };
 
+suil = callPackage ../all-pkgs/s/suil { };
+
 sushi_3-24 = callPackage ../all-pkgs/s/sushi {
   channel = "3.24";
   atk = pkgs.atk_2-26;

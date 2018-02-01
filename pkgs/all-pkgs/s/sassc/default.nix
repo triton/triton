@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "3.4.5";
+  version = "3.4.8";
 in
 stdenv.mkDerivation rec {
   name = "sassc-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "sass";
     repo = "sassc";
     rev = "${version}";
-    sha256 = "c6420496ef63e5e031f406995a7f330ad934df7d350df38f5d7f2cc85d4118e8";
+    sha256 = "096400650816e68c3db2fe0a3716623cf13a136768396059087270b5f543a766";
   };
 
   postPatch = ''

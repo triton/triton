@@ -37,16 +37,16 @@ let
     platforms;
 
   channel = "0.3";
-  version = "${channel}.26";
+  version = "${channel}.28";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmeiUWR7ewiY2eThcAXu1o4ehKakz3jcHR8VEZuJP2R91Z";
+    multihash = "QmdEucnqs1tNDQseGH2pSozoaKwWsqiaHRNea2vWKe6qGR";
     hashOutput = false;
-    sha256 = "6eff9844c4776546213f5e187e1ebcf646d0d4804ebc6d3dd62003cd4d5c3fa9";
+    sha256 = "152f87604a5a191775329dfb63764efa1d5c32403d1438da68e242f96b7d23ff";
   };
 
   nativeBuildInputs = [
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     libwebp
     openexr
     pango
-    #v4l_lib
+    v4l_lib
   ];
 
   configureFlags = [
@@ -104,9 +104,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (gdk-pixbuf != null)}-gdk-pixbuf"
     "--without-lensfun"
     "--${boolWt (librsvg != null)}-librsvg"
-    # Requires --with-libv4l
-    #"--${boolWt (v4l_lib != null)}-libv4l2"
-    "--without-libv4l2"
+    "--${boolWt (v4l_lib != null)}-libv4l2"
     "--${boolWt (openexr != null)}-openexr"
     "--without-sdl"
     "--${boolWt (libraw != null)}-libraw"
@@ -114,8 +112,7 @@ stdenv.mkDerivation rec {
     "--without-graphviz"
     "--without-lua"
     "--${boolWt (ffmpeg != null)}-libavformat"
-    #"--${boolWt (v4l_lib != null)}-libv4l"
-    "--without-libv4l"
+    "--${boolWt (v4l_lib != null)}-libv4l"
     "--${boolWt (lcms2 != null)}-lcms"
     "--without-libspiro"
     "--${boolWt (exiv2 != null)}-exiv2"

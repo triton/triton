@@ -1234,6 +1234,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   kvazaar = null;
   ladspa-sdk = null;
   #libavc1394 = null;
+  libbluray = null;
   libbs2b = null;
   libcaca = null;
   libdc1394 = null;
@@ -1883,6 +1884,7 @@ gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
 gvfs_1-34 = callPackage ../all-pkgs/g/gvfs {
   channel = "1.34";
+  libbluray = null;
   libsoup = pkgs.libsoup_2-60;
 };
 gvfs = callPackageAlias "gvfs_1-34" { };
@@ -2796,6 +2798,7 @@ mpfr = callPackage ../all-pkgs/m/mpfr { };
 mpv_generics = overrides: callPackage ../all-pkgs/m/mpv ({
   jack2_lib = null;
   lcms2 = null;
+  libbluray = null;
   libbs2b = null;
   libcaca = null;
   mujs = null;

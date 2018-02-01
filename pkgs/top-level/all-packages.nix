@@ -2810,17 +2810,17 @@ mpv_generics = overrides: callPackage ../all-pkgs/m/mpv ({
 } // overrides);
 mpv_0-27 = pkgs.mpv_generics {
   channel = "0.27";
-  waf = callPackageAlias "waf_1-9" { };
+  waf = pkgs.python3Packages.waf_1-9;
 };
 mpv_0-28 = pkgs.mpv_generics {
   channel = "0.28";
   ffmpeg = callPackageAlias "ffmpeg_head" { };  # Requires 3.5+
-  waf = callPackageAlias "waf_1-9" { };
+  waf = pkgs.python3Packages.waf_1-9;
 };
 mpv_head = pkgs.mpv_generics {
   channel = "999";
   ffmpeg = pkgs.ffmpeg_head;  # Requires newer than latest release
-  waf = callPackageAlias "waf_1-9" { };
+  waf = pkgs.python3Packages.waf_1-9;
 };
 mpv = callPackageAlias "mpv_0-27" { };
 
@@ -3808,13 +3808,7 @@ vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
 
 w3m = callPackage ../all-pkgs/w/w3m { };
 
-waf_1-9 = callPackage ../all-pkgs/w/waf {
-  channel = "1.9";
-};
-waf_2-0 = callPackage ../all-pkgs/w/waf {
-  channel = "2.0";
-};
-waf = callPackageAlias "waf_2-0" { };
+waf = pkgs.python3Packages.waf;
 
 wavpack = callPackage ../all-pkgs/w/wavpack { };
 

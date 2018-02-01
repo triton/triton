@@ -2,7 +2,7 @@
 , fetchurl
 , lib
 
-, python3
+, python
 
 , channel
 }:
@@ -50,24 +50,21 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    python3
+    python
   ];
+
+  PYTHON_EXE = "${python.interpreter}";
 
   setupHook = ./setup-hook.sh;
 
-  postPatch = ''
-    sed -i waf-light -e 's,env python,env python3,'
-    patchShebangs waf-light
-  '';
-
   configurePhase = ''
-    ./waf-light configure
+    ${python.interpreter} waf-light configure
   '';
 
   buildPhase = ''
     cp -v ${autowaf} autowaf.py
     cp -v ${lv2} lv2.py
-    ./waf-light build --tools=$(pwd)/autowaf.py,$(pwd)/lv2.py
+    ${python.interpreter} waf-light build --tools=$(pwd)/autowaf.py,$(pwd)/lv2.py
   '';
 
   installPhase = ''

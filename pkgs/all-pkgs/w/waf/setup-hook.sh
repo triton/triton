@@ -21,19 +21,19 @@ wafConfigurePhase() {
   wafFlagsArray+=('--jobs' "$NIX_BUILD_CORES")
 
   echo "configure flags: $wafFlags ${wafFlagsArray[@]}"
-  ./waf configure $wafFlags "${wafFlagsArray[@]}"
+  @PYTHON_EXE@ waf configure $wafFlags "${wafFlagsArray[@]}"
   eval "$postConfigure"
 }
 
 wafBuildPhase() {
   eval "$preBuild"
-  ./waf build --jobs $NIX_BUILD_CORES
+  @PYTHON_EXE@ waf build --jobs $NIX_BUILD_CORES
   eval "$postBuild"
 }
 
 wafInstallPhase() {
   eval "$preInstall"
-  ./waf install --jobs $NIX_BUILD_CORES
+  @PYTHON_EXE@ waf install --jobs $NIX_BUILD_CORES
   eval "$postInstall"
 }
 
@@ -41,8 +41,10 @@ remove_waf_link() {
   rm -fv 'waf'
 }
 
-if [ -n "${wafSetupHook:-true}" ] ; then
-  preConfigurePhases+=('waf_unpack')
+if [ -n "${wafSetupHook-true}" ] ; then
+  if [ -z "${wafUseVendored-}" ]; then
+    preConfigurePhases+=('waf_unpack')
+  fi
 
   configurePhase='wafConfigurePhase'
 
@@ -50,6 +52,7 @@ if [ -n "${wafSetupHook:-true}" ] ; then
 
   installPhase='wafInstallPhase'
 
-  postPhases+=('remove_waf_link')
+  if [ -z "${wafUseVendored-}" ]; then
+    postPhases+=('remove_waf_link')
+  fi
 fi
-

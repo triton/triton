@@ -16,6 +16,7 @@
 , libsndfile
 , libusb
 , libvorbis
+, libx11
 , mesa_noglu
 , mp4v2
 , opus
@@ -28,9 +29,8 @@
 , soundtouch
 , sqlite
 , taglib
-, vamp
+, vamp-plugin-sdk
 , wavpack
-, xorg
 }:
 
 let
@@ -62,6 +62,7 @@ stdenv.mkDerivation rec {
     libsndfile
     libusb
     libvorbis
+    libx11
     mesa_noglu
     mp4v2
     opus
@@ -74,9 +75,8 @@ stdenv.mkDerivation rec {
     soundtouch
     sqlite
     taglib
-    vamp.vampSDK
+    vamp-plugin-sdk
     wavpack
-    xorg.libX11
   ];
 
   patches = [

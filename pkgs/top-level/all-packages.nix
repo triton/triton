@@ -3770,6 +3770,8 @@ vala = callPackageAlias "vala_0-38" { };
 
 valgrind = callPackage ../all-pkgs/v/valgrind { };
 
+vamp-plugin-sdk = callPackage ../all-pkgs/v/vamp-plugin-sdk { };
+
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vcdimager = callPackage ../all-pkgs/v/vcdimager { };
@@ -4425,8 +4427,6 @@ libstartup_notification =
   t1lib = callPackage ../development/libraries/t1lib { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
-#
-  vamp = callPackage ../development/libraries/audio/vamp { };
 #
   webrtc-audio-processing =
     callPackage ../development/libraries/webrtc-audio-processing { };

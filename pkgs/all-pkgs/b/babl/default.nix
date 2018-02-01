@@ -1,20 +1,20 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
-  major = "0.1";
-  patch = "38";
-  version = "${major}.${patch}";
+  channel = "0.1";
+  version = "${channel}.42";
 in
 stdenv.mkDerivation rec {
   name = "babl-${version}";
 
   src = fetchurl {
-    url = "https://download.gimp.org/pub/babl/${major}/${name}.tar.bz2";
-    multihash = "QmZdN7aK3sSb1u8xRNZ7J4XADGc25XfGZesK5djNgx7vKM";
+    url = "https://download.gimp.org/pub/babl/${channel}/${name}.tar.bz2";
+    multihash = "QmQNUhy9hHMNhTvy7xrw9hiJkMprqg3KGbY2512PRD4hSg";
     hashOutput = false;
-    sha256 = "a0f9284fcade0377d5227f73f3bf0c4fb6f1aeee2af3a7d335a90081bf5fee86";
+    sha256 = "6859aff3d7210d1f0173297796da4581323ef61e6f0c1e1c8f0ebb95a47787f1";
   };
 
   passthru = {
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Image pixel format conversion library";
     homepage = http://gegl.org/babl/;
     license = licenses.gpl3;

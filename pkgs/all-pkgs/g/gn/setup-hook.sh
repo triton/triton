@@ -2,7 +2,8 @@ gnConfigurePhase() {
   eval "$preConfigure"
 
   echo "gn flags: $gnFlags ${gnFlagsArray[@]}"
-  gn gen --args="$gnFlags ${gnFlagsArray[@]}" out/Release
+  gn gen out/Release --args="$gnFlags ${gnFlagsArray[@]}"
+  cd out/Release
 
   eval "$postConfigure"
 }

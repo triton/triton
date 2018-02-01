@@ -2314,6 +2314,8 @@ libksba = callPackage ../all-pkgs/l/libksba { };
 
 liblfds = callPackage ../all-pkgs/l/liblfds { };
 
+liblo = callPackage ../all-pkgs/l/liblo { };
+
 liblogging = callPackage ../all-pkgs/l/liblogging { };
 
 libmatroska = callPackage ../all-pkgs/l/libmatroska { };

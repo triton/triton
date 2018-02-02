@@ -1,5 +1,5 @@
 { stdenv
-, fetchgit
+, fetchFromGitHub
 , fetchurl
 , lib
 , makeWrapper
@@ -13,6 +13,7 @@
 , grpc
 , ice
 , inputproto
+, libbsd
 , libcap
 , libsndfile
 , libx11
@@ -54,12 +55,37 @@ let
     optionals
     optionalString;
 
+  mumble-theme = stdenv.mkDerivation {
+    name = "mumble-theme-2017-11-26";
+
+    src = fetchFromGitHub {
+      version = 5;
+      owner = "mumble-voip";
+      repo = "mumble-theme";
+      rev = "212f8e336d3c2b385c10a7462ceedb88919edd00";
+      sha256 = "fca086c622b6cde4530647b5c3fa7b05e50adfdbb99705df54efbc6c18668b7f";
+    };
+
+    installPhase = ''
+      mkdir -pv "$out"
+      cp -rv . $out/
+    '';
+  };
+
+  celt_mumble-src = fetchFromGitHub {
+    version = 5;
+    owner = "mumble-voip";
+    repo = "celt-0.7.0";
+    rev = "5a16cda6d78cda0cd14eb13c56c65d82724842e5";
+    sha256 = "1a6de45d1a2ccf5d08596adc16bff3f9ec257e9fcba77504250f8d9bf0545166";
+  };
+
   sources = {
     "git" = {
       fetchzipversion = 5;
-      version = "2018-01-08";
-      rev = "28a8e64569aeba0eb06969540103aa1c4387a519";
-      sha256 = "b46f2fe2e4edfe6962f3cb288209b90987f9acd07b1182ac61a88697a5d2875e";
+      version = "2018-01-21";
+      rev = "1b203cdc8becf8d273feb285240db2f27ffa261b";
+      sha256 = "3cc1076aadd8775fbcf6b24800479b1847b1b02d60a98e8426b257c956ec7e10";
     };
   };
   source = sources."${channel}";
@@ -67,9 +93,10 @@ in
 stdenv.mkDerivation rec {
   name = "${config}-${source.version}";
 
-  src = fetchgit {
+  src = fetchFromGitHub {
     version = source.fetchzipversion;
-    url = "https://github.com/mumble-voip/mumble";
+    owner = "mumble-voip";
+    repo = "mumble";
     inherit (source)
       rev
       sha256;
@@ -87,6 +114,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     avahi
     boost
+    libbsd
     openssl
     protobuf-cpp
     qt5
@@ -113,11 +141,43 @@ stdenv.mkDerivation rec {
     libcap
   ];
 
-  postPatch = optionalString (config == "mumble") ''
+  postPatch = ''
+    mkdir -v 3rdparty-new/
+  '' + optionalString (config == "mumble") ''
     export MUMBLE_PYTHON="${python2}/bin/python"
     patchShebangs ./scripts/rcc-depends.py
+
+    # Remove unused reference to Celt 0.11
+    sed -i main.pro \
+      -e 's, 3rdparty/celt-0.11.0-build,,'
+
+    # Hack mumble's version of celt back into the source tree.
+    pushd 3rdparty-new/
+      unpackFile '${celt_mumble-src}'
+      celt_unpack_dir="$(
+        find . -type d -regextype sed -regex '\./celt-0\.7\.0-[a-z0-9]\{40\}'
+      )"
+      mv -v "$celt_unpack_dir" celt-0.7.0-src/
+    popd
+
+    mkdir -pv themes/Mumble/
+    cp -rv ${mumble-theme}/* themes/Mumble/
   '' + optionalString (config == "murmur" && ice != null) ''
     sed -i 's,/usr,${ice},g' src/murmur/murmur_ice/murmur_ice.pro
+  '' + ''
+    sed -i src/CryptographicRandom.cpp \
+      -e 's,#include "arc4random_uniform.h",#include <bsd/stdlib.h>,' \
+      -e 's,mumble_arc4random,arc4random,g'
+    sed -i '/arc4random_uniform.cpp/d' src/mumble.pri
+
+    mv -v 3rdparty/celt-0.7.0-build/ 3rdparty-new/
+    mv -v 3rdparty/qqbonjour-src/ 3rdparty-new/
+    mv -v 3rdparty/smallft-src/ 3rdparty-new/
+
+    # Remove original 3rdparty directory to ensure vendored sources are
+    # not used.
+    rm -rv 3rdparty
+    mv -v 3rdparty-new 3rdparty
   '';
 
   configureFlags = [
@@ -130,7 +190,6 @@ stdenv.mkDerivation rec {
     "dbus"
     "${boolNo (avahi != null)}bonjour"
     "embed-tango-icons"
-    # static_qt_plugins
     "no-static_qt_plugins"
     "packaged"
     "no-update"
@@ -142,12 +201,11 @@ stdenv.mkDerivation rec {
     "no-oss"
     "${boolNo (portaudio != null)}portaudio"
     "no-wasapi"
-    # TODO: asio support, ASIOInput.h
-    "no-asio"
+    "no-asio"  # TODO: asio support, ASIOInput.h
     "no-bundled-speex"
-    # sbcelt
+    "no-sbcelt"
     "bundled-celt"
-    "${boolNo (opus != null)}opus"
+    "opus"
     "no-bundled-opus"
     "vorbis-recording"
     "${boolNo mumbleOverlay}overlay"
@@ -170,6 +228,8 @@ stdenv.mkDerivation rec {
   makeFlags = [
     "${releaseType}"
   ];
+
+  NIX_LDFLAGS = "-lbsd";
 
   installPhase = ''
     mkdir -pv "$out"/{lib,bin}

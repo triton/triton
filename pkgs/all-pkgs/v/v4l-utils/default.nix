@@ -14,7 +14,7 @@
 # TODO: qt5 support
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     any
     optionals
     optionalString;
@@ -28,12 +28,12 @@ assert any (n: n == channel) [
 # See libv4l in all-packages.nix for the libs only (overrides alsa, libX11 & QT)
 
 stdenv.mkDerivation rec {
-  name = "v4l-utils-1.12.6";
+  name = "v4l-utils-1.14.1";
 
   src = fetchurl {
     url = "https://linuxtv.org/downloads/v4l-utils/${name}.tar.bz2";
-    multihash = "QmVfyxtJPBRu5yPod7sdrs7ALpTx8GsGnmJTb8uFLkHkL2";
-    sha256 = "74da1040284eaba48277ad051ffe1fca0ee05c5591bb01179d928def6d0a4561";
+    multihash = "QmRA8oRsPtsdrHKqWiG2BAT3SudYQhBUXtduyTX3MhUMFz";
+    sha256 = "7974e5626447407d8a1ed531da0461c0fe00e599a696cb548a240d17d3519005";
   };
 
   nativeBuildInputs = [
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
   buildParallel = false;
   installParallel = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "V4L utils and libv4l, provide common image formats regardless of the v4l device";
     homepage = http://linuxtv.org/projects.php;
     license = licenses.lgpl21Plus;

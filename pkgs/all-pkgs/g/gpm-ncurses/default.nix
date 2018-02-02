@@ -9,7 +9,7 @@
 }:
 
 let
-  ncursesName = "ncurses-6.0";
+  ncursesName = "ncurses-6.1";
   gpmName = "gpm-1.20.7";
 in
 
@@ -19,7 +19,7 @@ stdenv.mkDerivation {
   srcs = [
     (fetchurl {
       url = "mirror://gnu/ncurses/${ncursesName}.tar.gz";
-      sha256 = "0q3jck7lna77z5r42f13c4xglc7azd19pxfrjrpgp2yf615w4lgm";
+      sha256 = "aa057eeeb4a14d470101eff4597d5833dcef5965331be3528c08d99cebaa0d17";
     })
     (fetchurl {
       url = "http://www.nico.schottelius.org/software/gpm/archives/${gpmName}.tar.bz2";

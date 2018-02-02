@@ -55,21 +55,12 @@ let
     optionals
     optionalString;
 
-  mumble-theme = stdenv.mkDerivation {
-    name = "mumble-theme-2017-11-26";
-
-    src = fetchFromGitHub {
-      version = 5;
-      owner = "mumble-voip";
-      repo = "mumble-theme";
-      rev = "212f8e336d3c2b385c10a7462ceedb88919edd00";
-      sha256 = "fca086c622b6cde4530647b5c3fa7b05e50adfdbb99705df54efbc6c18668b7f";
-    };
-
-    installPhase = ''
-      mkdir -pv "$out"
-      cp -rv . $out/
-    '';
+  mumble-theme = fetchFromGitHub {
+    version = 5;
+    owner = "mumble-voip";
+    repo = "mumble-theme";
+    rev = "212f8e336d3c2b385c10a7462ceedb88919edd00";
+    sha256 = "fca086c622b6cde4530647b5c3fa7b05e50adfdbb99705df54efbc6c18668b7f";
   };
 
   celt_mumble-src = fetchFromGitHub {
@@ -160,8 +151,13 @@ stdenv.mkDerivation rec {
       mv -v "$celt_unpack_dir" celt-0.7.0-src/
     popd
 
-    mkdir -pv themes/Mumble/
-    cp -rv ${mumble-theme}/* themes/Mumble/
+    pushd themes/
+      unpackFile '${mumble-theme}'
+      mumble_theme_unpack_dir="$(
+        find . -type d -regextype sed -regex '\./mumble-theme-[a-z0-9]\{40\}'
+      )"
+      mv -v "$mumble_theme_unpack_dir"/* Mumble/
+    popd
   '' + optionalString (config == "murmur" && ice != null) ''
     sed -i 's,/usr,${ice},g' src/murmur/murmur_ice/murmur_ice.pro
   '' + ''
@@ -174,7 +170,7 @@ stdenv.mkDerivation rec {
     mv -v 3rdparty/qqbonjour-src/ 3rdparty-new/
     mv -v 3rdparty/smallft-src/ 3rdparty-new/
 
-    # Remove original 3rdparty directory to ensure vendored sources are
+    # Remove the original 3rdparty directory to ensure vendored sources are
     # not used.
     rm -rv 3rdparty
     mv -v 3rdparty-new 3rdparty

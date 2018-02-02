@@ -6,7 +6,6 @@
 , python2
 , which
 
-, adwaita-qt
 , alsa-lib
 , avahi
 , boost
@@ -92,7 +91,6 @@ stdenv.mkDerivation rec {
     protobuf-cpp
     qt5
   ] ++ optionals (config == "mumble") [
-    adwaita-qt
     alsa-lib
     fixesproto
     inputproto
@@ -196,11 +194,6 @@ stdenv.mkDerivation rec {
         "$out/share/icons/hicolor/scalable/apps"
     ''
   );
-
-  preFixup = optionalString (config == "mumble") ''
-    wrapProgram $out/bin/mumble \
-      --suffix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH"
-  '';
 
   meta = with lib; {
     description = "Low-latency, high quality voice chat software";

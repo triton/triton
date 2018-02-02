@@ -6,7 +6,6 @@
 , makeWrapper
 , which
 
-, adwaita-qt
 , boost
 , dbus
 , libtorrent-rasterbar
@@ -71,7 +70,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adwaita-qt
     boost
     dbus
     libtorrent-rasterbar
@@ -106,11 +104,6 @@ stdenv.mkDerivation rec {
     "--without-qt4"
     "--with-qjson=system"
   ];
-
-  preFixup = optionalString guiSupport ''
-    wrapProgram $out/bin/qbittorrent \
-      --suffix 'QT_PLUGIN_PATH' : "$QT_PLUGIN_PATH"
-  '';
 
   passthru = {
     srcVerification = fetchurl {

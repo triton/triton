@@ -34,10 +34,10 @@ let
       sha256 = "9a03b84e6d2ac81a0add84a7946033ff9ea854de49252069e478b9f6efce6bd2";
     };
     head = {
-      fetchzipversion = 3;
-      version = "2017-10-13";
-      rev = "dc600d47ec91644bc366eb9d29fd10a34968b3b8";
-      sha256 = "2474b245e5e7b455f600ba61cc63ba3766807d6bd23b236211db2e2661052d92";
+      fetchzipversion = 5;
+      version = "2018-01-27";
+      rev = "e487b318776b0f564f944e1661e1574779852b51";
+      sha256 = "35a50522aa841fa0018891e9a2e2a2163846a60042dfd58326cc521b9f50c450";
     };
   };
   source = sources."${channel}";

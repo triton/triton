@@ -8,6 +8,7 @@
 , isPy3
 , lib
 , makeWrapper
+, python
 
 , adwaita-icon-theme
 , chardet
@@ -135,7 +136,7 @@ buildPythonPackage rec {
   );
 
   preBuild = ''
-    python setup.py build
+    ${python.interpreter} setup.py build
   '';
 
   postInstall = optionalString (channel == "head") ''

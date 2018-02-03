@@ -332,6 +332,11 @@ stdenv.mkDerivation rec {
       isPy3
       version;
 
+
+    pythonAtLeast = x: versionAtLeast channel x;
+    pythonOlder = x: versionOlder channel x;
+    isPyPy = false;
+
     dbSupport = db != null;
     opensslSupport = openssl != null;
     readlineSupport = readline != null;

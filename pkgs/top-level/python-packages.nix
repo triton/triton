@@ -9,11 +9,12 @@
 with pkgs.lib;
 
 let
-  pythonAtLeast = versionAtLeast python.channel;
-  pythonOlder = versionOlder python.channel;
-  isPy2 = strings.substring 0 1 python.channel == "2";
-  isPy3 = strings.substring 0 1 python.channel == "3";
-  isPyPy = python.executable == "pypy";
+  # DEPRECATED: Use python.<func> instead
+  pythonAtLeast = python.pythonAtLeast;
+  pythonOlder = python.pythonOlder;
+  isPy2 = python.isPy2;
+  isPy3 = python.isPy3;
+  isPyPy = python.isPyPy;
 
   fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
     pkgs.fetchurl rec {

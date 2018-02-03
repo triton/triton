@@ -15,7 +15,7 @@ let
     optionalString
     platforms;
 
-  version = "2018-01-13";
+  version = "2018-01-31";
 in
 stdenv.mkDerivation rec {
   name = "zimg-${version}";
@@ -24,8 +24,8 @@ stdenv.mkDerivation rec {
     version = 5;
     owner = "sekrit-twc";
     repo = "zimg";
-    rev = "22dd3be5b2c76b4b6c2c0a67f3e2880a10a3daf3";
-    sha256 = "9e1f724b4445f776ff44c5618267f558cae323bf584d83bc23af89748d7ccc80";
+    rev = "2637633924c54b455c7e208c420c53675ac45478";
+    sha256 = "8e706c7b01365885003659d5f584b9259bed61055ccdb8ea655b648b622a4d7d";
   };
 
   nativeBuildInputs = [

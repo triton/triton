@@ -11,6 +11,7 @@
 
 , adwaita-icon-theme
 , chardet
+, gdk-pixbuf
 , geoip
 , gnome-themes-standard
 , librsvg
@@ -147,6 +148,7 @@ buildPythonPackage rec {
 
   preFixup = ''
     wrapProgram $out/bin/deluge \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --run "$DEFAULT_GTK2_RC_FILES"

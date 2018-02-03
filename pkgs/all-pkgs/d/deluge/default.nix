@@ -126,7 +126,7 @@ buildPythonPackage rec {
         -e 's/_version = .*/_version = "${sources.stable.version}"/' # .dev"/'
     '' + /* Format the user-agent string the same as the release versions */ ''
       sed -i deluge/core/core.py \
-        -e "s/user_agent = .*/user_agent = 'Deluge {}'.format(deluge_version)/"
+        -e "s/user_agent = .*/user_agent = 'Deluge {}'.format(DELUGE_VER)/"
     '' + /* Fix incorrect path to build directory */ ''
       sed -i setup.py \
         -e '/js_basedir/ s|self.build_lib, ||'

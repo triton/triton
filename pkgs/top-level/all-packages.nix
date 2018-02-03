@@ -3287,6 +3287,11 @@ python36Packages =
     python = callPackageAlias "python36" { };
     self = callPackageAlias "python36Packages" { };
   });
+python37Packages =
+  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+    python = callPackageAlias "python37" { };
+    self = callPackageAlias "python37Packages" { };
+  });
 #pypyPackages =
 #  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
 #    python = callPackageAlias "pypy" { };

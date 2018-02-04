@@ -191,11 +191,11 @@ let
       multihash = "QmbxvBJpsNPSRDR8HyQDAzgSoqj8raaR4FewSXPAL8TMww";
       sha256 = "5a77278a63741efa74e26bf197b9bb09ac6381b9757391b922407210f0f991c0";
     };
-    "9.9" = { # Git
+    "9.9" = {  # Git
       fetchzipversion = 5;
-      version = "2018.01.30";
-      rev = "fe1e6c06d03432c3e9208f019533c1d701f485d0";
-      sha256 = "2c9336fa0718b6f9196c14baca41719794db1f707f79aff4c00dea85983c39c8";
+      version = "2018.02.04";
+      rev = "48bc9fffd11c05e75b9125d8cd90e9263108bd83";
+      sha256 = "1fba94c63afc43c472de40c791d7af2378c818ded1b06ca2e0994c0647147bcc";
     };
   };
   source = sources."${channel}";

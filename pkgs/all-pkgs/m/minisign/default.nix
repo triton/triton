@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "0.7";
+  version = "0.8";
 in
 stdenv.mkDerivation rec {
   name = "minisign-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "jedisct1";
     repo = "minisign";
     rev = version;
-    sha256 = "6278de7053bcdfb2e458bbed89b9570346291eba545f0d637ac117a512071533";
+    sha256 = "467b7085df42284be24d66ccb605d69fa71b9f6cf518c2d7f6eea40eafca1536";
   };
 
   nativeBuildInputs = [

@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";
     homepage = http://www.isc.org/products/DHCP/;
-    license = licenses.mpl2;
+    license = licenses.mpl20;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -2,23 +2,20 @@
 , cmake
 , fetchFromGitHub
 , ninja
-
-, boost
 }:
 
 let
-  rev = "86ae3a5aa7e2109d849b2df89176d6432a35265d";
-  date = "2017-11-29";
+  version = "0.6.1";
 in
 stdenv.mkDerivation rec {
-  name = "yaml-cpp-${date}";
+  name = "yaml-cpp-${version}";
 
   src = fetchFromGitHub {
     version = 5;
     owner = "jbeder";
     repo = "yaml-cpp";
-    inherit rev;
-    sha256 = "6b48a37f85f5033d5ebb03caa1f2e2b587fd9543c2a882f16aec69f42b2b97b6";
+    rev = "yaml-cpp-${version}";
+    sha256 = "264e3e3916509d5d2f32125dd0f884d2e35f15bdfbf914fe13ec8952f62d3713";
   };
 
   nativeBuildInputs = [
@@ -26,8 +23,8 @@ stdenv.mkDerivation rec {
     ninja
   ];
 
-  buildInputs = [
-    boost
+  cmakeFlags = [
+    "-DYAML_CPP_BUILD_TESTS=OFF"
   ];
 
   meta = with stdenv.lib; {

@@ -4,6 +4,8 @@
 , patchelf
 }:
 
+# https://help.resilio.com/hc/en-us/articles/206216855-Sync-2-x-change-log
+
 let
   inherit (lib)
     makeSearchPath;
@@ -12,7 +14,7 @@ let
     stdenv.cc.libc
   ];
 
-  version = "2.5.9";
+  version = "2.5.12";
 in
 stdenv.mkDerivation rec {
   name = "resilio-${version}";
@@ -20,7 +22,7 @@ stdenv.mkDerivation rec {
   src  = fetchurl {
     url  = "https://download-cdn.resilio.com/${version}/"
       + "linux-x64/resilio-sync_x64.tar.gz";
-    sha256 = "535b05aa27cc94e75a9aaacb9a1f8f4f37a83aca0efe12bb3f9fcaa25e7d426b";
+    sha256 = "87d9eb37714af68dc53c031e9e5f381c1130d07bc0a217f1140272024e71cf9c";
   };
 
   nativeBuildInputs = [

@@ -1,6 +1,7 @@
 { stdenv
-, autoreconfHook
+, cmake
 , fetchFromGitHub
+, ninja
 
 , acl
 , attr
@@ -32,7 +33,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
+    cmake
+    ninja
   ];
 
   buildInputs = [
@@ -50,25 +52,9 @@ stdenv.mkDerivation rec {
     zstd
   ];
 
-  postPatch = ''
-    sed -i 's,-Werror ,,g' Makefile.am
-  '';
-
-  configureFlags = [
-    "--with-zlib"
-    "--with-bz2lib"
-    "--with-iconv"
-    "--with-lz4"
-    "--with-lzma"
-    "--with-lzo2"
-    "--with-zstd"
-    "--without-nettle"
-    "--with-openssl"
-    "--with-xml2"
-    "--without-expat"
-    "--enable-posix-regex-lib"
-    "--enable-xattr"
-    "--enable-acl"
+  cmakeFlags = [
+    "-DENABLE_LZO=yes"
+    "-DPOSIX_REGEX_LIB=LIBPCREPOSIX"
   ];
 
   meta = with stdenv.lib; {

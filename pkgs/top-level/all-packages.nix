@@ -2110,7 +2110,9 @@ libaio = callPackage ../all-pkgs/l/libaio { };
 
 libao = callPackage ../all-pkgs/l/libao { };
 
-libarchive = callPackage ../all-pkgs/l/libarchive { };
+libarchive = callPackage ../all-pkgs/l/libarchive {
+  cmake = pkgs.cmake_bootstrap;
+};
 
 libasr = callPackage ../all-pkgs/l/libasr { };
 

@@ -1,25 +1,35 @@
 { stdenv
-, fetchgit
+, fetchzip
+, git
 
 , openssl
 , zlib
 }:
 
+let
+  rev = "dbaee2672be14374acb17266477c19294c6155f3";
+  date = "2018-01-19";
+in
 stdenv.mkDerivation {
-  name = "cgit-2017-08-10";
+  name = "cgit-${date}";
 
-  src = fetchgit {
-    version = 3;
-    url = "https://git.zx2c4.com/cgit";
-    rev = "51cc456b773a3bb7253fad2146c1a0d2b0fa98cb";
-    multihash = "QmaLBxCZxBictEMjkqVhhucgGJRbyC3DwduHY68JiRLRgf";
-    sha256 = "726227d351687922bdb0b28ab70846fc7063ee96e40b6d9c13337c3413d0165f";
+  src = fetchzip {
+    version = 5;
+    url = "https://git.zx2c4.com/cgit/snapshot/cgit-${rev}.tar.xz";
+    multihash = "QmQiyNJddSWgGgKZaJ3MUrHGmWfCUSjxFPSv6Urd1GUUSg";
+    sha256 = "e3caa1df9123c38cf48b546ed0c9ae5a454548505fbcf4f57883af741fb5b48c";
   };
 
   buildInputs = [
     openssl
     zlib
   ];
+
+  prePatch = ''
+    rm -r git
+    unpackFile "${git.src}"
+    mv git-* git
+  '';
 
   preBuild = ''
     makeFlagsArray+=("prefix=$out")

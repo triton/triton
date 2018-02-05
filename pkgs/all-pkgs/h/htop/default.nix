@@ -1,24 +1,33 @@
 { stdenv
 , fetchurl
+, pythonPackages
 
 , ncurses
 }:
 
 let
-  version = "2.0.2";
+  version = "2.1.0";
 in
 stdenv.mkDerivation rec {
   name = "htop-${version}";
 
   src = fetchurl {
     url = "https://hisham.hm/htop/releases/${version}/${name}.tar.gz";
-    multihash = "QmYxK5YMHnM31CskD7WycoUoyykyREqGXe6YoCH1atoxrP";
-    sha256 = "179be9dccb80cee0c5e1a1f58c8f72ce7b2328ede30fb71dcdf336539be2f487";
+    multihash = "QmPkY2DFLYqFgyHpbBy6rG3tp2pYJnxovqcQ6Z79b72fQ6";
+    sha256 = "3260be990d26e25b6b49fc9d96dbc935ad46e61083c0b7f6df413e513bf80748";
   };
+
+  nativeBuildInputs = [
+    pythonPackages.python
+  ];
 
   buildInputs = [
     ncurses
   ];
+
+  postPatch = ''
+    patchShebangs scripts/MakeHeader.py
+  '';
 
   meta = with stdenv.lib; {
     description = "An interactive process viewer for Linux";

@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "5.9.2";
+  version = "5.10.2";
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "5846b0abe2c0cbeae2ab162d62d26c9fd63cd30a425437c15827429cd3ece18e";
+    sha256 = "939b3107bdae1e2399e98df7727dcc1b1d13369f217c245762d754589a313099";
   };
 
   nativeBuildInputs = [
@@ -49,6 +49,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Environment vars used for building certain configurations
+  DISABLE_WARNING_AS_ERROR = "1";
   PORTABLE = "1";
   USE_SSE = "1";
   CMAKE_CXX_FLAGS = "-std=gnu++11";

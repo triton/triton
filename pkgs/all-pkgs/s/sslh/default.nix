@@ -8,18 +8,18 @@
 }:
 
 let
-  date = "2017-06-12";
-  rev = "21f524f71165538dcde9f8de32b9f69385ba0c87";
+  date = "2018-01-27";
+  rev = "1a6ba5edc0b4482182ec6603433435ff091f66b6";
 in
 stdenv.mkDerivation rec {
   name = "sslh-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "yrutschle";
     repo = "sslh";
     inherit rev;
-    sha256 = "0711e384c336932662bca7f8aec7288498b2da63c63d80d678010a52cc9ca268";
+    sha256 = "39d965e17745d8e51492734be2c9a7db8bb0cc1235db0e1f3a045d6ef3fa24a3";
   };
 
   buildInputs = [
@@ -30,9 +30,6 @@ stdenv.mkDerivation rec {
   ];
 
   makeFlags = [
-    "USELIBCONFIG=1"
-    "USELIBPCRE=1"
-    "USELIBWRAP="
     "USELIBCAP=1"
     "USESYSTEMD=1"
   ];

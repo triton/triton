@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.7.1";
+  version = "1.7.2";
 in
 stdenv.mkDerivation rec {
   name = "libconfig-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "hyperrealm";
     repo = "libconfig";
     rev = "v${version}";
-    sha256 = "e2d15bff0b626f7dd327aae24e9e239cb8398fca0490fa5f465f6daa883eb3c4";
+    sha256 = "678e74b44702adf3428de35befd3c5624d11d1f6c38fc6e54d61f59f32bc7387";
   };
 
   nativeBuildInputs = [

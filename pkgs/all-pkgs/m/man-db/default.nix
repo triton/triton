@@ -2,17 +2,25 @@
 , fetchurl
 , groff
 
+, bzip2
 , db
+, gzip
+, less
 , libpipeline
+, libseccomp
+, lzip
+, util-linux_full
+, xz
+, zlib
 }:
  
 stdenv.mkDerivation rec {
-  name = "man-db-2.7.6.1";
+  name = "man-db-2.8.0";
   
   src = fetchurl {
     url = "mirror://savannah/man-db/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "08edbc52f24aca3eebac429b5444efd48b9b90b9b84ca0ed5507e5c13ed10f3f";
+    sha256 = "362aad1c14751456b3c32c96864c655aeffb79841f70b87cb3d3c20962f59727";
   };
 
   nativeBuildInputs = [
@@ -22,19 +30,32 @@ stdenv.mkDerivation rec {
   buildInputs = [
     db
     libpipeline
+    libseccomp
+    zlib
   ];
+
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-systemdtmpfilesdir=$out/lib/tmpfiles.d"
+    )
+  '';
 
   configureFlags = [
     "--disable-setuid"
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--with-systemdtmpfilesdir=\${out}/lib/tmpfiles.d"
+    "--with-pager=${less}/bin/less"
+    "--with-nroff=${groff}/bin/nroff"
     "--with-eqn=${groff}/bin/eqn"
     "--with-neqn=${groff}/bin/neqn"
-    "--with-nroff=${groff}/bin/nroff"
-    "--with-pic=${groff}/bin/pic"
-    "--with-refer=${groff}/bin/refer"
     "--with-tbl=${groff}/bin/tbl"
+    "--with-col=${util-linux_full}/bin/col"
+    "--with-refer=${groff}/bin/refer"
+    "--with-pic=${groff}/bin/pic"
+    "--with-gzip=${gzip}/bin/gzip"
+    "--with-bzip2=${bzip2}/bin/bzip2"
+    "--with-xz=${xz}/bin/xz"
+    "--with-lzip=${lzip}/bin/lzip"
   ];
 
   preInstall = ''

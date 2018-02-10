@@ -2,13 +2,32 @@
 , fetchurl
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://gnu/patch/patch-${version}.tar.xz"
+  ];
+
+  version = "2.7.5";
+in
 stdenv.mkDerivation rec {
   name = "gnupatch-${version}";
-  version = "2.7.5";
+  inherit version;
 
   src = fetchurl {
-    url = "mirror://gnu/patch/patch-${version}.tar.xz";
+    urls = tarballUrls version;
+    hashOutput = false;
     sha256 = "16d2r9kpivaak948mxzc0bai45mqfw73m113wrkmbffnalv1b5gx";
+  };
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.7.6";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "259B 3792 B3D6 D319 212C  C4DC D5BF 9FEB 0313 653A";
+      inherit (src) outputHashAlgo;
+      outputHash = "ac610bda97abe0d9f6b7c963255a11dcb196c25e337c61f94e4778d632f1d8fd";
+    };
   };
 
   meta = with stdenv.lib; {

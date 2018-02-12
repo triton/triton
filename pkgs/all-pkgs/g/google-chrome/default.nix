@@ -6,6 +6,7 @@
 
 , adwaita-icon-theme
 , alsa-lib
+, at-spi2-atk
 , atk
 , bzip2
 , cairo
@@ -90,6 +91,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     alsa-lib
+    at-spi2-atk
     atk
     bzip2
     cairo

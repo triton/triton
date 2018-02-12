@@ -1,25 +1,28 @@
 { stdenv
 , fetchurl
 , lib
+, meson
+, ninja
 , util-macros
 }:
 
 stdenv.mkDerivation rec {
-  name = "videoproto-2.3.3";
+  name = "xorgproto-2018.2";
 
   src = fetchurl {
     url = "mirror://xorg/individual/proto/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "c7803889fd08e6fcaf7b68cc394fb038b2325d1f315e571a6954577e07cca702";
+    sha256 = "9709c08b65d8371637605db97247782d1f0fa0bfd2111e37999088bb11996e64";
   };
 
   nativeBuildInputs = [
+    meson
+    ninja
     util-macros
   ];
 
   configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
+    "-Dlegacy=false"
   ];
 
   passthru = {
@@ -31,14 +34,14 @@ stdenv.mkDerivation rec {
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyFingerprints = [
         # Adam Jackson
-        "DD38 563A 8A82 2453 7D1F  90E4 5B8A 2D50 A0EC D0D3"
+        "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
       ];
       failEarly = true;
     };
   };
 
   meta = with lib; {
-    description = "";
+    description = "X.Org protocol headers";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

@@ -733,8 +733,6 @@ bcachefs-tools = callPackage ../all-pkgs/b/bcachefs-tools { };
 
 beecrypt = callPackage ../all-pkgs/b/beecrypt { };
 
-bigreqsproto = callPackage ../all-pkgs/b/bigreqsproto { };
-
 bind = callPackage ../all-pkgs/b/bind { };
 
 bind_tools = callPackageAlias "bind" {
@@ -919,8 +917,6 @@ colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 
 colorhug-client = callPackage ../all-pkgs/c/colorhug-client { };
 
-compositeproto = callPackage ../all-pkgs/c/compositeproto { };
-
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
@@ -964,8 +960,6 @@ curl_full = callPackage ../all-pkgs/c/curl {
 };
 
 cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };
-
-damageproto = callPackage ../all-pkgs/d/damageproto { };
 
 dash = callPackage ../all-pkgs/d/dash { };
 
@@ -1041,8 +1035,6 @@ dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
 dmraid = callPackage ../all-pkgs/d/dmraid { };
 
-dmxproto = callPackage ../all-pkgs/d/dmxproto { };
-
 dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };
 
 dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
@@ -1072,10 +1064,6 @@ double-conversion = callPackage ../all-pkgs/d/double-conversion { };
 dpdk = callPackage ../all-pkgs/d/dpdk { };
 
 dpkg = callPackage ../all-pkgs/d/dpkg { };
-
-dri2proto = callPackage ../all-pkgs/d/dri2proto { };
-
-dri3proto = callPackage ../all-pkgs/d/dri3proto { };
 
 #dropbox = callPackage ../all-pkgs/d/dropbox { };
 
@@ -1331,8 +1319,6 @@ firefox_wrapper = callPackage ../all-pkgs/f/firefox/wrapper.nix { };
 
 fish = callPackage ../all-pkgs/f/fish { };
 
-fixesproto = callPackage ../all-pkgs/f/fixesproto { };
-
 flac = callPackage ../all-pkgs/f/flac { };
 
 flashmap = callPackage ../all-pkgs/f/flashmap { };
@@ -1345,13 +1331,9 @@ flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };
 
-fontcacheproto = callPackage ../all-pkgs/f/fontcacheproto { };
-
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
 fontforge = callPackage ../all-pkgs/f/fontforge { };
-
-fontsproto = callPackage ../all-pkgs/f/fontsproto { };
 
 fox = callPackage ../all-pkgs/f/fox { };
 
@@ -1473,8 +1455,6 @@ glibmm_2-52 = callPackage ../all-pkgs/g/glibmm {
 glibmm = callPackageAlias "glibmm_2-52" { };
 
 glog = callPackage ../all-pkgs/g/glog { };
-
-glproto = callPackage ../all-pkgs/g/glproto { };
 
 glu = callPackage ../all-pkgs/g/glu { };
 
@@ -1958,11 +1938,11 @@ imlib2 = callPackage ../all-pkgs/i/imlib2 { };
 
 iniparser = callPackage ../all-pkgs/i/iniparser { };
 
-inkscape = callPackage ../all-pkgs/i/inkscape { };
+inkscape = callPackage ../all-pkgs/i/inkscape {
+  gtkmm = pkgs.gtkmm_3;
+};
 
 inotify-tools = callPackage ../all-pkgs/i/inotify-tools { };
-
-inputproto = callPackage ../all-pkgs/i/inputproto { };
 
 intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
@@ -2040,8 +2020,6 @@ jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
 judy = callPackage ../all-pkgs/j/judy { };
 
 kbd = callPackage ../all-pkgs/k/kbd { };
-
-kbproto = callPackage ../all-pkgs/k/kbproto { };
 
 kea = callPackage ../all-pkgs/k/kea { };
 
@@ -3232,10 +3210,6 @@ ppp = callPackage ../all-pkgs/p/ppp { };
 
 pptp = callPackage ../all-pkgs/p/pptp { };
 
-presentproto = callPackage ../all-pkgs/p/presentproto { };
-
-printproto = callPackage ../all-pkgs/p/printproto { };
-
 procps = callPackageAlias "procps-ng" { };
 
 procps-ng = callPackage ../all-pkgs/p/procps-ng { };
@@ -3349,8 +3323,6 @@ quazip = callPackage ../all-pkgs/q/quazip { };
 
 radvd = callPackage ../all-pkgs/r/radvd { };
 
-randrproto = callPackage ../all-pkgs/r/randrproto { };
-
 rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
 raptor2 = callPackage ../all-pkgs/r/raptor2 { };
@@ -3365,17 +3337,11 @@ readline = callPackage ../all-pkgs/r/readline { };
 
 recode = callPackage ../all-pkgs/r/recode { };
 
-recordproto = callPackage ../all-pkgs/r/recordproto { };
-
 redis = callPackage ../all-pkgs/r/redis { };
-
-renderproto = callPackage ../all-pkgs/r/renderproto { };
 
 resilio = callPackage ../all-pkgs/r/resilio { };
 
 resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
-
-resourceproto = callPackage ../all-pkgs/r/resourceproto { };
 
 rest = callPackage ../all-pkgs/r/rest { };
 
@@ -3436,8 +3402,6 @@ schroedinger = callPackage ../all-pkgs/s/schroedinger { };
 scons = pkgs.python2Packages.scons;
 
 screen = callPackage ../all-pkgs/s/screen { };
-
-scrnsaverproto = callPackage ../all-pkgs/s/scrnsaverproto { };
 
 scrot = callPackage ../all-pkgs/s/scrot { };
 
@@ -3711,7 +3675,6 @@ transmission = callPackageAlias "transmission_2" { };
 
 transmission-remote-gtk = callPackage ../all-pkgs/t/transmission-remote-gtk { };
 
-trapproto = callPackage ../all-pkgs/t/trapproto { };
 
 trousers = callPackage ../all-pkgs/t/trousers { };
 
@@ -3787,8 +3750,6 @@ vde2 = callPackage ../all-pkgs/v/vde2 { };
 
 vid-stab = callPackage ../all-pkgs/v/vid-stab { };
 
-videoproto = callPackage ../all-pkgs/v/videoproto { };
-
 vim = callPackage ../all-pkgs/v/vim { };
 
 vino_3-22 = callPackage ../all-pkgs/v/vino {
@@ -3833,8 +3794,6 @@ wget = callPackage ../all-pkgs/w/wget { };
 
 which = callPackage ../all-pkgs/w/which { };
 
-windowswmproto = callPackage ../all-pkgs/w/windowswmproto { };
-
 winusb = callPackage ../all-pkgs/w/winusb { };
 
 wiredtiger = callPackage ../all-pkgs/w/wiredtiger { };
@@ -3865,13 +3824,9 @@ xapian-core = callPackage ../all-pkgs/x/xapian-core { };
 
 xavs = callPackage ../all-pkgs/x/xavs { };
 
-xcmiscproto = callPackage ../all-pkgs/x/xcmiscproto { };
-
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
 
 xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };
-
-xextproto = callPackage ../all-pkgs/x/xextproto { };
 
 xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
 
@@ -3880,16 +3835,6 @@ xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 xf86-video-amdgpu = callPackage ../all-pkgs/x/xf86-video-amdgpu { };
 
 xf86-video-intel = callPackage ../all-pkgs/x/xf86-video-intel { };
-
-xf86bigfontproto = callPackage ../all-pkgs/x/xf86bigfontproto { };
-
-xf86dgaproto = callPackage ../all-pkgs/x/xf86dgaproto { };
-
-xf86driproto = callPackage ../all-pkgs/x/xf86driproto { };
-
-xf86miscproto = callPackage ../all-pkgs/x/xf86miscproto { };
-
-xf86vidmodeproto = callPackage ../all-pkgs/x/xf86vidmodeproto { };
 
 xfconf_4-12 = callPackage ../all-pkgs/x/xfconf {
   channel = "4.12";
@@ -3907,8 +3852,6 @@ xfsprogs_lib = pkgs.xfsprogs.lib;
 xine-lib = callPackage ../all-pkgs/x/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/x/xine-ui { };
-
-xineramaproto = callPackage ../all-pkgs/x/xineramaproto { };
 
 xmlto = callPackage ../all-pkgs/x/xmlto { };
 
@@ -4029,9 +3972,41 @@ xorg = recurseIntoAttrs (
   }
 );
 
-xorg-server = callPackage ../all-pkgs/x/xorg-server { };
+xorgproto = callPackage ../all-pkgs/x/xorgproto { };
+# DEPRECATED aliases
+bigreqsproto = callPackageAlias "xorgproto" { };
+compositeproto = callPackageAlias "xorgproto" { };
+damageproto = callPackageAlias "xorgproto" { };
+dmxproto = callPackageAlias "xorgproto" { };
+dri2proto = callPackageAlias "xorgproto" { };
+dri3proto = callPackageAlias "xorgproto" { };
+fixesproto = callPackageAlias "xorgproto" { };
+fontcacheproto = callPackageAlias "xorgproto" { };
+fontsproto = callPackageAlias "xorgproto" { };
+glproto = callPackageAlias "xorgproto" { };
+inputproto = callPackageAlias "xorgproto" { };
+kbproto = callPackageAlias "xorgproto" { };
+presentproto = callPackageAlias "xorgproto" { };
+printproto = callPackageAlias "xorgproto" { };
+randrproto = callPackageAlias "xorgproto" { };
+recordproto = callPackageAlias "xorgproto" { };
+renderproto = callPackageAlias "xorgproto" { };
+resourceproto = callPackageAlias "xorgproto" { };
+scrnsaverproto = callPackageAlias "xorgproto" { };
+trapproto = callPackageAlias "xorgproto" { };
+videoproto = callPackageAlias "xorgproto" { };
+windowswmproto = callPackageAlias "xorgproto" { };
+xcmiscproto = callPackageAlias "xorgproto" { };
+xextproto = callPackageAlias "xorgproto" { };
+xf86bigfontproto = callPackageAlias "xorgproto" { };
+xf86dgaproto = callPackageAlias "xorgproto" { };
+xf86driproto = callPackageAlias "xorgproto" { };
+xf86miscproto = callPackageAlias "xorgproto" { };
+xf86vidmodeproto = callPackageAlias "xorgproto" { };
+xineramaproto = callPackageAlias "xorgproto" { };
+xproto = callPackageAlias "xorgproto" { };
 
-xproto = callPackage ../all-pkgs/x/xproto { };
+xorg-server = callPackage ../all-pkgs/x/xorg-server { };
 
 xrefresh = callPackage ../all-pkgs/x/xrefresh { };
 

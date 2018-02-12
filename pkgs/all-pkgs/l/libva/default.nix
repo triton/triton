@@ -14,7 +14,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2.0.0";
+  version = "2.1.0";
 in
 stdenv.mkDerivation rec {
   name = "libva-${version}";
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533";
+    sha256 = "f3fa953a11d3210c3a4ee79031abdbe0863d5ce13d9b3f93f315f1eec60a4b0f";
   };
 
   buildInputs = [

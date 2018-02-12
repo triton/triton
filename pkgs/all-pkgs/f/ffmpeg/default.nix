@@ -187,9 +187,9 @@ let
 
   sources = {
     "3.4" = {
-      version = "3.4.1";
-      multihash = "QmbxvBJpsNPSRDR8HyQDAzgSoqj8raaR4FewSXPAL8TMww";
-      sha256 = "5a77278a63741efa74e26bf197b9bb09ac6381b9757391b922407210f0f991c0";
+      version = "3.4.2";
+      multihash = "QmeauNNSeUBumLAq5tkic7FusmmBgynfUSuy7HNt2Xm47x";
+      sha256 = "2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740";
     };
     "9.9" = {  # Git
       fetchzipversion = 5;
@@ -200,9 +200,6 @@ let
   };
   source = sources."${channel}";
 in
-
-# FIXME: reminder to fix this
-assert source.version == "3.4.2" -> throw "Remove x264 hack";
 
 /*
  *  Licensing dependencies
@@ -605,13 +602,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libvpx != null)}-libvpx"
     "--${boolEn (wavpack != null)}-libwavpack"
     "--${boolEn (libwebp != null)}-libwebp"
-    # FIXME: remove hack for 3.4.2+
-    (
-      if compareVersions "3.4.2" source.version != 1 then
-        "--${boolEn (x264 != null)}-libx264"
-      else
-        "--disable-libx264"
-    )
+    "--${boolEn (x264 != null)}-libx264"
     "--${boolEn (x265 != null)}-libx265"
     "--${boolEn (xavs != null)}-libxavs"
     #"--${boolEn (libxcb != null)}-libxcb"

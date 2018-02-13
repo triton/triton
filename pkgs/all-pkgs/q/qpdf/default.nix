@@ -3,6 +3,7 @@
 , lib
 , perl
 
+, libjpeg
 , pcre
 , zlib
 
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libjpeg
     pcre
     zlib
   ] ++ optionals doCheck [
@@ -41,7 +43,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs ./qpdf/fix-qdf
+    patchShebangs qpdf/fix-qdf
   '';
 
   configureFlags = [
@@ -61,7 +63,7 @@ stdenv.mkDerivation rec {
   ];
 
   preCheck = ''
-    patchShebangs ./qtest/bin/qtest-driver
+    patchShebangs qtest/bin/qtest-driver
   '';
 
   doCheck = false;

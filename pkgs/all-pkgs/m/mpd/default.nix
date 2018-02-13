@@ -64,17 +64,17 @@ let
     optional
     optionals;
 
-  versionMajor = "0.20";
-  versionMinor = "15";
+  channel = "0.20";
+  version = "${channel}.17";
 in
 stdenv.mkDerivation rec {
-  name = "mpd-${versionMajor}.${versionMinor}";
+  name = "mpd-${version}";
 
   src = fetchurl {
-    url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
+    url = "https://www.musicpd.org/download/mpd/${channel}/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmSrmkW1YesLwAV23jBynxTgvtxGXpvYUZR5jYbohW3fu9";
-    sha256 = "c69c4f67e665380ea3bbde6cff8958edc85f7cd40e7918ae5ce0a2184ca9eb40";
+    multihash = "QmYEHg1reEc4VyMFaWXtERbhsyC1wMVnXLKsxbJmfwzMR4";
+    sha256 = "2cb0e7f0e219df60a04b3c997d8ed7ad458ebfd89fd045e03fbe727277d5dac1";
   };
 
   nativeBuildInputs = [ ] ++ optionals documentationSupport [

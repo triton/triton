@@ -694,6 +694,10 @@ atop = callPackage ../all-pkgs/a/atop { };
 
 attr = callPackage ../all-pkgs/a/attr { };
 
+aubio = callPackage ../all-pkgs/a/aubio {
+  waf = pkgs.python2Packages.waf;
+};
+
 audiofile = callPackage ../all-pkgs/a/audiofile { };
 
 audit_full = callPackage ../all-pkgs/a/audit { };

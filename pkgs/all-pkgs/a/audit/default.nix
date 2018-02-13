@@ -2,7 +2,6 @@
 , fetchurl
 , swig
 
-, go
 , libcap-ng
 , krb5_lib
 , openldap
@@ -22,15 +21,15 @@ in
 let
   libOnly = prefix == "lib";
 
-  version = "2.7.6";
+  version = "2.8.2";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
-    multihash = "QmbVqxhupGCLgPfniEDSfNJHdgCkiYRHHt6pmgyUsfSLru";
-    sha256 = "fa65289cffdc95a25bfbdba541f43ee1b12c707090a38fd027dcf9354b9014e7";
+    multihash = "QmanyicGBjPkHr32BUYSBwj28z7HumSDc4eNv4syiFJfPM";
+    sha256 = "67b59b2b77afee9ed87afa4d80ffc8e6f3a1f4bbedd5f2871f387c952147bcba";
   };
 
   nativeBuildInputs = [
@@ -38,7 +37,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    go
     libcap-ng
     python2
     python3
@@ -58,7 +56,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--with-python"
     "--with-python3"
-    "--with-golang"
+    "--without-golang"
     "--${if libOnly then "disable" else "enable"}-listener"
     "--${if libOnly then "disable" else "enable"}-zos-remote"
     "--${if libOnly then "disable" else "enable"}-gssapi-krb5"

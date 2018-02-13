@@ -1,11 +1,12 @@
 { stdenv
 , fetchurl
+, lib
 
 , libatomic_ops
 }:
 
 let
-  version = "7.6.2";
+  version = "7.6.4";
 in
 stdenv.mkDerivation rec {
   name = "boehm-gc-${version}";
@@ -13,8 +14,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/ivmai/bdwgc/releases/download/v${version}/gc-${version}.tar.gz";
     # We need the multihash because they delete old releases
-    multihash = "QmQk6ZAat55XZWmDAekm9yNazs7unB68ocjWUA7VwKqHzE";
-    sha256 = "bd112005563d787675163b5afff02c364fc8deb13a99c03f4e80fdf6608ad41e";
+    multihash = "QmZ2oL3LwQB7FixEAzqZkSRRsdVV4cMFxGfhRY4jhms9Y1";
+    sha256 = "b94c1f2535f98354811ee644dccab6e84a0cf73e477ca03fb5a3758fb1fecd1c";
   };
 
   buildInputs = [
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
     "--enable-large-config"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The Boehm-Demers-Weiser conservative garbage collector for C and C++";
     homepage = http://hboehm.info/gc/;
     license = licenses.free;

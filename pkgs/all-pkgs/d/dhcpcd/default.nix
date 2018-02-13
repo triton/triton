@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    multihash = "QmfXh5tTwgsmMqxf5j1LsoRaqAJu3zAZkWUbsML23aZNQi";
+    multihash = "QmTEEcEyD43xQpzYHojhAduELfeJLDMcdcsLs4tzS8CMRJ";
     sha256 = "8b36537fbcc00771b9a6c9ccd71b5011df27b3f892e926b199a195fad2f3f3c8";
   };
 

@@ -1,16 +1,17 @@
 { stdenv
 , fetchurl
+, lib
 
 , systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-6.11.5";
+  name = "dhcpcd-7.0.1";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
     multihash = "QmfXh5tTwgsmMqxf5j1LsoRaqAJu3zAZkWUbsML23aZNQi";
-    sha256 = "6f9674dc7e27e936cc787175404a6171618675ecfb6903ab9887b1b66a87d69e";
+    sha256 = "8b36537fbcc00771b9a6c9ccd71b5011df27b3f892e926b199a195fad2f3f3c8";
   };
 
   buildInputs = [
@@ -35,7 +36,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A client for the Dynamic Host Configuration Protocol (DHCP)";
     homepage = http://roy.marples.name/projects/dhcpcd;
     license = licenses.bsd2;

@@ -19,11 +19,6 @@ let
       multihash = "QmRSQj9eJJTiRNKvYeXcm4Dow1PRSvujBp5uKeFGofGzNy";
       sha256 = "fc2e5b68382eb436a38c3104684a6c494df9bde133c139fbba3ddb5d7eaa6a2e";
     };
-    "0.7" = {
-      version = "0.7.1";
-      multihash = "QmeERWpDtsMdASnUwdCoXVx3FdSGBvtFztUGSE3gFm2Vab";
-      sha256 = "93f0e2dfb59021b19e69dc0dee855eb89f19397db1dea0d0d6f9329cff933066";
-    };
     "0.11" = {
       version = "0.11.3";
       multihash = "QmZmsAcAezXXCLo2ZFP6zkS93FJNUtK3zkQGm5Ywe8SYnD";

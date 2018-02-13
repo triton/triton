@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2.11.1";
+  version = "4.0";
 in
 buildPythonPackage rec {
   name = "pytest-runner-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytest-runner";
     inherit version;
-    sha256 = "983a31eab45e375240e250161a556163bc8d250edaba97960909338c273a89b3";
+    sha256 = "183f3745561b1e00ea51cd97634ba5c540848ab4aa8016a81faba7fb7f33ec76";
   };
 
   propagatedBuildInputs = [

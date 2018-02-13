@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libjpeg
 , libpng
@@ -10,14 +11,14 @@
 }:
 
 let
-  version = "2.0.1";
+  version = "2.0.2";
 in
 stdenv.mkDerivation {
   name = "SDL_image-${version}";
 
   src = fetchurl {
     url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-${version}.tar.gz";
-    sha256 = "3a3eafbceea5125c04be585373bfd8b3a18f259bd7eae3efc4e6d8e60e0d7f64";
+    sha256 = "72df075aef91fc4585098ea7e0b072d416ec7599aa10473719fbe51e9b8f6ce8";
   };
 
   buildInputs = [
@@ -29,7 +30,7 @@ stdenv.mkDerivation {
     zlib
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

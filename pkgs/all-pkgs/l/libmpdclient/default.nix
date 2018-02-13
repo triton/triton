@@ -6,19 +6,18 @@
 }:
 
 let
-  versionMajor = "2";
-  versionMinor = "13";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "2";
+  version = "${channel}.14";
 in
 stdenv.mkDerivation rec {
   name = "libmpdclient-${version}";
 
   src = fetchurl {
-    url = "https://www.musicpd.org/download/libmpdclient/${versionMajor}/"
+    url = "https://www.musicpd.org/download/libmpdclient/${channel}/"
         + "${name}.tar.xz";
-    multihash = "QmPGLstus9AbHLBTqbMP3eGH55eCt5Nn22MrAwEcWEBKGY";
+    multihash = "QmYLvsgQCNte2YzyocgNX9iPxyoi1EK3B55sY1Z1jXzY1H";
     hashOutput = false;
-    sha256 = "5115bd52bc20a707c1ecc7587e6389c17305348e2132a66cf767c62fc55ed45d";
+    sha256 = "0a84e2791bfe3077cf22ee1784c805d5bb550803dffe56a39aa3690a38061372";
   };
 
   nativeBuildInputs = [
@@ -33,10 +32,6 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    inherit
-      versionMajor
-      versionMinor;
-
     srcVerification = fetchurl {
       inherit (src)
         outputHash

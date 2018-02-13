@@ -15,12 +15,12 @@
 }:
  
 stdenv.mkDerivation rec {
-  name = "man-db-2.8.0";
+  name = "man-db-2.8.1";
   
   src = fetchurl {
     url = "mirror://savannah/man-db/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "362aad1c14751456b3c32c96864c655aeffb79841f70b87cb3d3c20962f59727";
+    sha256 = "a6aec641ca3d9942b054cc0e9c3f05cb46a3a992bc0006795755e2fed1357f3e";
   };
 
   nativeBuildInputs = [
@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "AC0A 4FF1 2611 B6FC CF01  C111 3935 87D9 7D86 500B";
       inherit (src) urls outputHash outputHashAlgo;
     };

@@ -29,12 +29,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "udisks-2.7.5";
+  name = "udisks-2.7.6";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/udisks/releases/download/"
       + "${name}/${name}.tar.bz2";
-    sha256 = "5bb135ba864dc2ae6e36c88c4084d9f4d95a51037f456c34f66ca2feefb0c76e";
+    sha256 = "512da29063de1cd4ecbfd9182d4faea0aff40835eaac69bc9f08e20ec56d16fe";
   };
 
   # FIXME:

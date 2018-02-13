@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.44";
+  version = "0.45.1";
 in
 buildPythonPackage rec {
   name = "olefile-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
     package = "olefile";
     inherit version;
     type = ".zip";
-    sha256 = "61f2ca0cd0aa77279eb943c07f607438edf374096b66332fae1ee64a6f0f73ad";
+    sha256 = "2b6575f5290de8ab1086f8c5490591f7e0885af682c7c1793bdaf6e64078d385";
   };
 
   nativeBuildInputs = [

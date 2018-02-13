@@ -4,34 +4,25 @@
 }:
 
 let
-  inherit (lib)
-    flip
-    mapAttrsToList;
-
-  date = "2017-12-18";
-
-  files = {
-    "services" = {
-      upstreamUrl = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml";
-      multihash = "QmdqX5ka9BK4V9mcUqX84G5rNLbVbmKvkFJggcX2jmcYQg";
-      sha256 = "c769e1773a90dc86a6b479b54c17c4cdf265ea83ac7a3f0e15542f26d4173e40";
-    };
-    "protocols" = {
-      upstreamUrl = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml";
-      multihash = "QmcND9WWoYMiw8yX2V2J6qNZwikjtMYe2pK57ssXo3DqZk";
-      sha256 = "4992fbc5453d0feb48492e6abda96bf9285ff4d2516f6924a0f92f773dc4cea2";
-    };
-  };
+  version = "2018-02-12";
 in
 stdenv.mkDerivation rec {
-  name = "iana-etc-${date}";
+  name = "iana-etc-${version}";
 
-  srcs = flip mapAttrsToList files (_: { upstreamUrl, multihash, sha256 }: fetchurl {
-    name = baseNameOf upstreamUrl;
-    inherit
-      multihash
-      sha256;
-  });
+  srcs = [
+    (fetchurl {
+      # 2018-02-12
+      url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml";
+      multihash = "QmYfWX6w9gzUqir3eb6zUJ75EQnzAmP9mC8Jormoetw91B";
+      sha256 = "1262abb7c0cb83d374fc402bd95c0241eef50455a722af02004749b8121f3a23";
+    })
+    (fetchurl {
+      # 2017-10-13
+      url = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml";
+      multihash = "QmcND9WWoYMiw8yX2V2J6qNZwikjtMYe2pK57ssXo3DqZk";
+      sha256 = "4992fbc5453d0feb48492e6abda96bf9285ff4d2516f6924a0f92f773dc4cea2";
+    })
+  ];
 
   unpackPhase = ''
     cp $srcs .

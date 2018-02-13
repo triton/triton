@@ -15,7 +15,7 @@ let
   inherit (lib)
     makeSearchPath;
 
-  version = "38.4.0";
+  version = "38.5.1";
 in
 buildPythonPackage rec {
   name = "setuptools-${version}";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
     package = "setuptools";
     inherit version;
     type = ".zip";
-    sha256 = "6501fc32f505ec5b3ed36ec65ba48f1b975f52cf2ea101c7b73a08583fd12f75";
+    sha256 = "6425484c08e99a98a42209c25c3d325f749230b55284d66192784f941a7e6628";
   };
 
   nativeBuildInputs = [

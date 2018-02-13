@@ -91,9 +91,9 @@ let
     };
     "0.28" = {
       fetchzipversion = 5;
-      version = "0.28.0";
-      rev = "v0.28.0";
-      sha256 = "ecf49d5cfbc5851a1c62b93da43cce7ee365969d699bab84aa8b8ea742b688d9";
+      version = "0.28.1";
+      rev = "v0.28.1";
+      sha256 = "5322eae62e2f808022f7165c9f7857c366e91ba79be44b606c15aa2769834bbe";
     };
     "999" = {
       fetchzipversion = 5;

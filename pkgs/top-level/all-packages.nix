@@ -1332,6 +1332,8 @@ flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };
 
+fontcacheproto = callPackage ../all-pkgs/f/fontcacheproto { };
+
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
 fontforge = callPackage ../all-pkgs/f/fontforge { };
@@ -3982,7 +3984,6 @@ dmxproto = callPackageAlias "xorgproto" { };
 dri2proto = callPackageAlias "xorgproto" { };
 dri3proto = callPackageAlias "xorgproto" { };
 fixesproto = callPackageAlias "xorgproto" { };
-fontcacheproto = callPackageAlias "xorgproto" { };
 fontsproto = callPackageAlias "xorgproto" { };
 glproto = callPackageAlias "xorgproto" { };
 inputproto = callPackageAlias "xorgproto" { };

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 
 , pcre
@@ -11,18 +12,19 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals;
+
+  version = "7.1.1";
 in
 stdenv.mkDerivation rec {
-  name = "qpdf-6.0.0";
+  name = "qpdf-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/qpdf/${name}.tar.gz";
-    multihash = "QmYAaPsgvdzYAv3svDDBwaaM2k5JPnkw8ky97T2oNtCi2X";
-    sha1Url = "mirror://sourceforge/qpdf/${name}.sha1";
-    sha256 = "a9fdc7e94d38fcd3831f37b6e0fe36492bf79aa6d54f8f66062cf7f9c4155233";
+    url = "mirror://sourceforge/qpdf/qpdf/${version}/${name}.tar.gz";
+    #sha512Url = "mirror://sourceforge/qpdf/qpdf/${version}/${name}.sha512";
+    sha256 = "8a0dbfa000a5c257abbc03721c7be277920fe0fcff08202b61c9c2464eedf2fa";
   };
 
   nativeBuildInputs = [
@@ -64,7 +66,7 @@ stdenv.mkDerivation rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Programs to inspect & manipulate PDF files";
     homepage = http://qpdf.sourceforge.net/;
     license = licenses.artistic2;

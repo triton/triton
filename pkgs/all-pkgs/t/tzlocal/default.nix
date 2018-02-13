@@ -3,11 +3,12 @@
 , fetchPyPi
 , lib
 
+, mock
 , pytz
 }:
 
 let
-  version = "1.4";
+  version = "1.5.1";
 in
 buildPythonPackage rec {
   name = "tzlocal-${version}";
@@ -15,14 +16,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "tzlocal";
     inherit version;
-    sha256 = "05a2908f7fb1ba8843f03b2360d6ad314dbf2bce4644feb702ccd38527e13059";
+    sha256 = "4ebeb848845ac898da6519b9b31879cf13b6626f7184c496037b818e238f2c4e";
   };
 
   buildInputs = [
+    mock
     pytz
   ];
-
-  doCheck = true;
 
   meta = with lib; {
     description = "tzinfo object for the local timezone";

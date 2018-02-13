@@ -46,17 +46,17 @@ let
     optionals
     optionalString;
 
-  version = "2.10.109";
+  version = "2.12.7";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "flexget";
     repo = "flexget";
     rev = version;
-    sha256 = "ca2a0169b84322ca7b732bf40d56a9f0afe5093181867b930026c82209a279f2";
+    sha256 = "a0c53387f57c716fd87585d05e8803696662354fd0a1876f14ff643fb47f3060";
   };
 
   propagatedBuildInputs = [

@@ -85,9 +85,9 @@ let
   sources = {
     "0.27" = {
       fetchzipversion = 3;
-      version = "0.27.0";
-      rev = "v0.27.0";
-      sha256 = "d80c86af466589d610a522b0ab20ee7b13630418d846d78bbfeb55930e5ecd59";
+      version = "0.27.1";
+      rev = "v0.27.1";
+      sha256 = "f1c95694de6d7e6839eb0c9fc32ee989e979e9636d578bb213b4764859cdfb09";
     };
     "0.28" = {
       fetchzipversion = 5;

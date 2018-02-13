@@ -10,11 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lilv-0.24.0";
+  name = "lilv-0.24.2";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${name}.tar.bz2";
-    sha256 = "fa60de536d3648aa3b1a445261fd77bd80d0246a071eed2e7ca51ea91a27fb9e";
+    multihash = "QmVKVW1YHScct59LWj6XBrfzKWCcFsP152GFbKZRkRwNBJ";
+    sha256 = "f7ec65b1c1f1734ded3a6c051bbaf50f996a0b8b77e814a33a34e42bce50a522";
   };
 
   nativeBuildInputs = [

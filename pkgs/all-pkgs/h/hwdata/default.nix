@@ -1,26 +1,31 @@
 { stdenv
-, fetchzip
+, fetchFromGitHub
+, lib
 }:
 
+let
+  version = "0.309";
+in
 stdenv.mkDerivation rec {
-  name = "hwdata-0.291";
+  name = "hwdata-${version}";
 
-  src = fetchzip {
-    version = 1;
-    url = "https://git.fedorahosted.org/cgit/hwdata.git/snapshot/${name}.tar.xz";
-    multihash = "QmVK9tFW7bpf1uTHLWdRiTrQ1KqVGrjQvsy5NUiZLPGhXm";
-    sha256 = "5595cd3ba209c01a51514f5604fcb7f93146a8ea4e7f686b63a157377a021c83";
+  src = fetchFromGitHub {
+    version = 5;
+    owner = "vcrhonek";
+    repo = "hwdata";
+    rev = "v${version}";
+    sha256 = "a376fb831b6700ccfdc75cd32106149e5ad8fbd2f157282e0f46e64a165b0be3";
   };
 
   postPatch = ''
-    patchShebangs ./configure
+    patchShebangs configure
   '';
 
-  configureFlags = [
-    "--datadir=$(prefix)/share"
-  ];
+  preConfigure = ''
+    configureFlagsArray+=("--datadir=$out/share")
+  '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Hardware Database, including Monitors, pci.ids, usb.ids, and video cards";
     homepage = "https://fedorahosted.org/hwdata/";
     license = licenses.gpl2;

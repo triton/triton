@@ -2,11 +2,10 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-, unzip
 }:
 
 let
-  version = "2017.2";
+  version = "2018.3";
 in
 buildPythonPackage rec {
   name = "pytz-${version}";
@@ -14,13 +13,8 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytz";
     inherit version;
-    type = ".zip";
-    sha256 = "f5c056e8f62d45ba8215e5cb8f50dfccb198b4b9fbea8500674f3443e4689589";
+    sha256 = "410bcd1d6409026fbaa65d9ed33bf6dd8b1e94a499e32168acfc7b332e4095c0";
   };
-
-  nativeBuildInputs = [
-    unzip
-  ];
 
   meta = with lib; {
     description = "World timezone definitions, modern and historical";

@@ -1,7 +1,9 @@
 { stdenv
+, bison
 , buildLinux
 , fetchFromGitHub
 , fetchurl
+, flex
 , git
 , lib
 , perl
@@ -40,12 +42,12 @@ let
       patchSha256 = "6dd42389603bc6c83d2e6db1d736303e41d26cef479cad926b87711f261c9c35";
     };
     "testing" = {
-      version = "4.15-rc9";
-      baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
+      version = "4.16-rc1";
+      baseSha256 = "5a26478906d5005f4f809402e981518d2b8844949199f60c4b6e1f986ca2a769";
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];
-      patchSha256 = "a5f946b8541611d988e56b59b247a435511e460903cdc142f204e092e0fd3aab";
+      patchSha256 = "e8d2b31e0133c402d13f3ccb45e7ad3f2575f5ce74b0a9087409b34a414739ca";
     };
     "bcachefs" =
       let
@@ -111,7 +113,7 @@ let
 
     kernelConfig = kernelConfigFun config;
 
-    nativeBuildInputs = [ perl ]
+    nativeBuildInputs = [ bison flex perl ]
       ++ optionals needsGitPatch [ git ];
 
     platformName = "pc";

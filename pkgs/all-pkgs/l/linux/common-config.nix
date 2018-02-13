@@ -68,7 +68,9 @@ with stdenv.lib;
   # Debugging.
   DEBUG_KERNEL y
   DYNAMIC_DEBUG y
-  BACKTRACE_SELF_TEST n
+  ${optionalString (versionOlder version "4.16") ''
+    BACKTRACE_SELF_TEST n
+  ''}
   ${optionalString (versionOlder version "4.11") ''
     DEBUG_NX_TEST n
   ''}
@@ -162,6 +164,7 @@ with stdenv.lib;
   WAN y
 
   # Networking options.
+  IPX n
   IP_PNP n
   IP_MROUTE_MULTIPLE_TABLES y
   IPV6_ROUTER_PREF y
@@ -321,24 +324,30 @@ with stdenv.lib;
   SND_HDA_RECONFIG y
   SND_HDA_PATCH_LOADER y
   SND_HDA_CODEC_CA0132_DSP y
+  ${optionalString (versionAtLeast version "4.16") ''
+    SOUNDWIRE y
+  ''}
 
   # USB serial devices.
   USB_SERIAL_GENERIC y # USB Generic Serial Driver
-  USB_SERIAL_KEYSPAN_MPR y # include firmware for various USB serial devices
-  USB_SERIAL_KEYSPAN_USA28 y
-  USB_SERIAL_KEYSPAN_USA28X y
-  USB_SERIAL_KEYSPAN_USA28XA y
-  USB_SERIAL_KEYSPAN_USA28XB y
-  USB_SERIAL_KEYSPAN_USA19 y
-  USB_SERIAL_KEYSPAN_USA18X y
-  USB_SERIAL_KEYSPAN_USA19W y
-  USB_SERIAL_KEYSPAN_USA19QW y
-  USB_SERIAL_KEYSPAN_USA19QI y
-  USB_SERIAL_KEYSPAN_USA49W y
-  USB_SERIAL_KEYSPAN_USA49WLC y
+  ${optionalString (versionOlder version "4.16") ''
+    USB_SERIAL_KEYSPAN_MPR y # include firmware for various USB serial devices
+    USB_SERIAL_KEYSPAN_USA28 y
+    USB_SERIAL_KEYSPAN_USA28X y
+    USB_SERIAL_KEYSPAN_USA28XA y
+    USB_SERIAL_KEYSPAN_USA28XB y
+    USB_SERIAL_KEYSPAN_USA19 y
+    USB_SERIAL_KEYSPAN_USA18X y
+    USB_SERIAL_KEYSPAN_USA19W y
+    USB_SERIAL_KEYSPAN_USA19QW y
+    USB_SERIAL_KEYSPAN_USA19QI y
+    USB_SERIAL_KEYSPAN_USA49W y
+    USB_SERIAL_KEYSPAN_USA49WLC y
+  ''}
 
   # Filesystem options - in particular, enable extended attributes and
   # ACLs for all filesystems that support them.
+  NCP_FS n
   FANOTIFY y
   EXT2_FS n
   EXT3_FS n
@@ -427,7 +436,7 @@ with stdenv.lib;
   IO_STRICT_DEVMEM y
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
-  CC_STACKPROTECTOR_REGULAR y
+  CC_STACKPROTECTOR_STRONG y
   USER_NS y # Support for user namespaces
   INTEL_TXT y
   SECURITY_YAMA y
@@ -529,6 +538,9 @@ with stdenv.lib;
   PPP_FILTER y
   REGULATOR y # Voltage and Current Regulator Support
   RC_DEVICES y # Enable IR devices
+  ${optionalString (versionAtLeast version "4.16") ''
+    LIRC y
+  ''}
   RT2800USB_RT55XX y
   RTC_DRV_DS1307_CENTURY y
   ${optionalString (versionOlder version "4.13") ''
@@ -625,6 +637,10 @@ with stdenv.lib;
   # Devtmpfs support.
   DEVTMPFS y
 
+  ${optionalString (versionAtLeast version "4.16") ''
+    MELLANOX_PLATFORM y
+  ''}
+
   X86_AMD_PLATFORM_DEVICE y
   ${optionalString (versionAtLeast version "4.12") ''
     X86_MCELOG_LEGACY y
@@ -702,6 +718,10 @@ with stdenv.lib;
   HVC_XEN_FRONTEND y
   SWIOTLB_XEN y
 
+  ${optionalString (versionAtLeast version "4.16") ''
+    JAILHOUSE_GUEST y
+  ''}
+
   KSM y
   CLEANCACHE y
   FRONTSWAP y
@@ -753,6 +773,9 @@ with stdenv.lib;
     NFP_APP_FLOWER y
     SPI_SLAVE y
     SDR_PLATFORM_DRIVERS y
+  ''}
+  ${optionalString (versionAtLeast version "4.16") ''
+    CHELSIO_IPSEC_INLINE y
   ''}
 
   # zram support (e.g for in-memory compressed swap).

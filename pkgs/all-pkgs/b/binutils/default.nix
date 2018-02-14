@@ -38,7 +38,7 @@ let
     i686-linux
     x86_64-linux;
 
-  version = "2.29.1";
+  version = "2.30";
 in
 stdenv.mkDerivation rec {
   name = "binutils-${version}";
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnu/binutils/binutils-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "e7010a46969f9d3e53b650a518663f98a5dde3c3ae21b7d71e5e6803bc36b577";
+    sha256 = "6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6";
   };
 
   # We don't need to provide any packages to the bootstrap
@@ -73,9 +73,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "00d5c4fbda40189954ea0c893655e6447c66b890";
+      rev = "2de0054fdd5a211c7801433dda343a312ab8f00b";
       file = "b/binutils/0000-upstream-fixes.patch";
-      sha256 = "3883fb078e6fd777584daf48b2cccfd594604e6e4a87c948148f16f14d11f6b9";
+      sha256 = "cb96aed03b9137c70eae895f6d781501b9df1320dc7c755745e3316e1ffa7566";
     })
     (fetchTritonPatch {
       rev = "a03cde5368a0265105fe8be99ef193585334cb37";

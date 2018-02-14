@@ -13,7 +13,7 @@ let
 
   current-system = "/run/current-system";
 
-  version = "2.26";
+  version = "2.27";
 in
 stdenv.mkDerivation rec {
   name = "glibc-${version}";
@@ -21,14 +21,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnu/glibc/glibc-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd";
+    sha256 = "5172de54318ec0b7f2735e5a91d908afe1c9ca291fec16b5374d9faadfc1fc72";
   };
 
   patches = [
     (fetchTritonPatch {
-      rev = "6c930839f49bb4f21380a29110e6b31f1c7eaa90";
+      rev = "e6a0fee9782da2e14fed014ef58451f1b47c7d61";
       file = "g/glibc/0000-upstream-fixes.patch";
-      sha256 = "dcef2d06f385b50030a5fbf19da240f5fe6ba61c62f9d07149ac1d283cc22714";
+      sha256 = "54b5681830a6bd48797a95a0b37bf1b22de2b025af71b927c2d9e181bd28a43e";
     })
     (fetchTritonPatch {
       rev = "5291f29cba8415e1f58e811d77957725ddde5c11";

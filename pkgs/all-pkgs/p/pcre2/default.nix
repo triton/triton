@@ -13,7 +13,7 @@ let
     "mirror://sourceforge/pcre/pcre/${version}/pcre2-${version}.tar.bz2"
   ];
 
-  version = "10.30";
+  version = "10.31";
 in
 stdenv.mkDerivation rec {
   name = "pcre2-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = tarballUrls version;
     hashOutput = false;
-    sha256 = "90bd41c605d30e3745771eb81928d779f158081a51b2f314bbcc1f73de5773db";
+    sha256 = "e07d538704aa65e477b6a392b32ff9fc5edf75ab9a40ddfc876186c4ff4d68ac";
   };
 
   buildInputs = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "10.30";
+      urls = tarballUrls "10.31";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
       inherit (src) outputHash outputHashAlgo;

@@ -3,7 +3,7 @@
 {
   "stable" = {
     "x86_64-linux" = {
-      sha256 = "72c613a2848ddaec604b8ee5df5f7504be832e6476f750f4ea39dd48a3654fff";
+      sha256 = "6ba016ae5064dfba9a2de24274f2de3b104451ecbdc0f4dffe7494478e90b145";
     };
   };
   "beta" = {

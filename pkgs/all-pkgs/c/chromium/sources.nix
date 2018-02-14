@@ -2,8 +2,8 @@
 { }:
 {
   "stable" = {
-    version = "64.0.3282.140";
-    sha256 = "146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce";
+    version = "64.0.3282.167";
+    sha256 = "f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455";
   };
   "beta" = {
     version = "65.0.3325.51";

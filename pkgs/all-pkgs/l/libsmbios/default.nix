@@ -2,35 +2,37 @@
 , autoreconfHook
 , fetchFromGitHub
 , gettext
+, help2man
 , perl
 
 , libxml2
-, python2Packages
+, python3Packages
 }:
 
 let
-  version = "2.3.3";
+  version = "2.4.1";
 in
 stdenv.mkDerivation rec {
   name = "libsmbios-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "dell";
     repo = "libsmbios";
     rev = "v${version}";
-    sha256 = "3cae3fa513023c237ee967745540008c8687587a24aba581953f25eab74c64f9";
+    sha256 = "54c173da3b49c9dafe17af29f900a4188e3e9e6a7c7be31b090514706b03c52d";
   };
 
   nativeBuildInputs = [
     autoreconfHook
     gettext
+    help2man
     perl
   ];
 
   buildInputs = [
     libxml2
-    python2Packages.python
+    python3Packages.python
   ];
 
   postPatch = ''
@@ -40,7 +42,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-libsmbios_cxx"
     "--disable-doxygen"
     "--disable-graphviz"
   ];

@@ -19,7 +19,6 @@
 , gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
-, gtk_2
 , gtk_3
 , libcap
 , libx11
@@ -103,7 +102,6 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gsettings-desktop-schemas
-    gtk_2
     gtk_3
     libcap
     libx11

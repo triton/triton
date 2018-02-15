@@ -71,7 +71,7 @@
 
 let
   channel = "5.10";
-  version = "${channel}.0";
+  version = "${channel}.1";
 
   inherit (lib)
     optionals;
@@ -83,9 +83,9 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${channel}/${version}"
       + "/single/qt-everywhere-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "c5e275ab0ed7ee61d0f4b82cd471770d";
-    sha1Confirm = "6b7d291a7f3a95161e681e38297df6fec0275add";
-    sha256 = "936d4cf5d577298f4f9fdb220e85b008ae321554a5fcd38072dc327a7296230e";
+    md5Confirm = "7e167b9617e7bd64012daaacb85477af";
+    sha1Confirm = "3d71e887287bdea664ac6f8db4aaa4a7d913be59";
+    sha256 = "05ffba7b811b854ed558abf2be2ddbd3bb6ddd0b60ea4b5da75d277ac15e740a";
   };
 
   nativeBuildInputs = [

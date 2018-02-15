@@ -33,14 +33,13 @@
 , libxrandr
 , libxrender
 , libxscrnsaver
-#, libxtst
+, libxtst
 , nspr
 , nss
 , pango
 , shared-mime-info
 , systemd_lib
 , xdg-utils
-, xorg
 
 , channel
 }:
@@ -118,7 +117,7 @@ stdenv.mkDerivation rec {
     libxrandr
     libxrender
     libxscrnsaver
-    xorg.libXtst
+    libxtst
     nspr
     nss
     pango

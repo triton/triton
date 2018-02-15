@@ -53,12 +53,13 @@ stdenv.mkDerivation rec {
     elfutils
   ];
 
-  patches = [
+  patches = optionals (channel != "dev") [
     (fetchTritonPatch {
       rev = "518382a2bbf31f798bf5271105ac4005510f185d";
       file = "s/spl/0001-Fix-constification.patch";
       sha256 = "96345a84fab6c8a989dc85e238887b91c772784121bff0acd500a49951f44dc0";
     })
+  ] ++ [
     (fetchTritonPatch {
       rev = "518382a2bbf31f798bf5271105ac4005510f185d";
       file = "s/spl/0002-Fix-install-paths.patch";

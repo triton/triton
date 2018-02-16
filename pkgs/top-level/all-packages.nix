@@ -3534,6 +3534,11 @@ subversion_1-8 = callPackage ../all-pkgs/s/subversion {
 };
 subversion = callPackageAlias "subversion_1-9" { };
 
+subunit = callPackage ../all-pkgs/s/subunit { };
+subunit_lib = callPackageAlias "subunit" {
+  type = "lib";
+};
+
 sudo = callPackage ../all-pkgs/s/sudo { };
 
 suil = callPackage ../all-pkgs/s/suil { };
@@ -4694,8 +4699,6 @@ google_talk_plugin =
 #
 #
   #spotify = callPackage ../applications/audio/spotify { };
-#
-  subunit = callPackage ../development/libraries/subunit { };
 #
 telepathy_logger =
   callPackage

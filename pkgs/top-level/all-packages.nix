@@ -877,6 +877,8 @@ cjdns = callPackage ../all-pkgs/c/cjdns { };
 
 clang = wrapCC (callPackageAlias "llvm" { });
 
+clr-boot-manager = callPackage ../all-pkgs/c/clr-boot-manager { };
+
 clutter_1-26 = callPackage ../all-pkgs/c/clutter {
   channel = "1.26";
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;

@@ -11,6 +11,8 @@ stdenv.mkDerivation rec {
     sha256 = "3d569869d27b48860210c758c4f313082103a5e58219a7669b52bfd29d674780";
   };
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     homepage = "http://sourceforge.net/apps/mediawiki/cppunit/";
     description = "C++ unit testing framework";

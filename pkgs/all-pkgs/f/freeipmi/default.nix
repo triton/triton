@@ -2,19 +2,21 @@
 , fetchurl
 
 , libgcrypt
+, libgpg-error
 }:
 
 stdenv.mkDerivation rec {
-  name = "freeipmi-1.5.5";
+  name = "freeipmi-1.6.1";
 
   src = fetchurl {
     url = "mirror://gnu/freeipmi/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "ae20b98d145b6316c4231903a64a96954bdd718e74fc4e6cec2cd0b63edcff53";
+    sha256 = "a2550e08e1f2d681efe770162125ac899022a6acf96256e5b7404eabb90db549";
   };
 
   buildInputs = [
     libgcrypt
+    libgpg-error
   ];
   
   configureFlags = [

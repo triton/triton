@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.34.1";
+  version = "3.35";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "a3c15d367caf784f33d96dbafbdffc16a8e42fb8c8aedfce97bf92a9f918dda0";
+    sha256 = "f4127de09bede39f5fd0f789d33c3504c5d261e69ea03022d46b319b3e32f6fa";
   };
 
   buildInputs = [
@@ -41,9 +41,9 @@ stdenv.mkDerivation rec {
       sha256 = "aa7c5a1a22474868d6781897b988f9e23d7958ae49c225bd7da65a3bf63fe9d1";
     })
     (fetchTritonPatch {
-      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
+      rev = "934da9af94d8e32bd17a4805e18268ce74c7d966";
       file = "n/nss/0002-Fix-sharedlib-loading.patch";
-      sha256 = "bb719d9acf4e3d984fc8885251daa7148e995a2691a040fb5c45f5dc05fc4ae0";
+      sha256 = "8596bb081a57c61077cdde086331799de14f98ce9d50fdd02145c2a0598bfa4d";
     })
     (fetchTritonPatch {
       rev = "cb1b429f5caaddd49687dc0a1348f5af555bcc72";

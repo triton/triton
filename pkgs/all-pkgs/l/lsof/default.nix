@@ -1,41 +1,60 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+, perl
+, which
+}:
 
+let
+  version = "4.90";
+in
 stdenv.mkDerivation rec {
   name = "lsof-${version}";
-  version = "4.89";
 
   src = fetchurl {
-    urls = [
-      "ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_${version}.tar.bz2"
-      "ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/OLD/lsof_${version}.tar.bz2"
-    ];
-    sha256 = "81ac2fc5fdc944793baf41a14002b6deb5a29096b387744e28f8c30a360a3718";
+    url = "ftp://ftp.fu-berlin.de/pub/unix/tools/lsof/lsof_${version}.tar.bz2";
+    multihash = "QmPMvGsXga5yFhCishH67xQxF3z6JgJK3FBhY2Tjykw6ed";
+    hashOutput = false;
+    sha256 = "6f14840c791926715cd80ba3b049220256470f9f16a457a2e4b516baab1a16f6";
   };
 
+  nativeBuildInputs = [
+    perl
+    which
+  ];
+
   postUnpack = ''
-    tar -xvf $srcRoot/lsof_''${version}_src.tar
-    srcRoot="lsof_''${version}_src"
+    unpackFile "$srcRoot"/*_src.tar
+    srcRoot=$(echo *_src)
   '';
 
-  postPatch = ''
-    # fix POSIX compliance with `echo`
-    sed -i {AFSConfig,Configure,Customize,Inventory,tests/CkTestDB} \
-      -e 's:echo -n:printf:'
-  '';
-  
-  configurePhase = "./Configure -n linux;";
+  configureScript = "./Configure";
 
-  # The configure script generates the makefile
+  addPrefix = false;
+
+  configureFlags = [
+    "-n"
+    "linux"
+  ];
+
+  LSOF_INCLUDE = "${stdenv.libc}/include";
+
   preBuild = ''
-    # Undocumented hack for ipv6?
-    sed -i Makefile \
-      -e 's/^CFGF=/&  -DHASIPv6=1/;'
+    sed -i '/define.*HASSECURITY/a#define  HASSECURITY 1' dialects/linux/machine.h
   '';
-  
-  installPhase = ''
+
+  postInstall = ''
     install -D -m755 -v 'lsof' "$out/bin/lsof"
     install -D -m644 -v 'lsof.8' "$out/man/man8/lsof.8"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "9AFD62A840BD3D55";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A tool to list open files";
@@ -43,6 +62,7 @@ stdenv.mkDerivation rec {
     license = licenses.free; # lsof license
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

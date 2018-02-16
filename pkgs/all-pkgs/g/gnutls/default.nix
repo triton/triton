@@ -23,7 +23,7 @@ let
   ];
 
   major = "3.6";
-  minor = "1";
+  minor = "2";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "20b10d2c9994bc032824314714d0e84c0f19bdb3d715d8ed55beb7364a8ebaed";
+    sha256 = "bcd5db7b234e02267f36b5d13cf5214baac232b7056a506252b7574ea7738d1f";
   };
 
   # This fixes some broken parallel dependencies
@@ -43,7 +43,8 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-ssl3-support"
     "--disable-ssl2-support"
-    "--enable-cryptodev"
+    # TODO: re-enable when the code is fixed (broken in 3.6.1 -> 3.6.2)
+    #"--enable-cryptodev"
     "--disable-tests"
     "--disable-valgrind-tests"
     "--disable-full-test-suite"
@@ -61,7 +62,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    cryptodev_headers
+    #cryptodev_headers
     gmp
     libidn2
     libtasn1
@@ -78,11 +79,11 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.6" "1";
+      urls = tarballUrls "3.6" "2";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "20b10d2c9994bc032824314714d0e84c0f19bdb3d715d8ed55beb7364a8ebaed";
+      outputHash = "bcd5db7b234e02267f36b5d13cf5214baac232b7056a506252b7574ea7738d1f";
     };
   };
 

@@ -113,8 +113,9 @@ let
 
     kernelConfig = kernelConfigFun config;
 
-    nativeBuildInputs = [ bison flex perl ]
-      ++ optionals needsGitPatch [ git ];
+    nativeBuildInputs = [ perl ]
+      ++ optionals needsGitPatch [ git ]
+      ++ optionals (versionAtLeast version "4.16") [ bison flex ];
 
     platformName = "pc";
     kernelBaseConfig = "defconfig";

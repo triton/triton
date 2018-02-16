@@ -1,4 +1,4 @@
-{ stdenv, runCommand, git, bc, elfutils, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, git, bison, flex, bc, elfutils, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -256,8 +256,9 @@ stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) con
   name = "linux-${version}";
 
   # GMP / MPFR / libmpc is a hack that should be fixed in gcc
-  nativeBuildInputs = [ perl bc elfutils openssl ]
+  nativeBuildInputs = [ bc elfutils openssl perl ]
     ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ]
+    ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.16") [ bison flex ]
     ++ stdenv.lib.optionals needsGitPatch [ git ];
 
   preBuild = ''

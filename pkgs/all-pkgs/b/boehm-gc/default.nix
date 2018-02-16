@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/ivmai/bdwgc/releases/download/v${version}/gc-${version}.tar.gz";
     # We need the multihash because they delete old releases
-    multihash = "QmZ2oL3LwQB7FixEAzqZkSRRsdVV4cMFxGfhRY4jhms9Y1";
+    multihash = "QmPqLbRQWoyj6zBG9jUp5C5XtzLibFKcEnr8MrUa1G1FFB";
     sha256 = "b94c1f2535f98354811ee644dccab6e84a0cf73e477ca03fb5a3758fb1fecd1c";
   };
 

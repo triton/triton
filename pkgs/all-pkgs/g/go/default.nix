@@ -14,7 +14,6 @@
 }:
 
 let
-
   inherit ((import ./sources.nix)."${channel}")
     version
     sha256
@@ -56,10 +55,6 @@ let
       find "$out" -name testdata -prune -exec rm -r {} \;
     '';
   };
-
-  inherit (stdenv.lib)
-    optionalString
-    versionOlder;
 in
 stdenv.mkDerivation {
   name = "go-${version}";
@@ -109,10 +104,12 @@ stdenv.mkDerivation {
     sed -i 's,/etc/protocols,${iana-etc}/etc/protocols,g' src/net/lookup_unix.go
     sed -i 's,/etc/services,${iana-etc}/etc/services,g' src/net/port_unix.go src/net/parse_test.go
     sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata}/share/zoneinfo/",' src/time/zoneinfo_unix.go
-  '' + optionalString (versionOlder version "1.7") ''
-    # We need to fix shebangs which will be used in an output script
-    # We can't use patch shebangs because this is an embedded script fix
-    sed -i 's,#!/usr/bin/env bash,#! ${stdenv.shell},g' misc/cgo/testcarchive/test.bash
+  '';
+
+  # Incremental re-compilation requires a path relative to home to store
+  # the object files
+  preBuild = ''
+    export HOME="$TMPDIR"
   '';
 
   GOOS = "linux";

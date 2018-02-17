@@ -217,6 +217,8 @@ go.stdenv.mkDerivation (
 
     runHook preBuild
 
+    export HOME="$TMPDIR"
+
     buildFlagsArray+=(
       "-asmflags" "-trimpath '$NIX_BUILD_TOP'"
       "-gcflags" "-trimpath '$NIX_BUILD_TOP'"

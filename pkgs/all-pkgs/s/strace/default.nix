@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "4.20";
+  version = "4.21";
 in
 stdenv.mkDerivation rec {
   name = "strace-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/strace/strace/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5bf3148dd17306a42566f7da17368fdd781afa147db05ea63a4ca2b50f58c523";
+    sha256 = "6d4165fba4f8afcf13a2ba87d85464f175180ca3ff8b828c4ccbc8b44de479b7";
   };
 
   nativeBuildInputs = [

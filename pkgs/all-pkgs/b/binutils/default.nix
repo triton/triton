@@ -3,6 +3,7 @@
 , autotools
 , bison
 , cc
+, coreutils
 , fetchTritonPatch
 , fetchurl
 , flex
@@ -54,6 +55,7 @@ stdenv.mkDerivation rec {
     autotools
     #bison
     cc
+    coreutils
     #flex
     #gnum4
     gnumake
@@ -112,6 +114,9 @@ stdenv.mkDerivation rec {
       -e 's,/usr,/no-such-path,g' \
       -e 's,\(:\|"\)/\(lib\|bin\|libexec\|include\),\1/no-such-path/\2,g' \
       -i
+
+    # Don't build tests
+    sed -i '/SUBDIRS/s, testsuite,,g' "$srcRoot"/gold/Makefile.in
   '';
 
   configureFlags = [
@@ -154,6 +159,8 @@ stdenv.mkDerivation rec {
   };
 
   outputs = autotools.commonOutputs;
+
+  buildParallel = false;
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";

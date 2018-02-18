@@ -69,6 +69,7 @@ stdenv.mkDerivation {
   preConfigure = ''
     export TARGET_DL=$(find "${libc.lib or libc}/lib/" -name ld\*.so\* -exec readlink -f {} \; | head -n 1)
     test -n "$TARGET_DL"
+    export TARGET_LIBC_INCLUDE="${libc.dev or libc}/include"
   '';
 
   configureAction = ''
@@ -81,7 +82,8 @@ stdenv.mkDerivation {
     source '${./lib.sh}'
     deepLink '${cc.dev or cc}'/lib/gcc/*/* "$out"
     deepLink '${cc.bin or cc}'/libexec/gcc/*/* "$out"
-    ln -sv "$(readlink -f '${libc.dev or libc}'/include)" "$out"/include
+    mkdir -p "$out"/include
+    ln -sv "$(readlink -f '${cc.dev or cc}'/include/c++)" "$out"/include/c++
     libs=(
       '${libc.lib or libc}'/lib/*.o
       '${libc.lib or libc}'/lib/*.so*
@@ -103,12 +105,18 @@ stdenv.mkDerivation {
 
   installCheckAction = ''
     pushd "$TMPDIR" >/dev/null
+
     # Test that our compiler works as expected
     echo "#include <stdlib.h>" >main.c
     echo "int main() { return EXIT_SUCCESS; }" >>main.c
     env -i CC_WRAPPER_LOG_LEVEL=debug "$out"/bin/gcc -v -o main main.c
-    ls -la main
     ./main
+
+    echo "#include <cstdlib>" >main.cc
+    echo "int main() { return EXIT_SUCCESS; }" >>main.cc
+    env -i CC_WRAPPER_LOG_LEVEL=debug "$out"/bin/g++ -v -o main main.cc
+    ./main
+
     popd >/dev/null
   '';
 

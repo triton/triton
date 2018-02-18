@@ -96,8 +96,19 @@ let
       link 'sed'
       link 'sort'
       link 'tail'
+      link 'touch'
       link 'tr'
       link 'xargs'
+    '';
+  };
+
+  bootstrap-coreutils = bootstrap-drv {
+    name = "coreutils";
+
+    extraCmd = ''
+      link 'expr'
+      link 'ls'
+      link 'uname'
     '';
   };
 
@@ -106,7 +117,7 @@ let
 
     extraCmd = ''
       mkdir -p "$out"/lib
-      for file in "$bootstrap"/lib/{libc.so*,crt*.o,ld*.so}; do
+      for file in "$bootstrap"/lib/{lib{c,m}.so*,crt*.o,ld*.so}; do
         ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
       done
       ln -sv '${bootstrap-tools}/include-glibc' "$out"/include
@@ -130,24 +141,35 @@ let
       shopt -s nullglob
       deepLink "$bootstrap"/lib/gcc/*/* "$out"
       deepLink "$bootstrap"/libexec/gcc/*/* "$out"
-      for file in "$bootstrap"/lib/{libc.so*,crt*.o,libgcc_s.so*}; do
+      mkdir -p "$out"/include
+      ln -sv "$(readlink -f "$bootstrap"/include/c++)" "$out"/include/c++
+      for file in "$bootstrap"/lib/lib{gcc_s,stdc++}.so*; do
         ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
       done
-      ln -sv "$(readlink -f '${bootstrap-libc}'/include)" "$out"/include
 
       mkdir -p "$out"/nix-support
       echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
+      echo "export CPPFLAGS='-idirafter ${bootstrap-libc}/include'" >>"$out"/nix-support/setup-hook
+      echo "export CXXLAGS='-idirafter $out/include'" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=${bootstrap-libc}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -B${bootstrap-libc}/lib\"" >>"$out"/nix-support/setup-hook
       echo "export CC='$out/bin/gcc'" >>"$out"/nix-support/setup-hook
       source "$out"/nix-support/setup-hook
 
       # Test that our compiler works as expected
+      set -x
       echo "#include <stdlib.h>" >main.c
       echo "int main() { return EXIT_SUCCESS; }" >>main.c
-      "$CC" $CFLAGS -v -o main main.c $LDFLAGS
-      ls -la main
+      "$CC" $CPPFLAGS $CFLAGS -v -o main main.c $LDFLAGS
       ./main
+
+      echo "#include <cstdlib>" >main.cc
+      echo "int main() { return EXIT_SUCCESS; }" >>main.cc
+      "$out"/bin/g++ $CPPFLAGS $CXXFLAGS -v -o main main.cc $LDFLAGS
+      ./main
+      set +x
     '';
   };
 
@@ -282,7 +304,7 @@ let
           gcc
           gcc_unwrapped;
 
-        coreutils = bootstrap-tools;
+        coreutils = bootstrap-coreutils;
         cc = gcc;
         libc = bootstrap-libc;
 

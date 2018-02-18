@@ -125,6 +125,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--help"
     "--disable-werror"
     "--enable-gold=default"
     "--enable-ld"

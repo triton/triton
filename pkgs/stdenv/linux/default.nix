@@ -37,11 +37,6 @@ let
 
     tarball = bootstrap-files.bootstrap-tools;
 
-    outputs = [
-      "out"
-      "glibc"
-    ];
-
     system = bootstrapSystem;
   }) // {
     inherit (bootstrap-files)
@@ -105,6 +100,18 @@ let
     '';
   };
 
+  bootstrap-libc = bootstrap-drv {
+    name = "libc";
+
+    extraCmd = ''
+      mkdir -p "$out"/lib
+      for file in "$bootstrap"/lib/{libc.so*,crt*.o,ld*.so}; do
+        ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
+      done
+      ln -sv '${bootstrap-tools}/include-glibc' "$out"/include
+    '';
+  };
+
   bootstrap-cc = bootstrap-drv {
     name = "cc";
 
@@ -122,14 +129,14 @@ let
       shopt -s nullglob
       deepLink "$bootstrap"/lib/gcc/*/* "$out"
       deepLink "$bootstrap"/libexec/gcc/*/* "$out"
-      ln -sv "${bootstrap-tools.glibc}"/include "$out"
-      for file in "$bootstrap"/lib/{lib{c,gcc_s}.so*,crt*.o,ld*.so}; do
+      for file in "$bootstrap"/lib/{libc.so*,crt*.o,libgcc_s.so*}; do
         ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
       done
+      ln -sv "$(readlink -f '${bootstrap-libc}'/include)" "$out"/include
 
       mkdir -p "$out"/nix-support
       echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f "$out"/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
       echo "export CC='$out/bin/gcc'" >>"$out"/nix-support/setup-hook
       source "$out"/nix-support/setup-hook
@@ -185,7 +192,7 @@ let
           gcc;
 
         cc = gcc;
-        libc = bootstrap-tools.glibc;
+        libc = bootstrap-libc;
 
         cc-wrapper = pkgs.cc-wrapper.override {
           cc = null;
@@ -245,7 +252,7 @@ let
 
         gcc_7 = cc-wrapper {
           cc = bootstrap-cc;
-          libc = bootstrap-tools.glibc;
+          libc = bootstrap-libc;
         };
       };
     }));

@@ -66,6 +66,11 @@ stdenv.mkDerivation {
   TARGET_LINKER = "binutils";
   TARGET_ARCH = optionalString (hostCc != null) outputTuple;
 
+  preConfigure = ''
+    export TARGET_DL=$(find "${libc.lib or libc}/lib/" -name ld\*.so\* -exec readlink -f {} \; | head -n 1)
+    test -n "$TARGET_DL"
+  '';
+
   configureAction = ''
     pushd "$srcRoot" >/dev/null
     PREFIX="$out" ./configure
@@ -76,7 +81,15 @@ stdenv.mkDerivation {
     source '${./lib.sh}'
     deepLink '${cc.dev or cc}'/lib/gcc/*/* "$out"
     deepLink '${cc.bin or cc}'/libexec/gcc/*/* "$out"
-    ln -sv '${libc.dev or libc}'/include "$out"
+    ln -sv "$(readlink -f '${libc.dev or libc}'/include)" "$out"/include
+    libs=(
+      '${libc.lib or libc}'/lib/*.o
+      '${libc.lib or libc}'/lib/*.so*
+      '${cc.lib or cc}'/lib/*.so*
+    )
+    for lib in "''${libs[@]}"; do
+      ln -sv $(readlink -f "$lib") "$out"/lib/$(basename "$lib") 2>/dev/null || true
+    done
 
     for file in ${concatMapStrings (n: "'${n}'/* ") binDirList}; do
       if [ -e "$out/bin/$(basename "$file")" ]; then
@@ -89,12 +102,14 @@ stdenv.mkDerivation {
   doInstallCheck = true;
 
   installCheckAction = ''
+    pushd "$TMPDIR" >/dev/null
     # Test that our compiler works as expected
     echo "#include <stdlib.h>" >main.c
     echo "int main() { return EXIT_SUCCESS; }" >>main.c
-    env -i "$out"/bin/gcc $CFLAGS -v -o main main.c $LDFLAGS
+    env -i CC_WRAPPER_LOG_LEVEL=debug "$out"/bin/gcc -v -o main main.c
     ls -la main
     ./main
+    popd >/dev/null
   '';
 
   passthru = {

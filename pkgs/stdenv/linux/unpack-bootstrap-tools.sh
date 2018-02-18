@@ -47,8 +47,3 @@ for file in "$out"/lib/*; do
     mv "$file.tmp" "$file"
   fi
 done
-
-# Create a separate glibc
-mkdir -p $glibc
-ln -s $out/lib $glibc/lib
-ln -s $out/include-glibc $glibc/include

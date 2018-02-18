@@ -1,9 +1,6 @@
 { stdenv
-, autoconf
-, automake
-, fetchFromGitHub
+, fetchurl
 , gobject-introspection
-, libtool
 , python2
 
 , cryptsetup
@@ -21,24 +18,18 @@
 }:
 
 let
-  version = "2.15";
+  version = "2.16";
 in
 stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
-  src = fetchFromGitHub {
-    version = 5;
-    owner = "storaged-project";
-    repo = "libblockdev";
-    rev = "${version}-1";
-    sha256 = "afe068a7d248699c1f5fa7e72bdbcc7f0055edd4eed31bf97dc930b57bc1e053";
+  src = fetchurl {
+    url = "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/${name}.tar.gz";
+    sha256 = "d841ae446cf6dc545e4f7386e13dfd8c3e07c4b6a962536b7c0fcd20e3a4d9e4";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
     gobject-introspection
-    libtool
     python2
   ];
 
@@ -57,14 +48,7 @@ stdenv.mkDerivation rec {
     volume_key
   ];
 
-  postPatch = ''
-    sed -i 's,pkg-config --atleast-version=3.2 libparted,pkg-config --atleast-version=3.3 libparted,' configure.ac
-  '';
-
   preConfigure = ''
-    patchShebangs autogen.sh
-    ./autogen.sh
-
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${volume_key}/include/volume_key"
   
     patchShebangs scripts/boilerplate_generator.py

@@ -2817,6 +2817,8 @@ msgpack-c = callPackage ../all-pkgs/m/msgpack-c { };
 
 mtdev = callPackage ../all-pkgs/m/mtdev { };
 
+mtd-utils = callPackage ../all-pkgs/m/mtd-utils { };
+
 mtools = callPackage ../all-pkgs/m/mtools { };
 
 mtr = callPackage ../all-pkgs/m/mtr { };

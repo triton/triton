@@ -88,6 +88,7 @@ let
       link 'ln'
       link 'ls'
       link 'mkdir'
+      link 'mv'
       link 'nproc' || true
       link 'readlink'
       link 'rm'
@@ -283,7 +284,7 @@ let
 
         coreutils = bootstrap-tools;
         cc = gcc;
-        libc = bootstrap-tools.glibc;
+        libc = bootstrap-libc;
 
         binutils = pkgs.binutils.override {
           cc = stage0Pkgs.cc;

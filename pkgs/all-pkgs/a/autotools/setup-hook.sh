@@ -40,7 +40,7 @@ autotoolsConfigureAction() {
   # If we have multiple outputs, have the build do the right thing
   if [ "$outputs" != "out" ]; then
     configureFlagsArray+=("--prefix=$aux")
-    configureFlagsArray+=("--exec-pefix=$bin")
+    configureFlagsArray+=("--exec-prefix=$bin")
     configureFlagsArray+=("--libdir=$dev/lib")
     configureFlagsArray+=("--includedir=$dev/include")
     configureFlagsArray+=("--mandir=$man/share/man")

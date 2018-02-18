@@ -89,16 +89,6 @@ stdenv.mkDerivation rec {
     })
 	];
 
-  GCC_EXEC_PREFIX = "/no-such-path/";
-
-  preUnpack = ''
-    set -x
-    echo "int main() { return 0; }" >main.c
-    gcc -v -g -O2 -o main main.c
-    set +x
-    exit 1
-  '';
-
   postPatch = ''
     # Remove any patch conflict files
     find "$srcRoot" -name \*.orig -type f -delete
@@ -125,7 +115,6 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--help"
     "--disable-werror"
     "--enable-gold=default"
     "--enable-ld"
@@ -164,7 +153,7 @@ stdenv.mkDerivation rec {
     inherit version;
   };
 
-  outputs = if bootstrap then [ "out" ] else autotools.commonOutputs;
+  outputs = autotools.commonOutputs;
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";

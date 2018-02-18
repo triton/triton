@@ -1,9 +1,6 @@
 { stdenv
-, autoconf
-, automake
-, fetchFromGitHub
+, fetchurl
 , gettext
-, libtool
 , python2
 
 , glib
@@ -18,19 +15,13 @@ in
 stdenv.mkDerivation rec {
   name = "libbytesize-${version}";
 
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "storaged-project";
-    repo = "libbytesize";
-    rev = version;
-    sha256 = "ad557593e12521d13ea2dbf64ddee906535ddeba8712c0aca3f9dbda06da94de";
+  src = fetchurl {
+    url = "https://github.com/storaged-project/libbytesize/releases/download/${version}/${name}.tar.gz";
+    sha256 = "65656ed62080d73d0f21d9647cee20533377bee150e91807fd54c502f3e1108f";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
     gettext
-    libtool
     python2
   ];
 
@@ -40,11 +31,6 @@ stdenv.mkDerivation rec {
     mpfr
     pcre
   ];
-
-  preConfigure = ''
-    patchShebangs autogen.sh
-    ./autogen.sh
-  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

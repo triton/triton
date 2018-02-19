@@ -45,6 +45,13 @@ autotoolsConfigureAction() {
     configureFlagsArray+=("--includedir=$dev/include")
     configureFlagsArray+=("--mandir=$man/share/man")
     configureFlagsArray+=("--infodir=$man/share/info")
+
+    # We need to make sure all of the outputs exist at the end of the build
+    # It's not guaranteed that all builds will have them
+    local output
+    for output in $outputs; do
+      mkdir -p "${!output}"
+    done
   else
     configureFlagsArray+=("--prefix=$out")
   fi

@@ -4,9 +4,11 @@
 , bison
 , cc
 , coreutils
+, diffutils
 , fetchTritonPatch
 , fetchurl
 , flex
+, gnugrep
 , gnum4
 , gnumake
 , gnupatch
@@ -39,6 +41,8 @@ let
     i686-linux
     x86_64-linux;
 
+  target = cc.platformTuples."${outputSystem}-boot";
+
   version = "2.30";
 in
 stdenv.mkDerivation rec {
@@ -56,7 +60,9 @@ stdenv.mkDerivation rec {
     #bison
     cc
     coreutils
+    diffutils
     #flex
+    gnugrep
     #gnum4
     gnumake
     gnupatch
@@ -73,12 +79,15 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  patches = [
+  # We can't apply the rollup during bootstrap since this would
+  # require us to have a `makeinfo` binary
+  patches = optionals (!bootstrap) [
     (fetchTritonPatch {
       rev = "2de0054fdd5a211c7801433dda343a312ab8f00b";
       file = "b/binutils/0000-upstream-fixes.patch";
       sha256 = "cb96aed03b9137c70eae895f6d781501b9df1320dc7c755745e3316e1ffa7566";
     })
+  ] ++ [
     (fetchTritonPatch {
       rev = "a03cde5368a0265105fe8be99ef193585334cb37";
       file = "b/binutils/0001-always-runpath.patch";
@@ -129,29 +138,27 @@ stdenv.mkDerivation rec {
     "--enable-deterministic-archives"
     "--${if !bootstrap then "with" else "without"}-system-zlib"
   ] ++ optionals bootstrap [
-    "--target=${cc.platformTuples."${outputSystem}-boot"}"  # Always treat bootstrapping like cross compiling
-  ] ++ optionals (elem stdenv.targetSystem bit64) [
+    "--target=${target}"  # Always treat bootstrapping like cross compiling
+  ] ++ optionals (elem outputSystem bit64) [
     "--enable-64-bit-archive"
   ];
 
-  #preBuild = ''
-  #  makeFlagsArray+=("tooldir=$out")
-  #'';
-
   preFixup = optionalString bootstrap ''
-    find "$out" -not -name bin -and -not -name share -mindepth 1 -maxdepth 1 | xargs -r rm -r
+    rm -r "$bin"/'${target}'
   '';
 
   # Make sure we retain no references to the FHS hierarchy of paths
   preFixupCheck = ''
-    if grep -rao '[a-zA-Z0-9_-/]*/\(bin\|include\|lib\|libexec\)' "$out" | grep -v ':\(/no-such-path\|/nix/store\)'; then
-      echo "Found FHS paths in binutils. We definitely don't want this";
-      exit 1
-    fi
+    set -x
+    for output in bin dev lib; do
+      if grep -rao '[a-zA-Z0-9_-/]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v ':\(/no-such-path\|/nix/store\)'; then
+        echo "Found FHS paths in binutils. We definitely don't want this";
+        exit 1
+      fi
+    done
+    set +x
   '';
 
-  ccFixFlags = !bootstrap;
-  buildDirCheck = !bootstrap;
   disableStatic = false;
 
   passthru = {
@@ -159,8 +166,6 @@ stdenv.mkDerivation rec {
   };
 
   outputs = autotools.commonOutputs;
-
-  buildParallel = false;
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";

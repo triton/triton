@@ -102,16 +102,6 @@ let
     '';
   };
 
-  bootstrap-coreutils = bootstrap-drv {
-    name = "coreutils";
-
-    extraCmd = ''
-      link 'expr'
-      link 'ls'
-      link 'uname'
-    '';
-  };
-
   bootstrap-libc = bootstrap-drv {
     name = "libc";
 
@@ -149,7 +139,7 @@ let
 
       mkdir -p "$out"/nix-support
       echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
-      echo "export CPPFLAGS='-idirafter ${bootstrap-libc}/include'" >>"$out"/nix-support/setup-hook
+      echo "export CPPFLAGS='-idirafter $(readlink -f '${bootstrap-libc}'/include)'" >>"$out"/nix-support/setup-hook
       echo "export CXXLAGS='-idirafter $out/include'" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
@@ -215,7 +205,7 @@ let
           gcc;
 
         cc = gcc;
-        libc = bootstrap-libc;
+        libc = glibc;
 
         cc-wrapper = pkgs.cc-wrapper.override {
           cc = null;
@@ -238,6 +228,40 @@ let
             link 'bison'
             mkdir -p "$out"/share
             ln -sv "${bootstrap-tools}"/share/bison "$out"/share
+          '';
+        };
+
+        coreutils = bootstrap-drv {
+          name = "coreutils";
+
+          extraCmd = ''
+            link 'cmp'
+            link 'expr'
+            link 'ls'
+            link 'sleep'
+            link 'rmdir'
+            link 'uname'
+          '';
+        };
+
+        diffutils = bootstrap-drv {
+          name = "diffutils";
+
+          extraCmd = ''
+            link 'diff'
+          '';
+        };
+
+        glibc = bootstrap-libc;
+
+        gnugrep = bootstrap-drv {
+          name = "gnugrep";
+
+          extraCmd = ''
+            link 'grep'
+            echo '#! /bin/sh' >"$out"/bin/egrep
+            echo "exec $(type -tP grep) -E \"\$@\"" >>"$out"/bin/egrep
+            chmod +x "$out"/bin/egrep
           '';
         };
 
@@ -304,9 +328,8 @@ let
           gcc
           gcc_unwrapped;
 
-        coreutils = bootstrap-coreutils;
         cc = gcc;
-        libc = bootstrap-libc;
+        libc = glibc;
 
         binutils = pkgs.binutils.override {
           cc = stage0Pkgs.cc;
@@ -334,8 +357,12 @@ let
 
         # These should not be used outside of the bootstrapping binutils / gcc
         inherit (stage0Pkgs)
+          coreutils
+          diffutils
           fetchurl
           fetchTritonPatch
+          glibc
+          gnugrep
           gnumake
           gnupatch
           gnutar

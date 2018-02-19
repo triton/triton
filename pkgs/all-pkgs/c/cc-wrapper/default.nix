@@ -43,7 +43,7 @@ let
 
   binDirList = map (n: "${n.bin or n}/bin") buildInputs;
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "cc-wrapper";
 
   src = ./src.tar;
@@ -119,6 +119,8 @@ stdenv.mkDerivation {
 
     popd >/dev/null
   '';
+
+  setupHook = ./setup-hook.sh;
 
   passthru = {
     inherit

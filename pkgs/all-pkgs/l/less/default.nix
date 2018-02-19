@@ -10,14 +10,19 @@ let
   inherit (lib)
     boolString
     boolWt;
+
+  fileUrls = name: [
+    "http://www.greenwoodsoftware.com/less/${name}"
+  ];
 in
 stdenv.mkDerivation rec {
-  name = "less-487";
+  name = "less-530";
 
   src = fetchurl {
-    url = "http://www.greenwoodsoftware.com/less/${name}.tar.gz";
-    multihash = "QmNvvbq4XTRfX5ZiAnYi7DbnVviNeDwXiAcYnpqWemr8c9";
-    sha256 = "f3dc8455cb0b2b66e0c6b816c00197a71bf6d1787078adeee0bcf2aea4b12706";
+    urls = map (n: "${n}.tar.gz") (fileUrls name);
+    multihash = "QmUXLRe6hL1spWcAK7Kq5RsM3eyiDZEE61EFAPQ2Mo9X36";
+    hashOutput = false;
+    sha256 = "503f91ab0af4846f34f0444ab71c4b286123f0044a4964f1ae781486c617f2e2";
   };
 
   buildInputs = [
@@ -27,17 +32,22 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--sysconfdir=/etc"
-    "--enable-largefile"
     "--with-secure"
-    "--without-no-float"
     "--with-regex=${boolString (pcre != null) "pcre" "posix"}"
   ];
 
-  preConfigure = ''
-    chmod +x ./configure
-  '' + /* Unicode */ ''
+  preConfigure = /* Unicode */ ''
     export ac_cv_lib_ncursesw_initscr=unicode
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") (fileUrls name);
+      pgpKeyFingerprint = "AE27 252B D684 6E7D 6EAE  1DD6 F153 A7C8 3323 5259";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A more advanced file pager than ‘more’";

@@ -70,6 +70,8 @@ stdenv.mkDerivation rec {
     export TARGET_DL=$(find "${libc.lib or libc}/lib/" -name ld\*.so\* -exec readlink -f {} \; | head -n 1)
     test -n "$TARGET_DL"
     export TARGET_LIBC_INCLUDE="${libc.dev or libc}/include"
+    export TARGET_LIBC_DYNAMIC_LIBS="${libc.lib or libc}/lib"
+    export TARGET_LIBC_STATIC_LIBS="${libc.dev or lib}/lib"
   '';
 
   configureAction = ''
@@ -84,12 +86,7 @@ stdenv.mkDerivation rec {
     deepLink '${cc.bin or cc}'/libexec/gcc/*/* "$out"
     mkdir -p "$out"/include
     ln -sv "$(readlink -f '${cc.dev or cc}'/include/c++)" "$out"/include/c++
-    libs=(
-      '${libc.lib or libc}'/lib/*.o
-      '${libc.lib or libc}'/lib/*.so*
-      '${cc.lib or cc}'/lib/*.so*
-    )
-    for lib in "''${libs[@]}"; do
+    for lib in '${cc.lib or cc}'/lib/*.so*; do
       ln -sv $(readlink -f "$lib") "$out"/lib/$(basename "$lib") 2>/dev/null || true
     done
 
@@ -110,6 +107,8 @@ stdenv.mkDerivation rec {
     echo "#include <stdlib.h>" >main.c
     echo "int main() { return EXIT_SUCCESS; }" >>main.c
     env -i CC_WRAPPER_LOG_LEVEL=debug "$out"/bin/gcc -v -o main main.c
+    ./main
+    env -i CC_WRAPPER_LOG_LEVEL=debug "$out"/bin/gcc -static -v -o main main.c
     ./main
 
     echo "#include <cstdlib>" >main.cc

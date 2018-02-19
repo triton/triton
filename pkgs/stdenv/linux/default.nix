@@ -51,7 +51,7 @@ let
 
   bootstrap-bash = "${bootstrap-tools}/bin/bash";
 
-  bootstrap-drv = { name, setupHook ? null, extraCmd ? "" }: derivation {
+  bootstrap-drv = { name, setupHook ? null, extraCmd ? "", outputs ? [ "out" ] }: derivation {
     name = "bootstrap-drv-${name}";
 
     builder = bootstrap-bash;
@@ -63,6 +63,7 @@ let
 
     inherit
       extraCmd
+      outputs
       setupHook;
 
     system = bootstrapSystem;
@@ -105,12 +106,21 @@ let
   bootstrap-libc = bootstrap-drv {
     name = "libc";
 
+    outputs = [
+      "dev"
+      "lib"
+    ];
+
     extraCmd = ''
-      mkdir -p "$out"/lib
-      for file in "$bootstrap"/lib/{lib{c,m}.so*,crt*.o,ld*.so}; do
-        ln -sv $(readlink -f "$file") "$out"/lib/$(basename "$file")
+      mkdir -p "$dev"/lib
+      for file in "$bootstrap"/lib/{lib{c,m}.a,crt*.o}; do
+        ln -sv $(readlink -f "$file") "$dev"/lib/$(basename "$file")
       done
-      ln -sv '${bootstrap-tools}/include-glibc' "$out"/include
+      mkdir -p "$lib"/lib
+      for file in "$bootstrap"/lib/{lib{c,m}.so*,ld*.so}; do
+        ln -sv $(readlink -f "$file") "$lib"/lib/$(basename "$file")
+      done
+      ln -sv '${bootstrap-tools}/include-glibc' "$dev"/include
     '';
   };
 
@@ -139,12 +149,13 @@ let
 
       mkdir -p "$out"/nix-support
       echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
-      echo "export CPPFLAGS='-idirafter $(readlink -f '${bootstrap-libc}'/include)'" >>"$out"/nix-support/setup-hook
+      echo "export CPPFLAGS='-idirafter $(readlink -f '${bootstrap-libc.dev}'/include)'" >>"$out"/nix-support/setup-hook
       echo "export CXXLAGS='-idirafter $out/include'" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc.lib}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
       echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=${bootstrap-libc}/lib\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -B${bootstrap-libc}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -L${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\$LDFLAGS -B${bootstrap-libc.dev}/lib\"" >>"$out"/nix-support/setup-hook
       echo "export CC='$out/bin/gcc'" >>"$out"/nix-support/setup-hook
       source "$out"/nix-support/setup-hook
 
@@ -387,15 +398,8 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
       name = "bootstrap-stdenv-linux-stage2";
 
-      cc = stage1Pkgs.gcc;
       hostSystem = bootstrapSystem;
       targetSystem = hostSystem;
-
-      extraAttrs = {
-        # stdenv.libc is used by GCC build to figure out the system-level
-        # /usr/include directory.
-        libc = stage2Pkgs.stdenv.cc.libc;
-      };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit (pkgs)

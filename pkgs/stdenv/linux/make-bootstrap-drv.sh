@@ -3,6 +3,12 @@ set -o pipefail
 
 export PATH="$bootstrap/bin"
 
+if [ -n "$bin" ]; then
+  output=bin
+else
+  output=out
+fi
+
 link() {
   local bin="$1"
 
@@ -11,13 +17,13 @@ link() {
     return 1
   fi
 
-  mkdir -p "$out"/bin
-  ln -sv "$bootstrap"/bin/"$bin" "$out"/bin
+  mkdir -p "${!output}"/bin
+  ln -sv "$bootstrap"/bin/"$bin" "${!output}"/bin
 }
 
 if [ -n "$setupHook" ]; then
-  mkdir -p "$out"/nix-support
-  sed "s,@out@,$out," <"$setupHook" >"$out"/nix-support/setup-hook
+  mkdir -p "${!output}"/nix-support
+  sed "s,@$output@,${!output}," <"$setupHook" >"${!output}"/nix-support/setup-hook
 fi
 
 if [ -n "$extraCmd" ]; then

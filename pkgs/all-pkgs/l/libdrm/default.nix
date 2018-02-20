@@ -1,45 +1,39 @@
 { stdenv
 , fetchurl
 , lib
+, meson
+, ninja
 
-, libpthread-stubs
-, xorg
+, libpciaccess
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.89";
+  name = "libdrm-2.4.90";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmSD4yeUjSwvfPgeLhP71JUMEiDTe9uBqaxTq7Lvr73s4z";
+    multihash = "QmewXPMZkp6i9ZVhnqg6LAToDXQ7fF4CfcZeY8emYQGGnN";
     hashOutput = false;
-    sha256 = "629f9782aabbb4809166de5f24d26fe0766055255038f16935602d89f136a02e";
+    sha256 = "db37ec8f1dbaa2c192ad9903c8d0988b858ae88031e96f169bf76aaf705db68b";
   };
 
-  buildInputs = [
-    libpthread-stubs
-    xorg.libpciaccess
+  nativeBuildInputs = [
+    meson
+    ninja
   ];
 
-  configureFlags = [
-    "--enable-largefile"
-    "--disable-udev"  # Udev is only used by tests.
-    "--enable-libkms"
-    "--enable-intel"
-    "--enable-radeon"
-    "--enable-amdgpu"
-    "--enable-nouveau"
-    "--enable-omap-experimental-api"
-    "--enable-exynos-experimental-api"
-    "--enable-freedreno"
-    "--disable-freedreno-kgsl"
-    "--enable-tegra-experimental-api"
-    "--disable-install-test-programs"
-    "--disable-cairo-tests"
-    "--disable-manpages"
-    "--disable-valgrind"
-    #"--with-xsltproc"
-    #"--with-kernel-source"
+  buildInputs = [
+    libpciaccess
+  ];
+
+  postPatch = ''
+    sed -i "/subdir('tests')/d" meson.build
+  '';
+
+  mesonFlags = [
+    "-Dcairo-tests=false"
+    "-Dinstall-test-programs=false"
+    #"-Dudev=true"
   ];
 
   # This breaks libraries talking to the dri interfaces

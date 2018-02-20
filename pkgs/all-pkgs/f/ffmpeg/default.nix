@@ -193,9 +193,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 5;
-      version = "2018.02.04";
-      rev = "48bc9fffd11c05e75b9125d8cd90e9263108bd83";
-      sha256 = "1fba94c63afc43c472de40c791d7af2378c818ded1b06ca2e0994c0647147bcc";
+      version = "2018.02.19";
+      rev = "acdea9e7c56b74b05c56b4733acc855b959ba073";
+      sha256 = "db688342daa19a2cfb9272e2cb4337911f37273e09c492fd73fee4013d7129d2";
     };
   };
   source = sources."${channel}";

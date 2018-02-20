@@ -6,7 +6,8 @@
 , python3Packages
 , yasm
 
-, boost
+, boost_1-65
+, boost_1-66
 , curl
 , expat
 , fcgi
@@ -99,7 +100,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost
     curl
     expat
     fuse_2
@@ -118,9 +118,11 @@ stdenv.mkDerivation rec {
     xfsprogs_lib
     zlib
   ] ++ optionals (versionOlder version "12.0.0") [
+    boost_1-65
     fcgi
     libatomic_ops
   ] ++ optionals (versionAtLeast version "12.0.0") [
+    boost_1-66
     gperf
     rdma-core
     rocksdb

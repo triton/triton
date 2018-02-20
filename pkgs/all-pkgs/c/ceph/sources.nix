@@ -8,8 +8,8 @@
     sha256 = "971c575c63942c4d068a98935bd950a5df124315024f9cafce87f5c7e13cdac2";
   };
   "12" = rec {
-    version = "12.2.2";
-    sha256 = "b59a277ccc81214fd75961de932eeb72772b07b161c84ed94afde8393b6db43d";
+    version = "12.2.3";
+    sha256 = "0917329f149e5f100b9d9fd8d999a51f848fde928b82d2662d233e8ca14a2244";
   };
   "dev" = rec {
     version = "12.2.0";

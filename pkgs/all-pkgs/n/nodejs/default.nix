@@ -8,6 +8,7 @@
 , http-parser
 , icu
 , libuv
+, nghttp2_lib
 , openssl_1-0-2
 , zlib
 
@@ -55,6 +56,9 @@ stdenv.mkDerivation rec {
     http-parser
     icu
     libuv
+  ] ++ optionals (versionAtLeast source.version "9.0.0") [
+    nghttp2_lib
+  ] ++ [
     openssl_1-0-2
     zlib
   ];
@@ -67,6 +71,9 @@ stdenv.mkDerivation rec {
     "--ninja"
     "--shared-http-parser"
     "--shared-libuv"
+  ] ++ optionals (versionAtLeast source.version "9.0.0") [
+    "--shared-nghttp2"
+  ] ++ [
     "--shared-openssl"
     "--shared-zlib"
     "--shared-cares"

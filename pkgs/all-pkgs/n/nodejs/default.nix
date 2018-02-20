@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, ninja
 , python
 
 , c-ares
@@ -27,6 +28,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    ninja
     python
   ];
 
@@ -44,6 +46,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--ninja"
     "--shared-http-parser"
     "--shared-libuv"
     "--shared-openssl"
@@ -56,8 +59,18 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  # Fix scripts like npm that depend on node
-  postInstall = ''
+  preBuild = ''
+    # Ninja build directory
+    makeFlagsArray+=('-C' 'out/Release/')
+  '';
+
+  installPhase = ''
+    # Install must be run manually when using ninja setup hook
+    sed -i tools/install.py \
+      -e "s,/usr/local,$out,"
+    ${python.interpreter} tools/install.py
+
+    # Fix scripts like npm that depend on node
     export PATH="$out/bin:$PATH"
     command -v node
     while read file; do

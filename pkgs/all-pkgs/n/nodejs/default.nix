@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , ninja
 , python
 
@@ -9,22 +10,39 @@
 , libuv
 , openssl_1-0-2
 , zlib
+
+, channel
 }:
 
 let
-  version = "9.4.0";
+  inherit (lib)
+    optionals
+    versionAtLeast;
+
+  sources = {
+    "8" = {
+      version = "8.9.4";
+      sha256 = "6cdcde9c9c1ca9f450a0b24eafa229ca759e576daa0fae892ce74d541ecdc86f";
+    };
+    "9" = {
+      version = "9.5.0";
+      sha256 = "666b463a378b65bb83afb8f2c271865e03804d5930c95688ab4020c5dcd5146d";
+    };
+  };
+
+  source = sources."${channel}";
 
   dirUrls = [
-    "https://nodejs.org/dist/v${version}"
+    "https://nodejs.org/dist/v${source.version}"
   ];
 in
 stdenv.mkDerivation rec {
-  name = "nodejs-${version}";
+  name = "nodejs-${source.version}";
 
   src = fetchurl {
-    urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
+    urls = map (n: "${n}/node-v${source.version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "7503e1f0f81288ff6e56009c0f399c0b5ebfe6f446734c5beb2d45393b21b20c";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -83,27 +101,30 @@ stdenv.mkDerivation rec {
       failEarly = true;
       sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
       #pgpsigSha256Urls = map (n: "${n}.asc") sha256Urls;
+      # https://github.com/nodejs/node#release-team
       pgpKeyFingerprints = [
-        # Rod Vagg
-        "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
-        # Evan Lucas
-        "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
-        # Jeremiah Senkpiel
-        "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
         # Colin Ihrig
         "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
-        # Myles Borins
-        "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
-        # James M Snell
-        "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
+        # Evan Lucas
+        "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
+        # Gibson Fahnestock
+        "7798 4A98 6EBC 2AA7 86BC  0F66 B01F BB92 821C 587A"
         # Italo A. Casas
         "5673 0D54 0102 8683 275B  D23C 23EF EFE9 3C4C FFFE"
+        # James M Snell
+        "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
+        # Jeremiah Senkpiel
+        "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
+        # Myles Borins
+        "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
+        # Rod Vagg
+        "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

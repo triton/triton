@@ -2968,7 +2968,13 @@ nixos-utils = callPackage ../all-pkgs/n/nixos-utils { };
 
 nmap = callPackage ../all-pkgs/n/nmap { };
 
-nodejs = callPackage ../all-pkgs/n/nodejs { };
+nodejs_8 = callPackage ../all-pkgs/n/nodejs {
+  channel = "8";
+};
+nodejs_9 = callPackage ../all-pkgs/n/nodejs {
+  channel = "9";
+};
+nodejs = callPackageAlias "nodejs_9" { };
 
 noise = callPackage ../all-pkgs/n/noise { };
 

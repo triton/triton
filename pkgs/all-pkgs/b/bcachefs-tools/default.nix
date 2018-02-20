@@ -10,11 +10,12 @@
 , liburcu
 , util-linux_lib
 , zlib
+, zstd
 }:
 
 let
-  date = "2018-02-05";
-  rev = "99adc23cf6260a8e5b237f498119ee163d8f71f6";
+  date = "2018-02-19";
+  rev = "cdf17bffadb3346ea4424357b5bb85de852231e9";
 in
 stdenv.mkDerivation {
   name = "bcache-tools-${date}";
@@ -22,8 +23,8 @@ stdenv.mkDerivation {
   src = fetchzip {
     version = 5;
     url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-${rev}.tar.xz";
-    multihash = "QmV29mnhsZ7Y7kyAqA8oMEzUQRRoGsk114wdghrpxZ6CYq";
-    sha256 = "74e407ad10f176d7d78219757e61a83145b843c847fbe5b158278035896c2b29";
+    multihash = "QmRxbVJY89HFw9qLpUXfLhwb2bPmK77bB2YDW3BvFGTc5Q";
+    sha256 = "e091e66afede0fcec84537ae14d37b3a12148778680c41c6e019d0a2135b9e57";
   };
 
   buildInputs = [
@@ -36,19 +37,14 @@ stdenv.mkDerivation {
     liburcu
     util-linux_lib
     zlib
+    zstd
   ];
-
-  postPatch = ''
-    sed -i 's,<blkid.h>,<blkid/blkid.h>,g' tools-util.c
-    sed -i 's,</usr/include/dirent.h>,<${stdenv.libc}/include/dirent.h>,g' cmd_migrate.c
-
-    sed -i '/-static/d' Makefile
-  '';
 
   preBuild = ''
     makeFlagsArray+=(
       "PREFIX=$out"
       "UDEVLIBDIR=$out/lib/udev"
+      "INITRAMFS_DIR=$TMPDIR"
     )
   '';
 

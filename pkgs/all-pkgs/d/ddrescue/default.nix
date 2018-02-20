@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ddrescue-1.22";
+  name = "ddrescue-1.23";
 
   src = fetchurl {
     url = "mirror://gnu/ddrescue/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "09857b2e8074813ac19da5d262890f722e5f7900e521a4c60354cef95eea10a7";
+    sha256 = "a9ae2dd44592bf386c9c156a5dacaeeb901573c9867ada3608f887d401338d8d";
   };
 
   nativeBuildInputs = [

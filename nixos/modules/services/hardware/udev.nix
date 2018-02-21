@@ -89,6 +89,7 @@ let
         if [[ ! -x $i ]]; then
           echo "FAIL"
           echo "$i is called in udev rules but not installed by udev"
+          grep "$i" "$out"/*
           exit 1
         fi
       done

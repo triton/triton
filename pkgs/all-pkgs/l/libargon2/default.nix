@@ -21,6 +21,15 @@ stdenv.mkDerivation {
     makeFlagsArray+=("PREFIX=$out")
   '';
 
+  postInstall = ''
+    mkdir -p "$out"/lib/pkgconfig
+    sed libargon2.pc \
+      -e "s,^prefix=.*,prefix=$out,g" \
+      -e 's,@HOST_MULTIARCH@,,g' \
+      -e 's,@UPSTREAM_VER@,${date},' \
+      >"$out"/lib/pkgconfig/libargon2.pc
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

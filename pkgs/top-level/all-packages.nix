@@ -2655,6 +2655,8 @@ lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 
 lmdb = callPackage ../all-pkgs/l/lmdb { };
 
+log4cplus = callPackage ../all-pkgs/l/log4cplus { };
+
 lrdf = callPackage ../all-pkgs/l/lrdf { };
 
 lsof = callPackage ../all-pkgs/l/lsof { };
@@ -4400,8 +4402,6 @@ libstartup_notification =
 #
   libzen = callPackage ../development/libraries/libzen { };
 
-  log4cplus = callPackage ../development/libraries/log4cplus { };
-#
   neon = callPackage ../development/libraries/neon {
     compressionSupport = true;
     sslSupport = true;

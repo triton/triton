@@ -205,7 +205,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-llvm"
     "--disable-valgrind"
 
-    "--${boolWt (buildConfig != "opengl-dummy")}-gallium-drivers${if (buildConfig != "opengl-dummy") then "=svga,i915,nouveau,r300,r600,radeonsi,freedreno,swrast,swr,virgl" else ""}"
+    "--${boolWt (buildConfig != "opengl-dummy")}-gallium-drivers${if (buildConfig != "opengl-dummy") then "=svga,i915,nouveau,r300,r600,radeonsi,swrast,swr,virgl" else ""}"
     "--${boolWt (buildConfig != "opengl-dummy")}-dri-driverdir${if (buildConfig != "opengl-dummy") then "=$(drivers)/lib/dri" else ""}"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--${boolWt (buildConfig != "opengl-dummy")}-dri-drivers${if (buildConfig != "opengl-dummy") then "=i915,i965,nouveau,radeon,r200,swrast" else ""}"

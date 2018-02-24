@@ -1332,6 +1332,8 @@ flashrom = callPackage ../all-pkgs/f/flashrom { };
 
 flashrom_chromium = callPackage ../all-pkgs/f/flashrom/chromium.nix { };
 
+flatbuffers = callPackage ../all-pkgs/f/flatbuffers { };
+
 flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };

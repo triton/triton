@@ -849,6 +849,7 @@ let
       "x509/pkix"
     ];
     propagatedBuildInputs = [
+      crypto
       net
       protobuf
       gogo_protobuf
@@ -6378,6 +6379,7 @@ let
     ];
     propagatedBuildInputs = [
       libkv
+      sctp
     ];
   };
 
@@ -8482,6 +8484,16 @@ let
     propagatedBuildInputs = [
       utils
     ];
+  };
+
+  sctp = buildFromGitHub {
+    version = 5;
+    owner = "ishidawataru";
+    repo = "sctp";
+    rev = "07191f837fedd2f13d1ec7b5f885f0f3ec54b1cb";
+    sha256 = "4ff89c03e31decd45b106e5c70d5250e131bd05162b1d42f55ba176231d85299";
+    date = "2018-02-18";
+    meta.autoUpdate = false;
   };
 
   sdnotify = buildFromGitHub {

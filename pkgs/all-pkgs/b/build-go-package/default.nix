@@ -280,7 +280,7 @@ go.stdenv.mkDerivation (
             temporary = !/\($/;
           }
           if (insideImport) {
-            where = match($0, /"(.*)"/, matches);
+            where = match($0, /"([^"]*)"/, matches);
             if (where != 0) {
               isMissing = 1;
               for (i in inputs) {

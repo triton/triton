@@ -907,6 +907,15 @@ let
     ];
   };
 
+  chacha20 = buildFromGitHub {
+    version = 5;
+    rev = "c8d29375923a8e1d2a0f0dc0fc1d8a0aba5b97ba";
+    owner  = "aead";
+    repo   = "chacha20";
+    sha256 = "0qhhsaj3xifxk71a5f1k10kcna92yfspv0s0mlp6jn5mlbsy6bs5";
+    date = "2018-02-14";
+  };
+
   chalk = buildFromGitHub {
     version = 2;
     rev = "22c06c80ed312dcb6e1cf394f9634aa2c4676e22";
@@ -1568,6 +1577,18 @@ let
     ];
   };
 
+  dlog = buildFromGitHub {
+    version = 5;
+    rev = "0.3";
+    owner  = "jedisct1";
+    repo   = "dlog";
+    sha256 = "0llzxkwbfmffj5cjdf5avzjypygy0fq6wm2ls2603phjfx5adh6n";
+    propagatedBuildInputs = [
+      go-syslog
+      sys
+    ];
+  };
+
   dns = buildFromGitHub {
     version = 5;
     rev = "v1.0.4";
@@ -1577,6 +1598,30 @@ let
     propagatedBuildInputs = [
       crypto
       net
+    ];
+  };
+
+  dnscrypt-proxy = buildFromGitHub {
+    version = 5;
+    rev = "2.0.4";
+    owner  = "jedisct1";
+    repo   = "dnscrypt-proxy";
+    sha256 = "19lk6790q6vb3vb1lg7b6cis793ksjqsckngv7f442zib6mrb0cq";
+    propagatedBuildInputs = [
+      cachecontrol
+      crypto
+      dlog
+      dns
+      ewma
+      godaemon
+      go-immutable-radix
+      go-minisign
+      go-systemd
+      golang-lru
+      safefile
+      service
+      toml
+      xsecretbox
     ];
   };
 
@@ -2411,6 +2456,15 @@ let
       net
     ];
     date = "2018-02-24";
+  };
+
+  godaemon = buildFromGitHub {
+    version = 5;
+    rev = "3d9f6e0b234fe7d17448b345b2e14ac05814a758";
+    owner  = "VividCortex";
+    repo   = "godaemon";
+    sha256 = "0vxihy5d64ym7k7zragkbyvjbli4f4mg18kmhl5kl0bwfd7vpw9x";
+    date = "2015-09-10";
   };
 
   godo = buildFromGitHub {
@@ -4268,6 +4322,18 @@ let
     repo = "go-metro";
     sha256 = "5d271cba19ad6aa9b0aaca7e7de6d5473eb4a9e4b682bbb1b7a4b37cca9bb706";
     meta.autoUpdate = false;
+  };
+
+  go-minisign = buildFromGitHub {
+    version = 5;
+    date = "2018-01-13";
+    rev = "f404c079ea5f0d4669fe617c553651f75167494e";
+    owner = "jedisct1";
+    repo = "go-minisign";
+    sha256 = "0qal80nfb8hrwvf7mk1ybrg21fmpv7w457pk7v3a1dvmm4fgwpjp";
+    propagatedBuildInputs = [
+      crypto
+    ];
   };
 
   go-msgio = buildFromGitHub {
@@ -7770,6 +7836,15 @@ let
     ];
   };
 
+  poly1305 = buildFromGitHub {
+    version = 5;
+    rev = "6cf43fdfd7a228cf3003ae23d10ddbf65e85997b";
+    owner  = "aead";
+    repo   = "poly1305";
+    sha256 = "07wx10yqr1mmb35i6z8s6wsragn2x9ly7g119rw0dymcbcsp64dz";
+    date = "2017-07-15";
+  };
+
   pongo2-v3 = buildFromGitHub {
     version = 3;
     rev = "v3.0";
@@ -8415,6 +8490,15 @@ let
     meta.autoUpdate = false;
   };
 
+  safefile = buildFromGitHub {
+    version = 5;
+    owner = "dchest";
+    repo = "safefile";
+    rev = "855e8d98f1852d48dde521e0522408d1fe7e836a";
+    date = "2015-10-22";
+    sha256 = "0kpirwpndc7jy4plibbvz1yjbh10aa41a91jmsr7qixpif5m91zk";
+  };
+
   sanitized-anchor-name = buildFromGitHub {
     version = 3;
     owner = "shurcooL";
@@ -8553,6 +8637,19 @@ let
     ];
     meta.useUnstable = true;
     date = "2018-02-13";
+  };
+
+  service = buildFromGitHub {
+    version = 5;
+    rev = "89346fbadecfd8c0ca98cfd31523f8eba9b4abbf";
+    owner  = "kardianos";
+    repo   = "service";
+    sha256 = "1nw93n2m720qd987mqwqdrv8z2ygcgbp3p7q69pacivpblidcgm9";
+    date = "2018-01-04";
+    propagatedBuildInputs = [
+      osext
+      sys
+    ];
   };
 
   session = buildFromGitHub {
@@ -9958,6 +10055,20 @@ let
     propagatedBuildInputs = [
       builder
       core
+    ];
+  };
+
+  xsecretbox = buildFromGitHub {
+    version = 5;
+    rev = "88b1956e8d9a013c98dda528d3a5b77f168b057f";
+    owner  = "jedisct1";
+    repo   = "xsecretbox";
+    sha256 = "0fb8sb29z6h3j9lapcqszv5bzv2wq5j7swhi0mb4iflxcig9shjn";
+    date = "2018-02-14";
+    propagatedBuildInputs = [
+      chacha20
+      crypto
+      poly1305
     ];
   };
 

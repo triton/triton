@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchFromGitHub
 , lib
 
 , libevent
@@ -7,15 +7,17 @@
 }:
 
 let
-  version = "0.3";
+  version = "0.4.0";
 in
 stdenv.mkDerivation rec {
   name = "dnscrypt-wrapper-${version}";
 
-  src = fetchurl {
-    url = "https://github.com/Cofyc/dnscrypt-wrapper/releases/download/"
-      + "v${version}/dnscrypt-wrapper-v${version}.tar.bz2";
-    sha256 = "ec5c290ba9b9a05536fa6ee827373ca9b3841508e6d075ae364405152446499c";
+  src = fetchFromGitHub {
+    version = 5;
+    owner = "cofyc";
+    repo = "dnscrypt-wrapper";
+    rev = "v${version}";
+    sha256 = "1ff78deeac40f12d5c5831a6452932cd5af76acc6e0011922168d560b764fe00";
   };
 
   buildInputs = [

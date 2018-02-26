@@ -586,6 +586,8 @@ wrapCC =
 
 "389-ds-base" = callPackage ../all-pkgs/3/389-ds-base { };
 
+aalib = callPackage ../all-pkgs/a/aalib { };
+
 accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };
@@ -4294,8 +4296,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #
   a52dec = callPackage ../development/libraries/a52dec { };
-#
-  aalib = callPackage ../development/libraries/aalib { };
 #
   faad2 = callPackage ../development/libraries/faad2 { };
 #

@@ -1,9 +1,11 @@
 { stdenv
+, cmake
 , fetchurl
 , lib
-, perl
+, ninja
 
 , bzip2
+, openssl
 , zlib
 }:
 
@@ -17,16 +19,18 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    perl
+    cmake
+    ninja
   ];
 
   buildInputs = [
     bzip2
+    openssl
     zlib
   ];
 
-  preInstall = ''
-    patchShebangs man/handle_links
+  postPatch = ''
+    sed -i '/ADD_SUBDIRECTORY(\(regress\|examples\))/d' CMakeLists.txt
   '';
 
   meta = with lib; {

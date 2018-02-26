@@ -3368,6 +3368,8 @@ resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
 
 rest = callPackage ../all-pkgs/r/rest { };
 
+restbed = callPackage ../all-pkgs/r/restbed { };
+
 rfkill = callPackage ../all-pkgs/r/rfkill { };
 
 rhash = callPackage ../all-pkgs/r/rhash { };

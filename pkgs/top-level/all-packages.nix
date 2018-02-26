@@ -3059,6 +3059,8 @@ opencv_3 = callPackage ../all-pkgs/o/opencv {
 };
 opencv = callPackageAlias "opencv_3" { };
 
+opendht = callPackage ../all-pkgs/o/opendht { };
+
 openexr = callPackage ../all-pkgs/o/openexr { };
 
 opengl-dummy = callPackage ../all-pkgs/m/mesa {

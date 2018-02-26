@@ -3044,10 +3044,6 @@ obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
-open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
-
-open-isns = callPackage ../all-pkgs/o/open-isns { };
-
 openal-soft = callPackage ../all-pkgs/o/openal-soft { };
 openal = callPackageAlias "openal-soft" { };
 
@@ -3070,6 +3066,10 @@ opengl-dummy = callPackage ../all-pkgs/m/mesa {
 opengl-headers = callPackage ../all-pkgs/o/opengl-headers { };
 
 openh264 = callPackage ../all-pkgs/o/openh264 { };
+
+open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
+
+open-isns = callPackage ../all-pkgs/o/open-isns { };
 
 openjpeg = callPackage ../all-pkgs/o/openjpeg { };
 

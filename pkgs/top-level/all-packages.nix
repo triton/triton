@@ -2030,6 +2030,8 @@ jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
 
 judy = callPackage ../all-pkgs/j/judy { };
 
+kashmir = callPackage ../all-pkgs/k/kashmir { };
+
 kbd = callPackage ../all-pkgs/k/kbd { };
 
 kea = callPackage ../all-pkgs/k/kea { };

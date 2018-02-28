@@ -3,6 +3,8 @@
 , fetchurl
 , gettext
 
+, attr
+, libunistring
 , readline
 , util-linux_lib
 }:
@@ -12,7 +14,7 @@ let
     "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
   ];
 
-  version = "4.14.0";
+  version = "4.15.1";
 in
 stdenv.mkDerivation rec {
   name = "xfsprogs-${version}";
@@ -20,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "b1b710b268bc95d6f45eca06e1262c29eb38865a19cd4404e48ba446e043b7ec";
+    sha256 = "27c36de9346a274143ad06c65b2fdbafd2806f3f37fa2c1235a08ed920d2bf3c";
   };
 
   nativeBuildInputs = [
@@ -28,6 +30,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    attr
+    libunistring
     readline
     util-linux_lib
   ];
@@ -42,27 +46,31 @@ stdenv.mkDerivation rec {
     sed -i "s,/bin/bash,$(type -P bash),g" install-sh
     sed -i "s,ldconfig,$(type -P ldconfig),g" configure m4/libtool.m4
 
-    # Fixes from gentoo 3.2.1 ebuild
-    sed -i "/^PKG_DOC_DIR/s:@pkg_name@:${name}:" include/builddefs.in
-    sed -i "/LLDFLAGS.*libtool-libs/d" $(find -name Makefile)
-    sed -i '/LIB_SUBDIRS/s:libdisk::' Makefile
+    # Remove static
+    find . -name Makefile -exec sed -i 's, -static,,g' {} \;
+
+    # Don't link against libtool-libs
+    find . -name Makefile -exec sed -i 's,=-libtool-libs,=,g' {} \;
+
+    # Don't depend on shared libs
+    find . -name Makefile -exec sed -i '/^LTDEPENDENCIES/s, $(LIB\(RT\|UNISTRING\)),,g' {} \;
   '';
 
   patches = [
     (fetchTritonPatch {
-      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
-      file = "x/xfsprogs/0001-xfsprogs-4.12.0-sharedlibs.patch";
-      sha256 = "4f10b622e8b7c8654a5dc79356343515ef203742ba4781b97a6f02f23e99555a";
-    })
-    (fetchTritonPatch {
-      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
-      file = "x/xfsprogs/0002-xfsprogs-4.9.0-underlinking.patch";
+      rev = "7231d726f6b0e134ce4c02dce5cd9ebf47d6138c";
+      file = "x/xfsprogs/0001-xfsprogs-4.9.0-underlinking.patch";
       sha256 = "644713208fcce550cbe66de8aa3fc366449a838baaba2db030bfc6111f4de7b5";
     })
     (fetchTritonPatch {
-      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
-      file = "x/xfsprogs/0003-xfsprogs-4.7.0-libxcmd-link.patch";
-      sha256 = "06cced4aeeb9a2d8c90e6d6fd1ff6571020122dbfe62140513f52bd82bf9abe8";
+      rev = "7231d726f6b0e134ce4c02dce5cd9ebf47d6138c";
+      file = "x/xfsprogs/0002-xfsprogs-4.15.0-sharedlibs.patch";
+      sha256 = "f3e3c00c92e4713fcfdbfa7a24b088f28352e4bd572b0ac9982d96d7b520da0b";
+    })
+    (fetchTritonPatch {
+      rev = "7231d726f6b0e134ce4c02dce5cd9ebf47d6138c";
+      file = "x/xfsprogs/0003-xfsprogs-4.15.0-docdir.patch";
+      sha256 = "d935b4c5ddc52f6b49952a1f18f828f05de544baf8f2e66a066a0abc5b6c2feb";
     })
   ];
 

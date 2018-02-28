@@ -86,7 +86,7 @@ let
       run_progs=$(grep -v '^[[:space:]]*#' $out/* | grep 'RUN+="/' |
         sed -e 's/.*RUN+="\([^ "]*\)[ "].*/\1/' | uniq)
       for i in $import_progs $run_progs; do
-        if [[ ! -x $i ]]; then
+        if [[ ! $i =~ /run/current-system/sw/bin/* ]] && [[ ! -x $i ]]; then
           echo "FAIL"
           echo "$i is called in udev rules but not installed by udev"
           grep "$i" "$out"/*

@@ -71,6 +71,9 @@ with stdenv.lib;
   ${optionalString (versionOlder version "4.16") ''
     BACKTRACE_SELF_TEST n
   ''}
+  ${optionalString (versionAtLeast version "4.16") ''
+    RUNTIME_TESTING_MENU n
+  ''}
   ${optionalString (versionOlder version "4.11") ''
     DEBUG_NX_TEST n
   ''}

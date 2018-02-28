@@ -50,6 +50,14 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  # WTF tar is broken without the `v` verbose option
+  # No clue on this one
+  preUnpack = ''
+    _defaultUnpack() {
+      xz -d <"$1" | tar xv
+    }
+  '';
+
   patches = [
     (fetchTritonPatch {
       rev = "21df51a39447ab99518058ddb37e245af246f15c";

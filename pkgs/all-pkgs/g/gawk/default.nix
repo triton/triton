@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "4.2.0";
+  version = "4.2.1";
 
   tarballUrls = version: [
     "mirror://gnu/gawk/gawk-${version}.tar.xz"
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "d4f3cd31c001fd0ed52832d4fbfbdfeaa38ad541c182f80ff8fdf87324a6a9f2";
+    sha256 = "d1119785e746d46a8209d28b2de404a57f983aa48670f4e225531d3bdc175551";
   };
 
   buildInputs = [
@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "4.2.0";
-      outputHash = "d4f3cd31c001fd0ed52832d4fbfbdfeaa38ad541c182f80ff8fdf87324a6a9f2";
+      urls = tarballUrls "4.2.1";
+      outputHash = "d1119785e746d46a8209d28b2de404a57f983aa48670f4e225531d3bdc175551";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "D196 7C63 7887 1317 7D86  1ED7 DF59 7815 937E C0D2";
     };

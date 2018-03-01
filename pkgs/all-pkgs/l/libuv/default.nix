@@ -2,11 +2,12 @@
 , autoconf
 , automake
 , fetchFromGitHub
+, lib
 , libtool
 }:
 
 let
-  version = "1.19.1";
+  version = "1.19.2";
 in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";
@@ -16,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "libuv";
     repo = "libuv";
     rev = "v${version}";
-    sha256 = "9dee5554cbd9af4e3f038b94e6bd4aa377b296bd19797572fefe8a59ff8d43a6";
+    sha256 = "f917781191be2600ac496efc8b8ae9bc18ff6ca1fdf4120a1ef908f85a967b65";
   };
 
   nativeBuildInputs = [
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
     ./autogen.sh
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

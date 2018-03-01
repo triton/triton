@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.4.4";
+  name = "openvpn-2.4.5";
 
   src = fetchurl {
     url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
-    multihash = "QmQmXRLRA8Q5pU1Bo5sm6HRvHJ4ACV9hGmjdicqSqKoY5i";
+    multihash = "QmTwFwwjATEySYTmGZxWL3cc3Hxvgx49sJGWgj3NR4R8du";
     hashOutput = false;
-    sha256 = "1ae883d9522c9fa6d189e5e4aaa058a93edd3d0b897e3c2664107c4785099fc3";
+    sha256 = "b1582ff7ebbb67196048a568911856470144acd420de82670148cbffaa0fbf33";
   };
 
   buildInputs = [

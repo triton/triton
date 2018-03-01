@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pptp-1.9.0";
+  name = "pptp-1.10.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/pptpclient/pptp/${name}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "0b1e8cbfc578d3f5ab12ee87c5c2c60419abfe9cc445690a8a19c320b11c9201";
+    sha256 = "82492db8e487ce73b182ee7f444251d20c44f5c26d6e96c553ec7093aefb5af4";
   };
 
   nativeBuildInputs = [

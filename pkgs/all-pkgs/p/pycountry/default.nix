@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "17.9.23";
+  version = "18.2.23";
 in
 buildPythonPackage rec {
   name = "pycountry-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pycountry";
     inherit version;
-    sha256 = "173c5e3a8884c5616c6595078cc8f27e65ce59c6d9aa8864bace0c6b1281c57a";
+    sha256 = "46e4b1a21516e41fe6f8c0ef7a9876da8ce9ac3f719e3fed79cf79fd9b6206ee";
   };
 
   doCheck = true;

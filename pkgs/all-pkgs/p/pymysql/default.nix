@@ -16,8 +16,6 @@ buildPythonPackage rec {
     sha256 = "56e3f5bcef6501012233620b54f6a7b8a34edc5751e85e4e3da9a0d808df5f68";
   };
 
-  doCheck = true;
-
   meta = with lib; {
     description = "Pure Python MySQL Driver";
     homepage = https://github.com/PyMySQL/PyMySQL/;

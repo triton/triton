@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "5.0.3";
+  version = "6.0.0";
 in
 stdenv.mkDerivation rec {
   name = "libdvdnav-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libdvdnav/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "5097023e3d2b36944c763f1df707ee06b19dc639b2b68fb30113a5f2cbf60b6d";
+    sha256 = "f0a2711b08a021759792f8eb14bb82ff8a3c929bf88c33b64ffcddaa27935618";
   };
 
   buildInputs = [

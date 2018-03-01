@@ -13,8 +13,8 @@ let
   inherit (lib)
     replaceChars;
 
-  channel = "1.4";
-  version = "${channel}.3";
+  channel = "1.5";
+  version = "${channel}.0";
 
   versionFormatted =
     # For initial minor releases drop the trailing zero
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
       "mirror://gnome/sources/libepoxy/${channel}/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "0b808a06c9685a62fca34b680abb8bc7fb2fda074478e329b063c1f872b826f6";
+    sha256 = "4c94995398a6ebf691600dda2e9685a0cac261414175c2adf4645cdfab42a5d5";
   };
 
   nativeBuildInputs = [

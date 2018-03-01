@@ -14,16 +14,16 @@
 }:
 
 let
-  version = "4.4.0";
+  version = "4.4.1";
 in
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
-    multihash = "Qmb7wcUA5NjnWMKWK5TUNwzKpkmyQLpFqNH2dgRTuX2vuC";
+    multihash = "QmTk4M3VUeRGNfHeUev2qnNViU7NZbNe4DJJvQcv399Jey";
     hashOutput = false;
-    sha256 = "4a90be0f22ad81c987f5584661b60a594f1b21c581b82bfba3ae60f89ae44397";
+    sha256 = "2a22508922ab367b4af4664a0472dc220cc9603482cf3c16d9aff14f3a76b608";
   };
 
   nativeBuildInputs = [

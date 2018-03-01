@@ -52,6 +52,7 @@ stdenv.mkDerivation rec {
       failEarly = true;
       urls = tarballUrls "10.31";
       pgpsigUrls = map (n: "${n}.sig") urls;
+        # Philip Hazel
       pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
       inherit (src) outputHash outputHashAlgo;
     };

@@ -1,10 +1,11 @@
 { stdenv
 , fetchFromGitHub
+, lib
 }:
 
 let
-  date = "2017-11-29";
-  rev = "b11de0f5c65bcc1b906f85f4df58883b0c133e7b";
+  date = "2018-02-09";
+  rev = "dd74753cf5cf8944438d6f49ddf46f9659993dfb";
 in
 stdenv.mkDerivation {
   name = "http-parser-${date}";
@@ -23,7 +24,7 @@ stdenv.mkDerivation {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "3.10";
+  version = "3.11";
 in
 buildPythonPackage {
   name = "ply-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "ply";
     inherit version;
-    sha256 = "96e94af7dd7031d8d6dd6e2a8e0de593b511c211a86e28a9c9621c275ac8bacb";
+    sha256 = "00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.dabeaz.com/ply/;
     description = "Python implementation of the lex & yacc parsing tools";
     license = licenses.bsd3;

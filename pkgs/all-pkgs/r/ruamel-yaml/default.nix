@@ -1,11 +1,12 @@
 { stdenv
 , buildPythonPackage
+, cython
 , fetchPyPi
 , lib
 }:
 
 let
-  version = "0.15.34";
+  version = "0.15.35";
 in
 buildPythonPackage {
   name = "ruamel.yaml-${version}";
@@ -13,8 +14,19 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "ruamel.yaml";
     inherit version;
-    sha256 = "f1e29054c6e477963e302b007b6cd1d6c7a58c38d78fabe64fde9ce170d2d1fd";
+    sha256 = "8dc74821e4bb6b21fb1ab35964e159391d99ee44981d07d57bf96e2395f3ef75";
   };
+
+  nativeBuildInputs = [
+    cython
+  ];
+
+  preBuild = /* Force file to be generated with current cython */ ''
+    pushd ext/
+      rm _ruamel_yaml.c
+      cython --verbose *.pyx
+    popd
+  '';
 
   meta = with lib; {
     maintainers = with maintainers; [

@@ -5,7 +5,6 @@
 , lib
 , nasm
 , ninja
-, yasm
 
 , numactl
 
@@ -40,9 +39,9 @@ let
     };
     "head" = {
       fetchzipversion = 5;
-      version = "2018-02-15";
-      rev = "7219376de42a1cc378ec957c886b511139d3c201";
-      sha256 = "12c6446fdbd817709a5e7c2b1e8d523b14d40856b2675ed2f9d1c868170c7630";
+      version = "2018-02-21";
+      rev = "2aa737a99f5148f11031e764fd1bc57bfd04fd8b";
+      sha256 = "70d886803df1759e2480fffab33c2d23ca17a96ae16e322489d0e2e78f600657";
     };
   };
   source = sources."${channel}";
@@ -131,14 +130,9 @@ let
 
     nativeBuildInputs = [
       cmake
+      nasm
       ninja
-    ] ++ (
-      if (channel == "head") then [
-        nasm
-      ] else [
-        yasm  # Remove for > 2.6
-      ]
-    );
+    ];
 
     buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
@@ -181,14 +175,9 @@ let
 
     nativeBuildInputs = [
       cmake
+      nasm
       ninja
-    ] ++ (
-      if (channel == "head") then [
-        nasm
-      ] else [
-        yasm  # Remove for > 2.6
-      ]
-    );
+    ];
 
     buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
@@ -211,14 +200,9 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    nasm
     ninja
-    ] ++ (
-      if (channel == "head") then [
-        nasm
-      ] else [
-        yasm  # Remove for > 2.6
-      ]
-    );
+  ];
 
   buildInputs = [
     libx265-10

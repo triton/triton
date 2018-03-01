@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "4.2.15";
+  version = "4.3.4";
 in
 buildPythonPackage rec {
   name = "isort-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "isort";
     inherit version;
-    sha256 = "79f46172d3a4e2e53e7016e663cc7a8b538bec525c36675fcfd2767df30b3983";
+    sha256 = "b9c40e9750f3d77e6e4d441d8b0266cf555e7cdabdcff33c4fd06366ca761ef8";
   };
 
   meta = with lib; {

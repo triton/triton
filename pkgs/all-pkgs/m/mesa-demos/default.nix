@@ -16,17 +16,16 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2017-09-01";
+  version = "2018-02-23";
 in
 stdenv.mkDerivation rec {
   name = "mesa-demos-${version}";
 
-  # Release has not been tagged in a long time.
   src = fetchgit {
-    version = 3;
+    version = 5;
     url = "https://anongit.freedesktop.org/git/mesa/demos.git";
-    rev = "9966d3af4b68521efe77d52540f5e1ffb8b35225";
-    sha256 = "b9bc6e660e1395bdb2b333d94a72b700ed88a6b905904bb6d445d13e2ce02f9c";
+    rev = "317f67fe5e75c685330d536f158acf6260b473d1";
+    sha256 = "1536e9ee7baf145838f09b7a976d6855621d87d3c54ac247b228f2fae687ceeb";
   };
 
   configureFlags = [

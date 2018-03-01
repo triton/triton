@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "3.1.1";
+  version = "3.2.0";
 in
 buildPythonPackage rec {
   name = "futures-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "futures";
     inherit version;
-    sha256 = "51ecb45f0add83c806c68e4b06106f90db260585b25ef2abfcda0bd95c0132fd";
+    sha256 = "9ec02aa7d674acb8618afb127e27fde7fc68994c0437ad759fa094a574adb265";
   };
 
   # This module is for backporting Python 3.2 functionality to Python 2.x.

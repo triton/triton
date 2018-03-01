@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "8.8.11";
+  version = "8.9.0";
 in
 buildPythonPackage {
   name = "phonenumbers-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "phonenumbers";
     inherit version;
-    sha256 = "ffe202e576921c8206dc4559dac4d40087a9e84cf375e59a44b115a7f20ad3fb";
+    sha256 = "2cb4822ba895200b06f46a788e852d6ae8200fdc97e1d7c86b0ee10c99d4ff3a";
   };
 
   meta = with lib; {

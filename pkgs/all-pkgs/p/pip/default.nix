@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2017-12-02";
+  version = "2018-03-01";
 in
 buildPythonPackage rec {
   name = "pip-${version}";
@@ -14,11 +14,11 @@ buildPythonPackage rec {
   # FIXME: Revert back to using versioned releases once 10.x is released.
   # XXX: pip vendors outdated sources and a release has not been tagged since 2016.
   src = fetchFromGitHub {
-    version = 3;
+    version = 5;
     owner = "pypa";
     repo = "pip";
-    rev = "ce674d2ca1dfae136fb33df914085e56d100bc57";
-    sha256 = "05f07d0364f7e4fd8de28d750359ce457b801843810ddbe335f5289363a42664";
+    rev = "1cb99c1a6a0161d11fc5396030d88ebd45e118d4";
+    sha256 = "afc0472d4fcbc69ee03ce44af87cbae81fec95976f5c788ff21c2b14ae58b8ee";
   };
 
   # src = fetchPyPi {

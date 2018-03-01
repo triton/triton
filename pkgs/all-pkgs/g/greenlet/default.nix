@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.4.12";
+  version = "0.4.13";
 in
 buildPythonPackage rec {
   name = "greenlet-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "greenlet";
     inherit version;
-    sha256 = "e4c99c6010a5d153d481fdaf63b8a0782825c0721506d880403a3b9b82ae347e";
+    sha256 = "0fef83d43bf87a5196c91e73cb9772f945a4caaff91242766c5916d1dd1381e4";
   };
 
   # Builtin for pypy

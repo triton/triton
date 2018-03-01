@@ -1,10 +1,11 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 }:
 
 let
-  version = "1.9.2";
+  version = "1.9.3";
 in
 stdenv.mkDerivation rec {
   name = "libbson-${version}";
@@ -12,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/libbson/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "0d1de4aa2ea4b223414c1b1aa803fc50d1ab658b327aead857fb4915136d4e34";
+    sha256 = "244e786c746fe6326433b1a6fcaadbdedc0da3d11c7b3168f0afa468f310e5f1";
   };
 
   nativeBuildInputs = [
@@ -32,7 +33,7 @@ stdenv.mkDerivation rec {
     ln -sv . "$incdir"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

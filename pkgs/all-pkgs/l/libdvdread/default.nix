@@ -9,7 +9,7 @@ let
   inherit (lib)
     boolWt;
 
-  version = "5.0.3";
+  version = "6.0.0";
 in
 stdenv.mkDerivation rec {
   name = "libdvdread-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libdvdread/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "321cdf2dbdc83c96572bc583cd27d8c660ddb540ff16672ecb28607d018ed82b";
+    sha256 = "b33b1953b4860545b75f6efc06e01d9849e2ea4f797652263b0b4af6dd10f935";
   };
 
   buildInputs = [

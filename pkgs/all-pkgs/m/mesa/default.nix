@@ -61,7 +61,7 @@ let
     optionalString
     splitString;
 
-  version = "17.3.5";
+  version = "17.3.6";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -79,9 +79,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmVycm1X7RkJUDaaFBEzut8yjLGtqvCCDZDbXcScP32w7q";
+    multihash = "QmR6ZRstoEE1viMvPLpzNQJ5ycbiQww7bze3BQaQ6Xn7Gd";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "eb9228fc8aaa71e0205c1481c5b157752ebaec9b646b030d27478e25a6d7936a";
+    sha256 = "e5915680d44ac9d05defdec529db7459ac9edd441c9845266eff2e2d3e57fbf8";
   };
 
   nativeBuildInputs = [

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "16.0.3";
+  version = "17.0.0";
 in
 buildPythonPackage rec {
   name = "pyzmq-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pyzmq";
     inherit version;
-    sha256 = "8a883824147523c0fe76d247dd58994c1c28ef07f1cc5dde595a4fd1c28f2580";
+    sha256 = "0145ae59139b41f65e047a3a9ed11bbc36e37d5e96c64382fcdff911c4d8c3f0";
   };
 
   nativeBuildInputs = [

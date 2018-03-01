@@ -1,5 +1,6 @@
 { stdenv
 , buildPythonPackage
+, cython
 , fetchFromGitHub
 #, fetchPyPi
 , lib
@@ -28,6 +29,10 @@ buildPythonPackage {
     rev = "298e07907ae526594069f6fdf31f2f1278cc1ae3";
     sha256 = "39eb24b73f96c9ed5b082f9179019e5a117187bd15b0025f71eab8ffba3b54e8";
   };
+
+  nativeBuildInputs = [
+    cython
+  ];
 
   buildInputs = [
     libyaml

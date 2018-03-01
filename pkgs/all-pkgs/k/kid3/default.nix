@@ -30,7 +30,7 @@ let
   inherit (lib)
     boolOn;
 
-  version = "3.4.5";
+  version = "3.5.1";
 in
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "0d703b0b8c2538eba1f8f540a87e13a4bf61f715ef9cd1253f18417ebb096404";
+    sha256 = "88c20826deb13f81bcdfa7033a4b9ff9ca8957112b2fa2ccc0a9a1076df73926";
   };
 
   nativeBuildInputs = [

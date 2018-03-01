@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, pythonPackages
+, python2
 
 , ncurses
 }:
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
+    python2
   ];
 
   buildInputs = [

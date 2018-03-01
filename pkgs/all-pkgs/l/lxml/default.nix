@@ -1,5 +1,6 @@
 { stdenv
 , buildPythonPackage
+, cython
 , fetchPyPi
 , lib
 
@@ -19,10 +20,18 @@ buildPythonPackage rec {
     sha256 = "940caef1ec7c78e0c34b0f6b94fe42d0f2022915ffc78643d28538a5cfd0f40e";
   };
 
+  nativeBuildInputs = [
+    cython
+  ];
+
   propagatedBuildInputs = [
     libxml2
     libxslt
   ];
+
+  postPatch = /* Force cython files to be regenerated */ ''
+    rm src/lxml/*.c
+  '';
 
   meta = with lib; {
     description = "Pythonic binding for the libxml2 and libxslt libraries";

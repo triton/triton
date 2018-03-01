@@ -20,16 +20,16 @@ let
   inherit (lib)
     boolEn;
 
-  channel = "0.10";
-  version = "${channel}.7";
+  channel = "0.12";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "exo-${version}";
 
   src = fetchurl {
     url = "http://archive.xfce.org/src/xfce/exo/${channel}/${name}.tar.bz2";
-    multihash = "Qmc1A3VwqurTNFYTfCXm4hd4iC7VCekBAheiWkeCB1Fe2u";
-    sha256 = "521581481128af93e815f9690020998181f947ac9e9c2b232b1f144d76b1b35c";
+    multihash = "QmTiBHtvFbXZq4Cb33gW5x3i4ia547sSYRu8YVrmR55Rgf";
+    sha256 = "c4994f9bcb0e0c3e2f7c647d9715ed22ea5c9b091320916e15ca7255ebf39822";
   };
 
   nativeBuildInputs = [

@@ -3,6 +3,7 @@
 , fetchTritonPatch
 , fetchurl
 , intltool
+, lib
 
 , dbus
 , dbus-glib
@@ -10,7 +11,6 @@
 , gobject-introspection
 , gtk3
 , json-glib
-, python
 , pythonPackages
 , raptor2
 , sqlite
@@ -22,17 +22,16 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  versionMajor = "1.0";
-  versionMinor = "";
-  version = "${versionMajor}"; #.${versionMinor}";
+  channel = "1.0";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "zeitgeist-${version}";
 
   src = fetchurl {
-    url = "https://launchpad.net/zeitgeist/${versionMajor}/${version}/"
+    url = "https://launchpad.net/zeitgeist/${channel}/${version}/"
       + "+download/${name}.tar.xz";
-    sha256 = "5ff508508f7a7b46acc9fbf1cf73fecb1aec214e18d9d22325aae8c2c2e8ddc8";
+    sha256 = "7de6a8e7b8aed33490437e522a9bf2e531681118c8cd91c052d554bbe64435bd";
   };
 
   nativeBuildInputs = [
@@ -48,7 +47,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk3
     json-glib
-    python
+    pythonPackages.python
     pythonPackages.rdflib
     raptor2
     sqlite
@@ -86,7 +85,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gobject-introspection != null)}-introspection"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A service which logs the users's activities and events";
     homepage = https://launchpad.net/zeitgeist;
     license = licenses.gpl2;

@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2017-04-01";
+  version = "2017-10-14";
   rev = stdenv.lib.replaceStrings ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
@@ -15,8 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://homepage.boetes.org/software/mg/mg-${rev}.tar.gz";
-    multihash = "QmNbDUe1yzSsKhxt11xFZDh97hfevWvG9111V5iAXYkdnj";
-    sha256 = "0a3608b17c153960cb1d954ca3b62445a77c0c1a18aa5c8c58aba9f6b8d62aab";
+    multihash = "QmerodBsZzGcFNn5n3Fr37cooSKoMh4fYHfXVMnjgQz3Jx";
+    sha256 = "51519698f3f44acd984d7805e4e315ded50c15aba8222521f88756fd67745341";
   };
 
   buildInputs = [

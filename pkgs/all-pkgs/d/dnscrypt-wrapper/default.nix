@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.4.0";
+  version = "0.4.1";
 in
 stdenv.mkDerivation rec {
   name = "dnscrypt-wrapper-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "cofyc";
     repo = "dnscrypt-wrapper";
     rev = "v${version}";
-    sha256 = "1ff78deeac40f12d5c5831a6452932cd5af76acc6e0011922168d560b764fe00";
+    sha256 = "db85e635ba8a96502ada7e9611bd8935226e07842c315d2f87144598fc4b6b79";
   };
 
   buildInputs = [

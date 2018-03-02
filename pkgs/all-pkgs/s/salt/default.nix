@@ -69,18 +69,18 @@ let
   # https://saltstack.com/product-support-lifecycle/
   sources = {
     "2016.11" = {
-      version = "2016.11.8";
-      sha256 = "e75f4178465d9198fcd5822643460c94d63de6221316367d5b85356ef8b1994a";
+      version = "2016.11.9";
+      sha256 = "272791eeb60b2135fef28c77791740945668f631ec2bfcb7163ed25bc09a8ab2";
     };
     "2017.7" = {
-      version = "2017.7.2";
-      sha256 = "ff3bc7de5abf01b8acbd144db5811b00867179b2353f5c6f7f19241e2eff2840";
+      version = "2017.7.4";
+      sha256 = "1d573095776ba052eec7d7cae1472f4b1d4c15f16e1d79c2dc48db3129dbae97";
     };
     head = {
-      fetchzipversion = 2;
-      version = "2017-02-17";
-      rev = "deba6d26554720953409d2280e366621f40f5162";
-      sha256 = "bcfd9417a3a37909c4835dc401d57d6eb3c90b89e30526f4e76bf8d7df177afd";
+      fetchzipversion = 5;
+      version = "2018-03-01";
+      rev = "7731ffae20b4ea5a140eb55aa7993f0ff3112c9d";
+      sha256 = "54cc0d503f097507505f1822c9210513a454882d30130262ac0be0b55774ec3d";
     };
   };
   source = sources."${channel}";

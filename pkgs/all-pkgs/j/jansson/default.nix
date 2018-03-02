@@ -1,15 +1,16 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "jansson-2.10";
+  name = "jansson-2.11";
 
   src = fetchurl {
     url = "http://www.digip.org/jansson/releases/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmT3RPUpADroQwrkfhmyHJnQghjzYcPnuaJCmU7nCPe5Jn";
-    sha256 = "78215ad1e277b42681404c1d66870097a50eb084be9d771b1d15576575cf6447";
+    multihash = "QmZwCiWdAq19Lygg8Je7J8UX7R1zaB7nYFqM1zX5VaFMFd";
+    sha256 = "6e85f42dabe49a7831dbdd6d30dca8a966956b51a9a50ed534b82afc3fa5b2f4";
   };
 
   passthru = {
@@ -21,7 +22,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "http://www.digip.org/jansson/";
     description = "C library for encoding, decoding and manipulating JSON data";
     license = licenses.mit;

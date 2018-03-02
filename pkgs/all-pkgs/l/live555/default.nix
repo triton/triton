@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2017.01.26";
+  version = "2018.02.12";
 in
 stdenv.mkDerivation rec {
   name = "live555-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     # upstream doesn't provide a stable URL, use videolan mirror
     url = "mirror://videolan/testing/contrib/live555/live.${version}.tar.gz";
-    sha256 = "3c4d440b79e415eb3a86d30d0cd061d3edcaaa0281909e8629e9756c2c375458";
+    sha256 = "9df74e4a26561a7d3d694ecba26c5a9038aa5cd54a61d308b1343a7800060621";
   };
 
   postPatch = /* Remove hard-coded paths */ ''

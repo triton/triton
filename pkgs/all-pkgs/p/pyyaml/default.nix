@@ -1,5 +1,6 @@
 { stdenv
 , buildPythonPackage
+, cython
 , fetchPyPi
 
 , libyaml
@@ -24,6 +25,10 @@ buildPythonPackage {
   buildInputs = [
     libyaml
   ];
+
+  postPatch = /* Force files to be regenerated with the current cython */ ''
+    rm ext/*.c || true
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

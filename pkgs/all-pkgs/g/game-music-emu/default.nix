@@ -5,14 +5,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "game-music-emu-0.6.1";
+  name = "game-music-emu-0.6.2";
 
   src = fetchurl {
     urls = [
-      "https://bitbucket.org/mpyne/game-music-emu/downloads/${name}.tar.bz2"
+      "https://bitbucket.org/mpyne/game-music-emu/downloads/${name}.tar.xz"
       "mirror://gentoo/distfiles/${name}.tar.bz2"
     ];
-    sha256 = "dc11bea098072d540d4d52dfb252e76fc3d3af67ee2807da48fbd8dbda3fd321";
+    sha256 = "5046cb471d422dbe948b5f5dd4e5552aaef52a0899c4b2688e5a68a556af7342";
   };
 
   nativeBuildInputs = [
@@ -33,6 +33,19 @@ stdenv.mkDerivation rec {
     "-DUSE_GME_SPC=ON"
     "-DUSE_GME_VGM=ON"
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      # Michael Pyne
+      pgpKeyFingerprint = "5406 ECE8 3665 DA9D 201D  3572 0BAF 0C9C 7B6A E9F2";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A collection of video game music file emulators";

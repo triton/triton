@@ -1,5 +1,6 @@
 { stdenv
 , buildPythonPackage
+, fetchFromGitHub
 , fetchPyPi
 , lib
 
@@ -13,22 +14,44 @@
 , pytest-benchmark
 , pytest-capturelog
 , pyyaml
+
+, channel ? "head"
 }:
 
 let
   inherit (lib)
     optionals;
 
-  version = "2.1.4";
+  sources = {
+    "stable" = {
+      version = "2.1.4";
+      sha256 = "90e6f9fb49246ad27f34f8b9984357e22562ccc3059241cbc08b4fac1d401c56";
+    };
+    head = {
+      fetchzipversion = 5;
+      version = "2018-02-12";
+      rev = "3afb850be95698a46f1c878be408ddf7f671b408";
+      sha256 = "48c02fa6346096b51175aeda5444369867716a896161e2f84cc2976b77e9b3f0";
+    };
+  };
+  source = sources."${channel}";
 in
 buildPythonPackage rec {
-  name = "guessit-${version}";
+  name = "guessit-${source.version}";
 
-  src = fetchPyPi {
-    package = "guessit";
-    inherit version;
-    sha256 = "90e6f9fb49246ad27f34f8b9984357e22562ccc3059241cbc08b4fac1d401c56";
-  };
+  src =
+    if channel != "head" then
+      fetchPyPi {
+        package = "guessit";
+        inherit (source) sha256 version;
+      }
+    else
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "guessit-io";
+        repo = "guessit";
+        inherit (source) rev sha256;
+      };
 
   nativeBuildInputs = optionals doCheck [
     pytest

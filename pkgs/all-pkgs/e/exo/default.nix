@@ -8,18 +8,16 @@
 , glib
 , gnome-themes-standard
 , gtk_2
+, gtk_3
 , libx11
 , libxfce4ui
 , libxfce4util
 , perlPackages
 , shared-mime-info
-, xproto
+, xorgproto
 }:
 
 let
-  inherit (lib)
-    boolEn;
-
   channel = "0.12";
   version = "${channel}.0";
 in
@@ -27,9 +25,9 @@ stdenv.mkDerivation rec {
   name = "exo-${version}";
 
   src = fetchurl {
-    url = "http://archive.xfce.org/src/xfce/exo/${channel}/${name}.tar.bz2";
-    multihash = "QmTiBHtvFbXZq4Cb33gW5x3i4ia547sSYRu8YVrmR55Rgf";
-    sha256 = "c4994f9bcb0e0c3e2f7c647d9715ed22ea5c9b091320916e15ca7255ebf39822";
+    url = "https://archive.xfce.org/src/xfce/exo/${channel}/${name}.tar.bz2";
+    multihash = "QmYFgqvrWQTFbBGukxhNJoZSpD6CDnxr767wVENjyn3vfj";
+    sha256 = "64b88271a37d0ec7dca062c7bc61ca323116f7855092ac39698c421a2f30a18f";
   };
 
   nativeBuildInputs = [
@@ -41,17 +39,18 @@ stdenv.mkDerivation rec {
     glib
     gnome-themes-standard
     gtk_2
+    gtk_3
     libx11
     libxfce4ui
     libxfce4util
     perlPackages.URI
-    xproto
+    xorgproto
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    "--${boolEn (glib != null)}-gio-unix"
+    "--enable-gio-unix"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"

@@ -354,6 +354,13 @@ go.stdenv.mkDerivation (
           echo "$OUT" >&2
           return 1
         fi
+      else
+        local rebuild
+        if rebuild="$(echo "$OUT" | grep -v "^\(WORK=\|${concatStringsSep "\\|" ([ goPackagePath ] ++ (map (n: n.goPackagePath) extraSrcs))}\)")"; then
+          echo "Got unwanted rebuild:" >&2
+          echo "$OUT" | awk '{ print "  " $0 }' >&2
+          return 1
+        fi
       fi
       if [ -n "$OUT" ]; then
         echo "$OUT" >&2

@@ -322,11 +322,11 @@ let
 
   sys = buildFromGitHub {
     version = 5;
-    rev = "88d2dcc510266da9f7f8c7f34e1940716cab5f5c";
-    date = "2018-02-23";
+    rev = "dd2ff4accc098aceecb86b36eaa7829b2a17b1c9";
+    date = "2018-03-02";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "1xrps645i71hkq0ljpbk5625d6w7rcb96z59mz0df2lp48mkimj1";
+    sha256 = "18rrqizw905r0p6qgklj4x8hm3kfkkfismf2q08qzki694plb0va";
     goPackagePath = "golang.org/x/sys";
   };
 
@@ -710,14 +710,15 @@ let
   };
 
   bolt = buildFromGitHub {
-    version = 3;
-    rev = "v1.3.1";
+    version = 5;
+    rev = "fd01fc79c553a8e99d512a07e8e0c63d4a3ccfc5";
     owner  = "boltdb";
     repo   = "bolt";
-    sha256 = "0j1dmlp9sh1v5kpxzvamyjdwlb0pndpy9a2qjhg2q93ri3dbfr58";
+    sha256 = "05ma1sn604hs6smr8alzx6nfzfi289ixxzknj0p73miwdfpz9299";
     buildInputs = [
       sys
     ];
+    date = "2018-03-02";
   };
 
   btcd = buildFromGitHub {
@@ -1765,8 +1766,8 @@ let
     version = 5;
     owner = "elves";
     repo = "elvish";
-    rev = "6bbbcc787355bb61909cb8c345d866393ba1e8d0";
-    sha256 = "00ym66dv51spz1b959c7as1jwm68dwx0q62lpfkvxjlmkh1mm4s4";
+    rev = "763ca79d1ef07f103e432a42a5c698926b11657c";
+    sha256 = "1ciaawzp53s8sxavnas19bxdhjqpw46dvccjmhpskxmi3mc6xij6";
     propagatedBuildInputs = [
       bolt
       go-isatty
@@ -1774,7 +1775,7 @@ let
       sys
     ];
     meta.useUnstable = true;
-    date = "2018-02-15";
+    date = "2018-03-02";
   };
 
   eme = buildFromGitHub {
@@ -7738,11 +7739,11 @@ let
 
   persistent = buildFromGitHub {
     version = 5;
-    date = "2018-01-27";
+    date = "2018-03-01";
     owner  = "xiaq";
     repo   = "persistent";
-    rev = "3d4eb2be76e07dd8cf579c114e2048cbfd540cca";
-    sha256 = "15kv7nxxi3zbnbalsvx2srykr0zlnhhbmr5mcy4kbg9hx2s5i6zq";
+    rev = "cd415c64068256386eb46bbbb1e56b461872feed";
+    sha256 = "1nha332n4n4px21cilixy4y2zjjja79vab03f4hlx08syfyq5yqk";
   };
 
   persistent-cookiejar = buildFromGitHub {

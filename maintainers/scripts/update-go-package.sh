@@ -66,6 +66,10 @@ if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
 fi
 export PATH="$(readlink -f "$TMPDIR/nix-env")/bin:$TMPDIR/bin"
 
+# We need to make sure git does not read our system config for extra purity
+# on systems with weird git parameters
+export GIT_CONFIG_NOSYSTEM=1
+
 echo "Finding packages and all dependencies..." >&2
 pkglist='[ '
 for arg in "$@"; do

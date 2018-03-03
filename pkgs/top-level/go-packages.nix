@@ -5942,12 +5942,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 5;
-    rev = "95f308da2006cb0e31361394b628c375d1eaa9ea";
-    date = "2018-02-20";
+    rev = "199a52d777e2b292fe430e8470d88037c43ed7ca";
+    date = "2018-02-26";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "f12d0ced32609d8f03c9f25d752a25ef2b4f8e4bebb9600b4b853a8a1b109005";
-    gxSha256 = "0srya7hdabvjinclf8qbzl8m8ilva4m8vap1f7730ib1j3vcjhl8";
+    sha256 = "dcfc15eb784487d6c34fe5ded1621c7c092f1e9a83595c49b30958ba93cf32ac";
+    gxSha256 = "0vbs6x6h8p166pmj7v74g30kca7b37rswwxzh5j8pp1pxcafjkn7";
     nativeBuildInputs = [
       gx-go.bin
     ];

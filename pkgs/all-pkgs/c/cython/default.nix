@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.28b1";
+  version = "2018-03-03";
 in
 buildPythonPackage {
   name = "cython-${version}";
@@ -22,8 +22,8 @@ buildPythonPackage {
     version = 5;
     owner = "cython";
     repo = "cython";
-    rev = version;
-    sha256 = "f73cd82d52762041f20f3cb4a217eaa1d4377b5a2c33853e7a308f861218c06c";
+    rev = "e8d309655fe0b80d8e10e35b852ccf9bf3045483";
+    sha256 = "0d9ed34ae5f3eb73950fd8df6eb4b8db3246e8f6318af7287a9f6ac82e248d3b";
   };
 
   meta = with lib; {

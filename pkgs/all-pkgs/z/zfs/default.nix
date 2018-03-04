@@ -97,14 +97,14 @@ stdenv.mkDerivation rec {
     })
   ] ++ optionals (channel == "dev") [
     (fetchTritonPatch {
-      rev = "dd4222238be6460f2fa5107433ecbd756a02a6c8";
+      rev = "975c1a6b50e7ecd4ffe242968de7689506a781d7";
       file = "z/zfs/0001-Fix-makefile-paths.patch";
-      sha256 = "3a2be15fad731b9e610ab0a8541a854b36dafa2e76a62cd6217667d6826c936f";
+      sha256 = "16129492ecb291cc553a69dfe300d11edce4964dadb0c8a3f4d49f716bd8d32f";
     })
     (fetchTritonPatch {
-      rev = "dd4222238be6460f2fa5107433ecbd756a02a6c8";
+      rev = "975c1a6b50e7ecd4ffe242968de7689506a781d7";
       file = "z/zfs/0002-Fix-binary-paths.patch";
-      sha256 = "1c5fc60a3ae3df3e0f549c97d0702de076262b8f9b0f6045f0ba1c0de16ee114";
+      sha256 = "e5785235cde6667421dc793db9035b13156a6a234196bb9707e9ad327a14135c";
     })
   ];
 

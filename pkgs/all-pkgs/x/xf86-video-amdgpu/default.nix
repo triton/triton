@@ -3,30 +3,22 @@
 , lib
 , util-macros
 
-, damageproto
-, fixesproto
-, fontsproto
 #, glamoregl
 , libdrm
 , opengl-dummy
-, randrproto
-, renderproto
 , systemd_lib
-, videoproto
-, xextproto
-, xf86driproto
 , xorg-server
 , xorg
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "xf86-video-amdgpu-1.4.0";
+  name = "xf86-video-amdgpu-18.0.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/driver/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "f8cac4bf3dd795b93cc337e5c0c62618026f597890a10d996f09c73eb88ba67c";
+    sha256 = "e909b9707d2562dfc36d8075a8cbddbc93901aaa8f2522d9a429c3fc5ad66d94";
   };
 
   nativeBuildInputs = [
@@ -34,20 +26,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    damageproto
-    fixesproto
-    fontsproto
     xorg.glamoregl
     libdrm
     opengl-dummy
-    randrproto
-    renderproto
     systemd_lib
-    videoproto
-    xextproto
-    xf86driproto
     xorg-server
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

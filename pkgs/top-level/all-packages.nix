@@ -3889,6 +3889,8 @@ xine-ui = callPackage ../all-pkgs/x/xine-ui { };
 
 xkbcomp = callPackage ../all-pkgs/x/xkbcomp { };
 
+xkeyboard-config = callPackage ../all-pkgs/x/xkeyboard-config { };
+
 xmlto = callPackage ../all-pkgs/x/xmlto { };
 
 xmltoman = callPackage ../all-pkgs/x/xmltoman { };
@@ -4001,6 +4003,7 @@ xorg = recurseIntoAttrs (
       xfs
       xineramaproto
       xkbcomp
+      xkeyboard-config
       xorg-server
       xproto
       xrefresh

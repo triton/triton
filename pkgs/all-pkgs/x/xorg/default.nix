@@ -70,6 +70,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xfs
 , xineramaproto
 , xkbcomp
+, xkeyboard-config
 , xorg-server
 , xproto
 , xrefresh
@@ -167,6 +168,7 @@ let
     xcbproto = xcb-proto;
     xf86videoamdgpu = xf86-video-amdgpu;
     xf86videointel = xf86-video-intel;
+    xkeyboardconfig = xkeyboard-config;
     xorgserver = xorg-server;
 
 ################################################################################
@@ -1261,17 +1263,6 @@ let
     buildInputs = [ inputproto libX11 libXext libXi libXinerama libXrandr ];
 
   }) // {inherit inputproto libX11 libXext libXi libXinerama libXrandr ;};
-
-  xkeyboardconfig = (mkDerivation "xkeyboardconfig" {
-    name = "xkeyboard-config-2.22";
-    src = fetchurl {
-      url = mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.22.tar.bz2;
-      sha256 = "deaec9989fbc443358b43864437b7b6d39caff07890a4a8055105ce9fcaa59bd";
-    };
-    nativeBuildInputs = [ intltool utilmacros ];
-    buildInputs = [ libX11 xproto ];
-
-  }) // {inherit libX11 xproto ;};
 
   xlsclients = (mkDerivation "xlsclients" {
     name = "xlsclients-1.1.3";

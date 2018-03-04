@@ -1766,8 +1766,8 @@ let
     version = 5;
     owner = "elves";
     repo = "elvish";
-    rev = "9ce5349c68ab040e90781a173c19e8514efb160c";
-    sha256 = "1vrbqcn1dhk2llqlpnrrg9qrn3djfm3bglmyzqhc2rckk4p574yp";
+    rev = "326ef4c09e2a7662e82c983efa8865052e8b6252";
+    sha256 = "1nlpp8q3sr3fcwj5na993jc8826xg6p1lnc7n8bm6h6cmqc3swj2";
     propagatedBuildInputs = [
       bolt
       go-isatty

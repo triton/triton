@@ -250,7 +250,7 @@ stdenv.mkDerivation rec {
     "-Dglamor=true"
     "-Dxnest=true"
     "-Ddmx=true"
-    "-Dxvfb=true"  # FIXME
+    "-Dxvfb=true"
     "-Dxwin=false"  # Windows
     "-Dglx=true"
     "-Dxdmcp=true"

@@ -3885,6 +3885,8 @@ xine-lib = callPackage ../all-pkgs/x/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/x/xine-ui { };
 
+xkbcomp = callPackage ../all-pkgs/x/xkbcomp { };
+
 xmlto = callPackage ../all-pkgs/x/xmlto { };
 
 xmltoman = callPackage ../all-pkgs/x/xmltoman { };
@@ -3995,6 +3997,7 @@ xorg = recurseIntoAttrs (
       xf86vidmodeproto
       xfs
       xineramaproto
+      xkbcomp
       xorg-server
       xproto
       xrefresh

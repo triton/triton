@@ -68,6 +68,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xf86vidmodeproto
 , xfs
 , xineramaproto
+, xkbcomp
 , xorg-server
 , xproto
 , xrefresh
@@ -131,6 +132,7 @@ let
       xf86vidmodeproto
       xfs
       xineramaproto
+      xkbcomp
       xproto
       xrefresh
       xtrans
@@ -1268,17 +1270,6 @@ let
     buildInputs = [ inputproto libX11 libXext libXi libXinerama libXrandr ];
 
   }) // {inherit inputproto libX11 libXext libXi libXinerama libXrandr ;};
-
-  xkbcomp = (mkDerivation "xkbcomp" {
-    name = "xkbcomp-1.4.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xkbcomp-1.4.0.tar.bz2;
-      sha256 = "bc69c8748c03c5ad9afdc8dff9db11994dd871b614c65f8940516da6bf61ce6b";
-    };
-    nativeBuildInputs = [ bison utilmacros ];
-    buildInputs = [ libX11 libxkbfile xproto ];
-
-  }) // {inherit libX11 libxkbfile xproto ;};
 
   xkeyboardconfig = (mkDerivation "xkeyboardconfig" {
     name = "xkeyboard-config-2.22";

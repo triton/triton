@@ -2608,6 +2608,8 @@ libxres = callPackage ../all-pkgs/l/libxres { };
 
 libxscrnsaver = callPackage ../all-pkgs/l/libxscrnsaver { };
 
+libxshmfence = callPackage ../all-pkgs/l/libxshmfence { };
+
 libxslt = callPackage ../all-pkgs/l/libxslt { };
 
 libxt = callPackage ../all-pkgs/l/libxt { };
@@ -3971,6 +3973,7 @@ xorg = recurseIntoAttrs (
       libxrender
       libxres
       libxscrnsaver
+      libxshmfence
       libxt
       libxtst
       libxv

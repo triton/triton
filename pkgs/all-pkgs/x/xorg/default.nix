@@ -42,6 +42,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxrender
 , libxres
 , libxscrnsaver
+, libxshmfence
 , libxt
 , libxtst
 , libxv
@@ -113,6 +114,7 @@ let
       libpciaccess
       libxcb
       libxkbfile
+      libxshmfence
       presentproto
       printproto
       randrproto
@@ -874,17 +876,6 @@ let
     buildInputs = [ libX11 libXext xextproto xf86vidmodeproto xproto ];
 
   }) // {inherit libX11 libXext xextproto xf86vidmodeproto xproto ;};
-
-  libxshmfence = (mkDerivation "libxshmfence" {
-    name = "libxshmfence-1.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libxshmfence-1.2.tar.bz2;
-      sha256 = "032b0nlkdrpbimdld4gqvhqx53rzn8fawvf1ybhzn7lcswgjs6yj";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xproto ];
-
-  }) // {inherit xproto ;};
 
   lndir = (mkDerivation "lndir" {
     name = "lndir-1.0.3";

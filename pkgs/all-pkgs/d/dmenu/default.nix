@@ -1,9 +1,14 @@
 { stdenv
 , fetchurl
+, lib
 
 , freetype
 , fontconfig
-, xorg
+, libx11
+, libxft
+, libxinerama
+, libxrender
+, xorgproto
 , zlib
 }:
 
@@ -19,12 +24,11 @@ stdenv.mkDerivation rec {
   buildInputs = [
     freetype
     fontconfig
-    xorg.libX11
-    xorg.libXft
-    xorg.libXinerama
-    xorg.libXrender
-    xorg.renderproto
-    xorg.xproto
+    libx11
+    libxft
+    libxinerama
+    libxrender
+    xorgproto
     zlib
   ];
 
@@ -40,7 +44,7 @@ stdenv.mkDerivation rec {
       -e "s,PREFIX = /usr/local,PREFIX = $out,g"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Dynamic menu for X";
     homepage = http://tools.suckless.org/dmenu;
     license = licenses.mit;

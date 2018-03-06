@@ -1,14 +1,18 @@
 { stdenv
 , fetchurl
+, lib
 
 , bzip2
 , freetype
 , giflib
+, libice
 , libid3tag
 , libjpeg
 , libpng
 , libtiff
-, xorg
+, libx11
+, libxext
+, xorgproto
 , zlib
 }:
 
@@ -27,15 +31,14 @@ stdenv.mkDerivation rec {
     bzip2
     freetype
     giflib
+    libice
     libid3tag
     libjpeg
     libpng
     libtiff
-    xorg.libICE
-    xorg.libX11
-    xorg.libXext
-    xorg.xextproto
-    xorg.xproto
+    libx11
+    libxext
+    xorgproto
     zlib
   ];
 
@@ -43,7 +46,7 @@ stdenv.mkDerivation rec {
     sed -i 's,@my_libs@,,g' imlib2-config.in
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Image manipulation library";
     license = licenses.free;
     maintainers = with maintainers; [

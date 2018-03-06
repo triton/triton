@@ -10,7 +10,7 @@
 , libcap-ng
 , libx11
 , systemd_lib
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     libcap-ng
     libx11
     systemd_lib
-    xproto
+    xorgproto
   ];
 
   preConfigure = ''

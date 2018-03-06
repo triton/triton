@@ -10,8 +10,7 @@
 , libx11
 , libxft
 , libxrender
-, renderproto
-, xproto
+, xorgproto
 }:
 
 let
@@ -37,8 +36,7 @@ stdenv.mkDerivation {
     libx11
     libxft
     libxrender
-    renderproto
-    xproto
+    xorgproto
   ];
 
   preBuild = ''

@@ -9,7 +9,7 @@
 , libx11
 , libxau
 , pulseaudio_lib
-, xproto
+, xorgproto
 }:
 
 let
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     libx11
     libxau
     pulseaudio_lib
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

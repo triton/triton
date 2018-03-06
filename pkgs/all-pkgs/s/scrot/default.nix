@@ -1,8 +1,10 @@
 { stdenv
 , fetchurl
+, lib
 
 , giblib
-, xorg
+, libx11
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -15,11 +17,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     giblib
-    xorg.libX11
-    xorg.xproto
+    libx11
+    xorgproto
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://linuxbrit.co.uk/scrot/;
     description = "A command-line screen capture utility";
     maintainers = with maintainers; [

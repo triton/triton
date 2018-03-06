@@ -11,7 +11,7 @@
 , libx11
 , libxinerama
 , libxt
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     libx11
     libxinerama
     libxt
-    xproto
+    xorgproto
   ];
 
   preBuild = ''

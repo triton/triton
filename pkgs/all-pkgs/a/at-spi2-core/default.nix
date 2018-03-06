@@ -9,15 +9,13 @@
 , dbus-glib
 , glib
 , gobject-introspection
-, inputproto
-, kbproto
 , libsm
 , libice
 , libx11
 , libxi
-, xextproto
+, libxtst
 , xorg
-, xproto
+, xorgproto
 
 , channel
 }:
@@ -55,14 +53,11 @@ stdenv.mkDerivation rec {
     dbus-glib
     glib
     gobject-introspection
-    inputproto
-    kbproto
-    xproto
     libsm
     libx11
     libxi
-    xorg.libXtst
-    xextproto
+    libxtst
+    xorgproto
   ];
 
   postPatch = /* Remove hardcoded references to the build driectory */ ''

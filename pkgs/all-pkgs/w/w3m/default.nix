@@ -3,20 +3,22 @@
 , fetchpatch
 , fetchzip
 , gettext
+, lib
 
 , boehm-gc
 , gpm
 , imlib2
+, libx11
 , man
 , ncurses
 , openssl
 , perl
-, xorg
+, xorgproto
 , zlib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 in
@@ -40,11 +42,11 @@ stdenv.mkDerivation rec {
   buildInputs = [
     boehm-gc
     gpm
+    libx11
     ncurses
     openssl
     imlib2
-    xorg.xproto
-    xorg.libX11
+    xorgproto
     zlib
   ];
 
@@ -94,7 +96,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://w3m.sourceforge.net/;
     description = "A text-mode web browser";
     maintainers = with maintainers; [

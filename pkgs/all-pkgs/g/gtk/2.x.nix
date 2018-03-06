@@ -14,7 +14,6 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, inputproto
 , libx11
 , libxcomposite
 , libxcursor
@@ -28,6 +27,7 @@
 , libxrender
 , pango
 , shared-mime-info
+, xorgproto
 }:
 
 let
@@ -67,7 +67,6 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    inputproto
     libx11
     libxcomposite
     libxcursor

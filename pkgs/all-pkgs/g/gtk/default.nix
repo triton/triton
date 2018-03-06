@@ -11,12 +11,10 @@
 , colord
 , cups
 , expat
-, fixesproto
 , fontconfig
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, inputproto
 , json-glib
 , libepoxy
 , libice
@@ -38,8 +36,7 @@
 , shared-mime-info
 , wayland
 , wayland-protocols
-, xorg
-, xproto
+, xorgproto
 
 , channel
 }:
@@ -89,12 +86,10 @@ stdenv.mkDerivation rec {
     colord
     cups
     expat
-    fixesproto
     fontconfig
     gdk-pixbuf
     glib
     gobject-introspection
-    inputproto
     json-glib
     libepoxy
     libxkbcommon
@@ -104,7 +99,7 @@ stdenv.mkDerivation rec {
     shared-mime-info
     wayland
     wayland-protocols
-    xproto
+    xorgproto
   ] ++ optionals opengl-dummy.glx [
     libice
     libsm

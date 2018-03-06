@@ -18,14 +18,11 @@
 , libvorbis
 , libx11
 , libxext
-#, libxv
+, libxv
 , opus
 , orc
 , pango
-, videoproto
-, xextproto
-, xorg
-, xproto
+, xorgproto
 , zlib
 
 , channel
@@ -76,13 +73,11 @@ stdenv.mkDerivation rec {
     libvorbis
     libx11
     libxext
-    xorg.libXv
+    libxv
     opus
     orc
     pango
-    videoproto
-    xextproto
-    xproto
+    xorgproto
     zlib
   ];
 

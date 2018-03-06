@@ -1,11 +1,16 @@
 { stdenv
 , fetchurl
+, lib
 , writeText
 
 , freetype
 , fontconfig
+, libx11
+, libxext
+, libxft
+, libxrender
 , ncurses
-, xorg
+, xorgproto
 
 , config ? null
 , configFile ? null
@@ -14,7 +19,7 @@
 assert config != null -> configFile == null;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
   configFile' =
@@ -27,7 +32,7 @@ let
 in
 stdenv.mkDerivation rec {
   name = "st-0.7";
-  
+
   src = fetchurl {
     url = "http://dl.suckless.org/st/${name}.tar.gz";
     multihash = "QmV1FssAdXN44hWi4QjWp5GLn5ZqwqnvBjJ8JRNayMRi5Z";
@@ -37,26 +42,24 @@ stdenv.mkDerivation rec {
   preBuild = optionalString (configFile' != null) ''
     cp ${configFile'} config.def.h
   '';
-  
+
   buildInputs = [
     freetype
     fontconfig
+    libx11
+    libxext
+    libxft
+    libxrender
     ncurses
-    xorg.kbproto
-    xorg.libX11
-    xorg.libXext
-    xorg.libXft
-    xorg.libXrender
-    xorg.renderproto
-    xorg.xproto
+    xorgproto
   ];
 
   preInstall = ''
     export TERMINFO="$out/share/terminfo"
     installFlagsArray+=("PREFIX=$out")
   '';
-    
-  meta = with stdenv.lib; {
+
+  meta = with lib; {
     homepage = http://st.suckless.org/;
     license = licenses.mit;
     maintainers = with maintainers; [

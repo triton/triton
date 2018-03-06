@@ -13,7 +13,7 @@
 , opengl-dummy
 , wayland
 , xorg
-, xproto
+, xorgproto
 }:
 
 let
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     libxfixes
     opengl-dummy
     wayland
-    xproto
+    xorgproto
   ];
 
   patchPhase = ''

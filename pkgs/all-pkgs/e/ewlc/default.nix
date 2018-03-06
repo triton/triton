@@ -1,6 +1,7 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 
 , chck
@@ -16,7 +17,7 @@
 , wayland
 , wayland-protocols
 , xorg
-, xproto
+, xorgproto
 }:
 
 let
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
     xorg.pixman
     xorg.xcbutilimage
     xorg.xcbutilwm
-    xproto
+    xorgproto
   ];
 
   cmakeFlags = [
@@ -72,7 +73,7 @@ stdenv.mkDerivation rec {
     popd >/dev/null
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

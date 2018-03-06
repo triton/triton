@@ -10,11 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxcb-1.12";
+  name = "libxcb-1.13";
 
   src = fetchurl {
     url = "mirror://xorg/individual/xcb/${name}.tar.bz2";
-    sha256 = "4adfb1b7c67e99bc9c2ccb110b2f175686576d2f792c8a71b9c8b19014057b5b";
+    hashOutput = false;
+    sha256 = "188c8752193c50ff2dbe89db4554c63df2e26a2e47b0fa415a70918b5b851daa";
   };
 
   nativeBuildInputs = [
@@ -63,6 +64,21 @@ stdenv.mkDerivation rec {
     "--without-launchd"
     "--without-serverside-support"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprints = [
+        # Daniel Stone
+        "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
+      ];
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "The X C Binding (XCB) library";

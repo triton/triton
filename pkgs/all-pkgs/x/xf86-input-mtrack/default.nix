@@ -1,9 +1,12 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
+, util-macros
 
 , mtdev
 , xorg
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -20,20 +23,17 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-    xorg.utilmacros
+    util-macros
   ];
 
   buildInputs = [
     mtdev
-    xorg.inputproto
-    xorg.pixman
-    xorg.xproto
-    xorg.xorgserver
+    xorgproto
   ];
 
   CFLAGS = "-I${xorg.pixman}/include/pixman-1";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://github.com/BlueDragonX/xf86-input-mtrack;
     description = "An Xorg driver for multitouch trackpads";
     license = licenses.gpl2;

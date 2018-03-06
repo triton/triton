@@ -10,7 +10,7 @@
 , libtiff
 , libx11
 , pango
-, xproto
+, xorgproto
 , zlib
 }:
 
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     libtiff
     libx11
     pango
-    xproto
+    xorgproto
     zlib
   ];
 

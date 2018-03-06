@@ -1,6 +1,12 @@
 { stdenv
 , fetchurl
-, xorg
+, lib
+
+, libx11
+, libxext
+, libxrandr
+, libxrender
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -13,13 +19,11 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    xorg.libX11
-    xorg.libXext
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.randrproto
-    xorg.renderproto
-    xorg.xproto
+    libx11
+    libxext
+    libxrandr
+    libxrender
+    xorgproto
   ];
 
   # Don't setuid as nixbuild doesn't allow this
@@ -31,7 +35,7 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("PREFIX=$out")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://tools.suckless.org/slock;
     description = "Simple X display locker";
     license = licenses.mit;

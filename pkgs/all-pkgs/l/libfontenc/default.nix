@@ -3,7 +3,7 @@
 , lib
 , util-macros
 
-, xproto
+, xorgproto
 , zlib
 }:
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    xproto
+    xorgproto
     zlib
   ];
 

@@ -5,7 +5,7 @@
 , glu
 , libx11
 , opengl-dummy
-, xproto
+, xorgproto
 }:
 
 let
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     glu
     libx11
     opengl-dummy
-    xproto
+    xorgproto
   ];
 
   postPatch = ''

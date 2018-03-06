@@ -4,11 +4,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "util-macros-1.19.1";
+  name = "util-macros-1.19.2";
 
   src = fetchurl {
     url = "mirror://xorg/individual/util/${name}.tar.bz2";
-    sha256 = "18d459400558f4ea99527bc9786c033965a3db45bf4c6a32eefdc07aa9e306a6";
+    sha256 = "d7e43376ad220411499a79735020f9d145fdc159284867e99467e0d771f3e712";
   };
 
   passthru = {
@@ -20,6 +20,8 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyFingerprints = [
+        # Alan Coopersmith
+        "4A19 3C06 D35E 7C67 0FA4  EF0B A2FB 9E08 1F2D 130E"
         # Matt Turner
         "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
       ];

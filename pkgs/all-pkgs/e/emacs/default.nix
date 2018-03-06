@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 , texinfo
 
 , acl
@@ -13,12 +14,22 @@
 , glib
 , gnutls
 , gpm
-, gtk3
+, gtk_3
+, libice
 , libjpeg
 , libpng
 , librsvg
+, libsm
 , libtiff
+, libx11
+, libxcb
+, libxft
+, libxfixes
+, libxinerama
 , libxml2
+#, libxpm
+, libxrandr
+, libxrender
 , ncurses
 , xorg
 , zlib
@@ -48,25 +59,25 @@ stdenv.mkDerivation rec {
     glib
     gnutls
     gpm
-    gtk3
+    gtk_3
+    libice
     libjpeg
     libpng
     librsvg
+    libsm
     libtiff
+    libx11
+    libxcb
+    libxft
+    libxfixes
+    libxinerama
     libxml2
-    ncurses
-    xorg.kbproto
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXft
-    xorg.libXfixes
-    xorg.libXinerama
+    #libxpm
     xorg.libXpm
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libxcb
-    xorg.xproto
+    libxrandr
+    libxrender
+    ncurses
+    xorgproto
     zlib
   ];
 
@@ -105,7 +116,7 @@ stdenv.mkDerivation rec {
   # FIXME
   buildDirCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNU Emacs 24, the extensible, customizable text editor";
     homepage = http://www.gnu.org/software/emacs/;
     license = licenses.gpl3Plus;

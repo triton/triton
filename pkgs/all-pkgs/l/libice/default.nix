@@ -4,7 +4,7 @@
 , util-macros
 
 , libbsd
-, xproto
+, xorgproto
 , xtrans
 }:
 
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libbsd
-    xproto
+    xorgproto
     xtrans
   ];
 

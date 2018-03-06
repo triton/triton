@@ -1,30 +1,56 @@
-{ stdenv, fetchurl, ncurses, pcre, libpng, zlib, readline }:
+{ stdenv
+, fetchurl
+, lib
+
+, ncurses
+, pcre
+, libpng
+, zlib
+, readline
+}:
 
 stdenv.mkDerivation rec {
-  name = "slang-2.3.1";
+  name = "slang-2.3.2";
+
   src = fetchurl {
-    url = "http://www.jedsoft.org/releases/slang/${name}.tar.bz2";
-    sha1Confirm = "bfd47c83886665d30d358c30d154435ec7583a4d";
-    sha256 = "a810d5da7b0c0c8c335393c6b4f12884be6fa7696d9ca9521ef21316a4e00f9d";
+    url = "https://www.jedsoft.org/releases/slang/${name}.tar.bz2";
+    multihash = "QmZ7PE4f7zB4jmAFSqpKMTUbtrwr2e9z4pU22H5dhSkW57";
+    sha1Confirm = "bbf7f2dcc14e7c7fca40868fd4b411a2bd9e2655";
+    sha256 = "fc9e3b0fc4f67c3c1f6d43c90c16a5c42d117b8e28457c5b46831b8b5d3ae31a";
   };
 
-  # Fix some wrong hardcoded paths
+  buildInputs = [
+    ncurses
+    pcre
+    libpng
+    zlib
+    readline
+  ];
+
+  # Fix some hardcoded paths
   preConfigure = ''
-    sed -i -e "s|/usr/lib/terminfo|${ncurses}/lib/terminfo|" configure
-    sed -i -e "s|/usr/lib/terminfo|${ncurses}/lib/terminfo|" src/sltermin.c
-    sed -i -e "s|/bin/ln|ln|" src/Makefile.in
+    sed -i configure \
+      -i src/sltermin.c \
+      -e 's|/usr/lib/terminfo|${ncurses}/lib/terminfo|'
+    sed -i src/Makefile.in -e 's|/bin/ln|ln|'
   '';
-  configureFlags = "--with-png=${libpng} --with-z=${zlib} --with-pcre=${pcre} --with-readline=${readline}";
-  buildInputs = [ncurses pcre libpng zlib readline];
+
+  configureFlags = [
+    "--with-png=${libpng}"
+    "--with-z=${zlib}"
+    "--with-pcre=${pcre}"
+    "--with-readline=${readline}"
+  ];
 
   buildParallel = false;
   installParallel = false;
 
-  meta = {
-    description = "A multi-platform programmer's library designed to allow a developer to create robust software";
+  meta = with lib; {
+    description = "A library for creating robust software";
     homepage = http://www.jedsoft.org/slang/;
-    license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.all;
-    maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
+    license = licenses.gpl2Plus;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

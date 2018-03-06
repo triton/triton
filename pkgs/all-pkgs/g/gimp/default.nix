@@ -12,7 +12,6 @@
 , babl
 , bzip2
 , cairo
-, fixesproto
 , freetype
 , fontconfig
 , gdk-pixbuf
@@ -50,7 +49,7 @@
 , poppler
 , shared-mime-info
 , xorg
-, xproto
+, xorgproto
 , xz
 , zlib
 }:
@@ -85,7 +84,6 @@ stdenv.mkDerivation rec {
     babl
     bzip2
     cairo
-    fixesproto
     freetype
     fontconfig
     gdk-pixbuf
@@ -126,7 +124,7 @@ stdenv.mkDerivation rec {
     shared-mime-info
     xorg.libXmu
     xorg.libXpm
-    xproto
+    xorgproto
     xz
     zlib
   ];

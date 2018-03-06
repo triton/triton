@@ -11,8 +11,13 @@
 , libsm
 , libtiff
 , libx11
+, libxext
+, libxcursor
+, libxft
+, libxrandr
+, libxrender
 , opengl-dummy
-, xorg
+, xorgproto
 , zlib
 }:
 
@@ -23,16 +28,6 @@ let
 
   version = "1.6.54";
 in
-
-assert xorg != null ->
-  xorg.libXext != null
-  && xorg.libXcursor != null
-  && xorg.libXft != null
-  && xorg.libXrandr != null
-  && xorg.libXrender != null
-  && xorg.renderproto != null
-  && xorg.xproto != null;
-
 stdenv.mkDerivation rec {
   name = "fox-${version}";
 
@@ -53,14 +48,13 @@ stdenv.mkDerivation rec {
     libsm
     libtiff
     libx11
+    libxext
+    libxcursor
+    libxft
+    libxrandr
+    libxrender
     opengl-dummy
-    xorg.libXext
-    xorg.libXcursor
-    xorg.libXft
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.renderproto
-    xorg.xproto
+    xorgproto
     zlib
   ];
 

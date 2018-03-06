@@ -20,22 +20,19 @@
 , libseccomp
 , libx11
 , libxext
+, libxkbfile
 , libxml2
 , libxrandr
 , pango
 , python
-, randrproto
 , systemd_lib
 , wayland
+#, xkeyboardconfig
 , xorg
-, xproto
+, xorgproto
 
 , channel
 }:
-
-assert libx11 != null ->
-  xorg.libxkbfile != null
-  && xorg.xkeyboardconfig != null;
 
 let
   inherit (lib)
@@ -81,15 +78,13 @@ stdenv.mkDerivation rec {
     libseccomp
     libx11
     libxext
+    libxkbfile
     libxml2
     libxrandr
     pango
-    randrproto
     systemd_lib
-    xproto
-  ] ++ optionals (libx11 != null) [
-    xorg.libxkbfile
     xorg.xkeyboardconfig
+    xorgproto
   ];
 
   configureFlags = [

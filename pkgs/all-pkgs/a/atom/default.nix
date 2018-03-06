@@ -18,7 +18,6 @@
 , gnome-themes-standard
 , gtk_2
 , gvfs
-, kbproto
 , libcap
 , libgnome-keyring
 , libgpg-error
@@ -31,17 +30,18 @@
 , libxext
 , libxfixes
 , libxi
+, libxkbfile
 , libxrandr
 , libxrender
 , libxscrnsaver
+, libxtst
 , nspr
 , nss
 , pango
 , python
 , shared-mime-info
 , systemd_lib
-, xorg
-, xproto
+, xorgproto
 , zlib
 
 , channel
@@ -94,7 +94,6 @@ stdenv.mkDerivation rec {
     gnome-themes-standard
     gtk_2
     gvfs
-    kbproto
     libcap
     libgnome-keyring
     libgpg-error
@@ -107,17 +106,17 @@ stdenv.mkDerivation rec {
     libxext
     libxfixes
     libxi
-    xorg.libxkbfile
+    libxkbfile
     libxrandr
     libxrender
     libxscrnsaver
-    xorg.libXtst
+    libxtst
     nspr
     nss
     pango
     stdenv.cc.cc
     systemd_lib
-    xproto
+    xorgproto
     zlib
   ];
 

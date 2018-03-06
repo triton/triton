@@ -5,16 +5,13 @@
 , ninja
 , unzip
 
-, kbproto
 , libx11
 , libxcursor
 , libxinerama
 , libxrandr
 , libxrender
 , opengl-dummy
-, randrproto
-, renderproto
-, xproto
+, xorgproto
 }:
 
 let
@@ -36,16 +33,13 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    kbproto
     libx11
     libxcursor
     libxinerama
     libxrandr
     libxrender
     opengl-dummy
-    randrproto
-    renderproto
-    xproto
+    xorgproto
   ];
 
   cmakeFlags = [

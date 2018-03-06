@@ -6,7 +6,7 @@
 
 , libx11
 , opengl-dummy
-, xproto
+, xorgproto
 }:
 
 let
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libx11
     opengl-dummy
-    xproto
+    xorgproto
   ];
 
   mesonFlags = [

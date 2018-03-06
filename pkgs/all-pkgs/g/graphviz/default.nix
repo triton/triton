@@ -3,6 +3,7 @@
 , fetchTritonPatch
 , fetchurl
 , flex
+, lib
 , libtool
 , swig
 
@@ -12,15 +13,23 @@
 , gts
 , fontconfig
 , libgd
+, libice
 , libjpeg
 , libpng
+, libx11
+, libxaw
+#, libxmu
+#, libxpm
+, libxrender
+, libxt
 , pango
 , xorg
+, xorgproto
 , zlib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optional
     optionals
     optionalString;
@@ -49,17 +58,19 @@ stdenv.mkDerivation rec {
     gts
     fontconfig
     libgd
+    libice
     libjpeg
     libpng
-    pango
-    xorg.libICE
-    xorg.libX11
-    xorg.libXaw
+    libx11
+    libxaw
+    #libxmu
     xorg.libXmu
+    #libxpm
     xorg.libXpm
-    xorg.libXrender
-    xorg.libXt
-    xorg.xproto
+    libxrender
+    libxt
+    pango
+    xorgproto
     zlib
   ];
 
@@ -86,7 +97,7 @@ stdenv.mkDerivation rec {
   fortifySource = false;
   optimize = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Open source graph visualization software";
     homepage = "http://www.graphviz.org/";
     license = licenses.free;

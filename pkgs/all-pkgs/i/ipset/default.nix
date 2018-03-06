@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
+, lib
 
 , libmnl
 }:
 
 stdenv.mkDerivation rec {
-  name = "ipset-6.35";
+  name = "ipset-6.36";
 
   src = fetchurl {
     url = "http://ipset.netfilter.org/${name}.tar.bz2";
-    multihash = "QmRfMyPAogoVJxds8F8i28nLshwCxyzYytVsVHbvQ9iA6L";
+    multihash = "QmQmXyc5cfKParMzketuNYrxJWzcYU5rRZFdJEBLTJd29s";
     hashOutput = false;
-    sha256 = "37071013e1f92e0ca2f5deac86e657db87290fe651f64f44ce662f3aa40bf4dc";
+    sha256 = "22224a90dc6c7d97b7a7addedd0740c3841e3d9a7ff8c8d2123bae0c3620d30d";
   };
 
   buildInputs = [
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://ipset.netfilter.org/;
     description = "Administration tool for IP sets";
     license = licenses.gpl2;

@@ -1,11 +1,22 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 
 , curl
+, libice
+, libsm
+, libx11
+, libxext
+, libxfixes
+, libxi
+, libxinerama
+, libxrandr
+, libxrender
+, libxtst
 , openssl
-, xorg
+, xorgproto
 }:
 
 let
@@ -30,24 +41,18 @@ stdenv.mkDerivation {
 
   buildInputs = [
     curl
+    libice
+    libsm
+    libx11
+    libxext
+    libxfixes
+    libxi
+    libxinerama
+    libxrandr
+    libxrender
+    libxtst
     openssl
-    xorg.fixesproto
-    xorg.inputproto
-    xorg.kbproto
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXtst
-    xorg.randrproto
-    xorg.renderproto
-    xorg.xproto
-    xorg.xextproto
+    xorgproto
   ];
 
   GIT_COMMIT = rev;
@@ -72,7 +77,7 @@ stdenv.mkDerivation {
     cp -v doc/*.conf* "$out"/etc
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -18,7 +18,7 @@
 , renderproto
 , which
 , xorg
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -47,12 +47,10 @@ stdenv.mkDerivation rec {
     libxrender
     libxt
     libxtst
-    randrproto
-    renderproto
     xorg.xcbutil
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
-    xproto
+    xorgproto
   ];
 
   postUnpack = ''

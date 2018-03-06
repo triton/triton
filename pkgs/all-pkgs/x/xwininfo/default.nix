@@ -5,7 +5,7 @@
 
 , libx11
 , libxcb
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libx11
     libxcb
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

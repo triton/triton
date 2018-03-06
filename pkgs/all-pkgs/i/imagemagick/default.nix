@@ -33,8 +33,7 @@
 , openjpeg
 , pango
 , perl
-, xextproto
-, xproto
+, xorgproto
 , xz
 , zlib
 }:
@@ -93,8 +92,7 @@ stdenv.mkDerivation rec {
     openjpeg
     pango
     perl
-    xextproto
-    xproto
+    xorgproto
     xz
     zlib
   ];

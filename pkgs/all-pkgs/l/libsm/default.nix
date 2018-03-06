@@ -5,7 +5,7 @@
 
 , libice
 , util-linux_lib
-, xproto
+, xorgproto
 , xtrans
 }:
 
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libice
     util-linux_lib
-    xproto
+    xorgproto
     xtrans
   ];
 

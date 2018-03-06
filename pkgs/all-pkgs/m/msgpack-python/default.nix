@@ -6,15 +6,15 @@
 }:
 
 let
-  version = "0.5.4";
+  version = "0.5.6";
 in
 buildPythonPackage {
   name = "msgpack-python-${version}";
 
   src = fetchPyPi {
-    package = "msgpack-python";
+    package = "msgpack";
     inherit version;
-    sha256 = "c1f3f8d02206f84258a3b4f99fbc0a4e3c849721c9361196c3bfd5243e4304cd";
+    sha256 = "0ee8c8c85aa651be3aa0cd005b5931769eaa658c948ce79428766f1bd46ae2c3";
   };
 
   nativeBuildInputs = [

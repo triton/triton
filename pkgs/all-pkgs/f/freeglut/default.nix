@@ -5,17 +5,14 @@
 , ninja
 
 , glu
-, inputproto
 , libx11
 , libxi
 , libxrandr
 , libxrender
+#, libxxf86vm
 , opengl-dummy
-, randrproto
-, renderproto
-, xf86vidmodeproto
 , xorg
-, xproto
+, xorgproto
 
 , glesSupport ? false
 }:
@@ -47,17 +44,13 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glu
-    inputproto
     libx11
     libxi
     libxrandr
     libxrender
     xorg.libXxf86vm
     opengl-dummy
-    randrproto
-    renderproto
-    xf86vidmodeproto
-    xproto
+    xorgproto
   ];
 
   cmakeFlags = [

@@ -1,12 +1,13 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 
 , libva
 , libx11
 , opengl-dummy
-, xproto
+, xorgproto
 }:
 
 let
@@ -32,10 +33,10 @@ stdenv.mkDerivation rec {
     libva
     libx11
     opengl-dummy
-    xproto
+    xorgproto
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "VDPAU driver with OpenGL/VAAPI backend";
     homepage = https://github.com/i-rinat/libvdpau-va-gl;
     license = licenses.mit;

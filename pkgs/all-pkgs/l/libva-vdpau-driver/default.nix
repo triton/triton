@@ -8,7 +8,7 @@
 , libva
 , libx11
 , opengl-dummy
-, xproto
+, xorgproto
 }:
 
 let
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     libva
     libx11
     opengl-dummy
-    xproto
+    xorgproto
   ];
 
   patches = [

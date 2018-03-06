@@ -151,7 +151,7 @@
 , x264
 , x265
 , xavs
-, xproto
+, xorgproto
 , xvidcore
 , xz
 , zeromq4
@@ -398,7 +398,7 @@ stdenv.mkDerivation rec {
     x264
     x265
     xavs
-    xproto
+    xorgproto
     xvidcore
     xz
     zeromq4

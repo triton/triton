@@ -26,7 +26,6 @@
 , gsettings-desktop-schemas
 , gtk
 , ibus
-, inputproto
 , lcms2
 , libcanberra
 , libgudev
@@ -49,10 +48,9 @@
 , upower
 , wayland
 , xf86-input-wacom
-, xf86miscproto
 #, xkeyboardconfig
 , xorg
-, xproto
+, xorgproto
 
 , channel
 }:
@@ -111,7 +109,6 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     #ibus
-    inputproto
     lcms2
     libcanberra
     libgudev
@@ -136,9 +133,8 @@ stdenv.mkDerivation rec {
     upower
     wayland
     xf86-input-wacom
-    xf86miscproto
     xorg.xkeyboardconfig
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

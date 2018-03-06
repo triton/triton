@@ -8,7 +8,7 @@
 , libx11
 , opengl-dummy
 , wayland
-, xproto
+, xorgproto
 }:
 
 let
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     libx11
     opengl-dummy
     wayland
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

@@ -1,19 +1,21 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , libjpeg
 , libpng
 , libmng
 , lcms
 , libtiff
+, libx11
 , openexr
 , opengl-dummy
-, xorg
+, xorgproto
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 
@@ -36,9 +38,9 @@ stdenv.mkDerivation rec {
     libtiff
     openexr
     opengl-dummy
-  ] ++ optionals (xorg != null) [
-    xorg.xproto
-    xorg.libX11
+  ] ++ optionals opengl-dummy.glx [
+    libx11
+    xorgproto
   ];
 
   patches = [
@@ -94,7 +96,7 @@ stdenv.mkDerivation rec {
       -e '/RESTRICT_KEYWORD/d'
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "DevIL image library";
     homepage = http://openil.sourceforge.net/;
     license = licenses.lgpl21;

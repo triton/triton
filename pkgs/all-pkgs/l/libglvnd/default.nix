@@ -4,10 +4,9 @@
 , lib
 , python2
 
-, glproto
 , libx11
 , libxext
-, xproto
+, xorgproto
 }:
 
 let
@@ -30,10 +29,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    glproto
     libx11
     libxext
-    xproto
+    xorgproto
   ];
 
   postPatch = ''

@@ -17,10 +17,6 @@ stdenv.mkDerivation rec {
     util-macros
   ];
 
-  buildInputs = [
-
-  ];
-
   configureFlags = [
     "--enable-selective-werror"
     "--disable-strict-compilation"

@@ -3,14 +3,24 @@
 , fetchTritonPatch
 , fetchzip
 , jam
+, lib
 , unzip
 
 , libjpeg
 , libpng
 , libtiff
+, libx11
+, libxau
+, libxdmcp
+, libxext
+, libxinerama
+, libxrandr
+, libxrender
+, libxscrnsaver
 , openssl
 , writeText
 , xorg
+, xorgproto
 , zlib
 }:
 
@@ -21,22 +31,17 @@ let
       libjpeg
       libpng
       libtiff
-      openssl
-      xorg.libX11
-      xorg.libXau
-      xorg.libXdmcp
-      xorg.libXext
-      xorg.libXinerama
-      xorg.libXrandr
-      xorg.libXrender
-      xorg.libXScrnSaver
+      libx11
+      libxau
+      libxdmcp
+      libxext
+      libxinerama
+      libxrandr
+      libxrender
+      libxscrnsaver
       xorg.libXxf86vm
-      xorg.randrproto
-      xorg.renderproto
-      xorg.scrnsaverproto
-      xorg.xextproto
-      xorg.xf86vidmodeproto
-      xorg.xproto
+      openssl
+      xorgproto
       zlib
     ];
   };
@@ -105,7 +110,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Color management system (compatible with ICC)";
     homepage = http://www.argyllcms.com;
     license = licenses.gpl3;

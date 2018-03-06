@@ -3,8 +3,6 @@
 , lib
 
 , file
-, inputproto
-, kbproto
 , libx11
 , libxext
 , libxi
@@ -12,11 +10,10 @@
 , libxrandr
 , libxrender
 , ncurses
-, randrproto
 , systemd_lib
 , xorg
 , xorg-server
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -32,8 +29,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     ncurses
     systemd_lib
-    inputproto
-    kbproto
     libx11
     libxext
     libxi
@@ -41,9 +36,8 @@ stdenv.mkDerivation rec {
     libxrandr
     libxrender
     xorg.pixman
-    randrproto
     xorg-server
-    xproto
+    xorgproto
   ];
 
   preConfigure = ''

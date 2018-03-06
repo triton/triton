@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2.1.0";
+  version = "2.3.0";
 in
 buildPythonPackage rec {
   name = "apache-libcloud-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "apache-libcloud";
     inherit version;
-    sha256 = "7e812f730495e5d59d0adb06792115241f08a59566d25445613b15f008c73a05";
+    sha256 = "0e2eee3802163bd0605975ed1e284cafc23203919bfa80c0cc5d3cd2543aaf97";
   };
 
   propagatedBuildInputs = [

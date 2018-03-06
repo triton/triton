@@ -4,7 +4,7 @@
 , util-macros
 
 , libxfont2
-, xproto
+, xorgproto
 , xtrans
 }:
 
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libxfont2
-    xproto
+    xorgproto
     xtrans
   ];
 

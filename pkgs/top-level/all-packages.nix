@@ -3439,9 +3439,8 @@ sddm = callPackage ../all-pkgs/s/sddm { };
 sdl_2 = callPackage ../all-pkgs/s/sdl { };
 sdl = callPackageAlias "sdl_2" { };
 
-SDL_2_image = callPackage ../all-pkgs/s/SDL_image {
-  SDL = pkgs.sdl_2;
-};
+sdl-image = callPackage ../all-pkgs/s/sdl-image { };
+SDL_2_image = callPackageAlias "sdl-image" { };
 
 sdparm = callPackage ../all-pkgs/s/sdparm { };
 

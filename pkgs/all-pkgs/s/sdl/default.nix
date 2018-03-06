@@ -6,11 +6,8 @@
 
 , alsa-lib
 , dbus
-, fixesproto
 , glib
 , ibus
-, inputproto
-, kbproto
 , libice
 , libdrm
 , libsamplerate
@@ -28,18 +25,13 @@
 #, libxxf86vm
 , opengl-dummy
 , pulseaudio_lib
-, randrproto
-, renderproto
-, scrnsaverproto
 , systemd_lib
 , tslib
 #, vulkan-headers
 , wayland
 , wayland-protocols
-, xextproto
-, xf86vidmodeproto
 , xorg
-, xproto
+, xorgproto
 
 , x11 ? true
 }:
@@ -51,16 +43,16 @@ let
   inherit (lib)
     boolOn;
 
-  version = "2.0.7";
+  version = "2.0.8";
 in
 stdenv.mkDerivation rec {
   name = "SDL-${version}";
 
   src = fetchurl {
     url = "https://www.libsdl.org/release/SDL2-${version}.tar.gz";
-    multihash = "QmaG2R5WXXbPxkcKBBeNVyePSw3UR3kXBxbmZsAJN47nRo";
+    multihash = "Qme3L6c5NYSv8eafYPJtBLecqJEJ86Etosk2MsXry7wd6j";
     hashOutput = false;
-    sha256 = "ee35c74c4313e2eda104b14b1b86f7db84a04eeab9430d56e001cea268bf4d5e";
+    sha256 = "edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec";
   };
 
   nativeBuildInputs = [
@@ -71,11 +63,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     alsa-lib
     dbus
-    fixesproto
     glib  # ???: possibly not propagated via pkgconfig correctly
     ibus
-    inputproto
-    kbproto
     libdrm
     libice
     libsamplerate
@@ -94,20 +83,12 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
     opengl-dummy
     pulseaudio_lib
-    randrproto
-    renderproto
-    scrnsaverproto
     systemd_lib
     tslib
     #vulkan-headers
     wayland
     wayland-protocols
-    xextproto
-    xf86vidmodeproto
-    xproto
-
-    randrproto
-    renderproto
+    xorgproto
   ];
 
   cmakeFlags = [

@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
+, lib
 
 , wayland
 }:
 
 stdenv.mkDerivation rec {
-  name = "wayland-protocols-1.10";
+  name = "wayland-protocols-1.13";
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmaCw2jgDFearXD3p7epW2MrGCpWppX131pGCucEnGBtP4";
+    multihash = "QmUqmaJ5BRkEoxYbJDh2yPES6DqZMak5qK1pnoE2BfEFZQ";
     hashOutput = false;
-    sha256 = "5719c51d7354864983171c5083e93a72ac99229e2b460c4bb10513de08839c0a";
+    sha256 = "0758bc8008d5332f431b2a84fea7de64d971ce270ed208206a098ff2ebc68f38";
   };
 
   buildInputs = [
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Wayland protocol files";
     homepage = https://wayland.freedesktop.org/;
     license = licenses.mit;

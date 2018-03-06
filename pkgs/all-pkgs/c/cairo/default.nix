@@ -16,9 +16,8 @@
 , libxrender
 , lzo
 , opengl-dummy
-, xextproto
 , xorg
-, xproto
+, xorgproto
 , zlib
 }:
 
@@ -61,8 +60,7 @@ stdenv.mkDerivation rec {
     libxcb
     libxext
     libxrender
-    xextproto
-    xproto
+    xorgproto
   ];
 
   patches = [

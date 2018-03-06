@@ -7,7 +7,7 @@
 , libx11
 #, libxpm
 , xorg
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     libsm
     libx11
     xorg.libXpm
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

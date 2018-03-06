@@ -5,11 +5,6 @@
 , util-macros
 
 , cairo
-, damageproto
-, dri2proto
-, dri3proto
-, fixesproto
-, fontsproto
 #, intel-gpu-tools
 , libdrm
 , libpciaccess
@@ -24,21 +19,16 @@
 , libxrandr
 , libxrender
 , libxscrnsaver
-#, libxshmfence
+, libxshmfence
 , libxtst
 , libxv
 #, libxvmc
 #, pixman
-, presentproto
-, randrproto
-, renderproto
 , systemd_lib
 #, xcb-util
-, xextproto
-, xf86driproto
 , xorg
 , xorg-server
-, xproto
+, xorgproto
 }:
 
 let
@@ -61,11 +51,6 @@ stdenv.mkDerivation {
 
   buildInputs = [
     cairo
-    damageproto
-    dri2proto
-    dri3proto
-    fixesproto
-    fontsproto
     #intel-gpu-tools
     xorg.intelgputools
     libdrm
@@ -81,22 +66,17 @@ stdenv.mkDerivation {
     libxrandr
     libxrender
     libxscrnsaver
-    xorg.libxshmfence
+    libxshmfence
     libxtst
     libxv
     #libxvmc
     xorg.libXvMC
     xorg.pixman
-    presentproto
-    randrproto
-    renderproto
     systemd_lib
     #xcb-util
     xorg.xcbutil
-    xextproto
-    xf86driproto
     xorg-server
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

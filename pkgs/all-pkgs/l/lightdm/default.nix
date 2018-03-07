@@ -3,14 +3,17 @@
 , fetchurl
 , intltool
 , itstool
+, lib
 , libxml2
 
 , audit_lib
 , glib
 , libgcrypt
+, libx11
+, libxcb
+, libxdmcp
 , libxklavier
 , pam
-, xorg
 }:
 
 let
@@ -45,11 +48,11 @@ stdenv.mkDerivation rec {
     audit_lib
     glib
     libgcrypt
+    libx11
+    libxcb
+    libxdmcp
     libxklavier
     pam
-    xorg.libX11
-    xorg.libXdmcp
-    xorg.libxcb
   ];
 
   configureFlags = [
@@ -65,7 +68,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://launchpad.net/lightdm;
     license = licenses.gpl3;
     maintainers = with maintainers; [

@@ -20,7 +20,6 @@
 , gnutls
 , gtk
 , jemalloc
-, kbproto
 , libaio
 , libcacard
 , libcap
@@ -54,7 +53,7 @@
 , vte
 , xfsprogs_lib
 , xorg
-, xproto
+, xorgproto
 , zlib
 }:
 
@@ -92,7 +91,6 @@ stdenv.mkDerivation rec {
     gnutls
     gtk
     jemalloc
-    kbproto
     libaio
     libcacard
     libcap
@@ -125,7 +123,7 @@ stdenv.mkDerivation rec {
     vte
     xfsprogs_lib
     xorg.pixman
-    xproto
+    xorgproto
     zlib
   ];
 

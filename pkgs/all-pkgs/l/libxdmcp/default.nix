@@ -4,7 +4,7 @@
 , util-macros
 
 , libbsd
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libbsd
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

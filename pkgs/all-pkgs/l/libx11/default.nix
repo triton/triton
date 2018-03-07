@@ -4,12 +4,8 @@
 , perl
 , util-macros
 
-, inputproto
-, kbproto
 , libxcb
-, xextproto
-, xf86bigfontproto
-, xproto
+, xorgproto
 , xtrans
 }:
 
@@ -33,12 +29,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    inputproto
-    kbproto
     libxcb
-    xextproto
-    xf86bigfontproto
-    xproto
+    xorgproto
     xtrans
   ];
 
@@ -55,8 +47,8 @@ stdenv.mkDerivation rec {
     "--enable-xthreads"
     "--enable-xcms"
     "--enable-xlocale"
-    "--${boolEn (xf86bigfontproto != null)}-xf86bigfont"
-    "--${boolEn (inputproto != null && kbproto != null)}-xkb"
+    "--enable-xf86bigfont"
+    "--enable-xkb"
     "--enable-composecache"
     "--disable-lint-library"
     "--without-xmlto"

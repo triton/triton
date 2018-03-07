@@ -32,7 +32,7 @@
 #, libxpm
 , libxrender
 , libxres
-#, libxshmfence
+, libxshmfence
 , libxt
 , libxtst
 , nettle
@@ -48,6 +48,8 @@
 #, xcbutilimage
 #, xcbutilkeysyms
 #, xcbutilrenderutil
+, xkbcomp
+, xkeyboard-config
 , xorg
 , xorgproto
 , xtrans
@@ -126,7 +128,7 @@ stdenv.mkDerivation rec {
     xorg.libXpm
     libxrender
     libxres
-    xorg.libxshmfence
+    libxshmfence
     libxt
     libxtst
     nettle
@@ -142,7 +144,7 @@ stdenv.mkDerivation rec {
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
     xorg.xcbutilrenderutil
-    xorg.xkbcomp
+    xkbcomp
     xorgproto
     xtrans
   ];
@@ -298,12 +300,12 @@ stdenv.mkDerivation rec {
     ###ln -s /var/tmp $out/share/X11/xkb/compiled  # FIXME
 
     wrapProgram $out/bin/Xephyr \
-      --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
-      --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
+      --set XKB_BINDIR "${xkbcomp}/bin" \
+      --add-flags "-xkbdir ${xkeyboard-config}/share/X11/xkb"
     wrapProgram $out/bin/Xvfb \
-      --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
+      --set XKB_BINDIR "${xkbcomp}/bin" \
       --set XORG_DRI_DRIVER_PATH ${opengl-dummy.driverSearchPath}/lib/dri \
-      --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
+      --add-flags "-xkbdir ${xkeyboard-config}/share/X11/xkb"
   '';
 
   bindnow = false;

@@ -3,11 +3,10 @@
 , lib
 , util-macros
 
-, fixesproto
 , libx11
 , libxfixes
 , libxrender
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -24,11 +23,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    fixesproto
     libx11
     libxfixes
     libxrender
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

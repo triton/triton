@@ -9,10 +9,8 @@
 , alsa-lib
 , avahi
 , boost
-, fixesproto
 , grpc
 , ice
-, inputproto
 , libbsd
 , libcap
 , libsndfile
@@ -30,7 +28,7 @@
 , speech-dispatcher
 , speex
 , speexdsp
-, xproto
+, xorgproto
 
 , mumbleOverlay ? true
 , releaseType ? "release"
@@ -111,8 +109,6 @@ stdenv.mkDerivation rec {
     qt5
   ] ++ optionals (config == "mumble") [
     alsa-lib
-    fixesproto
-    inputproto
     libsndfile
     libx11
     libxext
@@ -125,7 +121,7 @@ stdenv.mkDerivation rec {
     speech-dispatcher
     speex
     speexdsp
-    xproto
+    xorgproto
   ] ++ optionals (config == "murmur") [
     grpc
     ice

@@ -14,10 +14,8 @@
 , libxmu
 , libxp
 , libxt
-, printproto
-, xextproto
 , xorg
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -44,10 +42,8 @@ stdenv.mkDerivation rec {
     libxmu
     libxp
     libxt
-    printproto
     xorg.xbitmaps
-    xextproto
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

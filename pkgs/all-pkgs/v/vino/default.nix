@@ -12,24 +12,21 @@
 , gnutls
 , gtk
 , libgcrypt
+, libice
 , libjpeg
 , libnotify
 , libsecret
+, libsm
 , libsoup
+, libx11
+, libxext
+, libxtst
 , telepathy_glib
-, xorg
+, xorgproto
 , zlib
 
 , channel
 }:
-
-assert xorg != null ->
-  xorg.libICE != null
-  && xorg.libSM != null
-  && xorg.libX11 != null
-  && xorg.libXext != null
-  && xorg.libXtst != null
-  && xorg.xproto != null;
 
 let
   inherit (stdenv.lib)
@@ -62,19 +59,18 @@ stdenv.mkDerivation rec {
     gnutls
     gtk
     libgcrypt
+    libice
     libjpeg
     libnotify
     libsecret
+    libsm
     libsoup
+    libx11
+    libxext
+    libxtst
     telepathy_glib
+    xorgproto
     zlib
-  ] ++ optionals (xorg != null) [
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXext
-    xorg.libXtst
-    xorg.xproto
   ];
 
   configureFlags = [
@@ -87,7 +83,7 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--${boolWt (telepathy_glib != null)}-telepathy"
     "--${boolWt (libsecret != null)}-secret"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libxll != null)}-x"
     "--${boolWt (gnutls != null)}-gnutls"
     "--${boolWt (libgcrypt != null)}-gcrypt"
     "--${boolWt (avahi != null)}-avahi"

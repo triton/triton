@@ -3938,18 +3938,7 @@ xorg = recurseIntoAttrs (
       xmlto
       zlib
       # Rewritten xorg packages
-      bigreqsproto
-      compositeproto
-      damageproto
-      dmxproto
-      dri2proto
-      dri3proto
-      fixesproto
       fontcacheproto
-      fontsproto
-      glproto
-      inputproto
-      kbproto
       libdmx
       libfontenc
       libice
@@ -3978,33 +3967,14 @@ xorg = recurseIntoAttrs (
       libxt
       libxtst
       libxv
-      presentproto
-      printproto
-      randrproto
-      recordproto
-      renderproto
-      resourceproto
-      scrnsaverproto
-      trapproto
       util-macros
-      videoproto
-      windowswmproto
-      xcb-proto
-      xcmiscproto
-      xextproto
       xf86-video-amdgpu
       xf86-video-intel
-      xf86bigfontproto
-      xf86dgaproto
-      xf86driproto
-      xf86miscproto
-      xf86vidmodeproto
       xfs
-      xineramaproto
       xkbcomp
       xkeyboard-config
       xorg-server
-      xproto
+      xorgproto
       xrefresh
       xtrans
       xwininfo
@@ -4013,37 +3983,6 @@ xorg = recurseIntoAttrs (
 );
 
 xorgproto = callPackage ../all-pkgs/x/xorgproto { };
-# DEPRECATED aliases
-bigreqsproto = callPackageAlias "xorgproto" { };
-compositeproto = callPackageAlias "xorgproto" { };
-damageproto = callPackageAlias "xorgproto" { };
-dmxproto = callPackageAlias "xorgproto" { };
-dri2proto = callPackageAlias "xorgproto" { };
-dri3proto = callPackageAlias "xorgproto" { };
-fixesproto = callPackageAlias "xorgproto" { };
-fontsproto = callPackageAlias "xorgproto" { };
-glproto = callPackageAlias "xorgproto" { };
-inputproto = callPackageAlias "xorgproto" { };
-kbproto = callPackageAlias "xorgproto" { };
-presentproto = callPackageAlias "xorgproto" { };
-printproto = callPackageAlias "xorgproto" { };
-randrproto = callPackageAlias "xorgproto" { };
-recordproto = callPackageAlias "xorgproto" { };
-renderproto = callPackageAlias "xorgproto" { };
-resourceproto = callPackageAlias "xorgproto" { };
-scrnsaverproto = callPackageAlias "xorgproto" { };
-trapproto = callPackageAlias "xorgproto" { };
-videoproto = callPackageAlias "xorgproto" { };
-windowswmproto = callPackageAlias "xorgproto" { };
-xcmiscproto = callPackageAlias "xorgproto" { };
-xextproto = callPackageAlias "xorgproto" { };
-xf86bigfontproto = callPackageAlias "xorgproto" { };
-xf86dgaproto = callPackageAlias "xorgproto" { };
-xf86driproto = callPackageAlias "xorgproto" { };
-xf86miscproto = callPackageAlias "xorgproto" { };
-xf86vidmodeproto = callPackageAlias "xorgproto" { };
-xineramaproto = callPackageAlias "xorgproto" { };
-xproto = callPackageAlias "xorgproto" { };
 
 xorg-server_1-19 = callPackage ../all-pkgs/x/xorg-server {
   channel = "1.19";

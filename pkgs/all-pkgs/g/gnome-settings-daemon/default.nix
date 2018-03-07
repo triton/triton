@@ -39,6 +39,7 @@
 , libxi
 , libxkbfile
 , libxml2
+, libxtst
 , networkmanager
 , nss
 , pango
@@ -48,7 +49,7 @@
 , upower
 , wayland
 , xf86-input-wacom
-#, xkeyboardconfig
+, xkeyboard-config
 , xorg
 , xorgproto
 
@@ -122,7 +123,7 @@ stdenv.mkDerivation rec {
     libxfixes
     libxkbfile
     libxml2
-    xorg.libXtst
+    libxtst
     xorg.libXxf86misc
     networkmanager
     nss
@@ -133,7 +134,7 @@ stdenv.mkDerivation rec {
     upower
     wayland
     xf86-input-wacom
-    xorg.xkeyboardconfig
+    xkeyboard-config
     xorgproto
   ];
 

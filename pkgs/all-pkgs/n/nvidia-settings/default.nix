@@ -17,15 +17,11 @@
 , libxext
 , libxrandr
 , libxrender
+, libxv
 , nvidia-drivers_latest
 , opengl-dummy
 , pango
-, randrproto
-, renderproto
-, videoproto
-, xextproto
-, xf86vidmodeproto
-, xproto
+, xorgproto
 , xorg
 }:
 
@@ -60,22 +56,17 @@ stdenv.mkDerivation rec {
     libxext
     libxrandr
     libxrender
+    libxv
+    xorg.libXxf86vm
     nvidia-drivers_latest
     opengl-dummy
     pango
-    randrproto
-    renderproto
-    videoproto
-    xextproto
-    xf86vidmodeproto
-    xproto
-    xorg.libXv
-    xorg.libXxf86vm
+    xorgproto
   ];
 
   postPatch = /* libXv is normally loaded at runtime via LD_LIBRARY_PATH */ ''
     sed -i src/libXNVCtrlAttributes/NvCtrlAttributesXv.c \
-      -e 's,"libXv.so.1","${xorg.libXv}/lib/libXv.so.1",'
+      -e 's,"libXv.so.1","${libxv}/lib/libXv.so.1",'
   '' + /* Fix nvidia-application-profiles-key-documentation loading */ ''
     sed -i src/gtk+-2.x/ctkappprofile.c  \
       -e "s,/usr/share,${nvidia-drivers_latest}/share,"

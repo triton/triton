@@ -27,6 +27,10 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
+  postInstall = ''
+    ln -sv $out/share/ $out/etc
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

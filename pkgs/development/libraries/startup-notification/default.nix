@@ -1,7 +1,10 @@
 { stdenv
 , fetchurl
 
+, libx11
+, libxcb
 , xorg
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -13,10 +16,10 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    xorg.libX11
-    xorg.libxcb
+    libx11
+    libxcb
     xorg.xcbutil
-    xorg.xproto
+    xorgproto
   ];
 
   meta = with stdenv.lib; {

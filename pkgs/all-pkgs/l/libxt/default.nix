@@ -4,11 +4,10 @@
 , perl
 , util-macros
 
-, kbproto
 , libice
 , libsm
 , libx11
-, xproto
+, xorgproto
 }:
 
 let
@@ -30,11 +29,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    kbproto
     libice
     libsm
     libx11
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

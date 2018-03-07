@@ -54,7 +54,7 @@
 #, xkeyboardconfig
 , xorg
 , xorg-server
-, xproto
+, xorgproto
 , zenity
 
 , channel
@@ -138,7 +138,7 @@ stdenv.mkDerivation rec {
     wayland-protocols
     #xkeyboardconfig
     xorg.xkeyboardconfig
-    xproto
+    xorgproto
     zenity
   ];
 

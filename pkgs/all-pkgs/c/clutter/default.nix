@@ -13,7 +13,6 @@
 , glib
 , gobject-introspection
 , gtk
-, inputproto
 , json-glib
 , libdrm
 , libgudev
@@ -30,6 +29,7 @@
 , systemd_lib
 , tslib
 , wayland
+, xorgproto
 
 , channel
 }:
@@ -71,7 +71,6 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gtk
-    inputproto
     json-glib
     libdrm
     libgudev
@@ -88,6 +87,7 @@ stdenv.mkDerivation rec {
     systemd_lib
     tslib
     wayland
+    xorgproto
   ];
 
   configureFlags = [

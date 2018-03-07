@@ -3,10 +3,10 @@
 , fetchurl
 , lib
 
-, dri2proto
 , libx11
 , libxext
 , opengl-dummy
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -20,9 +20,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    dri2proto
     libx11
     libxext
+    xorgproto
   ];
 
   patches = [

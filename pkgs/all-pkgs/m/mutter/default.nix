@@ -39,10 +39,10 @@
 , libxi
 , libxinerama
 , libxkbcommon
-#, libxkbfile
+, libxkbfile
 , libxrandr
 , libxrender
-#, libxtst
+, libxtst
 , linux-headers
 , opengl-dummy
 , pango
@@ -51,7 +51,7 @@
 , upower
 , wayland
 , wayland-protocols
-#, xkeyboardconfig
+, xkeyboard-config
 , xorg
 , xorg-server
 , xorgproto
@@ -122,12 +122,10 @@ stdenv.mkDerivation rec {
     libxi
     libxinerama
     libxkbcommon
-    #libxkbfile
-    xorg.libxkbfile
+    libxkbfile
     libxrandr
     libxrender
-    #libxtst
-    xorg.libXtst
+    libxtst
     linux-headers
     opengl-dummy
     pango
@@ -136,8 +134,7 @@ stdenv.mkDerivation rec {
     upower
     wayland
     wayland-protocols
-    #xkeyboardconfig
-    xorg.xkeyboardconfig
+    xkeyboard-config
     xorgproto
     zenity
   ];

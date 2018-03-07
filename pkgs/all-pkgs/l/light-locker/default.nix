@@ -15,10 +15,6 @@
 , libxext
 , libxscrnsaver
 , systemd_lib
-, scrnsaverproto
-, xextproto
-, xf86miscproto
-, xf86vidmodeproto
 , xorg
 , xorgproto
 }:

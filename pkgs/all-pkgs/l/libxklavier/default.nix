@@ -13,8 +13,7 @@
 , libxml2
 , vala
 , xkbcomp
-, xorg
-#, xkeyboardconfig
+, xkeyboard-config
 }:
 
 let
@@ -46,7 +45,7 @@ stdenv.mkDerivation rec {
     libxkbfile
     libxml2
     xkbcomp
-    xorg.xkeyboardconfig
+    xkeyboard-config
   ];
 
   configureFlags = [
@@ -58,7 +57,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--${boolEn (xorg.libxkbfile != null)}-xkb-support"
+    "--${boolEn (libxkbfile != null)}-xkb-support"
     "--enable-xmodmap-support"
   ];
 

@@ -27,8 +27,7 @@
 , python
 , systemd_lib
 , wayland
-#, xkeyboardconfig
-, xorg
+, xkeyboard-config
 , xorgproto
 
 , channel
@@ -83,7 +82,7 @@ stdenv.mkDerivation rec {
     libxrandr
     pango
     systemd_lib
-    xorg.xkeyboardconfig
+    xkeyboard-config
     xorgproto
   ];
 

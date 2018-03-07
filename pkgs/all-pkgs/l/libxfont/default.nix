@@ -4,10 +4,9 @@
 , util-macros
 
 , bzip2
-, fontsproto
 , freetype
 , libfontenc
-, xproto
+, xorgproto
 , xtrans
 , zlib
 
@@ -47,10 +46,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    fontsproto
     freetype
     libfontenc
-    xproto
+    xorgproto
     xtrans
     zlib
   ];

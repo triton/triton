@@ -35,7 +35,7 @@
 , systemd_lib
 , tdb
 , webrtc-audio-processing
-, xextproto
+, xorgproto
 
 , prefix ? ""
 
@@ -99,7 +99,7 @@ stdenv.mkDerivation rec {
     soxr
     systemd_lib
     webrtc-audio-processing
-    xextproto
+    xorgproto
   ];
 
   patches = [

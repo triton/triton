@@ -9,11 +9,8 @@
 , lib
 , python2Packages
 
-, dri2proto
-, dri3proto
 , elfutils
 , expat
-, glproto
 , libclc
 , libdrm
 , libffi
@@ -32,6 +29,7 @@
 , wayland
 , wayland-protocols
 , xorg
+, xorgproto
 , zlib
 
 , buildConfig
@@ -97,10 +95,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dri2proto
-    dri3proto
     expat
-    glproto
     libdrm
     libx11
     libxcb
@@ -111,6 +106,7 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
     wayland
     wayland-protocols
+    xorgproto
     zlib
   ] ++ optionals (buildConfig != "opengl-dummy") [
     elfutils

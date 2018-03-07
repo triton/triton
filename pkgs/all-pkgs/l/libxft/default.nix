@@ -7,7 +7,7 @@
 , freetype
 , libx11
 , libxrender
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     freetype
     libx11
     libxrender
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

@@ -5,8 +5,8 @@
 , tcl_8-5
 , tcl_8-6
 , libx11
-, xorg
-, xproto
+, libxft
+, xorgproto
 , zlib
 
 , channel
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     tcl
     libx11
-    xorg.libXft
+    libxft
     xproto
     zlib
   ];

@@ -7,9 +7,14 @@
 , glib
 , gobject-introspection
 , iso-codes
+, libx11
+, libxi
+, libxkbfile
 , libxml2
 , vala
+, xkbcomp
 , xorg
+#, xkeyboardconfig
 }:
 
 let
@@ -36,11 +41,11 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     iso-codes
+    libx11
+    libxi
+    libxkbfile
     libxml2
-    xorg.libX11
-    xorg.libXi
-    xorg.libxkbfile
-    xorg.xkbcomp
+    xkbcomp
     xorg.xkeyboardconfig
   ];
 

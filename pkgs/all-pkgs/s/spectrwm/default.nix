@@ -14,8 +14,6 @@
 , libxrender
 , libxt
 , libxtst
-, randrproto
-, renderproto
 , which
 , xorg
 , xorgproto

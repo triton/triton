@@ -3,7 +3,7 @@
 , lib
 , util-macros
 
-, xproto
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

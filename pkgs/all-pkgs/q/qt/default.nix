@@ -9,13 +9,10 @@
 
 , alsa-lib
 , bluez
-, compositeproto
-, damageproto
 , cups
 , dbus
 , double-conversion
 , expat
-, fixesproto
 , fontconfig
 , freetype
 , glib
@@ -24,7 +21,6 @@
 , harfbuzz_lib
 , hunspell
 , icu
-, inputproto
 , libcap
 , libdrm
 , libevdev
@@ -44,7 +40,7 @@
 , libxrandr
 , libxrender
 , libxscrnsaver
-#, libxtst
+, libxtst
 , mariadb-connector-c
 , mtdev
 , opengl-dummy
@@ -53,17 +49,12 @@
 , pcre2
 , postgresql
 , pulseaudio_lib
-, randrproto
-, recordproto
-, renderproto
-, scrnsaverproto
 , sqlite
 , systemd_lib
 , tslib
 , wayland
-, xextproto
 , xorg
-, xproto
+, xorgproto
 , zlib
 
 , buildWebEngine ? false
@@ -103,7 +94,6 @@ stdenv.mkDerivation rec {
     cups
     dbus
     double-conversion
-    fixesproto
     fontconfig
     freetype
     glib
@@ -111,7 +101,6 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     harfbuzz_lib
     icu
-    inputproto
     libdrm
     libevdev
     libinput
@@ -133,34 +122,26 @@ stdenv.mkDerivation rec {
     pcre2
     postgresql
     pulseaudio_lib
-    renderproto
     sqlite
     systemd_lib
     tslib
     wayland
-    xextproto
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
     xorg.xcbutilrenderutil
     xorg.xcbutilwm
-    xproto
+    xorgproto
     zlib
   ] ++ optionals buildWebEngine [
-    compositeproto
-    damageproto
     expat
     hunspell
     libcap
     libxcursor
     libxdamage
     libxrandr
-    #libxtst
-    xorg.libXtst
+    libxtst
     libxscrnsaver
     pciutils
-    randrproto
-    recordproto
-    scrnsaverproto
   ];
 
   inherit version;

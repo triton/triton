@@ -42,8 +42,7 @@
 , totem-pl-parser
 , tracker
 #, vala
-, xextproto
-, xproto
+, xorgproto
 #, zeitgeist
 
 , channel
@@ -111,8 +110,7 @@ stdenv.mkDerivation rec {
     #python3Packages.python
     totem-pl-parser
     tracker
-    xextproto
-    xproto
+    xorgproto
     #zeitgeist
   ];
 

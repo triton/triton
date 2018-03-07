@@ -9,7 +9,7 @@
 , libxcb
 , wayland
 , wayland-protocols
-, xorg
+, xkeyboard-config
 }:
 
 stdenv.mkDerivation rec {
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     libxcb
     wayland
     wayland-protocols
-    xorg.xkeyboardconfig
+    xkeyboard-config
   ];
 
   mesonFlags = [

@@ -10,13 +10,23 @@
 , fontconfig
 , freetype
 , glib
+, libice
 , libpng
 , libredirect
+, libsm
 , llvm
+, libx11
+, libxcb
+, libxcursor
+, libxext
+, libxfixes
+, libxinerama
+, libxrandr
+, libxrender
 , pulseaudio_lib
 , qt5
 , quazip
-, xorg
+, xkeyboard-config
 , zlib
 }:
 
@@ -60,22 +70,22 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     glib
+    libice
     libpng
     libredirect
+    libsm
     llvm
+    libx11
+    libxcb
+    libxcursor
+    libxext
+    libxfixes
+    libxinerama
+    libxrandr
+    libxrender
     pulseaudio_lib
     qt5
     quazip
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXcursor
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
     zlib
   ];
 
@@ -110,7 +120,7 @@ stdenv.mkDerivation rec {
 
     wrapProgram $out/bin/ts3client \
       --set QT_PLUGIN_PATH "$out/lib/teamspeak/platforms" \
-      --set NIX_REDIRECTS /usr/share/X11/xkb=${xorg.xkeyboardconfig}/share/X11/xkb
+      --set NIX_REDIRECTS /usr/share/X11/xkb=${xkeyboard-config}/share/X11/xkb
   '';
 
   desktopItem = makeDesktopItem {

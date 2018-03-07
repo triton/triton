@@ -536,7 +536,7 @@ in
         xorg.xf86inputevdev
       ];
 
-    services.xserver.xkbDir = mkDefault "${pkgs.xorg.xkeyboardconfig}/etc/X11/xkb";
+    services.xserver.xkbDir = mkDefault "${pkgs.xkeyboard-config}/etc/X11/xkb";
 
     services.xserver.config =
       ''

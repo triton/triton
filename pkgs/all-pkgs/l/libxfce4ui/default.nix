@@ -17,7 +17,7 @@
 , libxfce4util
 , shared-mime-info
 , xfconf
-, xproto
+, xorgproto
 
 , channel
 }:
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     libx11
     libxfce4util
     xfconf
-    xproto
+    xorgproto
   ];
 
   configureFlags = [

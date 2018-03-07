@@ -6,7 +6,7 @@
 
 , libx11
 , libxkbfile
-, xorg
+, xkeyboard-config
 , xorgproto
 }:
 
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--with-xkb-config-root=${xorg.xkeyboardconfig}/share/X11/xkb"
+    "--with-xkb-config-root=${xkeyboard-config}/share/X11/xkb"
   ];
 
   passthru = {

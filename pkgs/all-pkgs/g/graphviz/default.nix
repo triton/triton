@@ -17,7 +17,7 @@
 , libjpeg
 , libpng
 , libx11
-, libxaw
+#, libxaw
 #, libxmu
 #, libxpm
 , libxrender
@@ -62,7 +62,8 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     libx11
-    libxaw
+    #libxaw
+    xorg.libXaw
     #libxmu
     xorg.libXmu
     #libxpm

@@ -20,7 +20,7 @@
 , xf86miscproto
 , xf86vidmodeproto
 , xorg
-, xproto
+, xorgproto
 }:
 
 let
@@ -51,21 +51,17 @@ stdenv.mkDerivation rec {
     libx11
     libxext
     libxscrnsaver
-    scrnsaverproto
-    systemd_lib
-    xextproto
-    xf86miscproto
-    xf86vidmodeproto
     xorg.libXxf86misc
     xorg.libXxf86vm
-    xproto
+    systemd_lib
+    xorgproto
   ];
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];
-  
+
   preInstall = ''
     installFlagsArray+=("sysconfdir=$out/etc")
   '';

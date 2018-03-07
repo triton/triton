@@ -16,7 +16,7 @@
 , opengl-dummy
 , openjpeg
 , openssl_1-0-2
-, xproto
+, xorgproto
 , zlib
 }:
 
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
     opengl-dummy
     openjpeg
     openssl_1-0-2
-    xproto
+    xorgproto
     zlib
   ];
 

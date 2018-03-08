@@ -17,26 +17,28 @@
 }:
 
 let
-  ver_branch = "1.24";
-  version = "${ver_branch}.0";
+  version = "1.25.2";
 in
-
 stdenv.mkDerivation rec {
   name = "lightdm-${version}";
 
   src = fetchurl {
-    url = "https://launchpad.net/lightdm/${ver_branch}/${version}/+download/${name}.tar.xz";
-    multihash = "QmccP64cjisjrVUNFAjbV9gwvp5XUTtTeCeTBrMKHfnVeS";
-    sha256 = "cd509b74382bcf382c6e3e4b54ac30ba804022fec968d6993d134552ea1a43a2";
+    url = "https://github.com/CanonicalLtd/lightdm/releases/download/"
+      + "${version}/${name}.tar.xz";
+    sha256 = "8a6bc0b32dcf2e9183269c66c83ab2948e01ac7c560fe93b55dd4f61673d8eb0";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "4ea97c22cd362ea9b2586f916795eb5cba5499fc";
-      file = "l/lightdm/fix-paths.patch";
-      sha256 = "a408fa254ff01ec2b9c805cdf5a22da6bf6e49c1fdb82dc3882d500295ff8819";
-    })
-  ];
+  postPatch = ''
+    grep -q '/usr/sbin/nologin' common/user-list.c
+    sed -i common/user-list.c \
+      -e 's,/usr/sbin/nologin,/usr/sbin/nologin /run/current-system/sw/bin/nologin,'
+    grep -q '/usr/local/bin' src/session-child.c
+    sed -i src/session-child.c \
+      -e 's,/usr/local/bin:/usr/bin:/bin,/run/current-system/sw/bin,'
+    grep -q '/bin/rm' src/shared-data-manager.c
+    sed -i src/shared-data-manager.c \
+      -e 's,/bin/rm,/run/current-system/sw/bin/rm,'
+  '';
 
   nativeBuildInputs = [
     intltool
@@ -69,9 +71,11 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    homepage = https://launchpad.net/lightdm;
+    description = "Cross-desktop display manager";
+    homepage = https://github.com/CanonicalLtd/lightdm;
     license = licenses.gpl3;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

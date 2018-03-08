@@ -1,5 +1,4 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , lib
 , makeWrapper
@@ -29,20 +28,13 @@ let
   inherit (stdenv)
     targetSystem;
 
-  inherit (stdenv.lib)
+  inherit (lib)
     elem
     optionals
     optionalString
     platforms;
 
   version = "2.4.0";
-
-  gcc-warnings_patch =
-    (fetchTritonPatch {
-      rev = "584cf8c80a7323ba45b31f5da22580e4f9493cf2";
-      file = "f/ffado/gcc-warnings.patch";
-      sha256 = "b10cb5edb06aec4a08e16134e493cab0d6e8c831e44afdfa95c6b901cc0a1ee0";
-    });
 in
 stdenv.mkDerivation rec {
   name = "${prefix}ffado-${version}";
@@ -80,7 +72,7 @@ stdenv.mkDerivation rec {
     # SConstruct checks cpuinfo and an objdump of /bin/mount to determine the
     # appropriate arch.  Let's just skip this and tell it which to build.
     sed '/def is_userspace_32bit(cpuinfo):/a\
-        return ${if (elem targetSystem platforms.bit64) then "False" else "True"}' -i SConstruct
+        return ${if (elem targetSystem platforms.bit32) then "True" else "False"}' -i SConstruct
   '';
 
   preBuild = ''

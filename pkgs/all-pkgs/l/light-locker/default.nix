@@ -4,11 +4,14 @@
 , glib
 , intltool
 , lib
+, makeWrapper
 , perl
 
 , dbus
 , dbus-glib
-, gtk3
+, dconf
+, gdk-pixbuf
+, gtk_3
 , libice
 , libsm
 , libx11
@@ -34,14 +37,16 @@ stdenv.mkDerivation rec {
     gettext
     glib
     intltool
+    makeWrapper
     perl
   ];
 
   buildInputs = [
     dbus
     dbus-glib
+    dconf
     glib
-    gtk3
+    gtk_3
     libice
     libsm
     libx11
@@ -60,6 +65,13 @@ stdenv.mkDerivation rec {
 
   preInstall = ''
     installFlagsArray+=("sysconfdir=$out/etc")
+  '';
+
+  preFixup = ''
+    wrapProgram $out/bin/light-locker \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES"
   '';
 
   meta = with lib; {

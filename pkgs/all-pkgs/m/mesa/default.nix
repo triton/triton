@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
     libxdamage
     libxext
     libxfixes
-    xorg.libxshmfence
+    libxshmfence
     xorg.libXxf86vm
     wayland
     wayland-protocols

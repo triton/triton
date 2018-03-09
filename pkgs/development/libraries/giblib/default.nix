@@ -2,7 +2,8 @@
 , fetchurl
 
 , imlib2
-, xorg
+, libx11
+, xorgproto
 }:
 
 stdenv.mkDerivation rec {
@@ -16,8 +17,8 @@ stdenv.mkDerivation rec {
   
   buildInputs = [
     imlib2
-    xorg.libX11
-    xorg.xproto
+    libx11
+    xorgproto
   ];
 
   meta = with stdenv.lib; {

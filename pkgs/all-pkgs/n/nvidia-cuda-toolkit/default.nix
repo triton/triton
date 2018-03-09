@@ -9,10 +9,15 @@
 , freetype
 , glib
 , gtk2
+, libx11
+, libxext
+, libxi
+, libxrender
+, libxt
+, libxtst
 , ncurses
 , python
 , unixODBC
-, xorg
 , zlib
 
 , channel
@@ -52,15 +57,15 @@ stdenv.mkDerivation rec {
     freetype
     glib
     gtk2
+    libx11
+    libxext
+    libxi
+    libxrender
+    libxt
+    libxtst
     ncurses
     python
     unixODBC
-    xorg.libX11
-    xorg.libXext
-    xorg.libXi
-    xorg.libXrender
-    xorg.libXt
-    xorg.libXtst
     zlib
   ];
 

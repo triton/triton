@@ -24,6 +24,7 @@
 , libxdamage
 , libxext
 , libxfixes
+, libxshmfence
 , llvm
 , lm-sensors
 , wayland

@@ -31,7 +31,7 @@
 , taglib
 , wavpack
 , xorg
-, xextproto
+, xorgproto
 , zlib
 
 , channel
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
     speex
     taglib
     wavpack
-    xextproto
+    xorgproto
     zlib
   ];
 

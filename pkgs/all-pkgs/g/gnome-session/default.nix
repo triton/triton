@@ -23,11 +23,11 @@
 , libxcomposite
 , libxext
 , libxrender
+, libxtst
 , mutter
 , opengl-dummy
 , systemd_lib
 , upower
-, xorg
 , xtrans
 
 , channel
@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
     libxcomposite
     libxext
     libxrender
-    xorg.libXtst
+    libxtst
     mutter  # gschemas
     opengl-dummy
     systemd_lib

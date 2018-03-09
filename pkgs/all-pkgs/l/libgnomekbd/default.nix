@@ -10,9 +10,9 @@
 , glib
 , gobject-introspection
 , gtk_3
+, libx11
 , libxklavier
 , pango
-, xorg
 
 , channel
 }:
@@ -45,10 +45,9 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gtk_3
+    libx11
     libxklavier
     pango
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
   ];
 
   configureFlags = [
@@ -57,7 +56,7 @@ stdenv.mkDerivation rec {
     "--enable-rpath"
     "--disable-tests"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
   ];
 
   preFixup = ''

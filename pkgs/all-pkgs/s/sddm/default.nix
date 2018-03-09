@@ -2,14 +2,15 @@
 , cmake
 , extra-cmake-modules
 , fetchurl
+, lib
 , ninja
 , pythonPackages
 
+, libxcb
 , pam
 , qt5
 , systemd_lib
 , systemd-dummy
-, xorg
 }:
 
 let
@@ -32,11 +33,11 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    libxcb
     pam
     qt5
     systemd_lib
     systemd-dummy
-    xorg.libxcb
   ];
 
   preConfigure = ''
@@ -67,7 +68,7 @@ stdenv.mkDerivation {
       -i ./src/common/Constants.h
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -28,6 +28,7 @@
 , libvdpau
 , libvisual
 , libwebp
+, libx11
 , musepack
 , openal
 , opencv
@@ -47,7 +48,6 @@
 #, vo-armwbenc
 , wayland
 , x265
-, xorg
 
 , channel
 }:
@@ -114,6 +114,7 @@ stdenv.mkDerivation rec {
     libvdpau
     libvisual
     libwebp
+    libx11
     musepack
     openal
     opencv
@@ -132,7 +133,6 @@ stdenv.mkDerivation rec {
     #vo-armwbenc
     wayland
     x265
-    xorg.libX11
   ];
 
   postPatch = ''

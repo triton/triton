@@ -6,18 +6,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optional
     optionalString;
 in
-
 stdenv.mkDerivation rec {
-  name = "gsm-1.0.16";
+  name = "gsm-1.0.17";
 
   src = fetchurl {
     url = "http://www.quut.com/gsm/${name}.tar.gz";
-    multihash = "QmRfJYdFiqexpN9ob1CScLZFE2mQit1JaTvR3VSPr31iqj";
-    sha256 = "725a3768a1e23ab8648b4df9d470aed38eb1635af3cbc8d0b64fef077236f4ce";
+    multihash = "QmTadgEVTjVcrV1qAbQRNUWgQiusqTT1csF4ueXTw5ov4F";
+    sha256 = "855a57d1694941ddf3c73cb79b8d0b3891e9c9e7870b4981613b734e1ad07601";
   };
 
   postPatch = /* Fix include directory */ ''
@@ -30,9 +29,12 @@ stdenv.mkDerivation rec {
       -e '/$(RANLIB) $(LIBGSM)/d'
   '';
 
+  preBuild = ''
+    makeFlagsArray+=("INSTALL_ROOT=$out")
+  '';
+
   makeFlags = [
     "SHELL=${stdenv.shell}"
-    "INSTALL_ROOT=$(out)"
   ] ++ optional stdenv.cc.isClang "CC=clang";
 
   NIX_CFLAGS_COMPILE = optional (!staticSupport) "-fPIC";

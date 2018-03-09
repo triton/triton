@@ -4,8 +4,15 @@
 , isPy3
 , lib
 
-, pkgs
-, pythonPackages
+, libjpeg
+, libpng
+, libx11
+, portmidi
+, sdl
+, sdl-image
+, sdl-mixer
+, sdl-ttf
+, smpeg
 }:
 
 let
@@ -21,15 +28,15 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pkgs.SDL
-    pkgs.SDL_image
-    pkgs.SDL_mixer
-    pkgs.SDL_ttf
-    pkgs.libpng
-    pkgs.libjpeg
-    pkgs.smpeg
-    pkgs.portmidi
-    pkgs.xorg.libX11
+    libjpeg
+    libpng
+    libx11
+    portmidi
+    sdl
+    sdl-image
+    sdl-mixer
+    sdl-ttf
+    smpeg
   ];
 
   patches = [
@@ -38,14 +45,13 @@ buildPythonPackage rec {
 
   preConfigure = ''
     for i in \
-      ${pkgs.SDL_image} \
-      ${pkgs.SDL_mixer} \
-      ${pkgs.SDL_ttf} \
-      ${pkgs.libpng} \
-      ${pkgs.libjpeg} \
-      ${pkgs.portmidi} \
-      ${pkgs.xorg.libX11}; do
-
+      ${sdl-image} \
+      ${sdl-mixer} \
+      ${sdp-ttf} \
+      ${libpng} \
+      ${libjpeg} \
+      ${portmidi} \
+      ${libx11}; do
       sed -i config_unix.py \
         -e "/origincdirs =/a'$i/include',"
       sed -i config_unix.py \

@@ -1,9 +1,10 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
 , pango
-, xorg
+, libx11
 }:
 
 stdenv.mkDerivation rec {
@@ -17,10 +18,10 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     pango
-    xorg.libX11
+    libx11
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A compatibility library for pango >1.30.*";
     homepage = http://www.pango.org/;
     license = licenses.lgpl2Plus;

@@ -4,12 +4,15 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , fontconfig
 , fox
 , freetype
 , libpng
-, xorg
+, libx11
+, libxft
+, libxrandr
 }:
 
 stdenv.mkDerivation rec {
@@ -33,9 +36,9 @@ stdenv.mkDerivation rec {
     fox
     freetype
     libpng
-    xorg.libX11
-    xorg.libXft
-    xorg.libXrandr
+    libx11
+    libxft
+    libxrandr
   ];
 
   postPatch = ''
@@ -54,7 +57,7 @@ stdenv.mkDerivation rec {
     "--with-xrandr"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "MS-Explorer like file manager for X";
     homepage = "http://roland65.free.fr/xfe";
     license = licenses.gpl2;

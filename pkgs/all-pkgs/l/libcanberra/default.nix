@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 , libtool
 
 , alsa-lib
@@ -18,7 +19,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 in
 stdenv.mkDerivation rec {
@@ -52,13 +53,13 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gtk3
     libcap
+    libice
+    libsm
     libvorbis
+    libx11
     pulseaudio_lib
     systemd_lib
     tdb
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
   ];
 
   preConfigure = ''
@@ -87,7 +88,7 @@ stdenv.mkDerivation rec {
     gtkModule = "/lib/gtk-2.0/";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "XDG Sound Theme and Name Specifications";
     homepage = http://0pointer.de/lennart/projects/libcanberra/;
     license = licenses.lgpl2Plus;

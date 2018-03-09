@@ -51,6 +51,7 @@
 , wayland
 , wayland-protocols
 , xorg
+, xorgproto
 , zlib
 
 , channel
@@ -171,9 +172,8 @@ stdenv.mkDerivation rec {
     vulkan-headers
     wayland
     wayland-protocols
+    xorgproto
     zlib
-
-    xorg.xproto
   ];
 
   wafFlags = [

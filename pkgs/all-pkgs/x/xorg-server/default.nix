@@ -14,7 +14,7 @@
 , libdmx
 , libdrm
 , libepoxy
-#, libpciaccess
+, libpciaccess
 , libselinux
 , libtirpc
 , libunwind
@@ -110,7 +110,7 @@ stdenv.mkDerivation rec {
     libdmx
     libdrm
     libepoxy
-    xorg.libpciaccess
+    libpciaccess
     libselinux
     libtirpc
     libunwind

@@ -8,13 +8,18 @@
 , gst-plugins-base
 , gtk3
 , expat
+, libice
 , libjpeg
 , libnotify
 , libpng
+, libsm
 , libtiff
+, libx11
+, libxinerama
 , msgpack-c
 , opengl-dummy
 , xorg
+, xorgproto
 , xz
 , zlib
 }:
@@ -37,18 +42,18 @@ stdenv.mkDerivation rec {
     gstreamer
     gst-plugins-base
     expat
+    libice
     libjpeg
     libnotify
     libpng
+    libsm
     libtiff
+    libx11
+    libxinerama
     msgpack-c
     opengl-dummy
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXinerama
     xorg.libXxf86vm
-    xorg.xf86vidmodeproto
+    xorgproto
     xz
     zlib
   ];

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = [
       "https://bitbucket.org/mpyne/game-music-emu/downloads/${name}.tar.xz"
-      "mirror://gentoo/distfiles/${name}.tar.bz2"
+      "mirror://gentoo/distfiles/${name}.tar.xz"
     ];
     sha256 = "5046cb471d422dbe948b5f5dd4e5552aaef52a0899c4b2688e5a68a556af7342";
   };

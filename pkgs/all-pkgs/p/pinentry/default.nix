@@ -16,22 +16,16 @@
 , shared-mime-info
 , qt5
 
-, type
+, enableGtk ? false
+, enableQt ? false
 }:
 
 let
   inherit (lib)
-    any
     boolEn
-    boolWt
     optionals
     optionalString;
-
-  isNox = type == "nox";
-  isGtk = type == "gtk";
-  isQt = type == "qt";
 in
-assert isNox || isGtk || isQt;
 stdenv.mkDerivation rec {
   name = "pinentry-1.1.0";
 
@@ -49,14 +43,13 @@ stdenv.mkDerivation rec {
     libassuan
     libcap
     libgpg-error
-  ] ++ optionals isNox [
     ncurses
-  ] ++ optionals isGtk [
+  ] ++ optionals enableGtk [
     gcr
     gnome-themes-standard
     gtk_2
     libsecret
-  ] ++ optionals isQt [
+  ] ++ optionals enableQt [
     qt5
   ];
 
@@ -67,24 +60,24 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--${boolEn isNox}-pinentry-curses"
+    "--enable-pinentry-curses"
     "--enable-pinentry-tty"
     "--enable-rpath"
     "--disable-pinentry-emacs"
     "--disable-inside-emacs"
-    "--${boolEn isGtk}-pinentry-gtk2"
-    "--${boolEn isGtk}-pinentry-gnome3"
-    "--${boolEn isGtk}-libsecret"
-    "--${boolEn isQt}-pinentry-qt"
-    "--${boolEn isQt}-pinentry-qt5"
+    "--${boolEn enableGtk}-pinentry-gtk2"
+    "--${boolEn enableGtk}-pinentry-gnome3"
+    "--${boolEn enableGtk}-libsecret"
+    "--${boolEn enableQt}-pinentry-qt"
+    "--${boolEn enableQt}-pinentry-qt5"
     "--with-libcap"
   ];
 
-  NIX_LDFLAGS = optionals isGtk [
+  NIX_LDFLAGS = optionals enableGtk [
     "-L${gcr}/lib"
   ];
 
-  preFixup = optionalString isGtk ''
+  preFixup = optionalString enableGtk ''
     wrapProgram $out/bin/pinentry-gtk-2 \
       --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \

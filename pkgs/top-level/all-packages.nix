@@ -3167,15 +3167,13 @@ pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
 picocom = callPackage ../all-pkgs/p/picocom { };
 
-pinentry_gtk = callPackage ../all-pkgs/p/pinentry {
-  type = "gtk";
+pinentry_gtk = callPackageAlias "pinentry" {
+  enableGtk = true;
 };
-pinentry_qt = callPackage ../all-pkgs/p/pinentry {
-  type = "qt";
+pinentry_qt = callPackageAlias "pinentry" {
+  enableQt = true;
 };
-pinentry = callPackage ../all-pkgs/p/pinentry {
-  type = "nox";
-};
+pinentry = callPackage ../all-pkgs/p/pinentry { };
 
 pipewire = callPackage ../all-pkgs/p/pipewire { };
 

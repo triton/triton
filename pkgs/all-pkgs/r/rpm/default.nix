@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , binutils
 , bzip2
@@ -16,12 +17,19 @@
 , zlib
 }:
 
+let
+  channel = "4.14";
+  version = "${channel}.1";
+in
 stdenv.mkDerivation rec {
-  name = "rpm-4.13.0";
+  name = "rpm-${version}";
 
   src = fetchurl {
-    url = "https://github.com/rpm-software-management/rpm/releases/download/${name}-release/${name}.tar.bz2";
-    sha256 = "221166b61584721a8ca979d7d8576078a5dadaf09a44208f69cc1b353240ba1b";
+    # Don't use release tarballs hosted on github, upstream removes them
+    # when there is a new release.
+    url = "http://ftp.rpm.org/releases/rpm-${channel}.x/${name}.tar.bz2";
+    multihash = "QmeWz66GYufBDJFyVPuz7ZF1X311Y3p2ELnkAFHYMfCZvu";
+    sha256 = "43f40e2ccc3ca65bd3238f8c9f8399d4957be0878c2e83cba2746d2d0d96793b";
   };
 
   buildInputs = [
@@ -71,7 +79,7 @@ stdenv.mkDerivation rec {
       -e 's, @WITH_LUA_LIB@,,'
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The RPM Package Manager";
     homepage = http://www.rpm.org/;
     license = licenses.gpl2;

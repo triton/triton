@@ -16,7 +16,7 @@ let
     boolEn;
 
   channel = "0.2";
-  version = "${channel}.2";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "gnome-autoar-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-autoar/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "e1fe2c06eed30305c38bf0939c72b0e51b4716658e2663a0cf4a4bf57874ca62";
+    sha256 = "5de9db0db028cd6cab7c2fec46ba90965474ecf9cd68cfd681a6488cf1fb240a";
   };
 
   nativeBuildInputs = [

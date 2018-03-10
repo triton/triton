@@ -3008,6 +3008,8 @@ ntp = callPackage ../all-pkgs/n/ntp { };
 
 numactl = callPackage ../all-pkgs/n/numactl { };
 
+nv-codec-headers = callPackage ../all-pkgs/n/nv-codec-headers { };
+
 nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
  channel = "8.0";
 };

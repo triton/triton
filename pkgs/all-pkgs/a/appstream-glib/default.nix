@@ -21,19 +21,17 @@
 , libarchive
 , libsoup
 , libyaml
-, pango
-, sqlite
 , util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.7.4";
+  name = "appstream-glib-0.7.6";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    multihash = "QmRWxFeL5AwR5hv7MLBmvdAWtFGvxniiZNn586MNguZDYe";
-    sha256 = "a09d0c0e892f7c142ddaf4dc40c3391f5211beff77307734576fe46911a6c825";
+    multihash = "QmZkRo11yeyXzYAf2iwpEHF9UtaFSwcGCGjxQNQy5PBKL3";
+    sha256 = "b216583a8b9c47f6db52031fbbdfd9005a274c6a0a97c8db8c1d80c890b7d545";
   };
 
   nativeBuildInputs = [
@@ -62,8 +60,8 @@ stdenv.mkDerivation rec {
   ];
 
   mesonFlags = [
-    "-Denable-rpm=false"
-    "-Denable-stemmer=false"
+    "-Drpm=false"
+    "-Dstemmer=false"
   ];
 
   meta = with lib; {

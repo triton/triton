@@ -3,6 +3,8 @@
 , gettext
 , intltool
 , lib
+, meson
+, ninja
 
 , glib
 , gobject-introspection
@@ -11,7 +13,7 @@
 }:
 
 let
-  channel = "0.7";
+  channel = "1.1";
   version = "${channel}";
 in
 stdenv.mkDerivation rec {
@@ -20,12 +22,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gcab/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "a16e5ef88f1c547c6c8c05962f684ec127e078d302549f3dfd2291e167d4adef";
+    sha256 = "192b2272c2adfde43595e5c62388854bca8a404bc796585b638e81774dd62950";
   };
 
   nativeBuildInputs = [
     gettext
     intltool
+    meson
+    ninja
     vala
   ];
 
@@ -35,15 +39,18 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-introspection"
-    "--enable-nls"
-    "--enable-glibtest"
+  postPatch = /* Remove for >1.1 */ ''
+    sed -i meson.build \
+      -e 's/git_version =.*/git_version = []/'
+  '';
+
+  mesonFlags = [
+    "-Ddocs=false"
+    "-Dintrospection=true"
+    "-Dtest=false"
   ];
+
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {

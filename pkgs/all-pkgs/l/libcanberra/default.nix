@@ -11,7 +11,10 @@
 , gst-plugins-base
 , gtk3
 , libcap
+, libice
+, libsm
 , libvorbis
+, libx11
 , pulseaudio_lib
 , systemd_lib
 , tdb

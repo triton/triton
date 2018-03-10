@@ -118,7 +118,7 @@
 , libxv
 , mfx-dispatcher
 , mmal ? null
-, nvenc ? false
+, nv-codec-headers
 , nvidia-cuda-toolkit
 , nvidia-drivers
 , openal
@@ -193,9 +193,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 5;
-      version = "2018.02.19";
-      rev = "acdea9e7c56b74b05c56b4733acc855b959ba073";
-      sha256 = "db688342daa19a2cfb9272e2cb4337911f37273e09c492fd73fee4013d7129d2";
+      version = "2018.03.09";
+      rev = "a6cba062051f345e8ebfdff34aba071ed73d923f";
+      sha256 = "b96a12b5b54d1c996267c742fed7482f61f6781356f74e81bee394f32cb52b1a";
     };
   };
   source = sources."${channel}";
@@ -482,25 +482,40 @@ stdenv.mkDerivation rec {
      */
     (fflag "--disable-amf" "3.5")
     "--disable-audiotoolbox"  # macOS
-    "--${boolEn (
+    (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuda"
+      && nvidia-drivers != null)}-cuda" null "3.4")
     "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda-sdk"
-    "--${boolEn (
+    (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuvid"
+      && nvidia-drivers != null)}-cuvid" null "3.4")
+    (fflag "--${boolEn (
+      nv-codec-headers != null
+      && nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-cuvid" "3.5")
     "--disable-d3d11va"  # Windows
     "--disable-dxva2"  # Windows
+    (fflag "--${boolEn (
+      nv-codec-headers != null
+      && nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-ffnvcodec" "3.5")
     "--${boolEn (libdrm != null)}-libdrm"
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
     "--${boolEn libnppSupport}-libnpp"
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
-    "--${boolEn nvenc}-nvenc"
-    (fflag "--${boolEn (
+    (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-nvenc" null "3.4")
+    (fflag "--${boolEn (
+      nv-codec-headers != null
+      && nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-nvenc" "3.5")
+    (fflag "--${boolEn (
+      nv-codec-headers != null
+      && nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-nvdec" "3.5")
     /**/"--disable-omx"
     /**/"--disable-omx-rpi"
@@ -543,6 +558,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (celt != null)}-libcelt"
     #"--${boolEn (libcdio != null)}-libcdio"
     /**/"--disable-libcdio"
+    /**/(fflag "--disable-libcodec2" "3.5")
     "--${boolEn (
       libdc1394 != null
       && libraw1394 != null)}-libdc1394"

@@ -1,4 +1,6 @@
 { stdenv
+, autoreconfHook
+, fetchpatch
 , fetchTritonPatch
 , fetchurl
 , gettext
@@ -83,6 +85,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    autoreconfHook  # Remove once Pipewire 0.1.8 patch is removed.
     gettext
     intltool
     libtool
@@ -160,6 +163,14 @@ stdenv.mkDerivation rec {
     # FIXME
     "--${boolWt (wayland != null)}-xwayland-path=${xorg-server}/bin/Xwayland"
     "--${boolWt (libx11 != null)}-x"
+  ];
+
+  patches = [
+    # Fix compat with Pipewire >=0.1.8
+    (fetchpatch {
+      url = "https://github.com/GNOME/mutter/commit/c063d43be84dd445a02700c7bb1bf77aea65bb61.patch";
+      sha256 = "e6b6eba0149444ed83483c08af186482f06788b4d4399af4117e7c75022ddc3a";
+    })
   ];
 
   NIX_CFLAGS_COMPILE = [

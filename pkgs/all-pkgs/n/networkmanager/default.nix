@@ -1,5 +1,6 @@
 { stdenv
 , docbook-xsl
+, fetchpatch
 , fetchTritonPatch
 , fetchurl
 , gettext
@@ -142,6 +143,14 @@ stdenv.mkDerivation rec {
       sha256 = "45d0235d3af0b8e471c2c7e14eb5bfc9e8029c6f5878c998e5273e84afab3e15";
     })
   ];*/
+
+  patches = [
+    # Remove after >1.10.4
+    (fetchpatch {
+      url = "https://github.com/NetworkManager/NetworkManager/commit/782578122c6cb23bdbee0b01eddceee1b967a673.patch";
+      sha256 = "7fa1e7087156827816bba884e99d39a6ac757dde619522afc1cf93b60d119b7f";
+    })
+  ];
 
   # FIXME: fix hard coded resolvconf paths
   postPatch = ''

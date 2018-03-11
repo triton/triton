@@ -2669,7 +2669,7 @@ llvm_5 = callPackage ../all-pkgs/l/llvm {
 llvm_6 = callPackage ../all-pkgs/l/llvm {
   channel = "6";
 };
-llvm = callPackageAlias "llvm_5" { };
+llvm = callPackageAlias "llvm_6" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 

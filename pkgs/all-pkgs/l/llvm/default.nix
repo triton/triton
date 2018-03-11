@@ -33,7 +33,8 @@ let
     mapAttrsToList
     replaceChars
     optionalString
-    versionAtLeast;
+    versionAtLeast
+    versionOlder;
 
   srcs' = flip mapAttrsToList srcs (n: d:
     let
@@ -94,12 +95,11 @@ stdenv.mkDerivation {
 
     # Remove impurities in polly
     sed -i "s,@POLLY_CONFIG_LLVM_CMAKE_DIR@,$out/lib/cmake/llvm," projects/polly/cmake/PollyConfig.cmake.in
-
+  '' + optionalString (versionOlder version "6.0.0") ''
     # Gcc 7 requires <functional> to be included
     sed \
       -e '1i#include <functional>' \
       -i tools/lldb/include/lldb/Utility/TaskPool.h
-
   '' + optionalString (versionAtLeast version "5.0.0") ''
     # Remove the permissions test
     # It tries to set permissions we can't have in our build env
@@ -108,7 +108,6 @@ stdenv.mkDerivation {
 
   cmakeFlags = with stdenv; [
     "-DCMAKE_BUILD_TYPE=Release"
-    "-DCMAKE_CXX_FLAGS=-std=c++11"
 
     "-DLLVM_INCLUDE_EXAMPLES=OFF"
     "-DLLVM_BUILD_TESTS=ON"

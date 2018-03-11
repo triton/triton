@@ -2663,11 +2663,11 @@ lirc = callPackage ../all-pkgs/l/lirc { };
 
 live555 = callPackage ../all-pkgs/l/live555 { };
 
-llvm_4 = callPackage ../all-pkgs/l/llvm {
-  channel = "4";
-};
 llvm_5 = callPackage ../all-pkgs/l/llvm {
   channel = "5";
+};
+llvm_6 = callPackage ../all-pkgs/l/llvm {
+  channel = "6";
 };
 llvm = callPackageAlias "llvm_5" { };
 

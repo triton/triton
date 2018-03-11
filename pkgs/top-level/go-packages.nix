@@ -2232,6 +2232,7 @@ let
     ];
     propagatedBuildInputs = [
     ];
+    preBuild = null;
   };
 
   genproto_for_grpc = genproto.override {
@@ -2243,6 +2244,7 @@ let
     ];
     propagatedBuildInputs = [
     ];
+    preBuild = null;
   };
 
   geoip2-golang = buildFromGitHub {
@@ -2340,6 +2342,9 @@ let
     repo = "go";
     sha256 = "17jwyd7rgngajbsx76ysk4rrm1p5akwhg7j60qxshd06fi39mnba";
     excludedPackages = "test";
+    propagatedBuildInputs = [
+      plz
+    ];
   };
 
   siddontang_go = buildFromGitHub {
@@ -6592,11 +6597,11 @@ let
   };
 
   logrus = buildFromGitHub {
-    version = 3;
-    rev = "v1.0.4";
+    version = 5;
+    rev = "8c0189d9f6bbf301e5d055d34268156b317016af";
     owner = "sirupsen";
     repo = "logrus";
-    sha256 = "1z2vw438lmva6khkmys1fprfk8a62mxd1klqbaws3lvvw74ys41j";
+    sha256 = "0z0cfc22zp9102s7i01db1h20k5i6h1d2wl2fwf3r4a3zn5f9krf";
     goPackageAliases = [
       "github.com/Sirupsen/logrus"
     ];
@@ -6604,6 +6609,8 @@ let
       crypto
       sys
     ];
+    meta.useUnstable = true;
+    date = "2018-02-13";
   };
 
   logutils = buildFromGitHub {
@@ -7835,6 +7842,15 @@ let
     propagatedBuildInputs = [
       go-systemd_journal
     ];
+  };
+
+  plz = buildFromGitHub {
+    version = 5;
+    owner  = "v2pro";
+    repo   = "plz";
+    rev = "0.9.1";
+    sha256 = "0blavw4cyw7n46n81q7rjmn3jb8dgs24mcvkk80baj5xflbrn2x8";
+    excludedPackages = "\\(witch\\|test\\|dump\\)";
   };
 
   poly1305 = buildFromGitHub {
@@ -9171,10 +9187,10 @@ let
 
   teleport = buildFromGitHub {
     version = 5;
-    rev = "v2.4.1";
+    rev = "v2.4.3";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "eb6225a432064f798dab2ac455f9dbaf63de696e6a1defc8e8d22d3203ea5e4e";
+    sha256 = "576becf1d0b720aa88c2246dae63b932b5ac936de1824a52d38b26cdfdb8bfd5";
     nativeBuildInputs = [
       pkgs.protobuf-cpp
       protobuf.bin

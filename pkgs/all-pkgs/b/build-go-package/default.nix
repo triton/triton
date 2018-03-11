@@ -354,7 +354,7 @@ go.stdenv.mkDerivation (
           echo "$OUT" >&2
           return 1
         fi
-      else
+      elif [ -z "$allowVendoredSources" ]; then
         local rebuild
         if rebuild="$(echo "$OUT" | grep -v "^\(WORK=\|${concatStringsSep "\\|" ([ goPackagePath ] ++ (map (n: n.goPackagePath) extraSrcs))}\)")"; then
           echo "Got unwanted rebuild:" >&2

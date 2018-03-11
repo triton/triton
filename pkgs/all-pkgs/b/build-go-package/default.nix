@@ -432,7 +432,13 @@ go.stdenv.mkDerivation (
         echo "Go Installing: $f" >&2
       fi
       mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
-      cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
+      if [[ "$f" =~ \.go$ ]]; then
+        # Make sure source files that have binaries are marked as binary only
+        # that way we never have unwanted rebuilds of already built packages
+        sed '1i//go:binary-only-package\n' "$NIX_BUILD_TOP/go/$f" >"$NIX_BUILD_TOP/${name}/$f"
+      else
+        cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
+      fi
     done < <(find . -type f)
     popd >/dev/null
 

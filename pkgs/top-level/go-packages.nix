@@ -1766,8 +1766,8 @@ let
     version = 5;
     owner = "elves";
     repo = "elvish";
-    rev = "326ef4c09e2a7662e82c983efa8865052e8b6252";
-    sha256 = "1nlpp8q3sr3fcwj5na993jc8826xg6p1lnc7n8bm6h6cmqc3swj2";
+    rev = "3d4bb53dfc300d57c2c5a16c76191765ffc6b889";
+    sha256 = "0fnmn8cavv4qr6d1fi5gpnisrh1990r206mwgyjy4gnk59w2092y";
     propagatedBuildInputs = [
       bolt
       go-isatty
@@ -1775,7 +1775,7 @@ let
       sys
     ];
     meta.useUnstable = true;
-    date = "2018-03-03";
+    date = "2018-03-11";
   };
 
   eme = buildFromGitHub {

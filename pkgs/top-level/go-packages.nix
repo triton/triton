@@ -435,6 +435,7 @@ let
     subPackages = [
       "."
     ];
+    meta.autoUpdate = false;
     propagatedBuildInputs = [
       hashland_for_aeshash
     ];
@@ -1460,6 +1461,7 @@ let
     goPackageAliases = [
       "github.com/tildeleb/cuckoo"
     ];
+    meta.autoUpdate = false;
     excludedPackages = "\\(example\\|dstest\\|primes/primes\\)";
     propagatedBuildInputs = [
       aeshash
@@ -5544,6 +5546,7 @@ let
     goPackageAliases = [
       "github.com/gxed/hashland"
     ];
+    meta.autoUpdate = false;
     date = "2017-10-03";
     excludedPackages = "example";
     propagatedBuildInputs = [
@@ -5565,6 +5568,7 @@ let
     sha256 = "1rs71c9pi9apwh59m42hdyvi0ax9a59rv12s5wmsq8013c3m2wnj";
     goPackagePath = "leb.io/hashland";
     date = "2017-10-03";
+    meta.autoUpdate = false;
     subPackages = [
       "nhash"
     ];
@@ -5667,6 +5671,7 @@ let
     sha256 = "0qg0y313a4bb01ki35hrzvf8ad2s616gc9ndnia0a936pwwgvml9";
     goPackagePath = "leb.io/hrff";
     date = "2017-09-27";
+    meta.autoUpdate = false;
   };
 
   http2curl = buildFromGitHub {

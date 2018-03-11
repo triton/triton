@@ -418,13 +418,15 @@ go.stdenv.mkDerivation (
     pushd "$NIX_BUILD_TOP/go" >/dev/null
     if [ -n "$subPackages" ]; then
       subPackageExpr='\('
+      begin=0
       for subPackage in $subPackages; do
-        if [ "$subPackageExpr" != '\(' ]; then
+        if [ "$begin" -ne "0" ]; then
           subPackageExpr+='\|'
         fi
         if [ "$subPackage" != "." ]; then
           subPackageExpr+="/$subPackage"
         fi
+        begin=1
       done
       subPackageExpr+='\)'
     else

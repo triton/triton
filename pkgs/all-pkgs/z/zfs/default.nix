@@ -6,6 +6,7 @@
 , fetchTritonPatch
 , libtool
 , nukeReferences
+, perl
 
 , attr
 , libtirpc
@@ -65,6 +66,8 @@ stdenv.mkDerivation rec {
     nukeReferences
   ] ++ optionals buildKernel [
     elfutils
+  ] ++ optionals (channel == "dev" && buildKernel) [
+    perl
   ];
 
   buildInputs = optionals buildKernel [
@@ -114,6 +117,8 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     ./autogen.sh
+  '' + optionalString (channel == "dev" && buildKernel) ''
+    patchShebangs scripts/enum-extract.pl
   '' + optionalString buildUser ''
     configureFlagsArray+=(
       "--with-dracutdir=$out/lib/dracut"

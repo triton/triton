@@ -40,6 +40,11 @@ stdenv.mkDerivation rec {
     "-Denable-docs=false"
   ];
 
+  # PC files mistakenly mention internal only libraries
+  preFixup = ''
+    sed -i 's, -l[^ ]*-internal,,g' "$out"/lib/pkgconfig/*.pc
+  '';
+
   meta = with lib; {
     description = "A library to handle keyboard descriptions";
     homepage = https://xkbcommon.org;

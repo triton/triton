@@ -50,6 +50,7 @@ let
 
   patch = if source ? patchSha256 && source.patchSha256 != null then
     fetchurl {
+      name = "linux-${version}.patch.xz";
       urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") directoryUrls);
       hashOutput = false;
       sha256 = source.patchSha256;

@@ -1,12 +1,21 @@
 { stdenv
+, autotools
+, binutils
 , bison
 , cc
+, coreutils
+, diffutils
 , fetchTritonPatch
 , fetchurl
 , flex
 , gettext
 , gnum4
+, gnumake
+, gnupatch
+, gnutar
+, gzip
 , perl
+, xz
 
 , gmp
 , isl
@@ -45,7 +54,16 @@ stdenv.mkDerivation (rec {
   };
 
   nativeBuildInputs = [
+    autotools
+    binutils
     cc
+    coreutils
+    diffutils
+    gnumake
+    gnupatch
+    gnutar
+    gzip
+    xz
   ] ++ optionals (!bootstrap) [
     bison
     flex
@@ -66,28 +84,40 @@ stdenv.mkDerivation (rec {
 
   postPatch = ''
     # Don't look in fhs paths at runtime
-    grep -r '"/\(usr\|lib\|lib64\)/' gcc/config \
+    grep -r '"/\(usr\|lib\|lib64\)/' "$srcRoot"/gcc/config \
       | awk -F: '{print $1}' | sort | uniq \
       | xargs -n 1 -P $NIX_BUILD_CORES sed -i 's,"/\(usr\|lib\|lib64\)/,"/no-such-path/,g'
 
     # Don't store configure flags in resulting excutables
-    grep -q 'TOPLEVEL_CONFIGURE_ARGUMENTS=' Makefile.in
-    sed -i '/TOPLEVEL_CONFIGURE_ARGUMENTS=/d' Makefile.in
+    grep -q 'TOPLEVEL_CONFIGURE_ARGUMENTS=' "$srcRoot"/Makefile.in
+    sed -i '/TOPLEVEL_CONFIGURE_ARGUMENTS=/d' "$srcRoot"/Makefile.in
+
+    # Fix calls to sh instead of SHELL
+    grep -q '^'$'\t'"sh " "$srcRoot"/libgcc/Makefile.in
+    sed -i 's,^\tsh ,\t$(SHELL) ,' "$srcRoot"/libgcc/Makefile.in
   '' + optionalString bootstrap ''
     # We need to make sure the sources for libraries exist in the root directory
     # During a bootstrap build where we don't have the libraries available
     # ahead of time.
-    unpackFile ${gmp.src}
-    mv gmp-* gmp
-    unpackFile ${isl.src}
-    mv isl-* isl
-    unpackFile ${mpc.src}
-    mv mpc-* mpc
-    unpackFile ${mpfr.src}
-    mv mpfr-* mpfr
+    mkdir -p "$NIX_BUILD_TOP"/tmp
+    pushd "$NIX_BUILD_TOP" >/dev/null
+
+    applyFile 'unpack' '${gmp.src}'
+    mv gmp-* "$srcRoot"/gmp
+
+    applyFile 'unpack' '${isl.src}'
+    mv isl-* "$srcRoot"/isl
+
+    applyFile 'unpack' '${mpc.src}'
+    mv mpc-* "$srcRoot"/mpc
+
+    applyFile 'unpack' '${mpfr.src}'
+    mv mpfr-* "$srcRoot"/mpfr
+
+    popd >/dev/null
   '' + optionalString (!bootstrap) ''
     # We don't want to use the included zlib
-    rm -r zlib
+    rm -r "$srcRoot"/zlib
   '';
 
   preConfigure = ''
@@ -106,7 +136,6 @@ stdenv.mkDerivation (rec {
     "--enable-static"
     "--${if !bootstrap then "enable" else "disable"}-shared"
     "--with-pic"
-    "--with-sysroot=/no-such-path"
     "--with-local-prefix=/no-such-path"
     "--${if !bootstrap then "with" else "without"}-headers"
     "--${if !bootstrap then "enable" else "disable"}-libquadmath"
@@ -152,54 +181,45 @@ stdenv.mkDerivation (rec {
   ];
 
   preBuild = ''
-    LIBC_INCLUDE="$(cat "$NIX_CC/nix-support/libc-include")"
+    eval `CC_WRAPPER_PRINT_CONFIG=1 cc-wrapper`
 
-    export CFLAGS="$(cat $NIX_CC/nix-support/libc-cflags)"
-    for flag in $(cat $NIX_CC/nix-support/libc-ldflags-before) $(cat $NIX_CC/nix-support/libc-ldflags); do
-      export LDFLAGS="$LDFLAGS -Wl,$flag"
-    done
-  '' + optionalString bootstrap ''
-    # When bootstrapping we want a static compiler
-    export LDFLAGS="$LDFLAGS -static";
-  '' + ''
     # Reduces the size of intermediate binaries
     export CFLAGS="$CFLAGS -O2"
 
     buildFlagsArray+=(
-      NATIVE_SYSTEM_HEADER_DIR="$LIBC_INCLUDE"
-      SYSTEM_HEADER_DIR="$LIBC_INCLUDE"
-      CFLAGS_FOR_BUILD="$CFLAGS"
-      CXXFLAGS_FOR_BUILD="$CFLAGS"
-      CFLAGS_FOR_TARGET="$CFLAGS"
-      CXXFLAGS_FOR_TARGET="$CFLAGS"
-      FLAGS_FOR_TARGET="$CFLAGS"
-      LDFLAGS_FOR_BUILD="$LDFLAGS"
-      LDFLAGS_FOR_TARGET="$LDFLAGS"
+      NATIVE_SYSTEM_HEADER_DIR="$TARGET_LIBC_INCLUDE"
+      SYSTEM_HEADER_DIR="/no-such-path"
+      CFLAGS_FOR_BUILD=""
+      CXXFLAGS_FOR_BUILD=""
+      CFLAGS_FOR_TARGET=""
+      CXXFLAGS_FOR_TARGET=""
+      FLAGS_FOR_TARGET=""
+      LDFLAGS_FOR_BUILD=""
+      LDFLAGS_FOR_TARGET=""
     )
   '' + optionalString bootstrap ''
     buildFlagsArray+=(
-      "BOOT_CFLAGS=$CFLAGS"
-      "BOOT_LDFLAGS=$LDFLAGS"
+      "BOOT_CFLAGS="
+      "BOOT_LDFLAGS="
     )
-  '' + ''
+  '';
+  /*+ ''
     exit_err() {
       local status="$?"
       echo "############# DEBUGGING #############"
       export NIX_DEBUG=1
+      export CC_WRAPPER_LOG_LEVEL=info
       export buildParallel=
-      local actualFlags
-      commonMakeFlags 'build'
-      printFlags 'build'
-      make "''${actualFlags[@]}" || true
+      makeBuildAction || true
       while read name; do
         echo "############# $name #############"
         cat "$name"
         echo ""
-      done < <(find host* -name config.log)
+      done < <(find "$buildRoot" -name config.log)
       exit "$status"
     }
-    trap exit_err ERR
-  '';
+    trap exit_err ERR EXIT
+  '';*/
 
   buildFlags = optionals (!bootstrap) [
     "LIMITS_H_TEST=true"
@@ -211,12 +231,14 @@ stdenv.mkDerivation (rec {
   # Installed tools are not used by the compiler and can be safely removed
   # Usually these contain references to the compiler used to build stage0
   postInstall = ''
-    find "$out" -name install-tools -prune -exec rm -r {} \;
+    for output in $outputs; do
+      find "''${!output}" -name install-tools -prune -exec rm -r {} \;
+    done
   '';
 
   # Deduplicate binaries
   preFixup = ''
-    pushd "$out"/bin >/dev/null
+    pushd "$bin"/bin >/dev/null
     prevHash=""
     prevFile=""
     OLDIFS="$IFS"
@@ -238,9 +260,21 @@ stdenv.mkDerivation (rec {
     popd >/dev/null
   '';
 
-  ccFixFlags = !bootstrap;
-  buildDirCheck = !bootstrap;
+  # Make sure we retain no references to the FHS hierarchy of paths
+  preFixupCheck = ''
+    set -x
+    for output in bin dev lib; do
+      if grep -rao '[a-zA-Z0-9_-/]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v ':\(/no-such-path\|/nix/store\)'; then
+        echo "Found FHS paths in binutils. We definitely don't want this";
+        exit 1
+      fi
+    done
+    set +x
+  '';
+
   disableStatic = false;
+
+  outputs = autotools.commonOutputs;
 
   passthru = {
     langAda = false;

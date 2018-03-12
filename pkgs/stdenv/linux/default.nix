@@ -246,12 +246,18 @@ let
           name = "coreutils";
 
           extraCmd = ''
+            link 'cksum'
             link 'cmp'
+            link 'cut'
             link 'expr'
+            link 'false'
             link 'ls'
             link 'sleep'
+            link 'od'
             link 'rmdir'
+            link 'true'
             link 'uname'
+            link 'uniq'
           '';
         };
 
@@ -297,6 +303,14 @@ let
           setupHook = pkgs.gnutar_1-30.setupHook;
           extraCmd = ''
             link 'tar'
+          '';
+        };
+
+        gzip = bootstrap-drv {
+          name = "gzip";
+          setupHook = pkgs.gzip.setupHook;
+          extraCmd = ''
+            link 'gzip'
           '';
         };
 
@@ -377,6 +391,7 @@ let
           gnumake
           gnupatch
           gnutar
+          gzip
           xz;
         inherit (pkgs)
           autotools;
@@ -405,10 +420,19 @@ let
         inherit (pkgs)
           stdenv
           lib
+          cc
           gcc
           gcc_unwrapped
-          linux-headers
-          linux-headers_4-9;
+          linux-headers;
+
+        linux-headers_4-9 = pkgs.linux-headers_4-9.override {
+          inherit (stage0Pkgs)
+            cc
+            gnumake
+            gnupatch
+            gnutar
+            xz;
+        };
 
         glibc = pkgs.glibc.override {
           bootstrap = true;

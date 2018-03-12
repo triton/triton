@@ -24,6 +24,8 @@ stdenv.mkDerivation rec {
     "GREP=grep"
   ];
 
+  setupHook = ./setup-hook.sh;
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

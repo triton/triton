@@ -1,6 +1,11 @@
 { stdenv
+, cc
 , fetchurl
 , lib
+, gnumake
+, gnupatch
+, gnutar
+, xz
 
 , channel
 }:
@@ -8,14 +13,14 @@
 let
   sources = {
     "4.9" = {
-      version = "4.9.65";
+      version = "4.9.85";
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "3e1937ad3aeb89ac247e96551059babe3c959c6c8868107adac6f3634e39a4ae";
+      patchSha256 = "800fb837c1fa05774662a384b20f3202ed098fed66d2a61baf06b9a0c7abfc04";
     };
     "4.14" = {
-      version = "4.14.2";
+      version = "4.14.23";
       baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
-      patchSha256 = "2dc86272e55d31c55bdeaa47b3d44fbd6235a396e37d82c2b47aa27f6ba82ee3";
+      patchSha256 = "65987b047297e03246f31c64a2afc79bee2f3de336d7079ce690853bead56d24";
     };
   };
 
@@ -40,12 +45,20 @@ stdenv.mkDerivation rec {
   inherit (sourceFetch)
     src;
 
+  nativeBuildInputs = [
+    cc
+    gnumake
+    gnupatch
+    gnutar
+    xz
+  ];
+
   patches = [
     sourceFetch.patch
   ];
 
   # There is no build process. Work is done entirely done by headers_install
-  buildPhase = ''
+  buildAction = ''
     true
   '';
 
@@ -64,12 +77,12 @@ stdenv.mkDerivation rec {
     find $out/include \( -name .install -o -name ..install.cmd \) -delete
   '';
 
-  # We don't need to fix the flags as this build comes early and
-  # binaries are only used for supporting the build process
-  ccFixFlags = false;
-
   # The linux-headers do not need to maintain any references
   allowedReferences = [ ];
+
+  passthru = {
+    inherit channel;
+  };
 
   meta = with stdenv.lib; {
     description = "Header files and scripts for Linux kernel";

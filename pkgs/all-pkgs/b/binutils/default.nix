@@ -133,6 +133,7 @@ stdenv.mkDerivation rec {
     "--enable-gold=default"
     "--enable-ld"
     "--${if !bootstrap then "enable" else "disable"}-shared"
+    "--enable-static"
     "--${if !bootstrap then "enable" else "disable"}-nls"
     "--${if !bootstrap then "enable" else "disable"}-plugins"
     "--enable-deterministic-archives"

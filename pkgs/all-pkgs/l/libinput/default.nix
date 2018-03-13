@@ -40,13 +40,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.10.1";
+  name = "libinput-1.10.2";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    multihash = "QmPr56UkgDEu6HGPo3X5WiYiPF2JPHiigKnFW4g1d3snuj";
+    multihash = "QmTV6BqbqvitApiatmLJhrZTPbp737dcwsLmVwZotv6HMU";
     hashOutput = false;
-    sha256 = "877522d76575e1945c7b3a9eb92cab90d5ad0379c4ef0dbe13054e489d4c6665";
+    sha256 = "1509766d348efe8c6da4285efad3acff4a4c955defb43309e3e4851849197bb9";
   };
 
   nativeBuildInputs = [
@@ -78,6 +78,10 @@ stdenv.mkDerivation rec {
     "-Dtests=${boolTf testsSupport}"
     "-Ddocumentation=${boolTf documentationSupport}"
   ];
+
+  preFixup = ''
+    sed -i '/Libs.private/s, -llibinput-util,,g' "$out"/lib/pkgconfig/*
+  '';
 
   passthru = {
     srcVerification = fetchurl {

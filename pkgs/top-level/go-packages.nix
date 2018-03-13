@@ -413,6 +413,37 @@ let
     ];
   };
 
+  acme = buildFromGitHub {
+    version = 5;
+    owner = "hlandau";
+    repo = "acme";
+    rev = "v0.0.67";
+    sha256 = "1l2a1y3mqv1mfri568j967n6jnmzbdb6cxm7l06m3lwidlzpjqvg";
+    buildInputs = [
+      pkgs.libcap
+    ];
+    propagatedBuildInputs = [
+      jmhodges_clock
+      crypto
+      dexlogconfig
+      easyconfig_v1
+      hlandau_goutils
+      kingpin_v2
+      go-jose_v1
+      go-systemd
+      go-wordwrap
+      graceful_v1
+      satori_go-uuid
+      link
+      net
+      pb_v1
+      service_v2
+      svcutils_v1
+      xlog
+      yaml_v2
+    ];
+  };
+
   aeshash = buildFromGitHub {
     version = 2;
     rev = "8ba92803f64b76c91b111633cc0edce13347f0d1";
@@ -490,6 +521,15 @@ let
     propagatedBuildInputs = [
       go-colorable
     ];
+  };
+
+  ansicolor = buildFromGitHub {
+    version = 5;
+    owner = "shiena";
+    repo = "ansicolor";
+    rev = "a422bbe96644373c5753384a59d678f7d261ff10";
+    date = "2015-11-19";
+    sha256 = "1683x3yhny5xbqf9kp3i9rpkj1gkc6a6w5r4p5kbbxpzidwmgb35";
   };
 
   ansiterm = buildFromGitHub {
@@ -753,6 +793,18 @@ let
     repo   = "builder";
     sha256 = "0lww2fd3njfqzvifvs1194h5hlclvralm6hl27m8n91nlcz4knd0";
     date = "2018-01-16";
+  };
+
+  buildinfo = buildFromGitHub {
+    version = 6;
+    rev = "337a29b5499734e584d4630ce535af64c5fe7813";
+    owner  = "hlandau";
+    repo   = "buildinfo";
+    sha256 = "10nixanz1iclg1psfxl6nfj4j3i5mlzal29lh68ala04ps8s9r4z";
+    date = "2016-11-12";
+    propagatedBuildInputs = [
+      easyconfig_v1
+    ];
   };
 
   bufio_v1 = buildFromGitHub {
@@ -1081,6 +1133,14 @@ let
     ];
   };
 
+  jmhodges_clock = buildFromGitHub {
+    version = 5;
+    owner = "jmhodges";
+    repo = "clock";
+    rev = "v1.1";
+    sha256 = "0qda1xvz0kq5q6jzfvf23j9anzjgs4dylp71bnnlcbq64s9ywwp6";
+  };
+
   clockwork = buildFromGitHub {
     version = 2;
     rev = "v0.1.0";
@@ -1243,6 +1303,15 @@ let
     owner  = "modern-go";
     repo   = "concurrent";
     sha256 = "0s0jzhcwbnqinx9pxbfk0fsc6brb7j716pvssr60gv70k7052lcn";
+  };
+
+  configurable_v1 = buildFromGitHub {
+    version = 6;
+    rev = "v1.0.1";
+    owner = "hlandau";
+    repo = "configurable";
+    sha256 = "0ycp11wnihrwnqywgnj4mn4mkqlsk1j4c7zyypl9s4k525apz581";
+    goPackagePath = "gopkg.in/hlandau/configurable.v1";
   };
 
   configure = buildFromGitHub {
@@ -1574,6 +1643,22 @@ let
     sha256 = "1fx4lz9gwps99ck0iskdjm0l3pnqr306h4w7578x3ni2vimc0ahy";
   };
 
+  dexlogconfig = buildFromGitHub {
+    version = 6;
+    date = "2016-11-12";
+    rev = "244f29bd260884993b176cd14ef2f7631f6f3c18";
+    owner = "hlandau";
+    repo = "dexlogconfig";
+    sha256 = "1j3zvhc4cyl9n8sd1apdgc0rw689xx26n8h4q89ymnyrqfg9g5py";
+    propagatedBuildInputs = [
+      buildinfo
+      easyconfig_v1
+      go-systemd
+      svcutils_v1
+      xlog
+    ];
+  };
+
   diskv = buildFromGitHub {
     version = 5;
     rev = "0646ccaebea1ed1539efcab30cae44019090093f";
@@ -1757,6 +1842,29 @@ let
     owner = "duosecurity";
     repo = "duo_api_golang";
     sha256 = "15a8hhxl33qdx9qnclinlwglr8vip37hvxxa5yg3m6kldyisq3vk";
+  };
+
+  easyconfig_v1 = buildFromGitHub {
+    version = 6;
+    owner = "hlandau";
+    repo = "easyconfig";
+    rev = "v1.0.16";
+    sha256 = "0ncv0i7s65sqlm0jwi9dz19y2yn7zlfxbpg1s3xxvslmg53hlvfk";
+    goPackagePath = "gopkg.in/hlandau/easyconfig.v1";
+    excludedPackages = "example";
+    propagatedBuildInputs = [
+      configurable_v1
+      kingpin_v2
+      pflag
+      toml
+      svcutils_v1
+    ];
+    postPatch = ''
+      sed -i '/type Value interface {/a\'$'\t'"Type() string" adaptflag/adaptflag.go
+      echo "func (v *value) Type() string {" >>adaptflag/adaptflag.go
+      echo $'\t'"return \"string\"" >>adaptflag/adaptflag.go
+      echo "}" >>adaptflag/adaptflag.go
+    '';
   };
 
   easyjson = buildFromGitHub {
@@ -2865,6 +2973,15 @@ let
       crypto
       errors
     ];
+  };
+
+  hlandau_goutils = buildFromGitHub {
+    version = 5;
+    rev = "0cdb66aea5b843822af6fdffc21286b8fe8379c4";
+    date = "2016-07-22";
+    owner = "hlandau";
+    repo = "goutils";
+    sha256 = "08nm9nxz21km6ivvvr7pg8758bdzrjp3i6hkkf1v051i1hvci7ws";
   };
 
   golang-lru = buildFromGitHub {
@@ -5379,6 +5496,16 @@ let
     date = "2017-10-15";
   };
 
+  graceful_v1 = buildFromGitHub {
+    version = 6;
+    owner = "tylerb";
+    repo = "graceful_v1";
+    rev = "v1.2.15";
+    sha256 = "0bc3hb3g62q12kfm91h4szx8svdmpjn9qy7dbj3wrxzwmjzv0q60";
+    goPackagePath = "gopkg.in/tylerb/graceful.v1";
+    excludedPackages = "test";
+  };
+
   grafana = buildFromGitHub {
     version = 5;
     owner = "grafana";
@@ -5616,6 +5743,15 @@ let
       platforms = with platforms;
         x86_64-linux;
     };
+  };
+
+  gspt = buildFromGitHub {
+    version = 6;
+    owner = "erikdubbelboer";
+    repo = "gspt";
+    rev = "2cac68f23d57e3e28a73b70d8d5d904749ec46e8";
+    sha256 = "1n7bhisr5y14xicwcb73bjc9r8gchsqcqknhhx93s7hfy9ps7mfw";
+    date = "2017-11-14";
   };
 
   guid = buildFromGitHub {
@@ -6695,6 +6831,15 @@ let
     repo = "liner";
     sha256 = "110j0y6iqljydwh1w2y396bzn9w68lkly177slawkmzl7vp4yfkp";
     date = "2017-11-22";
+  };
+
+  link = buildFromGitHub {
+    version = 6;
+    rev = "6d32b8d78d1e440948a1c461c5abcc6bf7881641";
+    owner  = "peterhellberg";
+    repo   = "link";
+    sha256 = "18449lb5g7pad88ljl73mhb5nmlxc78dfq9a1fdiz13x185i784r";
+    date = "2018-01-24";
   };
 
   linode = buildFromGitHub {
@@ -8059,6 +8204,9 @@ let
     rev = "ee5fd03fd6acfd43e44aea0b4135958546ed8e73";
     sha256 = "0iywv0hx8vzhv08zdvlgc9q510wllcqnwq9krfs1dwl94cyv71xc";
     date = "2018-02-20";
+    goPackageAliases = [
+      "github.com/ogier/pflag"
+    ];
   };
 
   pidfile = buildFromGitHub {
@@ -9013,6 +9161,21 @@ let
     ];
   };
 
+  service_v2 = buildFromGitHub {
+    version = 6;
+    rev = "v2.0.16";
+    owner = "hlandau";
+    repo = "service";
+    sha256 = "0yqzpkb6frm6zpp6cq80qv2vjfwd5a4d19hn7qja6z98y1r839yw";
+    goPackagePath = "gopkg.in/hlandau/service.v2";
+    propagatedBuildInputs = [
+      easyconfig_v1
+      gspt
+      svcutils_v1
+      winsvc
+    ];
+  };
+
   session = buildFromGitHub {
     version = 2;
     rev = "b8e286a0dba8f4999042d6b258daf51b31d08938";
@@ -9352,6 +9515,18 @@ let
     repo   = "suture";
     sha256 = "1mz1hn32018i05hm854kjm5vcdsv2f9qg7hvg0nsgw1vcv306z02";
     date = "2018-01-03";
+  };
+
+  svcutils_v1 = buildFromGitHub {
+    version = 6;
+    rev = "v1.0.10";
+    owner  = "hlandau";
+    repo   = "svcutils";
+    sha256 = "12liac8vqcx04aqw5gwdywz89fg8327nkx0zrw7iw133pb20mf7v";
+    goPackagePath = "gopkg.in/hlandau/svcutils.v1";
+    buildInputs = [
+      pkgs.libcap
+    ];
   };
 
   swag = buildFromGitHub {
@@ -10377,6 +10552,15 @@ let
     date = "2017-06-03";
   };
 
+  winsvc = buildFromGitHub {
+    version = 6;
+    rev = "f8fb11f83f7e860e3769a08e6811d1b399a43722";
+    owner = "btcsuite";
+    repo = "winsvc";
+    sha256 = "0g9c7dqhsc20xkcdn30nrjapdpvyx56vlspkgs65abljya3lkmpm";
+    date = "2015-01-17";
+  };
+
   wmi = buildFromGitHub {
     version = 5;
     rev = "1.0.0";
@@ -10461,6 +10645,18 @@ let
     sha256 = "0c1g5pipaj6z08778xx7q47lwp516qyd1zv82jhhls5jzy53c845";
     propagatedBuildInputs = [
       net
+    ];
+  };
+
+  xlog = buildFromGitHub {
+    version = 5;
+    rev = "v1.0.0";
+    owner  = "hlandau";
+    repo   = "xlog";
+    sha256 = "106gc5cpxavpxndkb516fvy4zn81h0jp9wvzxss4f9pvdi3zxvwd";
+    propagatedBuildInputs = [
+      go-isatty
+      ansicolor
     ];
   };
 

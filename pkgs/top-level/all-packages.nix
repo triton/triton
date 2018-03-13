@@ -594,6 +594,8 @@ acl = callPackage ../all-pkgs/a/acl { };
 
 acme-client = callPackage ../all-pkgs/a/acme-client { };
 
+acmetool = pkgs.goPackages.acme.bin // { outputs = [ "bin" ]; };
+
 acpi = callPackage ../all-pkgs/a/acpi { };
 
 acpid = callPackage ../all-pkgs/a/acpid { };

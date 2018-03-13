@@ -50,7 +50,7 @@ let
     optionals
     optionalString;
 
-  version = "4.7.5";
+  version = "4.7.6";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "316d04fa9fbabad6f2739fe68e1928778af4866265409119aba6ef3435c8fe8d";
+    sha256 = "1eede30fc8ef6504e24602fb72b00baa0a7b73b59f16d25cb0771dc8c7c57d6e";
   };
 
   nativeBuildInputs = [

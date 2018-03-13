@@ -7,14 +7,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "hidapi-2016-03-03";
+  name = "hidapi-2016-09-19";
   
   src = fetchFromGitHub {
-    version = 1;
+    version = 5;
     owner = "signal11";
     repo = "hidapi";
-    rev = "b5b2e1779b6cd2edda3066bbbf0921a2d6b1c3c0";
-    sha256 = "5e7367baeb6967d7dea9434f08ac0c6f6f9bed9520e3e6750ea31abf9d910641";
+    rev = "a6a622ffb680c55da0de787ff93b80280498330f";
+    sha256 = "34568bf58cd34ef8809058d706ecbb295cdb9e31f08e02b2953cd77545340092";
   };
 
   nativeBuildInputs = [

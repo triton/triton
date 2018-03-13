@@ -7,8 +7,8 @@ makeCommonFlags() {
   local -n phaseFlagsRef="${phaseName}Flags"
   local -n phaseFlagsArrRef="${phaseName}FlagsArray"
 
-  if [ -z "$buildRoot" ]; then
-    if [ -z "$srcRoot" ]; then
+  if [ -z "${buildRoot-}" ]; then
+    if [ -z "${srcRoot-}" ]; then
       echo "Make requires a buildRoot or srcRoot to be set"
       exit 1
     fi
@@ -16,16 +16,16 @@ makeCommonFlags() {
   fi
 
   flagsRef+=("--directory=$buildRoot")
-  if [ -n "$makefile" ]; then
+  if [ -n "${makefile-}" ]; then
     flagsRef+=("--file=$makefile")
   fi
   if [ -n "${parallelRef-1}" ]; then
     flagsRef+=("-j$NIX_BUILD_CORES" "-l$NIX_BUILD_CORES" "-O")
   fi
   flagsRef+=("SHELL=$bash") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-  flagsRef+=($makeFlags)
+  flagsRef+=(${makeFlags-})
   flagsRef+=("${makeFlagsArray[@]}")
-  flagsRef+=($phaseFlagsRef)
+  flagsRef+=(${phaseFlagsRef-})
   flagsRef+=("${phaseFlagsArrRef[@]}")
 }
 

@@ -1,7 +1,7 @@
 defaultDistAction() {
   return 0
 }
-if [ -z "$distAction" ]; then
+if [ -z "${distAction-}" ]; then
   distAction='defaultDistAction'
 fi
 

@@ -1,5 +1,5 @@
 configureBuildRoot() {
-  if [ -z "$buildRoot" ]; then
+  if [ -z "${buildRoot-}" ]; then
     if [ -n "${createBuildRoot-true}" ]; then
       mkdir -p "$NIX_BUILD_TOP"/build
       buildRoot="$NIX_BUILD_TOP"/build
@@ -14,7 +14,7 @@ configureBuildRoot() {
 defaultConfigureAction() {
   return 0
 }
-if [ -z "$configureAction" ]; then
+if [ -z "${configureAction-}" ]; then
   configureAction='defaultConfigureAction'
 fi
 

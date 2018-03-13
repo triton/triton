@@ -10,7 +10,7 @@ if ! type -t determineSourceDateEpoch >/dev/null; then
 fi
 
 determineSourceDateEpoch() {
-  if [ -z "$srcRoot" ]; then
+  if [ -z "${srcRoot-}" ]; then
     return 0
   fi
 

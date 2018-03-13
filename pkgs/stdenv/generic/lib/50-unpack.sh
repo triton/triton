@@ -1,7 +1,7 @@
 # Finds and sets the srcRoot for a default build after unpacking has been
 # completed
 unpackFindRootDefault() {
-  if [ -n "$srcRoot" ]; then
+  if [ -n "${srcRoot-}" ]; then
     return 0
   fi
 
@@ -9,19 +9,19 @@ unpackFindRootDefault() {
   # directory, otherwise we use the unpack directory
   local i
   for i in *; do
-    if [ ! -d "$i" ] || [ -n "$srcRoot" ]; then
+    if [ ! -d "$i" ] || [ -n "${srcRoot-}" ]; then
       srcRoot='.'
       break
     fi
     srcRoot="$i"
   done
 }
-if [ -z "$unpackFindRoot" ]; then
+if [ -z "${unpackFindRoot-}" ]; then
   unpackFindRoot='unpackFindRootDefault'
 fi
 
 unpackActionDefault() {
-  if [ -z "$srcs" ]; then
+  if [ "${#srcs[@]}" -eq "0" ]; then
     return 0
   fi
 
@@ -50,7 +50,7 @@ unpackActionDefault() {
 
   echo "Source root is $srcRoot"
 }
-if [ -z "$unpackAction" ]; then
+if [ -z "${unpackAction-}" ]; then
   unpackAction='unpackActionDefault'
 fi
 

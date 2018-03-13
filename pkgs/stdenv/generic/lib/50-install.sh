@@ -1,7 +1,7 @@
 defaultInstallAction() {
   return 0
 }
-if [ -z "$installAction" ]; then
+if [ -z "${installAction-}" ]; then
   installAction='defaultInstallAction'
 fi
 

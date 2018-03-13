@@ -37,7 +37,7 @@ _callImplicitHook() {
     'file') source "$hookName" ;;
     'keyword') : ;;
     *)
-      if [ -z "${!hookName}" ]; then
+      if [ -z "${!hookName-}" ]; then
         return "$def"
       else
         eval "${!hookName}"
@@ -64,7 +64,7 @@ exitHandler() {
   local exitCode="$?"
   set +e
 
-  if [ "$NIX_DEBUG" = 1 ] || [ -n "$showBuildStats" ]; then
+  if [ "${NIX_DEBUG-}" = 1 ] || [ "${showBuildStats-}" = "1" ]; then
     times > "$NIX_BUILD_TOP/.times"
     local -a times=($(cat "$NIX_BUILD_TOP/.times"))
     # Print the following statistics:
@@ -82,7 +82,7 @@ exitHandler() {
     # $succeedOnFailure is set, create the file
     # ‘$out/nix-support/failed’ to signal failure, and exit
     # normally.  Otherwise, return the original exit code.
-    if [ -n "$succeedOnFailure" ]; then
+    if [ "${succeedOnFailure-}" = "1" ]; then
       echo "build failed with exit code $exitCode (ignored)"
       mkdir -p "$out/nix-support"
       printf "%s" "$exitCode" > "$out/nix-support/failed"
@@ -163,7 +163,7 @@ addToSearchPathWithCustomDelimiter() {
   local dir="$3"
 
   if [ -d "$dir" ]; then
-    eval export ${varName}=${!varName}${!varName:+$delimiter}${dir}
+    eval export ${varName}=${!varName-}${!varName:+$delimiter}${dir}
   fi
 }
 
@@ -174,7 +174,7 @@ addToSearchPath() {
 hasOutput() {
   local target="$1"
 
-  [ "${outputsHash["$target"]}" = "1" ]
+  [ "${outputsHash["$target"]-}" = "1" ]
 }
 
 ######################## Textual substitution functions ########################
@@ -230,14 +230,15 @@ substituteAll() {
   local output="$2"
 
   # Select all environment variables
+  local args=()
   for envVar in $(env -0 | sed -z -n 's,^\([^=]*\).*,\1,p' | tr '\0' '\n'); do
-    if [ "$NIX_DEBUG" = "1" ]; then
+    if [ "${NIX_DEBUG-}" = "1" ]; then
       echo "$envVar -> ${!envVar}"
     fi
-    args="$args --subst-var $envVar"
+    args+=('--subst-var' "$envVar")
   done
 
-  substitute "$input" "$output" $args
+  substitute "$input" "$output" "${args[@]}"
 }
 
 substituteAllInPlace() {
@@ -323,22 +324,22 @@ fixupPhase() {
     prefix=${!output} runHook 'fixupOutput'
   done
 
-  if [ -n "$propagatedBuildInputs" ]; then
+  if [ -n "${propagatedBuildInputs-}" ]; then
     mkdir -p "$out/nix-support"
     echo "$propagatedBuildInputs" > "$out/nix-support/propagated-build-inputs"
   fi
 
-  if [ -n "$propagatedNativeBuildInputs" ]; then
+  if [ -n "${propagatedNativeBuildInputs-}" ]; then
     mkdir -p "$out/nix-support"
     echo "$propagatedNativeBuildInputs" > "$out/nix-support/propagated-native-build-inputs"
   fi
 
-  if [ -n "$propagatedUserEnvPkgs" ]; then
+  if [ -n "${propagatedUserEnvPkgs-}" ]; then
     mkdir -p "$out/nix-support"
     echo "$propagatedUserEnvPkgs" > "$out/nix-support/propagated-user-env-packages"
   fi
 
-  if [ "${#setupHook[@]}" -gt '0' ]; then
+  if [ "${#setupHooks[@]}" -gt '0' ]; then
     mkdir -p "$out"/nix-support
     if test -f "$out"/nix-support/setup-hook; then
       echo "We already have a setup-hook"
@@ -387,7 +388,7 @@ phaseHeader() {
 }
 
 genericBuild() {
-  if [ -n "$buildCommand" ]; then
+  if [ -n "${buildCommand-}" ]; then
     eval "$buildCommand"
     return
   fi
@@ -399,7 +400,7 @@ genericBuild() {
   chattr +i "$NIX_BUILD_EMPTY" 2>/dev/null || echo "WARNING: Missing chattr"
   cd "$NIX_BUILD_EMPTY"
 
-  if [ -z "$buildType" ] || [ "$buildType" = "normal" ]; then
+  if [ "${buildType-normal}" = "normal" ]; then
     phases=(
       "${prePhases[@]}"
       'unpackPhase'
@@ -448,11 +449,11 @@ for output in $outputs; do
 done
 
 # Array handling, we need to turn some variables into arrays
-prePhases=($prePhases)
-postPhases=($postPhases)
-srcs=($srcs $src)
-setupHooks=($setupHooks $setupHook)
-patches=($patches)
+prePhases=(${prePhases-})
+postPhases=(${postPhases-})
+srcs=(${srcs-} ${src-})
+setupHooks=(${setupHooks-} ${setupHook-})
+patches=(${patches-})
 
 arrayToDict patchVars
 
@@ -469,7 +470,7 @@ for i in $initialPath; do
   addToSearchPath 'PATH' "$i/bin"
 done
 
-if [ "$NIX_DEBUG" = 1 ]; then
+if [ "${NIX_DEBUG-}" = 1 ]; then
   echo "initial path: $PATH"
 fi
 
@@ -489,12 +490,12 @@ runHook 'preHook'
 runHook 'addInputsHook'
 
 crossPkgs=''
-for i in $buildInputs $defaultBuildInputs $propagatedBuildInputs; do
+for i in ${buildInputs-} ${defaultBuildInputs-} ${propagatedBuildInputs-}; do
   findInputs "$i" 'crossPkgs' 'propagated-build-inputs'
 done
 
 nativePkgs=''
-for i in $nativeBuildInputs $defaultNativeBuildInputs $propagatedNativeBuildInputs; do
+for i in ${nativeBuildInputs-} ${defaultNativeBuildInputs-} ${propagatedNativeBuildInputs-}; do
   findInputs "$i" 'nativePkgs' 'propagated-native-build-inputs'
 done
 
@@ -503,27 +504,16 @@ if [ "${selfApplySetupHook-0}" = "1" ]; then
   source "$setupHook"
 fi
 
-for i in $nativePkgs; do
+for i in ${nativePkgs-}; do
   _addToNativeEnv "$i"
 done
 
-for i in $crossPkgs; do
+for i in ${crossPkgs-}; do
   _addToCrossEnv "$i"
 done
 
-# Set the prefix.  This is generally $out, but it can be overriden,
-# for instance if we just want to perform a test build/install to a
-# temporary location and write a build report to $out.
-if [ -z "$prefix" ]; then
-  prefix="$out"
-fi
-
-if [ "$useTempPrefix" = 1 ]; then
-  prefix="$NIX_BUILD_TOP/tmp_prefix"
-fi
-
 PATH=$_PATH${_PATH:+:}$PATH
-if [ "$NIX_DEBUG" = 1 ]; then
+if [ "${NIX_DEBUG-}" = 1 ]; then
   echo "final path: $PATH"
 fi
 

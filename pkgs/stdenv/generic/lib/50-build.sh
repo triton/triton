@@ -1,7 +1,7 @@
 defaultBuildAction() {
   return 0
 }
-if [ -z "$buildAction" ]; then
+if [ -z "${buildAction-}" ]; then
   buildAction='defaultBuildAction'
 fi
 

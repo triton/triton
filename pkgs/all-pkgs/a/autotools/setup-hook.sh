@@ -3,11 +3,11 @@ autotoolsLibtoolFix() {
 }
 
 autotoolsConfigureAction() {
-  if [ -z "$configureScript" -a -x "$srcRoot"/configure ]; then
+  if [ -z "${configureScript-}" -a -x "$srcRoot"/configure ]; then
     configureScript="$srcRoot"/configure
   fi
 
-  if [ ! -x "$configureScript" ]; then
+  if [ ! -x "${configureScript-}" ]; then
     echo "Missing executable configure script: $configureScript" >&2
     exit 1
   fi

@@ -4,7 +4,7 @@ patchActionDefault() {
     applyFile 'patch' "$patch"
   done
 }
-if [ -z "$patchAction" ]; then
+if [ -z "${patchAction-}" ]; then
   patchAction='patchActionDefault'
 fi
 

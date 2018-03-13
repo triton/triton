@@ -149,13 +149,13 @@ let
 
       mkdir -p "$out"/nix-support
       echo "export GCC_EXEC_PREFIX='$out/lib/gcc/'" >>"$out"/nix-support/setup-hook
-      echo "export CPPFLAGS='-idirafter $(readlink -f '${bootstrap-libc.dev}'/include)'" >>"$out"/nix-support/setup-hook
-      echo "export CXXLAGS='-idirafter $out/include'" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc.lib}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -Wl,-rpath=${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -L${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
-      echo "export LDFLAGS=\"\$LDFLAGS -B${bootstrap-libc.dev}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export CPPFLAGS=\"\''${CPPFLAGS-}\"' -idirafter $(readlink -f '${bootstrap-libc.dev}'/include)'" >>"$out"/nix-support/setup-hook
+      echo "export CXXLAGS=\"\''${CXXFLAGS-}\"' -idirafter $out/include'" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\''${LDFLAGS-} -Wl,-dynamic-linker=$(readlink -f '${bootstrap-libc.lib}'/lib/ld*.so)\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\''${LDFLAGS-} -Wl,-rpath=$out/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\''${LDFLAGS-} -Wl,-rpath=${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\''${LDFLAGS-} -L${bootstrap-libc.lib}/lib\"" >>"$out"/nix-support/setup-hook
+      echo "export LDFLAGS=\"\''${LDFLAGS-} -B${bootstrap-libc.dev}/lib\"" >>"$out"/nix-support/setup-hook
       echo "export CC='$out/bin/gcc'" >>"$out"/nix-support/setup-hook
       source "$out"/nix-support/setup-hook
 

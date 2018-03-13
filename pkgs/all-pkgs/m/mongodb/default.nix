@@ -18,7 +18,7 @@
 }:
 
 let
-  version = "3.6.2";
+  version = "3.6.3";
 
   inherit (stdenv.lib)
     concatMap
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "018788bd31d6953e55cda0ad0771d23e6b78e024a8a6404a80a900c67215b0a7";
+    sha256 = "df2d5c05c569ca93eacf88b68e0feb3ff52ffbfc8ccd8736ff20d86850db207c";
   };
 
   nativeBuildInputs = [

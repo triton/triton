@@ -13,7 +13,7 @@
 
 let
   channel = "2.0";
-  version = "${channel}.1";
+  version = "${channel}.2";
 
   baseUrl = "mirror://kernel/linux/utils/cryptsetup/v${channel}";
 in
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "41d188092c52e23d576af41cf0cfe0555d8f7efa21598d4c57c56ea1b6d9c975";
+    sha256 = "4f8105d7f3bf758d58da3058b3cbd66c0ca81492b2dafe8ae7c049cc9e939e97";
   };
 
   buildInputs = [

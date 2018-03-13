@@ -531,9 +531,6 @@ if [ "$NIX_DEBUG" = 1 ]; then
   echo "final path: $PATH"
 fi
 
-# Make GNU Make produce nested output.
-export NIX_INDENT_MAKE=1
-
 # Normalize the NIX_BUILD_CORES variable. The value might be 0, which
 # means that we're supposed to try and auto-detect the number of
 # available CPU cores at run-time.

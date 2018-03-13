@@ -4,7 +4,7 @@ fi
 
 checkEmpty() {
   local file
-  for file in "$TMPDIR"/empty/*; do
+  for file in "$NIX_BUILD_EMPTY"/*; do
     echo "The empty builder directory should be empty, but we found $file"
     return 1
   done

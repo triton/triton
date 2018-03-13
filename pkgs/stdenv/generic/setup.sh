@@ -346,7 +346,7 @@ fixupPhase() {
     fi
     local setupHook
     for setupHook in "${setupHooks[@]}"; do
-      local setupHookTmp="$TMPDIR"/setup-hook-tmp
+      local setupHookTmp="$NIX_BUILD_TOP"/setup-hook-tmp
       substituteAll "$setupHook" "$setupHookTmp"
       cat "$setupHookTmp" >> "$out"/nix-support/setup-hook
       rm "$setupHookTmp"
@@ -394,9 +394,10 @@ genericBuild() {
 
   # Make our default directory empty and immutable so scripting has
   # to be more specific about how it operates
-  mkdir -p "$TMPDIR"/empty
-  chattr +i "$TMPDIR"/empty 2>/dev/null || echo "WARNING: Missing chattr"
-  cd "$TMPDIR"/empty
+  NIX_BUILD_EMPTY="$NIX_BUILD_TOP"/empty
+  mkdir -p "$NIX_BUILD_EMPTY"
+  chattr +i "$NIX_BUILD_EMPTY" 2>/dev/null || echo "WARNING: Missing chattr"
+  cd "$NIX_BUILD_EMPTY"
 
   if [ -z "$buildType" ] || [ "$buildType" = "normal" ]; then
     phases=(

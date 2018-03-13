@@ -9,7 +9,7 @@ let
     optionals
     platforms;
 
-  version = "4.18";
+  version = "4.19";
 
   baseUrls = [
     "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
@@ -21,17 +21,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
     hashOutput = false;
-    sha256 = "b89657c09bf88707d06ac238b8930d3ae08de68cb3edccfdc2e3dc97f9c8fb34";
+    sha256 = "2ed95917fa2277910d1d1cf36030607dccc0ba522bba08e2af13c113dcd8f729";
   };
 
   prePatch = ''
     cd nspr
   '';
 
-  configureFlags = [
-    "--enable-optimize"
-    "--disable-debug"
-  ] ++ optionals (elem stdenv.targetSystem platforms.bit64) [
+  configureFlags = optionals (elem stdenv.targetSystem platforms.bit64) [
     "--enable-64bit"
   ];
 

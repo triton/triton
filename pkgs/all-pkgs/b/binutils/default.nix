@@ -150,14 +150,12 @@ stdenv.mkDerivation rec {
 
   # Make sure we retain no references to the FHS hierarchy of paths
   preFixupCheck = ''
-    set -x
     for output in bin dev lib; do
-      if grep -rao '[a-zA-Z0-9_-/]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v ':\(/no-such-path\|/nix/store\)'; then
+      if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v '^[^:]*:.*\(/no-such-path\|/nix/store\|unpack\|%s\)'; then
         echo "Found FHS paths in binutils. We definitely don't want this";
         exit 1
       fi
     done
-    set +x
   '';
 
   disableStatic = false;

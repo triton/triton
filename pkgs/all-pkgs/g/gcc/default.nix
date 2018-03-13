@@ -230,34 +230,12 @@ stdenv.mkDerivation (rec {
 
   # Installed tools are not used by the compiler and can be safely removed
   # Usually these contain references to the compiler used to build stage0
+  # Also remove versioned binaries
   postInstall = ''
     for output in $outputs; do
       find "''${!output}" -name install-tools -prune -exec rm -r {} \;
     done
-  '';
-
-  # Deduplicate binaries
-  preFixup = ''
-    pushd "$bin"/bin >/dev/null
-    prevHash=""
-    prevFile=""
-    OLDIFS="$IFS"
-    IFS=$'\n'
-    for line in $(find . -type f -exec cksum {} \; | sort); do
-      hash="$(echo "$line" | awk '{print $1 " " $2}')"
-      file="$(echo "$line" | awk '{print $3}')"
-      if [ "$prevHash" = "$hash" ]; then
-        if cmp -s "$file" "$prevFile"; then
-          rm "$file"
-          ln -sv "$prevFile" "$file"
-        fi
-      else
-        prevHash="$hash"
-        prevFile="$file"
-      fi
-    done
-    IFS="$OLDIFS"
-    popd >/dev/null
+    find "$bin"/bin -name \*${version}\* -delete
   '';
 
   # Make sure we retain no references to the FHS hierarchy of paths

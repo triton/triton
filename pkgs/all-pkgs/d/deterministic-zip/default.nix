@@ -5,10 +5,11 @@
 , brotli_0-5-2
 , brotli_0-6-0
 , brotli_1-0-2
+, brotli_1-0-3
 , gnutar_1-29
 , gnutar_1-30
 
-, version ? 5
+, version ? 6
 }:
 
 let
@@ -27,6 +28,10 @@ let
     };
     "5" = {
       brotli = brotli_1-0-2;
+      tar = gnutar_1-30;
+    };
+    "6" = {
+      brotli = brotli_1-0-3;
       tar = gnutar_1-30;
     };
   };

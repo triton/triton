@@ -21,15 +21,15 @@ in
 let
   libOnly = prefix == "lib";
 
-  version = "2.8.2";
+  version = "2.8.3";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
-    multihash = "QmanyicGBjPkHr32BUYSBwj28z7HumSDc4eNv4syiFJfPM";
-    sha256 = "67b59b2b77afee9ed87afa4d80ffc8e6f3a1f4bbedd5f2871f387c952147bcba";
+    multihash = "QmRDWgCLKmFy25UxYAqTcUFwTeVK7SBwMvt5iRk8zqdDah";
+    sha256 = "744945caee27a472f0cc7ecb067f1f33d606e5aebcf9660e701a58f9d3668a1a";
   };
 
   nativeBuildInputs = [
@@ -68,7 +68,6 @@ stdenv.mkDerivation rec {
     "--without-aarch64"  # TODO: Support
     "--${if libOnly then "without" else "with"}-apparmor"
     "--without-prelude"
-    "--${if libOnly then "without" else "with"}-libwrap${if libOnly then "" else "=${tcp-wrappers}"}"
   ];
 
   # For libs only build and install the lib portion

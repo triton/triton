@@ -1,12 +1,13 @@
 { stdenv
 , autoconf
 , automake
+, bc
 , fetchFromGitHub
 , libtool
 }:
 
 let
-  version = "1.0.2";
+  version = "1.0.3";
 
   tarFlags = [
     "--sort=name"
@@ -33,18 +34,24 @@ stdenv.mkDerivation {
   name = "brotli-dist-${version}";
 
   src = fetchFromGitHub {
-    version = "3";
+    version = "5";
     owner = "google";
     repo = "brotli";
     rev = "v${version}";
-    sha256 = "03dc8ed0b9edca466776f6bf0b56f091695bf6b3a6c3d819de4beea505241223";
+    sha256 = "ca0c6e72a9f0905f1b85cb1f79db498a0c8608a1554791bdd197ed1507449e08";
   };
   
   nativeBuildInputs = [
     autoconf
     automake
+    bc
     libtool
   ];
+
+  postPatch = ''
+    ! grep -q 'c/enc/params.h' scripts/sources.lst
+    sed -i '/BROTLI_ENC_H/ac/enc/params.h \\' scripts/sources.lst
+  '';
 
   preConfigure = ''
     ./bootstrap

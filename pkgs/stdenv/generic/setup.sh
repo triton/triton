@@ -515,17 +515,6 @@ for i in $crossPkgs; do
   _addToCrossEnv "$i"
 done
 
-# Add the output as an rpath.
-if [ "$NIX_NO_SELF_RPATH" != 1 ]; then
-  export NIX_LDFLAGS="-rpath $out/lib $NIX_LDFLAGS"
-  if [ -n "$NIX_LIB64_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib64 $NIX_LDFLAGS"
-  fi
-  if [ -n "$NIX_LIB32_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib32 $NIX_LDFLAGS"
-  fi
-fi
-
 # Set the prefix.  This is generally $out, but it can be overriden,
 # for instance if we just want to perform a test build/install to a
 # temporary location and write a build report to $out.

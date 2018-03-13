@@ -64,9 +64,7 @@ exitHandler() {
   local exitCode="$?"
   set +e
 
-  closeNest
-
-  if [ -n "$showBuildStats" ]; then
+  if [ "$NIX_DEBUG" = 1 ] || [ -n "$showBuildStats" ]; then
     times > "$NIX_BUILD_TOP/.times"
     local -a times=($(cat "$NIX_BUILD_TOP/.times"))
     # Print the following statistics:
@@ -143,9 +141,8 @@ applyFile() {
     exit 1
   fi
 
-  header "${applyName}ing $srcFileOrig" 3
+  echo "${applyName}ing $srcFileOrig"
   eval "${cmd[@]}"
-  stopNest
 }
 
 printFlags() {
@@ -386,7 +383,7 @@ phaseHeader() {
     exit 1
   fi
 
-  header "$(printf '########## %-20s %37s ##########\n' "${phase^}" "$name")"
+  printf '########## %-20s %37s ##########\n' "${phase^}" "$name"
 }
 
 genericBuild() {
@@ -438,8 +435,6 @@ genericBuild() {
     # Evaluate the variable named $curPhase if it exists, otherwise the
     # function named $curPhase.
     eval "${!phase:-$phase}"
-
-    stopNest
   done
 }
 

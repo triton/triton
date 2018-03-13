@@ -58,31 +58,6 @@ _eval() {
   fi
 }
 
-################################### Logging ####################################
-
-startNest() {
-  nestingLevel=$(( $nestingLevel + 1 ))
-  echo -en "\033[$1p"
-}
-
-stopNest() {
-  nestingLevel=$(( $nestingLevel - 1 ))
-  echo -en "\033[q"
-}
-
-header() {
-  startNest "$2"
-  echo "$1"
-}
-
-# Make sure that even when we exit abnormally, the original nesting
-# level is properly restored.
-closeNest() {
-  while [ $nestingLevel -gt 0 ]; do
-    stopNest
-  done
-}
-
 ################################ Error handling ################################
 
 exitHandler() {
@@ -486,8 +461,6 @@ patches=($patches)
 arrayToDict patchVars
 
 PATH_DELIMITER=':'
-
-nestingLevel=0
 
 # Wildcard expansions that don't match should expand to an empty list.
 # This ensures that, for instance, "for i in *; do ...; done" does the

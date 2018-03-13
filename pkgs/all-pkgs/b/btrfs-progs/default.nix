@@ -50,6 +50,12 @@ stdenv.mkDerivation rec {
     zstd
   ];
 
+  # New e2fsprogs changes attr structure
+  postPatch = ''
+    grep -q 'e_value_block' convert/source-ext2.c
+    sed -i 's,e_value_block,e_value_inum,' convert/source-ext2.c
+  '';
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

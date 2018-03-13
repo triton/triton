@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "time-1.8";
+  name = "time-1.9";
 
   src = fetchurl {
     url = "mirror://gnu/time/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "8a2f540155961a35ba9b84aec5e77e3ae36c74cecb4484db455960601b7a2e1b";
+    sha256 = "fbacf0c81e62429df3e33bda4cee38756604f18e01d977338e23306a3e3b521e";
   };
 
   passthru = {

@@ -120,14 +120,10 @@ stdenv.mkDerivation (rec {
     rm -r "$srcRoot"/zlib
   '';
 
+  # GCC interprets empty paths as ".", which we don't want.
   preConfigure = ''
-    # GCC interprets empty paths as ".", which we don't want.
-    if test -z "$CPATH"; then
-      unset CPATH
-    fi
-    if test -z "$LIBRARY_PATH"; then
-      unset LIBRARY_PATH
-    fi
+    unset CPATH
+    unset LIBRARY_PATH
   '';
 
   configureFlags = [
@@ -184,7 +180,7 @@ stdenv.mkDerivation (rec {
     eval `CC_WRAPPER_PRINT_CONFIG=1 cc-wrapper`
 
     # Reduces the size of intermediate binaries
-    export CFLAGS="$CFLAGS -O2"
+    export CFLAGS="''${CFLAGS-} -O2"
 
     buildFlagsArray+=(
       NATIVE_SYSTEM_HEADER_DIR="$TARGET_LIBC_INCLUDE"

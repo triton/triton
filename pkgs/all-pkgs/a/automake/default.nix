@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.16";
+  version = "1.16.1";
 
   tarballUrls = version: [
     "mirror://gnu/automake/automake-${version}.tar.xz"
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = tarballUrls version;
     hashOutput = false;
-    sha256 = "f98f2d97b11851cbe7c2d4b4eaef498ae9d17a3c2ef1401609b7b4ca66655b8a";
+    sha256 = "5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921";
   };
 
   nativeBuildInputs = [
@@ -30,13 +30,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.16";
+      urls = tarballUrls "1.16.1";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprints = [
         # Mathieu Lirzin
         "F2A3 8D7E EB2B 6640 5761  070D 0ADE E100 9460 4D37"
       ];
-      outputHash = "f98f2d97b11851cbe7c2d4b4eaef498ae9d17a3c2ef1401609b7b4ca66655b8a";
+      outputHash = "5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921";
       inherit (src) outputHashAlgo;
     };
   };

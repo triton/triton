@@ -152,7 +152,7 @@ stdenv.mkDerivation rec {
   preFixupCheck = ''
     for output in bin dev lib; do
       if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v '^[^:]*:.*\(/no-such-path\|/nix/store\|unpack\|%s\)'; then
-        echo "Found FHS paths in binutils. We definitely don't want this";
+        echo "Found FHS paths. We definitely don't want this";
         exit 1
       fi
     done

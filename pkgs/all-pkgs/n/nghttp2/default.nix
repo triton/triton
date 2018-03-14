@@ -26,7 +26,7 @@ in
 let
   isLib = prefix == "lib";
 
-  version = "1.29.0";
+  version = "1.31.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/"
       + "v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "a7a1b18be57be6a53a7739988ea27d6ec9209e7b0e8372b8483cd911d7838739";
+    sha256 = "36573c2dc74f0da872b02a3ccf1f1419d6b992dd4703dc866e5a289d36397ac7";
   };
 
   buildInputs = optionals (!isLib) [

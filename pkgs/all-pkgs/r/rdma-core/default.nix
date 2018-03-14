@@ -10,14 +10,15 @@
 }:
 
 let
-  version = "17";
+  # Can't use 17.x until samba_full fixes usage of kern-abi.h
+  version = "16.4";
 in
 stdenv.mkDerivation rec {
   name = "rdma-core-${version}";
 
   src = fetchurl {
     url = "https://github.com/linux-rdma/rdma-core/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "28a8e3d540decef59b206a8bb103d37ea5b50510b7999b1b9fef0aa27a5beeb9";
+    sha256 = "0550cc56e8d1f28e13ce3d9ef38c501e5f00117d97ee7cfd57b6aca581828e52";
   };
 
   nativeBuildInputs = [

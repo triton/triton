@@ -29,16 +29,16 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.bz2"
   ];
 
-  version = "7.58.0";
+  version = "7.59.0";
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmPpr3p9MPVMsWmabqWj5cbryLWF8oMgXpWg9JtpKzDNAW";
+    multihash = "QmcQZuAm8PEBacogYNiTyeZd4dKtik6pYAGcPKuXreMGep";
     hashOutput = false;
-    sha256 = "1cb081f97807c01e3ed747b6e1c9fee7a01cb10048f1cd0b5f56cfe0209de731";
+    sha256 = "b5920ffd6a8c95585fb95070e0ced38322790cb335c39d0dab852d12e157b5a0";
   };
 
   nativeBuildInputs = [
@@ -113,11 +113,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "7.58.0";
+      urls = tarballUrls "7.59.0";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";
       inherit (src) outputHashAlgo;
-      outputHash = "1cb081f97807c01e3ed747b6e1c9fee7a01cb10048f1cd0b5f56cfe0209de731";
+      outputHash = "b5920ffd6a8c95585fb95070e0ced38322790cb335c39d0dab852d12e157b5a0";
     };
   };
 

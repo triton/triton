@@ -26,7 +26,7 @@
 }:
 
 let
-  version = "390.25";
+  version = "390.42";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://nvidia/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    sha256 = "c79bb974e3e716f3448088d72201bb9cfeec8d13ea8dbe5376439bf191c90bca";
+    sha256 = "9db8fd49a411c3751e519696e71550b6f7aed31b6a0e78c8733da57276527ea0";
   };
 
   nativeBuildInputs = [

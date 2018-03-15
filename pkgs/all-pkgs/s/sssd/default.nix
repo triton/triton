@@ -53,13 +53,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "sssd-1.16.0";
+  name = "sssd-1.16.1";
 
   src = fetchurl {
     url = "https://releases.pagure.org/SSSD/sssd/${name}.tar.gz";
-    multihash = "Qmdc59CttdA7knVBxW1nZe8q74SeBuytCxDtYtgqmFoppc";
+    multihash = "Qmf9yD9pzyL4QP3uj1XsUWDjAZRpHRsP66MmsZGCaXyAA1";
     hashOutput = false;
-    sha256 = "c581a6e5365cef87fca419c0c9563cf15eadbb682863d648d85ffcded7a3940f";
+    sha256 = "2dbf677851afdefcdf57eccaf25d59eb682a2994ad2a2dbf419003930a0b506e";
   };
 
   nativeBuildInputs = [

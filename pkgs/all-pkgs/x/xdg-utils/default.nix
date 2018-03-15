@@ -2,6 +2,7 @@
 , docbook_xml_dtd_412
 , docbook-xsl
 , fetchurl
+, lib
 , libxslt
 , xmlto
 , w3m
@@ -13,8 +14,8 @@
 }:
 
 let
-  rev = "338f54e0dbf3d9e9583f34c9dde194c39ba0b4e8";
-  version = "2016-06-10";
+  rev = "7d4360c64d94de53d907f13ca99837285e972ec6";
+  version = "2018-02-27";
 in
 stdenv.mkDerivation rec {
   name = "xdg-utils-${version}";
@@ -22,8 +23,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "${name}.tar.gz";
     url = "https://cgit.freedesktop.org/xdg/xdg-utils/snapshot/${rev}.tar.gz";
-    multihash = "QmTYcdd5NwEfG4cS9aGLKjYsjmYiVnYVpSQPRQtUnqVuuA";
-    sha256 = "541ba6e0b8c090f387ed6858d7da202dbbcf5d7701d257d76ebaeea538bef3b7";
+    multihash = "QmWgBkZtmwisnmDut85mWXP6MutN34i6VHJgWtj1V2wbvC";
+    sha256 = "7933aaea46227c70adcaab75d9360caa251f4589be6e56268eeee157c22fb089";
   };
 
   buildInputs = [
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Desktop integration utilities";
     homepage = http://portland.freedesktop.org/wiki/;
     license = licenses.mit;

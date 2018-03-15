@@ -26,8 +26,8 @@ let
       sha256 = "b72d4e71618d6bcbd039b487b51fa7543631a4ac3331d7caf69bdf55b5b2901a";
     };
     "9" = {
-      version = "9.7.0";
-      sha256 = "a136db69769fadbfc31b5577284faf644589519fb3c51e3dc7403566635956c9";
+      version = "9.8.0";
+      sha256 = "0706bb49e4fa5fa64c6c51941becb4b3854a6c0335425d7312bc086c37b41eac";
     };
   };
 

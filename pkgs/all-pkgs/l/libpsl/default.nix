@@ -9,14 +9,15 @@
 }:
 
 let
-  version = "0.20.0";
+  version = "0.20.1";
 in
 stdenv.mkDerivation rec {
   name = "libpsl-${version}";
 
   src = fetchurl {
-    url = "https://github.com/rockdaboot/libpsl/releases/download/${name}/${name}.tar.gz";
-    sha256 = "27a2547b87689b7a62f8ff807ae4d8240c6f2b2eb8893ca391d686b3aaa95267";
+    url = "https://github.com/rockdaboot/libpsl/releases/download/${name}/"
+      + "${name}.tar.gz";
+    sha256 = "95199613158dd773257ef4feccf1acdf5f791479ab4537bd984ca8598447219f";
   };
 
   nativeBuildInputs = [

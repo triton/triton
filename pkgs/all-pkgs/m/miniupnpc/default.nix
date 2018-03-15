@@ -4,12 +4,16 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "miniupnpc-2.0";
+  name = "miniupnpc-2.0.20180222";
 
   src = fetchurl {
-    url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
-    multihash = "Qmf3AjG4KqTBQFxQQE5Nx4zHUrF8uwRsmbQ26uApRKsbaT";
-    sha256 = "a1181f15a76f482d34f2a7fe253ecb9cee062cbcc5797c667da56a788fbe4318";
+    url = [
+      "http://miniupnp.tuxfamily.org/files/download.php?file=${name}.tar.gz"
+      "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz"
+    ];
+    name = "${name}.tar.gz";
+    multihash = "QmfVvdnyNkBsJSYQ1jjVhokJF2efu77PnFfJAqLcwtemLN";
+    sha256 = "587944686469d09f739744b3aed70c7ce753a79c40d6f1227f68a3e962665b75";
   };
 
   preBuild = ''

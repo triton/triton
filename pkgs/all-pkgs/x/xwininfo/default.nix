@@ -9,11 +9,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xwininfo-1.1.3";
+  name = "xwininfo-1.1.4";
 
   src = fetchurl {
     url = "mirror://xorg/individual/app/${name}.tar.bz2";
-    sha256 = "218eb0ea95bd8de7903dfaa26423820c523ad1598be0751d2d8b6a2c23b23ff8";
+    sha256 = "839498aa46b496492a5c65cd42cd2e86e0da88149b0672e90cb91648f8cd5b01";
   };
 
   nativeBuildInputs = [
@@ -32,6 +32,21 @@ stdenv.mkDerivation rec {
     "--disable-strict-compilation"
     #"--with-xcb-iccm"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprints = [
+        # Alan Coopersmith
+        "4A19 3C06 D35E 7C67 0FA4  EF0B A2FB 9E08 1F2D 130E"
+      ];
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Window information utility for X";

@@ -25,7 +25,7 @@ let
       fetchzipverion = 5;
       version = "2018-03-06";
       rev = "a30bfced6b6d6d976c728552d247cb30dd86e238";
-      sha256 = "9883e4b97a46fc9a6ff67c5ea8ace3ffb9d859a59e4ff071e273ec9df6dd1431";
+      sha256 = "06d9b688c6cab00abc7ad54b250052d766f94168faec4a615421a02272d41b40";
     };
   };
   source = sources."${channel}";

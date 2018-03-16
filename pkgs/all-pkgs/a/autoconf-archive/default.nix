@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "autoconf-archive-2017.09.28";
+  name = "autoconf-archive-2018.03.13";
 
   src = fetchurl {
     url = "mirror://gnu/autoconf-archive/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5c9fb5845b38b28982a3ef12836f76b35f46799ef4a2e46b48e2bd3c6182fa01";
+    sha256 = "6175f90d9fa64c4d939bdbb3e8511ae0ee2134863a2c7bf8d9733819efa6e159";
   };
 
   passthru = {

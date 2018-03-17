@@ -322,11 +322,11 @@ let
 
   sys = buildFromGitHub {
     version = 5;
-    rev = "7dca6fe1f43775aa6d1334576870ff63f978f539";
-    date = "2018-03-08";
+    rev = "2f1e207ee39ff70f3433e49c6eb52677a515e3b5";
+    date = "2018-03-16";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "10rpr4lasgriazbx9i5693f821s94dh2hg4r0h81i7984bh1k3i3";
+    sha256 = "1x9xpa7wchhs2368bx7wslz4kps5fvknmpjsihpj6x6wkzjhd7pk";
     goPackagePath = "golang.org/x/sys";
   };
 
@@ -1777,8 +1777,8 @@ let
     version = 5;
     owner = "elves";
     repo = "elvish";
-    rev = "3d4bb53dfc300d57c2c5a16c76191765ffc6b889";
-    sha256 = "0fnmn8cavv4qr6d1fi5gpnisrh1990r206mwgyjy4gnk59w2092y";
+    rev = "2f834da5c0f275607c576841182ed71878a6d971";
+    sha256 = "0gf55a6xfmgx5l71scs8l8wpnq6x2x0sha90wgj8ji50sl9d7y79";
     propagatedBuildInputs = [
       bolt
       go-isatty
@@ -1786,7 +1786,7 @@ let
       sys
     ];
     meta.useUnstable = true;
-    date = "2018-03-11";
+    date = "2018-03-16";
   };
 
   eme = buildFromGitHub {

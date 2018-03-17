@@ -1,11 +1,9 @@
 { stdenv
 , fetchurl
 , gettext
-, intltool
 , lib
-#, meson
-#, ninja
-, python
+, meson
+, ninja
 
 , at-spi2-core
 , atk
@@ -25,8 +23,8 @@ let
 
   sources = {
     "2.26" = {
-      version = "2.26.1";
-      sha256 = "b4f0c27b61dbffba7a5b5ba2ff88c8cee10ff8dac774fa5b79ce906853623b75";
+      version = "2.26.2";
+      sha256 = "61891f0abae1689f6617a963105a3f1dcdab5970c4a36ded9c79a7a544b16a6e";
     };
   };
   source = sources."${channel}";
@@ -42,9 +40,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    #meson
-    #ninja
-    python
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -53,17 +50,12 @@ stdenv.mkDerivation rec {
     dbus
     dbus-glib
     glib
-  ] ++ optionals doCheck [
-    libxml2
+    libxml2  # FIXME: Only needed for tests
   ];
 
-  configureFlags = [
-    "--enable-schemas-compile"
-    "--enable-p2p"
-    "--${boolWt doCheck}-tests"
+  mesonFlags = [
+    "-Ddisable_p2p=false"
   ];
-
-  doCheck = false;
 
   passthru = {
     srcVerification = fetchurl {

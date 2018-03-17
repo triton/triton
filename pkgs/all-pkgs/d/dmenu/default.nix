@@ -13,12 +13,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dmenu-4.7";
+  name = "dmenu-4.8";
 
   src = fetchurl {
-    url = "http://dl.suckless.org/tools/${name}.tar.gz";
-    multihash = "QmfWHbjBueUn281KveLuFytjLepEBBMAGvj8YKcrfBR79Y";
-    sha256 = "a75635f8dc2cbc280deecb906ad9b7594c5c31620e4a01ba30dc83984881f7b9";
+    url = "https://dl.suckless.org/tools/${name}.tar.gz";
+    multihash = "QmNxYLdEb4N1BWnBLNUmBrn292Gg3TPQiRTbSPrcCGk69w";
+    sha256 = "fe615a5c3607061e2106700862e82ac62a9fa1e6a7ac3d616a9c76106476db61";
   };
 
   buildInputs = [

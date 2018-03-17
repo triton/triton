@@ -7,15 +7,15 @@
 }:
 
 let
-  version = "0.7.8";
+  version = "0.7.9";
 in
 stdenv.mkDerivation rec {
   name = "libcap-ng-${version}";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/libcap-ng/${name}.tar.gz";
-    multihash = "QmWyF9KDXAS3pnEsCo8yLwTvUeH8wFDLfMTgmu19iCFhis";
-    sha256 = "c21af997445cd4107a55d386f955c5ea6f6e96ead693e9151277c0ab5f97d05f";
+    multihash = "QmRUFP2RxDnArPLs1ru9YxS7zsXYRB69Nimx436FD9kCfz";
+    sha256 = "4a1532bcf3731aade40936f6d6a586ed5a66ca4c7455e1338d1f6c3e09221328";
   };
 
   nativeBuildInputs = [

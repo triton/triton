@@ -8,6 +8,7 @@
 , cairo
 , fontconfig
 , freetype
+, fribidi
 , glib
 , gobject-introspection
 , harfbuzz_lib
@@ -21,8 +22,8 @@ let
     optionals
     optionalString;
 
-  channel = "1.40";
-  version = "${channel}.14";
+  channel = "1.42";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "pango-${version}";
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "90af1beaa7bf9e4c52db29ec251ec4fd0a8f2cc185d521ad1f88d01b3a6a17e3";
+    sha256 = "9924d88a3dcedff753f0763814a1605307c5c9c931413b8b47ea7267d1b19446";
   };
 
   nativeBuildInputs = [
@@ -43,6 +44,7 @@ stdenv.mkDerivation rec {
     cairo
     fontconfig
     freetype
+    fribidi
     glib
     gobject-introspection
     harfbuzz_lib
@@ -53,6 +55,7 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [
     "-Denable_docs=false"  # gtk-doc
+    "-Dgir=true"
   ];
 
   # preCheck = /* Fontconfig fails to load default config in test */
@@ -75,7 +78,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "A library for laying out and rendering of text";
+    description = "A library for layout and rendering of text";
     homepage = http://www.pango.org/;
     license = licenses.lgpl2Plus;
     maintainers = with maintainers; [

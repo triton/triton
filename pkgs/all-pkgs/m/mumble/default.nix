@@ -72,9 +72,9 @@ let
   sources = {
     "git" = {
       fetchzipversion = 5;
-      version = "2018-02-10";
-      rev = "0dddc4378f42e09685db6f427dd578079bef3bda";
-      sha256 = "5067a0db0c428d1573f2ea9d061ffd511b40106aea439c6c4788c8a9a2c52694";
+      version = "2018-03-15";
+      rev = "208ff1525439ab4819cae9705eef57320eaa66bd";
+      sha256 = "4f0e107d5e451a23be119210aafd80301829eee366955ab02659e4083ae81736";
     };
   };
   source = sources."${channel}";

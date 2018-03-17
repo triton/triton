@@ -55,6 +55,8 @@ buildPythonPackage rec {
     sed -i setup.py \
       -e 's,/usr,/non-existant-path,g' \
       -e 's,/opt,/non-existant-path,g'
+
+    sed -i "/def lz4_system_prefix/a\    return \"${lz4}\"" setup_lz4.py
   '';
 
   disabled = pythonOlder "3.5";

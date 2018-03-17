@@ -3,7 +3,7 @@
 , gettext
 , intltool
 , lib
-, python
+, python3
 
 , glib
 , glib-networking
@@ -22,9 +22,9 @@ let
     boolWt;
 
   sources = {
-    "2.60" = {
-      version = "2.60.3";
-      sha256 = "1b0dc762f23abe4e0d29b77370e539fd35f31d8e8e0318d6ddccff395be68a22";
+    "2.62" = {
+      version = "2.62.0";
+      sha256 = "ab7c7ae8d19d0a27ab3b6ae21599cec8c7f7b773b3f2b1090c5daf178373aaac";
     };
   };
   source = sources."${channel}";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
-    python
+    python3
     vala
   ];
 

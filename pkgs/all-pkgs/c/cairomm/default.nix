@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "cairomm-1.12.2";
+  name = "cairomm-1.15.5";
 
   src = fetchurl {
     url = "http://cairographics.org/releases/${name}.tar.gz";
-    multihash = "QmbiHbZeBhdVb5anjocYxJ9KQQKnZ85PRpDbAnmHRzYx48";
+    multihash = "QmPB3QBVf5eMws5BEdB3msh9J1DkcnWDSEkjJEfa4SKpc6";
     hashOutput = false;
-    sha256 = "45c47fd4d0aa77464a75cdca011143fea3ef795c4753f6e860057da5fb8bd599";
+    sha256 = "8db629f44378cac62b4931f725520334024e62c1951c4396682f1add63c1e3d1";
   };
 
   buildInputs = [

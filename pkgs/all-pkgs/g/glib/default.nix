@@ -1,10 +1,10 @@
 { stdenv
-, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , gettext
-, perl
-, python
+, meson
+, ninja
+, python3
 
 , attr
 , elfutils
@@ -34,78 +34,55 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  channel = "2.54";
-  version = "${channel}.3";
+  channel = "2.56";
+  version = "${channel}.0";
 in
-
-assert stdenv.cc.isGNU;
-
 stdenv.mkDerivation rec {
   name = "glib-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "963fdc6685dc3da8e5381dfb9f15ca4b5709b28be84d9d05a9bb8e446abac0a8";
+    sha256 = "ecef6e17e97b8d9150d0e8a4b3edee1ac37331213b8a2a87a083deea408a0fc7";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     gettext
-    perl
-    python
+    meson
+    ninja
   ];
 
   buildInputs = [
-    attr
-    elfutils
+    elfutils  # FIXME: only need libelf
     libffi
     libselinux
     pcre
     stdenv.libc
     util-linux_lib
     zlib
+  ] ++ optionals stdenv.cc.isGNU [  # FIXME: need a proper way to test current libc
+    # libattr is only needed for systems that don't use glibc
+    attr
   ];
 
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
 
-  postPatch = /* Don't build tests, also prevents extra deps */ ''
-    sed -i {.,gio,glib}/Makefile.{am,in} \
-      -e 's/ tests//'
+  postPatch = ''
+    sed -i gio/tests/gengiotypefuncs.py \
+      -e 's,#!/usr/bin/env python.*,#!${python3.interpreter},'
   '';
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    # FIXME: Figure out why disabling debug causes segfaults in applications
-    #        using glib.  It seems like glib asserts may be triggering
-    #        segfaults, but more debugging is needed.
-    #"--disable-debug"
-    "--disable-gc-friendly"
-    "--enable-mem-pools"
-    "--enable-rebuilds"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--enable-largefile"
-    "--disable-included-printf"
-    "--${boolEn (libselinux != null)}-selinux"
-    "--disable-fam"
-    "--${boolEn (attr != null)}-xattr"  # glibc or attr
-    "--${boolEn (elfutils != null)}-libelf"
-    "--${boolEn (util-linux_lib != null)}-libmount"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-man"
-    "--disable-dtrace"
-    "--disable-systemtap"
-    "--disable-coverage"
-    "--enable-Bsymbolic"
-    "--enable-znodelete"
-    "--enable-compile-warnings"
+  mesonFlags = [
+    "-Diconv=libc"  # FIXME: assumes glibc is libc
+    "-Dselinux=true"
+    "-Dxattr=true"
+    "-Dlibmount=true"
     # The internal pcre is not patched to support gcc5, among other
-    # fixes specific to Triton
-    "--with-pcre=system"
+    "-Dinternal_pcre=false"
+    "-Dman=false"
+    "-Dsystemtap=false"
+    "-Dgtk_doc=false"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

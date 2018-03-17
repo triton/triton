@@ -131,6 +131,13 @@ stdenv.mkDerivation rec {
     "-Dintrospection=${boolTf (gobject-introspection != null)}"
   ];
 
+  postInstall = ''
+    # Private libs are never actually installed.
+    sed -i $out/lib/pkgconfig/libnma.pc \
+      -i $out/lib/pkgconfig/libnm-gtk.pc \
+      -e '/Libs.private/d'
+  '';
+
   preFixup = ''
     wrapProgram "$out/bin/nm-applet" \
       --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \

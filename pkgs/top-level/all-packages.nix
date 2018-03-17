@@ -1581,7 +1581,7 @@ gnome-terminal_3-26 = callPackage ../all-pkgs/g/gnome-terminal {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   nautilus = pkgs.nautilus_unwrapped_3-26;
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
   vte = pkgs.vte_0-50;
 };
 gnome-terminal = callPackageAlias "gnome-terminal_3-26" { };
@@ -1719,7 +1719,7 @@ gsound = callPackage ../all-pkgs/g/gsound { };
 gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
   channel = "1.0";
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
@@ -1857,7 +1857,7 @@ gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.24";
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
 };
 gtksourceview = callPackageAlias "gtksourceview_3-24" { };
 
@@ -1875,7 +1875,7 @@ gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
   channel = "1.0";
   gssdp = pkgs.gssdp_1-0;
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
 };
 gupnp = callPackageAlias "gupnp_1-0" { };
 
@@ -1889,7 +1889,7 @@ gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 gvfs_1-34 = callPackage ../all-pkgs/g/gvfs {
   channel = "1.34";
   libbluray = null;
-  libsoup = pkgs.libsoup_2-60;
+  libsoup = pkgs.libsoup_2-62;
 };
 gvfs = callPackageAlias "gvfs_1-34" { };
 
@@ -2228,7 +2228,7 @@ libgdiplus = callPackage ../all-pkgs/l/libgdiplus { };
 
 libgee_0-20 = callPackage ../all-pkgs/l/libgee {
   channel = "0.20";
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
 };
 libgee = callPackageAlias "libgee_0-20" { };
 
@@ -2271,7 +2271,7 @@ libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   libsoup = pkgs.libsoup_2-60;
-  vala = pkgs.vala_0-38;
+  vala = pkgs.vala_0-40;
 };
 libgweather = callPackageAlias "libgweather_3-24" { };
 
@@ -3779,10 +3779,10 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-38 = callPackage ../all-pkgs/v/vala {
-  channel = "0.38";
+vala_0-40 = callPackage ../all-pkgs/v/vala {
+  channel = "0.40";
 };
-vala = callPackageAlias "vala_0-38" { };
+vala = callPackageAlias "vala_0-40" { };
 
 valgrind = callPackage ../all-pkgs/v/valgrind { };
 

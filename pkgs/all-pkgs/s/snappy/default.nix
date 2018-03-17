@@ -1,27 +1,30 @@
 { stdenv
 , autoreconfHook
+, cmake
 , fetchFromGitHub
+, ninja
 
 , lzo
 , zlib
 }:
 
 let
-  version = "1.1.4";
+  version = "1.1.7";
 in
 stdenv.mkDerivation rec {
   name = "snappy-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 5;
     owner = "google";
     repo = "snappy";
     rev = version;
-    sha256 = "ea51fc2c12aafbcd89bc65e859015fb7e63da0b95a952fbc52d0e624c301e484";
+    sha256 = "5dba0e94670b7f5190d448150228030fe0458805959ca389ca3818beded96293";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
+    cmake
+    ninja
   ];
 
   buildInputs = [
@@ -29,11 +32,8 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # -DNDEBUG for speed
-  configureFlags = [
-    "CXXFLAGS=-DNDEBUG"
-    "--enable-shared"
-    "--enable-static"
+  cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
   ];
 
   disableStatic = false;

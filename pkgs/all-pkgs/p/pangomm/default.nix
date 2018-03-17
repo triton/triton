@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , cairomm
 , glibmm
@@ -10,7 +11,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.40" = {
+      version = "2.40.1";
+      sha256 = "9762ee2a2d5781be6797448d4dd2383ce14907159b30bc12bf6b08e7227be3af";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "pangomm-${source.version}";
@@ -51,7 +58,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "C++ interface to the Pango text rendering library";
     homepage = http://www.pango.org/;
     license = with licenses; [

@@ -38,17 +38,17 @@ let
     optionalString;
 
     channel = "2.24";
-    version = "${channel}-2017-08-07";
+    version = "${channel}-2018-02-19";
 in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "GNOME";
     repo = "gtk";
-    rev = "bf8c1c212ebc6d05b534aa1c0edff73103e9cc56";
-    sha256 = "72be94622c5318bdc6c787515fd805ac4028f71aa5b4fac33abb1e52197c2c62";
+    rev = "98687be5627ea121873c6cacf1570a45f3a200f0";
+    sha256 = "391fa505b74b3de2b78eb8e5274f386be6ee5205dfdbf49b122c41d607de5c89";
   };
 
   nativeBuildInputs = [

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , atk
 , glibmm
@@ -9,7 +10,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.24" = {
+      version = "2.24.2";
+      sha256 = "ff95385759e2af23828d4056356f25376cfabc41e690ac1df055371537e458bd";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "atkmm-${source.version}";
@@ -46,7 +53,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "C++ interface for the ATK library";
     homepage = http://www.gtkmm.org;
     license = licenses.lgpl21Plus;

@@ -1,22 +1,23 @@
 { stdenv
 , fetchurl
-, python
+, lib
+, python2
 
 , glib
 , libgudev
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmbim-1.14.2";
+  name = "libmbim-1.16.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libmbim/${name}.tar.xz";
-    multihash = "QmaCdwLjoRqvJxArMcu28kkDcNDqH5zHKVHWvjFbknVNaD";
-    sha256 = "22cafe6b8432433aa58bedcf7db71111522ce6531bfe24e8e9b6058412cd31cf";
+    multihash = "QmfQVi9ZwXUv2aY2UGw1zUA5gj9HR96KWJCVyRqbJn8wSU";
+    sha256 = "c8ca50beeddd4b43309df5b698917268303bf176cea58fe4fe53d5bf0e93fac2";
   };
 
   nativeBuildInputs = [
-    python
+    python2
   ];
 
   buildInputs = [
@@ -28,9 +29,9 @@ stdenv.mkDerivation rec {
     patchShebangs .
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "Library for WWAN modems & devices using the MBIM protocol";
     homepage = http://www.freedesktop.org/software/libmbim/;
-    description = "Library for WWAN modems & devices which use the Mobile Broadband Interface Model (MBIM) protocol";
     license = with licenses; [
       gpl2Plus
       lgpl21Plus

@@ -1,6 +1,5 @@
 { stdenv
-, autoconf
-, automake
+, autoreconfHook
 , fetchurl
 , docbook2x
 , docbook_xml_dtd_45
@@ -28,8 +27,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
+    autoreconfHook
     docbook2x
   ];
 

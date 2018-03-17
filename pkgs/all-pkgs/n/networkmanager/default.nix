@@ -144,14 +144,6 @@ stdenv.mkDerivation rec {
     })
   ];*/
 
-  patches = [
-    # Remove after >1.10.4
-    (fetchpatch {
-      url = "https://github.com/NetworkManager/NetworkManager/commit/782578122c6cb23bdbee0b01eddceee1b967a673.patch";
-      sha256 = "7fa1e7087156827816bba884e99d39a6ac757dde619522afc1cf93b60d119b7f";
-    })
-  ];
-
   # FIXME: fix hard coded resolvconf paths
   postPatch = ''
     patchShebangs ./tools/create-exports-NetworkManager.sh

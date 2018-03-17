@@ -33,6 +33,7 @@
 , opengl-dummy
 , pango
 , rest
+, sassc
 , shared-mime-info
 , wayland
 , wayland-protocols
@@ -96,6 +97,7 @@ stdenv.mkDerivation rec {
     opengl-dummy
     pango
     rest
+    sassc
     shared-mime-info
     wayland
     wayland-protocols

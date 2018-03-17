@@ -5,14 +5,14 @@
 }:
 
 let
-  version = "3.15.3";
+  version = "3.17";
 in
 stdenv.mkDerivation rec {
   name = "nbd-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/nbd/nbd/${version}/${name}.tar.xz";
-    sha256 = "6888cd01efbd8e2377634c83c29c8a096b485f90f1185854651ed6b50f1c0056";
+    sha256 = "d95c6bb1a3ab33b953af99b73fb4833e123bd25433513b32d57dbeb1a0a0d189";
   };
 
   buildInputs = [

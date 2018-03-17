@@ -99,6 +99,11 @@ stdenv.mkDerivation rec {
 
     touch README  # File is expected to exist
 
+    # Glib meson build does not distribute m4 macros required by GTK+ 2.x.
+    # https://github.com/GNOME/glib/blob/master/m4macros/glib-gettext.m4
+    # https://gitlab.gnome.org/GNOME/gtk/issues/104
+    cp -v ${./glib-gettext.m4} ${./glib-2.0.m4} m4/
+
     # autoreconfHook doesn't use $ACLOCAL_FLAGS so it must be run manually
     aclocal --force -I m4/
     libtoolize --copy --force
@@ -131,6 +136,11 @@ stdenv.mkDerivation rec {
     #"--with-gdktarget=directfb"
     "--${boolWt (libx11 != null)}-x"
   ];
+
+  preInstall = ''
+    # Build fails to create directory
+    mkdir -pv $out/lib/gtk-2.0/2.10.0/
+  '';
 
   postInstall = "rm -rf $out/share/gtk-doc";
 

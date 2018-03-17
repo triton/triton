@@ -1,6 +1,5 @@
 { stdenv
-, autoconf
-, automake
+, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , gettext
@@ -33,8 +32,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
+    autoreconfHook
     gettext
   ];
 

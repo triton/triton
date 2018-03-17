@@ -436,6 +436,9 @@ go.stdenv.mkDerivation (
       if [ -n "$NIX_DEBUG" ]; then
         echo "Checking to Go Install: $f" >&2
       fi
+      if [[ "$f" =~ _test\.go$ ]]; then
+        continue
+      fi
       echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr"'\(/[^/]*\|\.a\)''$' || continue
       if [ -n "$NIX_DEBUG" ]; then
         echo "Go Installing: $f" >&2

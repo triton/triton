@@ -662,7 +662,7 @@ aspell = callPackage ../all-pkgs/a/aspell { };
 at-spi2-atk_2-26 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.26";
   at-spi2-core = pkgs.at-spi2-core_2-28;
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
 };
 at-spi2-atk = callPackageAlias "at-spi2-atk_2-26" { };
 
@@ -673,14 +673,14 @@ at-spi2-core = callPackageAlias "at-spi2-core_2-28" { };
 
 atftp = callPackage ../all-pkgs/a/atftp { };
 
-atk_2-26 = callPackage ../all-pkgs/a/atk {
-  channel = "2.26";
+atk_2-28 = callPackage ../all-pkgs/a/atk {
+  channel = "2.28";
 };
-atk = callPackageAlias "atk_2-26" { };
+atk = callPackageAlias "atk_2-28" { };
 
 atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
   channel = "2.24";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
 };
 atkmm = callPackageAlias "atkmm_2-24" { };
 
@@ -1118,7 +1118,7 @@ enchant = callPackage ../all-pkgs/e/enchant { };
 eog_3-26 = callPackage ../all-pkgs/e/eog {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
@@ -1139,7 +1139,7 @@ evieext = callPackage ../all-pkgs/e/evieext { };
 evince_3-22 = callPackage ../all-pkgs/e/evince {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-34;
@@ -1438,12 +1438,12 @@ git = callPackage ../all-pkgs/g/git { };
 
 gjs_1-46 = callPackage ../all-pkgs/g/gjs {
   channel = "1.46";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gjs_1-48 = callPackage ../all-pkgs/g/gjs {
   channel = "1.48";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gjs = callPackageAlias "gjs_1-46" { };
@@ -1490,7 +1490,7 @@ gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-24" { };
 gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
   channel = "3.20";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gnome-bluetooth = callPackageAlias "gnome-bluetooth_3-20" { };
@@ -1514,7 +1514,7 @@ gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
 gnome-desktop_3-26 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.26";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
@@ -1828,7 +1828,7 @@ gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk {
   channel = "3.22";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   at-spi2-atk = pkgs.at-spi2-atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
@@ -1855,7 +1855,7 @@ gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
 
 gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.24";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   vala = pkgs.vala_0-38;
 };
@@ -2268,7 +2268,7 @@ libgusb = callPackage ../all-pkgs/l/libgusb { };
 
 libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
   channel = "3.24";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   libsoup = pkgs.libsoup_2-60;
   vala = pkgs.vala_0-38;
@@ -2873,7 +2873,7 @@ musl = callPackage ../all-pkgs/m/musl { };
 
 mutter_3-26 = callPackage ../all-pkgs/m/mutter {
   channel = "3.26";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gnome-settings-daemon = pkgs.gnome-settings-daemon_3-26;
@@ -2889,7 +2889,7 @@ nasm = callPackage ../all-pkgs/n/nasm { };
 
 nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
   channel = "3.26";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
@@ -3583,7 +3583,7 @@ suil = callPackage ../all-pkgs/s/suil { };
 
 sushi_3-24 = callPackage ../all-pkgs/s/sushi {
   channel = "3.24";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gjs = pkgs.gjs_1-46;
   gtksourceview = pkgs.gtksourceview_3-24;
 };
@@ -3817,7 +3817,7 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte_0-50 = callPackage ../all-pkgs/v/vte {
   channel = "0.50";
-  atk = pkgs.atk_2-26;
+  atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 vte = callPackageAlias "vte_0-50" { };

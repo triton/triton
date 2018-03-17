@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   name = "st-0.7";
 
   src = fetchurl {
-    url = "http://dl.suckless.org/st/${name}.tar.gz";
+    url = "https://dl.suckless.org/st/${name}.tar.gz";
     multihash = "QmV1FssAdXN44hWi4QjWp5GLn5ZqwqnvBjJ8JRNayMRi5Z";
     sha256 = "f7870d906ccc988926eef2cc98950a99cc78725b685e934c422c03c1234e6000";
   };

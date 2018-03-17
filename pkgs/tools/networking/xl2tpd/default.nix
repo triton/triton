@@ -5,11 +5,11 @@ in stdenv.mkDerivation {
   name = "xl2tpd-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "xelerance";
     repo = "xl2tpd";
     rev = "v${version}";
-    sha256 = "17lnsk9fsyfp2g5hha7psim6047wj9qs8x4y4w06gl6bbf36jm9z";
+    sha256 = "8a597acf4a629ad5760b0099e54339a94d6b03bd2bcb57256f5fd86ca699c546";
   };
 
   buildInputs = [ libpcap ];

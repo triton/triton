@@ -31,12 +31,12 @@ let
       null;
 in
 stdenv.mkDerivation rec {
-  name = "st-0.7";
+  name = "st-0.8";
 
   src = fetchurl {
     url = "https://dl.suckless.org/st/${name}.tar.gz";
-    multihash = "QmV1FssAdXN44hWi4QjWp5GLn5ZqwqnvBjJ8JRNayMRi5Z";
-    sha256 = "f7870d906ccc988926eef2cc98950a99cc78725b685e934c422c03c1234e6000";
+    multihash = "QmVXjDbXRA3jahZhb3xUghJfsyPCPn58TNAkNHMG6oEjYE";
+    sha256 = "77353920d07d66c684a0f57ec37c2670c42fdc5c871d6382b701601cdc597576";
   };
 
   preBuild = optionalString (configFile' != null) ''

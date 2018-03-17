@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.9.0";
+  version = "1.10.0";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    sha256 = "05728b472785835b9921054d17594f5c35637282f757c025fc0e0fe8ba667610";
+    sha256 = "48b5e25129861c062b4aeb9d524aea901c13bfb7b9585be954ae6fb99fbd0d6e";
   };
 
   nativeBuildInputs = [
@@ -55,7 +55,7 @@ stdenv.mkDerivation {
   ];
 
   preBuild = ''
-    sed -i 's,\(grpc++.*\.so\.\)5,\11,g' Makefile
+    sed -i 's,\(grpc++.*\.so\.\)6,\11,g' Makefile
     makeFlagsArray+=("prefix=$out")
   '';
 

@@ -661,15 +661,15 @@ aspell = callPackage ../all-pkgs/a/aspell { };
 
 at-spi2-atk_2-26 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.26";
-  at-spi2-core = pkgs.at-spi2-core_2-26;
+  at-spi2-core = pkgs.at-spi2-core_2-28;
   atk = pkgs.atk_2-26;
 };
 at-spi2-atk = callPackageAlias "at-spi2-atk_2-26" { };
 
-at-spi2-core_2-26 = callPackage ../all-pkgs/a/at-spi2-core {
-  channel = "2.26";
+at-spi2-core_2-28 = callPackage ../all-pkgs/a/at-spi2-core {
+  channel = "2.28";
 };
-at-spi2-core = callPackageAlias "at-spi2-core_2-26" { };
+at-spi2-core = callPackageAlias "at-spi2-core_2-28" { };
 
 atftp = callPackage ../all-pkgs/a/atftp { };
 
@@ -4040,7 +4040,7 @@ zenity_generics = overrides: callPackage ../all-pkgs/z/zenity ({
 zenity_3-24 = pkgs.zenity_generics {
   channel = "3.24";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  at-spi2-core = pkgs.at-spi2-core_2-26;
+  at-spi2-core = pkgs.at-spi2-core_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 zenity = callPackageAlias "zenity_3-24" { };

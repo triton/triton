@@ -4,7 +4,7 @@
 , fetchurl
 , lib
 
-, cogl
+#, cogl
 , fontconfig
 , freetype
 , glib
@@ -46,6 +46,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    #cogl
     fontconfig
     freetype
     glib

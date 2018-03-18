@@ -9568,14 +9568,14 @@ let
 
   teleport = buildFromGitHub {
     version = 5;
-    rev = "v2.4.3";
+    rev = "v2.5.2";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "576becf1d0b720aa88c2246dae63b932b5ac936de1824a52d38b26cdfdb8bfd5";
-    nativeBuildInputs = [
-      pkgs.protobuf-cpp
-      protobuf.bin
-    ];
+    sha256 = "833ba064efe386dc2068c22ca1c8b09d248f5f55a2922d7fdabe2abb80605191";
+    #nativeBuildInputs = [
+    #  pkgs.protobuf-cpp
+    #  protobuf.bin
+    #];
     buildInputs = [
       aws-sdk-go
       backoff
@@ -9586,12 +9586,13 @@ let
       etcd_client
       etree
       form
-      genproto
+      #genproto
       go-oidc
-      go-shellwords
+      go-semver
+      #go-shellwords
       gops
       gosaml2
-      goterm
+      #goterm
       goxmldsig
       grpc
       grpc-gateway
@@ -9612,35 +9613,25 @@ let
       protobuf
       pty
       roundtrip
-      shellescape
+      #shellescape
       text
       timetools
       trace
       gravitational_ttlmap
       mailgun_ttlmap
       u2f
-      pborman_uuid
+      google_uuid
       yaml
       yaml_v2
     ];
-    excludedPackages = "\\(test\\|suite\\|fixtures\\|examples\\|docker\\)";
+    excludedPackages = "\\(suite\\|fixtures\\|test\\|mock\\)";
     meta.autoUpdate = false;
-    #patches = [
-    #  (fetchTritonPatch {
-    #    rev = "bbf0173a53b7b44b052022532eaca9aa0565f5e3";
-    #    file = "t/teleport/fix.patch";
-    #    sha256 = "7deb529032415073c1883b0557b35156c28b9010f6dab0ae41c4262f1ab38f8b";
-    #  })
-    #];
-    #postPatch = ''
-    #  sed -i 's,--gofast_out,--go_out,' Makefile
-    #'';
-    #preBuild = ''
-    #  GATEWAY_SRC=$(readlink -f unpack/grpc-gateway*)/src
-    #  API_SRC=$GATEWAY_SRC/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis
-    #  PROTO_INCLUDE=$GATEWAY_SRC:$API_SRC \
-    #    make -C go/src/$goPackagePath buildbox-grpc
-    #'';
+    postPatch = ''
+      rm lib/auth/helpers.go
+
+      grep -q 'SetHooks(' lib/utils/cli.go
+      sed -i 's,SetHooks(,Hooks = (,' lib/utils/cli.go
+    '';
     preFixup = ''
       test -f "$bin"/bin/tctl
     '';

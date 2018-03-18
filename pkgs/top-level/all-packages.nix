@@ -1625,7 +1625,7 @@ go_1-9 = callPackage ../all-pkgs/g/go {
 go_1-10 = callPackage ../all-pkgs/g/go {
   channel = "1.10";
 };
-go = callPackageAlias "go_1-9" { };
+go = callPackageAlias "go_1-10" { };
 
 goPackages_1-9 = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1-9" { };
@@ -1641,7 +1641,7 @@ goPackages_1-10 = callPackage ./go-packages.nix {
   };
   overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };
-goPackages = callPackageAlias "goPackages_1-9" { };
+goPackages = callPackageAlias "goPackages_1-10" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 

@@ -223,6 +223,10 @@ go.stdenv.mkDerivation (
     buildFlagsArray+=(
       "-asmflags" "${optionalString (versionAtLeast go.channel "1.10") "$goPackagePath/...="}-trimpath '$NIX_BUILD_TOP'"
       "-gcflags" "${optionalString (versionAtLeast go.channel "1.10") "$goPackagePath/...="}-trimpath '$NIX_BUILD_TOP'"
+  '' + optionalString (versionAtLeast go.channel "1.10") ''
+      "-asmflags" "gx/...=-trimpath '$NIX_BUILD_TOP'"
+      "-gcflags" "gx/...=-trimpath '$NIX_BUILD_TOP'"
+  '' + ''
     )
 
     export inputGoPaths="

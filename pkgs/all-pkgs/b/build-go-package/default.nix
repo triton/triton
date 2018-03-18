@@ -36,6 +36,7 @@ let
     optional
     optionalAttrs
     optionalString
+    versionAtLeast
     ;
 
   removeReferences = [
@@ -220,8 +221,8 @@ go.stdenv.mkDerivation (
     export HOME="$TMPDIR"
 
     buildFlagsArray+=(
-      "-asmflags" "-trimpath '$NIX_BUILD_TOP'"
-      "-gcflags" "-trimpath '$NIX_BUILD_TOP'"
+      "-asmflags" "${optionalString (versionAtLeast go.channel "1.10") "$goPackagePath/...="}-trimpath '$NIX_BUILD_TOP'"
+      "-gcflags" "${optionalString (versionAtLeast go.channel "1.10") "$goPackagePath/...="}-trimpath '$NIX_BUILD_TOP'"
     )
 
     export inputGoPaths="
@@ -330,7 +331,7 @@ go.stdenv.mkDerivation (
 
   '' + (optionalString (go.channel == "1.8") ''
     ERREGEX="no buildable Go source files"
-  '') + (optionalString (go.channel == "1.9") ''
+  '') + (optionalString (versionAtLeast go.channel "1.9") ''
     ERREGEX="\("
     ERREGEX="''${ERREGEX}build constraints exclude all Go files\|"
     ERREGEX="''${ERREGEX}no non-test Go files\|"

@@ -113,7 +113,7 @@ go.stdenv.mkDerivation (
     if [ -z "$allowVendoredSources" ]; then
       find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
     fi
-  '' + flip concatMapStrings extraSrcs ({ src, goPackagePath, ... }: ''
+  '' + flip concatMapStrings (filter (n: (n.src or null) != null) extraSrcs) ({ src, goPackagePath, ... }: ''
     mkdir extraSrc
     (cd extraSrc; unpackFile "${src}")
     mkdir -p "go/src/$(dirname "${goPackagePath}")"

@@ -392,7 +392,7 @@ go.stdenv.mkDerivation (
 
     # Build go packages
     while read dir; do
-      buildGoDir install "$dir"
+      buildGoDir "install -i" "$dir"
     done < <(getGoDirs "")
 
     runHook postBuild

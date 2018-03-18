@@ -85,7 +85,18 @@ stdenv.mkDerivation rec {
     "-Dgtk_doc=false"
   ];
 
-  postInstall = "rm -rvf $out/share/gtk-doc";
+  postInstall = ''
+    rm -rvf $out/share/gtk-doc
+
+    # Exit the ninja build directory
+    cd ../$srcRoot
+    # M4 macros are not installed by meson, but still needed by other
+    # packages during the meson transition.
+    for i in 'glib-2.0.m4' 'glib-gettext.m4' 'gsettings.m4'; do
+      ls -al
+      install -D -m 644 -v m4macros/$i $out/share/aclocal/$i
+    done
+  '';
 
   passthru = {
     gioModuleDir = "lib/gio-modules/${name}/gio/modules";

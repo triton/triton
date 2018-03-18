@@ -216,9 +216,9 @@ go.stdenv.mkDerivation (
   buildPhase = args.buildPhase or ''
     runHook renameImports
 
-    runHook preBuild
-
     export HOME="$TMPDIR"
+
+    runHook preBuild
 
     buildFlagsArray+=(
       "-asmflags" "${optionalString (versionAtLeast go.channel "1.10") "$goPackagePath/...="}-trimpath '$NIX_BUILD_TOP'"

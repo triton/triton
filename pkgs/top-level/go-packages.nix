@@ -1939,7 +1939,7 @@ let
   };
 
   escaper = buildFromGitHub {
-    version = 2;
+    version = 6;
     owner = "lucasem";
     repo = "escaper";
     rev = "17fe61c658dcbdcbf246c783f4f7dc97efde3a8b";
@@ -7193,9 +7193,6 @@ let
     repo = "mgo";
     sha256 = "04yl8rdzpwbnxad6dxsxjh0m9ksmzi8pqr24nc9rxn8xg61jfg99";
     goPackagePath = "gopkg.in/mgo.v2";
-    goPackageAliases = [
-      "github.com/10gen/llmgo"
-    ];
     excludedPackages = "dbtest";
     buildInputs = [
       pkgs.cyrus-sasl
@@ -7436,6 +7433,9 @@ let
     repo   = "mongo-tools";
     sha256 = "04k77al89km0zx6llwrb80iczdsgs106phd84l821cxxspfnia7k";
     buildInputs = [
+      pkgs.libpcap
+    ];
+    propagatedBuildInputs = [
       crypto
       escaper
       go-cache
@@ -7444,9 +7444,22 @@ let
       gopass
       mgo_v2
       openssl
+      snappy
       termbox-go
       tomb_v2
     ];
+    excludedPackages = "test";
+    postPatch = ''
+      mv vendor/src/github.com/10gen/llmgo "$NIX_BUILD_TOP"/llmgo
+    '';
+    preBuild = ''
+      mkdir -p $(echo unpack/mgo*)/src/github.com/10gen
+      mv llmgo unpack/mgo*/src/github.com/10gen
+    '';
+    extraSrcs = [ {
+      goPackagePath = "github.com/10gen/llmgo";
+      src = null;
+    } ];
 
     # Mongodb incorrectly names all of their binaries main
     # Let's work around this with our own installer
@@ -7454,7 +7467,7 @@ let
       mkdir -p $bin/bin
       while read b; do
         rm -f go/bin/main
-        go install $goPackagePath/$b/main
+        go install $buildFlags "''${buildFlagsArray[@]}" $goPackagePath/$b/main
         cp go/bin/main $bin/bin/$b
       done < <(find go/src/$goPackagePath -name main | xargs dirname | xargs basename -a)
       rm -r go/bin
@@ -7904,10 +7917,6 @@ let
     propagatedBuildInputs = [
       spacelog
     ];
-
-    preBuild = ''
-      find go/src/$goPackagePath -name \*.go | xargs sed -i 's,spacemonkeygo/openssl,10gen/openssl,g'
-    '';
   };
 
   opentracing-go = buildFromGitHub {
@@ -9631,6 +9640,9 @@ let
 
       grep -q 'SetHooks(' lib/utils/cli.go
       sed -i 's,SetHooks(,Hooks = (,' lib/utils/cli.go
+
+      grep -q 'uuid.New()$' lib/utils/utils.go
+      sed -i 's,uuid.New()$,uuid.New().String(),' lib/utils/utils.go
     '';
     preFixup = ''
       test -f "$bin"/bin/tctl

@@ -350,7 +350,7 @@ go.stdenv.mkDerivation (
         echo "Go Building: $dir" >&2
       fi
       local OUT
-      if ! OUT="$(go $cmd -work''${NIX_DEBUG+ -x} -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
+      if ! OUT="$(go $cmd''${NIX_DEBUG+ -x -v -work} -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" $d 2>&1)"; then
         if ! echo "$OUT" | grep -q "$ERREGEX"; then
           echo "$OUT" >&2
           return 1

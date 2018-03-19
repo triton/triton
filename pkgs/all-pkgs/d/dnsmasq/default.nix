@@ -17,13 +17,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "dnsmasq-2.78";
+  name = "dnsmasq-2.79";
 
   src = fetchurl {
     url = "http://www.thekelleys.org.uk/dnsmasq/${name}.tar.xz";
-    multihash = "Qmd1AiL3uzHVSaLuFa5TvZDemaETZqSrb66F7BYDFFnACM";
+    multihash = "QmRfdEB2CrJd92u8UjTUxNkVCZNBUaGKh86JvbKKsxU8kU";
     hashOutput = false;
-    sha256 = "89949f438c74b0c7543f06689c319484bd126cc4b1f8c745c742ab397681252b";
+    sha256 = "78ad74f5ca14fd85a8bac93f764cd9d60b27579e90eabd3687ca7b030e67861f";
   };
 
   buildInputs = [

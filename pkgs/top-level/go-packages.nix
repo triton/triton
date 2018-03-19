@@ -9558,6 +9558,7 @@ let
     nativeBuildInputs = [
       pkgs.protobuf-cpp
       gogo_protobuf.bin
+      pkgs.zip
     ];
     buildInputs = [
       aws-sdk-go
@@ -9629,7 +9630,13 @@ let
     '';
     preFixup = ''
       test -f "$bin"/bin/tctl
-      test -f "$bin"/bin/teleport
+    '';
+    postFixup = ''
+      pushd go/src/$goPackagePath/web/dist >/dev/null
+      zip -r "$NIX_BUILD_TOP"/assets.zip .
+      popd >/dev/null
+      cat assets.zip >>"$bin"/bin/teleport
+      zip -A "$bin"/bin/teleport
     '';
   };
 

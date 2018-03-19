@@ -284,18 +284,7 @@ let
     repo = "protobuf";
     sha256 = "1mif0cx6gi9308nyr935s8d564w2m6v012h3qflhi0jnzg3dmgx9";
     goPackagePath = "github.com/golang/protobuf";
-    buildInputs = [
-      genproto_protobuf
-    ];
-  };
-
-  protobuf_genproto = protobuf.override {
-    subPackages = [
-      "proto"
-      "ptypes/any"
-    ];
-    buildInputs = [
-    ];
+    excludedPackages = "test";
   };
 
   snappy = buildFromGitHub {
@@ -2288,28 +2277,13 @@ let
     ];
   };
 
-  genproto_protobuf = genproto.override {
-    subPackages = [
-      "protobuf"
-    ];
-    buildInputs = [
-      protobuf_genproto
-    ];
-    propagatedBuildInputs = [
-    ];
-    preBuild = null;
-  };
-
   genproto_for_grpc = genproto.override {
     subPackages = [
       "googleapis/rpc/status"
     ];
-    buildInputs = [
+    propagatedBuildInputs = [
       protobuf
     ];
-    propagatedBuildInputs = [
-    ];
-    preBuild = null;
   };
 
   geoip2-golang = buildFromGitHub {
@@ -9581,10 +9555,10 @@ let
     owner = "gravitational";
     repo = "teleport";
     sha256 = "833ba064efe386dc2068c22ca1c8b09d248f5f55a2922d7fdabe2abb80605191";
-    #nativeBuildInputs = [
-    #  pkgs.protobuf-cpp
-    #  protobuf.bin
-    #];
+    nativeBuildInputs = [
+      pkgs.protobuf-cpp
+      gogo_protobuf.bin
+    ];
     buildInputs = [
       aws-sdk-go
       backoff
@@ -9595,13 +9569,11 @@ let
       etcd_client
       etree
       form
-      #genproto
+      genproto
       go-oidc
       go-semver
-      #go-shellwords
       gops
       gosaml2
-      #goterm
       goxmldsig
       grpc
       grpc-gateway
@@ -9622,30 +9594,42 @@ let
       protobuf
       pty
       roundtrip
-      #shellescape
       text
       timetools
       trace
       gravitational_ttlmap
       mailgun_ttlmap
       u2f
-      google_uuid
+      pborman_uuid
       yaml
       yaml_v2
     ];
     excludedPackages = "\\(suite\\|fixtures\\|test\\|mock\\)";
     meta.autoUpdate = false;
+    patches = [
+      (fetchTritonPatch {
+        rev = "da07d9e81a14a3cccf33bf0253797c4f7ce5d349";
+        file = "t/teleport/2.5.2.patch";
+        sha256 = "75955d9202bea1a049e7b9ef747264cc24febe31c757cd49b9457cea929e69b9";
+      })
+    ];
     postPatch = ''
+      # Only used for tests
       rm lib/auth/helpers.go
-
-      grep -q 'SetHooks(' lib/utils/cli.go
-      sed -i 's,SetHooks(,Hooks = (,' lib/utils/cli.go
-
-      grep -q 'uuid.New()$' lib/utils/utils.go
-      sed -i 's,uuid.New()$,uuid.New().String(),' lib/utils/utils.go
+      # Make sure we regenerate this
+      rm lib/events/slice.pb.go
+      # We don't need integration test stuff
+      rm -r integration
+    '';
+    preBuild = ''
+      GATEWAY_SRC=$(readlink -f unpack/grpc-gateway*)/src
+      API_SRC=$GATEWAY_SRC/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis
+      PROTO_INCLUDE=$GATEWAY_SRC:$API_SRC \
+        make -C go/src/$goPackagePath buildbox-grpc
     '';
     preFixup = ''
       test -f "$bin"/bin/tctl
+      test -f "$bin"/bin/teleport
     '';
   };
 
@@ -10019,6 +10003,15 @@ let
     goPackageAliases = [
       "github.com/pborman/uuid"
     ];
+  };
+
+  pborman_uuid = buildFromGitHub {
+    version = 6;
+    rev = "c65b2f87fee37d1c7854c9164a450713c28d50cd";
+    owner = "pborman";
+    repo = "uuid";
+    sha256 = "1d73sl1nzmn38rgp2yl5iz3m6bpi80m6h4n4b9a4fdi9ra7f3kzm";
+    date = "2018-01-22";
   };
 
   validator_v2 = buildFromGitHub {

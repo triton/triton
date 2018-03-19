@@ -21,6 +21,12 @@ stdenv.mkDerivation rec {
     libsigcxx
   ];
 
+  postPatch = ''
+    grep -q 'sigc++-3.0' configure
+    sed -i configure \
+      -e 's/sigc++-3.0/sigc++-2.0/g'
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-documentation"

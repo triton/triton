@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , itstool
+, lib
 , makeWrapper
 , perl
 , perlPackages
@@ -43,13 +44,19 @@
 let
   inherit (builtins)
     toString;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals
     optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.22" = {
+      version = "3.22.1";
+      sha256 = "f3d439db3b5a5745d26175d615a71dffa1535235b1e3aa0b85d397ea33ab231c";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "evince-${source.version}";
@@ -201,7 +208,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Simple document viewer for GNOME";
     homepage = http://www.gnome.org/projects/evince/;
     license = licenses.gpl2Plus;

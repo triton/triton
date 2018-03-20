@@ -36,7 +36,7 @@ let
         };
     };
 
-    bluezConfig = if config.services.xserver.desktopManager.kde4.enable then configBluez else configBluez5;
+    bluezConfig = configBluez5;
 in
 
 {
@@ -54,7 +54,7 @@ in
   };
 
   ###### implementation
-  
+
   config = mkIf config.hardware.bluetooth.enable {
 
     environment.systemPackages = [ bluez-bluetooth pkgs.openobex pkgs.obexftp ];

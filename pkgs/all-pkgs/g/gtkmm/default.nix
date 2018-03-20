@@ -13,6 +13,27 @@
 , channel
 }:
 
+/*
+  To generate files from source:
+
+  nativeBuildInputs = [
+    autoreconfHook
+    gnum4
+    mm-common
+    perlPackages.perl
+    perlPackages.XMLParser
+  ]
+
+  preAutoreconf = ''
+    mm-common-prepare --copy --force .
+  '';
+
+  # Codegen directories are not added to sources unless enabled.
+  configureFlags = [
+    "--enable-maintainer-mode"
+  ];
+*/
+
 let
   inherit (lib)
     boolEn;
@@ -37,6 +58,17 @@ stdenv.mkDerivation rec {
     libepoxy
     pangomm
   ];
+
+  postPatch = ''
+    sed -i gdk/gdkmm/window.h \
+      -i gdk/gdkmm/window.cc \
+      -e 's/::Cairo::Format/::Cairo::Surface::Format/g'
+  '';
+
+  preConfigure = ''
+    sed -i configure \
+      -e 's/cairomm-1.0/cairomm-1.16/g'
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"

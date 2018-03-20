@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 , intltool
+, itstool
 , lib
 , libxslt
 , which
@@ -16,7 +17,6 @@
 , gsettings-desktop-schemas
 , gtk
 , iso-codes
-, itstool
 , libseccomp
 , libx11
 , libxext

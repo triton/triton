@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--${boolWt (telepathy_glib != null)}-telepathy"
     "--${boolWt (libsecret != null)}-secret"
-    "--${boolWt (libxll != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
     "--${boolWt (gnutls != null)}-gnutls"
     "--${boolWt (libgcrypt != null)}-gcrypt"
     "--${boolWt (avahi != null)}-avahi"

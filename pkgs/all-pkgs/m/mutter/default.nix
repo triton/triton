@@ -181,9 +181,10 @@ stdenv.mkDerivation rec {
   preFixup =
     /* Add a symlink to make sure the gobject-introspection hook
        adds typelibs to GI_TYPELIB_PATH */ ''
-    ln -svf $out/lib/mutter $out/lib/girepository-1.0
+    ln -svf $out/lib/mutter/ $out/lib/girepository-1.0
   '' + ''
     wrapProgram $out/bin/mutter \
+      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \

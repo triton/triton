@@ -35,6 +35,12 @@ stdenv.mkDerivation rec {
     pango
   ];
 
+  # XXX: keep in sync with cairo lib name
+  postPatch = ''
+    sed -i configure \
+      -e 's/cairomm-1.0/cairomm-1.16/g'
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-deprecated-api"

@@ -6,18 +6,18 @@
 }:
 
 let
-  date = "2017-05-21";
+  date = "2018-03-06";
   rev = "c538237f4e4c381d35f1c15497c95f659fd55850";
 in
 stdenv.mkDerivation rec {
   name = "jq-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "stedolan";
     repo = "jq";
     inherit rev;
-    sha256 = "542883672416e0a2d4d3735ff520c4504a462768d8aca9e42a10b1c66703fd7b";
+    sha256 = "7e74f81b0ad6ef7d007d292f4f6f23d4c33af416f0a7676fefacc991dfb498d4";
   };
 
   nativeBuildInputs = [

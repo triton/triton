@@ -12,6 +12,7 @@
 , gobject-introspection
 , gstreamer
 , iso-codes
+, libgudev
 , libogg
 , libtheora
 , libvisual
@@ -33,9 +34,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "4c306b03df0212f1b8903784e29bb3493319ba19ebebf13b0c56a17870292282";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "7e904660ff56e02b036cf7fdfb77a50a540828ca9d2614d69ba931772e5b6940";
     };
   };
 
@@ -67,6 +68,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gstreamer
     iso-codes
+    libgudev
     libogg
     libtheora
     libvisual
@@ -107,8 +109,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

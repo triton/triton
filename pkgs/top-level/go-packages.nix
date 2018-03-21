@@ -473,6 +473,31 @@ let
     ];
   };
 
+  alertmanager = buildFromGitHub {
+    version = 6;
+    owner = "prometheus";
+    repo = "alertmanager";
+    rev = "v0.14.0";
+    sha256 = "0fsgsv15xz4i27ppwcjrra8sby6a8myl5nhkh9x8y4gkakmk8pv6";
+    propagatedBuildInputs = [
+      backoff
+      errors
+      golang_protobuf_extensions
+      satori_go-uuid
+      kingpin
+      kit
+      mesh
+      net
+      oklog
+      prometheus_pkg
+      prometheus_common
+      prometheus_client_golang
+      gogo_protobuf
+      cespare_xxhash
+      yaml_v2
+    ];
+  };
+
   aliyungo = buildFromGitHub {
     version = 5;
     owner = "denverdino";
@@ -3023,7 +3048,9 @@ let
     owner  = "matttproud";
     repo   = "golang_protobuf_extensions";
     sha256 = "10gbh8lfcsvfs0a5fbr8rfl3s375bb4l2890h2v4qm3yf5d7mz6x";
-    buildInputs = [ protobuf ];
+    propagatedBuildInputs = [
+      protobuf
+    ];
   };
 
   golcs = buildFromGitHub {
@@ -5500,7 +5527,7 @@ let
   graceful_v1 = buildFromGitHub {
     version = 6;
     owner = "tylerb";
-    repo = "graceful_v1";
+    repo = "graceful";
     rev = "v1.2.15";
     sha256 = "0bc3hb3g62q12kfm91h4szx8svdmpjn9qy7dbj3wrxzwmjzv0q60";
     goPackagePath = "gopkg.in/tylerb/graceful.v1";
@@ -6497,6 +6524,18 @@ let
     date = "2017-09-06";
   };
 
+  kingpin = buildFromGitHub {
+    version = 6;
+    rev = "v2.2.6";
+    owner = "alecthomas";
+    repo = "kingpin";
+    sha256 = "00g6cnx6vl7yhhcy18q5im9wb2spsjp59hxmdqcaivha74zc6whp";
+    propagatedBuildInputs = [
+      template
+      units
+    ];
+  };
+
   kingpin_v2 = buildFromGitHub {
     version = 5;
     rev = "v2.2.6";
@@ -7291,6 +7330,18 @@ let
     owner = "imdario";
     repo = "mergo";
     sha256 = "0whr6vyphb649dqbibrkbiyn547snhb6scsjsb99hwavydqrr3xh";
+  };
+
+  mesh = buildFromGitHub {
+    version = 6;
+    rev = "fb4080d8ee8c3999005e85f5afcbc76b0f74b30a";
+    owner = "weaveworks";
+    repo = "mesh";
+    sha256 = "0711fx5d0gn4w1rb438msqvqyckxkl1xvnvr73ybf0xzy2cxsjnm";
+    date = "2018-01-19";
+    propagatedBuildInputs = [
+      crypto
+    ];
   };
 
   metrics = buildFromGitHub {
@@ -8426,6 +8477,17 @@ let
         -e 's,"k8s.io/client-go/pkg/api",api "k8s.io/api/core/v1",' \
         -i discovery/kubernetes/*.go
     '';
+  };
+  prometheus_pkg = prometheus.override {
+    buildInputs = [
+    ];
+    propagatedBuildInputs = [
+      cespare_xxhash
+    ];
+    subPackages = [
+      "pkg/labels"
+    ];
+    postPatch = null;
   };
 
   prometheus_client_golang = buildFromGitHub {

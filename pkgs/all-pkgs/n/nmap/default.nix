@@ -5,6 +5,7 @@
 , openssl
 , pcre
 , python2Packages
+, zlib
 }:
 
 let
@@ -31,6 +32,7 @@ stdenv.mkDerivation rec {
     openssl
     pcre
     python2Packages.python
+    zlib
   ];
 
   configureFlags = [

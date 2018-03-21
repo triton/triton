@@ -21,16 +21,9 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--with-openssl"
-    "--without-libgcrypt"
-    "--without-wincng"
-    "--with-libz"
-    "--disable-crypt-none"
-    "--disable-mac-none"
-    "--enable-gex-new"
-    # "--enable-clear-memory"  # Use autodetection
-    "--disable-debug"
     "--disable-examples-build"
+    "--with-openssl"
+    "--with-libz"
   ];
 
   passthru = {

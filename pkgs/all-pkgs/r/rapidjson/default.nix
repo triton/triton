@@ -5,17 +5,18 @@
 }:
 
 let
-  version = "1.1.0";
+  rev = "67a17cfdbc25ff1fc8d01714be87e242b03a4cc9";
+  date = "2018-03-19";
 in
 stdenv.mkDerivation rec {
-  name = "rapidjson-${version}";
+  name = "rapidjson-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "miloyip";
     repo = "rapidjson";
-    rev = "v${version}";
-    sha256 = "48a3645abd0cdb13f071656102fd44bcb7c20b4d489f78b87973c8c0159da149";
+    inherit rev;
+    sha256 = "22a04ec8f6f2e235110d369b7e638000fc19dcce9174ae716b85971aa4c9c6e8";
   };
 
   nativeBuildInputs = [
@@ -24,7 +25,9 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DRAPIDJSON_BUILD_EXAMPLES=NO"
+    "-DRAPIDJSON_BUILD_DOC=OFF"
+    "-DRAPIDJSON_BUILD_EXAMPLES=OFF"
+    "-DRAPIDJSON_BUILD_TESTS=OFF"
   ];
 
   meta = with stdenv.lib; {

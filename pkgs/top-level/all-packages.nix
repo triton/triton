@@ -4238,17 +4238,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   jdk = pkgs.java // { outputs = [ "out" ]; };
   jre = pkgs.java.jre // { outputs = [ "jre" ]; };
 #
-#  lua5_2 = callPackage ../development/interpreters/lua-5/5.2.nix { };
-#  lua5_2_compat = callPackage ../development/interpreters/lua-5/5.2.nix {
-#    compat = true;
-#  };
-  lua5_3 = callPackage ../development/interpreters/lua-5/5.3.nix { };
-  lua5_3_compat = callPackage ../development/interpreters/lua-5/5.3.nix {
-    compat = true;
-  };
-  lua5 = callPackageAlias "lua5_3_compat" { };
-  lua = callPackageAlias "lua5" { };
-#
   php = pkgs.php71;
 #
 #  phpPackages = recurseIntoAttrs (callPackage ./php-packages.nix {});

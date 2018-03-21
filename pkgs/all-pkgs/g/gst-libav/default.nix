@@ -20,9 +20,9 @@ let
     boolWt;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "2a56aa5d2d8cd912f2bce17f174713d2c417ca298f1f9c28ee66d4aa1e1d9e62";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "fb134b4d3e054746ef8b922ff157b0c7903d1fdd910708a45add66954da7ef89";
     };
   };
 
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     pushd $srcRoot/gst-libs/ext/
       rm -rfv libav/
       tar -xf ${ffmpeg.src}
-      mv ffmpeg-*/ libav/
+      mv -v ffmpeg-*/ libav/
     popd
   '';
 
@@ -70,8 +70,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

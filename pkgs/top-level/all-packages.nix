@@ -1724,12 +1724,12 @@ gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
-gst-libav_1-12 = callPackage ../all-pkgs/g/gst-libav {
-  channel = "1.12";
+gst-libav_1-14 = callPackage ../all-pkgs/g/gst-libav {
+  channel = "1.14";
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };
-gst-libav = callPackageAlias "gst-libav_1-12" { };
+gst-libav = callPackageAlias "gst-libav_1-14" { };
 
 gst-plugins-bad_generics = overrides:
   callPackage ../all-pkgs/g/gst-plugins-bad ({

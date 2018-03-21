@@ -4,7 +4,7 @@
 , lib
 , ninja
 
-, boost_1-66
+, boost
 , gnutls
 , jsoncpp
 , libargon2
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost_1-66
+    boost
     gnutls
     jsoncpp
     libargon2
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     "-DOPENDHT_PUSH_NOTIFICATIONS=ON"
   ];
 
-  NIX_LDFLAGS = "-rpath ${boost_1-66.lib}/lib";
+  NIX_LDFLAGS = "-rpath ${boost.lib}/lib";
 
   meta = with lib; {
     maintainers = with maintainers; [

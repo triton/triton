@@ -7,7 +7,7 @@
 , yasm
 
 , boost_1-65
-, boost_1-66
+, boost
 , curl
 , expat
 , fcgi
@@ -122,7 +122,7 @@ stdenv.mkDerivation rec {
     fcgi
     libatomic_ops
   ] ++ optionals (versionAtLeast version "12.0.0") [
-    boost_1-66
+    boost
     gperf
     rdma-core
     rocksdb

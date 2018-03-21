@@ -4,7 +4,7 @@
 , lib
 , ninja
 
-, boost_1-66
+, boost
 , kashmir
 , openssl
 }:
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost_1-66
+    boost
     kashmir
     openssl
   ];
@@ -47,9 +47,9 @@ stdenv.mkDerivation rec {
     find . \( -name \*.hpp -or -name \*.cpp \) -exec sed -i -e 's,std::error_code,boost::system::error_code,g' -e 's,asio::,boost::asio::,g' {} \;
   '';
 
-  NIX_CFLAGS_COMPILE = "-I${boost_1-66.dev}/include/boost";
+  NIX_CFLAGS_COMPILE = "-I${boost.dev}/include/boost";
 
-  NIX_LDFLAGS = "-rpath ${boost_1-66.lib}/lib -lboost_system";
+  NIX_LDFLAGS = "-rpath ${boost.lib}/lib -lboost_system";
   
   cmakeFlags = [
     "-DBUILD_SHARED=ON"

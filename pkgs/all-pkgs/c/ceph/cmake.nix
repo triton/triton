@@ -6,7 +6,6 @@
 , python3Packages
 , yasm
 
-, boost_1-65
 , boost
 , curl
 , expat
@@ -37,11 +36,7 @@
 
 let
   inherit (stdenv.lib)
-    optionals
-    optionalString
-    replaceChars
-    versionAtLeast
-    versionOlder;
+    replaceChars;
 
   sources = (import ./sources.nix)."${channel}";
 
@@ -95,14 +90,14 @@ stdenv.mkDerivation rec {
     python3Packages.cython
     python3Packages.python
     yasm
-  ] ++ optionals (versionOlder version "12.0.0") [
-    perl
   ];
 
   buildInputs = [
+    boost
     curl
     expat
     fuse_2
+    gperf
     jemalloc
     keyutils
     leveldb
@@ -112,24 +107,17 @@ stdenv.mkDerivation rec {
     nss
     openldap
     openssl
+    rdma-core
+    rocksdb
     snappy
     systemd_lib
     util-linux_lib
     xfsprogs_lib
     zlib
-  ] ++ optionals (versionOlder version "12.0.0") [
-    boost_1-65
-    fcgi
-    libatomic_ops
-  ] ++ optionals (versionAtLeast version "12.0.0") [
-    boost
-    gperf
-    rdma-core
-    rocksdb
   ];
 
   # Needed by the ceph command line
-  pythonPath = optionals (versionAtLeast version "12.2.0") [
+  pythonPath = [
     python2Packages.prettytable
   ];
 
@@ -145,19 +133,7 @@ stdenv.mkDerivation rec {
 
     # Boost doesn't know how to include python libraries
     sed -i '/find_package(Boost/aLIST(APPEND Boost_LIBRARIES ''${PYTHON_LIBRARY})' CMakeLists.txt
-  '' + optionalString (versionOlder version "12.0.0") ''
-    # Rocksdb fails with gcc7 with Werror
-    sed \
-      -e '/-Werror/d' \
-      -i src/rocksdb/Makefile \
-      -i src/rocksdb/CMakeLists.txt
-    sed \
-      -e '1i#include <functional>' \
-      -i src/rocksdb/util/thread_local.h \
-      -i src/rocksdb/utilities/persistent_cache/block_cache_tier_file.h \
-      -i src/rocksdb/utilities/persistent_cache/hash_table_evictable.h \
-      -i src/os/FuseStore.h
-  '' + optionalString (versionAtLeast version "12.0.0") ''
+
     # Fix for rocksdb api change
     grep -q 'rocksdb::perf_context' src/kv/RocksDBStore.cc
     sed -i 's,rocksdb::perf_context.,rocksdb::get_perf_context()->,g' src/kv/RocksDBStore.cc
@@ -178,11 +154,6 @@ stdenv.mkDerivation rec {
     "-DWITH_SYSTEMD=ON"
 
     "-DXFS_INCLUDE_DIR=${xfsprogs_lib}/include"
-  ] ++ optionals (versionOlder version "12.2.0") [
-    "-DHAVE_BABELTRACE=OFF"
-    "-DBUILD_SHARED_LIBS=ON"
-    "-DKEYUTILS_INCLUDE_DIR=${keyutils}/include"
-  ] ++ optionals (versionAtLeast version "12.2.0") [
     "-DWITH_LZ4=ON"
     "-DWITH_BABELTRACE=OFF"
     "-DWITH_SYSTEM_ROCKSDB=ON"

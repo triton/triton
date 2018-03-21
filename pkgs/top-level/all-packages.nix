@@ -841,9 +841,6 @@ ceph = hiPrio pkgs.ceph_12;
 ceph_10 = callPackage ../all-pkgs/c/ceph {
   channel = "10";
 };
-ceph_11 = callPackage ../all-pkgs/c/ceph/cmake.nix {
-  channel = "11";
-};
 ceph_12 = callPackage ../all-pkgs/c/ceph/cmake.nix {
   channel = "12";
 };

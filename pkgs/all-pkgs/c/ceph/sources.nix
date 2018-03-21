@@ -3,10 +3,6 @@
     version = "10.2.9";
     sha256 = "e93b75d4c4c341771b32d537591cccc4d7ee84ce1a3b62727b1a164b2e36fd6a";
   };
-  "11" = rec {
-    version = "11.2.1";
-    sha256 = "971c575c63942c4d068a98935bd950a5df124315024f9cafce87f5c7e13cdac2";
-  };
   "12" = rec {
     version = "12.2.3";
     sha256 = "0917329f149e5f100b9d9fd8d999a51f848fde928b82d2662d233e8ca14a2244";

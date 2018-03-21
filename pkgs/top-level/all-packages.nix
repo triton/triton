@@ -2690,6 +2690,8 @@ lsof = callPackage ../all-pkgs/l/lsof { };
 
 luajit = callPackage ../all-pkgs/l/luajit { };
 
+lua = callPackage ../all-pkgs/l/lua { };
+
 lv2 = callPackage ../all-pkgs/l/lv2 { };
 
 lvm2 = callPackage ../all-pkgs/l/lvm2 { };

@@ -1,7 +1,10 @@
 { stdenv
 , fetchurl
 
+, liblinear
 , libpcap
+, libssh2
+, lua
 , openssl
 , pcre
 , python2Packages
@@ -14,13 +17,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "nmap-7.60";
+  name = "nmap-7.70";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}.tar.bz2") baseUrls;
-    multihash = "QmSd9BAjL53EXssomcQAJp7GD9vyWDPmMe5MEzqisKAMRC";
+    multihash = "QmdByChZAjZradH73dAockfRumaEpgA3X7DqAeLA4kabMb";
     hashOutput = false;
-    sha256 = "a8796ecc4fa6c38aad6139d9515dc8113023a82e9d787e5a5fb5fa1b05516f21";
+    sha256 = "847b068955f792f4cc247593aca6dc3dc4aae12976169873247488de147a6e18";
   };
 
   nativeBuildInputs = [
@@ -28,7 +31,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    liblinear
     libpcap
+    libssh2
+    lua
     openssl
     pcre
     python2Packages.python

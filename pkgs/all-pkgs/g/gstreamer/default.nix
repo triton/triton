@@ -20,9 +20,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "5a8704aa4c2eeb04da192c4a9942f94f860ac1a585de90d9f914bac26a970674";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "fc361367f0d4b780a868a8833f9f30b9c9f4ac9faea4e6b251db8b4b0398466e";
     };
   };
 
@@ -63,15 +63,11 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [
     "-Dbuild_tools=false"
-    "-Dpoisoning=false"
     "-Ddisable_gtkdoc=true"
     "-Ddisable_examples=true"
     "-Ddisable_gst_debug=true"
-    "-Ddisable_registry=false"
     "-Ddisable_tracer_hooks=true"
     "-Dlibrary_format=shared"
-    "-Ddisable_introspection=false"
-    "-Ddisable_libunwind=false"
   ];
 
   passthru = {
@@ -82,8 +78,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

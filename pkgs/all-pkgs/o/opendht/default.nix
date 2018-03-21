@@ -16,17 +16,17 @@
 }:
 
 let
-  version = "1.6.0rc2";
+  version = "1.6.1";
 in
 stdenv.mkDerivation rec {
   name = "opendht-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "savoirfairelinux";
     repo = "opendht";
     rev = version;
-    sha256 = "8786e3546db1902e1bb8c236e882a1a00a95fd07a88d6401a8ce630328a6248a";
+    sha256 = "d5da86c63fcafa83754a8a41bd95ee54a364eeb7a8e5397191c99702575140ee";
   };
 
   nativeBuildInputs = [

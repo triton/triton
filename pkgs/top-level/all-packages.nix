@@ -1982,13 +1982,7 @@ iputils = callPackage ../all-pkgs/i/iputils { };
 
 irqbalance = callPackage ../all-pkgs/i/irqbalance { };
 
-isl_0-14 = callPackage ../all-pkgs/i/isl {
-  channel = "0.14";
-};
-isl_0-18 = callPackage ../all-pkgs/i/isl {
-  channel = "0.18";
-};
-isl = callPackageAlias "isl_0-18" { };
+isl = callPackage ../all-pkgs/i/isl { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 

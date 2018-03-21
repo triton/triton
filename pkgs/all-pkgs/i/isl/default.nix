@@ -1,42 +1,24 @@
 { stdenv
 , fetchurl
+, lib
 
 , gmp
-
-, channel
 }:
 
-let
-  sources = {
-    "0.18" = {
-      version = "0.18";
-      multihash = "QmPTtYQfodApCrwdwgKg2B9yY8n21MAT1MwUuwPDQqTDNK";
-      sha256 = "0f35051cc030b87c673ac1f187de40e386a1482a0cfdf2c552dd6031b307ddc4";
-    };
-    "0.14" = {
-      version = "0.14.1";
-      sha256 = "1m922l5bz69lvkcxrib7lvjqwfqsr8rpbzgmb2aq07bp76460jha";
-    };
-  };
-
-  inherit (sources."${channel}")
-    multihash
-    sha256
-    version;
-in
 stdenv.mkDerivation rec {
-  name = "isl-${version}";
+  name = "isl-0.19";
 
   src = fetchurl {
     url = "http://isl.gforge.inria.fr/${name}.tar.xz";
-    inherit multihash sha256;
+    multihash = "QmUmMWqKbbMEPdGQc4B8HQEHRprtbAHKTdroXpCZBH69WH";
+    sha256 = "6d6c1aa00e2a6dfc509fa46d9a9dbe93af0c451e196a670577a148feecf6b8a5";
   };
 
   buildInputs = [
     gmp
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.kotnet.org/~skimo/isl/;
     description = "A library for manipulating sets and relations of integer points bounded by linear constraints";
     license = licenses.mit;

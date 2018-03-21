@@ -365,7 +365,7 @@ let
         gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
           cc = stage0Pkgs.cc;
           gmp = srcOnly pkgs.gmp;
-          isl = srcOnly pkgs.isl_0-18;
+          isl = srcOnly pkgs.isl;
           mpc = srcOnly pkgs.mpc;
           mpfr = srcOnly pkgs.mpfr;
           bootstrap = true;

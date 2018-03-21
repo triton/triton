@@ -1898,6 +1898,8 @@ gzip = callPackage ../all-pkgs/g/gzip { };
 
 hadoop = callPackage ../all-pkgs/h/hadoop { };
 
+haproxy = callPackage ../all-pkgs/h/haproxy { };
+
 harfbuzz_lib = callPackage ../all-pkgs/h/harfbuzz {
   type = "lib";
 };

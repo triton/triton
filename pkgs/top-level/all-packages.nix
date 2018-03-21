@@ -2690,7 +2690,13 @@ lsof = callPackage ../all-pkgs/l/lsof { };
 
 luajit = callPackage ../all-pkgs/l/luajit { };
 
-lua = callPackage ../all-pkgs/l/lua { };
+lua_5-2 = callPackage ../all-pkgs/l/lua {
+  channel = "5.2";
+};
+lua_5-3 = callPackage ../all-pkgs/l/lua {
+  channel = "5.3";
+};
+lua = callPackageAlias "lua_5-3" { };
 
 lv2 = callPackage ../all-pkgs/l/lv2 { };
 

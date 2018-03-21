@@ -7,18 +7,18 @@
 }:
 
 let
-  rev = "8f4950a1723aeb3abd9bacb9a631eac788bbb6c9";
-  date = "2018-03-13";
+  rev = "b65d5d7240b6ad28862a5e13c2e0202075159b94";
+  date = "2018-03-19";
 in
 stdenv.mkDerivation rec {
   name = "moolticute-${date}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "mooltipass";
     repo = "moolticute";
     inherit rev;
-    sha256 = "c73003c0550181c775cdd506521b979e06550cd979929a6fc2098bc497c6042a";
+    sha256 = "fd0919e19066e9fb326dddf69319aac579a24f5b478986c586d7a0e91c271c3f";
   };
   
   nativeBuildInputs = [

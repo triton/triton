@@ -2322,6 +2322,8 @@ libksba = callPackage ../all-pkgs/l/libksba { };
 
 liblfds = callPackage ../all-pkgs/l/liblfds { };
 
+liblinear = callPackage ../all-pkgs/l/liblinear { };
+
 liblo = callPackage ../all-pkgs/l/liblo { };
 
 liblogging = callPackage ../all-pkgs/l/liblogging { };

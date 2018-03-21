@@ -2252,6 +2252,7 @@ let
     rev = "v1.4.7";
     sha256 = "19j58cdxnydx8nad708syyasriwz4l97rjf1qs4b1jv0g8az9paj";
     goPackagePath = "gopkg.in/fsnotify.v1";
+    meta.autoUpdate = false;  # Broken....
     propagatedBuildInputs = [
       sys
     ];

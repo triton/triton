@@ -3,7 +3,6 @@
 , fetchurl
 , ninja
 
-, boost
 , libconfuse
 , libusb
 , python
@@ -25,7 +24,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    #boost
     libconfuse
     libusb
     python

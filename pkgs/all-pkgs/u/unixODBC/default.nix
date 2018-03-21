@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "unixODBC-2.3.4";
+  name = "unixODBC-2.3.6";
 
   src = fetchurl rec {
-    url = "ftp://ftp.unixodbc.org/pub/unixODBC/${name}.tar.gz";
+    url = "http://www.unixodbc.org/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmX7VHuyeftN6jgbyNsTSZmfUT3LUmkFime7JY74ggAatL";
-    sha256 = "2e1509a96bb18d248bf08ead0d74804957304ff7c6f8b2e5965309c632421e39";
+    multihash = "QmSz44NEYC115XEuV7szZdMcQyxMHqVTWJwSJLVdXhKuTu";
+    sha256 = "88b637f647c052ecc3861a3baa275c3b503b193b6a49ff8c28b2568656d14d69";
   };
 
   buildInputs = [

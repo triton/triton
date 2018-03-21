@@ -87,7 +87,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       ++ pkg.propagatedNativeBuildInputs
       ++ pkg.extraSrcs;
     listPkgAndDeps = pkg:
-      if pkg ? goPackagePath then
+      if pkg ? goPackagePath && (pkg.src or null) != null then
         pkgs.lib.foldl
           (attr: dep: attr // listPkgAndDeps dep)
           { "${pkg.autoUpdatePath or pkg.goPackagePath}" = {

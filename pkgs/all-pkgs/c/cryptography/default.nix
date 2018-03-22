@@ -18,7 +18,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "2.1.4";
+  version = "2.2.1";
 in
 buildPythonPackage {
   name = "cryptography-${version}";
@@ -26,7 +26,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "cryptography";
     inherit version;
-    sha256 = "e4d967371c5b6b2e67855066471d844c5d52d210c36c28d49a8507b96e2c5291";
+    sha256 = "dddad9d322a3f0867009ff9f25477b8f7c0bdbedf143704b384c9472f11cb2d3";
   };
 
   buildInputs = [

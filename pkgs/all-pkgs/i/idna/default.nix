@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.5";
+  version = "2.6";
 in
 buildPythonPackage {
   name = "idna-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "idna";
     inherit version;
-    sha256 = "3cb5ce08046c4e3a560fc02f138d0ac63e00f8ce5901a56b32ec8b7994082aab";
+    sha256 = "2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f";
   };
 
   meta = with lib; {

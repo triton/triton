@@ -163,7 +163,7 @@ stdenv.mkDerivation rec {
         'chrome-sandbox'
         'nacl_helper'
       )
-      for elfExecutable in "''${patch_exes[@]}" ; do
+      for elfExecutable in "''${patch_exes[@]}"; do
         echo "patching: $elfExecutable"
         patchelf \
           --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
@@ -175,7 +175,7 @@ stdenv.mkDerivation rec {
       #   'libwidevinecdm.so'
       #   'libwidevinecdmadapter.so'
       # )
-      # for elfLibraries in "''${patch_libs[@]}" ; do
+      # for elfLibraries in "''${patch_libs[@]}"a; do
       #   echo "patching: $elfLibraries"
       #   patchelf \
       #     --set-rpath "$chromeLibPath" \

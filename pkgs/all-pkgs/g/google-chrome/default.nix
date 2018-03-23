@@ -190,6 +190,7 @@ stdenv.mkDerivation rec {
       "$out/bin/google-chrome${channame}"
 
     wrapProgram "$out/bin/google-chrome${channame}" \
+      --set 'FONTCONFIG_PATH' '${fontconfig}/etc/fonts' \
       --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix LD_LIBRARY_PATH : "${chromeLibPath}" \
       --prefix PATH : "${chromeBinPath}" \

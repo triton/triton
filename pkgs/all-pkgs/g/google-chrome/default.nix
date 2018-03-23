@@ -9,14 +9,12 @@
 , alsa-lib
 , at-spi2-atk
 , atk
-, bzip2
 , cairo
 , cups
 , dbus
 , expat
 , fontconfig
 , freetype
-, gconf
 , gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
@@ -93,14 +91,12 @@ stdenv.mkDerivation rec {
     alsa-lib
     at-spi2-atk
     atk
-    bzip2
     cairo
     cups
     dbus
     expat
     fontconfig
     freetype
-    gconf
     gdk-pixbuf
     glib
     gsettings-desktop-schemas

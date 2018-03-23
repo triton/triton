@@ -4,6 +4,7 @@
 , makeWrapper
 , patchelf
 
+, adobe-flash-player
 , adwaita-icon-theme
 , alsa-lib
 , at-spi2-atk
@@ -87,6 +88,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adobe-flash-player
     adwaita-icon-theme
     alsa-lib
     at-spi2-atk

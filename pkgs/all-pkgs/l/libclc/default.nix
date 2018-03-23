@@ -7,18 +7,18 @@
 }:
 
 let
-  date = "2017-10-04";
-  rev = "ad4ee18ea61a3ab46d425205f91783233516f030";
+  date = "2018-03-18";
+  rev = "96d10f2e9ec4c87d6b8d91e01d4d061915413f3e";
 in
 stdenv.mkDerivation {
   name = "libclc-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "llvm-mirror";
     repo = "libclc";
     inherit rev;
-    sha256 = "9d33560df5a0485395030f66fe1be85d8761d1dc1e2941667d73ed290dbbaa2c";
+    sha256 = "d7fd34b08360d8d2aab67119afc77d105737555b4d68ca7931e5def1cbbf8029";
   };
 
   nativeBuildInputs = [

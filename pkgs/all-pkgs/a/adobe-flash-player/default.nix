@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , channel
 }:
@@ -10,10 +11,20 @@
 assert stdenv.cc.isGNU;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     makeSearchPath;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "stable" = {
+      version = "29.0.0.113";
+      sha256 = "c0171b173f83dd7a9dcde15fb92984871f3f20ef3fc465394330b767c7546238";
+    };
+    "beta" = {
+      version = "24.0.0.154";
+      sha256 = "bd58f3523194c0f63694eef6705b91cc1fbd70ca8b02585e0105c6494f117057";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "flash-player-${source.version}";
@@ -36,7 +47,9 @@ stdenv.mkDerivation rec {
     stdenv.libc
   ];
 
-  postUnpack = ''
+  preUnpack = ''
+    mkdir -p src/
+    cd src/
     srcRoot="$(pwd)"
   '';
 
@@ -73,7 +86,7 @@ stdenv.mkDerivation rec {
   dontStrip = true;
   dontPatchELF = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Adobe Flash Player browser plugin";
     homepage = https://www.adobe.com/products/flashplayer.html;
     license = licenses.unfree; # AdobeFlash

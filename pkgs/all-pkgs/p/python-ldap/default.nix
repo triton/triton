@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.4.40";
+  version = "3.0.0";
 in
 buildPythonPackage {
   name = "python-ldap-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-ldap";
     inherit version;
-    sha256 = "202f2f4aeeed2333d4095e8122d066e502e9a64de30cb09ffae16d18c71053f4";
+    sha256 = "86746b912a2cd37a54b06c694f021b0c8556d4caeab75ef50435ada152e2fbe1";
   };
 
   NIX_CFLAGS_COMPILE = "-I${cyrus-sasl}/include/sasl";
@@ -27,6 +27,9 @@ buildPythonPackage {
   ];
 
   meta = with lib; {
+    description = "Modules for implementing LDAP clients";
+    homepage = https://www.python-ldap.org;
+    license = licenses.psf-2;
     maintainers = with maintainers; [
       wkennington
     ];

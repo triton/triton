@@ -1795,12 +1795,12 @@ gst-plugins-ugly_1-14 = pkgs.gst-plugins-ugly_generics {
 };
 gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1-14" { };
 
-gst-validate_1-12 = callPackage ../all-pkgs/g/gst-validate {
-  channel = "1.12";
+gst-validate_1-14 = callPackage ../all-pkgs/g/gst-validate {
+  channel = "1.14";
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };
-gst-validate = callPackageAlias "gst-validate_1-12" { };
+gst-validate = callPackageAlias "gst-validate_1-14" { };
 
 gstreamer_1-14 = callPackage ../all-pkgs/g/gstreamer {
   channel = "1.14";

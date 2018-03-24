@@ -2,6 +2,8 @@
 , fetchurl
 , gettext
 , lib
+# , meson
+# , ninja
 
 , glib
 , gobject-introspection
@@ -18,9 +20,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "f9da9dfe6e5d6f5ba3b38c5752b42d3f927715904942b405c2924d3cb77afba1";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "33df08bf77f2895d64b7e8a957de3b930b4da0a8edabfbefcff2eab027eeffdf";
     };
   };
 
@@ -38,6 +40,11 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
+  # nativeBuildInputs = [
+  #   meson
+  #   ninja
+  # ];
+
   buildInputs = [
     glib
     gobject-introspection
@@ -46,6 +53,10 @@ stdenv.mkDerivation rec {
     json-glib
     python3
   ];
+
+  # mesonFlags = [
+  #   "-Ddisable_gtkdoc=true"
+  # ];
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -71,8 +82,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

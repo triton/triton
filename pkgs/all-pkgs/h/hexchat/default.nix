@@ -27,12 +27,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "hexchat-2.12.4";
+  name = "hexchat-2.14.1";
 
   src = fetchurl {
     url = "https://dl.hexchat.net/hexchat/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "fa35913158bbc7d0d99de79371b6df3e8d21802f1d2c7c92f0e5db694acf2c3a";
+    sha256 = "b032e4bcebe2229f87047439979a1246ddcbf599e7e538baa3f2abfac9a003a2";
   };
 
   nativeBuildInputs = [
@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/bin/hexchat \
       --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : '${shared-mime-info}/share' \
       --run "$DEFAULT_GTK2_RC_FILES"
   '';
 

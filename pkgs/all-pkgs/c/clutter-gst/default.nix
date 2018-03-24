@@ -22,7 +22,7 @@ let
     optionals;
 
   channel = "3.0";
-  version = "${channel}.24";
+  version = "${channel}.26";
 in
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "e9f1c87d8f4c47062e952fb8008704f8942cf2d6f290688f3f7d13e83578cc6c";
+    sha256 = "d8618a6d9accec0f2a8574c5e1220051f8505fb82b20336c26bdbd482aa6cb3a";
   };
 
   buildInputs = [

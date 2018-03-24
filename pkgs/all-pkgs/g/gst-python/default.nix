@@ -2,9 +2,10 @@
 , fetchTritonPatch
 , fetchurl
 , lib
-#, meson
-#, ninja
+, meson
+, ninja
 
+, glib
 , gst-plugins-base
 , gstreamer
 , ncurses
@@ -17,9 +18,9 @@
 
 let
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "20ce6af6615c9a440c1928c31259a78226516d06bf1a65f888c6d109826fa3ea";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "e0b98111150aa3fcdeb6e228cd770995fbdaa8586fc02ec9b3273d4ae83399e6";
     };
   };
 
@@ -37,12 +38,13 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
-  # nativeBuildInputs = [
-  #   meson
-  #   ninja
-  # ];
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
 
   buildInputs = [
+    glib
     gst-plugins-base
     gstreamer
     ncurses
@@ -51,32 +53,28 @@ stdenv.mkDerivation rec {
     wrapPython
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "gst-python/gst-python-1.0-different-path-with-pygobject.patch";
-      sha256 = "7c83295005351c1bffd9c5d1816647753c434c8bdaf575779c25afd31eaa4adb";
-    })
-  ];
+  # patches = [
+  #   (fetchTritonPatch {
+  #     rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+  #     file = "gst-python/gst-python-1.0-different-path-with-pygobject.patch";
+  #     sha256 = "7c83295005351c1bffd9c5d1816647753c434c8bdaf575779c25afd31eaa4adb";
+  #   })
+  # ];
+
+  postPatch = ''
+    sed -i scripts/pythondetector \
+      -e 's,#!.*,#!${python.interpreter},'
+  '';
 
   preConfigure = ''
-    configureFlagsArray+=(
+    mesonFlagsArray+=(
       # Fix overrides site directory
-      "--with-pygi-overrides-dir=$out/lib/${python.libPrefix}/site-packages/gi/overrides"
+      "-Dpygi-overrides-dir=$out/lib/${python.libPrefix}/site-packages/gi/overrides"
     )
   '';
 
-  # preConfigure = ''
-  #   mesonFlagsArray+=(
-  #     # Fix overrides site directory
-  #     "-Dpygi-overrides-dir=$out/lib/${python.libPrefix}/site-packages/gi/overrides"
-  #   )
-  # '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-valgrind"
-  ];
+  # FIXME: Cannot build with meson, because meson only supports Py3
+  disabled = isPy2;
 
   passthru = {
     srcVerification = fetchurl {
@@ -86,8 +84,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

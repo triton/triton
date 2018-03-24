@@ -345,12 +345,12 @@ gevent = callPackage ../all-pkgs/g/gevent { };
 
 greenlet = callPackage ../all-pkgs/g/greenlet { };
 
-gst-python_1-12 = callPackage ../all-pkgs/g/gst-python {
-  channel = "1.12";
-  gst-plugins-base = pkgs.gst-plugins-base_1-12;
-  gstreamer = pkgs.gstreamer_1-12;
+gst-python_1-14 = callPackage ../all-pkgs/g/gst-python {
+  channel = "1.14";
+  gst-plugins-base = pkgs.gst-plugins-base_1-14;
+  gstreamer = pkgs.gstreamer_1-14;
 };
-gst-python = callPackageAlias "gst-python_1-12" { };
+gst-python = callPackageAlias "gst-python_1-14" { };
 
 guessit = callPackage ../all-pkgs/g/guessit { };
 

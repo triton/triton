@@ -1776,12 +1776,12 @@ gst-plugins-good_generics = overrides:
     libcaca = null;
     wavpack = null;
   } // overrides);
-gst-plugins-good_1-12 = pkgs.gst-plugins-good_generics {
-  channel = "1.12";
+gst-plugins-good_1-14 = pkgs.gst-plugins-good_generics {
+  channel = "1.14";
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };
-gst-plugins-good = callPackageAlias "gst-plugins-good_1-12" { };
+gst-plugins-good = callPackageAlias "gst-plugins-good_1-14" { };
 
 gst-plugins-ugly_generics = overrides:
   callPackage ../all-pkgs/g/gst-plugins-ugly ({

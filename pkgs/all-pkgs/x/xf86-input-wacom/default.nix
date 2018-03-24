@@ -17,13 +17,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xf86-input-wacom-0.36.0";
+  name = "xf86-input-wacom-0.36.1";
 
   src = fetchurl {
-    url = "mirror://sourceforge/linuxwacom/${name}.tar.bz2";
-    multihash = "QmQfPzFwv15U2sEA193SZdQdfmxouboKSTXg2p97hFtCnk";
+    url = "https://github.com/linuxwacom/xf86-input-wacom/releases/download/"
+      + "${name}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "eae7c5d2872b1433c8d679bb42b00213403eb2a0544c514f4df2b586284c23f6";
+    sha256 = "3206b92a4ed1fece07438a85405c748b9ed62cf0f0c3df845a2ce695d5463e09";
   };
 
   buildInputs = [
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Wacom digitizer driver for X11";
-    homepage = http://linuxwacom.sourceforge.net;
+    homepage = https://github.com/linuxwacom/xf86-input-wacom;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       codyopel

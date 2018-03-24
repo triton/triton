@@ -1,8 +1,10 @@
 { stdenv
 , fetchurl
-, autoconf
-, automake
 , intltool
+, lib
+, meson
+, ninja
+, vala
 
 , argyllcms
 , bash-completion
@@ -15,28 +17,28 @@
 , libusb
 , polkit
 , sqlite
+, systemd-dummy
 , systemd_lib
-, vala
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "colord-1.3.5";
+  name = "colord-1.4.2";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
-    multihash = "Qmb7gM6EEYoZ6p4zimVioFDdSrPQGZhfYGj5C8r9us68GF";
+    multihash = "Qme1Y2w1Carc9UXwU7LiVibZmMDznUC9rP8CDrgeWfnVct";
     hashOutput = false;
-    sha256 = "2daa8ffd2a532d7094927cd1a4af595b8310cea66f7707edcf6ab743460feed2";
+    sha256 = "4c70d5052a9c96da51fa57e80d6dc97ca642943d5b9940a196c990dfe84beca7";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
     intltool
+    meson
+    ninja
     vala
   ];
 
@@ -53,46 +55,35 @@ stdenv.mkDerivation rec {
     polkit
     sqlite
     systemd_lib
+    systemd-dummy
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-systemdsystemunitdir=$out/etc/systemd/system"
-      "--with-udevrulesdir=$out/lib/udev/rules.d"
-    )
+  # preConfigure = ''
+  #   configureFlagsArray+=(
+  #     "--with-systemdsystemunitdir=$out/etc/systemd/system"
+  #     "--with-udevrulesdir=$out/lib/udev/rules.d"
+  #   )
+  # '';
+
+  postPatch = ''
+    # Install systemd files to the current prefix
+    sed -i contrib/session-helper/meson.build \
+      -e "s|systemd.get_pkgconfig_variable.*|'$out/lib/systemd/user',|g"
+    sed -i data/meson.build \
+      -e "s|systemd.get_pkgconfig_variable('tmpfilesdir')|'$out/lib/tmpfiles.d'|" \
+      -e "s|systemd.get_pkgconfig_variable('systemdsystemunitdir')|'$out/lib/systemd/system'|"
   '';
 
-  configureFlags = [
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-nls"
-    "--disable-strict"
-    "--enable-rpath"
-    "--${boolEn (libgusb != null)}-libgusb"
-    "--${boolEn (systemd_lib != null)}-udev"
-    "--disable-bash-completion"
-    "--${boolEn (polkit != null)}-polkit"
-    "--enable-libcolordcompat"
-    "--${boolEn (systemd_lib != null)}-systemd-login"
-    "--disable-examples"
-    "--${boolEn (argyllcms != null)}-argyllcms-sensor"
-    "--disable-reverse"
-    "--disable-sane"
-    "--${boolEn (vala != null)}-vala"
-    "--disable-session-example"
-    "--enable-print-profiles"
-    "--disable-installed-tests"
-    #"--with-daemon-user"
+  mesonFlags = [
+    "-Denable-bash-completion=false"
+    "-Denable-libcolordcompat=true"
+    "-Denable-vala=true"
+    "-Denable-print-profiles=true"
+    "-Denable-man=false"
+    "-Denable-docs=false"
   ];
 
-  postInstall = ''
-    rm -rvf $out/var/lib/colord
-    mkdir -p $out/etc/bash_completion.d
-    cp -v ./data/colormgr $out/etc/bash_completion.d
-  '';
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -100,14 +91,14 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha1Urls =  map (n: "${n}.sha1") urls;
+      sha256Urls =  map (n: "${n}.sha256sum") urls;
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "163EB 50119 225DB 3DF8F  49EA1 7ACBA 8DFA9 70E17";
       failEarly = true;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Accurately color manage input and output devices";
     homepage = http://www.freedesktop.org/software/colord/intro.html;
     license = licenses.lgpl2Plus;

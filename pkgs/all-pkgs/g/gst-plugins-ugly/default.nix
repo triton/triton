@@ -17,7 +17,7 @@
 , libmpeg2
 , mpg123
 , orc
-#, x264
+, x264
 
 , channel
 }:
@@ -27,9 +27,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "1c165b8d888ed350acd8e6ac9f6fe06508e6fcc0a3afc6ccc9fbeb30df9be522";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "3fb9ea5fc8a2de4b3eaec4128d71c6a2d81dd19befe1cd87cb833b98bcb542d1";
     };
   };
 
@@ -66,12 +66,7 @@ stdenv.mkDerivation rec {
     libmpeg2
     mpg123
     orc
-    #x264  # FIXME: re-enable once compatible with api version 153+
-  ];
-
-  mesonFlags = [
-    # FIXME: add additional x264 libs for 10bpcc
-    #"-Dx264_libraries"
+    x264
   ];
 
   passthru = {
@@ -82,8 +77,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

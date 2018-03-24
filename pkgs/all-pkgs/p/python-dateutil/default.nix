@@ -1,7 +1,9 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
+, setuptools-scm
 , six
 }:
 
@@ -18,12 +20,13 @@ buildPythonPackage {
   };
 
   propagatedBuildInputs = [
+    setuptools-scm
     six
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Extensions to the standard Python datetime module";
     homepage = https://pypi.python.org/pypi/python-dateutil;
     licenses = licenses.bsd3;

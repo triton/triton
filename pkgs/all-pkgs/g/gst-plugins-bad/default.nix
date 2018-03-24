@@ -36,7 +36,7 @@
 , opengl-dummy
 , openh264
 , openjpeg
-#, openssl
+, openssl
 , opus
 , orc
 , qt5
@@ -65,9 +65,9 @@ let
     ];
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "0c7857be16686d5c1ba6e34bd338664d3d4599d32714a8eca5c8a41a101e2d08";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "ed5e2badb6f2858f60017b93334d91fe58a0e3f85ed2f37f2e931416fafb4f9f";
     };
   };
   source = sources."${channel}";
@@ -122,7 +122,7 @@ stdenv.mkDerivation rec {
     opengl-dummy
     openh264
     openjpeg
-    #openssl
+    openssl
     orc
     qt5
     rtmpdump
@@ -138,9 +138,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs gst-libs/gst/interfaces/build_mkenum.py
     patchShebangs gst-libs/gst/mpegts/mpegts_enum.py
-  '' + /* tests are slower than upstream expects */ ''
-    sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
-      -i tests/check/elements/audiomixer.c
+    patchShebangs gst-libs/gst/webrtc/webrtc_mkenum.py
   '';
 
   mesonFlags = [
@@ -159,8 +157,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

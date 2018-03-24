@@ -1756,12 +1756,12 @@ gst-plugins-bad_generics = overrides:
     gtk_3 = null;
     qt5 = null;
   } // overrides);
-gst-plugins-bad_1-12 = pkgs.gst-plugins-bad_generics {
-  channel = "1.12";
+gst-plugins-bad_1-14 = pkgs.gst-plugins-bad_generics {
+  channel = "1.14";
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };
-gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-12" { };
+gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-14" { };
 
 gst-plugins-base_1-14 = callPackage ../all-pkgs/g/gst-plugins-base {
   channel = "1.14";
@@ -1818,7 +1818,7 @@ gstreamer-editing-services =
 
 gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   channel = "1.12";
-  gst-plugins-bad = pkgs.gst-plugins-bad_1-12;
+  gst-plugins-bad = pkgs.gst-plugins-bad_1-14;
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };

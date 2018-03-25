@@ -19,6 +19,11 @@
         file = "g/gcc/0003-libcpp-Enforce-purity-for-time-functions.7.3.0.patch";
         sha256 = "7bea633c39650f2d3434f7cff52641ad6230989b98bd20ee908cc27250ce6572";
       })
+      (fetchTritonPatch {
+        rev = "7eb0a3fd9e53dbc2c1561f1605fd250f441cdfec";
+        file = "g/gcc/0004-Workaround-for-impurity-detection.7.3.0.patch";
+        sha256 = "b8a118de8a3ae4f15d9b130f137b9f48281f0c7352cd23d79ae4f50214e9ccc1";
+      })
     ];
   };
 }

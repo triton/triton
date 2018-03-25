@@ -83,10 +83,18 @@ stdenv.mkDerivation (rec {
   inherit patches;
 
   postPatch = ''
+    # Fix error msg that makes the build appear to contain impure paths
+    grep -q 'unary/binary/ternary' "$srcRoot"/gcc/tree-vect-stmts.c
+    sed -i 's,unary/binary/ternary,unary / binary / ternary,' "$srcRoot"/gcc/tree-vect-stmts.c
+
     # Don't look in fhs paths at runtime
-    grep -r '"/\(usr\|lib\|lib64\)/' "$srcRoot"/gcc/config \
+    grep -r '"/\(usr\|lib\|lib64\|libx32\|system\)/' "$srcRoot"/gcc/config \
       | awk -F: '{print $1}' | sort | uniq \
-      | xargs -n 1 -P $NIX_BUILD_CORES sed -i 's,"/\(usr\|lib\|lib64\)/,"/no-such-path/,g'
+      | xargs -n 1 -P $NIX_BUILD_CORES sed -i 's,"/\(usr\|lib\|lib64\|libx32\|system\)/,"/no-such-path/,g'
+
+    # Make sure we don't have unwanted /usr paths
+    grep -q '"/usr/lib/"' "$srcRoot"/gcc/gcc.c
+    sed -i 's,"/usr/lib/","/no-such-path/lib/",' "$srcRoot"/gcc/gcc.c
 
     # Don't store configure flags in resulting excutables
     grep -q 'TOPLEVEL_CONFIGURE_ARGUMENTS=' "$srcRoot"/Makefile.in
@@ -237,7 +245,7 @@ stdenv.mkDerivation (rec {
   # Make sure we retain no references to the FHS hierarchy of paths
   preFixupCheck = ''
     for output in bin dev lib; do
-      if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v '^[^:]*:.*\(/no-such-path\|/nix/store\|unpack\|%s\)'; then
+      if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v "^[^:]*:[ ]*\\([^/]\\|/no-such-path\\|$NIX_STORE\\|$NIX_BUILD_TOP\\)"; then
         echo "Found FHS paths. We definitely don't want this";
         exit 1
       fi

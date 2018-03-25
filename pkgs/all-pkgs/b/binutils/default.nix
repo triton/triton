@@ -151,7 +151,7 @@ stdenv.mkDerivation rec {
   # Make sure we retain no references to the FHS hierarchy of paths
   preFixupCheck = ''
     for output in bin dev lib; do
-      if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v '^[^:]*:.*\(/no-such-path\|/nix/store\|unpack\|%s\)'; then
+      if grep -rao '[a-zA-Z0-9_/.%-]*/\(bin\|include\|lib\|libexec\)' "''${!output}" | grep -v "^[^:]*:[ ]*\\([^/]\\|/no-such-path\\|$NIX_STORE\\|$NIX_BUILD_TOP\\)"; then
         echo "Found FHS paths. We definitely don't want this";
         exit 1
       fi

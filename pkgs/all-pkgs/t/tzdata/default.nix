@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2018c";
+  version = "2018d";
 in
 stdenv.mkDerivation rec {
   name = "tzdata-${version}";
@@ -11,13 +11,13 @@ stdenv.mkDerivation rec {
   srcs = [
     (fetchurl {
       url = "https://www.iana.org/time-zones/repository/releases/tzdata${version}.tar.gz";
-      multihash = "Qmeb9VPZNFWfoFzqm1zyX5jthZFKggRZVNQRiyLPoWyqRf";
-      sha256 = "2825c3e4b7ef520f24d393bcc02942f9762ffd3e7fc9b23850789ed8f22933f6";
+      multihash = "QmZRu5Zhc14rCG3Ykv29b1DPcVNwiLmzMWWx517KpYsdds";
+      sha256 = "5106eddceb5f1ae3a91dbd3960e1b8b11ba0dc08579a31cf0724a7691b10c054";
     })
     (fetchurl {
       url = "https://www.iana.org/time-zones/repository/releases/tzcode${version}.tar.gz";
-      multihash = "QmbdEmGRXxooAhbikTiGaLtkgwUrv4ok1JPhyhdwEoyuAa";
-      sha256 = "31fa7fc0f94a6ff2d6bc878c0a35e8ab8b5aa0e8b01445a1d4a8f14777d0e665";
+      multihash = "QmW9EqtCXZvW4Gh8FefYJdJRLRemGzLbQngdT4iVHAoSid";
+      sha256 = "7de44e85baad748d217e3fd60706f599f9aec68bce6356b163f52b0dbd40a8d9";
     })
   ];
 

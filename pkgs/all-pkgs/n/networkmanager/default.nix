@@ -42,7 +42,7 @@
 , ppp
 , python3Packages
 , readline
-, systemd_full
+, systemd_lib
 , tzdata
 , util-linux_lib
 , vala
@@ -130,7 +130,7 @@ stdenv.mkDerivation rec {
     python3Packages.python
     python3Packages.pygobject
     readline
-    systemd_full
+    systemd_lib
     util-linux_lib
     wpa_supplicant
     xz

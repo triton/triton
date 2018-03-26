@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libogg
 }:
@@ -17,7 +18,7 @@ stdenv.mkDerivation rec {
     libogg
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://xiph.org/vorbis/;
     license = licenses.bsd3;
     maintainers = with maintainers; [

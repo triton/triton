@@ -9,17 +9,17 @@
 
 let
   fileUrls = name: [
-    "http://www.openldap.org/software/download/OpenLDAP/openldap-release/${name}"
+    "https://www.openldap.org/software/download/OpenLDAP/openldap-release/${name}"
   ];
 in
 stdenv.mkDerivation rec {
-  name = "openldap-2.4.45";
+  name = "openldap-2.4.46";
 
   src = fetchurl {
     urls = map (n: "${n}.tgz") (fileUrls name);
-    multihash = "QmbXtLhJfjNe3QeQb5pzL9BqSEbKgk9Azvfw6YXePH7Ns7";
+    multihash = "Qmd89FnzzUsPf9xBwfxfHpnpcPjWPeJuuZ8oz5qR1mLsoV";
     hashOutput = false;
-    sha256 = "cdd6cffdebcd95161a73305ec13fc7a78e9707b46ca9f84fb897cd5626df3824";
+    sha256 = "9a90dcb86b99ae790ccab93b7585a31fbcbeec8c94bf0f7ab0ca0a87ea0c4b2d";
   };
 
   nativeBuildInputs = [

@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
   postInstall = ''
     sed -i "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
       -e "s,Exec=lightdm-gtk-greeter,Exec=$out/bin/lightdm-gtk-greeter,"
-    wrapProgram "$out/sbin/lightdm-gtk-greeter" \
+    wrapProgram "$out/bin/lightdm-gtk-greeter" \
       --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix XDG_DATA_DIRS ':' "${hicolor-icon-theme}/share" \
       --prefix XDG_DATA_DIRS ':' "${shared-mime-info}/share"

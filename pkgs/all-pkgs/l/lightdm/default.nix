@@ -17,7 +17,7 @@
 }:
 
 let
-  version = "1.25.2";
+  version = "1.26.0";
 in
 stdenv.mkDerivation rec {
   name = "lightdm-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/CanonicalLtd/lightdm/releases/download/"
       + "${version}/${name}.tar.xz";
-    sha256 = "8a6bc0b32dcf2e9183269c66c83ab2948e01ac7c560fe93b55dd4f61673d8eb0";
+    sha256 = "c95e14e9131b5f95ecba42faaab2cfa917371193caa54fa1b4322ad7a89334f0";
   };
 
   postPatch = ''

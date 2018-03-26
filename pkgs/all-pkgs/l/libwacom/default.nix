@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwacom-0.28";
+  name = "libwacom-0.29";
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/libwacom/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "e7d632301288b221cb5af69b4c5e57fd062bafd9a9acd6f9ce271570103267ef";
+    sha256 = "9cea00e68ddf342c3f749f6628d33fd3646f1937d7c57053ec6c5728d9a333b6";
   };
 
   postPatch = /* Disable docs */ ''

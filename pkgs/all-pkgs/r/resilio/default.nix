@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src  = fetchurl {
     url  = "https://download-cdn.resilio.com/${version}/"
       + "linux-x64/resilio-sync_x64.tar.gz";
-    sha256 = "87d9eb37714af68dc53c031e9e5f381c1130d07bc0a217f1140272024e71cf9c";
+    sha256 = "0cc68621543ae29a4373196709a5962868b69e5631238673723d858aa3d8fd0b";
   };
 
   nativeBuildInputs = [

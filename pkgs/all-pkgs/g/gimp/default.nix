@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , lib
+, libxml2
 , makeWrapper
 , python2Packages
 
@@ -44,9 +45,11 @@
 , libxfixes
 , libxt
 , libzip
+, mypaint-brushes
 , openexr
 , pango
 , poppler
+, poppler-data
 , shared-mime-info
 , xorg
 , xorgproto
@@ -55,8 +58,8 @@
 }:
 
 let
-  major = "2.9";
-  patch = "8";
+  major = "2.10";
+  patch = "0-RC1";
 
   version = "${major}.${patch}";
 in
@@ -65,14 +68,15 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://download.gimp.org/pub/gimp/v${major}/${name}.tar.bz2";
-    multihash = "QmcJnieMv2BAESLYgzaN7npxGaLqRZvaSk9uwzSVEyu3R4";
+    multihash = "QmfYkPnG63yRTFFUEnUP7gJTahiqqW2NhhfVSYEq4xoLxQ";
     hashOutput = false;
-    sha256 = "a94983ea4ab230629ae2515506917a49d1df62816d8fac0cf60ef548ea3d9162";
+    sha256 = "cc87b8edc74451b25563fdd8ee29169bd6554283a7bc07cb6a142beee89d269e";
   };
 
   nativeBuildInputs = [
     gettext
     intltool
+    libxml2
     makeWrapper
     python2Packages.wrapPython
   ];
@@ -116,9 +120,11 @@ stdenv.mkDerivation rec {
     libxfixes
     libxt
     libzip
+    mypaint-brushes
     openexr
     pango
     poppler
+    poppler-data
     python2Packages.python
     python2Packages.pygtk
     shared-mime-info
@@ -150,6 +156,9 @@ stdenv.mkDerivation rec {
   preBuild = ''
     # Build depends on shared-mime-info
     export XDG_DATA_DIRS="$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${shared-mime-info}/share"
+
+    # Build depends gdk pixbuf loaders
+    export GDK_PIXBUF_MODULE_FILE='${gdk-pixbuf.loaders.cache}'
   '';
 
   postInstall = ''

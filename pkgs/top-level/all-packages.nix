@@ -1078,6 +1078,8 @@ dpkg = callPackage ../all-pkgs/d/dpkg { };
 
 dtc = callPackage ../all-pkgs/d/dtc { };
 
+duperemove = callPackage ../all-pkgs/d/duperemove { };
+
 duplicity = pkgs.pythonPackages.duplicity;
 
 e2fsprogs = callPackage ../all-pkgs/e/e2fsprogs { };

@@ -21,7 +21,7 @@ let
       name = "${package}-${version}${type}";
       url = "https://localhost/not-a-url";
       preFetch = ''
-        $curl 'https://pypi.python.org/pypi/${package}/json' | \
+        $curl 'https://pypi.org/pypi/${package}/json' | \
           ${pkgs.jq}/bin/jq -r '
             .releases["${version}"] |
               reduce .[] as $item ("";

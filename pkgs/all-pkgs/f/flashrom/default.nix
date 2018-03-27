@@ -24,6 +24,10 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
+  postPatch = ''
+    sed -i '/-Werror/d' Makefile
+  '';
+
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';

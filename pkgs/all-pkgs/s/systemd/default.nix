@@ -117,6 +117,12 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,\(-DABS_\(SRC\|BUILD\)_DIR=\\"\).*\\",\1/no-such-path\\",g' Makefile.in
+  '' + optionalString (type != "lib") ''
+    # Fix an issue with missing definitions conflicting with real ones
+    sed -i '\,#include <sys/socket.h>,i#include <sys/mount.h>' src/basic/missing.h
+
+    # Fix another issue where sys/mount conflicts with linux/fs definitions
+    find . \( -name \*.c -or -name \*.h \) -exec sed -i '\,#include <linux/fs.h>,i#include <sys/mount.h>' {} \;
   '';
 
   preConfigure = ''

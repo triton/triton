@@ -32,6 +32,7 @@
 , libxrender
 , ncurses
 , xorg
+, xorgproto
 , zlib
 }:
 

@@ -5,20 +5,22 @@
 , util-macros
 
 , mtdev
-, xorg
 , xorgproto
+, xorg-server
 }:
 
+let
+  version = "0.3.1";
+in
 stdenv.mkDerivation rec {
   name = "xf86-input-mtrack-${version}";
-  version = "0.3.1";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "BlueDragonX";
     repo = "xf86-input-mtrack";
     rev = "v${version}";
-    sha256 = "507605b2c69b630d0c7cec77e1da504ef97af30c595ef8fa4819c53cb0e0e960";
+    sha256 = "26f00ed72e3c0b26878cbe0143c065d75f553e43eaca23623e9c0f2b0ab89588";
   };
 
   nativeBuildInputs = [
@@ -29,9 +31,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     mtdev
     xorgproto
+    xorg-server
   ];
-
-  CFLAGS = "-I${xorg.pixman}/include/pixman-1";
 
   meta = with lib; {
     homepage = https://github.com/BlueDragonX/xf86-input-mtrack;

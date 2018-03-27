@@ -72,6 +72,10 @@ stdenv.mkDerivation rec {
     "--${boolWt (libxklavier != null)}-libxklavier"
   ];
 
+  preBuild = ''
+    makeFlagsArray+=("sbindir=$out/bin")
+  '';
+
   preInstall = ''
     installFlagsArray+=(
       "localstatedir=$TMPDIR"

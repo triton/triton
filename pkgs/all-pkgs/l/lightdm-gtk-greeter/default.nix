@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  postInstall = ''
+  preFixup = ''
     sed -i "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
       -e "s,Exec=lightdm-gtk-greeter,Exec=$out/bin/lightdm-gtk-greeter,"
     wrapProgram "$out/bin/lightdm-gtk-greeter" \

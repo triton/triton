@@ -163,7 +163,6 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     wrapPythonPrograms
-    ln -sv gimp-${major} $out/bin/gimp
   '';
 
   preFixup = ''

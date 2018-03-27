@@ -4,6 +4,7 @@
 , elfutils
 , fetchFromGitHub
 , fetchTritonPatch
+, fetchurl
 , libtool
 , nukeReferences
 , perl
@@ -51,13 +52,19 @@ assert buildKernel && ! (kernel.isCompatibleVersion source.maxLinuxVersion "0") 
 stdenv.mkDerivation rec {
   name = "zfs-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";
 
-  src = fetchFromGitHub {
-    owner = "zfsonlinux";
-    repo = "zfs";
-    rev = "${if source ? version then "zfs-${source.version}" else source.rev}";
-    inherit (source) sha256;
-    version = source.fetchzipVersion;
-  };
+  src = if source ? fetchzipVersion then
+    fetchFromGitHub {
+      owner = "zfsonlinux";
+      repo = "zfs";
+      rev = "${if source ? version then "zfs-${source.version}" else source.rev}";
+      inherit (source) sha256;
+      version = source.fetchzipVersion;
+    }
+  else
+    fetchurl {
+      url = "https://github.com/zfsonlinux/zfs/releases/download/zfs-${version}/zfs-${version}.tar.gz";
+      inherit (source) sha256;
+    };
 
   nativeBuildInputs = [
     autoconf

@@ -1,36 +1,36 @@
 { stdenv
+, cmake
 , fetchFromGitHub
 , lib
-
-, lz4
-, xz
-, zlib
+, ninja
 }:
 
 let
-  version = "1.3.3";
+  version = "1.3.4";
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "facebook";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "8b72e1fa00ce3948058a7b969fb51b230ea220be4e9f6c42ddc2094a27603385";
+    sha256 = "ac8a9855f2194d8699d9ac40c7eeb30af76c75b714eccf5407f07bb71dc3801a";
   };
 
-  buildInputs = [
-    lz4
-    xz
-    zlib
+  nativeBuildInputs = [
+    cmake
+    ninja
   ];
 
-  # Makefile builds during the install phase
-  preInstall = ''
-    installFlagsArray+=("PREFIX=$out")
+  postPatch = ''
+    cd build/cmake
   '';
+
+  cmakeFlags = [
+    "-DZSTD_BUILD_CONTRIB=ON"
+  ];
 
   meta = with lib; {
     description = "Fast real-time lossless compression algorithm";

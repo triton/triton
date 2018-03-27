@@ -4093,7 +4093,9 @@ zookeeper = callPackage ../all-pkgs/z/zookeeper { };
 
 zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd = callPackage ../all-pkgs/z/zstd { };
+zstd = callPackage ../all-pkgs/z/zstd {
+  cmake = pkgs.cmake_bootstrap;
+};
 
 ################################################################################
 ################################################################################

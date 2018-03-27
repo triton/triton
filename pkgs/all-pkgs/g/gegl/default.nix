@@ -37,16 +37,16 @@ let
     platforms;
 
   channel = "0.3";
-  version = "${channel}.28";
+  version = "${channel}.30";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmdEucnqs1tNDQseGH2pSozoaKwWsqiaHRNea2vWKe6qGR";
+    multihash = "QmVN53UuPYMtcCT2PndjqLMeQxyrrHz7ZDejmnJMBcwUCb";
     hashOutput = false;
-    sha256 = "152f87604a5a191775329dfb63764efa1d5c32403d1438da68e242f96b7d23ff";
+    sha256 = "f8b4a93ad2c5187efcc7d9a665ef626a362587eb701eebccf21b13616791e551";
   };
 
   nativeBuildInputs = [
@@ -82,19 +82,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-largefile"
-    "--disable-debug"
-    "--disable-profile"
-    "--disable-docs"
-    "--${boolEn (elem targetSystem platforms.x86-all)}-mmx"
-    "--${boolEn (elem targetSystem platforms.x86-all)}-sse"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-glibtest"
-    "--enable-nls"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-workshop"
     "--${boolEn (vala != null)}-vala"
     "--without-mrg"
     "--${boolWt (gexiv2 != null)}-gexiv2"

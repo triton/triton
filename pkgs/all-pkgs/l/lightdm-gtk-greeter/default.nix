@@ -62,10 +62,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
     "--${boolEn (gobject-introspection != null)}-introspection"
+    "--enable-compile-warnings"
+    "--disable-iso-c"
     "--disable-libindicator"
     "--disable-libido"
     "--disable-indicator-services-command"
     #"--enable-kill-on-sigterm"
+    "--enable-nls"
     "--${boolWt (libxklavier != null)}-libxklavier"
   ];
 
@@ -78,8 +81,8 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     sed -i "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
-      -e "s,Exec=lightdm-gtk-greeter,Exec=$out/sbin/lightdm-gtk-greeter,"
-    wrapProgram "$out/sbin/lightdm-gtk-greeter" \
+      -e "s,Exec=lightdm-gtk-greeter,Exec=$out/bin/lightdm-gtk-greeter,"
+    wrapProgram "$out/bin/lightdm-gtk-greeter" \
       --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix XDG_DATA_DIRS ':' "${hicolor-icon-theme}/share" \
       --prefix XDG_DATA_DIRS ':' "${shared-mime-info}/share"

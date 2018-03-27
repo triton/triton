@@ -62,13 +62,10 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-compile-warnings"
-    "--disable-iso-c"
     "--disable-libindicator"
     "--disable-libido"
     "--disable-indicator-services-command"
     #"--enable-kill-on-sigterm"
-    "--enable-nls"
     "--${boolWt (libxklavier != null)}-libxklavier"
   ];
 

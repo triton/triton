@@ -4,6 +4,7 @@
 , elfutils
 , fetchFromGitHub
 , fetchTritonPatch
+, fetchurl
 , libtool
 
 , kernel ? null
@@ -37,13 +38,20 @@ assert buildKernel && !(kernel.isCompatibleVersion source.maxLinuxVersion "0") -
 stdenv.mkDerivation rec {
   name = "spl-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";
 
-  src = fetchFromGitHub {
-    owner = "zfsonlinux";
-    repo = "spl";
-    rev = "${if source ? version then "spl-${source.version}" else source.rev}";
-    inherit (source) sha256;
-    version = source.fetchzipVersion;
-  };
+  src = if source ? fetchzipVersion then
+    fetchFromGitHub {
+      owner = "zfsonlinux";
+      repo = "spl";
+      rev = "${if source ? version then "zfs-${source.version}" else source.rev}";
+      inherit (source) sha256;
+      version = source.fetchzipVersion;
+    }
+  else
+    fetchurl {
+      url = "https://github.com/zfsonlinux/zfs/releases/download/zfs-${version}/spl-${version}.tar.gz";
+      inherit (source) sha256;
+    };
+
 
   nativeBuildInputs = [
     autoconf
@@ -53,13 +61,7 @@ stdenv.mkDerivation rec {
     elfutils
   ];
 
-  patches = optionals (channel != "dev") [
-    (fetchTritonPatch {
-      rev = "518382a2bbf31f798bf5271105ac4005510f185d";
-      file = "s/spl/0001-Fix-constification.patch";
-      sha256 = "96345a84fab6c8a989dc85e238887b91c772784121bff0acd500a49951f44dc0";
-    })
-  ] ++ [
+  patches = [
     (fetchTritonPatch {
       rev = "518382a2bbf31f798bf5271105ac4005510f185d";
       file = "s/spl/0002-Fix-install-paths.patch";

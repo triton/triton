@@ -2900,6 +2900,8 @@ mutter = callPackageAlias "mutter_3-26" { };
 
 mxml = callPackage ../all-pkgs/m/mxml { };
 
+mypaint-brushes = callPackage ../all-pkgs/m/mypaint-brushes { };
+
 nano = callPackage ../all-pkgs/n/nano { };
 
 nasm = callPackage ../all-pkgs/n/nasm { };

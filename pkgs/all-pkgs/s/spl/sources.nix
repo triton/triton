@@ -5,10 +5,10 @@
     sha256 = "9e98af3daaf1a6605b34f8b709a60cfc52dbf2bedcfc01d919d1f77c695247de";
   };
   "dev" = {
-    date = "2018-02-24";
-    rev = "3673d032850c3b54b8b2cc74cf1782a75cc9b2a9";
+    date = "2018-03-09";
+    rev = "43983eb2024ec6b3280e6e06a6fb621ee3bb2a41";
     maxLinuxVersion = "4.16";
-    fetchzipVersion = 5;
-    sha256 = "a61e53c2ae0e38378d1f8065da30b63707b187080a490efffd51c89856609c51";
+    fetchzipVersion = 6;
+    sha256 = "8a87799b101bff21211aef67300528eb4cbcc1612dc5a350e806d5059202b7e6";
   };
 }

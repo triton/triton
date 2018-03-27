@@ -3238,6 +3238,8 @@ poppler = callPackage ../all-pkgs/p/poppler {
   qt5 = null;
 };
 
+poppler-data = callPackage ../all-pkgs/p/poppler-data { };
+
 popt = callPackage ../all-pkgs/p/popt { };
 
 portaudio = callPackage ../all-pkgs/p/portaudio { };

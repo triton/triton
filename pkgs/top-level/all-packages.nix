@@ -811,6 +811,8 @@ busyboxBootstrap = callPackageAlias "busybox" {
 
 bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
+cabextract = callPackage ../all-pkgs/c/cabextract { };
+
 cacert = callPackage ../all-pkgs/c/cacert { };
 
 c-ares = callPackage ../all-pkgs/c/c-ares { };

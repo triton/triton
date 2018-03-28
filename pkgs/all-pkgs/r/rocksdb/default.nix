@@ -43,16 +43,10 @@ stdenv.mkDerivation rec {
     zstd
   ];
 
-  postPatch = ''
-    # Hack to fix typos
-    sed -i 's,#inlcude,#include,g' build_tools/build_detect_platform
-  '';
-
   # Environment vars used for building certain configurations
   DISABLE_WARNING_AS_ERROR = "1";
   PORTABLE = "1";
   USE_SSE = "1";
-  CMAKE_CXX_FLAGS = "-std=gnu++11";
   JEMALLOC_LIB = "-ljemalloc";
 
   makeFlags = [

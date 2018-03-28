@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "6.0.2p1";
+  version = "6.0.3p1";
 
   name = "opensmtpd-${version}";
 
@@ -26,9 +26,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = map (n: "${n}.tar.gz") baseUrls;
-    multihash = "QmTaJoYN8ayemCRNJyobCD94dnAk7hS9AsamymXLFgRNp2";
+    multihash = "QmbkjWGABUzhkHmAh16zhhUstFm6cQGn4JmYG7XQyBQdCB";
     hashOutput = false;
-    sha256 = "2af9b6d08784c7e546bf124bb61e311a6aa0c9835507710a76f5c242383190ac";
+    sha256 = "291881862888655565e8bbe3cfb743310f5dc0edb6fd28a889a9a547ad767a81";
   };
 
   nativeBuildInputs = [

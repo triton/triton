@@ -73,20 +73,20 @@ stdenv.mkDerivation rec {
     nukeReferences
   ] ++ optionals buildKernel [
     elfutils
-  ] ++ optionals (channel == "dev" && buildKernel) [
     perl
   ];
 
   buildInputs = optionals buildKernel [
     spl
   ] ++ optionals buildUser [
-    attr
     libtirpc
     lvm2
     python
     systemd_lib
     util-linux_full
     zlib
+  ] ++ optionals (buildUser && channel != "dev") [
+    attr
   ] ++ optionals (buildUser && channel == "dev") [
     openssl
   ];
@@ -124,7 +124,7 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     ./autogen.sh
-  '' + optionalString (channel == "dev" && buildKernel) ''
+  '' + optionalString (buildKernel) ''
     patchShebangs scripts/enum-extract.pl
   '' + optionalString buildUser ''
     configureFlagsArray+=(

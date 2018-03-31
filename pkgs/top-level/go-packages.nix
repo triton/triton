@@ -5677,10 +5677,10 @@ let
 
   grpc = buildFromGitHub rec {
     version = 6;
-    rev = "v1.11.0";
+    rev = "v1.10.1";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1kmqsn6b43wvxib0zhq1kjdfsk0jn7pvxqwbqmg2wydcgi8nbryl";
+    sha256 = "65a812baf1d3eb6693d334e53d6cdec18779775763f92131187a3c8722bbbcce";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -5693,6 +5693,8 @@ let
       oauth2
       protobuf
     ];
+    # GRPC 1.11.0 is broken with swarmkit 2018-03-27
+    meta.autoUpdate = false;
   };
 
   grpc_for_gax-go = grpc.override {
@@ -6704,10 +6706,10 @@ let
 
   kubernetes-client-go = buildFromGitHub {
     version = 6;
-    rev = "8ae4a66b9b242b227528a5286f78b1215429b2da";
+    rev = "88e8ea169afa2918712ce2bc64fc1e2d11d72b12";
     owner  = "kubernetes";
     repo   = "client-go";
-    sha256 = "018ynzc5xk51xhpjbzhgyrphpdnxmwilb4kmkxi4fdhqyfgsrbqq";
+    sha256 = "1pnpskyh9dq8lq20dg12bxbds8g9pc8iyx67ad4hg8mp3qnhc0ig";
     goPackagePath = "k8s.io/client-go";
     excludedPackages = "\\(test\\|fake\\)";
     propagatedBuildInputs = [
@@ -6732,7 +6734,7 @@ let
       sed -i 's#spt.Token,#spt.Token(),#' plugin/pkg/client/auth/azure/azure.go
     '';
     meta.useUnstable = true;
-    date = "2018-03-27";
+    date = "2018-03-28";
   };
 
   ldap = buildFromGitHub {

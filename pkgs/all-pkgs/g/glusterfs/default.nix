@@ -4,16 +4,16 @@
 , fetchurl
 , flex
 , makeWrapper
-, python
+, python2
 
 , acl
 , attr
 , coreutils
 , gawk
-, glib
 , gnugrep
 , gnused
 , libaio
+, libtirpc
 , liburcu
 , libxml2
 , lvm2
@@ -40,8 +40,8 @@ let
     which
   ];
 
-  versionMajor = "3.13";
-  versionMinor = "2";
+  versionMajor = "4.0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,21 +50,21 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "6d374e4007766b262fd9961e57a2b9af107c8b40fdbe016b2fea52491e5f2c30";
+    sha256 = "1fb1e8914f57db89905e0bb7d424a801d2aa400fe4632b6a2b6985b25f81377d";
   };
 
   nativeBuildInputs = [
     bison
     flex
     makeWrapper
-    python
+    python2
   ];
 
   buildInputs = [
     acl
     attr
-    glib
     libaio
+    libtirpc
     liburcu
     libxml2
     lvm2
@@ -82,7 +82,12 @@ stdenv.mkDerivation rec {
     cp ${automake}/share/automake*/config.* .
 
     # Don't chown / setuid anything
-    sed -i '/\(chown\|chmod\)/d' contrib/fuse-util/Makefile.in
+    grep -q 'chmod u+s' contrib/fuse-util/Makefile.in
+    sed -i '\,\(chown root\|chmod u+s\),d' contrib/fuse-util/Makefile.in
+
+    # Remove hard coded work directory
+    grep -q '@GLUSTERD_WORKDIR@' events/Makefile.in
+    sed -i '\,@GLUSTERD_WORKDIR@,d' events/Makefile.in
   '';
 
   preConfigure = ''
@@ -95,20 +100,18 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--with-mountutildir=/run/current-system/sw/bin"
     "--enable-bd-xlator"
     "--enable-crypt-xlator"
-    "--enable-qemu-block"
+    "--with-mountutildir=/run/current-system/sw/bin"
   ];
 
   preInstall = ''
     find . -name Makefile -exec sed -i {} \
-      -e "s,sysconfdir[ ]*=.*,sysconfdir = $out/etc," \
-      -e "s,localstatedir[ ]*=.*,localstatedir = $TMPDIR," \
-      -e "s,mountutildir[ ]*=.*,mountutildir = $out/bin," \
-      -e "s,utildir[ ]*=.*,utildir = $out/bin," \
-      -e "s,GLUSTERD_WORKDIR[ ]*=.*,GLUSTERD_WORKDIR = $TMPDIR," \
-      -e "\,/var/lib/glusterd/events,d" \
+      -e "s,^sysconfdir[ ]*=.*,sysconfdir = $out/etc," \
+      -e "s,^localstatedir[ ]*=.*,localstatedir = $TMPDIR," \
+      -e "s,^mountutildir[ ]*=.*,mountutildir = $out/bin," \
+      -e "s,^utildir[ ]*=.*,utildir = $out/bin," \
+      -e "s,^GLUSTERD_WORKDIR[ ]*=.*,GLUSTERD_WORKDIR = $TMPDIR," \
       \;
   '';
 

@@ -1,14 +1,17 @@
 { stdenv
 , fetchurl
 , gettext
+, groff
 , lib
 
+, file
 , ncurses
+, zlib
 }:
 
 let
   channel = "2.9";
-  version = "${channel}.4";
+  version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
   name = "nano-${version}";
@@ -19,15 +22,18 @@ stdenv.mkDerivation rec {
       "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "2cf9726e735f5c962af63d27c2faaead5936e45adec983659fb9e4af88ffa35a";
+    sha256 = "7b8d181cb57f42fa86a380bb9ad46abab859b60383607f731b65a9077f4b4e19";
   };
 
   nativeBuildInputs = [
     gettext
+    groff
   ];
 
   buildInputs = [
+    file
     ncurses
+    zlib
   ];
 
   configureFlags = [

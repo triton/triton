@@ -1811,14 +1811,14 @@ gstreamer_1-14 = callPackage ../all-pkgs/g/gstreamer {
 };
 gstreamer = callPackageAlias "gstreamer_1-14" { };
 
-gstreamer-editing-services_1-12 =
+gstreamer-editing-services_1-14 =
   callPackage ../all-pkgs/g/gstreamer-editing-services {
-    channel = "1.12";
+    channel = "1.14";
     gst-plugins-base = pkgs.gst-plugins-base_1-14;
     gstreamer = pkgs.gstreamer_1-14;
   };
 gstreamer-editing-services =
-  callPackageAlias "gstreamer-editing-services_1-12" { };
+  callPackageAlias "gstreamer-editing-services_1-14" { };
 
 gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   channel = "1.12";

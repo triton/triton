@@ -19,9 +19,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "bd7eaa2c9572db9e7e535064024b6f69250de864fe8a5d5be86fa8c7edacca0c";
+    "1.14" = {
+      version = "1.14.0";
+      sha256 = "8d5f90eb532f4cf4aa1466807ef92b05bd1705970d7aabe10066929bbc698d91";
     };
   };
 
@@ -66,8 +66,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "1.33";
+  version = "1.34";
 
   tarballUrls = version: [
     "mirror://gnu/libidn/libidn-${version}.tar.gz"
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "44a7aab635bb721ceef6beecc4d49dfd19478325e1b47f3196f7d2acc4930e19";
+    sha256 = "3719e2975f2fb28605df3479c380af2cf4ab4e919e1506527e4c7670afff6e3c";
   };
 
   postPatch = ''
@@ -27,11 +27,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = tarballUrls "1.33";
+      urls = tarballUrls "1.34";
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyFingerprint = "9AA9 BDB1 1BB1 B99A 2128  5A33 0664 A769 5426 5E8C";
       inherit (src) outputHashAlgo;
-      outputHash = "44a7aab635bb721ceef6beecc4d49dfd19478325e1b47f3196f7d2acc4930e19";
+      outputHash = "3719e2975f2fb28605df3479c380af2cf4ab4e919e1506527e4c7670afff6e3c";
     };
   };
 

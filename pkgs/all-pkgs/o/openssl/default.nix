@@ -24,9 +24,9 @@ let
       ];
     };
     "1.1.0" = {
-      version = "1.1.0g";
-      multihash = "QmQ8QbZm1bENziurKDCYnbq1BJUAjxwaSUaoZWNFyT8hNb";
-      sha256 = "de4d501267da39310905cb6dc8c6121f7a2cad45a7707f76df828fe1b85073af";
+      version = "1.1.0h";
+      multihash = "Qmejf2f1edhc27TTTPxE8Tpp2fdHPvxeCL5dCsnfPqDbxH";
+      sha256 = "5835626cde9e99656585fc7aaa2302a73a7e1340bf8c14fd635a62c66802a517";
       patches = [
         (fetchTritonPatch {
           rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.0.2n";
+      urls = tarballUrls "1.1.0h";
       pgpsigUrls = map (n: "${n}.asc") urls;
       sha256Urls = map (n: "${n}.sha256") urls;
       pgpKeyFingerprints = [
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
         "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
       ];
       inherit (src) outputHashAlgo;
-      outputHash = "370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe";
+      outputHash = "5835626cde9e99656585fc7aaa2302a73a7e1340bf8c14fd635a62c66802a517";
     };
   };
 

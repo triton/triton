@@ -6,6 +6,7 @@
 , gettext
 , libxslt
 , makeWrapper
+, perl
 , xmlto
 
 , coreutils
@@ -17,7 +18,6 @@
 , gnused
 , openssl
 , pcre2
-, perl
 , python
 , zlib
 }:
@@ -31,7 +31,7 @@ let
     gnused
   ];
 
-  version = "2.16.3";
+  version = "2.17.0";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "d65d99e9e5b081c1f14ea018973806e942a2eb7d0da2ebc01bd2525adee62d48";
+    sha256 = "e916e5e95e81dbeafa7aac5d719c01108b5c814eb90b746695afa1afedf955c7";
   };
 
   patches = [
@@ -57,6 +57,7 @@ stdenv.mkDerivation rec {
     gettext
     libxslt
     makeWrapper
+    perl
     xmlto
   ];
 

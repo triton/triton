@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , audit_lib
@@ -12,12 +13,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.6p1";
+  name = "openssh-7.7p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "a323caeeddfe145baaa0db16e98d784b1fbc7dd436a6bf1f479dfd5cd1d21723";
+    sha256 = "d73be7e684e99efcd024be15a30bffcbe41b012b2f7b3c9084aed621775e6b8f";
   };
 
   buildInputs = [
@@ -32,7 +33,11 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    ./locale_archive.patch
+    (fetchTritonPatch {
+      rev = "0adef9010d48cf06dd295edc65d6ffc1c618ba10";
+      file = "o/openssh/0001-Pass-LOCALE_ARCHIVE-to-children.patch";
+      sha256 = "0dd79faa9cb039c4c34aea5a8307dc0a55464a839ddd7e5f9c5ec5a0c2baec5c";
+    })
   ];
 
   postPatch = ''

@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "1.1.4";
+  version = "1.1.5";
 in
 buildPythonPackage rec {
   name = "borgbackup-${version}";
@@ -22,7 +22,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "borgbackup";
     inherit version;
-    sha256 = "22a4a53840886180e87de5636356f29e491209365861007c31d7f18220c72cb2";
+    sha256 = "4356e6c712871f389e3cb1d6382e341ea635f9e5c65de1cd8fcd103d0fb66d3d";
   };
 
   nativeBuildInputs = [
@@ -55,8 +55,6 @@ buildPythonPackage rec {
     sed -i setup.py \
       -e 's,/usr,/non-existant-path,g' \
       -e 's,/opt,/non-existant-path,g'
-
-    sed -i "/def lz4_system_prefix/a\    return \"${lz4}\"" setup_lz4.py
   '';
 
   disabled = pythonOlder "3.5";

@@ -9947,10 +9947,10 @@ let
 
   teleport = buildFromGitHub {
     version = 6;
-    rev = "v2.5.4";
+    rev = "v2.5.6";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "215c49e165ea500eb406991095ffdf6b18af2a0750037106a793626cad026275";
+    sha256 = "d2821f3231ea1b5a76db2b1f1fbd53d5697703b014900a1cf5a92e5b8700c1a6";
     nativeBuildInputs = [
       pkgs.protobuf-cpp
       gogo_protobuf.bin

@@ -9,8 +9,8 @@
 }:
 
 let
-  version = "2.1.12";
-  newVersion = "2.1.12";
+  version = "2.1.13";
+  newVersion = "2.1.13";
 
   tarballUrls = version: [
     "mirror://samba/talloc/talloc-${version}.tar"
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "987c0cf6815e948d20caaca04eba9b823e67773f361ffafe676e24b953cc604b";
+    sha256 = "84f399dbf0ad97006a2b4953ea99452d033faac15aabfddd4ba61734764c6047";
   };
 
   nativeBuildInputs = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
       pgpDecompress = true;
       inherit (samba_full.pgp.library) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
-      outputHash = "987c0cf6815e948d20caaca04eba9b823e67773f361ffafe676e24b953cc604b";
+      outputHash = "84f399dbf0ad97006a2b4953ea99452d033faac15aabfddd4ba61734764c6047";
     };
   };
 

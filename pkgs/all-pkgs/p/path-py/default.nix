@@ -10,15 +10,15 @@
 }:
 
 let
-  version = "10.3.1";
+  version = "11.0.1";
 in
 buildPythonPackage rec {
-  name = "path.py-${version}";
+  name = "path-py-${version}";
 
   src = fetchPyPi {
     package = "path.py";
     inherit version;
-    sha256 = "412706be1cd8ab723c77829f9aa0c4d4b7c7b26c7b1be0275a6841c3cb1001e0";
+    sha256 = "e7eb9d0ca4110d9b4d7c9baa0696d8c94f837d622409cefc5ec9e7c3d02ea11f";
   };
 
   buildInputs = [

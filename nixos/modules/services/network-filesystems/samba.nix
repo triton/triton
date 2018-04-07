@@ -38,7 +38,7 @@ let
       ${smbToString (map shareConfig (attrNames cfg.shares))}
     '');
 
-  daemonService = appName: args:
+  daemonService = appName:
     { description = "Samba Service Daemon ${appName}";
 
       requiredBy = [ "samba.target" ];
@@ -49,7 +49,9 @@ let
       };
 
       serviceConfig = {
-        ExecStart = "${samba}/sbin/${appName} ${args}";
+        Type = "notify";
+        NotifyAccess = "all";
+        ExecStart = "${samba}/sbin/${appName} --foreground --no-process-group";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       };
 
@@ -174,9 +176,9 @@ in
           };
 
           services = {
-            "samba-nmbd" = daemonService "nmbd" "-F";
-            "samba-smbd" = daemonService "smbd" "-F";
-            "samba-winbindd" = daemonService "winbindd" "-F";
+            "samba-nmbd" = daemonService "nmbd";
+            "samba-smbd" = daemonService "smbd";
+            "samba-winbindd" = daemonService "winbindd";
             "samba-setup" = {
               description = "Samba Setup Task";
               script = setupScript;

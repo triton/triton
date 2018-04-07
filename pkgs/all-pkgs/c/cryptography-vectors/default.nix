@@ -5,15 +5,15 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.2.2";
 in
 buildPythonPackage {
-  name = "cryptography_vectors-${version}";
+  name = "cryptography-vectors-${version}";
 
   src = fetchPyPi {
     package = "cryptography_vectors";
     inherit version;
-    sha256 = "be7cf2e4de057f2a5307d9600177014daefd58a96de9cb9f437c26753fd462fe";
+    sha256 = "28b52c84bae3a564ce51bfb0753cbe360218bd648c64efa2808c886c18505688";
   };
 
   meta = with lib; {

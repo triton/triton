@@ -10,16 +10,16 @@
 
 let
   major = "1.8";
-  version = "${major}.4";
+  version = "${major}.7";
 in
 stdenv.mkDerivation rec {
   name = "haproxy-${version}";
   
   src = fetchurl {
     url = "https://www.haproxy.org/download/${major}/src/${name}.tar.gz";
-    multihash = "QmUDhzY9mXo78Fenmr9vvfz4BsH1vH8nHPC6hoaehg8JV4";
+    multihash = "QmR3qq7PWWxiBhq1v89Tu3sYKNXE3L4WEj9iHL7ATL6LGw";
     hashOutput = false;
-    sha256 = "e305b0a4e7dec08072841eef6ac6dcd1b5586b1eff09c2d51e152a912e8884a6";
+    sha256 = "0584a52c9a9095470be8d4216b31e7a312873752d5eb66be4eb3ce51b2875317";
   };
 
   buildInputs = [
@@ -31,7 +31,6 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    cat Makefile
     makeFlagsArray+=("PREFIX=$out")
   '';
 

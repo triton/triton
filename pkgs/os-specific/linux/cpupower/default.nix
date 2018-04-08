@@ -18,6 +18,8 @@ stdenv.mkDerivation {
 
   src = kernel.src;
 
+  patches = kernel.patches;
+
   nativeBuildInputs = [
     gettext
   ];

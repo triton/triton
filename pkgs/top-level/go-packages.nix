@@ -750,11 +750,11 @@ let
   };
 
   blackfriday = buildFromGitHub {
-    version = 5;
+    version = 6;
     owner = "russross";
     repo = "blackfriday";
-    rev = "v1.5";
-    sha256 = "2e392843a85c619cd7115f3c0a81f181a5b9537cc1c313673871319139e5f0ca";
+    rev = "v1.5.1";
+    sha256 = "959a36690c3687eed66672cd7befecd88dd3a3fa7e84ce2b6387288894ebcdfa";
     propagatedBuildInputs = [
       sanitized-anchor-name
     ];
@@ -1367,6 +1367,19 @@ let
       yaml_v2
     ];
     excludedPackages = "test";
+  };
+
+  console = buildFromGitHub rec {
+    version = 6;
+    rev = "cb7008ab3d8359b78c5f464cb7cf160107ad5925";
+    owner = "containerd";
+    repo = "console";
+    sha256 = "0cc56pf92rdcbb7dw6qm64m50hhvqf6v5cbhrp26n9lpajcpp72s";
+    date = "2018-03-07";
+    propagatedBuildInputs = [
+      errors
+      sys
+    ];
   };
 
   consul = buildFromGitHub rec {
@@ -2241,6 +2254,17 @@ let
     sha256 = "1q04xarwz0f2jlhz3d9myxx8ikrbynj5pyhhcsz25dc56kc2gpfz";
   };
 
+  filepath-securejoin = buildFromGitHub {
+    version = 6;
+    rev = "v0.2.1";
+    owner  = "cyphar";
+    repo   = "filepath-securejoin";
+    sha256 = "0sz7cppgh5zyqdmkdih3i69yaixi3kks37yzw15g4algk0dyx0yk";
+    propagatedBuildInputs = [
+      errors
+    ];
+  };
+
   fileutil = buildFromGitHub {
     version = 5;
     date = "2018-01-08";
@@ -2325,7 +2349,6 @@ let
     rev = "v1.4.7";
     sha256 = "19j58cdxnydx8nad708syyasriwz4l97rjf1qs4b1jv0g8az9paj";
     goPackagePath = "gopkg.in/fsnotify.v1";
-    meta.autoUpdate = false;  # Broken....
     propagatedBuildInputs = [
       sys
     ];
@@ -7637,27 +7660,6 @@ let
     meta.useUnstable = true;
   };
 
-  moby_for_runc = moby.override {
-    subPackages = [
-      "pkg/longpath"
-      "pkg/mount"
-      "pkg/symlink"
-      "pkg/system"
-      "pkg/term"
-      "pkg/term/windows"
-    ];
-    propagatedBuildInputs = [
-      continuity
-      errors
-      go-ansiterm
-      go-units
-      go-winio
-      image-spec
-      logrus
-      sys
-    ];
-  };
-
   moby_lib = moby.override {
     subPackages = [
       "api/types"
@@ -9185,38 +9187,46 @@ let
   };
 
   runc = buildFromGitHub {
-    version = 2;
-    rev = "v1.0.0-rc1";
+    version = 6;
+    rev = "cc4307ab6643668ce5abc6b524e1764a54c32550";
     owner = "opencontainers";
     repo = "runc";
-    sha256 = "f9d79f48bbaf1c385219bf8617a25eb88f9a81f25f1a168830700e8ea9004db1";
+    sha256 = "06ms3kb4hjg7hbbz5hzdyns7c5sb2w9690wh837ldn48fv3nfj32";
     propagatedBuildInputs = [
+      urfave_cli
+      console
       dbus
+      filepath-securejoin
       fileutils
       go-systemd
       go-units
       gocapability
       libseccomp-golang
       logrus
-      moby_for_runc
       netlink
       protobuf
       runtime-spec
-      urfave_cli
+      selinux
+      sys
     ];
-    meta.autoUpdate = false;
+    date = "2018-04-03";
+    postPatch = ''
+      grep -q 'unix.SIGUNUSED' signalmap.go
+      sed -i '/unix.SIGUNUSED/d' signalmap.go
+    '';
   };
 
   runtime-spec = buildFromGitHub {
-    version = 2;
-    rev = "v1.0.0-rc1";
+    version = 6;
+    rev = "a1998ecf27964b493231626886dea534e2cfadc2";
     owner = "opencontainers";
     repo = "runtime-spec";
-    sha256 = "f5b8967328a8c42eafac05ae8569f6e23cbb5b23d7af55072ee57c04c4622742";
+    sha256 = "1fqypfsi116h9q867jmap27aprmkh6kwnl8pd3j1c6qi321yqpz6";
     buildInputs = [
       gojsonschema
     ];
-    meta.autoUpdate = false;
+    #meta.autoUpdate = false;
+    date = "2018-04-06";
   };
 
   safefile = buildFromGitHub {
@@ -9325,6 +9335,15 @@ let
     repo = "seed";
     sha256 = "0hnkw8zjiqkyffxfbgh1020dgy0vxzad1kby0kkm8ld3i5g0aq7a";
     date = "2017-03-13";
+  };
+
+  selinux = buildFromGitHub {
+    version = 6;
+    rev = "76b408a8e68e301b8245ba414ab600a0d1d797d9";
+    owner = "opencontainers";
+    repo = "selinux";
+    sha256 = "0n8w5vzzfmnvs2l25dbq3nhr9rk64pcdi1wv412i5h0yyxl6z5qs";
+    date = "2018-01-04";
   };
 
   semver = buildFromGitHub {
@@ -9981,7 +10000,7 @@ let
       lemma
       logrus
       kubernetes-apimachinery
-      moby_for_runc
+      moby_lib
       net
       osext
       otp

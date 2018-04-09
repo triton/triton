@@ -54,13 +54,13 @@ let
   sources = {
     "stable" = {
       suffix = "";
-      version = "1.25.0";
-      sha256 = "50aac9bcee896e285852c431be0fab7a5b670b17e46b45092d0224fa31e03112";
+      version = "1.25.1";
+      sha256 = "64ba24e3cf315413666bc3331105a16a188728e18af8b47242d1302338c91340";
     };
     "beta" = {
       suffix = "-beta";
-      version = "1.26.0-beta0";
-      sha256 = "f917f3ae09147f32c154658a331aa151186cdcacba305e138385f9f2e314ede1";
+      version = "1.26.0-beta1";
+      sha256 = "15d6705dcd0d90b3aafd206bbcea50950867957eda283b529cecd8eb668781d1";
     };
   };
   source = sources."${channel}";

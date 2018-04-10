@@ -2074,6 +2074,8 @@ kmscon = callPackage ../all-pkgs/k/kmscon { };
 
 knot = callPackage ../all-pkgs/k/knot { };
 
+knot-resolver = callPackage ../all-pkgs/k/knot-resolver { };
+
 krb5_full = callPackage ../all-pkgs/k/krb5 { };
 krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";

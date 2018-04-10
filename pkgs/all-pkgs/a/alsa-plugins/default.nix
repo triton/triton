@@ -4,25 +4,24 @@
 , alsa-lib
 , ffmpeg
 , jack2_lib
-, libogg
 , libsamplerate
 , pulseaudio_lib
 , speexdsp
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-plugins-1.1.5";
+  name = "alsa-plugins-1.1.6";
 
   src = fetchurl {
     url = "mirror://alsa/plugins/${name}.tar.bz2";
-    multihash = "QmcqwpskPPY7WBKqi69PDXbfkACgWdtdHfpSuVFMCUbuuK";
-    sha256 = "797da5f8f53379fbea28817bc466de16affd2c07849e84f1af8d5e22f7bb7f1c";
+    multihash = "QmbHz8QeVAitVks4Nn5PcgnFgRsGNPuZEBXjHaajVUZT61";
+    sha256 = "6f1d31ebe3b1fa1cc8dade60b7bed1cb2583ac998167002d350dc0a5e3e40c13";
   };
 
   buildInputs = [
     alsa-lib
+    #ffmpeg
     jack2_lib
-    libogg
     libsamplerate
     pulseaudio_lib
     speexdsp

@@ -6,15 +6,15 @@
 }:
 
 let
-  version = "2.1.0";
+  version = "2.2.0";
 in
 stdenv.mkDerivation rec {
   name = "htop-${version}";
 
   src = fetchurl {
     url = "https://hisham.hm/htop/releases/${version}/${name}.tar.gz";
-    multihash = "QmPkY2DFLYqFgyHpbBy6rG3tp2pYJnxovqcQ6Z79b72fQ6";
-    sha256 = "3260be990d26e25b6b49fc9d96dbc935ad46e61083c0b7f6df413e513bf80748";
+    multihash = "QmNUCyueoLPGSTevC3kmn2wZ1ez3RoGrLo1U6RsGGA899o";
+    sha256 = "d9d6826f10ce3887950d709b53ee1d8c1849a70fa38e91d5896ad8cbc6ba3c57";
   };
 
   nativeBuildInputs = [

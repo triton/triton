@@ -5,15 +5,15 @@
 }:
 
 let
-  version = "3.3.12";
+  version = "3.3.13";
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "procps-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/procps-ng/procps-ng-${version}.tar.xz";
-    multihash = "QmRgtzxS6QizqhxMKg4c467ULX53fSnc13pFkPPW6vTG8H";
-    sha256 = "6ed65ab86318f37904e8f9014415a098bec5bc53653e5d9ab404f95ca5e1a7d4";
+    url = "mirror://sourceforge/procps-ng/Production/procps-ng-${version}.tar.xz";
+    hashOutput = false;
+    sha256 = "52b05b2bd5b05f46f24766a10474337ebadd828df9915e2b178df291cf88f7d3";
   };
 
   buildInputs = [
@@ -23,6 +23,15 @@ stdenv.mkDerivation {
   makeFlags = [
     "usrbin_execdir=$(out)/bin"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://sourceforge.net/projects/procps-ng/;

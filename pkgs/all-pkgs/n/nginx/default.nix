@@ -16,6 +16,7 @@
 
 let
   inherit ((import ./sources.nix)."${channel}")
+    multihash
     sha256
     version;
 in
@@ -25,7 +26,9 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://nginx.org/download/${name}.tar.gz";
     hashOutput = false;
-    inherit sha256;
+    inherit
+      multihash
+      sha256;
   };
 
   buildInputs = [

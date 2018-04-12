@@ -15,16 +15,15 @@ let
   inherit (lib)
     boolEn;
 
-  versionMajor = "0.18";
-  versionMinor = "5";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "0.18";
+  version = "${channel}.6";
 in
 stdenv.mkDerivation rec {
   name = "libsecret-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libsecret/${versionMajor}/${name}.tar.xz";
-    sha256 = "9ce7bd8dd5831f2786c935d82638ac428fa085057cc6780aba0e39375887ccb3";
+    url = "mirror://gnome/sources/libsecret/${channel}/${name}.tar.xz";
+    sha256 = "5efbc890ba41a323ffe0599cd260fd12bd8eb62a04aa1bd1b2762575d253d66f";
   };
 
   nativeBuildInputs = [
@@ -41,11 +40,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--enable-introspection"
     "--enable-manpages"
     "--${boolEn (vala != null)}-vala"
@@ -54,6 +48,18 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--with-libgcrypt-prefix=${libgcrypt}"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libsecret/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "GObject library for the freedesktop.org Secret Service API";

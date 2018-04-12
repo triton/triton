@@ -1125,7 +1125,7 @@ eog_3-26 = callPackage ../all-pkgs/e/eog {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 eog = callPackageAlias "eog_3-26" { };
 
@@ -1146,7 +1146,7 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
   nautilus = pkgs.nautilus_unwrapped_3-26;
 };
@@ -1157,7 +1157,7 @@ evince = callPackageAlias "evince_3-22" { };
 evolution-data-server_3-26 = callPackage ../all-pkgs/e/evolution-data-server {
   channel = "3.26";
   #gnome-online-accounts
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   libsoup = pkgs.libsoup_2-62;
 };
 evolution-data-server = callPackageAlias "evolution-data-server_3-26" { };
@@ -1464,7 +1464,7 @@ glib = callPackage ../all-pkgs/g/glib { };
 
 glib-networking_2-54 = callPackage ../all-pkgs/g/glib-networking {
   channel = "2.54";
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 glib-networking = callPackageAlias "glib-networking_2-54" { };
 
@@ -1506,7 +1506,7 @@ gnome-calculator_3-26 = callPackage ../all-pkgs/g/gnome-calculator {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gtksourceview = pkgs.gtksourceview_3-24;
   libsoup = pkgs.libsoup_2-62;
 };
@@ -1522,7 +1522,7 @@ gnome-desktop_3-26 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.26";
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 gnome-desktop = callPackageAlias "gnome-desktop_3-26" { };
 
@@ -1553,7 +1553,7 @@ gnome-screenshot_3-26 = callPackage ../all-pkgs/g/gnome-screenshot {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 gnome-screenshot = callPackageAlias "gnome-screenshot_3-26" { };
 
@@ -1562,7 +1562,7 @@ gnome-session_3-26 = callPackage ../all-pkgs/g/gnome-session {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 gnome-session = callPackageAlias "gnome-session_3-26" { };
 
@@ -1573,7 +1573,7 @@ gnome-settings-daemon_3-26 =
     gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
     gnome-desktop = pkgs.gnome-desktop_3-26;
     gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
-    gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+    gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   };
 gnome-settings-daemon = callPackageAlias "gnome-settings-daemon_3-26" { };
 
@@ -1585,7 +1585,7 @@ gnome-terminal_3-26 = callPackage ../all-pkgs/g/gnome-terminal {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   nautilus = pkgs.nautilus_unwrapped_3-26;
   vala = pkgs.vala_0-40;
   vte = pkgs.vte_0-50;
@@ -1708,13 +1708,13 @@ grub_efi-i386 = callPackage ../all-pkgs/g/grub {
   type = "efi-i386";
 };
 
-gsettings-desktop-schemas_3-24 =
+gsettings-desktop-schemas_3-28 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
-    channel = "3.24";
+    channel = "3.28";
     gnome-backgrounds = pkgs.gnome-backgrounds_3-24;
   };
 gsettings-desktop-schemas =
-  callPackageAlias "gsettings-desktop-schemas_3-24" { };
+  callPackageAlias "gsettings-desktop-schemas_3-28" { };
 
 grpc = callPackage ../all-pkgs/g/grpc { };
 
@@ -2899,7 +2899,7 @@ mutter_3-26 = callPackage ../all-pkgs/m/mutter {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gnome-settings-daemon = pkgs.gnome-settings-daemon_3-26;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 mutter = callPackageAlias "mutter_3-26" { };
 
@@ -2916,14 +2916,14 @@ nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-26;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
   tracker = pkgs.tracker_2-0;
 };
 nautilus_3-26 = callPackage ../all-pkgs/n/nautilus {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
 };
 nautilus_unwrapped = callPackageAlias "nautilus_unwrapped_3-26" { };
@@ -3724,7 +3724,7 @@ tracker_2-0 = callPackage ../all-pkgs/t/tracker {
   evolution-data-server = pkgs.evolution-data-server_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 tracker = callPackageAlias "tracker_2-0" { };
 

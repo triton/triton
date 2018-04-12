@@ -16,9 +16,9 @@ let
     boolEn;
 
   sources ={
-    "3.24" = {
-      version = "3.24.1";
-      sha256 = "76a3fa309f9de6074d66848987214f0b128124ba7184c958c15ac78a8ac7eea7";
+    "3.28" = {
+      version = "3.28.0";
+      sha256 = "4cb4cd7790b77e5542ec75275237613ad22f3a1f2f41903a298cf6cc996a9167";
     };
   };
   source = sources."${channel}";
@@ -49,10 +49,8 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-maintainer-mode"
     "--enable-schemas-compile"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-nls"
   ];
 
   passthru = {

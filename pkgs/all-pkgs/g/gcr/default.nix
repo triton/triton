@@ -22,16 +22,15 @@ let
   inherit (lib)
     boolEn;
 
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "3.28";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "gcr-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gcr/${versionMajor}/${name}.tar.xz";
-    sha256 = "90572c626d8a708225560c42b4421f7941315247fa1679d4ef569bde7f4bb379";
+    url = "mirror://gnome/sources/gcr/${channel}/${name}.tar.xz";
+    sha256 = "15e175d1da7ec486d59749ba34906241c442898118ce224a7b70bf2e849faf0b";
   };
 
   nativeBuildInputs = [
@@ -55,8 +54,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
     "--enable-schemas-compile"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -71,6 +68,18 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gcr/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Libraries for cryptographic UIs and accessing PKCS#11 modules";

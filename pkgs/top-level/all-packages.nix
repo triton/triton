@@ -1222,6 +1222,7 @@ ffado_lib = callPackage ../all-pkgs/f/ffado {
 
 ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
+  aomedia = null;
   celt = null;
   chromaprint = null;
   fdk-aac = null;

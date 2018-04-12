@@ -61,6 +61,7 @@
  */
 #, aacplusExtlib ? false, aacplus
 , alsa-lib
+, aomedia
 #, avisynth
 , bzip2
 , celt
@@ -140,6 +141,7 @@
 , snappy
 , soxr
 , speex
+#, srt  # TODO: https://github.com/Haivision/srt
 , tesseract
 #, twolame
 #, utvideo
@@ -192,10 +194,10 @@ let
       sha256 = "2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740";
     };
     "9.9" = {  # Git
-      fetchzipversion = 5;
-      version = "2018.03.09";
-      rev = "a6cba062051f345e8ebfdff34aba071ed73d923f";
-      sha256 = "b96a12b5b54d1c996267c742fed7482f61f6781356f74e81bee394f32cb52b1a";
+      fetchzipversion = 6;
+      version = "2018.04.11";
+      rev = "a26c9fdd1b4c047d6c89e29774928fd7bf347e8b";
+      sha256 = "70cab5aa0029ce65112f295425911daac9c8af87155b9709e6c548e01a5e0c09";
     };
   };
   source = sources."${channel}";
@@ -335,6 +337,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     alsa-lib
+    aomedia
     bzip2
     celt
     chromaprint
@@ -391,6 +394,7 @@ stdenv.mkDerivation rec {
     soxr
     snappy
     speex
+    #srt
     tesseract
     v4l_lib
     vid-stab
@@ -547,6 +551,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libgcrypt != null)}-gcrypt"
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
+    (fflag "--${boolEn (aomedia != null)}-libaom" "3.5")
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
     (deprfflag "--${boolEn (jack2_lib != null)}-jack" null "3.4")
     "--${boolEn (jni != null)}-jni"
@@ -601,6 +606,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (snappy != null)}-libsnappy"
     "--${boolEn (soxr != null)}-libsoxr"
     "--${boolEn (speex != null)}-libspeex"
+    /**/(fflag "--disable-libsrt" "3.5")
     "--${boolEn (libssh != null)}-libssh"
     #"--${boolEn (tesseract != null)}-libtesseract"
     /**/"--disable-libtesseract"

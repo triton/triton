@@ -5,19 +5,20 @@
 , nasm
 , ninja
 , perl
+, python3
 }:
 
 let
-  version = "2017-12-22";
+  version = "2018-04-11";
 in
 stdenv.mkDerivation rec {
   name = "aomedia-${version}";
 
   src = fetchgit {
-    version = 5;
+    version = 6;
     url = "https://aomedia.googlesource.com/aom";
-    rev = "94e3fe3b2f21d4c821336fd85d89bf07f4144d55";
-    sha256 = "405cfdc8393d8e34f61bd4401ee38768d98652ac65cfd2a8beb675a85b719078";
+    rev = "3cfa8b7a7ecadb56e292056c057238e7218be2ac";
+    sha256 = "177b50ee292a3506bba423c93132043b3a93a7472e3c5bdd0baa610d61527b3a";
   };
 
   nativeBuildInputs = [
@@ -25,14 +26,12 @@ stdenv.mkDerivation rec {
     nasm
     ninja
     perl
+    python3
   ];
 
   cmakeFlags = [
-    "-DENABLE_CCACHE=OFF"
-    "-DENABLE_DISTCC=OFF"
     "-DENABLE_DOCS=OFF"
     "-DENABLE_NASM=ON"
-    "-DENABLE_IDE_TEST_HOSTING=OFF"
     "-DBUILD_SHARED_LIBS=ON"
   ];
 

@@ -2276,14 +2276,14 @@ libgudev = callPackage ../all-pkgs/l/libgudev { };
 
 libgusb = callPackage ../all-pkgs/l/libgusb { };
 
-libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
-  channel = "3.24";
+libgweather_3-28 = callPackage ../all-pkgs/l/libgweather {
+  channel = "3.28";
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   libsoup = pkgs.libsoup_2-62;
   vala = pkgs.vala_0-40;
 };
-libgweather = callPackageAlias "libgweather_3-24" { };
+libgweather = callPackageAlias "libgweather_3-28" { };
 
 libgxps_0-3 = callPackage ../all-pkgs/l/libgxps {
   channel = "0.3";

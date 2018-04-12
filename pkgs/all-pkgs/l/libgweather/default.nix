@@ -3,9 +3,11 @@
 , gettext
 , intltool
 , lib
+, meson
+, ninja
+, vala
 
 , atk
-, gconf
 , gdk-pixbuf
 , geocode-glib
 , glib
@@ -15,18 +17,22 @@
 , libxml2
 , pango
 , tzdata
-, vala
 
 , channel
 }:
 
 let
   inherit (lib)
-    boolEn
-    boolString
-    boolWt;
+    boolTf
+    optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.28" = {
+      version = "3.28.1";
+      sha256 = "157a8388532a751b36befff424b11ed913b2c43689b62cd2060f6847eb730be3";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libgweather-${source.version}";
@@ -40,12 +46,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    meson
+    ninja
     vala
   ];
 
   buildInputs = [
     atk
-    gconf
     gdk-pixbuf
     geocode-glib
     glib
@@ -56,21 +63,23 @@ stdenv.mkDerivation rec {
     pango
   ];
 
-  configureFlags = [
-    "--enable-schemas-compile"
-    "--enable-compile-warnings"
-    #"--disable-Werror"
-    "--enable-glibtest"
-    "--enable-nls"
-    "--disable-glade-catalog"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala"
-    "--${boolWt (tzdata != null)}-zoneinfo-dir${
-      boolString (tzdata != null) "=${tzdata}/share/zoneinfo" ""}"
+  postPatch = /* Already handled by setup hooks */ ''
+    sed -i meson.build \
+      -e '/meson_post_install.py/d'
+  '' + /* Remove hardcoded references to build directory */ ''
+    sed -i libgweather/gweather-enum-types.h.tmpl \
+      -e '/@filename@/d'
+  '';
+
+  mesonFlags = optionals (tzdata != null) [
+    "-Dzoneinfo_dir=${tzdata}/share/zoneinfo"
+  ] ++ [
+    #"-Dowm_apikey="
+    "-Dglade_catalog=false"
+    "-Denable_vala=${boolTf (vala != null)}"
   ];
+
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {

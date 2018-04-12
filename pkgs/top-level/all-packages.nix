@@ -1154,13 +1154,13 @@ evince = callPackageAlias "evince_3-22" { };
 
 #evolution = callPackage ../all-pkgs/e/evolution { };
 
-evolution-data-server_3-26 = callPackage ../all-pkgs/e/evolution-data-server {
-  channel = "3.26";
+evolution-data-server_3-28 = callPackage ../all-pkgs/e/evolution-data-server {
+  channel = "3.28";
   #gnome-online-accounts
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   libsoup = pkgs.libsoup_2-62;
 };
-evolution-data-server = callPackageAlias "evolution-data-server_3-26" { };
+evolution-data-server = callPackageAlias "evolution-data-server_3-28" { };
 
 ewlc = callPackage ../all-pkgs/e/ewlc { };
 
@@ -3721,7 +3721,7 @@ totem-pl-parser = callPackageAlias "totem-pl-parser_3-26" { };
 tracker_2-0 = callPackage ../all-pkgs/t/tracker {
   channel = "2.0";
   #evolution
-  evolution-data-server = pkgs.evolution-data-server_3-26;
+  evolution-data-server = pkgs.evolution-data-server_3-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;

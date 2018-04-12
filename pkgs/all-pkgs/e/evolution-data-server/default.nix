@@ -27,7 +27,7 @@
 , nspr
 , nss
 , p11-kit
-, python
+, python3
 , sqlite
 , zlib
 
@@ -39,9 +39,9 @@ let
     boolOn;
 
   sources = {
-    "3.26" = {
-      version = "3.26.6";
-      sha256 = "e43aa1847ddc02965f560261ef88d18fb8704eddaa55555bf96b884a33e510ec";
+    "3.28" = {
+      version = "3.28.1";
+      sha256 = "6b04fc1adaba0541546267a77f1bc5aa549fe85eb9933492fdf994c69fa36989";
     };
   };
   source = sources."${channel}";
@@ -85,28 +85,22 @@ stdenv.mkDerivation rec {
     nss
     openldap
     p11-kit
-    python
+    python3
     sqlite
     zlib
   ];
 
   cmakeFlags = [
-    "-DENABLE_MAINTAINER_MODE=OFF"
-    "-DWITH_PRIVATE_DOCS=OFF"
     "-DENABLE_GTK=${boolOn (gtk != null)}"
+    "-DENABLE_OAUTH2=OFF"  # Remove dependency on webkit
     "-DENABLE_GOOGLE_AUTH=OFF"  # Remove dependency on webkit
     "-DENABLE_EXAMPLES=OFF"
     "-DENABLE_GOA=OFF"  # Remove dependency on webkit
     "-DENABLE_UOA=OFF"  # Remove dependency on webkit
     "-DENABLE_BACKEND_PER_PROCESS=ON"
-    "-DENABLE_BACKTRACES=OFF"
-    "-DENABLE_IPV6=ON"
     "-DENABLE_WEATHER=${boolOn (libgweather != null)}"
-    "-DENABLE_DOT_LOCKING=ON"
-    "-DENABLE_FILE_LOCKING=ON"
     "-DENABLE_BROKEN_SPOOL=OFF"
     "-DENABLE_GOOGLE=OFF"  # Remove dependency on webkit
-    "-DENABLE_LARGEFILE=ON"
     "-DENABLE_VALA_BINDINGS=OFF"
     # "-DWITH_DBUS_SERVICE_DIR"
     # "-DWITH_SYSTEMDUSERUNITDIR"
@@ -115,6 +109,11 @@ stdenv.mkDerivation rec {
     "-DWITH_LIBDB=${if (db != null) then "${db}" else "OFF"}"
     # "-DWITH_LIBDB_CFLAGS"
     # "-DWITH_LIBDB_LIBS"
+  ];
+
+  CXXFLAGS = [
+    # http://site.icu-project.org/download/61#TOC-Migration-Issues
+    "-DU_USING_ICU_NAMESPACE=1"
   ];
 
   buildDirCheck = false;  # FIXME

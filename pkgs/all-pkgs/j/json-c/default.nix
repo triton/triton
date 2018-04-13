@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "json-c-0.13";
+  name = "json-c-0.13.1";
 
   src = fetchurl {
     url = "https://s3.amazonaws.com/json-c_releases/releases/${name}-nodoc.tar.gz";
-    multihash = "QmXX4CdLoBynvztrGnqwYvBsYwHtJBRBLK3QQRNwTZBLqV";
-    sha256 = "8572760646e9d23ee68f967ca62fa134a97b931665fd9af562192b7788c95a06";
+    multihash = "QmcZKHLKKMKbQH3Gm7C57LnskNGCcvSJNDRyahiKSjib9X";
+    sha256 = "94a26340c0785fcff4f46ff38609cf84ebcd670df0c8efd75d039cc951d80132";
   };
 
   nativeBuildInputs = [

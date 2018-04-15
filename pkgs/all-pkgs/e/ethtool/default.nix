@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "4.15";
+  version = "4.16";
 
   tarballUrls = [
     "mirror://kernel/software/network/ethtool/ethtool-${version}.tar"
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "71f7fd32483ffdc7c6c4d882e230714eb101df0a46cbe396dbeb8ac78f1ef91a";
+    sha256 = "fe967a6722db2099fa63d847b6628e3e31cf9f53571a37503347dcc3e4015a03";
   };
 
   passthru = {

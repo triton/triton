@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.0.3";
+  version = "1.0.4";
 
   tarFlags = [
     "--sort=name"
@@ -34,11 +34,11 @@ stdenv.mkDerivation {
   name = "brotli-dist-${version}";
 
   src = fetchFromGitHub {
-    version = "5";
+    version = "6";
     owner = "google";
     repo = "brotli";
     rev = "v${version}";
-    sha256 = "ca0c6e72a9f0905f1b85cb1f79db498a0c8608a1554791bdd197ed1507449e08";
+    sha256 = "333397c592c055a6a63db056a0263a72f0e78110c911838ae2f6c2aa54ac77ef";
   };
   
   nativeBuildInputs = [
@@ -47,11 +47,6 @@ stdenv.mkDerivation {
     bc
     libtool
   ];
-
-  postPatch = ''
-    ! grep -q 'c/enc/params.h' scripts/sources.lst
-    sed -i '/BROTLI_ENC_H/ac/enc/params.h \\' scripts/sources.lst
-  '';
 
   preConfigure = ''
     ./bootstrap

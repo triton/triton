@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
     elfutils
   ];
 
-  patches = [
+  patches = optionals (channel == "stable") [
     (fetchTritonPatch {
       rev = "518382a2bbf31f798bf5271105ac4005510f185d";
       file = "s/spl/0002-Fix-install-paths.patch";
@@ -71,6 +71,17 @@ stdenv.mkDerivation rec {
       rev = "7556b2c93e25e3861f30a656fe1c6a55c08a07a1";
       file = "s/spl/0003-Fix-paths.patch";
       sha256 = "214357f623fb397c79cc3ab1ea0a0bc833d828277646928e242a50e76eb26755";
+    })
+  ] ++ optionals (channel == "dev") [
+    (fetchTritonPatch {
+      rev = "97be348abfd5d881ce8206e2cb5005b52b6fe9a5";
+      file = "s/spl/0001-Fix-install-paths.patch";
+      sha256 = "f962c22a1d18d45688dda97d7177ed50adccf47037c9df61bae65becaae02592";
+    })
+    (fetchTritonPatch {
+      rev = "97be348abfd5d881ce8206e2cb5005b52b6fe9a5";
+      file = "s/spl/0002-Fix-paths.patch";
+      sha256 = "77ee1b103a6144b31d5a8af9ec30e923ff8cef1e98584a3375a1e55d0ba93d41";
     })
   ];
 

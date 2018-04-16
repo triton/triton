@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.0.18";
+  version = "1.0.22";
 in
 buildPythonPackage {
   name = "ipaddress-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "ipaddress";
     inherit version;
-    sha256 = "5d8534c8e185f2d8a1fda1ef73f2c8f4b23264e8e30063feeb9511d492a413e1";
+    sha256 = "b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c";
   };
 
   meta = with lib; {

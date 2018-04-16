@@ -79,15 +79,15 @@ let
       maxXorgVersion = "1.19";
     };
     beta = {
-      versionMajor = "390";
-      versionMinor = "12";
-      sha256i686   = "bf534c7ddeb24fed49af7285e31ae8a58dd52220870796b28078ba1f773f76da";
-      sha256x86_64 = "68c744abc7f42eaa9e640d90ecd3c7691a74b84584b83b776488ef1916f8eb43";
-      maxLinuxVersion = "4.14";
+      versionMajor = "396";
+      versionMinor = "18";
+      sha256i686   = "63223406a552fd50808dca0b6864dccbc265dfc614dde89492f1e53afa7cce0b";
+      sha256x86_64 = "0d39bd3e1727e5849401db7fa04d667662b6b9a80b2a11a897bb4ba0e7273208";
+      maxLinuxVersion = "4.16";
       maxXorgVersion = "1.19";
     };
     # Update to which ever channel has the latest release at the time.
-    latest = long-lived;
+    latest = beta;
   };
   source = sources."${channel}";
 
@@ -124,8 +124,8 @@ stdenv.mkDerivation {
   src = fetchurl {
     url =
       if elem targetSystem platforms.i686-linux then
-        "mirror://nvidia/XFree86/Linux-x86/${version}/"
-          + "NVIDIA-Linux-x86-${version}.run"
+        "mirror://nvidia/XFree86/Linux-x86_64/${version}/"
+          + "NVIDIA-Linux-x86_64-${version}.run"
       else if elem targetSystem platforms.x86_64-linux then
         "mirror://nvidia/XFree86/Linux-x86_64/${version}/"
           + "NVIDIA-Linux-x86_64-${version}"
@@ -547,8 +547,8 @@ stdenv.mkDerivation {
 
     srcVerification = fetchurl {
       urls = [
-        ("https://download.nvidia.com/XFree86/Linux-x86/${version}/"
-            + "NVIDIA-Linux-x86-${version}.run")
+        ("https://download.nvidia.com/XFree86/Linux-x86_64/${version}/"
+            + "NVIDIA-Linux-x86_64-${version}.run")
         ("https://download.nvidia.com/XFree86/Linux-x86_64/${version}/"
             + "NVIDIA-Linux-x86_64-${version}"
             + "${if channel == "tesla" then "" else "-no-compat32"}.run")

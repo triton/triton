@@ -156,7 +156,6 @@ with stdenv.lib;
   # Enable various subsystems.
   ACCESSIBILITY y # Accessibility support
   AUXDISPLAY y # Auxiliary Display support
-  DONGLE y # Serial dongle support
   HIPPI y
   MTD_COMPLEX_MAPPINGS y # needed for many devices
   SCSI_LOWLEVEL y # enable lots of SCSI devices
@@ -203,6 +202,12 @@ with stdenv.lib;
   NF_CONNTRACK_EVENTS y
   NF_CONNTRACK_TIMEOUT y
   NF_CONNTRACK_TIMESTAMP y
+  ${optionalString (versionAtLeast version "4.17") ''
+    NF_TABLES_ARP y
+    NF_TABLES_BRIDGE y
+    NF_TABLES_INET y
+    NF_TABLES_NETDEV y
+  ''}
   NETFILTER_NETLINK_GLUE_CT y
   IP_VS_IPV6 y
   IP_DCCP_CCID3 y
@@ -217,6 +222,9 @@ with stdenv.lib;
   BATMAN_ADV_MCAST y
   NET_SWITCHDEV y
   NET_L3_MASTER_DEV y
+  ${optionalString (versionAtLeast version "4.17") ''
+    NET_DSA_MV88E6XXX_PTP y
+  ''}
   AF_RXRPC_IPV6 y
 
   MLX5_CORE_EN y
@@ -381,6 +389,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.13") ''
     #OVERLAY_FS_INDEX y
   ''}
+  ${optionalString (versionAtLeast version "4.17") ''
+    #OVERLAY_FS_XINO_AUTO y
+  ''}
   UBIFS_FS_ADVANCED_COMPR y
   UBIFS_ATIME_SUPPORT y
   ${optionalString (versionAtLeast version "4.10") ''
@@ -421,7 +432,12 @@ with stdenv.lib;
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
   CEPH_LIB_USE_DNS_RESOLVER y
-  PSTORE_LZ4_COMPRESS y
+  PSTORE_CONSOLE y
+  PSTORE_PMSG y
+  PSTORE_FTRACE y
+  ${optionalString (versionAtLeast version "4.17") ''
+    PSTORE_842_COMPRESS y
+  ''}
   SQUASHFS_FILE_DIRECT y
   SQUASHFS_DECOMP_MULTI_PERCPU y
   SQUASHFS_XATTR y
@@ -505,17 +521,16 @@ with stdenv.lib;
   NFTL_RW y
   MTD_NAND_ECC_SMC y
   MTD_NAND_ECC_BCH y
+  ${optionalString (versionAtLeast version "4.17") ''
+    MTD_ONENAND_OTP y
+    MTD_ONENAND_2X_PROGRAM y
+  ''}
   DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
   IDE n
-  IRDA_ULTRA y # Ultra (connectionless) protocol
-  ${optionalString (versionAtLeast version "4.14") ''
-    IRDA_CACHE_LAST_LSAP y
-    IRDA_FAST_RR y
-  ''}
   JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
   JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
   JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
@@ -563,6 +578,9 @@ with stdenv.lib;
   SLIP_SMART y
   HWMON y
   THERMAL_HWMON y # Hardware monitoring support
+  ${optionalString (versionAtLeast version "4.17") ''
+    THERMAL_STATISTICS y
+  ''}
   ${optionalString (versionAtLeast version "4.14") ''
     CLOCK_THERMAL y
     DEVFREQ_THERMAL y

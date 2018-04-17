@@ -21,6 +21,7 @@
 , libxi
 , libxkbcommon
 , python3Packages
+, unicode-character-database
 , vala
 , wayland
 , xorg
@@ -64,6 +65,7 @@ stdenv.mkDerivation rec {
     libxi
     libxkbcommon
     python3Packages.python
+    unicode-character-database
     wayland
   ];
 
@@ -105,6 +107,9 @@ stdenv.mkDerivation rec {
     sed -i configure \
       -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${
         python3Packages.python.libPrefix}|"
+  '' + /* Upstream does not correctly implement autoconf flags */ ''
+    sed -i configure \
+      -e 's,/usr/share/unicode/ucd,${unicode-character-database}/share/unicode-character-database,g'
   '';
 
   preFixup = ''

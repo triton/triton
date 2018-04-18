@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ipset-6.36";
+  name = "ipset-6.38";
 
   src = fetchurl {
     url = "http://ipset.netfilter.org/${name}.tar.bz2";
-    multihash = "QmQmXyc5cfKParMzketuNYrxJWzcYU5rRZFdJEBLTJd29s";
+    multihash = "QmYRzzDYxdx7CLuCiFoUFKcLAmUtpDgJeeDVcxCNNRtEfj";
     hashOutput = false;
-    sha256 = "22224a90dc6c7d97b7a7addedd0740c3841e3d9a7ff8c8d2123bae0c3620d30d";
+    sha256 = "ceef625ba31fe0aaa422926c7231a819de0b07644c02c17ebdd3022a29e3e244";
   };
 
   buildInputs = [

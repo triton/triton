@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2.1.0";
+  version = "2.2.0";
 in
 buildPythonPackage rec {
   name = "pylast-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pylast";
     inherit version;
-    sha256 = "b9b51dc40a7d3ac3eee17ab5b462b8efb7f2c2ff195261ea846ae4e1168e1c5b";
+    sha256 = "a21a10e559cbb80db5eb72e20a22740496a292977ed3568c937560b8d6885ab4";
   };
 
   propagatedBuildInputs = [

@@ -3,17 +3,18 @@
 }:
 
 let
-  version = "2.1.0";
+  date = "2017-09-21";
+  rev = "3a10df60133644b23d6e73196afdf15f41958da6";
 in
 stdenv.mkDerivation rec {
-  name = "utf8proc-${version}";
+  name = "utf8proc-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "JuliaLang";
     repo = "utf8proc";
-    rev = "v${version}";
-    sha256 = "a53bfc8c7f2c8fe4c1d3094676761ef0733b6919e38883af9723dd88da209ed8";
+    inherit rev;
+    sha256 = "ab2e18be2531838cf2df86e68a778d964862a2de9771684c6d491762dd9d8110";
   };
 
   preBuild = ''

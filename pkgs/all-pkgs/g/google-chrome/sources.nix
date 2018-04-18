@@ -3,17 +3,17 @@
 {
   "stable" = {
     "x86_64-linux" = {
-      sha256 = "2668878e7f9eff2a2ffbf2c4393b783e3d67da599b5ff94714ef1fa548e22464";
+      sha256 = "affd1443f9756240a30fac61bc7a06666cd5d9532204e1b09f499d89afc18ef9";
     };
   };
   "beta" = {
     "x86_64-linux" = {
-      sha256 = "7da2c290ed78746acd55eae1b9371ed993edb2dd667ddeb0aadb998680d1fd98";
+      sha256 = "a7f8d1a9433b7131f0c498b82e8839f7f6081ebd809c3fb3c2aa5dcb63bdef18";
     };
   };
   "unstable" = {
     "x86_64-linux" = {
-      sha256 = "c1e4532a1c701fb388b46aca64b943c68c26812cc8317ba6fde1e538f5a11f75";
+      sha256 = "75ac5835337aecc98baa40f0851541d225b32081dc4729f29cfaedc5c8fb3071";
     };
   };
 }

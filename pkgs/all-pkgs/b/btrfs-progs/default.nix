@@ -17,7 +17,7 @@
 }:
 
 let
-  version = "4.15.1";
+  version = "4.16";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "67102ac0d6795f368acc94efaca29b6626d972638790a4a0c9f89a27cd543f96";
+    sha256 = "f3e0ec4864b7b89db1a6a36fa48bf8a9217117714a04b13c84d0fea1eac154b2";
   };
 
   nativeBuildInputs = [
@@ -50,11 +50,9 @@ stdenv.mkDerivation rec {
     zstd
   ];
 
-  # New e2fsprogs changes attr structure
-  postPatch = ''
-    grep -q 'e_value_block' convert/source-ext2.c
-    sed -i 's,e_value_block,e_value_inum,' convert/source-ext2.c
-  '';
+  configureFlags = [
+    "--disable-python"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

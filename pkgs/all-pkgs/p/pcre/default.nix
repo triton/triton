@@ -1,13 +1,14 @@
 { stdenv
 , fetchurl
+, lib
 
 , pcregrep ? false
-  , bzip2 ? null
-  , zlib ? null
+  , bzip2
+  , zlib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals;
 
@@ -62,7 +63,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Perl Compatible Regular Expressions";
     homepage = "http://www.pcre.org/";
     license = licenses.bsd3;

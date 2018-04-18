@@ -1,28 +1,32 @@
 { stdenv
-, autoreconfHook
 , fetchFromGitHub
 , lib
+, meson
+, ninja
 }:
 
 let
-  version = "2018-01-28";
+  version = "2018-03-21";
 in
 stdenv.mkDerivation rec {
   name = "fribidi-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "fribidi";
     repo = "fribidi";
-    rev = "d18badec88bca8f6f4149156ebe7f1c6467a7bd8";
-    sha256 = "b61899c1bb39ad2270b23d81d3d18af8a164ff6635aa4f034cda4316e2ef296e";
+    rev = "47ed4eb33d11ff132d698decd24be4e16ff55c60";
+    sha256 = "9b41531bff1fba6bf692545d586e9def0b4be443ca6439ccd03770907a6e19ee";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
+    meson
+    ninja
   ];
 
-  buildParallel = false;
+  mesonFlags = [
+    "-Ddocs=false"
+  ];
 
   meta = with lib; {
     description = "GNU implementation of the Unicode Bidirectional Algorithm";

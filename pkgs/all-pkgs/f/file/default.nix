@@ -1,20 +1,22 @@
 { stdenv
 , fetchurl
 
+, libseccomp
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "file-5.32";
+  name = "file-5.33";
 
   src = fetchurl {
     url = "ftp://ftp.astron.com/pub/file/${name}.tar.gz";
-    multihash = "QmchzYpNV6HRqGer6eZkoEZdMTu3X7QZi6NeKBJ2QmWCtW";
+    multihash = "QmcLhzLgJJ8M6krx9JKHKyNPXK6nx176GkE7pVYfvc3HSs";
     hashOutput = false;
-    sha256 = "8639dc4d1b21e232285cd483604afc4a6ee810710e00e579dbe9591681722b50";
+    sha256 = "1c52c8c3d271cd898d5511c36a68059cda94036111ab293f01f83c3525b737c6";
   };
 
   buildInputs = [
+    libseccomp
     zlib
   ];
 

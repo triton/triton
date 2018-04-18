@@ -18,13 +18,13 @@ let
     boolWt
     optionals;
 
-  version = "5.4.2";
+  version = "5.5";
 
   documentation = fetchurl {
     url = "mirror://sourceforge/zsh/zsh-doc/${version}/"
       + "zsh-${version}-doc.tar.xz";
     hashOutput = false;
-    sha256 = "5229cc93ebe637a07deb5b386b705c37a50f4adfef788b3c0f6647741df4f6bd";
+    sha256 = "b995c16a2ded516b6e07883932640fcca8b53b1b8a1934094a8a32ef087f52fc";
   };
 in
 stdenv.mkDerivation rec {
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/zsh/zsh/${version}/zsh-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "a80b187b6b770f092ea1f53e89021d06c03d8bbe6a5e996bcca3267de14c5e52";
+    sha256 = "a8359b81d090425d497c6f3c724a7c21a81c614b03e7662ed347705d86958e53";
   };
 
   nativeBuildInputs = [

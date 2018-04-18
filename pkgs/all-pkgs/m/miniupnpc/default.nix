@@ -4,7 +4,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "miniupnpc-2.0.20180222";
+  name = "miniupnpc-2.0.20180410";
 
   src = fetchurl {
     url = [
@@ -12,8 +12,8 @@ stdenv.mkDerivation rec {
       "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz"
     ];
     name = "${name}.tar.gz";
-    multihash = "QmfVvdnyNkBsJSYQ1jjVhokJF2efu77PnFfJAqLcwtemLN";
-    sha256 = "587944686469d09f739744b3aed70c7ce753a79c40d6f1227f68a3e962665b75";
+    multihash = "QmdhakP6AEv1LHAPqjgyNpNfPYnpWsZsQ61vQ9G3Evjj1m";
+    sha256 = "99b25d0c6ae8554dbdcbf68ede9929c06752537a6987635d866e4f3d8244f446";
   };
 
   preBuild = ''

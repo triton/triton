@@ -3541,13 +3541,10 @@ spice-protocol = callPackage ../all-pkgs/s/spice-protocol { };
 spidermonkey_45 = callPackage ../all-pkgs/s/spidermonkey {
   channel = "45";
 };
-spidermonkey_24 = callPackage ../all-pkgs/s/spidermonkey {
-  channel = "24";
+spidermonkey_52 = callPackage ../all-pkgs/s/spidermonkey {
+  channel = "52";
 };
-spidermonkey_17 = callPackage ../all-pkgs/s/spidermonkey {
-  channel = "17";
-};
-spidermonkey = callPackageAlias "spidermonkey_45" { };
+spidermonkey = callPackageAlias "spidermonkey_52" { };
 
 spl = callPackage ../all-pkgs/s/spl {
   channel = "stable";

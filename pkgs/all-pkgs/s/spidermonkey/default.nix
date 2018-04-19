@@ -1,7 +1,11 @@
 { stdenv
+, autoconf_21x
 , fetchurl
+, fetchzip
+, lib
 , perl
-, python
+, python2
+, which
 
 , icu
 , libffi
@@ -12,50 +16,44 @@
 , channel
 }:
 
+# >=45.0.0 should use the releases in the murcurial repo at:
+# https://hg.mozilla.org/mozilla-unified, see generateDistTarball below.
+
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
+    replaceStrings
     versionAtLeast;
 
   sources = {
-    "17" = rec {
-      version = "17.0.0";
-      urls = [
-        "https://ftp.mozilla.org/pub/js/mozjs${version}.tar.gz"
-      ];
-      sha256 = "1fig2wf4f10v43mqx67y68z6h77sy900d1w0pz9qarrqx57rc7ij";
+    "45" = {
+      version = "45.9.0";
+      sha256 = "2afb02029e115fae65dbe1d9c562cbfeb761a6807338bbd30dbffba616cb2d20";
     };
-    "24" = rec {
-      version = "24.2.0";
-      urls = [
-        "https://ftp.mozilla.org/pub/js/mozjs-${version}.tar.bz2"
-      ];
-      sha256 = "1n1phk8r3l8icqrrap4czplnylawa0ddc2cc4cgdz46x3lrkybz6";
-    };
-    "45" = rec {
-      version = "45.0.2";
-      urls = [
-        "https://people.mozilla.org/~sfink/mozjs-${version}.tar.bz2"
-      ];
-      sha256 = "570530b1e551bf4a459d7cae875f33f99d5ef0c29ccc7742a1b6f588e5eadbee";
+    "52" = {
+      version = "52.7.3";
+      sha256 = "5cc68c1a7486cfbbf02aec0e9da9f87b55e7bfc68c7d5139bc1e578441aaf19f";
     };
   };
-
-  inherit (sources."${channel}")
-    sha256
-    urls
-    version;
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "spidermonkey-${version}";
+  name = "spidermonkey-${source.version}";
 
   src = fetchurl {
-    inherit urls sha256;
+    url = "https://archive.mozilla.org/pub/firefox/releases/"
+      + "${source.version}esr/source/"
+      + "firefox-${source.version}esr.source.tar.xz";
+    name = "spidermonkey-${source.version}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
+    autoconf_21x
     perl
-    python
+    python2
+    which
   ];
 
   buildInputs = [
@@ -66,28 +64,32 @@ stdenv.mkDerivation rec {
     icu
   ];
 
+  postUnpack = ''
+    srcRoot="$srcRoot/js/src/"
+  '';
+
+  # They assume the autoconf binary is named `autoconf-2.13` so detection fails.
+  AUTOCONF = "${autoconf_21x}/bin/autoconf";
+
   # Fixes an issue with gcc7 c++ strictness
   CXXFLAGS = "-fpermissive";
 
-  prePatch = ''
-    cd js/src
-  '';
-
-  postPatch = if versionAtLeast version "38.0.0" then ''
-    chmod +x ../../python/mozbuild/mozbuild/milestone.py
-    sed -i '1i#!${python}/bin/python' ../../python/mozbuild/mozbuild/milestone.py
-  '' else ''
-    # Fixes a version detection issue with perl 5.22.x
-    sed -i 's/(defined\((@TEMPLATE_FILE)\))/\1/' config/milestone.pl
+  preConfigure = /* configure cannot be executed in the build directory */ ''
+    mkdir -pv build/
+    cd build/
+    configureScript='../configure'
   '';
 
   configureFlags = [
     "--enable-release"
     "--enable-pie"
+    "--disable-debug"
+    "--enable-readline"
     "--with-pthreads"
+    "--enable-shared-js"
     "--with-system-nspr"
     "--with-system-zlib"
-    "--enable-system-ffi"
+    ###"--enable-system-ffi"
     "--disable-tests"
     "--enable-optimize"
     "--enable-jemalloc"
@@ -95,7 +97,7 @@ stdenv.mkDerivation rec {
     "--enable-install-strip"
     "--enable-readline"
     "--with-system-icu"
-  ] ++ optionals (versionAtLeast version "45.0.0") [
+  ] ++ optionals (versionAtLeast channel "45") [
     "--enable-gold"
   ];
 
@@ -108,13 +110,25 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  buildParallel = versionAtLeast version "45.0.0";
+  buildParallel = versionAtLeast channel "45";
   installParallel = false;
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      sha512Url = "https://archive.mozilla.org/pub/firefox/releases/"
+        + "${source.version}esr/SHA512SUMS";
+      pgpsigSha512Url = "${sha512Url}.asc";
+      pgpKeyFingerprint = "14F2 6682 D091 6CDD 81E3  7B6D 61B7 B526 D98F 0353";
+      inherit (src) urls outputHashAlgo outputHash;
+    };
+  };
+
+  meta = with lib; {
     description = "Mozilla's JavaScript engine written in C/C++";
     homepage = https://developer.mozilla.org/en/SpiderMonkey;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

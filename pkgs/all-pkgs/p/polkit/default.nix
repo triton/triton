@@ -6,29 +6,30 @@
 , fetchzip
 , gtk-doc
 , intltool
+, lib
 , libtool
 , libxslt
 
 , glib
 , expat
 , pam
-, spidermonkey_24
+, spidermonkey_52
 , gobject-introspection
 , systemd_lib
 }:
 
 let
-  date = "2017-04-24";
-  rev = "766a2eab6bfedc9df00b0509bc34ccdee9fe0a76";
+  date = "2018-04-03";
+  rev = "dda431905221a81921492b1d28b96b4bffb57700";
 in
 stdenv.mkDerivation rec {
   name = "polkit-${date}";
 
   src = fetchzip {
-    version = 3;
+    version = 6;
     url = "https://cgit.freedesktop.org/polkit/snapshot/${rev}.tar.xz";
-    multihash = "QmaRi4JCEz7SZhSwARy4iFUeHe9CisUcpHo6XcmjuzdejC";
-    sha256 = "1db5e8fe9d74a538d46b5eb8dbe00bdf2d6dd3dade9f51869d3599cb3be33fa0";
+    multihash = "Qma5P1infsj9vQ8rsNFoU66YKwLDxcp8c5DoFrBfYR5q5v";
+    sha256 = "20f577d2f9ee618f8f8e3b9035a402bd4cac68026be186f8b7d12d267fcacffa";
   };
 
   nativeBuildInputs = [
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
     glib
     expat
     pam
-    spidermonkey_24
+    spidermonkey_52
     gobject-introspection
     systemd_lib
   ];
@@ -92,7 +93,7 @@ stdenv.mkDerivation rec {
 
   installParallel = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.freedesktop.org/wiki/Software/polkit;
     description = "A toolkit for defining and handling the policy that allows unprivileged processes to speak to privileged processes";
     maintainers = with maintainers; [

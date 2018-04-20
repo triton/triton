@@ -5,14 +5,15 @@
 }:
 
 let
-  version = "34";
+  version = "35";
 in
 stdenv.mkDerivation rec {
   name = "efivar-${version}";
 
   src = fetchurl {
-    url = "https://github.com/rhinstaller/efivar/releases/download/${version}/${name}.tar.bz2";
-    sha256 = "1b7e34e728b4b4c294a10734e601212e4c31ce4cf409e27d1d630daa8d0f4325";
+    url = "https://github.com/rhinstaller/efivar/releases/download/${version}/"
+      + "${name}.tar.bz2";
+    sha256 = "1e033dc5d099a44fd473b0887dbcc4b105613efab0fb3c5df9f111ea5d147394";
   };
 
   buildInputs = [

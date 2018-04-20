@@ -2165,6 +2165,8 @@ libcacard = callPackage ../all-pkgs/l/libcacard { };
 
 libcanberra = callPackage ../all-pkgs/l/libcanberra { };
 
+libcap = callPackage ../all-pkgs/l/libcap { };
+
 libcap-ng = callPackage ../all-pkgs/l/libcap-ng { };
 
 libcddb = callPackage ../all-pkgs/l/libcddb { };
@@ -4634,8 +4636,6 @@ libstartup_notification =
   kmod-debian-aliases =
     callPackage ../os-specific/linux/kmod-debian-aliases { };
 
-  libcap = callPackage ../os-specific/linux/libcap { };
-#
   aggregateModules = modules:
     callPackage ../all-pkgs/k/kmod/aggregator.nix {
       inherit modules;

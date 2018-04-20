@@ -4,17 +4,18 @@
 , glib
 , libev
 , libevent
-, talloc
 , tevent
 }:
 
+let
+  version = "0.3.0";
+in
 stdenv.mkDerivation rec {
-  name = "libverto-0.2.6";
+  name = "libverto-${version}";
 
   src = fetchurl {
-    url = "https://fedorahosted.org/releases/l/i/libverto/${name}.tar.gz";
-    multihash = "QmZMZ6mYD6wY4Sun6jYpS24FzEA9C6rgpXjf4jXSNUxYn3";
-    sha256 = "17hwr55ga0rkm5cnyfiipyrk9n372x892ph9wzi88j2zhnisdv0p";
+    url = "https://github.com/latchset/libverto/releases/download/${version}/${name}.tar.gz";
+    sha256 = "955d3ff4192830c74ce88185f39621c9e490d5a3e7aba04d1e5346d4886f862e";
   };
 
   buildInputs = [
@@ -22,11 +23,10 @@ stdenv.mkDerivation rec {
     libev
     libevent
     tevent
-    talloc
   ];
 
   postInstall = ''
-    # In v0.2.6 the shipped pkg-config files have an out of order
+    # In v0.3.0 the shipped pkg-config files have an out of order
     # declaration of exec_prefix breaking them. This fixes that issue
     sed -i 's,''${exec_prefix},''${prefix},g' $out/lib/pkgconfig/*.pc
   '';

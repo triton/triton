@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.4.1";
+  version = "1.4.2";
 in
 stdenv.mkDerivation rec {
   name = "libdvdcss-${version}";
@@ -12,12 +12,10 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libdvdcss/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "eb073752b75ae6db3a3ffc9d22f6b585cd024079a2bf8acfa56f47a8fce6eaac";
+    sha256 = "78c2ed77ec9c0d8fbed7bf7d3abc82068b8864be494cfad165821377ff3f2575";
   };
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-largefile"
     "--disable-doc"
   ];
 

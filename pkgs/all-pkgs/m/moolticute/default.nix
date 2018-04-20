@@ -7,8 +7,8 @@
 }:
 
 let
-  rev = "b65d5d7240b6ad28862a5e13c2e0202075159b94";
-  date = "2018-03-19";
+  rev = "1433a84b568d3ccb0424d5064e4298dd1ff8fc0f";
+  date = "2018-04-19";
 in
 stdenv.mkDerivation rec {
   name = "moolticute-${date}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     owner = "mooltipass";
     repo = "moolticute";
     inherit rev;
-    sha256 = "fd0919e19066e9fb326dddf69319aac579a24f5b478986c586d7a0e91c271c3f";
+    sha256 = "67ec1a0994e4c5d6b5acb54adc12c46afbe1d2324f3e38916f2d8268728efb49";
   };
   
   nativeBuildInputs = [

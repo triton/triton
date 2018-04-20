@@ -11,18 +11,18 @@
 }:
 
 let
-  rev = "7a912d90e2f2eccbc1ded619b21c681d7adec048";
-  date = "2017-12-30";
+  rev = "b6767cc9592c21ed42504ababa9e1a3b7c026fde";
+  date = "2017-02-07";
 in
 stdenv.mkDerivation rec {
   name = "cyrus-sasl-${date}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "cyrusimap";
     repo = "cyrus-sasl";
     inherit rev;
-    sha256 = "bca8d4d1093839300736fbead70eab9dd85388cca09a52d6f64935a3a05d8596";
+    sha256 = "59760ec6970b3b87d31888a475f1e3a65baaedc153745d73f4ffc6a668e8db91";
   };
 
   nativeBuildInputs = [

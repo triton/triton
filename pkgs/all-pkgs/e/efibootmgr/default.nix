@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "15";
+  version = "16";
 in
 stdenv.mkDerivation rec {
   name = "efibootmgr-${version}";
 
   src = fetchurl {
     url = "https://github.com/rhinstaller/efibootmgr/releases/download/${version}/${name}.tar.bz2";
-    sha256 = "2081add77eb0641805386acd0a0fbbe6dbfb71831b814507ef49087f748333f9";
+    sha256 = "950795fb4b58a09fb69e93c120d624000253f1241134469495c7a9def731f65f";
   };
 
   buildInputs = [

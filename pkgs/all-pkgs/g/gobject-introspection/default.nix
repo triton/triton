@@ -4,6 +4,8 @@
 , fetchurl
 , flex
 , lib
+# , meson
+# , ninja
 
 , bzip2
 , glib
@@ -34,6 +36,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     bison
     flex
+    # meson
+    # ninja
   ];
 
   buildInputs = [
@@ -58,6 +62,9 @@ stdenv.mkDerivation rec {
   postPatch = /* patchShebangs does not catch @PYTHON@ */ ''
     sed -i tools/g-ir-tool-template.in \
       -e 's|#!/usr/bin/env @PYTHON@|#!${python2.interpreter}|'
+  '' + /* Fix broken glib version check */ ''
+    sed -i configure{,.ac} \
+      -e 's/2.56.1/2.56.0/g'
   '' +
   optionalString doCheck (''
       patchShebangs ./tests/gi-tester
@@ -76,6 +83,10 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
     "--${boolWt doCheck}-cairo"
   ];
+
+  # meonFlags = [
+  #   "-Ddoctool=false"
+  # ];
 
   postInstall = "rm -frv $out/share/gtk-doc";
 

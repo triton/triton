@@ -74,12 +74,12 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "ncmpc-0.29";
+  name = "ncmpc-0.30";
 
   src = fetchurl {
     url = "https://www.musicpd.org/download/ncmpc/0/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "ef68a9b67172383ea80ee46579015109433fa058728812d2b0ebede660d85f12";
+    sha256 = "e3fe0cb58b8a77f63fb1645c2f974b334f1614efdc834ec698ee7d861f1b12a3";
   };
 
   nativeBuildInputs = [

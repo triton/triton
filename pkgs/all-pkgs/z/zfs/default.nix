@@ -153,6 +153,7 @@ stdenv.mkDerivation rec {
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
+      "systemdgeneratordir=$out/lib/systemd/system-generators"
       "DEFAULT_INITCONF_DIR=$out/etc/default"
       "DEFAULT_INIT_DIR=$out/etc/init.d"
     )

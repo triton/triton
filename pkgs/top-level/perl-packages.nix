@@ -3282,10 +3282,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   DBI = buildPerlPackage rec {
-    name = "DBI-1.636";
+    name = "DBI-1.641";
     src = fetchurl {
       url = "mirror://cpan/authors/id/T/TI/TIMB/${name}.tar.gz";
-      sha256 = "8f7ddce97c04b4b7a000e65e5d05f679c964d62c8b02c94c1a7d815bb2dd676c";
+      sha256 = "5509e532cdd0e3d91eda550578deaac29e2f008a12b64576e8c261bb92e8c2c1";
     };
     buildParallel = false;
     meta = {
@@ -7369,11 +7369,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  ModuleInstall = let version = "1.18"; in buildPerlPackage {
+  ModuleInstall = let version = "1.19"; in buildPerlPackage {
     name = "Module-Install-${version}";
     src = fetchurl {
       url = "mirror://cpan/authors/id/E/ET/ETHER/Module-Install-${version}.tar.gz";
-      sha256 = "29068ac33502cec959844c206516c09cc4a847cb57327d41015f605153ca645e";
+      sha256 = "1a53a78ddf3ab9e3c03fc5e354b436319a944cba4281baf0b904fa932a13011b";
     };
     buildInputs = [ YAMLTiny ];
     meta = {
@@ -13316,11 +13316,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  XMLSAX = buildPerlPackage {
-    name = "XML-SAX-0.99";
+  XMLSAX = buildPerlPackage rec {
+    name = "XML-SAX-1.00";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GR/GRANTM/XML-SAX-0.99.tar.gz;
-      sha256 = "115dypb50w1l94y3iwihv5nkixbsv1cxiqkd93y4rk5n6s74pc1j";
+      url = "mirror://cpan/authors/id/G/GR/GRANTM/${name}.tar.gz";
+      sha256 = "45ea6564ef8692155d57b2de0862b6442d3c7e29f4a9bc9ede5d7ecdc74c2ae3";
     };
     propagatedBuildInputs = [XMLNamespaceSupport XMLSAXBase];
     postInstall = ''
@@ -13328,11 +13328,11 @@ let self = _self // overrides; _self = with self; {
       '';
   };
 
-  XMLSAXBase = buildPerlPackage {
-    name = "XML-SAX-Base-1.08";
+  XMLSAXBase = buildPerlPackage rec {
+    name = "XML-SAX-Base-1.09";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GR/GRANTM/XML-SAX-Base-1.08.tar.gz;
-      sha256 = "666270318b15f88b8427e585198abbc19bc2e6ccb36dc4c0a4f2d9807330219e";
+      url = "mirror://cpan/authors/id/G/GR/GRANTM/${name}.tar.gz";
+      sha256 = "66cb355ba4ef47c10ca738bd35999723644386ac853abbeb5132841f5e8a2ad0";
     };
     meta = {
       description = "Base class for SAX Drivers and Filters";

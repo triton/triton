@@ -5,8 +5,8 @@
 }:
 
 let
-  release = "20161014";
-  version = "2.6";
+  release = "20180419";
+  version = "2.8-rc1";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
       + "files/releases/${release}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d856d6506054f52abeaa3543ea2f2344595a3dc05d0d873ed7f724f7a16b1874";
+    sha256 = "57e8fad435055938dbc52b1ff4a0f6b943aad4a01cc7604a881805e84632d861";
   };
 
   nativeBuildInputs = [
@@ -28,8 +28,8 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "DESTDIR=$out"
       "PREFIX=$out"
+      "SHLIBDIR=$out/lib"
     )
   '';
 

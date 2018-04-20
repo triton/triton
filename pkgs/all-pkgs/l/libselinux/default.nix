@@ -9,8 +9,8 @@
 }:
 
 let
-  release = "20161014";
-  version = "2.6";
+  release = "20180419";
+  version = "2.8-rc1";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
       + "files/releases/${release}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "4ea2dde50665c202253ba5caac7738370ea0337c47b251ba981c60d24e1a118a";
+    sha256 = "2229b6ef6cee73d335fb3d9f763e167fe182e70cd045e18f975bd2f9d0d9d6dd";
   };
 
   nativeBuildInputs = [
@@ -33,9 +33,6 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i src/Makefile \
-      -e 's|$(LIBDIR)/libsepol.a|${libsepol}/lib/libsepol.a|'
-
     sed \
       -e 's,-Werror ,,g' \
       -i utils/Makefile \
@@ -43,12 +40,9 @@ stdenv.mkDerivation rec {
   '';
 
   preBuild = ''
-    # Build fails without this precreated
-    mkdir -pv $out/include
-
     makeFlagsArray+=(
       "PREFIX=$out"
-      "DESTDIR=$out"
+      "SHLIBDIR=$out/lib"
     )
   '';
 

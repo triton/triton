@@ -21,18 +21,20 @@ let
   inherit (lib)
     optionals
     optionalString;
-in
 
+  date = "2018-03-23";
+  rev = "4ef1a5f3dfb310562bd9d3c7cc3f9a1b74b7c44d";
+in
 stdenv.mkDerivation rec {
-  name = "w3m-0.5.3-2017-01-02";
+  name = "w3m-0.5.3-${date}";
 
   src = fetchzip {
-    version = 2;
+    version = 6;
     inherit name;
     url = "https://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
-        + "1ac245bdcd803f69c7793ecccc090a80b1137d35.tar.xz";
-    multihash = "QmTcfZpbKyXxKc74cqyjzzk7DbP561qwfmCVfsWXVUkPS6";
-    sha256 = "227d21edad6cda082f5e7423305a81b39fb40925031f5b5998a90d6c18971532";
+        + "${rev}.tar.xz";
+    multihash = "QmRi689Z81q9YLpTxDjL7fSbhMNqbfAc6gmEeCmfjw9zE6";
+    sha256 = "37acc2b198ba7e74811597796c35821d51d4d14c5cde71e4180dd337cbced635";
   };
 
   nativeBuildInputs = [

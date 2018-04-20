@@ -29,16 +29,16 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "cairo-1.15.10";
+  name = "cairo-1.15.12";
 
   src = fetchurl {
     urls = [
       "https://cairographics.org/releases/${name}.tar.xz"
       "https://cairographics.org/snapshots/${name}.tar.xz"
     ];
-    multihash = "QmUQwof2ut5B3fGCEqxGMwJffwTCc4QWX8NVW9GNV5NAqX";
+    multihash = "QmVKRF9CrXnZGJ65g6QvsfDthQGsBZG7XLD4tzgUxhFZdC";
     hashOutput = false;
-    sha256 = "62ca226134cf2f1fd114bea06f8b374eb37f35d8e22487eaa54d5e9428958392";
+    sha256 = "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9";
   };
 
   nativeBuildInputs = [

@@ -1,9 +1,11 @@
 { stdenv
 , fetchurl
+
+, openssl
 }:
 
 let
-  version = "1.3.5";
+  version = "1.3.6";
 in
 stdenv.mkDerivation rec {
   name = "rhash-${version}";
@@ -11,30 +13,32 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/rhash/rhash/${version}/${name}-src.tar.gz";
     hashOutput = false;
-    sha256 = "98e0688acae29e68c298ffbcdbb0f838864105f9b2bd8857980664435b1f1f2e";
+    sha256 = "964df972b60569b5cb35ec989ced195ab8ea514fc46a74eab98e86569ffbcf92";
   };
 
-  preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
-  '';
+  buildInputs = [
+    openssl
+  ];
 
-  buildFlags = [
-    "build-shared"
-    "lib-shared"
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--enable-openssl"
+    "--disable-openssl-runtime"
   ];
 
   preInstall = ''
-    grep '$(DESTDIR)/etc' Makefile
-    sed -i 's,$(DESTDIR)/etc,$(DESTDIR)/$(PREFIX)/etc,g' Makefile
+    installFlagsArray+=("SYSCONFDIR=$out/etc")
+
+    ! grep -q 'install-headers' Makefile
     echo 'install-nix:' >>Makefile
     echo $'\t' '+$(MAKE) -C librhash install-headers' >>Makefile
     echo $'\t' '+$(MAKE) -C librhash install-so-link' >>Makefile
   '';
 
   installTargets = [
-    "install-lib-shared"
+    "install"
+    "install-pkg-config"
     "install-nix"
-    "install-shared"
   ];
 
   passthru = {

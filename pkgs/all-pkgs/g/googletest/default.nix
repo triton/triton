@@ -5,18 +5,18 @@
 }:
 
 let
-  date = "2018-02-15";
-  rev = "3f0cf6b62ad1eb50d8736538363d3580dd640c3e";
+  date = "2018-04-19";
+  rev = "a6f06bf2fd3b832822cd4e9e554b7d47f32ec084";
 in
 stdenv.mkDerivation rec {
   name = "googletest-${date}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "google";
     repo = "googletest";
     inherit rev;
-    sha256 = "de94b080fb7937c84f12c99048055a3a8a81a8c4c4a6dafcce2333da2130709c";
+    sha256 = "1382656ede7fa99def19a8c4faff8909d86f9e18fcfa512f4f2bf782376b8832";
   };
 
   nativeBuildInputs = [

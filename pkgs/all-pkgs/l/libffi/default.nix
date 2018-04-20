@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "ftp://sourceware.org/pub/libffi/${name}.tar.gz";
+    multihash = "QmYVaqFAiZJy8YHrRYLCtBZzhNGxLJRBxR2Pkk1hm4ZMkN";
     sha256 = "0dya49bnhianl0r65m65xndz6ls2jn1xngyn72gd28ls3n7bnvnh";
   };
 

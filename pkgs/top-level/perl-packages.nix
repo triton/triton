@@ -5520,11 +5520,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  HTMLParser = buildPerlPackage {
-    name = "HTML-Parser-3.71";
+  HTMLParser = buildPerlPackage rec {
+    name = "HTML-Parser-3.72";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GA/GAAS/HTML-Parser-3.71.tar.gz;
-      sha256 = "00nqzdgl7c3jilx7mil19k5jwcw3as14pvkjgxi97zyk94vqp4dy";
+      url = "mirror://cpan/authors/id/G/GA/GAAS/${name}.tar.gz";
+      sha256 = "ec28c7e1d9e67c45eca197077f7cdc41ead1bb4c538c7f02a3296a4bb92f608b";
     };
     propagatedBuildInputs = [ HTMLTagset ];
     meta = {
@@ -5696,13 +5696,16 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  HTTPCookies = buildPerlPackage {
-    name = "HTTP-Cookies-6.01";
+  HTTPCookies = buildPerlPackage rec {
+    name = "HTTP-Cookies-6.04";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GA/GAAS/HTTP-Cookies-6.01.tar.gz;
-      sha256 = "087bqmg22dg3vj7gssh3pcsh9y1scimkbl5h1kc8jqyfhgisvlzm";
+      url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
+      sha256 = "0cc7f079079dcad8293fea36875ef58dd1bfd75ce1a6c244cd73ed9523eb13d4";
     };
-    propagatedBuildInputs = [ HTTPDate HTTPMessage ];
+    propagatedBuildInputs = [
+      HTTPDate
+      HTTPMessage
+    ];
     meta = {
       description = "HTTP cookie jars";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -5715,7 +5718,11 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/G/GA/GAAS/HTTP-Daemon-6.01.tar.gz;
       sha256 = "1hmd2isrkilf0q0nkxms1q64kikjmcw9imbvrjgky6kh89vqdza3";
     };
-    propagatedBuildInputs = [ HTTPDate HTTPMessage LWPMediaTypes ];
+    propagatedBuildInputs = [
+      HTTPDate
+      HTTPMessage
+      LWPMediaTypes
+    ];
     meta = {
       description = "A simple http server class";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -5750,13 +5757,19 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  HTTPMessage = buildPerlPackage {
-    name = "HTTP-Message-6.06";
+  HTTPMessage = buildPerlPackage rec {
+    name = "HTTP-Message-6.16";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GA/GAAS/HTTP-Message-6.06.tar.gz;
-      sha256 = "0qxdrcak97azjvqyx1anpb2ky6vp6vc37x0wcfjdqfajkh09fzh8";
+      url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
+      sha256 = "46790ae127946d5cfea5a1e05c1b9f4a045a7c5094fe81f086bbf3341290ebd0";
     };
-    propagatedBuildInputs = [ EncodeLocale HTTPDate IOHTML LWPMediaTypes URI ];
+    propagatedBuildInputs = [
+      EncodeLocale
+      HTTPDate
+      IOHTML
+      LWPMediaTypes
+      URI 
+    ];
     meta = {
       description = "HTTP style messages";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -5800,7 +5813,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/D/DA/DANKOGAI/HTTP-Response-Encoding-0.06.tar.gz;
       sha256 = "1am8lis8107s5npca1xgazdy5sknknzcqyhdmc220s4a4f77n5hh";
     };
-    propagatedBuildInputs = [ LWPUserAgent HTTPMessage ];
+    propagatedBuildInputs = [ HTTPMessage ];
     meta = {
       description = "Adds encoding() to HTTP::Response";
     };
@@ -6831,13 +6844,23 @@ let self = _self // overrides; _self = with self; {
   };
 
   LWP = buildPerlPackage rec {
-    name = "libwww-perl-6.13";
+    name = "libwww-perl-6.33";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/E/ET/ETHER/${name}.tar.gz";
-      sha256 = "1cpqjl59viw50bnbdyn8xzrwzg7g54b2rszw0fifacqrppp17gaz";
+      url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
+      sha256 = "97417386f11f007ae129fe155b82fd8969473ce396a971a664c8ae6850c69b99";
     };
-    patches = [ ../development/perl-modules/lwp-test-with-localhost.patch ];
-    propagatedBuildInputs = [ EncodeLocale FileListing HTMLParser HTTPCookies HTTPDaemon HTTPDate HTTPMessage HTTPNegotiate LWPMediaTypes NetHTTP URI WWWRobotRules ];
+    propagatedBuildInputs = [
+      EncodeLocale
+      FileListing
+      HTMLParser
+      HTTPCookies
+      HTTPDaemon
+      HTTPDate
+      HTTPNegotiate
+      NetHTTP
+      TryTiny
+      WWWRobotRules
+    ];
     meta = with stdenv.lib; {
       description = "The World-Wide Web library for Perl";
       license = with licenses; [ artistic1 gpl1Plus ];
@@ -6886,19 +6909,6 @@ let self = _self // overrides; _self = with self; {
       description = "Provide https support for LWP::UserAgent";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       platforms = with stdenv.lib.platforms; linux;
-    };
-  };
-
-  LWPUserAgent = buildPerlPackage {
-    name = "LWP-UserAgent-6.05";
-    src = fetchurl {
-      url = mirror://cpan/authors/id/G/GA/GAAS/libwww-perl-6.05.tar.gz;
-      sha256 = "08wgwyz7748pv5cyngxia0xl6nragfnhrp4p9s78xhgfyygpj9bv";
-    };
-    propagatedBuildInputs = [ EncodeLocale FileListing HTMLParser HTTPCookies HTTPDaemon HTTPDate HTTPNegotiate HTTPMessage LWPMediaTypes NetHTTP URI WWWRobotRules ];
-    meta = {
-      description = "The World-Wide Web library for Perl";
-      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
   };
 
@@ -8315,7 +8325,7 @@ let self = _self // overrides; _self = with self; {
     name = "MooseX-Types-URI-0.05";
     src = fetchurl {
       url = mirror://cpan/authors/id/E/ET/ETHER/MooseX-Types-URI-0.05.tar.gz;
-      sha256 = "08acqm23ff22hicb3l4wc7szvdhlxpan7qmpgl15ilawrmz60p82";
+      sha256 = "cca7ab4a6f63f3ccaacae0f2e1337e8edf84137e73f18548ec7d659f23efe413";
     };
     propagatedBuildInputs = [ Moose MooseXTypes MooseXTypesPathClass namespaceclean Testuseok URI URIFromHash ];
     meta = {
@@ -8626,11 +8636,11 @@ let self = _self // overrides; _self = with self; {
     propagatedBuildInputs = [NetIP DigestHMAC];
   };
 
-  NetHTTP = buildPerlPackage {
-    name = "Net-HTTP-6.09";
+  NetHTTP = buildPerlPackage rec {
+    name = "Net-HTTP-6.17";
     src = fetchurl {
-      url = mirror://cpan/authors/id/E/ET/ETHER/Net-HTTP-6.09.tar.gz;
-      sha256 = "52762b939d84806908ba544581c5708375f7938c3c0e496c128ca3fbc425e58d";
+      url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
+      sha256 = "1e8624b1618dc6f7f605f5545643ebb9b833930f4d7485d4124aa2f2f26d1611";
     };
     propagatedBuildInputs = [ URI ];
     meta = {
@@ -8667,7 +8677,7 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0k4h4a5048h7qgyx25ih64x0l4airx8a6d9gjq08wmxcl2fk3z3v";
     };
     buildInputs = [ TestWarn ];
-    propagatedBuildInputs = [ ClassAccessor ClassDataInheritable DigestHMAC DigestSHA1 LWPUserAgent URI ];
+    propagatedBuildInputs = [ ClassAccessor ClassDataInheritable DigestHMAC DigestSHA1 URI ];
     meta = {
       description = "An implementation of the OAuth protocol";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -8776,7 +8786,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/M/MM/MMIMS/Net-Twitter-Lite-0.11002.tar.gz;
       sha256 = "032gyn1h3r5d83wvz7nj3k7g50wcf73lbbmjc18466ml90vigys0";
     };
-    propagatedBuildInputs = [ CryptSSLeay LWPUserAgent NetOAuth URI ];
+    propagatedBuildInputs = [ CryptSSLeay NetOAuth URI ];
     meta = {
       homepage = http://github.com/semifor/Net-Twitter-Lite;
       description = "A perl interface to the Twitter API";
@@ -9057,7 +9067,7 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/J/JA/JAYBONCI/${name}.tar.gz";
       sha256 = "0ad78qri4sg9agghqdm83xsjgks94yvffs23kppy7mqjy8gwwjxn";
     };
-    buildInputs = [ TestPod LWPUserAgent ];
+    buildInputs = [ TestPod ];
     propagatedBuildInputs = [ IOStringy ];
     meta = with stdenv.lib; {
       homepage = http://search.cpan.org/~jaybonci/Parse-DebControl;
@@ -9366,7 +9376,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/F/FL/FLORA/Plack-Test-ExternalServer-0.01.tar.gz;
       sha256 = "1dbg1p3rgvvbkkpvca5jlc2mzx8iqyiybk88al93pvbca65h1g7h";
     };
-    propagatedBuildInputs = [ HTTPMessage LWPUserAgent Plack TestTCP URI ];
+    propagatedBuildInputs = [ HTTPMessage Plack TestTCP URI ];
     meta = {
       description = "Run HTTP tests on external live servers";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -12746,13 +12756,12 @@ let self = _self // overrides; _self = with self; {
     buildInputs = [TestException];
   };
 
-  TryTiny = buildPerlPackage {
-    name = "Try-Tiny-0.22";
+  TryTiny = buildPerlPackage rec {
+    name = "Try-Tiny-0.30";
     src = fetchurl {
-      url = mirror://cpan/authors/id/D/DO/DOY/Try-Tiny-0.22.tar.gz;
-      sha256 = "60fba46f4693d33d54539104f9001df008dabb400b6837e9605c39a6ee6a1b19";
+      url = "mirror://cpan/authors/id/E/ET/ETHER/${name}.tar.gz";
+      sha256 = "da5bd0d5c903519bbf10bb9ba0cb7bcac0563882bcfe4503aee3fb143eddef6b";
     };
-    buildInputs = [ if_ ];
     meta = {
       homepage = http://metacpan.org/release/Try-Tiny;
       description = "Minimal try/catch with proper preservation of $@";
@@ -12906,11 +12915,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  URI = buildPerlPackage {
-    name = "URI-1.69";
+  URI = buildPerlPackage rec {
+    name = "URI-1.73";
     src = fetchurl {
-      url = mirror://cpan/authors/id/E/ET/ETHER/URI-1.69.tar.gz;
-      sha256 = "0bdlk1cn7ipy4kdylrn73yz9i2k39ikm1cqvh9hq0vvbcbm1cjxp";
+      url = "mirror://cpan/authors/id/E/ET/ETHER/${name}.tar.gz";
+      sha256 = "cca7ab4a6f63f3ccaacae0f2e1337e8edf84137e73f18548ec7d659f23efe413";
     };
     meta = {
       description = "Uniform Resource Identifiers (absolute and relative)";
@@ -13044,7 +13053,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/E/ET/ETHER/WWW-Mechanize-1.73.tar.gz;
       sha256 = "1zrw8aadhwy48q51x2z2rqlkwf17bya4j4h3hy89mw783j96rmg9";
     };
-    propagatedBuildInputs = [ HTMLForm HTMLParser HTMLTree HTTPDaemon HTTPMessage HTTPServerSimple LWP LWPUserAgent TestWarn URI ];
+    propagatedBuildInputs = [ HTMLForm HTMLParser HTMLTree HTTPDaemon HTTPMessage HTTPServerSimple LWP TestWarn URI ];
     meta = {
       homepage = https://github.com/bestpractical/www-mechanize;
       description = "Handy web browsing in a Perl object";

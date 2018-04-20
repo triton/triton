@@ -11,16 +11,16 @@ let
     "http://xmlsoft.org/sources/libxslt-${version}.tar.gz"
   ];
 
-  version = "1.1.30";
+  version = "1.1.32";
 in
 stdenv.mkDerivation rec {
   name = "libxslt-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmPkxXTGmrFPCvGZyHqGRvBJz4B7rRNiVmVLinf6Kom2NP";
+    multihash = "QmRQrD68VWTwGFcwGuUaVMna6ohGUJjhTiF3JqdpTKVbpN";
     hashOutput = false;
-    sha256 = "ba65236116de8326d83378b2bd929879fa185195bc530b9d1aba72107910b6b3";
+    sha256 = "526ecd0abaf4a7789041622c3950c0e7f2c4c8835471515fd77eec684a355460";
   };
 
   buildInputs = [
@@ -43,11 +43,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.1.30";
+      urls = tarballUrls "1.1.32";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";
       inherit (src) outputHashAlgo;
-      outputHash = "ba65236116de8326d83378b2bd929879fa185195bc530b9d1aba72107910b6b3";
+      outputHash = "526ecd0abaf4a7789041622c3950c0e7f2c4c8835471515fd77eec684a355460";
     };
   };
 

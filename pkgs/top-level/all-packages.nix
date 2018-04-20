@@ -755,9 +755,6 @@ bluez = callPackage ../all-pkgs/b/bluez { };
 
 boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 
-boost_1-65 = callPackage ../all-pkgs/b/boost {
-  channel = "1.65";
-};
 boost_1-66 = callPackage ../all-pkgs/b/boost {
   channel = "1.66";
 };

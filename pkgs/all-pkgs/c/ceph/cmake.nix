@@ -6,7 +6,7 @@
 , python3Packages
 , yasm
 
-, boost
+, boost_1-66
 , curl
 , expat
 , fcgi
@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost
+    boost_1-66
     curl
     expat
     fuse_2

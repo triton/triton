@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ncdu-1.12";
+  name = "ncdu-1.13";
 
   src = fetchurl {
     url = "https://dev.yorhel.nl/download/${name}.tar.gz";
-    multihash = "QmbDWb9ycS5sudqN1Q8JUAuui4T2MwyDiW8zJNCmD9YzNc";
+    multihash = "QmX9trpxBMrxLD1eCBm9gAMQ65tAwnSkHwzbByoTq229wG";
     hashOutput = false;
-    sha256 = "820e4e4747a2a2ec7a2e9f06d2f5a353516362c22496a10a9834f871b877499a";
+    sha256 = "f4d9285c38292c2de05e444d0ba271cbfe1a705eee37c2b23ea7c448ab37255a";
   };
   
   buildInputs = [

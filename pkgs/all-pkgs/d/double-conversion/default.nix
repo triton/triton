@@ -4,15 +4,19 @@
 , ninja
 }:
 
+let
+  date = "2018-04-20";
+  rev = "7a560cf769d9f108d7c09299f805823692a0f523";
+in
 stdenv.mkDerivation {
-  name = "double-conversion-2016-07-11";
+  name = "double-conversion-${date}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "google";
     repo = "double-conversion";
-    rev = "25166c3505aedb57a12301a37e2e2ad1d4e7a326";
-    sha256 = "7040327727811a1010d4fb5f9832dfeb96c0b405a51fdc12b60c11819cfbecc4";
+    inherit rev;
+    sha256 = "07cee67ea2d767bb900009b45a9adedcbf72ec82974c47ec45390b691381cb34";
   };
 
   nativeBuildInputs = [

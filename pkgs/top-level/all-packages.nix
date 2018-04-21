@@ -3135,6 +3135,8 @@ opensmtpd = callPackage ../all-pkgs/o/opensmtpd { };
 
 opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };
 
+opensp = callPackage ../all-pkgs/o/opensp { };
+
 openssh = callPackage ../all-pkgs/o/openssh { };
 
 openssl_1-0-2 = callPackage ../all-pkgs/o/openssl {
@@ -4123,10 +4125,6 @@ zstd = callPackage ../all-pkgs/z/zstd {
   netcat = callPackage ../tools/networking/netcat { };
 #
   npapi_sdk = callPackage ../development/libraries/npapi-sdk { };
-#
-  opensp = callPackage ../tools/text/sgml/opensp { };
-
-  spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
   strongswan = callPackage ../tools/networking/strongswan { };
 #

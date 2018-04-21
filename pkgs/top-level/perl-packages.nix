@@ -339,11 +339,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  ArchiveCpio = buildPerlPackage {
-    name = "Archive-Cpio-0.09";
+  ArchiveCpio = buildPerlPackage rec {
+    name = "Archive-Cpio-0.10";
     src = fetchurl {
-      url = mirror://cpan/authors/id/P/PI/PIXEL/Archive-Cpio-0.09.tar.gz;
-      sha256 = "1cf8k5zjykdbc1mn8lixlkij6jklwn6divzyq2grycj3rpd36g5c";
+      url = "mirror://cpan/authors/id/P/PI/PIXEL/${name}.tar.gz";
+      sha256 = "246fb31669764e78336b2191134122e07c44f2d82dc4f37d552ab28f8668bed3";
     };
     meta = {
       description = "Module for manipulations of cpio archives";
@@ -6289,13 +6289,12 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  JSON = buildPerlPackage {
-    name = "JSON-2.90";
+  JSON = buildPerlPackage rec {
+    name = "JSON-2.97001";
     src = fetchurl {
-      url = mirror://cpan/authors/id/M/MA/MAKAMAKA/JSON-2.90.tar.gz;
-      sha256 = "127yppvr17qik9pkd1vy901hs4l13kg6rhp76jdgcyask35v7nsd";
+      url = "mirror://cpan/authors/id/I/IS/ISHIGAKI/${name}.tar.gz";
+      sha256 = "e277d9385633574923f48c297e1b8acad3170c69fa590e31fa466040fc6f8f5a";
     };
-    buildInputs = [ TestPod ];
     meta = {
       description = "JSON (JavaScript Object Notation) encoder/decoder";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];

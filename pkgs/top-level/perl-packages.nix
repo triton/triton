@@ -331,11 +331,11 @@ let self = _self // overrides; _self = with self; {
     buildInputs = [ TestNoWarnings Moo TypeTiny ];
   };
 
-  ListCompare = buildPerlPackage {
-    name = "List-Compare-1.18";
+  ListCompare = buildPerlPackage rec {
+    name = "List-Compare-0.53";
     src = fetchurl {
-      url = mirror://cpan/authors/id/J/JK/JKEENAN/List-Compare-0.39.tar.gz;
-      sha256 = "1v4gn176faanzf1kr9axdp1220da7nkvz0d66mnk34nd0skjjxcl";
+      url = "mirror://cpan/authors/id/J/JK/JKEENAN/${name}.tar.gz";
+      sha256 = "fdbf4ff67b3135d44475fef7fcac0cd4706407d5720d26dca914860eb10f8550";
     };
   };
 
@@ -13221,10 +13221,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   XMLLibXML = buildPerlPackage rec {
-    name = "XML-LibXML-2.0129";
+    name = "XML-LibXML-2.0132";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SH/SHLOMIF/${name}.tar.gz";
-      sha256 = "5ca0269ba06800c84061a7f3333c85fab5584d69cd7b4e0641963da7fd36b366";
+      sha256 = "721452e3103ca188f5968ab06d5ba29fe8e00e49f4767790882095050312d476";
     };
     SKIP_SAX_INSTALL = 1;
     buildInputs = [ pkgs.libxml2 ];

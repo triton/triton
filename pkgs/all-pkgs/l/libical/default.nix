@@ -1,37 +1,54 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
 , ninja
 , perl
+, vala
 
 , db
+, glib
+, gobject-introspection
+, icu
+, libxml2
 }:
 
+let
+  version = "3.0.3";
+in
 stdenv.mkDerivation rec {
   name = "libical-${version}";
-  version = "2.0.0";
 
-  src = fetchFromGitHub {
-    version = 1;
-    owner = "libical";
-    repo = "libical";
-    rev = "v${version}";
-    sha256 = "4432bbe74cbc778f8d40df4d1d419a8154f2ccd329508cd55f267d2622e7f75a";
+  src = fetchurl {
+    url = "https://github.com/libical/libical/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "5b91eb8ad2d2dcada39d2f81d5e3ac15895823611dc7df91df39a35586f39241";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
     perl
+    vala
   ];
 
   buildInputs = [
     db
+    glib
+    gobject-introspection
+    icu
+    libxml2
   ];
 
   cmakeFlags = [
-    "-DWITH_BDB=YES"
+    "-DSHARED_ONLY=YES"
+    "-DUSE_BUILTIN_TZDATA=NO"
+    "-DGOBJECT_INTROSPECTION=YES"
+    "-DICAL_BUILD_DOCS=NO"
+    "-DICAL_GLIB_VAPI=YES"
+    "-DICAL_GLIB=YES"
   ];
+
+  # Remove this when makeFlags and ninjaFlags are separate
+  setVapidirInstallFlag = false;
 
   meta = with stdenv.lib; {
     homepage = https://github.com/libical/libical;

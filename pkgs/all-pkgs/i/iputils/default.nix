@@ -1,6 +1,6 @@
 { stdenv
 , docbook-xsl
-, docbook_sgml_dtd_31
+, docbook_xml_dtd_44
 , fetchFromGitHub
 , libxslt
 , perlPackages
@@ -8,20 +8,21 @@
 , libcap
 , libidn2
 , openssl
-, spCompat
 }:
 
 let
+  date = "2018-03-14";
+  rev = "0b4f8f12ecd487314f2c4f3d27c1a11130df5e84";
 in
 stdenv.mkDerivation rec {
-  name = "iputils-2017-11-01";
+  name = "iputils-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "iputils";
     repo = "iputils";
-    rev = "b551fb608a1314fce824ca5a437e5381b7bbf95c";
-    sha256 = "578bb59b7db799aa1d770d431bef6cf27823f53776a35a9980e261a20cb6af94";
+    inherit rev;
+    sha256 = "fa15ac68a3546fcb30645e3c478b684d620251491e1ece0e5281dd43f711d9da";
   };
 
   postPatch = /* Fix hardcoded xsltproc path */ ''
@@ -45,6 +46,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     docbook-xsl
+    docbook_xml_dtd_44
     libxslt
   ];
 
@@ -52,7 +54,6 @@ stdenv.mkDerivation rec {
     libcap
     libidn2
     openssl
-    spCompat
   ];
 
   buildFlags = [

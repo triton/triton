@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.5";
+  version = "2.8";
 in
 stdenv.mkDerivation rec {
   name = "bash-completion-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/scop/bash-completion/releases/download/"
       + "${version}/${name}.tar.xz";
-    sha256 = "b0b9540c65532825eca030f1241731383f89b2b65e80f3492c5dd2f0438c95cf";
+    sha256 = "c01f5570f5698a0dda8dc9cfb2a83744daa1ec54758373a6e349bd903375f54d";
   };
 
   doCheck = true;

@@ -1,20 +1,26 @@
 { stdenv
 , fetchurl
 , gettext
+
+, lm-sensors
 }:
 
 stdenv.mkDerivation rec {
-  name = "sysstat-11.5.7";
+  name = "sysstat-11.7.3";
 
   src = fetchurl {
     url = "http://pagesperso-orange.fr/sebastien.godard/${name}.tar.xz";
-    sha1Confirm = "ba45b9c6f6acff756fba70e4819f259bb0c3f1bc";
-    multihash = "QmSEq6QCbtLjVmuGFA2ih3BRNscQ2v14TKC1hqd91x8Lsk";
-    sha256 = "4a38efaa0ca85ee5484d046bd427012979264fef17f07fd7855860e592819482";
+    sha1Confirm = "d60fe0d4789cb377105c9a30f73e8e2158d3d288";
+    multihash = "QmfLyAG597r7BGxbJgKjAtTxfn2RtpnVT71foZGRZrRa2x";
+    sha256 = "8ea4ffcce8dae68a1cbb6acaa131ae7e3e6c5765134e670aa9baa38c1bcc66ea";
   };
 
   nativeBuildInputs = [
     gettext
+  ];
+
+  buildInputs = [
+    lm-sensors
   ];
 
   preConfigure = ''

@@ -9,14 +9,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "edac-utils-2015-07-11";
+  name = "edac-utils-2015-06-11";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "grondo";
     repo = "edac-utils";
     rev = "556ebce6e1a5a8ad8c07090979a36be7a2276e2e";
-    sha256 = "7ec7c190afbe475d978a572743c16572126f2a5c813cc2672c4edd2665a9f7f8";
+    sha256 = "0850c3a01494bb2dcfd894c3839f086fbd97446e2825e361202edb498f7cbfe5";
   };
 
   nativeBuildInputs = [

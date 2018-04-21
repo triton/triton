@@ -3641,6 +3641,8 @@ syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
 synergy = callPackage ../all-pkgs/s/synergy { };
 
+sysfsutils = callPackage ../all-pkgs/s/sysfsutils { };
+
 syslinux = callPackage ../all-pkgs/s/syslinux { };
 
 sysstat = callPackage ../all-pkgs/s/sysstat { };
@@ -4641,8 +4643,6 @@ libstartup_notification =
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 #
-  sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
-
   # TODO(dezgeg): either refactor & use ubootTools directly, or
   # remove completely
   ubootChooser = name: ubootTools;

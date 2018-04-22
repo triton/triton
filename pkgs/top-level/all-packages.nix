@@ -3173,6 +3173,8 @@ p7zip = callPackage ../all-pkgs/p/p7zip { };
 
 pam = callPackage ../all-pkgs/p/pam { };
 
+pam_wrapper = callPackage ../all-pkgs/p/pam_wrapper { };
+
 pango = callPackage ../all-pkgs/p/pango { };
 
 pangomm_2-40 = callPackage ../all-pkgs/p/pangomm {

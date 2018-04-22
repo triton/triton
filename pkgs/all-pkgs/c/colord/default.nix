@@ -8,13 +8,11 @@
 
 , argyllcms
 , bash-completion
-, dbus
 , glib
 , gobject-introspection
 , libgusb
 , lcms2
 , libgudev
-, libusb
 , polkit
 , sqlite
 , systemd-dummy
@@ -26,13 +24,13 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "colord-1.4.2";
+  name = "colord-1.4.3";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
-    multihash = "Qme1Y2w1Carc9UXwU7LiVibZmMDznUC9rP8CDrgeWfnVct";
+    multihash = "QmY9zG5iSirN9LfHFapxbvHY6RWXomXBRUmieLDFgDppRT";
     hashOutput = false;
-    sha256 = "4c70d5052a9c96da51fa57e80d6dc97ca642943d5b9940a196c990dfe84beca7";
+    sha256 = "9a8e669ee1ea31632bee636cc57353f703c2ea9b64cd6e02bbaabe9a1e549df7";
   };
 
   nativeBuildInputs = [
@@ -45,25 +43,16 @@ stdenv.mkDerivation rec {
   buildInputs = [
     argyllcms
     bash-completion
-    dbus
     glib
     gobject-introspection
     lcms2
     libgudev
     libgusb
-    libusb
     polkit
     sqlite
     systemd_lib
     systemd-dummy
   ];
-
-  # preConfigure = ''
-  #   configureFlagsArray+=(
-  #     "--with-systemdsystemunitdir=$out/etc/systemd/system"
-  #     "--with-udevrulesdir=$out/lib/udev/rules.d"
-  #   )
-  # '';
 
   postPatch = ''
     # Install systemd files to the current prefix
@@ -71,16 +60,18 @@ stdenv.mkDerivation rec {
       -e "s|systemd.get_pkgconfig_variable.*|'$out/lib/systemd/user',|g"
     sed -i data/meson.build \
       -e "s|systemd.get_pkgconfig_variable('tmpfilesdir')|'$out/lib/tmpfiles.d'|" \
-      -e "s|systemd.get_pkgconfig_variable('systemdsystemunitdir')|'$out/lib/systemd/system'|"
+      -e "s|systemd.get_pkgconfig_variable('systemdsystemunitdir')|'$out/lib/systemd/system'|" \
+      -e "s|bash_completion.get_pkgconfig_variable('completionsdir')|'$out/share/bash-completion/completions'|"
   '';
 
   mesonFlags = [
-    "-Denable-bash-completion=false"
-    "-Denable-libcolordcompat=true"
-    "-Denable-vala=true"
-    "-Denable-print-profiles=true"
-    "-Denable-man=false"
-    "-Denable-docs=false"
+    "-Dsession_example=false"
+    "-Dlibcolordcompat=true"
+    "-Dvapi=true"
+    "-Dtests=false"
+    "-Ddaemon_user=colord"
+    "-Dman=false"
+    "-Ddocs=false"
   ];
 
   setVapidirInstallFlag = false;

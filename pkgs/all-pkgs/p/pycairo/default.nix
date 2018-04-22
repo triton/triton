@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchurl
+, isPy3
 , lib
 
 , cairo
@@ -10,7 +11,7 @@ let
   inherit (lib)
     optionalString;
 
-  version = "1.15.4";
+  version = "1.17.0";
 in
 buildPythonPackage rec {
   name = "pycairo-${version}";
@@ -19,16 +20,20 @@ buildPythonPackage rec {
     url = "https:/github.com/pygobject/pycairo/releases/download/v${version}/"
       + "pycairo-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "ee4c3068c048230e5ce74bb8994a024711129bde1af1d76e3276c7acd81c4357";
+    sha256 = "cdd4d1d357325dec3a21720b85d273408ef83da5f15c184f2eff3212ff236b9f";
   };
 
   buildInputs = [
     cairo
   ];
 
-  # pkgconfig has a broken prefix
-  preFixup = ''
-    sed -i "s,prefix=.*,prefix=$out," $out/share/pkgconfig/py*cairo.pc
+  # PC is no longer installed during bdist install
+  # Make our own instead
+  postInstall = optionalString isPy3 ''
+    mkdir -p "$out"/share/pkgconfig
+    includedir="$(dirname "$(find "$out" -name py3cairo.h)")"
+    sed "s,@includedir@,$includedir," '${./py3cairo.pc.in}' \
+      >"$out"/share/pkgconfig/py3cairo.pc
   '';
 
   passthru = {

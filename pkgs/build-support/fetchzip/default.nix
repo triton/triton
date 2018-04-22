@@ -102,6 +102,6 @@ lib.overrideDerivation (fetchurl (rec {
     unzip
   ];
 }) // {
-  inherit purgeTimestamps;
+  inherit purgeTimestamps version;
   deterministic-zip = deterministic-zip';
 }

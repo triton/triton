@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "resolv_wrapper-1.1.3";
+  name = "resolv_wrapper-1.1.5";
 
   src = fetchurl {
     url = "mirror://samba/cwrap/${name}.tar.gz";
-    sha256 = "1h76155pnmd3pqxfyi00q0fg6v45ad9dhnjsqcsbzg18s626wyad";
+    sha256 = "e989fdaa1385bdf3ef7dbcb83b3f7f15c69e78ca6432e254be390b7c63e1b06c";
   };
 
   nativeBuildInputs = [

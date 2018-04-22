@@ -3,6 +3,7 @@
 
 , dbus
 , glib
+, json-c
 , libical
 , readline
 , systemd_lib
@@ -23,13 +24,15 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus
     glib
+    json-c
     libical
     readline
     systemd_lib
   ];
 
   preConfigure = ''
-    sed tools/hid2hci.rules \
+    grep -q '"/sbin/udevadm' tools/hid2hci.rules
+    sed -i tools/hid2hci.rules \
       -e 's,/sbin/udevadm,${systemd_lib}/bin/udevadm,' \
       -e 's,hid2hci ,$out/lib/udev/hid2hci ,'
 
@@ -46,20 +49,22 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--enable-pie"
     "--enable-threads"
     "--enable-library"
-    "--disable-test"
-    "--enable-tools"
-    "--enable-monitor"
-    "--enable-udev"
-    "--enable-cups"
-    "--enable-obex"
-    "--enable-client"
-    "--enable-systemd"
-    "--enable-experimental"
+    "--enable-nfc"
+    "--enable-sap"
+    "--enable-health"
+    "--enable-mesh"
+    "--enable-manpages"
     "--enable-sixaxis"
-    "--disable-android"
   ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+    )
+  '';
 
   passthru = {
     srcVerification = fetchurl {

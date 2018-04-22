@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "soxr-0.1.2";
+  name = "soxr-0.1.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/soxr/${name}-Source.tar.xz";
-    sha256 = "0xf2w3piwz9gfr1xqyrj4k685q5dy53kq3igv663i4f4y4sg9rjl";
+    sha256 = "b111c15fdc8c029989330ff559184198c161100a59312f5dc19ddeb9b5a15889";
   };
 
   nativeBuildInputs = [
@@ -19,16 +19,7 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DBUILD_EXAMPLES=OFF"
-    "-DBUILD_SHARED_LIBS=ON"
     "-DBUILD_TESTS=OFF"
-    "-DVISIBILITY_HIDDEN=ON"
-    "-DWITH_AVFFT=OFF"
-    "-DWITH_DOUBLE_PRECISION=ON"
-    "-DWITH_LSR_BINDINGS=ON"
-    "-DWITH_OPENMP=ON"
-    "-DWITH_PFFFT=ON"
-    "-DWITH_SIMD=ON"
   ];
 
   meta = with stdenv.lib; {

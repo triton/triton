@@ -10,17 +10,17 @@
 
 # TODO: support for java, mono, python, & ruby
 let
-  version = "3.7.0";
+  version = "3.7.1";
 in
 stdenv.mkDerivation rec {
   name = "ice-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "dc26d72374aa42e02a850f53d896da48ca47e4f6699638862b932fc6579bb80f";
+    sha256 = "39c3fe53c6e5b1662a7b8286b11a7273e4a5253c1adaa3daba6f18d82cc51ff2";
   };
 
   buildInputs = [

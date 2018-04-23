@@ -1,6 +1,7 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
+, ninja
 
 , glib
 , zlib
@@ -12,16 +13,14 @@ in
 stdenv.mkDerivation rec {
   name = "libproxy-${version}";
 
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "libproxy";
-    repo = "libproxy";
-    rev = version;
-    sha256 = "09bbe39a15ec4fe7be6293e8ea3a15a3ef2d71e38f5e9b4f551c85db715aed05";
+  src = fetchurl {
+    url = "https://github.com/libproxy/libproxy/releases/download/${version}/${name}.tar.xz";
+    sha256 = "654db464120c9534654590b6683c7fa3887b3dad0ca1c4cd412af24fbfca6d4f";
   };
 
   nativeBuildInputs = [
     cmake
+    ninja
   ];
 
   buildInputs = [

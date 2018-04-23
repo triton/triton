@@ -48,9 +48,9 @@ let
 
   sources = {
     "2.3" = {
-      fetchzipversion = 3;
+      fetchzipversion = 6;
       version = "2.3.0";
-      sha256 = "072b868039e8c11c2d753d9096f8de66e115cc503a8fb60122728904ed61d4ac";
+      sha256 = "53f23a4d528caf4cc436c42975d3ab029a422a57ea558689d95984205aa0cea9";
     };
   };
   source = sources."${channel}";

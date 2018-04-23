@@ -17,7 +17,7 @@
 , libfpx
 , libice
 , libjpeg
-, liblqr1
+, liblqr
 , libpng
 , librsvg
 , libsm
@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
     libfpx
     libice
     libjpeg
-    liblqr1
+    liblqr
     libpng
     librsvg
     libsm
@@ -154,7 +154,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (libjpeg != null)}-jpeg"
     "--${boolWt (lcms2 != null)}-lcms"
     "--${boolWt (openjpeg != null)}-openjp2"
-    "--${boolWt (liblqr1 != null)}-lqr"
+    "--${boolWt (liblqr != null)}-lqr"
     "--${boolWt (xz != null)}-lzma"
     "--${boolWt (openexr != null)}-openexr"
     "--${boolWt (pango != null)}-pango"

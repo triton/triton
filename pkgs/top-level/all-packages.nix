@@ -2341,6 +2341,8 @@ liblo = callPackage ../all-pkgs/l/liblo { };
 
 liblogging = callPackage ../all-pkgs/l/liblogging { };
 
+liblqr = callPackage ../all-pkgs/l/liblqr { };
+
 libmatroska = callPackage ../all-pkgs/l/libmatroska { };
 
 libmbim = callPackage ../all-pkgs/l/libmbim { };
@@ -4359,8 +4361,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
 #
   libgtop = callPackage ../development/libraries/libgtop {};
-#
-  liblqr1 = callPackage ../development/libraries/liblqr-1 { };
 #
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #

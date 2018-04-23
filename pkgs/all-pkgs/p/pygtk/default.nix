@@ -23,11 +23,11 @@ stdenv.mkDerivation rec {
   name = "pygtk-2.24-2011-10-02";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "GNOME";
     repo = "pygtk";
     rev = "eaf1c1b881d2d20d202cf475b5ffed2206b110df";
-    sha256 = "976d1da90ed977287c8f879958cdb949c81ab7a8d9ce4ae6c2fec6d1222c6336";
+    sha256 = "3393309ec2cd452c598b86fdddfce1f9de5aa02a8044b74bdaab1e43dd6fa462";
   };
 
   nativeBuildInputs = [

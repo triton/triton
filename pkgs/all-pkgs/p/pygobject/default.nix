@@ -1,4 +1,6 @@
 { stdenv
+, autoreconfHook
+, fetchFromGitHub
 , fetchurl
 , isPy3
 , lib
@@ -23,8 +25,12 @@ let
 
   sources = {
     "2.28" = {
-      version = "2.28.7";
-      sha256 = "bb9d25a3442ca7511385a7c01b057492095c263784ef31231ffe589d83a96a5a";
+      version = "2.28";
+      date = "2013-02-19";
+      # Latest commit from pygobject-2-28 branch
+      rev = "9456ba70fdb98b3a4eb7ee2f630182387a54ca00";
+      sha256 = "bf61ddfa54b9af5ff4ed4321ac2a8f613da334e88f481a53a634dd7d08509327";
+      fetchzipversion = 2;
     };
     "3.28" = {
       version = "3.28.2";
@@ -40,22 +46,34 @@ in
 assert is2x -> !isPy3;
 
 stdenv.mkDerivation rec {
-  name = "pygobject-${source.version}";
+  name = "pygobject-${source.version}${optionalString is2x "-${source.date}"}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/pygobject/${channel}/${name}.tar.xz";
-    hashOutput = false;
-    inherit (source) sha256;
-  };
+  src =
+    if is2x then
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "GNOME";
+        repo = "pygobject";
+        inherit (source) rev sha256;
+      }
+    else
+      fetchurl {
+        url = "mirror://gnome/sources/pygobject/${channel}/${name}.tar.xz";
+        hashOutput = false;
+        inherit (source) sha256;
+      };
+
+  nativeBuildInputs = optionals is2x [
+    autoreconfHook
+  ];
 
   buildInputs = [
+    cairo
     glib
     gobject-introspection
     libffi
-    python
-  ] ++ optionals (!is2x) [
-    cairo
     pycairo
+    python
   ];
 
   configureFlags = optionals is2x [

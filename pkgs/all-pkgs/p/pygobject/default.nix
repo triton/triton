@@ -26,9 +26,9 @@ let
       version = "2.28.7";
       sha256 = "bb9d25a3442ca7511385a7c01b057492095c263784ef31231ffe589d83a96a5a";
     };
-    "3.26" = {
-      version = "3.26.1";
-      sha256 = "f5577b9b9c70cabb9a60d81b855d488b767c66f867432e7fb64aa7269b04d1a9";
+    "3.28" = {
+      version = "3.28.2";
+      sha256 = "ac443afd14fcb9ff5744b65d6e2b380e70510278404fb8684a9b9fb089e6f2ca";
     };
   };
   source = sources."${channel}";

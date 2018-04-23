@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libfpx-1.3.1-8";
+  name = "libfpx-1.3.1-10";
 
   src = fetchurl {
     url = "mirror://imagemagick/delegates/${name}.tar.xz";
-    multihash = "QmaL3ZGmVcTuPcr9y9RSWXAPNi8ZtmwRCCodedNEEYP6uw";
+    multihash = "QmWKpD48Sz4eAKSKGtMDrszyg4RuMhK1MvVkqVAGSHNpAw";
     hashOutput = false;
-    sha256 = "654eb938f810fcf032c76e5e339038787c520733a39e088544aaa7bcc4e3703b";
+    sha256 = "491b55535580d27355669c45fe995446bd34df5dbcdc15312e58c3ebecc6a455";
   };
 
   configureFlags = [

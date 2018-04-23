@@ -26,11 +26,11 @@ let
   sources = {
     "2.28" = {
       version = "2.28";
-      date = "2013-02-19";
+      date = "2017-10-13";
       # Latest commit from pygobject-2-28 branch
-      rev = "9456ba70fdb98b3a4eb7ee2f630182387a54ca00";
-      sha256 = "bf61ddfa54b9af5ff4ed4321ac2a8f613da334e88f481a53a634dd7d08509327";
-      fetchzipversion = 2;
+      rev = "c9594b6a91e6ca2086fedec2ed8249e0a9c029fc";
+      sha256 = "8a7a304d2df31ef0523cd733ab3ff5f3e595b048bb9fcd59920223935d4a6477";
+      fetchzipversion = 6;
     };
     "3.28" = {
       version = "3.28.2";

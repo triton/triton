@@ -59,7 +59,7 @@
 
 let
   major = "2.10";
-  patch = "0-RC1";
+  patch = "0";
 
   version = "${major}.${patch}";
 in
@@ -68,9 +68,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://download.gimp.org/pub/gimp/v${major}/${name}.tar.bz2";
-    multihash = "QmfYkPnG63yRTFFUEnUP7gJTahiqqW2NhhfVSYEq4xoLxQ";
+    multihash = "QmSWwq2e5Ei47j2K6tJdWgrxAuiiw6VN7NQm8hW2AnxaYN";
     hashOutput = false;
-    sha256 = "cc87b8edc74451b25563fdd8ee29169bd6554283a7bc07cb6a142beee89d269e";
+    sha256 = "7fcc96fb88cb0a0595d2610f63a15dec245bb37bf9db527d37a24fb75e547de2";
   };
 
   nativeBuildInputs = [
@@ -125,8 +125,9 @@ stdenv.mkDerivation rec {
     pango
     poppler
     poppler-data
-    python2Packages.python
+    python2Packages.pycairo
     python2Packages.pygtk
+    python2Packages.python
     shared-mime-info
     xorg.libXmu
     xorg.libXpm
@@ -136,6 +137,7 @@ stdenv.mkDerivation rec {
   ];
 
   pythonPath = [
+    python2Packages.pycairo
     python2Packages.pygtk
   ];
 

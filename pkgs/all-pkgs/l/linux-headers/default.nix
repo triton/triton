@@ -5,11 +5,6 @@
 
 let
   sources = {
-    "3.18" = {
-      major = "3";
-      version = "3.18.14";
-      sha256 = "1xh0vvn1l2g1kkg54f0mg0inbpsiqs24ybgsakksmcpcadjgqk1i";
-    };
     "4.4" = {
       major = "4";
       version = "4.4.57";
@@ -19,6 +14,11 @@ let
       major = "4";
       version = "4.9";
       sha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
+    };
+    "4.14" = {
+      major = "4";
+      version = "4.14";
+      sha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
     };
   };
 

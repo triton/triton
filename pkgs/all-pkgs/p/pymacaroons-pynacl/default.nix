@@ -13,11 +13,11 @@ buildPythonPackage {
   name = "pymacaroons-pynacl-${version}";
   
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "matrix-org";
     repo = "pymacaroons";
     rev = "v${version}";
-    sha256 = "1aef4d8f75479fe4860e90dc2365f421e788977b586a138c0c31210762384c92";
+    sha256 = "77c8c29d0e2bc5ca8cb449674fb644e02fd9a4dd343e3e7f55e3cb70d139f99f";
   };
 
   buildInputs = [

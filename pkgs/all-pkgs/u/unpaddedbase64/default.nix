@@ -10,11 +10,11 @@ buildPythonPackage {
   name = "unpaddedbase64-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "matrix-org";
     repo = "python-unpaddedbase64";
     rev = "v${version}";
-    sha256 = "6cd66a07e89d4d13e7def16615fdb0ee37e03a70aba41ae88b54f965e5c199f9";
+    sha256 = "15a2f090a1c5dd865c2cd11763cf2a8f55fa4762bc4c751989225f93afcff4cf";
   };
 
   meta = with stdenv.lib; {

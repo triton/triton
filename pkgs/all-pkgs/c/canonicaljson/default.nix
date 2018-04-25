@@ -1,23 +1,21 @@
 { stdenv
 , buildPythonPackage
-, fetchFromGitHub
+, fetchPyPi
 
 , frozendict
 , simplejson
 }:
 
 let
-  version = "1.0.0";
+  version = "1.1.3";
 in
 buildPythonPackage {
   name = "canonicaljson-${version}";
 
-  src = fetchFromGitHub {
-    version = 1;
-    owner = "matrix-org";
-    repo = "python-canonicaljson";
-    rev = "v${version}";
-    sha256 = "e4aa26819eca15804c59db079625c41845a9e150d7558525c3f2d45fc5f371ee";
+  src = fetchPyPi {
+    package = "canonicaljson";
+    inherit version;
+    sha256 = "06fe8676dbba4289d846f0699324297e1fd9bb7f2cb9964d69f364a0d2fca0e0";
   };
 
   propagatedBuildInputs = [

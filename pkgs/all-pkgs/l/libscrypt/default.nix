@@ -3,17 +3,18 @@
 }:
 
 let
-  version = "1.21";
+  rev = "a402f4116245ce8677b3d9f4f87096b5ccbe26e9";
+  date = "2018-02-03";
 in
 stdenv.mkDerivation {
-  name = "libscrypt-${version}";
+  name = "libscrypt-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "technion";
     repo = "libscrypt";
-    rev = "v${version}";
-    sha256 = "6689e8a878ddd772df315ba19ffc7071738a0d839e5081313534516d173ab214";
+    inherit rev;
+    sha256 = "a106f4378f475f38e5fd06b43c47f9b71bf8b93834e7f03290699f185079b6cf";
   };
 
   preBuild = ''

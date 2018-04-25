@@ -10,11 +10,11 @@ buildPythonPackage {
   name = "matrix-angular-sdk-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "matrix-org";
     repo = "matrix-angular-sdk";
     rev = "v${version}";
-    sha256 = "fb46ea9a24fd067ef3723b3db05cc19ba3f10e097353f9c8bf2783fbc63a8938";
+    sha256 = "d504bcbf1aa8b01b13fbdb398a0ca8bbec470586b59f7f7bc04f5300e36c8856";
   };
 
   meta = with stdenv.lib; {

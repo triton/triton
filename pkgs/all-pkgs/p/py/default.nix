@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.4.34";
+  version = "1.5.3";
 in
 buildPythonPackage rec {
   name = "py-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "py";
     inherit version;
-    sha256 = "0f2d585d22050e90c7d293b6451c83db097df77871974d90efd5a30dc12fcde3";
+    sha256 = "29c9fab495d7528e80ba1e343b958684f4ace687327e6f789a94bf3d1915f881";
   };
 
   doCheck = false;

@@ -7,6 +7,7 @@
 , automat
 , constantly
 , hyperlink
+, idna
 , incremental
 , zope-interface
 }:
@@ -28,6 +29,7 @@ buildPythonPackage rec {
     automat
     constantly
     hyperlink
+    idna
     incremental
     zope-interface
   ];

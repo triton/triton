@@ -14,11 +14,11 @@ buildPythonPackage {
   name = "signedjson-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "matrix-org";
     repo = "python-signedjson";
     rev = "v${version}";
-    sha256 = "6bf97a66408b4cffb5fcee2e350792f7f7216cba58ad85394b5f88f42dd31a88";
+    sha256 = "e786d2888b9f61df7eb750a3832e5edae552bc433236f8bf9a7c1949dacc51ad";
   };
 
   propagatedBuildInputs = [

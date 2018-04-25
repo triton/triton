@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.3.10";
+  version = "1.3.11";
 in
 stdenv.mkDerivation rec {
   name = "graphite2-${version}";
@@ -15,17 +15,13 @@ stdenv.mkDerivation rec {
     url = "https://github.com/silnrsi/graphite/releases/download/${version}/"
       + "${name}.tgz";
     hashOutput = false;
-    sha256 = "90fde3b2f9ea95d68ffb19278d07d9b8a7efa5ba0e413bebcea802ce05cda1ae";
+    sha256 = "bab92ed1844d6538e7e5bda76f6ac9aaf633e38b683983b942c78c8ce063ad7c";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
   ];
-
-  # cmakeFlags = [
-  #   "-DGRAPHITE2_ASAN=ON"
-  # ];
 
   passthru = {
     srcVerification = fetchurl {

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.8.1";
+  version = "0.8.3";
 in
 buildPythonPackage {
   name = "mistune-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "mistune";
     inherit version;
-    sha256 = "4c0f66924ce28f03b95b210ea57e57bd0b59f479edd91c2fa4fe59331eae4a82";
+    sha256 = "bc10c33bfdcaa4e749b779f62f60d6e12f8215c46a292d05e486b869ae306619";
   };
 
   meta = with stdenv.lib; {

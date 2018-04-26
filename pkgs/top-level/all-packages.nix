@@ -1973,6 +1973,8 @@ imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
 imlib2 = callPackage ../all-pkgs/i/imlib2 { };
 
+influxdb = pkgs.goPackages.influx.bin // { outputs = [ "bin" ]; };
+
 iniparser = callPackage ../all-pkgs/i/iniparser { };
 
 inkscape = callPackage ../all-pkgs/i/inkscape {

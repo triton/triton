@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "0.7.5";
+  version = "0.7.6";
 in
 stdenv.mkDerivation {
   name = "thin-provisioning-tools-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "jthornber";
     repo = "thin-provisioning-tools";
     rev = "v${version}";
-    sha256 = "dab400d845d43254b888c433255fda4b81896dbdce8b9ccc71a79ff679b0b823";
+    sha256 = "4c6774d1822fc96fe62679add44ef6167d6feb48ec807dee9d1fe832ca938118";
   };
 
   nativeBuildInputs = [

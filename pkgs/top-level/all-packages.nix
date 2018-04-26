@@ -773,12 +773,6 @@ borgbackup = pkgs.python3Packages.borgbackup;
 
 borgmatic = pkgs.python3Packages.borgmatic;
 
-brotli_0-5-2 = callPackage ../all-pkgs/b/brotli/old.nix {
-  version = "0.5.2";
-};
-brotli_0-6-0 = callPackage ../all-pkgs/b/brotli/old.nix {
-  version = "0.6.0";
-};
 brotli_1-0-2 = callPackage ../all-pkgs/b/brotli {
   version = "1.0.2";
 };
@@ -1662,9 +1656,6 @@ gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
 
-gnutar_1-29 = callPackage ../all-pkgs/g/gnutar {
-  version = "1.29";
-};
 gnutar_1-30 = callPackage ../all-pkgs/g/gnutar {
   version = "1.30";
 };

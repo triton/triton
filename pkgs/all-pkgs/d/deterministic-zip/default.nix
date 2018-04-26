@@ -1,11 +1,8 @@
 { stdenv
 , lib
 
-, brotli_0-5-2
-, brotli_0-6-0
 , brotli_1-0-2
 , brotli_1-0-3
-, gnutar_1-29
 , gnutar_1-30
 
 , version ? 6
@@ -13,14 +10,6 @@
 
 let
   versions = {
-    "2" = {
-      brotli = brotli_0-5-2;
-      tar = gnutar_1-29;
-    };
-    "3" = {
-      brotli = brotli_0-6-0;
-      tar = gnutar_1-29;
-    };
     "5" = {
       brotli = brotli_1-0-2;
       tar = gnutar_1-30;
@@ -35,11 +24,7 @@ let
     brotli
     tar;
 
-  brotliFlags =
-    if lib.versionAtLeast brotli.version "1.0.0" then
-      [ "-6" "-c" ]
-    else
-      [ "--quality" "6" ];
+  brotliFlags = [ "-6" "-c" ];
 
   cmd = ''
     ${tar}/bin/tar \

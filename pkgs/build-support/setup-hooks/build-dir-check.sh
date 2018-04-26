@@ -35,7 +35,7 @@ _buildDirCheck() {
         reader=(xz -d -c "$file")
         ;;
       *.tbr|*.br)
-        reader=(brotli --decompress --input "$file")
+        reader=(brotli -d -c "$file")
         ;;
       *)
         reader=(cat "$file")

@@ -2496,6 +2496,8 @@ libsoup = callPackageAlias "libsoup_2-62" { };
 
 libspectre = callPackage ../all-pkgs/l/libspectre { };
 
+libspiro = callPackage ../all-pkgs/l/libspiro { };
+
 libssh = callPackage ../all-pkgs/l/libssh { };
 
 libssh2 = callPackage ../all-pkgs/l/libssh2 { };

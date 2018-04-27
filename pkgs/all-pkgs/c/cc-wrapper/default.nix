@@ -63,15 +63,19 @@ stdenv.mkDerivation rec {
 
   TARGET_PATH = concatStringsSep ":" binDirList;
   TARGET_COMPILER = "gcc";
-  TARGET_LINKER = "binutils";
-  TARGET_ARCH = optionalString (hostCc != null) outputTuple;
+  TARGET_LINKER = "ld";
+  TARGET_ARCH = outputTuple;
 
-  preConfigure = ''
+  preConfigure = optionalString (libc != null) ''
     export TARGET_DL=$(find "${libc.lib or libc}/lib/" -name ld\*.so\* -exec readlink -f {} \; | head -n 1)
     test -n "$TARGET_DL"
     export TARGET_LIBC_INCLUDE="${libc.dev or libc}/include"
     export TARGET_LIBC_DYNAMIC_LIBS="${libc.lib or libc}/lib"
     export TARGET_LIBC_STATIC_LIBS="${libc.dev or lib}/lib"
+  '' + optionalString (true) ''
+    env
+    echo "####################"
+    sed -i '1aset -x' "$srcRoot"/build/configure/compiler_exes.sh
   '';
 
   configureAction = ''

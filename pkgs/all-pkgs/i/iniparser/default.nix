@@ -1,42 +1,37 @@
 { stdenv
 , fetchFromGitHub
-, fetchTritonPatch
 }:
 
+let
+  rev = "7b68537ac11fa62e923fd26aa87e206dc93a9a55";
+  date = "2018-03-27";
+in
 stdenv.mkDerivation rec {
-  name = "iniparser-${version}";
-  version = "4.0";
+  name = "iniparser-${date}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "ndevilla";
     repo = "iniparser";
-    rev = "v${version}";
-    sha256 = "619194948447cf0e2bb76fbfad1561a86a0cf089700116f3ce08216d2f0fb27d";
+    inherit rev;
+    sha256 = "69e5adca2de8a9eaec44a03d5c03c5126818fd2fc2c806956739e715d9244540";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "7b328573fd49ff0b2ab3a56e51f37ffcb4275fec";
-      file = "iniparser/iniparser-4.0-no-usr.patch";
-      sha256 = "bc46f43470ede9d504755491a01d3000f3dcdf3e9b2d7d950dcd32be2fdc5e79";
-    })
-  ];
-
-  buildFlags = [
-    "CC=cc"
-    "libiniparser.so"
-  ];
+  postPatch = ''
+    grep -q '/usr' iniparser.pc
+    sed -i "s,/usr,$out," iniparser.pc
+  '';
 
   installPhase = ''
-    install -D -m644 -v 'src/dictionary.h' "$out/include/dictionary.h"
-    install -D -m644 -v 'src/iniparser.h' "$out/include/iniparser.h"
+    for file in src/*.h; do
+      install -D -m644 -v "$file" "$out"/include/$(basename "$file")
+    done
 
-    install -D -m644 -v 'libiniparser.so.0' "$out/lib/libiniparser.so.0"
-    ln -sv $out/lib/libiniparser.so.0 $out/lib/libiniparser.so
+    shared_lib="$(echo libiniparser.so.*)"
+    install -D -m644 -v "$shared_lib" "$out"/lib/"$shared_lib"
+    ln -sv "$shared_lib" "$out"/lib/libiniparser.so
 
-    mkdir -pv "$out/share/doc/${name}"
-    cp -rv html $out/share/doc/${name}
+    install -D -m644 -v iniparser.pc "$out"/lib/pkgconfig/iniparser.pc
   '';
 
   meta = with stdenv.lib; {

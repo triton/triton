@@ -12,11 +12,11 @@ stdenv.mkDerivation rec {
   name = "leveldb-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "google";
     repo = "leveldb";
     rev = "v${version}";
-    sha256 = "5ff3768ea5515865fcc1336fdee6028ade616b9c65b17db6dea4c1a98eeeb0bf";
+    sha256 = "907eb9c7eaa604fb331be97f5e1a3f912de3f22dc116e37aa1096772b85a8955";
   };
 
   buildFlags = [

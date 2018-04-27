@@ -2533,6 +2533,8 @@ libu2f-host = callPackage ../all-pkgs/l/libu2f-host { };
 
 libungif = callPackage ../all-pkgs/l/libungif { };
 
+libuninameslist = callPackage ../all-pkgs/l/libuninameslist { };
+
 libunique = callPackage ../all-pkgs/l/libunique { };
 
 libunistring = callPackage ../all-pkgs/l/libunistring { };

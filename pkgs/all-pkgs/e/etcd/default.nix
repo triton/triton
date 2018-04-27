@@ -13,11 +13,11 @@ buildPythonPackage {
   name = "etcd-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "dsoprea";
     repo = "PythonEtcdClient";
     rev = version;
-    sha256 = "49229c429916f8788347ab372070d9ddc8cb15e6918eb5bb0b79ead962c5e27f";
+    sha256 = "87276a422d2d057ee4223eaa7c75ad36c8850257208f0f131bd1f8e4cdb29fe7";
   };
 
   postPatch = ''

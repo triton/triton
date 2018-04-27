@@ -3,21 +3,22 @@
 }:
 
 let
-  date = "2017-04-29";
-  rev = "f9973ab5540a56ee89888799a6d7a12c9aa603cf";
+  date = "2018-04-24";
+  rev = "37efd1c53621f26d935e5fb6d8e49dbe9a4cd8df";
 in
 stdenv.mkDerivation {
   name = "gnulib-${date}";
 
   src = fetchzip {
-    version = 3;
+    version = 6;
     url = "https://git.savannah.gnu.org/cgit/gnulib.git/snapshot/gnulib-${rev}.tar.xz";
-    multihash = "Qmd3PwjvZKUSG8n8SgcaBHfmD9ULRQHZ39g1qmKzJCR58K";
-    sha256 = "73b60abb56e6026d4ec09e56a68785c2165f1cf50345e16f99827b70493d4c8f";
+    multihash = "QmYbDvkAFtT51Ruj4BHZ4TDZLBZLirGu85AyHDMKyKYpaZ";
+    sha256 = "11a715698ab425f0f6a9ab90f06d7a895f257da5a931e32624f2664269167fb3";
   };
 
   installPhase = ''
-    mkdir -p $out
+    echo "This package does not install anything, use the source instead"
+    exit 1
   '';
 
   meta = with stdenv.lib; {

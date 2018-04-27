@@ -1,10 +1,5 @@
 { stdenv
-, asciidoc
-, docbook_xml_dtd_45
-, docbook-xsl
 , fetchurl
-, libxslt
-, xmlto
 
 , krb5_lib
 , libsodium
@@ -12,7 +7,7 @@
 }:
 
 let
-  version = "4.2.2";
+  version = "4.2.3";
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";
@@ -21,16 +16,8 @@ stdenv.mkDerivation rec {
     url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "5b23f4ca9ef545d5bd3af55d305765e3ee06b986263b31967435d285a3e6df6b";
+    sha256 = "8f1e2b2aade4dbfde98d82366d61baef2f62e812530160d2e6d0a5bb24e40bc0";
   };
-
-  nativeBuildInputs = [
-    asciidoc
-    docbook_xml_dtd_45
-    docbook-xsl
-    libxslt
-    xmlto
-  ];
 
   buildInputs = [
     krb5_lib
@@ -39,9 +26,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--with-gssapi_krb5"
+    "--with-libgssapi_krb5"
     "--with-libsodium"
-    # "--with-pgm" # TODO: Implement
   ];
 
   passthru = {

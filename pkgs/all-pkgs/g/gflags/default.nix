@@ -12,11 +12,11 @@ stdenv.mkDerivation rec {
   name = "gflags-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";
-    sha256 = "4d1bce2f9b66629af0513b4acc9381915842e8af188af115aac0b77d71990af3";
+    sha256 = "78726a75af3148ac6b782e1ea797a71d8f9b51fc2ff65df5171da9e8288a736f";
   };
 
   nativeBuildInputs = [

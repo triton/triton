@@ -3,17 +3,18 @@
 }:
 
 let
-  version = "2.0.2";
+  rev = "29fc26a8ee4116236230160b67ae693a11a9352f";
+  date = "2018-02-15";
 in
 stdenv.mkDerivation rec {
-  name = "uthash-${version}";
+  name = "uthash-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "troydhanson";
     repo = "uthash";
-    rev = "v${version}";
-    sha256 = "b091d9a9464e05b934ee7800acc3a9b56ee20f211f5077e361dc38e1400d210b";
+    inherit rev;
+    sha256 = "aad0a490b6bb075efcea2a1556ac0168c89e587915c89a7e0f89424cf4d44456";
   };
 
   installPhase = ''

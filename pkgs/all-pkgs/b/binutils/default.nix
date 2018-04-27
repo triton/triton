@@ -83,9 +83,9 @@ stdenv.mkDerivation rec {
   # require us to have a `makeinfo` binary
   patches = optionals (!bootstrap) [
     (fetchTritonPatch {
-      rev = "2de0054fdd5a211c7801433dda343a312ab8f00b";
+      rev = "08e96e281d79c82071529751bbdcbf846839ab9e";
       file = "b/binutils/0000-upstream-fixes.patch";
-      sha256 = "cb96aed03b9137c70eae895f6d781501b9df1320dc7c755745e3316e1ffa7566";
+      sha256 = "433bc51eb4e31d3276b892b05124e78809d71dc69d2cf805764d06d8b534d084";
     })
   ] ++ [
     (fetchTritonPatch {

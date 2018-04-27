@@ -26,9 +26,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "e6a0fee9782da2e14fed014ef58451f1b47c7d61";
+      rev = "08e96e281d79c82071529751bbdcbf846839ab9e";
       file = "g/glibc/0000-upstream-fixes.patch";
-      sha256 = "54b5681830a6bd48797a95a0b37bf1b22de2b025af71b927c2d9e181bd28a43e";
+      sha256 = "5856003c754977a206e7905137a2ef5bb472c0fbd4cad8e2f1b97b294a971933";
     })
     (fetchTritonPatch {
       rev = "5291f29cba8415e1f58e811d77957725ddde5c11";

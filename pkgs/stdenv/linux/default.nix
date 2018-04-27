@@ -219,7 +219,7 @@ let
         libc = glibc;
 
         cc-wrapper = pkgs.cc-wrapper.override {
-          cc = null;
+          cc = bootstrap-cc;
         };
 
         fetchurl = pkgs.fetchurl.override {

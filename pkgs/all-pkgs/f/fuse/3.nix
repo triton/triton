@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-3.2.1";
+  name = "fuse-3.2.2";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.xz";
     hashOutput = false;
-    sha256 = "524d5360a5a243a9579c4b5a8330a3ddd3176375fbfea417ce6b8b3db6aea273";
+    sha256 = "76836c3e458fa971ee354057bfaef84df7a876afe60492dda9b30e7dcad9c887";
   };
 
   nativeBuildInputs = [
@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
     # Can't chmod / chown in a nix-build
     sed -i 's,\(chmod\|chown\|mknod\|mkdir\),true,g' util/install_helper.sh
     sed -i "s,\".*/etc/init.d,\"$TMPDIR," util/install_helper.sh
+    sed -i "s,/etc,$out/etc,g" util/install_helper.sh
   '';
 
   buildInputs = [

@@ -2,13 +2,21 @@
 , fetchurl
 }:
 
+let
+  tarballUrls = version: [
+    "https://tukaani.org/xz/xz-${version}.tar.xz"
+  ];
+
+  version = "5.2.4";
+in
 stdenv.mkDerivation rec {
-  name = "xz-5.2.3";
+  name = "xz-${version}";
 
   src = fetchurl {
-    url = "http://tukaani.org/xz/${name}.tar.xz";
-    multihash = "QmRoqsqhx11SwkwKokd3gkYsxNtfRwG7eRYnT21rx6KodS";
-    sha256 = "7876096b053ad598c31f6df35f7de5cd9ff2ba3162e5a5554e4fc198447e0347";
+    urls = tarballUrls version;
+    multihash = "QmTvwVoGSrcoHNt7LKZDhnQUarCqFiJbY2ZwN4ctkVhCn1";
+    hashOutput = false;
+    sha256 = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
@@ -21,6 +29,17 @@ stdenv.mkDerivation rec {
   '';
 
   disableStatic = false;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "5.2.4";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "3690 C240 CE51 B467 0D30  AD1C 38EE 757D 6918 4620";
+      inherit (src) outputHashAlgo;
+      outputHash = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://tukaani.org/xz/;

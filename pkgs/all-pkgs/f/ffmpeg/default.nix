@@ -193,6 +193,11 @@ let
       multihash = "QmeauNNSeUBumLAq5tkic7FusmmBgynfUSuy7HNt2Xm47x";
       sha256 = "2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740";
     };
+    "4.0" = {
+      version = "4.0";
+      multihash = "QmQJ5auMPqGMdkEH2codELmUszBfFrngEZdNgLTMbFUySg";
+      sha256 = "ed945daf40b124e77a685893cc025d086f638bc703183460aff49508edb3a43f";
+    };
     "9.9" = {  # Git
       fetchzipversion = 6;
       version = "2018.04.30";

@@ -1288,6 +1288,10 @@ ffmpeg_3-4 = pkgs.ffmpeg_generic {
   channel = "3.4";
 };
 ffmpeg_3 = callPackageAlias "ffmpeg_3-4" { };
+ffmpeg_4-0 = pkgs.ffmpeg_generic {
+  channel = "4.0";
+};
+ffmpeg_4 = callPackageAlias "ffmpeg_4-0" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies
@@ -1295,7 +1299,7 @@ ffmpeg_head = pkgs.ffmpeg_generic {
   libvpx = pkgs.libvpx_head;
   x265 = pkgs.x265_head;
 };
-ffmpeg = callPackageAlias "ffmpeg_3" { };
+ffmpeg = callPackageAlias "ffmpeg_4" { };
 
 ffms = callPackage ../all-pkgs/f/ffms { };
 

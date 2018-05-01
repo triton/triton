@@ -195,9 +195,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 6;
-      version = "2018.04.11";
-      rev = "a26c9fdd1b4c047d6c89e29774928fd7bf347e8b";
-      sha256 = "70cab5aa0029ce65112f295425911daac9c8af87155b9709e6c548e01a5e0c09";
+      version = "2018.04.30";
+      rev = "0807a771600956e1f3e36a202fd3877418541eb0";
+      sha256 = "90a0a74d616c5334439f951e0a2496a36eb026e3c23f310f75e652427d91a810";
     };
   };
   source = sources."${channel}";
@@ -484,7 +484,7 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    (fflag "--disable-amf" "3.5")
+    (fflag "--disable-amf" "4.0")
     "--disable-audiotoolbox"  # macOS
     (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
@@ -498,13 +498,13 @@ stdenv.mkDerivation rec {
     (fflag "--${boolEn (
       nv-codec-headers != null
       && nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuvid" "3.5")
+      && nvidia-drivers != null)}-cuvid" "4.0")
     "--disable-d3d11va"  # Windows
     "--disable-dxva2"  # Windows
     (fflag "--${boolEn (
       nv-codec-headers != null
       && nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-ffnvcodec" "3.5")
+      && nvidia-drivers != null)}-ffnvcodec" "4.0")
     "--${boolEn (libdrm != null)}-libdrm"
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
     "--${boolEn libnppSupport}-libnpp"
@@ -516,11 +516,11 @@ stdenv.mkDerivation rec {
     (fflag "--${boolEn (
       nv-codec-headers != null
       && nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-nvenc" "3.5")
+      && nvidia-drivers != null)}-nvenc" "4.0")
     (fflag "--${boolEn (
       nv-codec-headers != null
       && nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-nvdec" "3.5")
+      && nvidia-drivers != null)}-nvdec" "4.0")
     /**/"--disable-omx"
     /**/"--disable-omx-rpi"
     /**/"--disable-rkmpp"
@@ -551,7 +551,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libgcrypt != null)}-gcrypt"
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
-    (fflag "--${boolEn (aomedia != null)}-libaom" "3.5")
+    (fflag "--${boolEn (aomedia != null)}-libaom" "4.0")
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
     (deprfflag "--${boolEn (jack2_lib != null)}-jack" null "3.4")
     "--${boolEn (jni != null)}-jni"
@@ -563,7 +563,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (celt != null)}-libcelt"
     #"--${boolEn (libcdio != null)}-libcdio"
     /**/"--disable-libcdio"
-    /**/(fflag "--disable-libcodec2" "3.5")
+    /**/(fflag "--disable-libcodec2" "4.0")
     "--${boolEn (
       libdc1394 != null
       && libraw1394 != null)}-libdc1394"
@@ -581,7 +581,7 @@ stdenv.mkDerivation rec {
     "--disable-libiec61883"
     #"--${boolEn (ilbc != null)}-libilbc"
     "--disable-libilbc"
-    (fflag "--${boolEn (jack2_lib != null)}-libjack" "3.5")
+    (fflag "--${boolEn (jack2_lib != null)}-libjack" "4.0")
     "--${boolEn (kvazaar != null)}-libkvazaar"
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"
@@ -606,17 +606,17 @@ stdenv.mkDerivation rec {
     "--${boolEn (snappy != null)}-libsnappy"
     "--${boolEn (soxr != null)}-libsoxr"
     "--${boolEn (speex != null)}-libspeex"
-    /**/(fflag "--disable-libsrt" "3.5")
+    /**/(fflag "--disable-libsrt" "4.0")
     "--${boolEn (libssh != null)}-libssh"
     #"--${boolEn (tesseract != null)}-libtesseract"
     /**/"--disable-libtesseract"
     "--${boolEn (libtheora != null)}-libtheora"
-    /**/(fflag "--disable-libtls" "3.5")  # libressl
+    /**/(fflag "--disable-libtls" "4.0")  # libressl
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
     "--${boolEn (v4l_lib != null)}-libv4l2"
     (deprfflag "--${boolEn (v4l_lib != null)}-v4l2_m2m" null "3.4")
-    (fflag "--${boolEn (v4l_lib != null)}-v4l2-m2m" "3.5")
+    (fflag "--${boolEn (v4l_lib != null)}-v4l2-m2m" "4.0")
     "--${boolEn (vid-stab != null)}-libvidstab"
     /**/"--disable-libvmaf"
     "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"
@@ -637,11 +637,12 @@ stdenv.mkDerivation rec {
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"
-    /**/(fflag "--disable-lv2" "3.5")
+    /**/(fflag "--disable-lv2" "4.0")
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
     /**/"--disable-libndi_newtek"
+    #/**/(fflag "--disable-mbedtls" "4.1")
     "--disable-mediacodec"  # android
     "--${boolEn (libmysofa != null)}-libmysofa"
     "--${boolEn (openal != null)}-openal"
@@ -669,6 +670,14 @@ stdenv.mkDerivation rec {
     # dependencies and fails without -lasound.
     "--extra-ldflags=-lasound"
   ];
+
+  # For debugging the configure script
+  #configurePhase = ''
+  #  ./configure $configureFlags || {
+  #    cat ffbuild/config.log
+  #    return 1
+  #  }
+  #'';
 
   # Build qt-faststart executable
   postBuild = optionalString qtFaststartProgram ''

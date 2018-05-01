@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , readline
@@ -19,18 +20,14 @@ let
       sha256 = "f681aa518233bc407e23acf0f5887c884f17436f000d453b2491a9f11a52400c";
     };
   };
-
-  inherit (sources."${channel}")
-    version
-    multihash
-    sha256;
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "lua-${version}";
+  name = "lua-${source.version}";
 
   src = fetchurl {
     url = "https://www.lua.org/ftp/${name}.tar.gz";
-    inherit
+    inherit (source)
       multihash
       sha256;
   };
@@ -39,13 +36,67 @@ stdenv.mkDerivation rec {
     readline
   ];
 
-  preBuild = ''
-    makeFlagsArray+=("INSTALL_TOP=$out")
+  patches = [
+    (fetchTritonPatch {
+      rev = "0619357d1bd2ab053c2fb3532d959660eaca6433";
+      file = "l/lua/liblua.so.patch";
+      sha256 = "2cc83c77423a2dda3696766b2d1ccee2796e052ab04d5178905f41ed9241a3d8";
+    })
+  ];
+
+  postPatch = ''
+    sed -i src/luaconf.h \
+      -e "/LUA_ROOT/ s,/usr/,$out,"
   '';
+
+  preBuild = ''
+    makeFlagsArray+=(
+      "INSTALL_TOP=$out"
+    )
+  '';
+
+  NIX_CFLAGS_COMPILE = [
+    "-DLUA_COMPAT_5_1"
+    "-DLUA_COMPAT_5_2"
+  ];
 
   buildFlags = [
     "linux"
   ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "TO_LIB=liblua.so liblua.so.${channel} liblua.so.${source.version}"
+      "INSTALL_DATA=cp -d"
+      "INSTALL_MAN=$out/share/man/man1"
+    )
+  '';
+
+  postInstall = ''
+    mkdir -p $out/lib/pkgconfig/
+    cat > $out/lib/pkgconfig/lua.pc <<EOF
+    prefix=$out
+    INSTALL_BIN=\''${prefix}/bin
+    INSTALL_INC=\''${prefix}/include
+    INSTALL_LIB=\''${prefix}/lib
+    INSTALL_MAN=\''${prefix}/man/man1
+    INSTALL_LMOD=\''${prefix}/share/lua/${channel}
+    INSTALL_CMOD=\''${prefix}/lib/lua/${channel}
+    exec_prefix=\''${prefix}
+    libdir=\''${exec_prefix}/lib
+    includedir=\''${prefix}/include
+
+    Name: Lua
+    Description: An Extensible Extension Language
+    Version: ${source.version}
+    Libs: -L\''${libdir} -llua -lm
+    Cflags: -I\''${includedir}
+
+    EOF
+
+    # Remove empty directory
+    rm -rv $out/lib/lua/
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

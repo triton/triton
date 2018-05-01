@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libaio-0.3.110";
+  name = "libaio-0.3.111";
 
   src = fetchurl {
-    url = "https://fedorahosted.org/releases/l/i/libaio/${name}.tar.gz";
-    multihash = "QmPxxZxeCD1Dmgkbtr8DFwyBDEU7tY9E7cpP2tXVWJAedE";
-    sha256 = "0zjzfkwd1kdvq6zpawhzisv7qbq1ffs343i5fs9p498pcf7046g0";
+    url = "https://releases.pagure.org/libaio/${name}.tar.gz";
+    multihash = "QmSicVEFxtogFpjDnR2c1xSLJjkgPxSDcyNpbUUrP1A1Qq";
+    sha256 = "62cf871ad8fd09eb3418f00aca7a7d449299b8e1de31c65f28bf6a2ef1fa502a";
   };
 
   preBuild = ''

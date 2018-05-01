@@ -136,7 +136,7 @@ stdenv.mkDerivation (rec {
 
   configureFlags = [
     # Always treat bootstrapping as cross compiling
-    (if bootstrap then "--target=${cc.platformTuples."${outputSystem}-boot"}" else null)
+    (if bootstrap then "--target=${cc.platformTuples."${outputSystem}"}" else null)
     "--enable-static"
     "--${if !bootstrap then "enable" else "disable"}-shared"
     "--with-pic"
@@ -263,6 +263,9 @@ stdenv.mkDerivation (rec {
     langJava = false;
     langVhdl = false;
     isGNU = true;
+
+    inherit
+      outputSystem;
 
     srcVerification = fetchurl {
       failEarly = true;

@@ -34,14 +34,15 @@ let
     head
     optional
     optionals
-    optionalString;
+    optionalString
+    removeSuffix;
 
   inherit (lib.platforms)
     bit64
     i686-linux
     x86_64-linux;
 
-  target = cc.platformTuples."${outputSystem}-boot";
+  target = cc.platformTuples."${outputSystem}";
 
   version = "2.30";
 in
@@ -140,7 +141,7 @@ stdenv.mkDerivation rec {
     "--${if !bootstrap then "with" else "without"}-system-zlib"
   ] ++ optionals bootstrap [
     "--target=${target}"  # Always treat bootstrapping like cross compiling
-  ] ++ optionals (elem outputSystem bit64) [
+  ] ++ optionals (elem (removeSuffix "-boot" outputSystem) bit64) [
     "--enable-64-bit-archive"
   ];
 
@@ -161,7 +162,9 @@ stdenv.mkDerivation rec {
   disableStatic = false;
 
   passthru = {
-    inherit version;
+    inherit
+      outputSystem
+      version;
   };
 
   outputs = autotools.commonOutputs;

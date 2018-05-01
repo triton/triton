@@ -359,7 +359,7 @@ let
         binutils = pkgs.binutils.override {
           cc = stage0Pkgs.cc;
           bootstrap = true;
-          outputSystem = hostSystem;
+          outputSystem = "${hostSystem}-boot";
         };
 
         gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
@@ -369,7 +369,7 @@ let
           mpc = srcOnly pkgs.mpc;
           mpfr = srcOnly pkgs.mpfr;
           bootstrap = true;
-          outputSystem = hostSystem;
+          outputSystem = "${hostSystem}-boot";
         };
 
         gcc_7 = cc-wrapper {

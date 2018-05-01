@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  doInstallCheck = true;
+  doInstallCheck = outputSystem == stdenv.targetSystem;
 
   installCheckAction = ''
     pushd "$TMPDIR" >/dev/null

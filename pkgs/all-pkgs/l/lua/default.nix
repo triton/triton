@@ -45,8 +45,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i src/luaconf.h \
-      -e "/LUA_ROOT/ s,/usr/,$out,"
+    sed -i "/LUA_ROOT/ s,/usr,$out," src/luaconf.h
   '';
 
   preBuild = ''

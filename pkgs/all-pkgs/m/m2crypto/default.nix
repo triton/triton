@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "0.29.0";
+  version = "0.30.1";
 in
 buildPythonPackage {
   name = "M2Crypto-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "M2Crypto";
     inherit version;
-    sha256 = "a0fea2c5ab913e42864d1ccbaee5878c23886368b606e923609fda4ce37d26c0";
+    sha256 = "a1b2751cdadc6afac3df8a5799676b7b7c67a6ad144bb62d38563062e7cd3fc6";
   };
 
   nativeBuildInputs = [

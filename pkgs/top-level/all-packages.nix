@@ -3042,10 +3042,10 @@ nmap = callPackage ../all-pkgs/n/nmap { };
 nodejs_8 = callPackage ../all-pkgs/n/nodejs {
   channel = "8";
 };
-nodejs_9 = callPackage ../all-pkgs/n/nodejs {
-  channel = "9";
+nodejs_10 = callPackage ../all-pkgs/n/nodejs {
+  channel = "10";
 };
-nodejs = callPackageAlias "nodejs_9" { };
+nodejs = callPackageAlias "nodejs_10" { };
 
 noise = callPackage ../all-pkgs/n/noise { };
 

@@ -10,6 +10,7 @@
 , libuv
 , nghttp2_lib
 , openssl_1-0-2
+, openssl_1-1-0
 , zlib
 
 , channel
@@ -25,9 +26,9 @@ let
       version = "8.10.0";
       sha256 = "b72d4e71618d6bcbd039b487b51fa7543631a4ac3331d7caf69bdf55b5b2901a";
     };
-    "9" = {
-      version = "9.9.0";
-      sha256 = "ab8a721b8db1193754885e891ebde9a982c82fd9207df04a2aebafbb9fb27042";
+    "10" = {
+      version = "10.0.0";
+      sha256 = "e239109020755db8a58e6bcb8b9375439e31cf3bbe92d0670a320a47a4e8ab50";
     };
   };
 
@@ -58,8 +59,13 @@ stdenv.mkDerivation rec {
     libuv
   ] ++ optionals (versionAtLeast source.version "9.0.0") [
     nghttp2_lib
-  ] ++ [
-    openssl_1-0-2
+  ] ++ (
+    if versionAtLeast source.version "10.0.0" then [
+      openssl_1-1-0
+    ] else [
+      openssl_1-0-2
+    ]
+  ) ++ [
     zlib
   ];
 

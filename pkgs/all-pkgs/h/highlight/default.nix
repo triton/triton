@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "highlight-3.42";
+  name = "highlight-3.43";
 
   src = fetchurl {
     url = "http://www.andre-simon.de/zip/${name}.tar.bz2";
-    multihash = "QmUB9nFBaaXorBGJsZ3tRkSZfrNhQ1XwdUGyL6ee243R66";
+    multihash = "QmR6k7Q7RUtEbKpPWtUFyB6zb6q29ZxRSvFHkCCEq17Fg5";
     hashOutput = false;
-    sha256 = "a582810384a0c1e870dcd2ca157ba4b5120f898ceb2fd370cfed4f86fc87311e";
+    sha256 = "db957ebd73048dcb46347f44a1fe8a949fda40b5ecb360bf0df2da0d8d92e902";
   };
 
   buildInputs = [

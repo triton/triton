@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "0.12.2";
+  version = "1.0.1";
 in
 buildPythonPackage {
   name = "Flask-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Flask";
     inherit version;
-    sha256 = "49f44461237b69ecd901cc7ce66feea0319b9158743dd27a2899962ab214dac1";
+    sha256 = "cfc15b45622f9cfee6b5803723070fd0f489b3bd662179195e702cb95fd924c8";
   };
 
   propagatedBuildInputs = [

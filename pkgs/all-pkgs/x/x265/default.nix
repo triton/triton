@@ -40,8 +40,8 @@ let
     "head" = {
       fetchzipversion = 5;
       version = "2018-04-24";
-      rev = "091f07265371ae6ee2c38795d5554e6146acc18b";
-      sha256 = "de7de6f664bf96ba59fa594da5f915abf3a335bb1ef2bcc52c957d2c35350ad4";
+      rev = "fde57c2996659ae2dd5aeddbdedbdb6dc52178e1";
+      sha256 = "183d0f128d9273b7cc3e4984c9403ff338241760bbda47c030a52dda37bea6e9";
     };
   };
   source = sources."${channel}";

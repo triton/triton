@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , readline
 
@@ -8,6 +9,9 @@
 }:
 
 let
+  inherit (lib)
+    replaceStrings;
+
   sources = {
     "5.2" = {
       version = "5.2.4";
@@ -21,6 +25,8 @@ let
     };
   };
   source = sources."${channel}";
+
+  channel' = replaceStrings ["."] [""] channel;
 in
 stdenv.mkDerivation rec {
   name = "lua-${source.version}";
@@ -72,32 +78,19 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    mkdir -p $out/lib/pkgconfig/
-    cat > $out/lib/pkgconfig/lua.pc <<EOF
-    prefix=$out
-    INSTALL_BIN=\''${prefix}/bin
-    INSTALL_INC=\''${prefix}/include
-    INSTALL_LIB=\''${prefix}/lib
-    INSTALL_MAN=\''${prefix}/man/man1
-    INSTALL_LMOD=\''${prefix}/share/lua/${channel}
-    INSTALL_CMOD=\''${prefix}/lib/lua/${channel}
-    exec_prefix=\''${prefix}
-    libdir=\''${exec_prefix}/lib
-    includedir=\''${prefix}/include
-
-    Name: Lua
-    Description: An Extensible Extension Language
-    Version: ${source.version}
-    Libs: -L\''${libdir} -llua -lm
-    Cflags: -I\''${includedir}
-
-    EOF
+    mkdir -p "$out"/lib/pkgconfig
+    sed '${./lua.pc.in}' \
+      -e 's,@version@,${source.version},' \
+      -e 's,@channel@,${channel},' \
+      -e "s,@prefix@,$out," \
+      >"$out"/lib/pkgconfig/lua${channel'}.pc
+    ln -sv lua${channel'}.pc "$out"/lib/pkgconfig/lua.pc
 
     # Remove empty directory
-    rm -rv $out/lib/lua/
+    rm -rv "$out"/lib/lua
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

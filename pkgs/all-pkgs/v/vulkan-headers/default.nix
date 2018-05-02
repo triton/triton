@@ -14,11 +14,15 @@ stdenv.mkDerivation rec {
     sha256 = "fc959a9372a29418b728519962933db412ca4f42968107e1932a535167965460";
   };
 
+  configurePhase = "true";
+
+  buildPhase = "true";
+
   installPhase = ''
-    install -D -m 644 -v 'src/vulkan/vulkan.h' \
-      "$out/include/vulkan/vulkan.h"
-    install -D -m 644 -v 'src/vulkan/vk_platform.h' \
-      "$out/include/vulkan/vk_platform.h"
+    for i in include/vulkan/*; do
+      install -D -m 644 -v "$i" \
+        "$out"/include/vulkan/"$(basename "$i")"
+    done
   '';
 
   meta = with lib; {

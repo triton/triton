@@ -4,16 +4,19 @@
 , ncurses
 }:
 
+let
+  rev = "923e7d7ebc5c1f009755bdeb789ac25658ccce03";
+  date = "2017-04-20";
+in
 stdenv.mkDerivation rec {
-  name = "sl-${version}";
-  version = "5.02";
+  name = "sl-${date}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "mtoyoda";
     repo = "sl";
-    rev = version;
-    sha256 = "9c3930b1af9dd1d091024ed18c3eaad4b8d20f7669d510a94607a877157a4e88";
+    inherit rev;
+    sha256 = "f162eb85752900fab27405313927bfe9266ab66529a17ad48a214b5078bd99bf";
   };
 
   buildInputs = [

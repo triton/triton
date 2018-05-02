@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "6.6.0";
+  version = "7.0.0";
 in
 stdenv.mkDerivation {
   name = "pf-ring-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "ntop";
     repo = "PF_RING";
     rev = version;
-    sha256 = "52274b6ae2208da6294cc9036641b18b18825377a38ef90a1662dba58c2f6404";
+    sha256 = "eb53596c254c7f21f4bb96b8b762fc4e8b294f407926600872988790e6da34ff";
   };
 
   nativeBuildInputs = [

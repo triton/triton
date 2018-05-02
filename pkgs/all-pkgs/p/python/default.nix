@@ -136,11 +136,6 @@ stdenv.mkDerivation rec {
       file = "python/python-2.7-deterministic-build.patch";
       sha256 = "7b8ed591008f8f0dafb7f2c95d06404501c84223197fe138df75791f12a9dc24";
     })
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "python/python-2.7-properly-detect-curses.patch";
-      sha256 = "c0d17df5f1c920699f68a1c87973d626ea8423a4881927b0ac7a20f88ceedcb4";
-    })
     # Python recompiles a Python if the mtime stored *in* the
     # pyc/pyo file differs from the mtime of the source file.  This
     # doesn't work in Nix because Nix changes the mtime of files in

@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
     ln -sv lua${channel'}.pc "$out"/lib/pkgconfig/lua.pc
 
     # Remove empty directory
-    rm -rv "$out"/lib/lua
+    rm -rv "$out"/lib/lua/
   '';
 
   meta = with lib; {

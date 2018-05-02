@@ -90,11 +90,11 @@ let
       rev = "v${version}";
       sha256 = "df2914ac05eef341dbf2ef454390b4615175db27959b6da489298a31d455957e";
     };
-    "0.28" = {
-      fetchzipversion = 5;
-      version = "0.28.1";
-      rev = "v0.28.1";
-      sha256 = "5322eae62e2f808022f7165c9f7857c366e91ba79be44b606c15aa2769834bbe";
+    "0.28" = rec {
+      fetchzipversion = 6;
+      version = "0.28.2";
+      rev = "v${version}";
+      sha256 = "4242b61dbb6c449d4c1c78d766c4e8acb56ff3e6e13d0450c41a570e9fbc7176";
     };
     "999" = {
       fetchzipversion = 5;

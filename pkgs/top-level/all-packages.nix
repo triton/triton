@@ -1349,15 +1349,15 @@ gawk = callPackage ../all-pkgs/g/gawk { };
 
 gcab = callPackage ../all-pkgs/g/gcab { };
 
-gcc_unwrapped_7 = callPackage ../all-pkgs/g/gcc {
-  channel = "7";
+gcc_unwrapped_8 = callPackage ../all-pkgs/g/gcc {
+  channel = "8";
 };
-gcc_unwrapped = pkgs.gcc_unwrapped_7;
+gcc_unwrapped = pkgs.gcc_unwrapped_8;
 
-gcc_7 = pkgs.cc-wrapper {
-  cc = pkgs.gcc_unwrapped_7;
+gcc_8 = pkgs.cc-wrapper {
+  cc = pkgs.gcc_unwrapped_8;
 };
-gcc = hiPrio pkgs.gcc_7;
+gcc = hiPrio pkgs.gcc_8;
 
 gconf = callPackage ../all-pkgs/g/gconf { };
 

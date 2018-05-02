@@ -1,8 +1,8 @@
 { fetchTritonPatch }:
 {
-  "7" = {
-    version = "7.3.0";
-    sha256 = "832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c";
+  "8" = {
+    version = "8.1.0";
+    sha256 = "1d1866f992626e61349a1ccd0b8d5253816222cdc13390dcfaa74b093aa2b153";
     patches = [
       (fetchTritonPatch {
         rev = "8e60932cc6002332b7d031568bdb72ec2b494f1c";

@@ -322,7 +322,7 @@ let
           '';
         };
 
-        gcc_7 = cc-wrapper {
+        gcc_8 = cc-wrapper {
           cc = bootstrap-cc;
           libc = bootstrap-libc;
         };
@@ -362,7 +362,7 @@ let
           outputSystem = "${hostSystem}-boot";
         };
 
-        gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
+        gcc_unwrapped_8 = pkgs.gcc_unwrapped_8.override {
           cc = stage0Pkgs.cc;
           gmp = srcOnly pkgs.gmp;
           isl = srcOnly pkgs.isl;
@@ -372,8 +372,8 @@ let
           outputSystem = "${hostSystem}-boot";
         };
 
-        gcc_7 = cc-wrapper {
-          cc = gcc_unwrapped_7;
+        gcc_8 = cc-wrapper {
+          cc = gcc_unwrapped_8;
           libc = null;
           wrappedPackages = [
             binutils

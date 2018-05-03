@@ -488,7 +488,7 @@ let
       golang_protobuf_extensions
       satori_go-uuid
       kingpin
-      kit
+      kit_logging
       mesh
       net
       oklog
@@ -2706,14 +2706,6 @@ let
     repo   = "gofuzz";
     sha256 = "1ghcx5q9vsgmknl9954cp4ilgayfkg937c1z4m3lqr41fkma9zgi";
     date = "2017-06-12";
-  };
-
-  gohistogram = buildFromGitHub {
-    version = 3;
-    rev = "v1.0.0";
-    owner  = "VividCortex";
-    repo   = "gohistogram";
-    sha256 = "02bikhfr47gp4ww9mmz9pz6q4g6293z0fn8kd83kn0i12x0s8b2l";
   };
 
   goid = buildFromGitHub {
@@ -6451,26 +6443,9 @@ let
     owner = "go-kit";
     repo = "kit";
     sha256 = "1wf764qbq7apl4sri8924qxkipw544hbcx9vkvqbxx41wf88w905";
-    subPackages = [
-      "log"
-      "log/level"
-      "metrics"
-      "metrics/expvar"
-      "metrics/generic"
-      "metrics/influx"
-      "metrics/internal/lv"
-      "metrics/prometheus"
-    ];
-    propagatedBuildInputs = [
-      gohistogram
-      influxdb_client
-      logfmt
-      prometheus_client_golang
-      stack
-    ];
   };
 
-  kit_for_prometheus = kit.override {
+  kit_logging = kit.override {
     subPackages = [
       "log"
       "log/level"
@@ -8208,7 +8183,7 @@ let
       grpc
       grpc-gateway
       kingpin_v2
-      kit_for_prometheus
+      kit_logging
       kubernetes-api
       kubernetes-apimachinery
       kubernetes-client-go
@@ -8299,7 +8274,7 @@ let
       golang_protobuf_extensions
       httprouter
       logrus
-      kit_for_prometheus
+      kit_logging
       kingpin_v2
       net
       prometheus_client_golang
@@ -8334,7 +8309,7 @@ let
       cespare_xxhash
       errors
       kingpin_v2
-      kit_for_prometheus
+      kit_logging
       lockfile
       prometheus_client_golang
       sync

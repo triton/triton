@@ -22,6 +22,15 @@ stdenv.mkDerivation rec {
     sox
   ];
 
+  postPatch = ''
+    #ls -al ; return 1
+    sed -i libffsox-2/ffsox_frame_writer.c \
+      -i libffsox-2/ffsox_frame.c \
+      -i libffsox-2/ffsox_packet_writer.c \
+      -e 's/CODEC_FLAG_GLOBAL_HEADER/AV_CODEC_FLAG_GLOBAL_HEADER/g' \
+      -e 's/CODEC_CAP_VARIABLE_FRAME_SIZE/AV_CODEC_CAP_VARIABLE_FRAME_SIZE/'
+  '';
+
   meta = with lib; {
     description = "A audio/video loudness scanner implementing ITU-R BS.1770";
     homepage = "http://bs1770gain.sourceforge.net/";

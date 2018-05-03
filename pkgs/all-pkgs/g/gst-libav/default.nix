@@ -4,7 +4,7 @@
 , meson
 , ninja
 
-, ffmpeg
+, ffmpeg_3
 , glib
 , gst-plugins-base
 , gstreamer
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    ffmpeg
+    ffmpeg_3
     glib
     gst-plugins-base
     gstreamer
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
   postUnpack = /* gst-libav vendors outdated ffmpeg sources */ ''
     pushd $srcRoot/gst-libs/ext/
       rm -rfv libav/
-      tar -xf ${ffmpeg.src}
+      tar -xf ${ffmpeg_3.src}
       mv -v ffmpeg-*/ libav/
     popd
   '';

@@ -70,8 +70,8 @@ let
       sha256 = "372d6f75203626370218c97c21519b779e5af334177cafa65a5655e357c77520";
     };
     "canary" = {
-      version = "0.0.45";
-      sha256 = "fa9d48626334434f3f306c42c694d1f22ca8ee0668fc0fddc42fe85f475d0a4a";
+      version = "0.0.48";
+      sha256 = "f831c2b68c17d73dfdbfe29ec025f24c20b4c06dab3ec18624812e41774abc38";
     };
   };
   source = sources."${channel}";

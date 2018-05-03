@@ -66,8 +66,8 @@ let
       sha256 = "2f4464bcea532673ca7b314dc2a1b7966f5d175e535a0254753f778dc559ef18";
     };
     "ptb" = {
-      version = "0.0.7";
-      sha256 = "c0636961f4b3bf484c81f283873572cf526ad36fd6ff423c31bdfea010211d50";
+      version = "0.0.9";
+      sha256 = "372d6f75203626370218c97c21519b779e5af334177cafa65a5655e357c77520";
     };
     "canary" = {
       version = "0.0.45";

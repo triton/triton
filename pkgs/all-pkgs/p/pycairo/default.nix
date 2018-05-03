@@ -29,11 +29,14 @@ buildPythonPackage rec {
 
   # PC is no longer installed during bdist install
   # Make our own instead
-  postInstall = optionalString isPy3 ''
-    mkdir -p "$out"/share/pkgconfig
-    includedir="$(dirname "$(find "$out" -name py3cairo.h)")"
-    sed "s,@includedir@,$includedir," '${./py3cairo.pc.in}' \
-      >"$out"/share/pkgconfig/py3cairo.pc
+  postInstall = ''
+    mkdir -pv "$out"/share/pkgconfig
+    includedir="$(dirname "$(find "$out" -name py${if isPy3 then "3" else ""}cairo.h)")"
+    sed \
+      -e "s,@includedir@,$includedir," \
+      -e 's/@version@/${version}/' \
+      '${./pycairo.pc.in}' \
+      >"$out"/share/pkgconfig/py${if isPy3 then "3" else ""}cairo.pc
   '';
 
   passthru = {

@@ -92,9 +92,9 @@ let
     };
     "999" = {
       fetchzipversion = 5;
-      version = "2018-01-30";
-      rev = "7f3c7100d518f5f2fc961275178e04b0cabb5b5c";
-      sha256 = "bb3fda44181ab8eea4f5deaed22ca9ad17bce30c1019220490b23f85b4042d75";
+      version = "2018-05-02";
+      rev = "7d8eee36a52fe39475b63204e74d25cbd538ea56";
+      sha256 = "e43ca3d168a0c275cd2b8402a03eea84afb341ee69580841cd48ebe933b3bab9";
     };
   };
   source = sources."${channel}";
@@ -198,7 +198,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libass != null)}-libass-osd"
     "--${boolEn (zlib != null)}-zlib"
-    "--enable-encoding"
+    (strDepr "--enable-encoding" null "0.28.999")
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libdvdread != null)}-dvdread"
     "--${boolEn (
@@ -215,7 +215,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libarchive != null)}-libarchive"
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
-    "--disable-sdl1"
+    (strDepr "--disable-sdl1" null "0.28.999")
     "--disable-oss-audio"
     "--disable-rsound"
     #"--${boolEn ( != null)}-sndio"

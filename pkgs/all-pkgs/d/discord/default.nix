@@ -62,8 +62,8 @@ let
 
   sources = {
     "stable" = {
-      version = "0.0.4";
-      sha256 = "8b62e49088d3bf525ab07ba6a64ec3f1c8c7c252a9c13178d060efb0674e9caa";
+      version = "0.0.5";
+      sha256 = "2f4464bcea532673ca7b314dc2a1b7966f5d175e535a0254753f778dc559ef18";
     };
     "ptb" = {
       version = "0.0.7";

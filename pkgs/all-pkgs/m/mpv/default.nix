@@ -84,12 +84,6 @@ let
       null;
 
   sources = {
-    "0.27" = rec {
-      fetchzipversion = 6;
-      version = "0.27.2";
-      rev = "v${version}";
-      sha256 = "df2914ac05eef341dbf2ef454390b4615175db27959b6da489298a31d455957e";
-    };
     "0.28" = rec {
       fetchzipversion = 6;
       version = "0.28.2";
@@ -177,7 +171,7 @@ stdenv.mkDerivation rec {
   ];
 
   wafFlags = [
-    (strNew "--disable-lgpl" "0.28.0")
+    (strNew "--disable-lgpl" "0.28.999")
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -197,8 +191,6 @@ stdenv.mkDerivation rec {
     "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
-    (strDepr "--disable-termios" null "0.27.0")
-    (strDepr "--disable-shm" null "0.27.0")
     "--${boolEn (samba_client != null)}-libsmbclient"
     #"--${boolEn (lua != null)}-lua"
     /**/"--disable-lua"  # FIXME: need lua 5.2
@@ -237,10 +229,10 @@ stdenv.mkDerivation rec {
     "--disable-wasapi"  # Windows
     "--disable-cocoa"  # macOS
     "--${boolEn (libdrm != null)}-drm"
-    (strNew "--enable-drmprime" "0.28.0")
+    "--enable-drmprime"
     "--${boolEn opengl-dummy.gbm}-gbm"
-    (strNew "--${boolEn (wayland != null)}-wayland-scanner" "0.28.0")
-    (strNew "--${boolEn (wayland-protocols != null)}-wayland-protocols" "0.28.0")
+    "--${boolEn (wayland != null)}-wayland-scanner"
+    "--${boolEn (wayland-protocols != null)}-wayland-protocols"
     "--${boolEn (
         wayland != null &&
         wayland-protocols != null &&
@@ -265,34 +257,29 @@ stdenv.mkDerivation rec {
     # FIXME: add passthru booleans to libvdpau for feature detection
     # "--${boolEn opengl-dummy.glx}-vdpau-gl-x11"  # FIXME
     #"--${boolEn (libva != null)}-vaapi"
-    /**/"--disable-vaapi"  # FIXME: 0.27.0 only supports libva 1.x
+    "--${boolEn (libva != null)}-vaapi"
     # FIXME: add passthru booleans to libva for feature detection
-    #"--enable-vaapi-x11"  # FIXME: 0.27.0 only supports libva 1.x
-    #"--enable-vaapi-wayland"  # FIXME: 0.27.0 only supports libva 1.x
-    #"--enable-vaapi-drm"  # FIXME: 0.27.0 only supports libva 1.x
-    #"--${boolEn opengl-dummy.glx}-vaapi-glx"  # FIXME: 0.27.0 only supports libva 1.x
-    #"--${boolEn opengl-dummy.egl}-vaapi-x-egl"  # FIXME: 0.27.0 only supports libva 1.x
+    #"--enable-vaapi-x11"
+    #"--enable-vaapi-wayland"
+    #"--enable-vaapi-drm"
+    #"--${boolEn opengl-dummy.glx}-vaapi-glx"
+    #"--${boolEn opengl-dummy.egl}-vaapi-x-egl"
     "--${boolEn (libcaca != null)}-caca"
     "--${boolEn (libjpeg != null)}-jpeg"
     "--disable-direct3d"  # Windows
-    /**/(strNew "--disable-shaderc" "0.28.0")
-    /**/(strNew "--disable-crossc" "0.28.0")
-    /**/(strNew "--disable-d3d11" "0.28.0")  # Windows
+    /**/"--disable-shaderc"
+    /**/"--disable-crossc"
+    "--disable-d3d11"  # Windows
     "--disable-rpi"  # FIXME: add raspberry pi support
     "--disable-ios-gl"  # iOS
     "--disable-plain-gl"
-    (strNew "--enable-gl" "0.28.0")
+    "--enable-gl"
     "--disable-mali-fbdev"
     "--${boolEn (opengl-dummy != null)}-gl"
-    (strNew "--${boolEn (vulkan-headers != null)}-vulkan" "0.28.0")
-    /**/(strNew "--disable-vulkan" "0.28.0")
-    #(strDepr "--${boolEn (libva != null)}-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
-    (strDepr "--disable-vaapi-hwaccel" null "0.27.0")  # FIXME: 0.27.0 only supports libva 1.x
-    (strDepr "--disable-videotoolbox-hwaccel-new" null "0.27.0")  # macOS
-    (strDepr "--disable-videotoolbox-hwaccel-old" null "0.27.0")  # macOS
+    #"--${boolEn (vulkan-headers != null)}-vulkan"
+    /**/"--disable-vulkan"  # FIXME: expects vulkan.pc
     ###"--disable-videotoolbox-hwaccel"  # macOS
     "--disable-videotoolbox-gl"  # macOS
-    (strDepr "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel" null "0.27.0")
     "--disable-d3d-hwaccel"  # Windows
     "--disable-d3d9-hwaccel"  # Windows
     "--disable-gl-dxinterop-d3d9"  # Windows
@@ -308,6 +295,9 @@ stdenv.mkDerivation rec {
     # "--${boolEn (v4l_lib != null)}-audio-input"
     #"--${boolEn ( != null)}-dvbin"
     "--disable-apple-remote"
+    "--disable-macos-touchbar"
+    (strNew "--disable-macos-cocoa-cb" "0.29.0")
+    #(strNew "--disable-swift-flags" "0.29.0")
   ];
 
   postInstall = /* Use a standard font */ ''

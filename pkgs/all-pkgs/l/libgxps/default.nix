@@ -64,6 +64,12 @@ stdenv.mkDerivation rec {
     "-Dwith-libtiff=true"
   ];
 
+  postInstall = /* pkgconf can't parse >= in Requires if it is not surrounded
+                   by spaces */ ''
+    sed -i $out/lib/pkgconfig/libgxps.pc \
+      -e 's/>=/ >= /g'
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

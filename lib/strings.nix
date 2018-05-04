@@ -49,7 +49,8 @@ rec {
   # directory of the given list of packages.  For example,
   # `makeSearchPath "bin" ["x" "y" "z"]' returns "x/bin:y/bin:z/bin".
   makeSearchPath = subDir: packages:
-    concatStringsSep ":" (map (path: path + "/" + subDir) packages);
+    concatStringsSep ":" (map (path: path + "/" + subDir)
+      (lib.filter (n: n != null) packages));
 
   # Dependening on the boolean `cond', return either the given string
   # or the empty string.

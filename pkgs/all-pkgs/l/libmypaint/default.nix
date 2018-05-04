@@ -33,6 +33,10 @@ stdenv.mkDerivation rec {
     json-c
   ];
 
+  postPatch = ''
+    sed -i 's,gegl-0.3,gegl-0.4,' configure gegl/libmypaint-gegl.pc.in
+  '';
+
   configureFlags = [
     "--enable-openmp"
     "--enable-i18n"

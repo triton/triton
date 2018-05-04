@@ -144,6 +144,9 @@ stdenv.mkDerivation rec {
   postPatch = /* Use system theme by default */ ''
     sed -i app/config/gimpguiconfig.h \
       -e '/GIMP_CONFIG_DEFAULT_THEME/ s/03-Dark/System/'
+  '' + ''
+    grep -q 'gegl-0.3' gimp.pc.in
+    sed -i 's,gegl-0.3,gegl-0.4,' gimp.pc.in
   '';
 
   configureFlags = [

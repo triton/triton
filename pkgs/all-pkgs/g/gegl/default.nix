@@ -1,13 +1,11 @@
 { stdenv
-, autoreconfHook
 , fetchurl
-, intltool
 , lib
 
 , babl
 , cairo
 , exiv2
-, ffmpeg
+, ffmpeg_3-4
 , gdk-pixbuf
 , gexiv2
 , glib
@@ -19,6 +17,7 @@
 , libpng
 , libraw
 , librsvg
+, libspiro
 , libtiff
 , libwebp
 , openexr
@@ -36,24 +35,20 @@ let
     elem
     platforms;
 
-  channel = "0.3";
-  version = "${channel}.34";
+  channel = "0.4";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmXDKVdYca9nWTKUXDkFm4J1B1nPVKQ7MTG4uKHSdmgDqN";
+    multihash = "QmZiH6hCsnFLSyptFfGPQEFpzRheQ7AjEpy2mduLbig4Ns";
     hashOutput = false;
-    sha256 = "5ca2227655ebf1ab2e252cee3eede219c758336394288ef301b93264b9411304";
+    sha256 = "d04d2bfa0ff5a4bcfe7566f7418929a9c80f0109fa248ea4ff19538b3e99f0c5";
   };
 
   nativeBuildInputs = [
-    # Pre-generated autoconf/automake files are outdated and fail
-    # to detect libv4l & ffmpeg correctly.
-    autoreconfHook
-    intltool
     vala
   ];
 
@@ -61,7 +56,7 @@ stdenv.mkDerivation rec {
     babl
     cairo
     exiv2
-    ffmpeg
+    ffmpeg_3-4
     gdk-pixbuf
     gexiv2
     glib
@@ -73,6 +68,7 @@ stdenv.mkDerivation rec {
     libpng
     libraw
     librsvg
+    libspiro
     libtiff
     libwebp
     openexr
@@ -84,7 +80,7 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-glibtest"
-    "--${boolEn (vala != null)}-vala"
+    "--${boolWt (vala != null)}-vala"
     "--without-mrg"
     "--${boolWt (gexiv2 != null)}-gexiv2"
     "--${boolWt (cairo != null)}-cairo"
@@ -100,12 +96,11 @@ stdenv.mkDerivation rec {
     "--${boolWt (jasper != null)}-jasper"
     "--without-graphviz"
     "--without-lua"
-    "--${boolWt (ffmpeg != null)}-libavformat"
+    "--${boolWt (ffmpeg_3-4 != null)}-libavformat"
     "--${boolWt (v4l_lib != null)}-libv4l"
     "--${boolWt (lcms2 != null)}-lcms"
-    "--without-libspiro"
+    "--${boolWt (libspiro != null)}-libspiro"
     "--${boolWt (exiv2 != null)}-exiv2"
-    "--without-exit2"
     "--without-umfpack"
     "--${boolWt (libtiff != null)}-libtiff"
     "--${boolWt (libwebp != null)}-webp"
@@ -114,7 +109,6 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha1Urls = map (n: "${n}/../SHA1SUMS") src.urls;
       sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
       inherit (src) urls outputHash outputHashAlgo;
     };

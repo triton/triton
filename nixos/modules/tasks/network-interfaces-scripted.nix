@@ -423,6 +423,7 @@ in
           description = "Wg Config ${n}";
           wantedBy = [
             "multi-user.target"
+            "sleep.target"
           ];
           requires = [
             "network-dev-${n}.service"
@@ -432,6 +433,7 @@ in
           ];
           after = [
             "network-dev-${n}.service"
+            "sleep.target"
           ];
           serviceConfig = {
             Type = "simple";

@@ -6,23 +6,22 @@
 , curl
 , krb5_lib
 , openssl
-, sqlite
 , zlib
 }:
 
 let
-  rev = "21df0ad2a5605884eb25679fcb68ca4f6fcc4cd3";
-  date = "2018-02-09";
+  rev = "1fe8a067f95c86596261b2049a0b68c003877d08";
+  date = "2018-05-09";
 in
 stdenv.mkDerivation rec {
   name = "mariadb-connector-c-${date}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "MariaDB";
     repo = "mariadb-connector-c";
     inherit rev;
-    sha256 = "651a74b4c9ab149fb06ff7f5cf6991f86b5c02b0ac1d8632b3e0791243fcec2e";
+    sha256 = "0e23b68fc623679894d72b6d95ed38ab293b8e64968930047f41b4392ddcde64";
   };
 
   nativeBuildInputs = [
@@ -34,7 +33,6 @@ stdenv.mkDerivation rec {
     curl
     krb5_lib
     openssl
-    sqlite
     zlib
   ];
 
@@ -43,7 +41,6 @@ stdenv.mkDerivation rec {
     "-DWITH_MYSQLCOMPAT=ON"
     "-DWITH_UNITTEST=OFF"
     "-DWITH_EXTERNAL_ZLIB=ON"
-    "-DWITH_SQLITE=ON"
   ];
 
   # Hack to make sure we include the libpath in the _config binaries

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "20.1";
+  version = "20.2";
 in
 stdenv.mkDerivation {
   name = "cjdns-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
     owner = "cjdelisle";
     repo = "cjdns";
     rev = "cjdns-v${version}";
-    sha256 = "8b6894b1f072bc8be9ad90ad3859654452b2f0491237e8339cb51252f33ef046";
+    sha256 = "b7ec0051f007ffeadbbbc1e590aa4779c353f4564e5737a153d225f5a11e067a";
   };
 
   nativeBuildInputs = [

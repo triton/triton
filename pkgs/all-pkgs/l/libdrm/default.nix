@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.91";
+  name = "libdrm-2.4.92";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmXcfz4a8U9FoLWT1B9CEnmkubqVeE6GvHRS4wqZubFzJC";
+    multihash = "QmZFk6yY395FinYREgu1ZR5ebUPQyFVPRCYW1ufv9vqrab";
     hashOutput = false;
-    sha256 = "634a0ed0cc1eff06f48674b1da81aafa661a9f001e7a4f43dde81076886dc800";
+    sha256 = "e9e48fdb4de139dc4d9880aa1473158a16ff6aff63d14341367bd30a51ff39fa";
   };
 
   nativeBuildInputs = [
@@ -32,8 +32,7 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [
     "-Dcairo-tests=false"
-    "-Dinstall-test-programs=false"
-    #"-Dudev=true"
+    "-Dudev=true"
   ];
 
   # This breaks libraries talking to the dri interfaces

@@ -23,7 +23,7 @@ with lib;
 
   config = mkIf config.hardware.cpu.intel.updateMicrocode {
     boot.initrd.prepend = [
-      "${pkgs.intel-microcode}/intel-ucode.img"
+      "${pkgs.intel-microcode}/${pkgs.intel-microcode.initrdPath}"
     ];
     system.extraDependencies = [
       pkgs.intel-microcode

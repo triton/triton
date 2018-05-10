@@ -2033,6 +2033,8 @@ iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
 itstool = pkgs.python2Packages.itstool;
 
+iucode-tool = callPackage ../all-pkgs/i/iucode-tool { };
+
 iw = callPackage ../all-pkgs/i/iw { };
 
 jack2_full = callPackage ../all-pkgs/j/jack2 { };

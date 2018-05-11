@@ -9,7 +9,7 @@
 }:
 
 let
-  major = "2.4";
+  major = "2.5";
   patch = "1";
   version = "${major}.${patch}";
 in
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cache.ruby-lang.org/pub/ruby/${major}/${name}.tar.xz";
-    sha256 = "4fc8a9992de3e90191de369270ea4b6c1b171b7941743614cc50822ddc1fe654";
+    sha256 = "886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d";
   };
 
   buildInputs = [
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    rm "$out/share/ri/2.4.0/system/created.rid"
+    rm "$out/share/ri/2.5.0/system/created.rid"
   '';
 
   meta = with stdenv.lib; {

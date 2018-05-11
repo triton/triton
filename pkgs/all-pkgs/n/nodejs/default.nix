@@ -24,6 +24,10 @@ let
     versionOlder;
 
   sources = {
+    "6" = {
+      version = "6.14.2";
+      sha256 = "b3a534b2ad5e96c6ff67f3a1356b94f7a28ef118eb1d420b314fe5aafe6d62d1";
+    };
     "8" = {
       version = "8.11.1";
       sha256 = "40a6eb51ea37fafcf0cfb58786b15b99152bec672cccf861c14d1cca0ad4758a";
@@ -49,8 +53,9 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = optionals (versionAtLeast source.version "7.0.0") [
     ninja
+  ] ++ [
     python
   ];
 
@@ -74,9 +79,9 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs configure
   '' + optionalString ((versionOlder source.version "10.0.0") &&
-         (versionAtLeast source.version "7.0.0"))
-  /* Fix compat with ICU 61+, Remove if fixed upstream
-     https://github.com/nodejs/node/commit/b8f47b27571f8d763f811f017be3fb37d466c4fc */ ''
+       (versionAtLeast source.version "7.0.0"))
+    /* Fix compat with ICU 61+, Remove if fixed upstream
+       https://github.com/nodejs/node/commit/b8f47b27571f8d763f811f017be3fb37d466c4fc */ ''
     sed -i src/inspector_io.cc \
       -e 's/UnicodeString/icu::UnicodeString/g' \
       -e 's/CheckedArrayByteSink/icu::CheckedArrayByteSink/g' \
@@ -88,8 +93,9 @@ stdenv.mkDerivation rec {
       -e 's/LocalUResourceBundlePointer/icu::LocalUResourceBundlePointer/g'
   '';
 
-  configureFlags = [
+  configureFlags = optionals (versionAtLeast source.version "7.0.0") [
     "--ninja"
+  ] ++ [
     "--shared-http-parser"
     "--shared-libuv"
   ] ++ optionals (versionAtLeast source.version "8.0.0") [
@@ -105,7 +111,7 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  preBuild = ''
+  preBuild = optionalString (versionAtLeast source.version "7.0.0") ''
     # Ninja build directory
     makeFlagsArray+=('-C' 'out/Release/')
   '';
@@ -154,6 +160,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

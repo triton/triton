@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
   ] ++ optionals (versionAtLeast source.version "8.0.0") [
     nghttp2_lib
   ] ++ (
-    if versionAtLeast source.version "10.0.0" then [
+    if versionAtLeast source.version "8.0.0" then [
       openssl_1-1-0
     ] else [
       openssl_1-0-2

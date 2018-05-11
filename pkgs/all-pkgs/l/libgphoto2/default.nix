@@ -18,7 +18,7 @@ let
   inherit (lib)
     boolWt;
 
-  version = "2.5.16";
+  version = "2.5.17";
 in
 stdenv.mkDerivation rec {
   name = "libgphoto2-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/gphoto/libgphoto/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "e757416d1623e01a9d0d294b2e790162e434c0964f50d3b7ff1a3424b62a2906";
+    sha256 = "417464f0a313fa937e8a71cdf18a371cf01e750830195cd63ae31da0d092b555";
   };
 
   nativeBuildInputs = [
@@ -46,9 +46,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-gp2ddb"
-    "--enable-nls"
-    "--enable-rpath"
-    "--enable-largefile"
     "--disable-internal-docs"
     "--disable-docs"
     "--${boolWt (libjpeg-turbo != null)}-jpeg"

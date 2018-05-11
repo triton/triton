@@ -829,17 +829,21 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    };
 
    responses = self.buildPythonPackage rec {
-     name = "responses-0.5.1";
+     name = "responses-${version}";
+     version = "0.9.0";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/r/responses/${name}.tar.gz";
-       md5Confirm = "f1962b295b18128c522e83901556deac";
-       sha256 = "1spcfxixyk9k7pk82jm6zqkwk031s95lh8q0mz7539jrb7269bcc";
+     src = fetchPyPi {
+       package = "responses";
+       inherit version;
+       sha256 = "c6082710f4abfb60793899ca5f21e7ceb25aabf321560cc0726f8b59006811c9";
      };
 
-     propagatedBuildInputs = with self; [ cookies mock requests six ];
-
-
+     propagatedBuildInputs = with self; [
+        cookies
+        mock
+        requests
+        six
+     ];
    };
 
    pyechonest = self.buildPythonPackage rec {

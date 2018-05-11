@@ -197,6 +197,8 @@ attrs = callPackage ../all-pkgs/a/attrs { };
 
 automat = callPackage ../all-pkgs/a/automat { };
 
+autotorrent = callPackage ../all-pkgs/a/autotorrent { };
+
 aws-cli = callPackage ../all-pkgs/a/aws-cli { };
 
 babel = callPackage ../all-pkgs/b/babel { };

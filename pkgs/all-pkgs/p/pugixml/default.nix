@@ -6,17 +6,17 @@
 }:
 
 let
-  version = "1.8.1";
+  version = "1.9";
 in
 stdenv.mkDerivation rec {
   name = "pugixml-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "zeux";
     repo = "pugixml";
     rev = "v${version}";
-    sha256 = "e9439efae818f525960d3bc8694e65c10dfb6c81ed81a9e2de5909f5c0bd16b3";
+    sha256 = "c55511ddf8d1233560696aea5b4af594b5c93f58ad82f8bf04e7de875d2f526b";
   };
 
   nativeBuildInputs = [

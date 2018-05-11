@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     http-parser
     icu
     libuv
-  ] ++ optionals (versionAtLeast source.version "9.0.0") [
+  ] ++ optionals (versionAtLeast source.version "8.0.0") [
     nghttp2_lib
   ] ++ (
     if versionAtLeast source.version "10.0.0" then [
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     "--ninja"
     "--shared-http-parser"
     "--shared-libuv"
-  ] ++ optionals (versionAtLeast source.version "9.0.0") [
+  ] ++ optionals (versionAtLeast source.version "8.0.0") [
     "--shared-nghttp2"
   ] ++ [
     "--shared-openssl"

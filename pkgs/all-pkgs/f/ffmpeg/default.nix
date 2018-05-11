@@ -146,6 +146,7 @@
 #, twolame
 #, utvideo
 , v4l_lib
+#, vapoursynth  # FIXME: recursive dependency
 , vid-stab
 #, vo-aacenc
 , vo-amrwbenc ? null
@@ -200,9 +201,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 6;
-      version = "2018.04.30";
-      rev = "0807a771600956e1f3e36a202fd3877418541eb0";
-      sha256 = "90a0a74d616c5334439f951e0a2496a36eb026e3c23f310f75e652427d91a810";
+      version = "2018.05.10";
+      rev = "974eb4aaaa7d96a996c61030fca4095c3c2c6284";
+      sha256 = "a91659bba6197e0f44768965b9afa240c33bffc85c2c1a38e15597799d0c3b81";
     };
   };
   source = sources."${channel}";
@@ -402,6 +403,7 @@ stdenv.mkDerivation rec {
     #srt
     tesseract
     v4l_lib
+    #vapoursynth
     vid-stab
     wavpack
     x264
@@ -660,6 +662,8 @@ stdenv.mkDerivation rec {
     "--${boolEn (sdl != null)}-sdl"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-securetransport"
+    #(fflag "--${boolEn (vapoursynth != null)}-vapoursynth" "4.1")
+    /**/(fflag "--disable-vapoursynth" "4.1")
     #"--${boolEn (libx11 != null && libxv != null)}-xlib"
     "--${boolEn (zlib != null)}-zlib"
     /*

@@ -10,9 +10,9 @@
 
 let
   sources = {
-    "2.54" = {
-      version = "2.54.1";
-      sha256 = "7cc28c732b04d70ed34f0c923543129083cfb90580ea4a2b4be5b38802bf6a4a";
+    "2.56" = {
+      version = "2.56.0";
+      sha256 = "6e74fcba0d245451c58fc8a196e9d103789bc510e1eee1a9b1e816c5209e79a9";
     };
   };
   source = sources."${channel}";
@@ -32,15 +32,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--disable-documentation"
-    "--disable-debug-refcounting"
     "--enable-warnings"
     # Deprecated apis used by gtkmm2
     "--enable-deprecated-api"
-    "--without-libstdc-doc"
-    "--without-libsigc-doc"
   ];
 
   passthru = {

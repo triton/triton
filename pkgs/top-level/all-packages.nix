@@ -1477,11 +1477,11 @@ glib-networking_2-54 = callPackage ../all-pkgs/g/glib-networking {
 };
 glib-networking = callPackageAlias "glib-networking_2-54" { };
 
-glibmm_2-54 = callPackage ../all-pkgs/g/glibmm {
-  channel = "2.54";
+glibmm_2-56 = callPackage ../all-pkgs/g/glibmm {
+  channel = "2.56";
   libsigcxx = pkgs.libsigcxx_2-10;
 };
-glibmm = callPackageAlias "glibmm_2-54" { };
+glibmm = callPackageAlias "glibmm_2-56" { };
 
 glog = callPackage ../all-pkgs/g/glog { };
 

@@ -11,12 +11,12 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "gsm-1.0.17";
+  name = "gsm-1.0.18";
 
   src = fetchurl {
     url = "http://www.quut.com/gsm/${name}.tar.gz";
-    multihash = "QmTadgEVTjVcrV1qAbQRNUWgQiusqTT1csF4ueXTw5ov4F";
-    sha256 = "855a57d1694941ddf3c73cb79b8d0b3891e9c9e7870b4981613b734e1ad07601";
+    multihash = "QmPAYeHsz2KszyKC4baG7Bybh4pW3o4oB2vJnWjjxaqcmC";
+    sha256 = "04f68087c3348bf156b78d59f4d8aff545da7f6e14f33be8f47d33f4efae2a10";
   };
 
   postPatch = /* Fix include directory */ ''

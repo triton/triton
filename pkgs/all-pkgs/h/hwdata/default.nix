@@ -4,17 +4,17 @@
 }:
 
 let
-  version = "0.311";
+  version = "0.312";
 in
 stdenv.mkDerivation rec {
   name = "hwdata-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "vcrhonek";
     repo = "hwdata";
     rev = "v${version}";
-    sha256 = "19ba68d3e7ebd0e2c333be93924cc42299cb2fa9b656a6d704046c68e1dbb804";
+    sha256 = "1084bce8e98fe03c84d61c0b5b5fb8234ca3623955cb4c3f306e93d69c34625b";
   };
 
   postPatch = ''

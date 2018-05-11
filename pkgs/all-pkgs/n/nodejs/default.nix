@@ -19,7 +19,9 @@
 let
   inherit (lib)
     optionals
-    versionAtLeast;
+    optionalString
+    versionAtLeast
+    versionOlder;
 
   sources = {
     "8" = {
@@ -71,6 +73,19 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs configure
+  '' + optionalString ((versionOlder source.version "10.0.0") &&
+         (versionAtLeast source.version "7.0.0"))
+  /* Fix compat with ICU 61+, Remove if fixed upstream
+     https://github.com/nodejs/node/commit/b8f47b27571f8d763f811f017be3fb37d466c4fc */ ''
+    sed -i src/inspector_io.cc \
+      -e 's/UnicodeString/icu::UnicodeString/g' \
+      -e 's/CheckedArrayByteSink/icu::CheckedArrayByteSink/g' \
+      -e 's/StringPiece/icu::StringPiece/g'
+    sed -i src/node_i18n.cc \
+      -e 's/TimeZone::getTZDataVersion/icu::TimeZone::getTZDataVersion/g'
+    sed -i tools/icu/iculslocs.cc \
+      -e 's/CharString/icu::CharString/g' \
+      -e 's/LocalUResourceBundlePointer/icu::LocalUResourceBundlePointer/g'
   '';
 
   configureFlags = [

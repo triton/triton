@@ -3,7 +3,7 @@
 , fetchPyPi
 , lib
 
-#, deluge-client
+, deluge-client
 , requests
 , six
 }:
@@ -21,7 +21,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    #deluge-client
+    deluge-client
     requests
     six
   ];

@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.3.3";
+  version = "1.3.4";
 in
 buildPythonPackage {
   name = "llfuse-${version}";
@@ -19,7 +19,7 @@ buildPythonPackage {
     package = "llfuse";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "e514fa390d143530c7395f640c6b527f4f80b03f90995c7b38ff0b2f86e11ce7";
+    sha256 = "50396c5f3c49c3145e696e5b62df4fcca8b66634788020fba7b6932a858c78c2";
   };
 
   nativeBuildInputs = [

@@ -281,6 +281,8 @@ debtcollector = callPackage ../all-pkgs/d/debtcollector { };
 
 decorator = callPackage ../all-pkgs/d/decorator { };
 
+defusedxml = callPackage ../all-pkgs/d/defusedxml { };
+
 deluge = callPackage ../all-pkgs/d/deluge {
   channel = "stable";
 };
@@ -288,7 +290,7 @@ deluge_head = callPackage ../all-pkgs/d/deluge {
   channel = "head";
 };
 
-defusedxml = callPackage ../all-pkgs/d/defusedxml { };
+deluge-client = callPackage ../all-pkgs/d/deluge-client { };
 
 diffoscope = callPackage ../all-pkgs/d/diffoscope { };
 

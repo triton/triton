@@ -10,6 +10,8 @@
 
 , audit_lib
 , dbus
+, egl-wayland
+#, fontutil
 , libbsd
 , libdmx
 , libdrm
@@ -77,8 +79,8 @@ let
       sha256 = "a732502f1db000cf36a376cd0c010ffdbf32ecdd7f1fa08ba7f5bdf9601cc197";
     };
     "1.20" = {
-      version = "1.19.99.901";
-      sha256 = "3654e69e19426d9738381abbe0c325082be42971535eb791fb3604f60499a36e";
+      version = "1.20.0";
+      sha256 = "9d967d185f05709274ee0c4f861a4672463986e550ca05725ce27974f550d3e6";
     };
   };
   source = sources."${channel}";
@@ -106,6 +108,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     audit_lib
     dbus
+    egl-wayland
+    xorg.fontutil
     libbsd
     libdmx
     libdrm
@@ -250,6 +254,7 @@ stdenv.mkDerivation rec {
     "-Dxephyr=true"
     "-Dxwayland=true"
     "-Dglamor=true"
+    "-Dxwayland_eglstream=true"
     "-Dxnest=true"
     "-Ddmx=true"
     "-Dxvfb=true"
@@ -285,6 +290,22 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = optionalString (versionAtLeast channel "1.20") ''
+    # Fix file missing in release
+    cat > include/xwayland-config.h.meson.in <<'EOF'
+    /* xwayland-config.h.meson.in: not at all generated */
+
+    #pragma once
+
+    #include <dix-config.h>
+
+    /* Build glamor support for Xwayland */
+    #mesondefine XWL_HAS_GLAMOR
+
+    /* Build eglstream support for Xwayland */
+    #mesondefine XWL_HAS_EGLSTREAM
+
+    EOF
+
     # Xwin is an unconditional dependency.
     sed -i include/meson.build \
       -e '/xwin-config.h/,+2 d'

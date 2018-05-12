@@ -71,23 +71,23 @@ let
       maxXorgVersion = "1.19";
     };
     short-lived = {
-      versionMajor = "387";
-      versionMinor = "34";
-      sha256i686   = "b8babd2c7128233d83cc3bae0ee04c80580e9098849864e7b9bc3217609958c1";
-      sha256x86_64 = "d540908e76aeecb1f4a2812acf5ad37346934a6b7c8043c8b3ce230a48ceb440";
-      maxLinuxVersion = "4.14";
-      maxXorgVersion = "1.19";
+      versionMajor = "396";
+      versionMinor = "24";
+      sha256i686   = "2c01f57abd78e9c52d3e76e3cdf688835be54f419a1093bbaa7ab21f375d4399";
+      sha256x86_64 = "2d4bf72801f101a85df6fd1464021380ad51f5a30df05dadaf1fb546a175a441";
+      maxLinuxVersion = "4.17";
+      maxXorgVersion = "1.20";
     };
     beta = {
       versionMajor = "396";
       versionMinor = "18";
       sha256i686   = "63223406a552fd50808dca0b6864dccbc265dfc614dde89492f1e53afa7cce0b";
       sha256x86_64 = "0d39bd3e1727e5849401db7fa04d667662b6b9a80b2a11a897bb4ba0e7273208";
-      maxLinuxVersion = "4.16";
-      maxXorgVersion = "1.19";
+      maxLinuxVersion = "4.17";
+      maxXorgVersion = "1.20";
     };
     # Update to which ever channel has the latest release at the time.
-    latest = beta;
+    latest = short-lived;
   };
   source = sources."${channel}";
 

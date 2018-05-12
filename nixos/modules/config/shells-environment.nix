@@ -170,9 +170,6 @@ in
 
          # The setuid wrappers override other bin directories.
          export PATH="${config.security.wrapperDir}:$PATH"
-
-         # ~/bin if it exists overrides other bin directories.
-         export PATH="$HOME/bin:$PATH"
        '';
 
     system.activation.scripts.binsh = stringAfter [ "stdio" ]

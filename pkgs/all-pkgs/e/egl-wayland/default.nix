@@ -1,7 +1,8 @@
 { stdenv
-, autoreconfHook
 , fetchFromGitHub
 , lib
+, meson
+, ninja
 
 #, egl-headers
 , eglexternalplatform
@@ -12,21 +13,22 @@
 }:
 
 let
-  version = "2017-08-01";
+  version = "2018-01-31";
 in
 stdenv.mkDerivation rec {
   name = "egl-wayland-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "NVIDIA";
     repo = "egl-wayland";
-    rev = "1f4b1fde684595fe28e250b7429e028a7bb7d40d";
-    sha256 = "b84943ef5b555cb08ef3daa068c217963977ddfd6617c1aca219d766b9ecc0a7";
+    rev = "68ffe6fff49fff7667e8bab5b743c3e6c1950a6f";
+    sha256 = "89f67cc9fd6082466d75449d3b496f2eae3e9dc0fe0f8b79d49c444e6acab9f2";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -36,10 +38,6 @@ stdenv.mkDerivation rec {
     opengl-dummy
     wayland
     xorgproto
-  ];
-
-  configureFlags = [
-    "--disable-debug"
   ];
 
   meta = with lib; {

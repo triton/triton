@@ -22,7 +22,7 @@
 , liboauth
 , libsoup
 , libxml2
-, lua5
+, lua
 , rest
 , sqlite
 , totem-pl-parser
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     liboauth
     libsoup
     libxml2
-    lua5
+    lua
     sqlite
     totem-pl-parser
     tracker

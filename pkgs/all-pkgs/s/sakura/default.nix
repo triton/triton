@@ -15,7 +15,7 @@
 }:
 
 let
-  version = "3.5.0";
+  version = "3.6.0";
 in
 stdenv.mkDerivation rec {
   name = "sakura-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://launchpad.net/sakura/trunk/${version}/+download/"
       + "${name}.tar.bz2";
-    sha256 = "eb30ede41083fda2b07c6a3b7393150f48867e81d28ef70b15824740cab00c3a";
+    sha256 = "a1161f3cedde20a7e1bc5981b3e6ab3b91d2cd3a5ffe35c792a7fa402a1e86e0";
   };
 
   nativeBuildInputs = [

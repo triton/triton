@@ -14,14 +14,12 @@
 
 let
   version = "3.29.0";
-
-  file = "FileZilla_${version}_src.tar.bz2";
 in
 stdenv.mkDerivation rec {
   name = "filezilla-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/filezilla/FileZilla_Client/${version}/${file}";
+    url = "mirror://filezilla/client/FileZilla_${version}_src.tar.bz2";
     sha256 = "ead1ed74f19cf33aadf814a45b742207de3a8c349dbe2a11c344966bb8705259";
   };
 

@@ -53,6 +53,13 @@ rec {
     http://archive.debian.org/debian-archive/debian
   ];
 
+  filezilla = [
+    https://download.filezilla-project.org
+    https://dl1.cdn.filezilla-project.org
+    https://dl2.cdn.filezilla-project.org
+    https://dl3.cdn.filezilla-project.org
+  ];
+
   fedora = [
     https://mirrors.kernel.org/fedora
     http://fedora.mirrors.pair.com

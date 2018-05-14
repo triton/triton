@@ -91,6 +91,9 @@ stdenv.mkDerivation rec {
     patchShebangs gst-libs/gst/rtsp/rtsp_mkenum.py
     patchShebangs gst-libs/gst/pbutils/pbutils_mkenum.py
     patchShebangs gst-libs/gst/app/app_mkenum.py
+
+    grep -q "subdir('tests')" meson.build
+    sed -i "/subdir('tests')/d" meson.build
   '';
 
   mesonFlags = [

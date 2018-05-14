@@ -1,8 +1,8 @@
 {
   "stable" = {
-    version = "0.7.8";
+    version = "0.7.9";
     maxLinuxVersion = "4.16";
-    sha256 = "70ba0edd72914d4bfc9a9426cf26725e955a9509acbddb6902efb9eebb35f150";
+    sha256 = "f50ca2441c6abde4fe6b9f54d5583a45813031d6bb72b0011b00fc2683cd9f7a";
   };
   "dev" = {
     date = "2018-04-19";

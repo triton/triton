@@ -2,21 +2,23 @@
 , fetchzip
 , autoreconfHook
 
+, acl
+, attr
 , libselinux
 , util-linux_lib
 }:
 
 let
-  version = "1.8.0";
+  version = "1.10.0";
 in
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
 
   src = fetchzip {
-    version = 2;
+    version = 6;
     url = "https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
-    multihash = "QmYtAxnwEbn5QNz7G7knx1AeBnQDvhgUhEkTMyhdUmyEVA";
-    sha256 = "b198db1b6bfd7aeb42ab9454bc4c3a1b571e11968ba6f512ad924727c3398465";
+    multihash = "QmVkecWQEoxb1p3Gq3v98jtSbK9hRDwkyi7eaKwqGvxxJC";
+    sha256 = "67debfc18650528f5a5c28fbd3c8981dc037ac3146ad0a0f62166b7b3f09da06";
   };
 
   nativeBuildInputs = [
@@ -24,6 +26,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    acl
+    attr
     libselinux
     util-linux_lib
   ];

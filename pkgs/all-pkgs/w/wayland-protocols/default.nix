@@ -6,16 +6,16 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "wayland-protocols-1.13";
+  name = "wayland-protocols-1.14";
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmUqmaJ5BRkEoxYbJDh2yPES6DqZMak5qK1pnoE2BfEFZQ";
+    multihash = "Qma39CZMJMasLoVyFe6tuN7sG8ZsWsnpvyBCtoAbNyTHPN";
     hashOutput = false;
-    sha256 = "0758bc8008d5332f431b2a84fea7de64d971ce270ed208206a098ff2ebc68f38";
+    sha256 = "9648896b2462b49b15a69b60f44656593c170c0e73121c890eb16d0c1d9376f6";
   };
 
-  buildInputs = [
+  nativeBuildInputs = [
     wayland
   ];
 

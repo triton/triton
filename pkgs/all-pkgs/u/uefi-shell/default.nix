@@ -3,17 +3,17 @@
 }:
 
 let
-  date = "2017-06-02";
-  rev = "b0b626ea2f16faca9f864599384fd184a89e0195";
+  date = "2018-05-14";
+  rev = "63c76537c652eb5a84360ee043c5f7b63728a622";
 self = stdenv.mkDerivation {
   name = "uefi-shell-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "tianocore";
     repo = "edk2";
     inherit rev;
-    sha256 = "f3d950c119de75467650ea98d36cce1164b04522ed82c791159db22c376044a7";
+    sha256 = "4e30babc28f6a8bcb2008426c38f645bf69dc0d1115f4885c4ea39b4d7c687ef";
   };
 
   installPhase = ''

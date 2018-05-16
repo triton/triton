@@ -8,8 +8,8 @@
     sha256 = "428337f2b2f5e3ea21b8a44f88eb89c99a07a324559b99aebe777c9abdf4c4c0";
   };
   "9.5" = {
-    version = "9.5.12";
-    sha256 = "02e86f5c66467731bbec18fde96e0daf38c13c9141d8e7d41be663ab6fa6f698";
+    version = "9.5.13";
+    sha256 = "5408b86a0b56fd0140c6a0016bf9179bc7817fa03d5571cca346c9ab122ea5ee";
   };
   "9.6" = {
     version = "9.6.8";

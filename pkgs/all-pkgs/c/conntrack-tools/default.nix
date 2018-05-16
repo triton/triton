@@ -9,16 +9,17 @@
 , libnetfilter_cttimeout
 , libnetfilter_queue
 , libnfnetlink
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "conntrack-tools-1.4.4";
+  name = "conntrack-tools-1.4.5";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/conntrack-tools/files/${name}.tar.bz2";
+    multihash = "QmctmXVM84zF4VTqkaCGd7hdzr6zi8AqqFgVHET9EUDFFe";
     hashOutput = false;
-    multihash = "QmRzqG5Q7QtX9ZmLAZMyEA1k3m9Lqcd51Utbx6e8WZCkqp";
-    sha256 = "b7caf4fcc4c03575df57d25e5216584d597fd916c891f191dac616ce68bdba6c";
+    sha256 = "36c6d99c7684851d4d72e75bd07ff3f0ff1baaf4b6f069eb7244990cd1a9a462";
   };
 
   nativeBuildInputs = [
@@ -33,11 +34,13 @@ stdenv.mkDerivation rec {
     libnetfilter_cttimeout
     libnetfilter_queue
     libnfnetlink
+    systemd_lib
   ];
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--enable-systemd"
   ];
 
   # We need this for the promotion of caches

@@ -3,23 +3,25 @@
 , lib
 
 , lcms2
+, libjpeg
 , jasper
 }:
 
 let
-  version = "0.18.9";
+  version = "0.18.11";
 in
 stdenv.mkDerivation rec {
   name = "libraw-${version}";
 
   src = fetchurl {
     url = "https://www.libraw.org/data/LibRaw-${version}.tar.gz";
-    multihash = "QmYfDcuqTFijZSUqJoA38n2T9XbRMow8B6conjhMLag79U";
-    sha256 = "d2ef177032e6d804fc512b206d02c393fca26be43ecd136cc26926407273b24e";
+    multihash = "QmY6XydpA8qunrEhSTRdv5kw6WThXofdn8Ep9HTZ5LxfRw";
+    sha256 = "7cf724a40a0d8915869498f51062a952167e4f5bae2b6920542c9e0e079a471d";
   };
 
   buildInputs = [
     lcms2
+    libjpeg
     jasper
   ];
 

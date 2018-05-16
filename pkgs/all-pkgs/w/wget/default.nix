@@ -1,10 +1,13 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , lib
 
 , c-ares
+, gpgme
 , libidn2
+, libmetalink
 , libpsl
 , libunistring
 , lzip
@@ -38,7 +41,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     c-ares
+    gpgme
     libidn2
+    libmetalink
     libpsl
     libunistring
     lzip
@@ -57,6 +62,14 @@ stdenv.mkDerivation rec {
   # even though it uses libidn2
   NIX_LDFLAGS = "-rpath ${libidn2}/lib";
 
+  patches = [
+    (fetchTritonPatch {
+      rev = "fa395249911cd2e87c55ef493b7a2be43ec16abd";
+      file = "w/wget/fix-ptimer.patch";
+      sha256 = "fa155549e97376e7a9668a45aa3052536054f019abe4db9506dc6bfed41da4be";
+    })
+  ];
+
   postPatch = ''
     for i in "doc/texi2pod.pl" "util/rmold.pl" ; do
       sed -i "$i" \
@@ -71,25 +84,15 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-opie"
-    "--enable-digest"
-    "--enable-ntlm"
     "--disable-debug"
-    "--disable-valgrind-tests"
-    "--disable-assert"
-    "--enable-largefile"
-    "--enable-threads=posix"
-    "--enable-nls"
-    "--enable-rpath"
-    "--enable-ipv6"
-    "--enable-iri"
-    "--enable-pcre"
     "--with-ssl=openssl"
-    "--with-zlib"
     "--with-metalink"
     "--with-cares"
     "--with-openssl"
-    "--with-libuuid"
+  ];
+
+  makeFlags = [
+    "V=1"
   ];
 
   doCheck = false;

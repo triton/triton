@@ -1,15 +1,26 @@
 { stdenv
+, cmake
 , fetchurl
+, ninja
 }:
 
 stdenv.mkDerivation rec {
-  name = "libebml-1.3.4";
+  name = "libebml-1.3.6";
 
   src = fetchurl {
-    url = "https://dl.matroska.org/downloads/libebml/${name}.tar.bz2";
-    multihash = "QmTN45Zqmf914LzAbCMqLTajuvsokWHRkbcjNoPHvYe4qM";
-    sha256 = "c50d3ecf133742c6549c0669c3873f968e11a365a5ba17b2f4dc339bbe51f387";
+    url = "https://dl.matroska.org/downloads/libebml/${name}.tar.xz";
+    multihash = "Qma3fGKxMKiPRqFzTM7Z1TPnmTur6KfEN4tf9q2NpHFLHE";
+    sha256 = "1e5a7a7820c493aa62b0f35e15b4233c792cc03458c55ebdfa7a6521e4b43e9e";
   };
+
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
+
+  cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
+  ];
 
   meta = with stdenv.lib; {
     description = "Extensible Binary Meta Language library";

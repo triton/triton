@@ -4,15 +4,15 @@
 }:
 
 let
-  version = "5.6.3";
+  version = "5.6.4";
 in
 stdenv.mkDerivation rec {
   name = "unrar-${version}";
 
   src = fetchurl {
     url = "https://www.rarlab.com/rar/unrarsrc-${version}.tar.gz";
-    multihash = "Qmeutj44mTUK6bXfen8hwmwpRwAosh7QBy3cqQw2EvZc36";
-    sha256 = "c590e70a745d840ae9b9f05ba6c449438838c8280d76ce796a26b3fcd0a1972e";
+    multihash = "QmX4jmEHAUJT5ZKBQqZCcgqQSEhDMCWxLHoxMjGYmZVrgn";
+    sha256 = "9335d2201870f2034007c04be80e00f1dc23932cb88b329d55c76134e6ba49fe";
   };
 
   setupHook = ./setup-hook.sh;

@@ -2363,6 +2363,8 @@ libmediaart = callPackage ../all-pkgs/l/libmediaart { };
 
 libmediainfo = callPackage ../all-pkgs/l/libmediainfo { };
 
+libmetalink = callPackage ../all-pkgs/l/libmetalink { };
+
 libmhash = callPackage ../all-pkgs/l/libmhash { };
 
 libmicrohttpd = callPackage ../all-pkgs/l/libmicrohttpd { };

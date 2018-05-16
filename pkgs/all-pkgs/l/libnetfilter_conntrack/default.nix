@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libnetfilter_conntrack-1.0.6";
+  name = "libnetfilter_conntrack-1.0.7";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnetfilter_conntrack/files/${name}.tar.bz2";
+    multihash = "QmYkpHPtdpovy7TU2gvwAfeJp5SWWHe4gHBpxJ7tUMry1m";
     hashOutput = false;
-    multihash = "QmdyNB8BoHa5cg2rTyCASLK3mwoGPwRZriJRwtb6XPpt9N";
-    sha256 = "efcc08021284e75f4d96d3581c5155a11f08fd63316b1938cbcb269c87f37feb";
+    sha256 = "33685351e29dff93cc21f5344b6e628e41e32b9f9e567f4bec0478eb41f989b6";
   };
 
   buildInputs = [

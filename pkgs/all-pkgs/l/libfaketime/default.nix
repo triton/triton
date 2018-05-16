@@ -1,13 +1,19 @@
 { stdenv
-, fetchurl
+, fetchFromGitHub
 }:
 
+let
+  version = "0.9.7";
+in
 stdenv.mkDerivation rec {
-  name = "libfaketime-0.9.6";
+  name = "libfaketime-${version}";
 
-  src = fetchurl {
-    url = "http://www.code-wizards.com/projects/libfaketime/${name}.tar.gz";
-    sha256 = "1dw2lqsv2iqwxg51mdn25b4fjj3v357s0mc6ahxawqp210krg29s";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "wolfcw";
+    repo = "libfaketime";
+    rev = "v${version}";
+    sha256 = "ecba09840e254f8b9a884c32ac6ddd23591db23d98c09463941a93dccfc6c004";
   };
 
   preBuild = ''

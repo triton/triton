@@ -1,33 +1,32 @@
 { stdenv
+, cmake
 , fetchurl
 , lib
+, ninja
 
 , libebml
 }:
 
-let
-  inherit (lib)
-    optionals;
-in
 stdenv.mkDerivation rec {
-  name = "libmatroska-1.4.8";
+  name = "libmatroska-1.4.9";
 
   src = fetchurl {
     url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.xz";
-    multihash = "QmTQvHwzCcV58uQ1eSvFXW6vQyvA3K5rXqLTZjXnYERg1o";
-    sha256 = "d8c72b20d4c5bf888776884b0854f95e74139b5267494fae1f395f7212d7c992";
+    multihash = "QmPYuyMxdLtLryvTsSygmZBgtqi8YFyuz7jR8n6kLoAT9j";
+    sha256 = "38a61dd5d87c070928b5deb3922b63b2b83c09e2e4a10f9393eecb6afa9795c8";
   };
+
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
 
   buildInputs = [
     libebml
   ];
 
-  makeFlags = [
-    "prefix=$(out)"
-    "LIBEBML_INCLUDE_DIR=${libebml}/include"
-    "LIBEBML_LIB_DIR=${libebml}/lib"
-  ] ++ optionals stdenv.cc.isClang [
-    "CXX=clang++"
+  cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
   ];
 
   meta = with lib; {

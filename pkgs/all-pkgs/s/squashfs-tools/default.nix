@@ -5,17 +5,22 @@
 , lzo
 , xz
 , zlib
+, zstd
 }:
 
+let
+  date = "2018-11-28";
+  rev = "fb33dfc32b131a1162dcf0e35bd88254ae10e265";
+in
 stdenv.mkDerivation rec {
-  name = "squashfs-4.4dev";
+  name = "squashfs-tools-${date}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "plougher";
     repo = "squashfs-tools";
-    rev = "9c1db6d13a51a2e009f0027ef336ce03624eac0d";
-    sha256 = "fea7782f4a37c9bac657fec97426c28910903b0bb6800cd4fdaf849adce02716";
+    inherit rev;
+    sha256 = "ab76ba9f30f493f245e2489bf118cdb74ee04d83ded571ab2043eccbffc6401c";
   };
 
   buildInputs = [
@@ -23,6 +28,7 @@ stdenv.mkDerivation rec {
     lzo
     xz
     zlib
+    zstd
   ];
 
   prePatch = ''
@@ -38,6 +44,7 @@ stdenv.mkDerivation rec {
     "XZ_SUPPORT=1"
     "LZO_SUPPORT=1"
     "LZ4_SUPPORT=1"
+    "ZSTD_SUPPORT=1"
   ];
 
   meta = with stdenv.lib; {

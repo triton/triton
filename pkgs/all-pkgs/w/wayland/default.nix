@@ -18,16 +18,16 @@ let
     boolEn
     optionals;
 
-  version = "1.14.0";
+  version = "1.15.0";
 in
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmbHiXA1JkG8Cpw8CA83Ae7atdBUSyjniHgfA3JmMPmphy";
+    multihash = "QmSgwmWbnThrBc9s42b9bHtDraxcrBXZnNV4VC5gguZe6A";
     hashOutput = false;
-    sha256 = "ed80cabc0961a759a42092e2c39aabfc1ec9a13c86c98bbe2b812f008da27ab8";
+    sha256 = "eb3fbebb8559d56a80ad3753ec3db800f587329067962dbf65e14488b4b7aeb0";
   };
 
   nativeBuildInputs = [ ]
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
+      pgpKeyFingerprint = "C006 6D7D B8E9 AC68 44D7  2871 5E54 498E 697F 11D7";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

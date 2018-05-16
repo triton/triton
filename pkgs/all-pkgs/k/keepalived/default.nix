@@ -13,15 +13,15 @@
 }:
 
 let
-  version = "1.4.3";
+  version = "1.4.4";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmVhcYTRsFLEYsyZ9JqseFD9PZ6x7qRfANzAsmbZc6jds8";
-    sha256 = "1030bd967d4e522189a90a1294189ee6b6029272dc137e6e206ea431e9825478";
+    multihash = "QmR5H3s5vcmqDp6jtruc1xK9eb68aqfUmF8NV5zvA86MvR";
+    sha256 = "147c2b3b782223128551fd0a1564eaa30ed84a94b68c50ec5087747941314704";
   };
 
   nativeBuildInputs = [

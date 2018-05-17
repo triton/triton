@@ -3030,6 +3030,7 @@ ninja = callPackage ../all-pkgs/n/ninja { };
 
 nix = callPackage ../all-pkgs/n/nix { };
 
+nix_2 = callPackage ../all-pkgs/n/nix/2.nix { };
 
 nixos-utils = callPackage ../all-pkgs/n/nixos-utils { };
 

@@ -3226,6 +3226,8 @@ pcsc-lite_lib = callPackageAlias "pcsc-lite_full" {
   libOnly = true;
 };
 
+peg = callPackage ../all-pkgs/p/peg { };
+
 perl = callPackage ../all-pkgs/p/perl { };
 
 pf-ring = callPackage ../all-pkgs/p/pf-ring { };

@@ -5,22 +5,21 @@
 
 , curl
 , openssl
-, util-linux_lib
 , zlib
 }:
 
 let
-  version = "1.2.13";
+  version = "1.4.51";
 in
 stdenv.mkDerivation {
   name = "aws-sdk-cpp-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "aws";
     repo = "aws-sdk-cpp";
     rev = version;
-    sha256 = "689bea30403f5cdab16ef3149dba35d9d057745d14f18383c587cacebcf1c215";
+    sha256 = "28c7ae265312174ec6dfd3e88509ea40657afb7dcf4551bd0d3ca1a366258cb1";
   };
 
   nativeBuildInputs = [
@@ -31,7 +30,6 @@ stdenv.mkDerivation {
   buildInputs = [
     curl
     openssl
-    util-linux_lib
     zlib
   ];
 

@@ -4,17 +4,18 @@
 }:
 
 let
-  versionr = "2017-01-17";
+  date = "2018-03-14";
+  rev = "e3b182e3253f92bdbb03a71fdbd958bfb69cf3e3";
 in
 stdenv.mkDerivation rec {
-  name = "eglexternalplatform-${versionr}";
+  name = "eglexternalplatform-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "NVIDIA";
     repo = "eglexternalplatform";
-    rev = "76e29488ca3a34e5ef58a4c83d8cd857b621de2a";
-    sha256 = "b36fecd578b9e7868b1db47391f9a3656ec822b992896cf8822406c171d9d180";
+    inherit rev;
+    sha256 = "2f09000182bb8f0935cf13c23742bee66fc054df88dc9c77e1ea71757661667d";
   };
 
   postPatch = ''

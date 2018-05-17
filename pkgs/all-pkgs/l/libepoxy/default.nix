@@ -14,7 +14,7 @@ let
     replaceChars;
 
   channel = "1.5";
-  version = "${channel}.0";
+  version = "${channel}.1";
 
   versionFormatted =
     # For initial minor releases drop the trailing zero
@@ -28,12 +28,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = [
-      ("https://github.com/anholt/libepoxy/releases/download/v${versionFormatted}/"
+      ("https://github.com/anholt/libepoxy/releases/download/${versionFormatted}/"
         + "${name}.tar.xz")
       "mirror://gnome/sources/libepoxy/${channel}/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "4c94995398a6ebf691600dda2e9685a0cac261414175c2adf4645cdfab42a5d5";
+    sha256 = "ba25f9251bdd12fa11f06b4dbd29073dab6f120be9b941e91754c338b926c720";
   };
 
   nativeBuildInputs = [

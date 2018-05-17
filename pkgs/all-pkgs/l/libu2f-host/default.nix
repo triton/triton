@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libu2f-host-1.1.5";
+  name = "libu2f-host-1.1.6";
 
   src = fetchurl {
     url = "https://developers.yubico.com/libu2f-host/Releases/${name}.tar.xz";
-    multihash = "QmPLR6juLTQLQGEvNThbyGyzkTv8PSapxLY2gdYTuCjHgL";
+    multihash = "QmRdCxnrCMhcxepKbTTCHhwyvhNYJNUka6wNAFqVGpY7Y5";
     hashOutput = false;
-    sha256 = "f32b71435edf6e412f2971edef411f3b4edb419a5356553ad57811ece4a63a95";
+    sha256 = "4da0bb9e32cab230e63bf65252076f9a4b5e40eb9ec2ddaf9376bcef30e7bda7";
   };
 
   buildInputs = [

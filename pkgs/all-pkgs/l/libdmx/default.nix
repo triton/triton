@@ -9,11 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdmx-1.1.3";
+  name = "libdmx-1.1.4";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
-    sha256 = "c97da36d2e56a2d7b6e4f896241785acc95e97eb9557465fd66ba2a155a7b201";
+    hashOutput = false;
+    sha256 = "253f90005d134fa7a209fbcbc5a3024335367c930adf0f3203e754cf32747243";
   };
 
   nativeBuildInputs = [
@@ -29,6 +30,18 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-selective-werror"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "4A19 3C06 D35E 7C67 0FA4  EF0B A2FB 9E08 1F2D 130E";
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+    };
+  };
 
   meta = with lib; {
     description = "X.org libdmx library";

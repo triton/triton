@@ -2,6 +2,7 @@
 , config
 , fetchTritonPatch
 , fetchurl
+, lib
 , perl
 
 , boehm-gc
@@ -14,24 +15,17 @@
 , sqlite
 , xz
 
-, channel ? "stable"
-
 , storeDir ? config.nix.storeDir or "/nix/store"
 , stateDir ? config.nix.stateDir or "/nix/var"
 }:
 
-let
-  inherit ((import ./sources.nix)."${channel}")
-    version
-    multihash
-    sha256;
-in
 stdenv.mkDerivation rec {
-  name = "nix-${version}";
+  name = "nix-1.11.15";
 
   src = fetchurl {
-    url = "https://nixos.org/releases/nix/nix-${version}/nix-${version}.tar.xz";
-    inherit multihash sha256;
+    url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
+    multihash = "QmQZZDokYTPBgsgt59BxAsHyUMrXeJqLzkADd7wq6MQq38";
+    sha256 = "d20f20e45d519f54fae5c61d55eadcf53e6d7cdbde9870eeec80d499f9805165";
   };
 
   nativeBuildInputs = [
@@ -96,7 +90,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Package manager that makes packages reproducible";
     homepage = https://nixos.org/;
     license = licenses.lgpl2Plus;
@@ -105,7 +99,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -3030,9 +3030,6 @@ ninja = callPackage ../all-pkgs/n/ninja { };
 
 nix = callPackage ../all-pkgs/n/nix { };
 
-nix_dev = callPackageAlias "nix" {
-  channel = "dev";
-};
 
 nixos-utils = callPackage ../all-pkgs/n/nixos-utils { };
 

@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchFromGitHub
 , lib
 
 , libbsd
@@ -7,16 +7,18 @@
 }:
 
 let
-  version = "2017-10-14";
+  version = "2018-04-08";
   rev = stdenv.lib.replaceStrings ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
   name = "mg-${version}";
 
-  src = fetchurl {
-    url = "https://homepage.boetes.org/software/mg/mg-${rev}.tar.gz";
-    multihash = "QmerodBsZzGcFNn5n3Fr37cooSKoMh4fYHfXVMnjgQz3Jx";
-    sha256 = "51519698f3f44acd984d7805e4e315ded50c15aba8222521f88756fd67745341";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "hboetes";
+    repo = "mg";
+    inherit rev;
+    sha256 = "f744fba2ca7a569984d36bf76684b777248003ec11a6a08eabc8453786301b94";
   };
 
   buildInputs = [
@@ -24,16 +26,9 @@ stdenv.mkDerivation rec {
     ncurses
   ];
 
-  postPatch =
-    /* Remove OpenBSD specific easter egg */ ''
-      sed -i GNUmakefile \
-        -e 's/theo\.o//'
-      sed -i main.c \
-        -e '/theo_init/d'
-    '' + /* Remove hardcoded paths */ ''
-      sed -i GNUmakefile \
-        -e 's|/usr/bin/||'
-    '';
+  postPatch = ''
+    sed -i 's|/usr/bin/||' GNUmakefile
+  '';
 
   makefile = "GNUmakefile";
 

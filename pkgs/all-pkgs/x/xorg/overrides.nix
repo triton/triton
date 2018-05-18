@@ -142,16 +142,6 @@ in
     ];
   };
 
-  intelgputools = attrs: attrs // {
-    # Underspecified dependency
-    buildInputs = attrs.buildInputs ++ [
-      args.zlib
-    ];
-    prePatch = ''
-      sed -i '/-DIGT_SRCDIR/s,$(abs_top_srcdir),/no-such-path,' lib/Makefile.in
-    '';
-  };
-
   xrdb = attrs: attrs // {
     configureFlags = [
       "--with-cpp=${args.mcpp}/bin/mcpp"

@@ -644,17 +644,6 @@ let
 
   }) // {inherit xorgproto ;};
 
-  intelgputools = (mkDerivation "intelgputools" {
-    name = "intel-gpu-tools-1.20";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/intel-gpu-tools-1.20.tar.bz2;
-      sha256 = "2fffe7a66789f56f301e6b60a3afe21556f34acbad8b7b29c8f3dd41f0b148e8";
-    };
-    nativeBuildInputs = [ bison flex python python3 utilmacros ];
-    buildInputs = [ cairo xorgproto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
-
-  }) // {inherit cairo xorgproto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ;};
-
   # libFS = (mkDerivation "libFS" {
   #   name = "libFS-1.0.7";
   #   src = fetchurl {

@@ -1987,6 +1987,8 @@ inkscape = callPackage ../all-pkgs/i/inkscape {
 
 inotify-tools = callPackage ../all-pkgs/i/inotify-tools { };
 
+intel-gpu-tools = callPackage ../all-pkgs/i/intel-gpu-tools { };
+
 intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
 intel-vaapi-driver = callPackage ../all-pkgs/i/intel-vaapi-driver { };

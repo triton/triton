@@ -53,16 +53,26 @@ enum nss_status _nss_nixos_getpwnam_r(const char *name, struct passwd *pwd,
 	}
 
 	/* User should be prefixed with the `builder_name` */
-	if (strncmp(builder_name, name, strlen(builder_name))) {
+	const size_t builder_name_len = strlen(builder_name);
+	if (strncmp(builder_name, name, builder_name_len)) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+	if (name[builder_name_len] == '\0') {
 		*errnop = ENOENT;
 		return NSS_STATUS_NOTFOUND;
 	}
 
 	/* The suffix should be a number */
 	errno = 0;
-	builder_id = strtoul(name + strlen(builder_name), NULL, 10);
+	char *endptr = NULL;
+	builder_id = strtoul(name + strlen(builder_name), &endptr, 10);
 	if (errno) {
 		*errnop = errno;
+		return NSS_STATUS_NOTFOUND;
+	}
+	if (endptr[0] != '\0') {
+		*errnop = ENOENT;
 		return NSS_STATUS_NOTFOUND;
 	}
 	if (builder_id >= max_builders) {

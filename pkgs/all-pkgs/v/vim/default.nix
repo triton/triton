@@ -19,7 +19,7 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "8.0.1740";
+  version = "8.1.0001";
 in
 stdenv.mkDerivation rec {
   name = "vim-${version}";
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "bb830fdbd268f319ee09107122b51e38998dfeb0715893cc478f7c0caf4989de";
+    sha256 = "393ec55656042a9bdd2838c9070194f7f1e21caafd7cb99d39f5b114a724a447";
   };
 
   nativeBuildInputs = [
@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--enable-fail-if-missing"
     "--enable-multibyte"
-    "--enable-nls"
   ];
 
   postInstall = ''

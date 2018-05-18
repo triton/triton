@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gperftools-2.6.3";
+  name = "gperftools-2.7";
 
   src = fetchurl {
     url = "https://github.com/gperftools/gperftools/releases/download/${name}/${name}.tar.gz";
-    sha256 = "314b2ff6ed95cc0763704efb4fb72d0139e1c381069b9e17a619006bee8eee9f";
+    sha256 = "1ee8c8699a0eff6b6a203e59b43330536b22bbcbe6448f54c7091e5efb0763c9";
   };
 
   buildInputs = [

@@ -1,82 +1,53 @@
 { stdenv
-, fetchurl
-, gnum4
+, fetchFromGitHub
 , lib
-, python
+, meson
+, ninja
 
-#, intelgputools
 , libdrm
 , libva
 , libx11
-, libxext
-, libxfixes
-, opengl-dummy
 , wayland
-, xorg
 , xorgproto
 }:
 
 let
-  version = "2.1.0";
+  date = "2018-04-28";
+  rev = "40b15a5c6c0103c23a5db810aef27cf75d0b6723";
 in
 stdenv.mkDerivation rec {
-  name = "intel-vaapi-driver-${version}";
+  name = "intel-vaapi-driver-${date}";
 
-  src = fetchurl rec {
-    urls = [
-      ("https://github.com/01org/intel-vaapi-driver/releases/download/"
-        + "${version}/${name}.tar.bz2")
-      ("https://www.freedesktop.org/software/vaapi/releases/"
-        + "libva-intel-driver/${name}.tar.bz2")
-    ];
-    hashOutput = false;
-    sha256 = "ecfaf2ccc4b9af7340e002d2ef807d1e33051d4992f1983f5f4d60e516f86bdf";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "intel";
+    repo = "intel-vaapi-driver";
+    inherit rev;
+    sha256 = "5ac5271ecd9918b3c95d265d0bdf27fd9cb5f5551757a4968a0600a42ff75761";
   };
 
   nativeBuildInputs = [
-    gnum4
-    xorg.intelgputools
-    python
+    meson
+    ninja
   ];
 
   buildInputs = [
     libdrm
     libva
     libx11
-    libxext
-    libxfixes
-    opengl-dummy
     wayland
     xorgproto
   ];
 
-  patchPhase = ''
-    patchShebangs ./src/shaders/gpp.py
-  '';
-
   preConfigure = ''
-    sed -i configure \
-      -e "s,LIBVA_DRIVERS_PATH=.*,LIBVA_DRIVERS_PATH=$out/lib/dri,"
+    mesonFlagsArray+=("-Ddriverdir=$out/lib/dri")
   '';
 
-  configureFlags = [
-    "--enable-drm"
-    "--enable-x11"
-    "--enable-wayland"
-    "--enable-hybrid-codec"
+  mesonFlags = [
+    "-Dwith_x11=yes"
+    "-Dwith_wayland=yes"
+    "-Denable_hybrid_codec=true"
   ];
-
-  passthru = {
-    srcVerification = fetchurl {
-      failEarly = true;
-      inherit (src)
-        outputHash
-        outputHashAlgo
-        urls;
-      sha1Url = map (n: "${n}.sha1sum") src.urls;
-    };
-    failEarly = true;
-  };
 
   meta = with lib; {
     description = "VA-API user mode driver for Intel GEN Graphics family";

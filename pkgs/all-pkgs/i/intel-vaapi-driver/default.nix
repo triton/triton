@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, fetchurl
 , lib
 , meson
 , ninja

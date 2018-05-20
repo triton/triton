@@ -58,6 +58,12 @@ stdenv.mkDerivation rec {
     "-Dgir=true"
   ];
 
+  postPatch = ''
+    # Fix list being cast to a string
+    sed -i meson.build \
+      -e "/PKGCONFIG_CAIRO_REQUIRES/ s/pangocairo_requires/'''.join(pangocairo_requires)/"
+  '';
+
   # preCheck = /* Fontconfig fails to load default config in test */
   #     optionalString doCheck ''
   #   export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"

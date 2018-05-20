@@ -196,7 +196,7 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     configureFlagsArray+=(
       "--with-udev-dir=$out/lib/udev"
-      "--with-systemunitdir=$out/etc/systemd/system"
+      "--with-systemdsystemunitdir=$out/lib/systemd/system"
       "--with-dbus-sys-dir=$out/etc/dbus-1/system.d"
     )
   '';

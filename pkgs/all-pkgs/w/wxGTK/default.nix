@@ -4,6 +4,7 @@
 
 , cairo
 , gconf
+, glu
 , gstreamer
 , gst-plugins-base
 , gtk3
@@ -39,6 +40,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     cairo
     gconf
+    glu
     gstreamer
     gst-plugins-base
     expat

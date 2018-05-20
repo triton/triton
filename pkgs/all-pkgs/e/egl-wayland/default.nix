@@ -40,6 +40,13 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
+  postPatch = ''
+    # Fix list being cast to a string
+    sed -i meson.build \
+      -e '/EGL_EXTERNAL_PLATFORM_MAX_VERSION/ s/\[//' \
+      -e '/EGL_EXTERNAL_PLATFORM_MAX_VERSION/ s/\]//'
+  '';
+
   meta = with lib; {
     description = "Wayland EGL External Platform library";
     homepage = https://github.com/NVIDIA/egl-wayland;

@@ -1830,13 +1830,13 @@ gstreamer-editing-services_1-14 =
 gstreamer-editing-services =
   callPackageAlias "gstreamer-editing-services_1-14" { };
 
-gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
-  channel = "1.12";
+gstreamer-vaapi_1-14 = callPackage ../all-pkgs/g/gstreamer-vaapi {
+  channel = "1.14";
   gst-plugins-bad = pkgs.gst-plugins-bad_1-14;
   gst-plugins-base = pkgs.gst-plugins-base_1-14;
   gstreamer = pkgs.gstreamer_1-14;
 };
-gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-12" { };
+gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-14" { };
 
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 # Deprecated alias

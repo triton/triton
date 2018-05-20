@@ -15,10 +15,9 @@
 , libxrandr
 , libxrender
 , opengl-dummy
-, renderproto
 , systemd_lib
 , wayland
-, xorg
+, xorgproto
 
 , channel
 }:
@@ -29,9 +28,9 @@ let
     optionals;
 
   sources = {
-    "1.12" = {
-      version = "1.12.4";
-      sha256 = "1c2d77242e1f30c4d1394636cae9f6877228a017960fca96881e0080d8b6e9c9";
+    "1.14" = {
+      version = "1.14.1";
+      sha256 = "585c3ddb0c39220de0a33e5d0ed6196a108b8407ec3538d7c64617713b4434e8";
     };
   };
 
@@ -66,9 +65,9 @@ stdenv.mkDerivation rec {
     libxrandr
     libxrender
     opengl-dummy
-    renderproto
     systemd_lib
     wayland
+    xorgproto
   ];
 
   mesonFlags = [
@@ -90,8 +89,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

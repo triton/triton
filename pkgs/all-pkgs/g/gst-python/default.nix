@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, isPy2
 , lib
 , meson
 , ninja
@@ -19,8 +20,8 @@
 let
   sources = {
     "1.14" = {
-      version = "1.14.0";
-      sha256 = "e0b98111150aa3fcdeb6e228cd770995fbdaa8586fc02ec9b3273d4ae83399e6";
+      version = "1.14.1";
+      sha256 = "1bc6704955e343f78d2d935487f26d2db4c131c9a6dad38eb331c7e3639147d3";
     };
   };
 

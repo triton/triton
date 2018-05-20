@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.0.4";
+  version = "2.0.5";
 
   tarballUrls = version: [
     "mirror://gnu/libidn/libidn2-${version}.tar.lz"
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "a446ac5e40b801edfc4f6ba50fdeb614dcfeb34ab0d8c6868e29f359b877c201";
+    sha256 = "0ff7a59eeedff3865fa17151d656991f56d8835f593982d7327af5e0bf9a9668";
   };
 
   nativeBuildInputs = [
@@ -30,11 +30,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.0.4";
+      urls = tarballUrls "2.0.5";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1CB2 7DBC 9861 4B2D 5841  646D 0830 2DB6 A267 0428";
       inherit (src) outputHashAlgo;
-      outputHash = "a446ac5e40b801edfc4f6ba50fdeb614dcfeb34ab0d8c6868e29f359b877c201";
+      outputHash = "0ff7a59eeedff3865fa17151d656991f56d8835f593982d7327af5e0bf9a9668";
     };
   };
 

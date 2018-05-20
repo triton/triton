@@ -3909,6 +3909,8 @@ wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
 
 wlc = callPackage ../all-pkgs/w/wlc { };
 
+woeusb = callPackage ../all-pkgs/w/woeusb { };
+
 wpa_supplicant = callPackage ../all-pkgs/w/wpa_supplicant { };
 
 wxGTK = callPackage ../all-pkgs/w/wxGTK { };

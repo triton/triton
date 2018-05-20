@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "6.0.0";
+  version = "6.3.0";
 in
 buildPythonPackage rec {
   name = "cheroot-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "cheroot";
     inherit version;
-    sha256 = "ba474e5149b03fabc2bba2d0b490b4d95443894d45b1430b799dccea3b3f4683";
+    sha256 = "56c07903580d51ebd456e764d2bef334e97025369cfe6af56357053a9ff72446";
   };
 
   propagatedBuildInputs = [

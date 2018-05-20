@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "3.5.0";
+  version = "3.7.0";
 in
 buildPythonPackage {
   name = "keystoneauth1-${version}";
@@ -19,7 +19,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "keystoneauth1";
     inherit version;
-    sha256 = "0579c112df9ab6764d6e005b7bacbaf2524f7cfcf9a89cc041b2b72d00414268";
+    sha256 = "50ae1e3247f02d71a92b23dc5d19dac553a8c76bbdc9371c074d68d037ff84a1";
   };
 
   propagatedBuildInputs = [

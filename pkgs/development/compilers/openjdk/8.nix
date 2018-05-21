@@ -14,6 +14,7 @@
 , unzip
 , which
 , xorg
+, xorgproto
 , zip
 , zlib
 
@@ -83,8 +84,6 @@ let
       perl
       which
       unzip
-      xorg.inputproto
-      xorg.kbproto
       xorg.libICE
       xorg.libSM
       xorg.libX11
@@ -96,9 +95,7 @@ let
       xorg.libXt
       xorg.libXtst
       xorg.lndir
-      xorg.renderproto
-      xorg.xextproto
-      xorg.xproto
+      xorgproto
       zip
       zlib
     ];

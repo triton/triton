@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     sed -i src/nm-openvpn-service.c \
       -e 's,/sbin/openvpn,${openvpn}/sbin/openvpn,g' \
       -e 's,/sbin/modprobe,${kmod}/sbin/modprobe,g'
-    sed -i properties/auth-helpers.c \
+    sed -i properties/nm-openvpn-editor.c \
       -e 's,/sbin/openvpn,${openvpn}/sbin/openvpn,g'
   '' + optionalString findHardcodedPaths ''
     rm -rf build-aux config.{guess,sub} configure{,.ac} ltmain.sh m4/ man/ docs INSTALL *.m4

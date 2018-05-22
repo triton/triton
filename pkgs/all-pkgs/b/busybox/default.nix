@@ -1,32 +1,18 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
-, static ? false
 , minimal ? false
 , extraConfig ? ""
 }:
 
 let
-  configParser = ''
-    function parseconfig {
-        while read LINE; do
-            NAME=`echo "$LINE" | cut -d \  -f 1`
-            OPTION=`echo "$LINE" | cut -d \  -f 2`
-
-            if ! [[ "$NAME" =~ ^CONFIG_ ]]; then continue; fi
-
-            echo "parseconfig: removing $NAME"
-            sed -i /$NAME'\(=\| \)'/d .config
-
-            echo "parseconfig: setting $NAME=$OPTION"
-            echo "$NAME=$OPTION" >> .config
-        done
-    }
-  '';
+  inherit (lib)
+    optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "busybox-1.28.3";
+  name = "busybox-1.28.4";
 
   src = fetchurl {
     urls = [
@@ -34,7 +20,7 @@ stdenv.mkDerivation rec {
       "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "ad0d22033f23e696f9a71a4c2f9210194dda39b024a79151f4ac278995332a6e";
+    sha256 = "e3c14a3699dc7e82fed397392957afc78e37bdf25398ac38ead6e84621b2ae6a";
   };
 
   patches = [
@@ -49,28 +35,43 @@ stdenv.mkDerivation rec {
     export KCONFIG_NOTIMESTAMP=1
     make ${if minimal then "allnoconfig" else "defconfig"}
 
-    ${configParser}
+    parseconfig() {
+      while read LINE; do
+        NAME=`echo "$LINE" | cut -d \  -f 1`
+        OPTION=`echo "$LINE" | cut -d \  -f 2`
+
+        if ! [[ "$NAME" =~ ^CONFIG_ ]]; then continue; fi
+
+        echo "parseconfig: removing $NAME"
+        sed -i /$NAME'\(=\| \)'/d .config
+
+        echo "parseconfig: setting $NAME=$OPTION"
+        echo "$NAME=$OPTION" >> .config
+      done
+    }
 
     cat << EOF | parseconfig
 
+    CONFIG_LFS y
     CONFIG_PREFIX "$out"
+    CONFIG_PID_FILE_PATH="/run"
     CONFIG_INSTALL_NO_USR y
 
-    CONFIG_LFS y
-
-    ${stdenv.lib.optionalString static ''
-      CONFIG_STATIC y
+    ${optionalString (!minimal) ''
+      # Use the external mount.cifs program.
+      CONFIG_FEATURE_MOUNT_CIFS n
+      CONFIG_FEATURE_MOUNT_HELPERS y
     ''}
 
-    # Use the external mount.cifs program.
-    CONFIG_FEATURE_MOUNT_CIFS n
-    CONFIG_FEATURE_MOUNT_HELPERS y
-
     ${extraConfig}
-    $extraCrossConfig
     EOF
 
     make oldconfig
+  '';
+
+  postInstall = ''
+    mkdir -p "$out"/share/busybox
+    cp .config "$out"/share/busybox/config
   '';
 
   passthru = {

@@ -798,10 +798,23 @@ build-dir-check = callPackage ../all-pkgs/b/build-dir-check { };
 
 busybox = callPackage ../all-pkgs/b/busybox { };
 
-busyboxBootstrap = callPackageAlias "busybox" {
-  static = true;
+busybox_shell = callPackageAlias "busybox" {
   minimal = true;
   extraConfig = ''
+    CONFIG_STATIC y
+    CONFIG_ASH y
+    CONFIG_ASH_ECHO y
+    CONFIG_ASH_PRINTF y
+    CONFIG_ASH_TEST y
+    CONFIG_ASH_GETOPTS y
+    CONFIG_ASH_CMDCMD y
+  '';
+};
+
+busybox_bootstrap = callPackageAlias "busybox" {
+  minimal = true;
+  extraConfig = ''
+    CONFIG_STATIC y
     CONFIG_ASH y
     CONFIG_ASH_ECHO y
     CONFIG_ASH_TEST y

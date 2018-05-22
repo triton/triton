@@ -31,8 +31,8 @@ let
       sha256 = "2afb02029e115fae65dbe1d9c562cbfeb761a6807338bbd30dbffba616cb2d20";
     };
     "52" = {
-      version = "52.7.3";
-      sha256 = "5cc68c1a7486cfbbf02aec0e9da9f87b55e7bfc68c7d5139bc1e578441aaf19f";
+      version = "52.8.0";
+      sha256 = "babed4fe0ae95783e39358aedf7111b20fd9442f73b3b41b025fa4951fe76287";
     };
   };
   source = sources."${channel}";

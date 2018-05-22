@@ -7,13 +7,11 @@
 let
   inherit (stdenv.lib)
     optionalString
-    versionAtLeast
-    versionOlder;
+    versionAtLeast;
 
   sha256s = {
     "0.6.0" = "93555277a19e56025a8fecbe8bf3d6034f18d8a655816fba94067d75f9f3a9ed";
     "0.5.2" = "60453b0d24a7dbff802b92c6e1d244d986ea517b3edb9eb71c39aa53f05cb144";
-    "0.4.0" = "d6a06624eece91f54e4b22b8088ce0090565c7d3f121386dc007b6d2723397ac";
   };
 in
 stdenv.mkDerivation rec {
@@ -24,14 +22,10 @@ stdenv.mkDerivation rec {
     sha256 = sha256s."${version}";
   };
 
-  postPatch = optionalString (versionOlder version "0.5.0") ''
-    cd tools
-  '';
-
   # Only ships with cmake / bazel now but it simple enough to build our own
   buildPhase = optionalString (versionAtLeast version "0.6.0") ''
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$(pwd)/include"
-  '' + optionalString (versionAtLeast version "0.5.0") ''
+  '' + ''
     readarray -t cfiles < <(find . -name \*.c)
     args=()
     for cfile in "''${cfiles[@]}"; do

@@ -767,9 +767,6 @@ borgbackup = pkgs.python3Packages.borgbackup;
 
 borgmatic = pkgs.python3Packages.borgmatic;
 
-brotli_0-4-0 = callPackage ../all-pkgs/b/brotli/old.nix {
-  version = "0.4.0";
-};
 brotli_0-5-2 = callPackage ../all-pkgs/b/brotli/old.nix {
   version = "0.5.2";
 };

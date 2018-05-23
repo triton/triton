@@ -29,17 +29,17 @@ let
     "4.9" = {
       version = "4.9.102";
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "a1daad441ae3df6a9dcce7b6c53b38a9c80613bad62b16517b20dab3a0df8293";
+      patchSha256 = "5a8cd2d20dfd1b61a681ff01eb5406057032adbd035d15a52f2c9abe1b4f4a54";
     };
     "4.14" = {
       version = "4.14.43";
       baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
-      patchSha256 = "9899039be6a66e98272120c4c6d50f4029a6b4f9cc95e5ca3555cff513a7581c";
+      patchSha256 = "3a005904c6600cc88ec7f0c6449e20b281d2179fb9604a161df485c0cbb1af2e";
     };
     "4.16" = {
       version = "4.16.11";
       baseSha256 = "63f6dc8e3c9f3a0273d5d6f4dca38a2413ca3a5f689329d05b750e4c87bb21b9";
-      patchSha256 = "299b45a4f16f763ecf654e6642c020b6e9e461601d056ef44ecb21b54d736cbf";
+      patchSha256 = "d0d998f193c3feeab95f1378dea15aa6ba145f591661547cc00ef16d161651fe";
     };
     "testing" = {
       version = "4.17-rc5";

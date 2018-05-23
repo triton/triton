@@ -25,11 +25,11 @@ stdenv.mkDerivation rec {
   name = "NetworkManager-l2tp-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "seriyps";
     repo = "NetworkManager-l2tp";
     rev = version;
-    sha256 = "ca9f648ea9bd7ac177389af26713dda82af1d1ba98a5b46d42e1846bfbcb4de3";
+    sha256 = "d844cc391189783ebb08907940b51ab1550b34315460df97ac95b10d69f69a5a";
   };
 
   nativeBuildInputs = [

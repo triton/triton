@@ -16,13 +16,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.3.2.10";
+  name = "tor-0.3.3.6";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
-    multihash = "QmRF8NBmgLTuuB9NmUazwxFSaNrnrC3Va5AaJbi6YMVLnr";
+    multihash = "Qma62LQ8yDpxoQ1berYFV2c7zcHmGbdSW9FRg5NnAFTnv8";
     hashOutput = false;
-    sha256 = "60df77c31dcf94fdd686c8ca8c34f3b70243b33a7344ecc0b719d5ca2617cbee";
+    sha256 = "99bc59f6dbf395894de12f3a83b3251a82dfd93dc7f6d3afcbbd80f6111433b7";
   };
 
   nativeBuildInputs = [
@@ -45,6 +45,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     # Remove donna curve25519
+    grep -q 'x$tor_cv_can_use_curve25519_donna_c64"' configure
     sed -i 's,"x$tor_cv_can_use_curve25519_donna_c64","xno",g' configure
   '';
 

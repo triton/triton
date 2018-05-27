@@ -7,18 +7,18 @@
 }:
 
 let
-  date = "2017-09-21";
-  rev = "d566775bf2e0f87b3d81bd799cccd40fda2de133";
+  date = "2018-05-04";
+  rev = "c0a0d9f31f9940abf375a41b43a343cdbf87caab";
 in
 stdenv.mkDerivation {
   name = "netperf-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "HewlettPackard";
     repo = "netperf";
     inherit rev;
-    sha256 = "78219c29ae9a00e7a2d8e60804b5f3c201091ab40604669bf6694eb0dcef1c61";
+    sha256 = "1f56c8bb25adb5044718bc590fc0cee0b68a3a809abe9cb64b1332552b05afeb";
   };
 
   nativeBuildInputs = [

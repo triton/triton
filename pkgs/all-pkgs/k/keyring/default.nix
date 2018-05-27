@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "11.0.0";
+  version = "12.2.1";
 in
 buildPythonPackage {
   name = "keyring-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "keyring";
     inherit version;
-    sha256 = "b4607520a7c97be96be4ddc00f4b9dac65f47a45af4b4cd13ed5a8879641d646";
+    sha256 = "4498eaa2e32fc69a8b36749116b670c379d36a1a9ad4ab107df1e19c8a120ffe";
   };
 
   propagatedBuildInputs = [

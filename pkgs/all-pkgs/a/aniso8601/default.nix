@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.2.1";
+  version = "3.0.0";
 in
 buildPythonPackage rec {
   name = "aniso8601-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "aniso8601";
     inherit version;
-    sha256 = "e7ba4f42d3aea75909c79b1f4c4614768b4f13fbb98fc658a7b6061ddb0be47c";
+    sha256 = "7cf068e7aec00edeb21879c2bbda048656c34d281e133a77425be03b352122d8";
   };
 
   propagatedBuildInputs = [

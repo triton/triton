@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "2.2.0";
+  version = "2.2.1";
 in
 stdenv.mkDerivation rec {
   name = "libcue-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "lipnitsk";
     repo = "libcue";
     rev = "v${version}";
-    sha256 = "d967e7e6087586f771281072ddc4e94afd56fcb7fcfe1b2e9931866d41df2b6b";
+    sha256 = "eb3ee520325181ee2e0308aefb0dc7cdedfea2cecf1574f73ac0e5f6b53a0aa4";
   };
 
   nativeBuildInputs = [

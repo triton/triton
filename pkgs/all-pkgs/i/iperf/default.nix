@@ -10,9 +10,8 @@
 let
   sources = {
     "2" = {
-      version = "2.0.9";
-      multihash = "QmVEsHmgJrz1vJM9oGaM5oStWsxYC19JyCW4QAUVQWvVKM";
-      sha256 = "a5350777b191e910334d3a107b5e5219b72ffa393da4186da1e0a4552aeeded6";
+      version = "2.0.11";
+      sha256 = "b7d650d07c6bb0e357b5938a20e4ac33876012fddb952299c5d321e6958da5d2";
     };
     "3" = {
       fetchzipVersion = 5;
@@ -29,7 +28,6 @@ let
 
   inherit (source)
     version
-    multihash
     sha256;
 in
 stdenv.mkDerivation rec {
@@ -46,9 +44,8 @@ stdenv.mkDerivation rec {
       }
     else
       fetchurl {
-        name = "${name}.tar.gz";
-        url = "https://iperf.fr/download/source/${name}-source.tar.gz";
-        inherit multihash sha256;
+        url = "mirror://sourceforge/iperf2/${name}.tar.gz";
+        inherit sha256;
       };
 
   buildInputs = optionals (channel == "3") [

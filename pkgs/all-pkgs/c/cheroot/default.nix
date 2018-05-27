@@ -19,6 +19,11 @@ buildPythonPackage rec {
     sha256 = "e83ecc6bd473c340a10adac19cc69c65607638fa3e8b37cf0b26b6fdf4db4994";
   };
 
+  postPatch = ''
+    sed -i setup.py \
+      -e '/setuptools_scm_git_archive/d'
+  '';
+
   propagatedBuildInputs = [
     setuptools-scm
     six

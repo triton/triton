@@ -17,11 +17,11 @@ stdenv.mkDerivation rec {
   name = "libvdpau-va-gl-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "i-rinat";
     repo = "libvdpau-va-gl";
-    rev = "v" + version;
-    sha256 = "1c5c03239f56e1092d273f822396a6c1103a100d737d425a67662892eb0b5d51";
+    rev = "v${version}";
+    sha256 = "32bbc4aa57ca3c9cc5824e0bbec3e59e6dda5a33d2bb2ef4955ce15b7d61f3fe";
   };
 
   nativeBuildInputs = [

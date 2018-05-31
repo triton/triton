@@ -21,11 +21,11 @@ stdenv.mkDerivation rec {
   name = "libaccounts-glib-${version}";
 
   src = fetchFromGitLab {
-    version = 2;
+    version = 6;
     owner = "accounts-sso";
     repo = "libaccounts-glib";
     rev = "VERSION_${version}";
-    sha256 = "da801fd903413634e257157ec4a363749cd71a742a9f9721a44237ad6df1906d";
+    sha256 = "105df9c2f350c4a33992211b4875c155c290edb598b049586bb5a4d8fe322fa5";
   };
 
   nativeBuildInputs = [

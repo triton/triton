@@ -6,14 +6,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libutp-2016-05-25";
+  name = "libutp-2018-05-15";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "bittorrent";
     repo = "libutp";
-    rev = "31103141c4101bc05bfe4c622cb77d17ff90c0f1";
-    sha256 = "2702fb5d8d96bcd4b3957e90092db01c9906b3047db9f909b5e6083bf2c0bd5c";
+    rev = "2b364cbb0650bdab64a5de2abb4518f9f228ec44";
+    sha256 = "9c180f50a9e8038bac50cbc94cceb0083d91b2dc11a4be6a112b71b226735192";
   };
 
   nativeBuildInputs = [

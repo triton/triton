@@ -3907,8 +3907,6 @@ wget = callPackage ../all-pkgs/w/wget { };
 
 which = callPackage ../all-pkgs/w/which { };
 
-winusb = callPackage ../all-pkgs/w/winusb { };
-
 wiredtiger = callPackage ../all-pkgs/w/wiredtiger { };
 
 wireguard = callPackage ../all-pkgs/w/wireguard {

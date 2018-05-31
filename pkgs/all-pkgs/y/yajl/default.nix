@@ -11,11 +11,11 @@ stdenv.mkDerivation rec {
   name = "yajl-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "lloyd";
     repo = "yajl";
     rev = version;
-    sha256 = "a82892c2ce5c6984ed43086aced1ece9c649920ce8cd79c7a7c253e0f79f8db2";
+    sha256 = "bc9987663ea2ae312f9cfb7e33a0ff053668fff151a1a61f8afe7aab23485c74";
   };
 
   nativeBuildInputs = [

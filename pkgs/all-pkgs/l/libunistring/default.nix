@@ -7,7 +7,7 @@ let
     "mirror://gnu/libunistring/libunistring-${version}.tar.xz"
   ];
 
-  version = "0.9.9";
+  version = "0.9.10";
 in
 stdenv.mkDerivation rec {
   name = "libunistring-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "a4d993ecfce16cf503ff7579f5da64619cee66226fb3b998dafb706190d9a833";
+    sha256 = "eb8fb2c3e4b6e2d336608377050892b54c3c983b646c561836550863003c05d7";
   };
 
   # One of the tests fails to compile for 0.9.6 when run in parallel
@@ -25,11 +25,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.9.9";
+      urls = tarballUrls "0.9.10";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "4622 25C3 B46F 3487 9FC8  496C D605 848E D7E6 9871";
       inherit (src) outputHashAlgo;
-      outputHash = "a4d993ecfce16cf503ff7579f5da64619cee66226fb3b998dafb706190d9a833";
+      outputHash = "eb8fb2c3e4b6e2d336608377050892b54c3c983b646c561836550863003c05d7";
     };
   };
 

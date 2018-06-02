@@ -60,7 +60,7 @@ let
     optionalString
     splitString;
 
-  version = "18.0.3";
+  version = "18.1.1";
 
   # This is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -78,9 +78,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmWfLGaCNCivxPdVnRoBY95YUTBxXgt9M4vBZfRY57LSVu";
+    multihash = "QmawFrgbj1Dvp1R8SWVJu3LsNMsStzrL7KM194RbtWiPzk";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "099d9667327a76a61741a533f95067d76ea71a656e66b91507b3c0caf1d49e30";
+    sha256 = "d3312a2ede5aac14a47476b208b8e3a401367838330197c4588ab8ad420d7781";
   };
 
   nativeBuildInputs = [
@@ -147,7 +147,7 @@ stdenv.mkDerivation rec {
       -i src/gallium/drivers/freedreno/Makefile.am
   '' + /* Files are unnecessarily pre-generated for an older LLVM version */ ''
     # https://github.com/mesa3d/mesa/commit/5233eaf9ee85bb551ea38c1e2bbd8ac167754e50
-    rm src/gallium/drivers/swr/rasterizer/jitter/gen_builder{,_x86}.hpp
+    rm src/gallium/drivers/swr/rasterizer/jitter/gen_builder.hpp
   '' + /* Install glvnd files in the current prefix */ ''
     sed -i src/egl/Makefile.am \
       -e 's/LIBGLVND_DATADIR/DATADIR/'
@@ -189,6 +189,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
     "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
     "--${boolEn (buildConfig != "opengl-dummy")}-omx-bellagio"
+    #"--${boolEn (buildConfig != "opengl-dummy")}-omx-tizonia"
     "--${boolEn (buildConfig != "opengl-dummy")}-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang

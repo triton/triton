@@ -1,16 +1,17 @@
 { stdenv
+, cmake
 , fetchurl
-, perl
+, ninja
+, python3Packages
 
 , cyrus-sasl
-, libbson
 , openssl
 , snappy
 , zlib
 }:
 
 let
-  version = "1.9.4";
+  version = "1.10.1";
 in
 stdenv.mkDerivation rec {
   name = "mongo-c-driver-${version}";
@@ -18,39 +19,28 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "910c2f1b2e3df4d0ea39c2f242160028f90fcb8201f05339a730ec4ba70811fb";
+    sha256 = "630e83bfc97114a9936f0b6871bfd593b538839caf1d3f93c8038148d1b9a4d6";
   };
 
   nativeBuildInputs = [
-    perl
+    cmake
+    ninja
+    python3Packages.sphinx
   ];
 
   buildInputs = [
     cyrus-sasl
-    libbson
     openssl
     snappy
     zlib
   ];
 
-  configureFlags = [
-    "--disable-examples"
-    "--disable-tests"
-    "--enable-sasl=yes"
-    "--enable-ssl=openssl"
-    "--enable-crypto-system-profile"
-    "--with-libbson=system"
-    "--with-snappy=system"
-    "--with-zlib=system"
+  cmakeFlags = [
+    "-DENABLE_TESTS=OFF"
+    "-DENABLE_EXAMPLES=OFF"
+    "-DENABLE_CRYPTO_SYSTEM_PROFILE=ON"
+    "-DENABLE_MAN_PAGES=ON"
   ];
-
-  # Builders don't respect the nested include dir
-  postInstall = ''
-    incdir="$(echo "$out"/include/*)"
-    mv "$incdir"/* "$out/include"
-    rmdir "$incdir"
-    ln -sv . "$incdir"
-  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

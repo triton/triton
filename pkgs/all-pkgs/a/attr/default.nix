@@ -3,12 +3,20 @@
 , gettext
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://savannah/attr/attr-${version}.src.tar.gz"
+  ];
+
+  version = "2.4.47";
+in
 stdenv.mkDerivation rec {
-  name = "attr-2.4.47";
+  name = "attr-${version}";
 
   src = fetchurl {
-    url = "mirror://savannah/attr/${name}.src.tar.gz";
-    sha256 = "0nd8y0m6awc9ahv0ciiwf8gy54c8d3j51pw9xg7f7cn579jjyxr5";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859";
   };
 
   nativeBuildInputs = [
@@ -32,6 +40,17 @@ stdenv.mkDerivation rec {
     "install-lib"
     "install-dev"
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.4.47";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "600C D204 FBCE A418 BD2C  A74F 1543 4326 0542 DF34";
+      inherit (src) outputHashAlgo;
+      outputHash = "25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library and tools for manipulating extended attributes";

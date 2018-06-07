@@ -5,12 +5,20 @@
 , attr
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://savannah/acl/acl-${version}.src.tar.gz"
+  ];
+
+  version = "2.2.52";
+in
 stdenv.mkDerivation rec {
-  name = "acl-2.2.52";
+  name = "acl-${version}";
 
   src = fetchurl {
-    url = "mirror://savannah/acl/${name}.src.tar.gz";
-    sha256 = "08qd9s3wfhv0ajswsylnfwr5h0d7j9d4rgip855nrh400nxp940p";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "179074bb0580c06c4b4137be4c5a92a701583277967acdb5546043c7874e0d23";
   };
 
   nativeBuildInputs = [
@@ -46,6 +54,17 @@ stdenv.mkDerivation rec {
     "install-lib"
     "install-dev"
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.2.52";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "600C D204 FBCE A418 BD2C  A74F 1543 4326 0542 DF34";
+      inherit (src) outputHashAlgo;
+      outputHash = "179074bb0580c06c4b4137be4c5a92a701583277967acdb5546043c7874e0d23";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library and tools for manipulating access control lists";

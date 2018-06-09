@@ -10,15 +10,15 @@ let
     "mirror://gnu/bison/bison-${version}.tar.xz"
   ];
 
-  version = "3.0.4";
+  version = "3.0.5";
 in
 stdenv.mkDerivation rec {
   name = "bison-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/bison/${name}.tar.gz";
+    urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "b67fd2daae7a64b5ba862c66c07c1addb9e6b1b05c5f2049392cfd8a2172952e";
+    sha256 = "075cef2e814642e30e10e8155e93022e4a91ca38a65aa1d5467d4e969f97f338";
   };
 
   nativeBuildInputs = [

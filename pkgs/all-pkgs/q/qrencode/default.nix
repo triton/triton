@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "qrencode-4.0.0";
+  name = "qrencode-4.0.2";
 
   src = fetchurl {
     url = "https://fukuchi.org/works/qrencode/${name}.tar.bz2";
-    multihash = "QmdntiBk9DrBpTGnCLgMnBpi7Q2ZjVqASuoKSVU9TfaSek";
-    sha256 = "c90035e16921117d4086a7fdee65aab85be32beb4a376f6b664b8a425d327d0b";
+    multihash = "QmRFJHZN5xzbJUNt3Uigj5epDQiNRhBSrSKJ7Vt8rM3SuP";
+    sha256 = "c9cb278d3b28dcc36b8d09e8cad51c0eca754eb004cb0247d4703cb4472b58b4";
   };
 
   buildInputs = [

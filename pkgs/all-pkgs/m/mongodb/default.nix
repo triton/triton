@@ -6,7 +6,6 @@
 , cyrus-sasl
 , gperftools
 , icu
-, libbson
 , libpcap
 , mongo-c-driver
 , openssl
@@ -18,7 +17,7 @@
 }:
 
 let
-  version = "3.6.3";
+  version = "3.6.5";
 
   inherit (stdenv.lib)
     concatMap
@@ -30,7 +29,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "df2d5c05c569ca93eacf88b68e0feb3ff52ffbfc8ccd8736ff20d86850db207c";
+    sha256 = "b99535800925b5c5a9a103fdad37559b6cde13e7cdce72310f32ff105ec615df";
   };
 
   nativeBuildInputs = [
@@ -46,7 +45,6 @@ stdenv.mkDerivation rec {
     cyrus-sasl
     gperftools
     #icu
-    libbson
     libpcap
     mongo-c-driver
     openssl

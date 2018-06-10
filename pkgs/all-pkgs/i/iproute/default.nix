@@ -5,11 +5,14 @@
 , lib
 
 , db
+, elfutils
 , iptables
+, libcap
+, libmnl
 }:
 
 let
-  version = "4.16.0";
+  version = "4.17.0";
 
   tarballUrls = [
     "mirror://kernel/linux/utils/net/iproute2/iproute2-${version}.tar"
@@ -21,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "0c5c24020fd7349fe25728c5edee9fb6a1bc8a38f08e23be5c57a6301e55ee0a";
+    sha256 = "6fa991b092315887775b9e47dc6a89af7ae09dd3ad4ccff754d055c566b4be6e";
   };
 
   nativeBuildInputs = [
@@ -31,7 +34,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     db
+    elfutils
     iptables
+    libcap
+    #libmnl  header conflicts
   ];
 
   preConfigure = ''

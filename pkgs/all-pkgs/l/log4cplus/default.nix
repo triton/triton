@@ -8,7 +8,7 @@ let
     concatStringsSep
     splitString;
 
-  version = "2.0.0";
+  version = "2.0.1";
   rel = "REL_" + concatStringsSep "_" (splitString "." version);
 in
 stdenv.mkDerivation rec {
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
       "https://github.com/log4cplus/log4cplus/releases/download/${rel}/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "8c85e769c3dbec382ed4db91f15e5bc24ba979f810262723781f2fc596339bf4";
+    sha256 = "813580059fd91260376e411b3e09c740aa86dedc5f6a0bd975b9b39d5c4370e6";
   };
 
   passthru = {

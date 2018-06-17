@@ -64,6 +64,9 @@ with stdenv.lib;
   DECOMPRESS_LZO y
   DECOMPRESS_LZ4 y
   DECOMPRESS_XZ y
+  ${optionalString (versionAtLeast version "4.18") ''
+    TLS_DEVICE y
+  ''}
 
   # Debugging.
   DEBUG_KERNEL y
@@ -166,7 +169,9 @@ with stdenv.lib;
   WAN y
 
   # Networking options.
-  IPX n
+  ${optionalString (versionOlder version "4.18") ''
+    IPX n
+  ''}
   IP_PNP n
   IP_MROUTE_MULTIPLE_TABLES y
   IPV6_ROUTER_PREF y
@@ -197,6 +202,12 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.14") ''
     BPF_STREAM_PARSER y
+  ''}
+  ${optionalString (versionAtLeast version "4.18") ''
+    XDP_SOCKETS y
+  ''}
+  ${optionalString (versionAtLeast version "4.18") ''
+    BPFILTER y
   ''}
   NF_CONNTRACK_ZONES y
   NF_CONNTRACK_EVENTS y
@@ -259,7 +270,6 @@ with stdenv.lib;
   V4L_PLATFORM_DRIVERS y
   V4L_MEM2MEM_DRIVERS y
   DVB_PLATFORM_DRIVERS y
-  RADIO_SI470X y
   DRM_DP_AUX_CHARDEV y
   DRM_RADEON_USERPTR y
   DRM_AMDGPU_CIK y
@@ -358,7 +368,9 @@ with stdenv.lib;
 
   # Filesystem options - in particular, enable extended attributes and
   # ACLs for all filesystems that support them.
-  NCP_FS n
+  ${optionalString (versionOlder version "4.18") ''
+    NCP_FS n
+  ''}
   FANOTIFY y
   EXT2_FS n
   EXT3_FS n
@@ -455,7 +467,7 @@ with stdenv.lib;
   IO_STRICT_DEVMEM y
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
-  CC_STACKPROTECTOR_STRONG y
+  ${optionalString (versionOlder version "4.18") "CC_"}STACKPROTECTOR_STRONG y
   USER_NS y # Support for user namespaces
   INTEL_TXT y
   SECURITY_YAMA y
@@ -593,6 +605,7 @@ with stdenv.lib;
 
   # PCI-Expresscard hotplug support
   HOTPLUG_PCI_PCIE y
+  HOTPLUG_PCI_SHPC y
 
   # Linux containers.
   NAMESPACES y #  Required by 'unshare' used by 'nixos-install'
@@ -738,6 +751,9 @@ with stdenv.lib;
   HVC_XEN y
   HVC_XEN_FRONTEND y
   SWIOTLB_XEN y
+  ${optionalString (versionAtLeast version "4.18") ''
+    DRM_XEN y
+  ''}
 
   ${optionalString (versionAtLeast version "4.16") ''
     JAILHOUSE_GUEST y
@@ -797,6 +813,9 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.16") ''
     CHELSIO_IPSEC_INLINE y
+  ''}
+  ${optionalString (versionAtLeast version "4.18") ''
+    MLX5_EN_TLS y
   ''}
 
   # zram support (e.g for in-memory compressed swap).

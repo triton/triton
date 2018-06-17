@@ -8,6 +8,10 @@
 , lib
 , perl
 
+, gmp
+, mpfr
+, libmpc
+
 , # Overrides to the kernel config.
   extraConfig ? ""
 
@@ -47,12 +51,12 @@ let
       patchSha256 = "a528b102daad9d3072b328f68d4fc7b4eff7641ad301d1a54e5b8f5385efeb0b";
     };
     "testing" = {
-      version = "4.17-rc7";
-      baseSha256 = "63f6dc8e3c9f3a0273d5d6f4dca38a2413ca3a5f689329d05b750e4c87bb21b9";
+      version = "4.18-rc1";
+      baseSha256 = "9faa1dd896eaea961dc6e886697c0b3301277102e5bc976b2758f9a62d3ccd13";
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];
-      patchSha256 = "0312001a8a7bc4ac12eedbab9c85cca49d4df2f3eacd1cc32354b061c20d9d0b";
+      patchSha256 = "cdbe297640cf1cc04661c69343e279d36ceb767836f4c15a401bc2b211201335";
     };
     "bcachefs" =
       let
@@ -122,11 +126,23 @@ let
       ++ optionals needsGitPatch [ git ]
       ++ optionals (versionAtLeast version "4.16") [ bison flex ];
 
+    # Referenced by gcc internally for plugins
+    buildInputs = optionals (versionAtLeast version "4.9") [ gmp mpfr libmpc ];
+
     platformName = "pc";
     kernelBaseConfig = "defconfig";
     kernelTarget = "bzImage";
     autoModules = true;
     arch = common.kernelArch;
+
+    # We don't want these compiler security features / optimizations
+    optFlags = false;
+    pie = false;
+    fpic = false;
+    noStrictOverflow = false;
+    fortifySource = false;
+    stackProtector = false;
+    optimize = false;
 
     postPatch = kernel.postPatch + ''
       # Patch kconfig to print "###" after every question so that

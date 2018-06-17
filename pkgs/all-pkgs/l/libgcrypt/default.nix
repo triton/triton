@@ -11,7 +11,7 @@ let
     "mirror://gnupg/libgcrypt/libgcrypt-${version}.tar.bz2"
   ];
 
-  version = "1.8.2";
+  version = "1.8.3";
 in
 stdenv.mkDerivation rec {
   name = "libgcrypt-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "c8064cae7558144b13ef0eb87093412380efa16c4ee30ad12ecb54886a524c07";
+    sha256 = "66ec90be036747602f2b48f98312361a9180c97c68a690a5f376fa0f67d0af7c";
   };
 
   buildInputs = [
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.8.2";
+      urls = tarballUrls "1.8.3";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprints = [
         # Werner Koch
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
         # NIIBE Yutaka
         "031E C253 6E58 0D8E A286  A9F2 2071 B08A 33BD 3F06"
       ];
-      outputHash = "c8064cae7558144b13ef0eb87093412380efa16c4ee30ad12ecb54886a524c07";
+      outputHash = "66ec90be036747602f2b48f98312361a9180c97c68a690a5f376fa0f67d0af7c";
       inherit (src) outputHashAlgo;
     };
   };

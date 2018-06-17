@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.7";
+  version = "2.8";
 in
 buildPythonPackage {
   name = "libarchive-c-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "libarchive-c";
     inherit version;
-    sha256 = "56eadbc383c27ec9cf6aad3ead72265e70f80fa474b20944328db38bab762b04";
+    sha256 = "06d44d5b9520bdac93048c72b7ed66d11a6626da16d2086f9aad079674d8e061";
   };
 
   postPatch = ''

@@ -7,6 +7,7 @@
 , lib
 
 , gmp
+, jansson
 , iptables
 , libmnl
 , libnftnl
@@ -14,13 +15,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "nftables-0.8.5";
+  name = "nftables-0.9.0";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nftables/files/${name}.tar.bz2";
-    multihash = "QmNjb4Gw77iY438dS3tm6wnDgKSuvzsJ1GBVZEFJzMf5tg";
+    multihash = "QmVRkBjAnaDLBh56CGRGDEwdoaryZC9sajqXrjRyjH4X2A";
     hashOutput = false;
-    sha256 = "8e9baf80a1c7f0e19e5b50e469bda4487793d839da45c75e8a20fadcbaeae323";
+    sha256 = "ad8181b5fcb9ca572f444bed54018749588522ee97e4c21922648bb78d7e7e91";
   };
 
   nativeBuildInputs = [
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     gmp
+    jansson
     iptables
     libmnl
     libnftnl
@@ -44,6 +46,7 @@ stdenv.mkDerivation rec {
     "--without-mini-gmp"
     "--with-cli"
     "--with-xtables"
+    "--with-json"
   ];
 
   preInstall = ''

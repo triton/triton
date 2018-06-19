@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, gettext
 
 , attr
 }:
@@ -21,38 +20,8 @@ stdenv.mkDerivation rec {
     sha256 = "06be9865c6f418d851ff4494e12406568353b891ffe1f596b34693c387af26c7";
   };
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
   buildInputs = [
     attr
-  ];
-
-  postPatch =
-    /* Upstream use C++-style comments in C code. Remove them. This
-       comment breaks compilation with strict gcc flags are used. */ ''
-    sed -i include/acl.h \
-      -e '/^\/\//d'
-  '';
-
-  configureFlags = [
-    "--enable-gettext"
-    "--disable-lib64"
-    "AWK=gawk"
-    "ECHO=exho"
-    "MAKE=make"
-    "MSGFMT=msgfmt"
-    "MSGMERGE=msgmerge"
-    "SED=sed"
-    "XGETTEXT=xgettext"
-    "ZIP=gzip"
-  ];
-
-  installTargets = [
-    "install"
-    "install-lib"
-    "install-dev"
   ];
 
   passthru = {

@@ -3,18 +3,22 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pkgconf-1.4.2";
+  name = "pkgconf-1.5.1";
 
   src = fetchurl {
     url = "https://distfiles.dereferenced.org/pkgconf/${name}.tar.xz";
-    multihash = "Qmc2pkAWeoa1DWZNMT8jSB44R8Lq7yxG9u1rCHbns2VLT4";
-    sha256 = "bab39371d4ab972be1d539a8b10b6cc21f8eafc97f617102e667e82bd32eb234";
+    multihash = "QmfSQ4St6HjvxcbUuSpK8qbUioAh5Gu1FfkSuuSaVeibGf";
+    sha256 = "d6877d721f84b59f137da48b237f16e68b598f5afc4f2a04d0a5c9e7e2bf5462";
   };
 
-  postInstall = ''
-    # The install is broken and is missing libpkgconfig/config.h
-    cp -v libpkgconf/config.h "$out"/include/pkgconf
+  configureFlags = [
+    "--with-personality-dir=/no-such-path"
+    "--with-pkg-config-dir=/no-such-path"
+    "--with-system-libdir=/no-such-path"
+    "--with-system-includedir=/no-such-path"
+  ];
 
+  postInstall = ''
     # The header files expect themselves to be in libpkgconf
     # however they are installed to pkgconf
     test -d "$out"/include/pkgconf

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.4.13";
+  version = "0.4.15";
 in
 buildPythonPackage {
   name = "python-magic-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-magic";
     inherit version;
-    sha256 = "604eace6f665809bebbb07070508dfa8cabb2d7cb05be9a56706c60f864f1289";
+    sha256 = "f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5";
   };
 
   postPatch = ''

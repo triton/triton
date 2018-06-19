@@ -6,15 +6,15 @@
 }:
 
 let
-  version = "1.4.4";
+  version = "1.4.5";
 in
 stdenv.mkDerivation rec {
   name = "xapian-core-${version}";
 
   src = fetchurl {
     url = "https://oligarchy.co.uk/xapian/${version}/${name}.tar.xz";
-    multihash = "QmQjRk7UXkkbLCg57fWcVads7imyiE5EqYWz5fMkupTmvb";
-    sha256 = "a6a985a9841a452d75cf2169196b7ca6ebeef27da7c607078cd401ad041732d9";
+    multihash = "QmNsVt49CYc1VL9usMVFtpa4sooBzfsUzJyFgyybodqTqN";
+    sha256 = "85b5f952de9df925fd13e00f6e82484162fd506d38745613a50b0a2064c6b02b";
   };
 
   buildInputs = [
@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    #"--enable-64bit-docid"  breaks notmuch
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];

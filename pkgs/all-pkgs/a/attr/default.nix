@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, gettext
 }:
 
 let
@@ -19,27 +18,14 @@ stdenv.mkDerivation rec {
     sha256 = "5ead72b358ec709ed00bbf7a9eaef1654baad937c001c044fe8b74c57f5324e7";
   };
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
   configureFlags = [
-    "--enable-gettext"
-    "--disable-lib64"
-    "AWK=gawk"
-    "ECHO=exho"
-    "MAKE=make"
-    "MSGFMT=msgfmt"
-    "MSGMERGE=msgmerge"
-    "SED=sed"
-    "XGETTEXT=xgettext"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
   ];
 
-  installTargets = [
-    "install"
-    "install-lib"
-    "install-dev"
-  ];
+  preInstall = ''
+    installFlagsArray+=("sysconfdir=$out/etc")
+  '';
 
   passthru = {
     srcVerification = fetchurl rec {

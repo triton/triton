@@ -7,10 +7,10 @@
 
 let
   tarballUrls = version: [
-    "mirror://savannah/acl/acl-${version}.src.tar.gz"
+    "mirror://savannah/acl/acl-${version}.tar.gz"
   ];
 
-  version = "2.2.52";
+  version = "2.2.53";
 in
 stdenv.mkDerivation rec {
   name = "acl-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "179074bb0580c06c4b4137be4c5a92a701583277967acdb5546043c7874e0d23";
+    sha256 = "06be9865c6f418d851ff4494e12406568353b891ffe1f596b34693c387af26c7";
   };
 
   nativeBuildInputs = [
@@ -58,11 +58,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.52";
+      urls = tarballUrls "2.2.53";
       pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "600C D204 FBCE A418 BD2C  A74F 1543 4326 0542 DF34";
+      pgpKeyFingerprints = [
+        "600C D204 FBCE A418 BD2C  A74F 1543 4326 0542 DF34"
+        # Mike Frysinger
+        "B902 B527 1325 F892 AC25  1AD4 4163 3B9F E837 F581"
+      ];
       inherit (src) outputHashAlgo;
-      outputHash = "179074bb0580c06c4b4137be4c5a92a701583277967acdb5546043c7874e0d23";
+      outputHash = "06be9865c6f418d851ff4494e12406568353b891ffe1f596b34693c387af26c7";
     };
   };
 

@@ -7,8 +7,6 @@
 , libxslt
 , xmlto
 
-, acl
-, attr
 , e2fsprogs
 , lzo
 , util-linux_lib
@@ -41,8 +39,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    acl
-    attr
     e2fsprogs
     lzo
     util-linux_lib

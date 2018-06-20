@@ -5,17 +5,16 @@
 }:
 
 let
-  release = "20180419";
-  version = "2.8-rc1";
+  release = "20180524";
+  version = "2.8";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
 
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
-      + "files/releases/${release}/${name}.tar.gz";
-    hashOutput = false;
-    sha256 = "57e8fad435055938dbc52b1ff4a0f6b943aad4a01cc7604a881805e84632d861";
+    url = "https://github.com/SELinuxProject/selinux/releases/download/"
+      + "${release}/${name}.tar.gz";
+    sha256 = "3ad6916a8352bef0bad49acc8037a5f5b48c56f94e4cb4e1959ca475fa9d24d6";
   };
 
   nativeBuildInputs = [

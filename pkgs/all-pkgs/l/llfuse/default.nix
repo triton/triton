@@ -36,6 +36,12 @@ buildPythonPackage {
   '' + ''
     sed -i setup.py \
       -e '/-Werror=conversion/d'
+
+    grep -q '<attr/xattr.h>' src/xattr.h
+    sed \
+      -e 's,attr/xattr.h,sys/xattr.h,g' \
+      -e '\#sys/xattr.h#a#include <attr/attributes.h>' \
+      -i src/xattr.h
   '';
 
   preBuild = ''

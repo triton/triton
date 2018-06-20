@@ -9,17 +9,16 @@
 }:
 
 let
-  release = "20180419";
-  version = "2.8-rc1";
+  release = "20180524";
+  version = "2.8";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
 
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
-      + "files/releases/${release}/${name}.tar.gz";
-    hashOutput = false;
-    sha256 = "2229b6ef6cee73d335fb3d9f763e167fe182e70cd045e18f975bd2f9d0d9d6dd";
+    url = "https://github.com/SELinuxProject/selinux/releases/download/"
+      + "${release}/${name}.tar.gz";
+    sha256 = "31db96ec7643ce10912b3c3f98506a08a9116dcfe151855fd349c3fda96187e1";
   };
 
   nativeBuildInputs = [

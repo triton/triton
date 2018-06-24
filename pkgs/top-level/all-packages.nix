@@ -2458,6 +2458,8 @@ libpthread-stubs = callPackage ../all-pkgs/l/libpthread-stubs { };
 
 libpwquality = callPackage ../all-pkgs/l/libpwquality { };
 
+libqb = callPackage ../all-pkgs/l/libqb { };
+
 libqmi = callPackage ../all-pkgs/l/libqmi { };
 
 libraw = callPackage ../all-pkgs/l/libraw { };

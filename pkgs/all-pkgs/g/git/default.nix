@@ -23,6 +23,9 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    concatStringsSep;
+
   path = [
     coreutils
     gawk
@@ -31,7 +34,7 @@ let
     gnused
   ];
 
-  version = "2.17.1";
+  version = "2.18.0";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -43,12 +46,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "79136e7aa83abae4d8a25c8111f113d3c5a63aeb5fd93cc72c26d49c6d5ba65e";
+    sha256 = "8b40be383a603147ae29337136c00d1c634bdfdc169a30924a024596a7e30e92";
   };
-
-  patches = [
-    ./symlinks-in-bin.patch
-  ];
 
   nativeBuildInputs = [
     asciidoc
@@ -69,25 +68,29 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # required to support pthread_cancel()
-  NIX_LDFLAGS = "-lgcc_s";
-
-  makeFlags = [
-    "SHELL_PATH=${stdenv.shell}"
-    "SANE_TOOL_PATH=${stdenv.lib.concatStringsSep ":" path}"
-    "USE_LIBPCRE2=1"
-    "GNU_ROFF=1"
-    "PERL_PATH=${perl}/bin/perl"
-    "PYTHON_PATH=${python}/bin/python"
-    "NO_TCLTK=1"
-    "HAVE_CLOCK_GETTIME=1"
-    "HAVE_CLOCK_MONOTONIC=1"
-    "NO_INSTALL_HARDLINKS=1"
-    "prefix=\${out}"
-    "sysconfdir=/etc"
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--with-sane-tool-path=${concatStringsSep ":" path}"
+    "--with-libpcre"
+    "--without-tcltk"
   ];
 
+  # required to support pthread_cancel()
+  #NIX_LDFLAGS = "-lgcc_s";
+
+  makeFlags = [
+    "PERL_PATH=${perl}/bin/perl"
+    "PYTHON_PATH=${python}/bin/python"
+    "GNU_ROFF=1"
+    "INSTALL_SYMLINKS=1"
+  ];
+
+  preBuild = ''
+    cat config.mak.autogen
+  '';
+
   buildFlags = [
+    "V=1"
     "all"
     "man"
   ];

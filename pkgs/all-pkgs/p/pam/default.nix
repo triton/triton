@@ -9,15 +9,15 @@
 }:
 
 let
-  version = "1.3.0";
+  version = "1.3.1";
 in
 stdenv.mkDerivation rec {
   name = "pam-${version}";
 
   src = fetchurl {
-    url = "http://www.linux-pam.org/library/Linux-PAM-${version}.tar.bz2";
-    multihash = "QmXy2JMRjxfKRsgyWjJyLooMCXMnW3V8LUpsKWFfgacC62";
-    sha256 = "1fyi04d5nsh8ivd0rn2y0z83ylgc0licz7kifbb6xxi2ylgfs6i4";
+    url = "https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz";
+    hashOutput = false;
+    sha256 = "eff47a4ecd833fbf18de9686632a70ee8d0794b79aecb217ebd0ce11db4cd0db";
   };
 
   buildInputs = [
@@ -34,20 +34,11 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--disable-static-modules"
-    "--enable-pie"
     "--disable-prelude"
-    "--disable-debug"
-    "--disable-pamlocking"
     "--enable-read-both-confs"
-    "--enable-lckpwdf"
-    "--with-xauth=/run/current-system/sw/bin/xauth"
-    "--enable-cracklib"
-    "--enable-audit"
-    "--enable-db=db"
-    "--enable-nis"
     "--disable-selinux"
     "--disable-regenerate-docu"
+    "--with-xauth=/run/current-system/sw/bin/xauth"
   ];
 
   preInstall = ''

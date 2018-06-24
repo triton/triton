@@ -1,7 +1,6 @@
 { stdenv
 , fetchzip
 
-, attr
 , keyutils
 , libaio
 , libnih
@@ -29,7 +28,6 @@ stdenv.mkDerivation {
   };
 
   buildInputs = [
-    attr
     keyutils
     libaio
     libnih
@@ -41,6 +39,11 @@ stdenv.mkDerivation {
     zlib
     zstd
   ];
+
+  postPatch = ''
+    grep -q 'attr/xattr.h' cmd_migrate.c
+    sed -i 's,attr/xattr.h,sys/xattr.h,' cmd_migrate.c
+  '';
 
   preBuild = ''
     makeFlagsArray+=(

@@ -2,8 +2,6 @@
 , fetchurl
 , lib
 , perl
-
-, attr
 }:
 
 stdenv.mkDerivation rec {
@@ -16,10 +14,6 @@ stdenv.mkDerivation rec {
   
   nativeBuildInputs = [
     perl
-  ];
-
-  buildInputs = [
-    attr
   ];
 
   preConfigure = ''

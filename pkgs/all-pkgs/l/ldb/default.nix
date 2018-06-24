@@ -7,6 +7,7 @@
 , samba_full
 
 , cmocka
+, lmdb
 , popt
 , talloc
 , tdb
@@ -14,7 +15,7 @@
 }:
 
 let
-  name = "ldb-1.3.3";
+  name = "ldb-1.4.0";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "2b3070f6127d9684e928038abad441e18aef8c2ce703c3ec5d57fadd4ecdfa91";
+    sha256 = "a87edaa35a33a76006a7ccd30f326514db78ac235b3a257402441349bc0da9b4";
   };
 
   nativeBuildInputs = [
@@ -38,6 +39,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     cmocka
+    lmdb
     talloc
     tdb
     tevent

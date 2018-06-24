@@ -3,7 +3,6 @@
 , autoreconfHook
 
 , acl
-, attr
 , libselinux
 , util-linux_lib
 }:
@@ -27,7 +26,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
-    attr
     libselinux
     util-linux_lib
   ];

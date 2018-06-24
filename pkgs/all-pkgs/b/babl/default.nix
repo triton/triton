@@ -5,16 +5,16 @@
 
 let
   channel = "0.1";
-  version = "${channel}.46";
+  version = "${channel}.50";
 in
 stdenv.mkDerivation rec {
   name = "babl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/babl/${channel}/${name}.tar.bz2";
-    multihash = "QmcvoY76U9HmDpP8uPxF7SRec7cybphf7Vt8wfWrSiPstU";
+    multihash = "QmZ7CrSj2ZoVi1RoFMSDc36wfig6VbNbaecFqEALbLL1Fo";
     hashOutput = false;
-    sha256 = "bbc2403b1badf8014ec42200e65d7b1f46e68e627c33c6242fa31ac5dc869e5b";
+    sha256 = "b52c1dc081ff9ae8bc4cb7cdb959c762ea692b9f4431bacf8d17a14dbcc85b2d";
   };
 
   configureFlags = [

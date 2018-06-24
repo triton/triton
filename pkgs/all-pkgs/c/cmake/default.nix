@@ -62,7 +62,10 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  postPatch = optionalString (!bootstrap) ''
+  postPatch = /* LibUV 1.21.0+ compat */ ''
+    ! grep -q 'uv/version.h' Source/Modules/FindLibUV.cmake
+    sed -i 's,uv-version.h,uv/version.h,' Source/Modules/FindLibUV.cmake
+  '' + optionalString (!bootstrap) ''
     sed -i '/CMAKE_USE_SYSTEM_/s,OFF,ON,g' CMakeLists.txt
   '';
 

@@ -4,6 +4,7 @@
 , gettext
 
 , attr
+, icu
 , libunistring
 , readline
 , util-linux_lib
@@ -14,7 +15,7 @@ let
     "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
   ];
 
-  version = "4.15.1";
+  version = "4.16.1";
 in
 stdenv.mkDerivation rec {
   name = "xfsprogs-${version}";
@@ -22,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "27c36de9346a274143ad06c65b2fdbafd2806f3f37fa2c1235a08ed920d2bf3c";
+    sha256 = "3d5c2da46112b86cbd967fee43cea731d38a1b2aaf601b57674ed34e808652df";
   };
 
   nativeBuildInputs = [
@@ -31,6 +32,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     attr
+    icu
     libunistring
     readline
     util-linux_lib
@@ -76,6 +78,13 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"
+
+    configureFlagsArray+=(
+      "--includedir=$lib/include"
+      "--libdir=$lib/lib"
+      "--with-systemd-unit-dir=$out/lib/systemd/system"
+      "--with-crond-dir=$out/etc/cron.d"
+    )
   '';
 
   configureFlags = [
@@ -85,8 +94,7 @@ stdenv.mkDerivation rec {
     "XGETTEXT=xgettext"
     "--disable-lib64"
     "--enable-readline"
-    "--includedir=$(lib)/include"
-    "--libdir=$(lib)/lib"
+    "--enable-libicu"
   ];
 
   installFlags = [

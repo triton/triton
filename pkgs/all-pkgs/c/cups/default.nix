@@ -2,7 +2,6 @@
 , fetchurl
 
 , acl
-, attr
 , avahi
 , dbus
 , gnutls
@@ -38,7 +37,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
-    attr
     avahi
     dbus
     gnutls

@@ -2,7 +2,6 @@
 , fetchurl
 
 , acl
-, attr
 , libburn
 , libisofs
 , readline
@@ -19,9 +18,13 @@ stdenv.mkDerivation rec {
     sha256 = "91cf50473f0f19400629515974bda441545aaae29862dcbbdb28d87b821ca5a5";
   };
 
+  postPatch = ''
+    sed -i 's,attr/xattr.h,sys/xattr.h,' \
+      configure
+  '';
+
   buildInputs = [
     acl
-    attr
     libburn
     libisofs
     readline

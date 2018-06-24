@@ -2,7 +2,6 @@
 , fetchurl
 
 , acl
-, attr
 , zlib
 }:
 
@@ -18,9 +17,13 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
-    attr
     zlib
   ];
+
+  postPatch = ''
+    sed -i 's,attr/xattr.h,sys/xattr.h,' \
+      configure libisofs/aaip-os-linux.c
+  '';
 
   configureFlags = [
     "--enable-libacl"

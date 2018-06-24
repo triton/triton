@@ -2,7 +2,9 @@
 , fetchurl
 
 , acl
+, attr
 , gmp
+, libcap
 , selinuxSupport? false
   , libselinux
   , libsepol
@@ -29,7 +31,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
+    attr
     gmp
+    libcap
   ] ++ optionals selinuxSupport [
     libselinux
     libsepol

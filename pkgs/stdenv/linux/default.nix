@@ -225,7 +225,7 @@ let
           gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
           openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
           gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-4 bzip2
-          gnumake gnupatch pkgconf pkgconfig patchelf mpfr;
+          gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
 
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -305,7 +305,7 @@ let
         gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
         openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
         gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-4 bzip2
-        gnumake gnupatch pkgconf pkgconfig patchelf mpfr;
+        gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
     };
   });
 

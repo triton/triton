@@ -4,7 +4,6 @@
 , ninja
 
 , acl
-, attr
 , bzip2
 , e2fsprogs
 , libxml2
@@ -18,8 +17,8 @@
 }:
 
 let
-  rev = "d7dea508d1a4d2052f7578d2e2be32162040d3a5";
-  date = "2018-06-10";
+  rev = "3649ed23c6b4392d692580c03b10a611e3eaaa32";
+  date = "2018-06-17";
 in
 stdenv.mkDerivation rec {
   name = "libarchive-${date}";
@@ -29,7 +28,7 @@ stdenv.mkDerivation rec {
     owner = "libarchive";
     repo = "libarchive";
     inherit rev;
-    sha256 = "ebe4cf59c1a6bb757d31452af4893fecc4e9d000c5914316f6b2932105fcdec8";
+    sha256 = "15e4e46ae1e8da16fe13dfa69185ccc4126aa431885aa6a52fb39ab2f8b0017b";
   };
 
   nativeBuildInputs = [
@@ -39,7 +38,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
-    attr
     bzip2
     e2fsprogs
     libxml2

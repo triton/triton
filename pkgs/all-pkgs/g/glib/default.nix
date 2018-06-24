@@ -6,7 +6,6 @@
 , ninja
 , python3
 
-, attr
 , elfutils
 , libffi
 , libselinux
@@ -60,9 +59,6 @@ stdenv.mkDerivation rec {
     stdenv.libc
     util-linux_lib
     zlib
-  ] ++ optionals stdenv.cc.isGNU [  # FIXME: need a proper way to test current libc
-    # libattr is only needed for systems that don't use glibc
-    attr
   ];
 
   setupHook = ./setup-hook.sh;

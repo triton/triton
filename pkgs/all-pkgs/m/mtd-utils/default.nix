@@ -3,25 +3,23 @@
 , lib
 
 , acl
-, attr
 , lzo
 , util-linux_lib
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "mtd-utils-2.0.1";
+  name = "mtd-utils-2.0.2";
 
   src = fetchurl {
     url = "ftp://ftp.infradead.org/pub/mtd-utils/${name}.tar.bz2";
-    multihash = "QmPAoove9VgbFkAYBRjLgHsVuFEeVynsSDuCPM1ngtAUcS";
+    multihash = "QmS2YuAJ38SAkBX3jL5wSqVgHshBiGsAzW4xczH15B2bhj";
     hashOutput = false;
-    sha256 = "312baa0446e4e728ceb413c53533e41e547d1c13ffa0752b2f879fd289fc2f63";
+    sha256 = "fb3de61be8e932abb424e8ea3c30298f553d5f970ad158a737bb303bbf9660b8";
   };
   
   buildInputs = [
     acl
-    attr
     lzo
     util-linux_lib
     zlib

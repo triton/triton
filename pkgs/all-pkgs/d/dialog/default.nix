@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dialog-1.3-20171209";
+  name = "dialog-1.3-20180621";
 
   src = fetchurl {
     url = "https://invisible-mirror.net/archives/dialog/${name}.tgz";
-    multihash = "QmRGktegXLbQ5VK4ryaYwQXWw5N1KViLZjQduPCVoxr7av";
+    multihash = "QmduzYHXtrY6DR7XDr93PsXWBGj7CChcdrruVNrtVuajtY";
     hashOutput = false;
-    sha256 = "20139442119e2eff5c35236e8e5e313c901539008d9cccf8c8ab3851b41267e6";
+    sha256 = "4a4859e2b22d24e46c1a529b5a5605b95503aa04da4432f7bbd713e3e867587a";
   };
 
   nativeBuildInputs = [

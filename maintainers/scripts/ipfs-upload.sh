@@ -178,13 +178,14 @@ verify() {
 ARGS=()
 n=0
 for url in "${URLS[@]}"; do
-  f="Fetch $url"
+  outname=$(basename "$url")
+  f="Fetch $outname"
   ARGS+=("-" "$f" fetch "$n" "$url")
-  u="Upload $url"
+  u="Upload $outname"
   ARGS+=("-" "$u" "$upload" "$n" "$url")
   ARGS+=("--require" "$f" "--before" "$u")
   for gw in "${RO_GATEWAYS[@]}"; do
-    v="Verify $url $gw"
+    v="Verify $outname $gw"
     ARGS+=("-" "$v" verify "$n" "$gw")
     ARGS+=("--require" "$u" "--before" "$v")
   done

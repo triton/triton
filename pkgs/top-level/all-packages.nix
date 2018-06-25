@@ -953,6 +953,8 @@ consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; 
 
 coreutils = callPackage ../all-pkgs/c/coreutils { };
 
+corosync = callPackage ../all-pkgs/c/corosync { };
+
 cpio = callPackage ../all-pkgs/c/cpio { };
 
 cpp-netlib = callPackage ../all-pkgs/c/cpp-netlib { };

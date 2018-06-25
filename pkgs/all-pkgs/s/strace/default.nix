@@ -2,11 +2,12 @@
 , fetchurl
 , perl
 
+, elfutils
 , libunwind
 }:
 
 let
-  version = "4.22";
+  version = "4.23";
 in
 stdenv.mkDerivation rec {
   name = "strace-${version}";
@@ -14,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/strace/strace/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "068cd09264c95e4d591bbcd3ea08f99a693ed8663cd5169b0fdad72eb5bdb39d";
+    sha256 = "7860a6965f1dd832747bd8281a04738274398d32c56e9fbd0a68b1bb9ec09aad";
   };
 
   nativeBuildInputs = [
@@ -22,6 +23,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    elfutils
     libunwind
   ];
 

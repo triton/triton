@@ -4,7 +4,7 @@ RW_GATEWAYS=(
 )
 RO_GATEWAYS=(
   "https://ipfs.io"
-  "https://hardbin.com"
+  #"https://hardbin.com"
   "https://ipfs.wak.io"
 )
 

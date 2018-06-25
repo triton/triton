@@ -6,6 +6,7 @@
 
 , acl
 , alsa-lib
+, cairo
 , dbus
 , fontconfig
 , freetype
@@ -15,6 +16,7 @@
 , gnutls
 , gpm
 , gtk_3
+, lcms2
 , libice
 , libjpeg
 , libpng
@@ -23,6 +25,7 @@
 , libtiff
 , libx11
 , libxcb
+, libxext
 , libxft
 , libxfixes
 , libxinerama
@@ -30,6 +33,7 @@
 #, libxpm
 , libxrandr
 , libxrender
+, systemd_lib
 , ncurses
 , xorg
 , xorgproto
@@ -37,12 +41,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "emacs-25.3";
+  name = "emacs-26.1";
 
   src = fetchurl {
     url = "mirror://gnu/emacs/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "253ac5e7075e594549b83fd9ec116a9dc37294d415e2f21f8ee109829307c00b";
+    sha256 = "1cf4fc240cd77c25309d15e18593789c8dbfba5c2b44d8f77c886542300fd32c";
   };
 
   nativeBuildInputs = [
@@ -52,6 +56,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     acl
     alsa-lib
+    cairo
     dbus
     fontconfig
     freetype
@@ -61,6 +66,7 @@ stdenv.mkDerivation rec {
     gnutls
     gpm
     gtk_3
+    lcms2
     libice
     libjpeg
     libpng
@@ -69,6 +75,7 @@ stdenv.mkDerivation rec {
     libtiff
     libx11
     libxcb
+    libxext
     libxft
     libxfixes
     libxinerama
@@ -77,6 +84,7 @@ stdenv.mkDerivation rec {
     xorg.libXpm
     libxrandr
     libxrender
+    systemd_lib
     ncurses
     xorgproto
     zlib
@@ -102,8 +110,6 @@ stdenv.mkDerivation rec {
     mkdir -p $out/share/emacs/site-lisp/
     cp ${./site-start.el} $out/share/emacs/site-lisp/site-start.el
   '';
-
-  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl {

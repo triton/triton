@@ -59,7 +59,7 @@
 
 let
   major = "2.10";
-  patch = "0";
+  patch = "2";
 
   version = "${major}.${patch}";
 in
@@ -68,9 +68,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://download.gimp.org/pub/gimp/v${major}/${name}.tar.bz2";
-    multihash = "QmSWwq2e5Ei47j2K6tJdWgrxAuiiw6VN7NQm8hW2AnxaYN";
+    multihash = "QmQGQMEmh9FtJsh4mbRFeSXwo2PDb8dRzqmosMdNJTawPe";
     hashOutput = false;
-    sha256 = "7fcc96fb88cb0a0595d2610f63a15dec245bb37bf9db527d37a24fb75e547de2";
+    sha256 = "1cb0baaecdefe44d371a15f2739a1bcbce4682336b4ccf8eb7b587ce52c333eb";
   };
 
   nativeBuildInputs = [
@@ -144,9 +144,6 @@ stdenv.mkDerivation rec {
   postPatch = /* Use system theme by default */ ''
     sed -i app/config/gimpguiconfig.h \
       -e '/GIMP_CONFIG_DEFAULT_THEME/ s/03-Dark/System/'
-  '' + ''
-    grep -q 'gegl-0.3' gimp.pc.in
-    sed -i 's,gegl-0.3,gegl-0.4,' gimp.pc.in
   '';
 
   configureFlags = [
@@ -181,7 +178,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      md5Urls = map (n: "${n}.md5") src.urls;
+      # Not available for 2.10.2 for some reason
+      #md5Urls = map (n: "${n}.md5") src.urls;
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

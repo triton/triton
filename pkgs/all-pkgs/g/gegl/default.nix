@@ -36,16 +36,16 @@ let
     platforms;
 
   channel = "0.4";
-  version = "${channel}.0";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmZiH6hCsnFLSyptFfGPQEFpzRheQ7AjEpy2mduLbig4Ns";
+    multihash = "QmTN1J6X7sjQ92JBQZptukofZGu6nZvjNKoqhRqndTudVc";
     hashOutput = false;
-    sha256 = "d04d2bfa0ff5a4bcfe7566f7418929a9c80f0109fa248ea4ff19538b3e99f0c5";
+    sha256 = "6a358bc19d20b8ac1daf645cc8b53cdc2ea6f9c98a6036179a57045a26a07f8d";
   };
 
   nativeBuildInputs = [

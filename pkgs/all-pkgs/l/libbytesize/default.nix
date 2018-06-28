@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
-, python2
+, python3
 
 , glib
 , gmp
@@ -10,19 +10,19 @@
 }:
 
 let
-  version = "1.2";
+  version = "1.3";
 in
 stdenv.mkDerivation rec {
   name = "libbytesize-${version}";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/libbytesize/releases/download/${version}/${name}.tar.gz";
-    sha256 = "65656ed62080d73d0f21d9647cee20533377bee150e91807fd54c502f3e1108f";
+    sha256 = "d1991726a67ee44e4c9b3deaba5bbacd5392d3364439efce08060abc45edf5d0";
   };
 
   nativeBuildInputs = [
     gettext
-    python2
+    python3
   ];
 
   buildInputs = [

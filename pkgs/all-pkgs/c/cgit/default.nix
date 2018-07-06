@@ -7,17 +7,17 @@
 }:
 
 let
-  rev = "dbaee2672be14374acb17266477c19294c6155f3";
-  date = "2018-01-19";
+  rev = "22583c4992852fff08559c35fde7bf6f673d1644";
+  date = "2018-07-05";
 in
 stdenv.mkDerivation {
   name = "cgit-${date}";
 
   src = fetchzip {
-    version = 5;
+    version = 6;
     url = "https://git.zx2c4.com/cgit/snapshot/cgit-${rev}.tar.xz";
-    multihash = "QmQiyNJddSWgGgKZaJ3MUrHGmWfCUSjxFPSv6Urd1GUUSg";
-    sha256 = "e3caa1df9123c38cf48b546ed0c9ae5a454548505fbcf4f57883af741fb5b48c";
+    multihash = "QmUo56QMxngG8CQn6e9diRKdDNvdogpRZpMN8mC5v3WAjd";
+    sha256 = "3ac7d3ff9e5905250b9b5617d6fe6c6571bf0172b1d1617e46cd6dd93760a0a2";
   };
 
   buildInputs = [

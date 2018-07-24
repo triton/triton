@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.44.2";
+  version = "1.44.3";
 in
 stdenv.mkDerivation rec {
   name = "e2fsprogs-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/e2fsprogs/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "e5c05a5ba4a9a1766f4b500ad7ef3220843860bfa64ebdda1b462b23bcb37f68";
+    sha256 = "c2ae6d8ce6fb96b55886cf761411fc22ab41976f4f8297fc54c706df442483be";
   };
 
   buildInputs = [

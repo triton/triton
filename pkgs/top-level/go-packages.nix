@@ -6375,11 +6375,11 @@ let
 
   ipfs = buildFromGitHub {
     version = 6;
-    rev = "v0.4.15";
+    rev = "v0.4.16";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "64a4ca7d87aea3998718110f84b4f61e3ae4d02cb412245623b439fd553cda77";
-    gxSha256 = "1h5kn8ilvh9bnaibfvl6av02i5qqw5dgnclh8z5zq39igljnlq28";
+    sha256 = "2cc01572709ac12f1dfe4fec6c234866552439d7c9d499889efff266d4d882f7";
+    gxSha256 = "0d9y6ncjfxwc294c69ac48pk3j3dql8b2cr7r7hjm4253vni9pgi";
     nativeBuildInputs = [
       gx-go.bin
     ];

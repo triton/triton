@@ -18,7 +18,7 @@ let
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
   ];
 
-  version = "8.29";
+  version = "8.30";
 in
 stdenv.mkDerivation rec {
   name = "coreutils-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "92d0fa1c311cacefa89853bdb53c62f4110cdfda3820346b59cbd098f40f955e";
+    sha256 = "e831b3a86091496cdba720411f9748de81507798f6130adeaef872d206e1b057";
   };
 
   buildInputs = [
@@ -42,11 +42,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "8.29";
+      urls = tarballUrls "8.30";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "6C37 DC12 121A 5006 BC1D  B804 DF6F D971 3060 37D9";
       inherit (src) outputHashAlgo;
-      outputHash = "92d0fa1c311cacefa89853bdb53c62f4110cdfda3820346b59cbd098f40f955e";
+      outputHash = "e831b3a86091496cdba720411f9748de81507798f6130adeaef872d206e1b057";
     };
   };
 

@@ -32,10 +32,35 @@ mesonConfigurePhase() {
     # is called from the generated build files.
     export LC_ALL="en_US.UTF-8"
 
-    meson $mesonFlags "${mesonFlagsArray[@]}" \
+    meson setup $mesonFlags "${mesonFlagsArray[@]}" \
       "${mesonSrcDir}" "${mesonBuildDir}"
 
     eval "$postConfigure"
+}
+
+mesonCheckPhase() {
+    runHook 'preCheck'
+
+    local actualMakeFlags
+    actualMakeFlags=($checkFlags "${checkFlagsArray[@]}")
+    printMakeFlags 'check'
+    meson test "${actualMakeFlags[@]}"
+
+    runHook 'postCheck'
+}
+
+mesonInstallPhase() {
+    runHook 'preInstall'
+
+    mkdir -p "$prefix"
+
+    local actualMakeFlags
+    actualMakeFlags=($installFlags "${installFlagsArray[@]}")
+    actualMakeFlags+=('--no-rebuild')
+    printMakeFlags 'install'
+    meson install "${actualMakeFlags[@]}"
+
+    runHook 'postInstall'
 }
 
 mesonFixup() {
@@ -46,8 +71,11 @@ mesonFixup() {
 
 if [ -n "${mesonConfigure-true}" -a -z "$configurePhase" ]; then
   configurePhase=mesonConfigurePhase
-  if [ -z "$checkTarget" ]; then
-    checkTarget="test"
+  if [ -n "${mesonCheck-true}" ]; then
+    checkPhase=mesonCheckPhase
+  fi
+  if [ -n "${mesonInstall-true}" ]; then
+    installPhase=mesonInstallPhase
   fi
   fixupOutputHooks+=(mesonFixup)
 fi

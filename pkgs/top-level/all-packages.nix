@@ -3359,7 +3359,7 @@ python37 = callPackage ../all-pkgs/p/python {
 #  self = callPackageAlias "pypy" { };
 #};
 python2 = callPackageAlias "python27" { };
-python3 = callPackageAlias "python36" { };
+python3 = callPackageAlias "python37" { };
 python = callPackageAlias "python2" { };
 
 python27Packages = hiPrioSet (
@@ -3384,7 +3384,7 @@ python37Packages =
 #    self = callPackageAlias "pypyPackages" { };
 #  });
 python2Packages = callPackageAlias "python27Packages" { };
-python3Packages = callPackageAlias "python36Packages" { };
+python3Packages = callPackageAlias "python37Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };

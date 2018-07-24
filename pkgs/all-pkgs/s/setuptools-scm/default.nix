@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.1.0";
+  version = "3.0.2";
 in
 buildPythonPackage rec {
   name = "setuptools-scm-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "setuptools_scm";
     inherit version;
-    sha256 = "a767141fecdab1c0b3c8e4c788ac912d7c94a0d6c452d40777ba84f918316379";
+    sha256 = "113cea38b2edba8538b7e608b58cbd7e09bb71b16d968a9b97e36b4805e06d59";
   };
 
   meta = with lib; {

@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "5.18.12";
+  version = "5.18.14";
 
   tarballUrls = version: [
     "mirror://gnu/autogen/rel${version}/autogen-${version}.tar.xz"
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "be3ba62e883185b6ee8475edae97d7197d701d6b9ad9c3d2df53697110c1bfd8";
+    sha256 = "ffc7ab99382116852fd4c73040c124799707b2d9b00a60b54e8b457daa7a06e4";
   };
 
   nativeBuildInputs = [
@@ -35,6 +35,10 @@ stdenv.mkDerivation rec {
     gmp
   ];
 
+  configureFlags = [
+    "--enable-snprintfv-install"
+  ];
+
   # Fix a broken sed expression used for detecting the minor
   # version of guile we are using
   postPatch = ''
@@ -43,17 +47,20 @@ stdenv.mkDerivation rec {
       -e 's,guile_versions_to_search=",\02.2 ,g' \
       -i configure
 
+    grep -q '< 201000' agen5/guile-iface.h
     sed -i 's,< 201000,< 203000,g' agen5/guile-iface.h
+
+    sed -i 's, -Werror,,' configure
   '';
 
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "5.18.12";
+      urls = tarballUrls "5.18.14";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "44A0 88E2 95C3 A722 C450  590E C9EF 76DE B74E E762";
       inherit (src) outputHashAlgo;
-      outputHash = "be3ba62e883185b6ee8475edae97d7197d701d6b9ad9c3d2df53697110c1bfd8";
+      outputHash = "ffc7ab99382116852fd4c73040c124799707b2d9b00a60b54e8b457daa7a06e4";
     };
   };
 

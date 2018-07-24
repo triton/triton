@@ -2,6 +2,7 @@
 , fetchurl
 , perl
 
+, brotli
 , c-ares
 , krb5_lib
 , libidn2
@@ -46,6 +47,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    brotli
     c-ares
     nghttp2_lib
     openssl
@@ -79,6 +81,7 @@ stdenv.mkDerivation rec {
     "--enable-libcurl_option"
     "--${if stdenv.cc.cc.isGNU then "enable" else "disable"}-libgcc"
     "--with-zlib"
+    "--with-brotli"
     "--enable-ipv4"
     "--with-gssapi"
     "--without-winssl"
@@ -97,7 +100,7 @@ stdenv.mkDerivation rec {
     "--${if isFull then "with" else "without"}-librtmp"
     "--disable-versioned-symbols"
     "--without-winidn"
-    "--${if isFull then "with" else "without"}-libidn"
+    "--${if isFull then "with" else "without"}-libidn2"
     "--with-nghttp2"
     "--disable-sspi"
     "--enable-crypto-auth"

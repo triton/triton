@@ -8,7 +8,7 @@ let
     "mirror://gnupg/npth/npth-${version}.tar.bz2"
   ];
 
-  version = "1.5";
+  version = "1.6";
 in
 stdenv.mkDerivation rec {
   name = "npth-${version}";
@@ -16,16 +16,16 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "294a690c1f537b92ed829d867bee537e46be93fbd60b16c04630fbbfcd9db3c2";
+    sha256 = "1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1";
   };
 
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.5";
+      urls = tarballUrls "1.6";
       pgpsigUrls = map (n: "${n}.sig") urls;
       inherit (gnupg.srcVerification) pgpKeyFingerprints;
-      outputHash = "294a690c1f537b92ed829d867bee537e46be93fbd60b16c04630fbbfcd9db3c2";
+      outputHash = "1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1";
       inherit (src) outputHashAlgo;
     };
   };

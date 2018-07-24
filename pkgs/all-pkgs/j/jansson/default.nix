@@ -8,8 +8,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.digip.org/jansson/releases/${name}.tar.gz";
-    hashOutput = false;
     multihash = "QmZwCiWdAq19Lygg8Je7J8UX7R1zaB7nYFqM1zX5VaFMFd";
+    hashOutput = false;
     sha256 = "6e85f42dabe49a7831dbdd6d30dca8a966956b51a9a50ed534b82afc3fa5b2f4";
   };
 

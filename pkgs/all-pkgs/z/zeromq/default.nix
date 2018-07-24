@@ -3,11 +3,12 @@
 
 , krb5_lib
 , libsodium
+, libunwind
 , util-linux_lib
 }:
 
 let
-  version = "4.2.3";
+  version = "4.2.5";
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";
@@ -16,12 +17,13 @@ stdenv.mkDerivation rec {
     url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "8f1e2b2aade4dbfde98d82366d61baef2f62e812530160d2e6d0a5bb24e40bc0";
+    sha256 = "cc9090ba35713d59bb2f7d7965f877036c49c5558ea0c290b0dcc6f2a17e489f";
   };
 
   buildInputs = [
     krb5_lib
     libsodium
+    libunwind
     util-linux_lib
   ];
 

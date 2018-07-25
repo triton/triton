@@ -33,16 +33,16 @@ let
     optionals
     optionalString;
 
-  version = "9.12.1";
+  version = "9.12.2";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmXHAwp7jBnAQXtNxt5gikkCwBeb5o4Lm9yJGh4MqM7p92";
+    multihash = "Qmc4MYSkko2TtuJTRhKZXLCcz1rP3rTMkgCnDU1ovSLe72";
     hashOutput = false;
-    sha256 = "16e446425c35e48b651ddf1171d2115ebf32b07670b652e1030a174038937510";
+    sha256 = "9f6a4c8b39a7064d447d8414a09ed667ff21adc69f17461916d8f5a45f348452";
   };
 
   nativeBuildInputs = [

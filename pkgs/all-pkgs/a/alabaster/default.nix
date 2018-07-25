@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.7.10";
+  version = "0.7.11";
 in
 buildPythonPackage {
   name = "alabaster-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "alabaster";
     inherit version;
-    sha256 = "37cdcb9e9954ed60912ebc1ca12a9d12178c26637abdf124e3cde2341c257fe0";
+    sha256 = "b63b1f4dc77c074d386752ec4a8a7517600f6c0db8cd42980cae17ab7b3275d7";
   };
 
   meta = with lib; {

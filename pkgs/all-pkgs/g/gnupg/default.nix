@@ -32,7 +32,7 @@ let
     "mirror://gnupg/gnupg/gnupg-${version}.tar.bz2"
   ];
 
-  version = "2.2.8";
+  version = "2.2.9";
 in
 stdenv.mkDerivation rec {
   name = "gnupg-${version}";
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "777b4cb8ced21965a5053d4fa20fe11484f0a478f3d011cef508a1a49db50dcd";
+    sha256 = "6278eaabffa1ebc9fa2ceb3dc53eea9a1505ab02a668a86dd6fec06951af2164";
   };
 
   nativeBuildInputs = [
@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.8";
+      urls = tarballUrls "2.2.9";
       pgpsigUrl = map (n: "${n}.sig") urls;
       pgpKeyFingerprints = [
         "D869 2123 C406 5DEA 5E0F  3AB5 249B 39D2 4F25 E3B6"
@@ -106,7 +106,7 @@ stdenv.mkDerivation rec {
         "D238 EA65 D64C 67ED 4C30  73F2 8A86 1B1C 7EFD 60D9"
         "46CC 7308 65BB 5C78 EBAB  ADCF 0437 6F3E E085 6959"
       ];
-      sha256 = "777b4cb8ced21965a5053d4fa20fe11484f0a478f3d011cef508a1a49db50dcd";
+      sha256 = "6278eaabffa1ebc9fa2ceb3dc53eea9a1505ab02a668a86dd6fec06951af2164";
     };
   };
 

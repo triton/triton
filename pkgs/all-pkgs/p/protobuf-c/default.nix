@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, protobuf-cpp
+, protobuf-cpp_legacy
 }:
 
 let
@@ -16,11 +16,11 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    protobuf-cpp
+    protobuf-cpp_legacy
   ];
 
   buildInputs = [
-    protobuf-cpp
+    protobuf-cpp_legacy
   ];
 
   meta = with stdenv.lib; {

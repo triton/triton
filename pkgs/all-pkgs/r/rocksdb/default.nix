@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "5.13.4";
+  version = "5.14.2";
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "15e4e46ae1e8da16fe13dfa69185ccc4126aa431885aa6a52fb39ab2f8b0017b";
+    sha256 = "f7b37bfcf7a8179a8865e8ea5583f44a6a662c0d919da6986b6e2160f3181d49";
   };
 
   nativeBuildInputs = [
@@ -42,6 +42,10 @@ stdenv.mkDerivation rec {
     zlib
     zstd
   ];
+
+  postPatch = ''
+    patchShebangs build_tools
+  '';
 
   # Environment vars used for building certain configurations
   DISABLE_WARNING_AS_ERROR = "1";

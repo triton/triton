@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-7.0.5b";
+  name = "dhcpcd-7.0.6";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    multihash = "QmW6FTD3KZqM1WFNc9Nh18gaSmRYwgnCWNEtz5QikiSojn";
-    sha256 = "587cdaba99cc8778a6cbe3a52728e37ac0f4dfbc9d5b702d48a505be0162317d";
+    multihash = "QmZc8vvowES1xjh8K7kn8UrWhz3vzT1gKv2PAxGLDM43PE";
+    sha256 = "727aa7ca972ab45ccad9238ae102604cca94ada87989305d04d81196d78ac341";
   };
 
   buildInputs = [
@@ -23,12 +23,6 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
   ];
 
-  preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
-  '';
-
-  # Hack to make installation succeed.  dhcpcd will still use /var/db
-  # at runtime.
   preInstall = ''
     installFlagsArray+=(
       "DBDIR=$TMPDIR/db"

@@ -4,18 +4,18 @@
 }:
 
 let
-  date = "2017-10-14";
-  rev = "5bc77e9ea99ca7c3caefc6cd45b7bd43f83fafc3";
+  date = "2018-07-12";
+  rev = "322148b0161e5b570ae68af36b9ca7966ce57566";
 in
 stdenv.mkDerivation rec {
   name = "libnfs-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "sahlberg";
     repo = "libnfs";
     inherit rev;
-    sha256 = "a1710405d2fcbd1b028123ee2ff257ba557813060d234a23b332c4229434815d";
+    sha256 = "65eba9fc439f2b833a2b4f9a741647896aefb71059a930717e2e0455739b60ba";
   };
 
   nativeBuildInputs = [
@@ -23,9 +23,9 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-werror"
     "--enable-utils"
     "--disable-examples"
+    "--disable-werror"
   ];
 
   meta = with stdenv.lib; {

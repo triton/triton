@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.4.3";
+  version = "1.5";
 in
 buildPythonPackage rec {
   name = "jaraco-classes-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "jaraco.classes";
     inherit version;
-    sha256 = "e347f2b502521bfc35c57ab4695e8b6d7371625c392a0ca0d46742ee93359d3e";
+    sha256 = "d101c45efd518a3ed76409a23ad2319bafeda13c3252395fe4d8ec195dd45f00";
   };
 
   nativeBuildInputs = [

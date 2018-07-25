@@ -1,20 +1,17 @@
 { stdenv
-, autoreconfHook
 , fetchurl
 }:
 
+let
+  version = "2.0.12";
+in
 stdenv.mkDerivation rec {
-  name = "numactl-2.0.11";
+  name = "numactl-${version}";
 
   src = fetchurl {
-    url = "ftp://oss.sgi.com/www/projects/libnuma/download/${name}.tar.gz";
-    multihash = "QmaBbbjGZoxP3LoNpkVRy4oNktHtQBCSYxZVKuJDxAavCD";
-    sha256 = "450c091235f891ee874a8651b179c30f57a1391ca5c4673354740ba65e527861";
+    url = "https://github.com/numactl/numactl/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "55bbda363f5b32abd057b6fbb4551dd71323f5dbb66335ba758ba93de2ada729";
   };
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
 
   disableStatic = false;
 

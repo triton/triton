@@ -11,13 +11,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iptables-1.6.2";
+  name = "iptables-1.8.0";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/iptables/files/${name}.tar.bz2";
-    multihash = "QmQ4gBkvapKEPtz3eUvcxZtrATaNo4kJAYVZ2SxSykRPxb";
+    multihash = "QmevSzREm6thrEqLFEfeVdk1yi6VET5Lp8jt2W3TcNrnyJ";
     hashOutput = false;
-    sha256 = "55d02dfa46263343a401f297d44190f2a3e5113c8933946f094ed40237053733";
+    sha256 = "c4cbfa187c4296e4bc2e347ebbc21e309def7274773f20f0df0b8feaf7e8de50";
   };
 
   nativeBuildInputs = [
@@ -40,9 +40,6 @@ stdenv.mkDerivation rec {
     "--enable-nfsynproxy"
     "--enable-shared"
   ];
-
-  # Sometimes breaks building nft.c before xtables-config-parser.h
-  buildParallel = false;
 
   passthru = {
     srcVerification = fetchurl {

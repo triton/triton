@@ -3330,7 +3330,13 @@ prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
 protobuf-c = callPackage ../all-pkgs/p/protobuf-c { };
 
-protobuf-cpp = callPackage ../all-pkgs/p/protobuf-cpp { };
+protobuf-cpp = callPackage ../all-pkgs/p/protobuf-cpp {
+  channel = "latest";
+};
+
+protobuf-cpp_legacy = callPackage ../all-pkgs/p/protobuf-cpp {
+  channel = "legacy";
+};
 
 psmisc = callPackage ../all-pkgs/p/psmisc { };
 

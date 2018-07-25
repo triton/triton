@@ -15,7 +15,7 @@ let
     "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
   ];
 
-  version = "4.16.1";
+  version = "4.17.0";
 in
 stdenv.mkDerivation rec {
   name = "xfsprogs-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "3d5c2da46112b86cbd967fee43cea731d38a1b2aaf601b57674ed34e808652df";
+    sha256 = "f53f5169cb98cfca471ddea30092738c427ba284c5356e01b45dd1ae3b297e0d";
   };
 
   nativeBuildInputs = [

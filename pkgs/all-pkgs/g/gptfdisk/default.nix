@@ -2,14 +2,13 @@
 , fetchurl
 , lib
 
-, icu
 , ncurses
 , popt
 , util-linux_lib
 }:
 
 let
-  version = "1.0.3";
+  version = "1.0.4";
 in
 stdenv.mkDerivation rec {
   name = "gptfdisk-${version}";
@@ -18,11 +17,10 @@ stdenv.mkDerivation rec {
     # http://www.rodsbooks.com/gdisk/${name}.tar.gz also works, but the home
     # page clearly implies a preference for using SourceForge's bandwidth:
     url = "mirror://sourceforge/gptfdisk/gptfdisk/${version}/${name}.tar.gz";
-    sha256 = "89fd5aec35c409d610a36cb49c65b442058565ed84042f767bba614b8fc91b5c";
+    sha256 = "b663391a6876f19a3cd901d862423a16e2b5ceaa2f4a3b9bb681e64b9c7ba78d";
   };
 
   buildInputs = [
-    icu
     ncurses
     popt
     util-linux_lib

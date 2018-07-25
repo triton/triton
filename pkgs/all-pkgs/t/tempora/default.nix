@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.9";
+  version = "1.13";
 in
 buildPythonPackage rec {
   name = "tempora-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "tempora";
     inherit version;
-    sha256 = "9ea980c63be54f83d2a466fccc6eeef96a409f74c5034764fb328b0d43247e96";
+    sha256 = "4848df474c9d7ad9515fbeaadc88e48843176b4b90393652156ccff613bcaeb1";
   };
 
   propagatedBuildInputs = [

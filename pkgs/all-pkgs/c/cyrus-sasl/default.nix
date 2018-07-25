@@ -11,8 +11,8 @@
 }:
 
 let
-  rev = "b6767cc9592c21ed42504ababa9e1a3b7c026fde";
-  date = "2017-02-07";
+  rev = "e41cfb986c1b1935770de554872247453fdbb079";
+  date = "2018-05-10";
 in
 stdenv.mkDerivation rec {
   name = "cyrus-sasl-${date}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     owner = "cyrusimap";
     repo = "cyrus-sasl";
     inherit rev;
-    sha256 = "59760ec6970b3b87d31888a475f1e3a65baaedc153745d73f4ffc6a668e8db91";
+    sha256 = "76a496ea30b52297fcf8ad11397d2e0f5cbec88e15c8f4d4098d8c0696357ab0";
   };
 
   nativeBuildInputs = [

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2018.4";
+  version = "2018.5";
 in
 buildPythonPackage rec {
   name = "pytz-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytz";
     inherit version;
-    sha256 = "c06425302f2cf668f1bba7a0a03f3c1d34d4ebeef2c72003da308b3947c7f749";
+    sha256 = "ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277";
   };
 
   meta = with lib; {

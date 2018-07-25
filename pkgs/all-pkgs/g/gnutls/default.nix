@@ -1,20 +1,17 @@
 { stdenv
 , autogen
-, autoreconfHook
 , fetchurl
-, perl
+, which
 
 , cryptodev_headers
 , gmp
 , libidn2
 , libtasn1
 , libunistring
-, lzo
 , nettle
 , p11-kit
 , trousers
 , unbound
-, zlib
 }:
 
 let
@@ -23,7 +20,7 @@ let
   ];
 
   major = "3.6";
-  minor = "2";
+  minor = "3";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -32,47 +29,37 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "bcd5db7b234e02267f36b5d13cf5214baac232b7056a506252b7574ea7738d1f";
+    sha256 = "ed642b66a4ecf4851ab2d809cd1475c297b6201d8e8bd14b4d1c08b53ffca993";
   };
 
-  # This fixes some broken parallel dependencies
-  postPatch = ''
-    sed -i 's,^BUILT_SOURCES =,\0 systemkey-args.h,g' src/Makefile.am
-  '';
-
   configureFlags = [
-    "--disable-ssl3-support"
+    "--disable-maintainer-mode"
+    "--disable-doc"
+    "--enable-manpages"
     "--disable-ssl2-support"
-    # TODO: re-enable when the code is fixed (broken in 3.6.1 -> 3.6.2)
-    #"--enable-cryptodev"
+    "--enable-cryptodev"
     "--disable-tests"
-    "--disable-valgrind-tests"
     "--disable-full-test-suite"
     "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
     "--with-trousers-lib=${trousers}/lib"
     "--disable-dependency-tracking"
-    "--enable-manpages"
-    "--enable-fast-install"
   ];
 
   nativeBuildInputs = [
     autogen
-    autoreconfHook
-    perl
+    which
   ];
 
   buildInputs = [
-    #cryptodev_headers
+    cryptodev_headers
     gmp
     libidn2
     libtasn1
     libunistring
-    lzo
     nettle
     p11-kit
     trousers
     unbound
-    zlib
   ];
 
   passthru = {
@@ -83,7 +70,7 @@ stdenv.mkDerivation rec {
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "bcd5db7b234e02267f36b5d13cf5214baac232b7056a506252b7574ea7738d1f";
+      outputHash = "ed642b66a4ecf4851ab2d809cd1475c297b6201d8e8bd14b4d1c08b53ffca993";
     };
   };
 

@@ -1,9 +1,14 @@
 { stdenv
 , fetchurl
+
+, functionPrefix ? null
 }:
 
 let
   version = "5.1.0";
+
+  inherit (stdenv.lib)
+    optionals;
 in
 stdenv.mkDerivation rec {
   name = "jemalloc-${version}";
@@ -13,6 +18,10 @@ stdenv.mkDerivation rec {
       + "${name}.tar.bz2";
     sha256 = "5396e61cc6103ac393136c309fae09e44d74743c86f90e266948c50f3dbb7268";
   };
+
+  configureFlags = optionals (functionPrefix != null) [
+    "--with-jemalloc-prefix=${functionPrefix}"
+  ];
 
   disableStatic = false;
 

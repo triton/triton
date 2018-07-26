@@ -149,9 +149,7 @@ rec {
   ];
 
   mariadb = [
-    http://downloads.mariadb.org/interstitial
-    http://sfo1.mirrors.digitalocean.com/mariadb
-    http://mirror.jmu.edu/pub/mariadb
+    http://mirrors.accretive-networks.net/mariadb
   ];
 
   metalab = [
@@ -239,6 +237,12 @@ rec {
   sourceforgejp = [
     http://osdn.dl.sourceforge.jp
     http://jaist.dl.sourceforge.jp
+  ];
+
+  sourceware = [
+    https://mirrors.kernel.org/sourceware
+    https://www.mirrorservice.org/sites/sourceware.org/pub
+    ftp://sources.redhat.com/pub
   ];
 
   ubuntu = [

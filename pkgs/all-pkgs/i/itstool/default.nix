@@ -23,6 +23,18 @@ buildPythonPackage rec {
     libxml2
   ];
 
+  # Move our shared data to the correct directory
+  postInstall = ''
+    mv "$(toPythonPath "$out")"/usr/local/share "$out"
+    rmdir "$(toPythonPath "$out")"/usr{/local,}
+  '';
+
+  # Fix references to /usr
+  preFixup = ''
+    grep -q '/usr/local/share' "$out"/bin/itstool
+    sed -i "s,/usr\(\|/local\),$out,g" "$out"/bin/itstool
+  '';
+
   disabled = isPy3;
 
   meta = with lib; {

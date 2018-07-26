@@ -12,11 +12,11 @@ stdenv.mkDerivation {
   name = "linenoise-ng-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "arangodb";
     repo = "linenoise-ng";
     inherit rev;
-    sha256 = "d07d9d44c22bf6ea80fa2145214ed1f319a058628a92537aabb38f95dd28f6eb";
+    sha256 = "ae1ce228a2d56cc6474928d68993cc63b4ab7581f4812b0fa28d5a3cca2f263f";
   };
 
   nativeBuildInputs = [

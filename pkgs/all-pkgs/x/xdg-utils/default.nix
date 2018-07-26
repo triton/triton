@@ -13,18 +13,13 @@
 , gnused
 }:
 
-let
-  rev = "7d4360c64d94de53d907f13ca99837285e972ec6";
-  version = "2018-02-27";
-in
 stdenv.mkDerivation rec {
-  name = "xdg-utils-${version}";
+  name = "xdg-utils-1.1.3";
 
   src = fetchurl {
-    name = "${name}.tar.gz";
-    url = "https://cgit.freedesktop.org/xdg/xdg-utils/snapshot/${rev}.tar.gz";
-    multihash = "QmWgBkZtmwisnmDut85mWXP6MutN34i6VHJgWtj1V2wbvC";
-    sha256 = "7933aaea46227c70adcaab75d9360caa251f4589be6e56268eeee157c22fb089";
+    url = "https://portland.freedesktop.org/download/${name}.tar.gz";
+    multihash = "QmfVZz8B54tQZNrVKR6RD1NY8PnCEjEjkeS4u2gmrkkRu3";
+    sha256 = "d798b08af8a8e2063ddde6c9fa3398ca81484f27dec642c5627ffcaa0d4051d9";
   };
 
   buildInputs = [

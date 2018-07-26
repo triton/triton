@@ -3,14 +3,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "linenoise-2016-07-29";
+  name = "linenoise-2018-07-18";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 6;
     owner = "antirez";
     repo = "linenoise";
-    rev = "c894b9e59f02203dbe4e2be657572cf88c4230c3";
-    sha256 = "8e8ed2a742e7e34a87f23ca1f157d04af3ce9fc577020a4834202b7034736177";
+    rev = "4a961c0108720741e2683868eb10495f015ee422";
+    sha256 = "938c04a790668eef049c69708c6c2285830c522eb784b6e10b513893810b9c1e";
   };
 
   buildPhase = ''

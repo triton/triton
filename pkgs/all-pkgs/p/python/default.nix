@@ -293,6 +293,8 @@ stdenv.mkDerivation rec {
       sed -i $out/lib/python${channel}/${configdir}/Makefile \
         -e "s@^LIBS=.*@LIBS= $LIBS@g" \
         -e "s@$NIX_BUILD_TOP@/no-such-path@g"
+      sed -i "$out"/bin/python${channel}-config \
+        -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@"
 
       # We need to update _sysconfigdata.py{,o,c}
       sed -i $out/lib/python${channel}/${sysconfigdatapy} \

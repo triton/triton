@@ -10,7 +10,9 @@
 
 let
   inherit (lib)
-    replaceStrings;
+    optionalString
+    replaceStrings
+    versionAtLeast;
 
   sources = {
     "5.2" = {
@@ -19,9 +21,9 @@ let
       sha256 = "b9e2e4aad6789b3b63a056d442f7b39f0ecfca3ae0f1fc0ae4e9614401b69f4b";
     };
     "5.3" = {
-      version = "5.3.4";
-      multihash = "QmNYqRyfDBStum87ptEAZWBbjAXKC6pmZX9vuJzcdhK5Ru";
-      sha256 = "f681aa518233bc407e23acf0f5887c884f17436f000d453b2491a9f11a52400c";
+      version = "5.3.5";
+      multihash = "QmezDfvLkh3Yso3DxVQTHpvkGhXXLrnAkjA4WHQPbE79CW";
+      sha256 = "0c2eed3f960446e1a3e4b9a1ca2f3ff893b6ce41942cf54d5dd59ab4b3b058ac";
     };
   };
   source = sources."${channel}";
@@ -50,7 +52,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = ''
+  postPatch = optionalString (versionAtLeast source.version "5.3.4") ''
+    grep -q '$V\.4' Makefile
+    sed -i "s,\$V\.4,${source.version}," Makefile
+  '' + ''
+    grep -q '/usr' src/luaconf.h
     sed -i "/LUA_ROOT/ s,/usr,$out," src/luaconf.h
   '';
 

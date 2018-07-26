@@ -405,6 +405,10 @@ lockfile = callPackage ../all-pkgs/l/lockfile { };
 
 lxml = callPackage ../all-pkgs/l/lxml { };
 
+libxml2 = callPackage ../all-pkgs/l/libxml2/python.nix {
+  libxml2 = pkgs.libxml2;
+};
+
 m2crypto = callPackage ../all-pkgs/m/m2crypto { };
 
 m2r = callPackage ../all-pkgs/m/m2r { };

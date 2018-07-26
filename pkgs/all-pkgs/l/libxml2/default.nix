@@ -4,7 +4,6 @@
 
 , findXMLCatalogs
 , icu
-, python
 , readline
 , xz
 , zlib
@@ -29,7 +28,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     icu
-    python
     readline
     xz
     zlib
@@ -39,15 +37,8 @@ stdenv.mkDerivation rec {
     findXMLCatalogs
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-python-install-dir=$(toPythonPath "$out")"
-    )
-  '';
-
   configureFlags = [
     "--with-icu=${icu}"
-    "--with-python=${python}"
     "--with-readline=${readline}"
     "--with-zlib=${zlib}"
     "--with-lzma=${xz}"

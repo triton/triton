@@ -35,8 +35,6 @@ buildPythonPackage rec {
     sed -i "s,/usr\(\|/local\),$out,g" "$out"/bin/itstool
   '';
 
-  disabled = isPy3;
-
   meta = with lib; {
     homepage = http://itstool.org/;
     description = "XML to PO and back again";

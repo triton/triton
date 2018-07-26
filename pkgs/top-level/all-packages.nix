@@ -2045,7 +2045,7 @@ isl = callPackageAlias "isl_0-18" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
-itstool = pkgs.python2Packages.itstool;
+itstool = pkgs.python3Packages.itstool;
 
 iucode-tool = callPackage ../all-pkgs/i/iucode-tool { };
 

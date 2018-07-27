@@ -3509,6 +3509,8 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
+sanlock = callPackage ../all-pkgs/s/sanlock { };
+
 sas2flash = callPackage ../all-pkgs/s/sas2flash { };
 
 sassc = callPackage ../all-pkgs/s/sassc { };

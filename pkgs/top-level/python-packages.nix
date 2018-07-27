@@ -539,6 +539,10 @@ pygobject_3-28 = callPackage ../all-pkgs/p/pygobject {
   channel = "3.28";
 };
 pygobject = callPackageAlias "pygobject_3-28" { };
+pygobject_nocairo = callPackageAlias "pygobject_3-28" {
+  cairo = null;
+  pycairo = null;
+};
 
 pygtk = callPackage ../all-pkgs/p/pygtk { };
 

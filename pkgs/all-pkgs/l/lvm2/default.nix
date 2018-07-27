@@ -1,87 +1,125 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
+, gettext
+, python3Packages
 
-, coreutils
+, dlm_lib
+, libaio
 , libselinux
 , libsepol
 , readline
+, sanlock
 , systemd_lib
+, systemd-dummy
 , thin-provisioning-tools
-, util-linux_full
 , util-linux_lib
 }:
 
 let
   baseUrls = [
-    "ftp://sources.redhat.com/pub/lvm2/releases"
+    "mirror://sourceware/lvm2"
+    "mirror://sourceware/lvm2/releases"
   ];
 
-  version = "2.02.177";
+  version = "2.02.180";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
 
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
-    multihash = "QmTySLANE87DaF9K6JKicm9KKcTvsiKUz7Fvtnd4xUbEcw";
     hashOutput = false;
-    sha256 = "4025a23ec9b15c2cb7486d151c29dc953b75efc4d452cfe9dbbc7c0fac8e80f2";
+    sha256 = "24997e26dfc916151707c9da504d38d0473bec3481a8230b676bc079041bead6";
   };
 
+  nativeBuildInputs = [
+    gettext
+    python3Packages.wrapPython
+  ];
+
   buildInputs = [
+    dlm_lib
+    libaio
     libselinux
     libsepol
+    python3Packages.dbus-python
+    python3Packages.python
+    python3Packages.pyudev
     readline
-    thin-provisioning-tools
+    sanlock
     systemd_lib
+    systemd-dummy
+    thin-provisioning-tools
     util-linux_lib
   ];
 
+  pythonPath = [
+    python3Packages.dbus-python
+    python3Packages.pygobject_nocairo
+    python3Packages.pyudev
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "4eae3ae85a5e46a689a94e2356547952f922d5c6";
+      file = "l/lvm2/0001-Fix-paths.patch";
+      sha256 = "8167a0b99e5cdddeb13629b1ceb32d70e9f9d060e6f105f80785f39031925693";
+    })
+  ];
+
   configureFlags = [
-    "--enable-udev_rules"
-    "--enable-udev_sync"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--enable-pkgconfig"
-    "--enable-applib"
+    "--enable-lvmpolld"
+    "--enable-lvmlockd-sanlock"
+    "--enable-lvmlockd-dlm"
+    "--enable-dmfilemapd"
+    "--enable-notify-dbus"
+    "--enable-udev_sync"
+    "--enable-udev_rules"
+    "--disable-udev-rule-exec-detection"  # don't look in /usr
     "--enable-cmdlib"
+    "--enable-dbus-service"
+    "--enable-write_install"
     "--enable-dmeventd"
+    #"--enable-nls"  # Broken and well supported
+    "--with-clvmd=none"  # Deprecated
   ];
 
   preConfigure = ''
-    substituteInPlace scripts/lvmdump.sh \
-      --replace /usr/bin/tr ${coreutils}/bin/tr
-    substituteInPlace scripts/lvm2_activation_generator_systemd_red_hat.c \
-      --replace /usr/sbin/lvm $out/sbin/lvm \
-      --replace /usr/bin/udevadm ${systemd_lib}/bin/udevadm
-
-    sed -i /DEFAULT_SYS_DIR/d Makefile.in
-    sed -i /DEFAULT_PROFILE_DIR/d conf/Makefile.in
-  '';
-
-  # To prevent make install from failing.
-  preInstall = ''
-    installFlagsArray+=(
-      "OWNER="
-      "GROUP="
-      "confdir=$out/etc"
+    configureFlagsArray+=(
+      "--with-systemdsystemunitdir=$out/lib/systemd/system"
+      "--with-udevdir=$out/lib/udev/rules.d"
     )
   '';
 
-  # Install systemd stuff.
+  preBuild = ''
+    cat Makefile
+  '';
+
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "confdir=$out/etc/lvm"
+      "SYSTEMD_GENERATOR_DIR=$out/lib/systemd/system-generators"
+    )
+  '';
+
   installTargets = [
     "install"
     "install_systemd_generators"
     "install_systemd_units"
+    "install_all_man"
     "install_tmpfiles_configuration"
   ];
 
-  postInstall = ''
-    substituteInPlace $out/lib/udev/rules.d/13-dm-disk.rules \
-      --replace $out/sbin/blkid ${util-linux_full}/bin/blkid
+  preFixup = ''
+    wrapPythonPrograms "$out"/bin
 
-    # Systemd stuff
-    mkdir -p $out/etc/systemd/system $out/lib/systemd/system-generators
-    cp scripts/blk_availability_systemd_red_hat.service $out/etc/systemd/system
-    cp scripts/lvm2_activation_generator_systemd_red_hat $out/lib/systemd/system-generators
+    ! grep -r '/usr' "$out"
+    ! grep -r '"/\(sbin\|bin\|libexec\)' "$out"
   '';
 
   passthru = {
@@ -89,7 +127,11 @@ stdenv.mkDerivation rec {
       failEarly = true;
       sha512Urls = map (n: "${n}/sha512.sum") baseUrls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "8843 7EF5 C077 BD11 3D3B  7224 2281 91C1 567E 2C17";
+      pgpKeyFingerprints = [
+        "8843 7EF5 C077 BD11 3D3B  7224 2281 91C1 567E 2C17"
+        # Marian Csontos
+        "D501 A478 440A E2FD 130A  1BE8 B911 2431 E509 039F"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -16,7 +16,6 @@
 , libtirpc
 , liburcu
 , libxml2
-, lvm2
 , ncurses
 , openssl
 , rdma-core
@@ -40,8 +39,8 @@ let
     which
   ];
 
-  versionMajor = "4.0";
-  versionMinor = "1";
+  versionMajor = "4.1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,7 +49,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "1fb1e8914f57db89905e0bb7d424a801d2aa400fe4632b6a2b6985b25f81377d";
+    sha256 = "6f0b01c082fec65134eea43b2e4df8d4b55269f43b7d330e81eaad920d7c63e5";
   };
 
   nativeBuildInputs = [
@@ -67,7 +66,6 @@ stdenv.mkDerivation rec {
     libtirpc
     liburcu
     libxml2
-    lvm2
     ncurses
     openssl
     rdma-core
@@ -78,6 +76,10 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
+    # Fix hardcoded python path
+    grep -q 'PYTHON=/usr/bin/python2' configure
+    sed -i 's,PYTHON=/usr/bin/python2,PYTHON=${python2.interpreter},' configure
+
     # Glusterfs ships broken config.* files
     cp ${automake}/share/automake*/config.* .
 
@@ -100,8 +102,9 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-bd-xlator"
     "--enable-crypt-xlator"
+    "--disable-xmltest"
+    "--enable-ipv6-default"
     "--with-mountutildir=/run/current-system/sw/bin"
   ];
 

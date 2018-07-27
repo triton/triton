@@ -9,7 +9,6 @@
 , libcap-ng
 , ncurses
 , pam
-, python3
 , readline
 , systemd_lib
 , zlib
@@ -54,7 +53,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    python3
     libcap-ng
   ] ++ optionals (!libOnly) [
     audit_lib
@@ -85,7 +83,8 @@ stdenv.mkDerivation rec {
     "--enable-newgrp"
     "--enable-write"
     "--without-smack"
-    "--with-python"
+    #"--with-python"  # Only needed for libmount bindings
+    # Make a separate python package for this if needed
     "--enable-fs-paths-default=/var/setuid-wrappers:/run/current-system/sw/bin:/sbin:/bin"
     "--disable-use-tty-group"
   ] ++ (if libOnly then [

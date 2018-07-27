@@ -1057,6 +1057,14 @@ discord_canary = callPackage ../all-pkgs/d/discord {
   channel = "canary";
 };
 
+dlm_full = callPackage ../all-pkgs/d/dlm {
+  type = "full";
+};
+
+dlm_lib = callPackage ../all-pkgs/d/dlm {
+  type = "lib";
+};
+
 dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 dmidecode = callPackage ../all-pkgs/d/dmidecode { };

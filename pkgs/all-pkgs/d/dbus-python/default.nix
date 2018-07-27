@@ -10,21 +10,25 @@
 }:
 
 let
-  version = "1.2.6";
+  version = "1.2.8";
 in
 stdenv.mkDerivation rec {
   name = "dbus-python-${version}";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus-python/${name}.tar.gz";
-    multihash = "QmUzysEv7fQZwPgLiK61CdzwkGKvYdkqvHr3T5HfNwy988";
-    sha256 = "32f29c17172cdb9cb61c68b1f1a71dfe7351506fc830869029c47449bd04faeb";
+    multihash = "QmYhvL6Cw5uTNTM1qgf5cxzTyEr59EcpwHtnrXrVLDFBbn";
+    sha256 = "abf12bbb765e300bf8e2a1b2f32f85949eab06998dbda127952c31cb63957b6f";
   };
 
   buildInputs = [
     dbus
     glib
     python
+  ];
+
+  configureFlags = [
+    "PYTHON=${python.interpreter}"
   ];
 
   passthru = {

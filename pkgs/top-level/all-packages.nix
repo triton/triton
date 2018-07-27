@@ -3204,6 +3204,8 @@ p11-kit = callPackage ../all-pkgs/p/p11-kit { };
 
 p7zip = callPackage ../all-pkgs/p/p7zip { };
 
+pacemaker = callPackage ../all-pkgs/p/pacemaker { };
+
 pam = callPackage ../all-pkgs/p/pam { };
 
 pam_wrapper = callPackage ../all-pkgs/p/pam_wrapper { };

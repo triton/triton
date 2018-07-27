@@ -31,6 +31,12 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  # Services are run via systemd so don't try and secure the path
+  # This makes it harder to customize
+  postPatch = ''
+    grep -r '^PATH="' -l init | xargs sed -i '/^PATH=/d'
+  '';
+
   preConfigure = ''
     configureFlagsArray+=(
       "--with-systemddir=$out/lib/systemd/system"

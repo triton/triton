@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "3.6.1";
+  version = "3.6.4";
 in
 buildPythonPackage {
   name = "pycryptodomex-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pycryptodomex";
     inherit version;
-    sha256 = "82b758f870c8dd859f9b58bc9cff007403b68742f9e0376e2cbd8aa2ad3baa83";
+    sha256 = "4daabe7c0404e673b9029aa43761c779b9b4df2cbe11ccd94daded6a0acd8808";
   };
 
   meta = with lib; {

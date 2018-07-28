@@ -11,7 +11,7 @@
 , googletest
 , log4cplus
 , mariadb-connector-c
-, openssl_1-0-2
+, openssl
 , postgresql
 }:
 
@@ -19,16 +19,16 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.3.0";
+  version = "1.4.0";
 in
 stdenv.mkDerivation rec {
   name = "kea-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
-    multihash = "QmSjmvseLKnXDXv8DvBauHqwt13RYDabxE9k7J3UmpMRwj";
+    multihash = "QmNXhX5Gh4G7kzK1rayP5sHKkUzvj9Xc84eNXCEm35J3Rk";
     hashOutput = false;
-    sha256 = "6edfcdbf2526c218426a1d1a6a6694a4050c97bb8412953a230285d63415c391";
+    sha256 = "c0f8ecb93657adfc5ab970c91706754e601084828493f053f159661d21b31128";
   };
 
   nativeBuildInputs = [
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     #cassandra
     log4cplus
     mariadb-connector-c
-    openssl_1-0-2
+    openssl
     postgresql
     python2Packages.python
   ];
@@ -64,10 +64,10 @@ stdenv.mkDerivation rec {
     "--with-gtest-source=${googletest}/share/gtest/src"
     "--with-gtest=${googletest}"
   ] ++ [
-    "--with-openssl=${openssl_1-0-2}"
+    "--with-openssl=${openssl}"
     "--without-botan-config"
-    "--with-dhcp-mysql=${mariadb-connector-c}/bin/mariadb_config"
-    "--with-dhcp-pgsql=${postgresql}/bin/pg_config"
+    "--with-mysql=${mariadb-connector-c}/bin/mariadb_config"
+    "--with-pgsql=${postgresql}/bin/pg_config"
     #"--with-cql=${cassandra}/bin/cql_config"
     "--with-log4cplus"
   ];

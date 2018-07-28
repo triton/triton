@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, icu, expat, zlib, bzip2, python2
+, icu, expat, zlib, bzip2, python2, xz
 , toolset ? if stdenv.cc.isClang then "clang" else null
 , enableRelease ? true
 , enableDebug ? false
@@ -136,7 +136,7 @@ stdenv.mkDerivation {
     EOF
   '';
 
-  buildInputs = [ icu expat zlib bzip2 python2 ];
+  buildInputs = [ icu expat zlib bzip2 xz python2 ];
 
   configureScript = "./bootstrap.sh";
   configureFlags = commonConfigureFlags ++ [

@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, which
 
 , glib
 , ipset
@@ -13,20 +12,16 @@
 }:
 
 let
-  version = "1.4.4";
+  version = "2.0.6";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmR5H3s5vcmqDp6jtruc1xK9eb68aqfUmF8NV5zvA86MvR";
-    sha256 = "147c2b3b782223128551fd0a1564eaa30ed84a94b68c50ec5087747941314704";
+    multihash = "Qmf286PcP7joRJo5T3CtLKEZL8QKbnUCE11MzHxgBDGsCP";
+    sha256 = "82252192d6df8c8c85b415ae6babff6a8d879d3fd6aacd4d1614c37f8e9971de";
   };
-
-  nativeBuildInputs = [
-    which
-  ];
 
   buildInputs = [
     glib
@@ -39,20 +34,11 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
-  postPatch = ''
-    sed -i 's,$(DESTDIR)/usr/share,$out/share,g' Makefile.in
-
-    sed \
-      -e 's,GENL_LIB=.*,GENL_LIB=nl-genl-3,' \
-      -e 's,NL3_LIB=.*,NL3_LIB=nl-3,' \
-      -e 's,ROUTE_LIB=.*,ROUTE_LIB=nl-route-3,' \
-      -i configure
-  '';
-
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-silent-rules"
+    "--enable-bfd"
     #"--enable-snmp"
     #"--enable-snmp-vrrp"
     #"--enable-snmp-checker"
@@ -60,15 +46,9 @@ stdenv.mkDerivation rec {
     #"--enable-snmp-rfcv2"
     #"--enable-snmp-rfcv3"
     "--enable-dbus"
-    "--enable-sha1"
     "--enable-json"
+    "--enable-sha1"
   ];
-
-  # This is a crappy hack to work around how broken the configure script is
-  # at parsing pkgconfig files. This does seem to have no negative side effect.
-  preBuild = ''
-    export NIX_LDFLAGS="$NIX_LDFLAGS -lnl-genl-3 -lnl-route-3 -lssl"
-  '';
 
   preInstall = ''
     installFlagsArray+=(

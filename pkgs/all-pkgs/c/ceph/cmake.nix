@@ -75,6 +75,11 @@ let
     prePatch = ''
       cd src/ceph-volume
     '';
+
+    postPatch = ''
+      grep -q 'locations = (' ceph_volume/util/system.py
+      sed -i "/locations = (/a\        '/run/current-system/sw/bin'," ceph_volume/util/system.py
+    '';
   };
 in
 stdenv.mkDerivation rec {

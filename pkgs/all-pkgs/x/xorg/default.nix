@@ -788,10 +788,10 @@ let
   }) // {inherit libX11 libXext xorgproto ;};
 
   libXxf86misc = (mkDerivation "libXxf86misc" {
-    name = "libXxf86misc-1.0.3";
+    name = "libXxf86misc-1.0.4";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/libXxf86misc-1.0.3.tar.bz2;
-      sha256 = "0nvbq9y6k6m9hxdvg3crycqsnnxf1859wrisqcs37z9fhq044gsn";
+      url = mirror://xorg/individual/lib/libXxf86misc-1.0.4.tar.bz2;
+      sha256 = "a89c03e2b0f16239d67a2031b9003f31b5a686106bbdb3c797fb88ae472af380";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libX11 libXext xorgproto ];

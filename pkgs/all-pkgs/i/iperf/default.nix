@@ -14,9 +14,9 @@ let
       sha256 = "b7d650d07c6bb0e357b5938a20e4ac33876012fddb952299c5d321e6958da5d2";
     };
     "3" = {
-      fetchzipVersion = 5;
-      version = "3.5";
-      sha256 = "b7af9389e9c33823964dd9900364fb77846867c00ba0cf8bbee55e7989fc248a";
+      fetchzipVersion = 6;
+      version = "3.6";
+      sha256 = "bbdcadcd7588f309838f04ca681ef367361bec1ba1873a4669ef3db7693d13a1";
     };
   };
 

@@ -73,10 +73,7 @@ let
   ] ++ optionals (patch != null) [
     (fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}/patch-${version}.sign") directoryUrls;
       inherit (patch) urls outputHash outputHashAlgo;
-      inherit pgpKeyFingerprints;
     })
   ];
 in {

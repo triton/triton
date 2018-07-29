@@ -2,14 +2,11 @@
 , buildPythonPackage
 , fetchPyPi
 
-, m2crypto
-, ply
-, pyyaml
-, six
+, pbr
 }:
 
 let
-  version = "0.10.0";
+  version = "0.12.4";
 in
 buildPythonPackage {
   name = "pywbem-${version}";
@@ -17,14 +14,11 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pywbem";
     inherit version;
-    sha256 = "383a62087599041fa1d6ed89c583193270a7c7cbb7b5893a0eec2f03bd5cc845";
+    sha256 = "8bc065f0adb6b6c6c082c663eb5764b841834dbf208952f64cc21f64a252d09f";
   };
 
   propagatedBuildInputs = [
-    m2crypto
-    ply
-    pyyaml
-    six
+    pbr
   ];
 
   meta = with stdenv.lib; {

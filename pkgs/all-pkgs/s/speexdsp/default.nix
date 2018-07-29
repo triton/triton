@@ -17,15 +17,15 @@ let
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "speexdsp-2017-08-08";
+  name = "speexdsp-2018-07-17";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "xiph";
     repo = "speexdsp";
     # Upstream has not tagged a release since 2014
-    rev = "85e8ad5432eb9333f727e7b18c97995317eabf02";
-    sha256 = "5bfd04cffc5c855abebb042e5882bda8cf9b38cf90eb580328c34c7e1ea4052c";
+    rev = "8ce055a3d2d794a1b013ce4dd23538f798a6c9f2";
+    sha256 = "e37de7d16dcc1010288ed6ad231b815f24471b132059927236ccdafd5cf9e070";
   };
 
   nativeBuildInputs = [

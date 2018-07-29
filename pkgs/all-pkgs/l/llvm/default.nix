@@ -31,10 +31,7 @@ let
     flip
     makeOverridable
     mapAttrsToList
-    replaceChars
-    optionalString
-    versionAtLeast
-    versionOlder;
+    replaceChars;
 
   srcs' = flip mapAttrsToList srcs (n: d:
     let
@@ -95,12 +92,7 @@ stdenv.mkDerivation {
 
     # Remove impurities in polly
     sed -i "s,@POLLY_CONFIG_LLVM_CMAKE_DIR@,$out/lib/cmake/llvm," projects/polly/cmake/PollyConfig.cmake.in
-  '' + optionalString (versionOlder version "6.0.0") ''
-    # Gcc 7 requires <functional> to be included
-    sed \
-      -e '1i#include <functional>' \
-      -i tools/lldb/include/lldb/Utility/TaskPool.h
-  '' + optionalString (versionAtLeast version "5.0.0") ''
+
     # Remove the permissions test
     # It tries to set permissions we can't have in our build env
     sed -i '/TEST_F(FileSystemTest, permissions)/a\  return;' unittests/Support/Path.cpp
@@ -148,6 +140,7 @@ stdenv.mkDerivation {
       pgpKeyFingerprints = [
         "11E5 21D6 4698 2372 EB57  7A1F 8F08 71F2 0211 9294"
         "B6C8 F982 82B9 44E3 B0D5  C253 0FC3 042E 345A D05D"
+        "474E 2231 6ABF 4785 A88C  6E8E A2C7 94A9 8641 9D8A"
       ];
     });
   };

@@ -1,7 +1,7 @@
 {
   "10" = rec {
-    version = "10.2.10";
-    sha256 = "adb148308849a3cc13e04a8f7c589c184912fceacaaf6eed7d449dba96d18478";
+    version = "10.2.11";
+    sha256 = "44638c6e2ea822a40dec3fe6e504972886fe4430f91bc5b4a01f2377f7ba750e";
   };
   "12" = rec {
     version = "12.2.7";

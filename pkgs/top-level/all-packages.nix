@@ -1555,6 +1555,8 @@ gnome-desktop_3-26 = callPackage ../all-pkgs/g/gnome-desktop {
 };
 gnome-desktop = callPackageAlias "gnome-desktop_3-26" { };
 
+gnome-doc-utils = callPackage ../all-pkgs/g/gnome-doc-utils { };
+
 gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
   channel = "3.20";
 };
@@ -4335,9 +4337,6 @@ zstd = callPackage ../all-pkgs/z/zstd {
   doxygen = callPackage ../development/tools/documentation/doxygen {
     qt4 = null;
   };
-#
-  gnome_doc_utils =
-    callPackage ../development/tools/documentation/gnome-doc-utils { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #

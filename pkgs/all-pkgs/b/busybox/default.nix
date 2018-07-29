@@ -12,7 +12,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "busybox-1.28.4";
+  name = "busybox-1.29.1";
 
   src = fetchurl {
     urls = [
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
       "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "e3c14a3699dc7e82fed397392957afc78e37bdf25398ac38ead6e84621b2ae6a";
+    sha256 = "fc250730ea16d28839bfecda3c431683fa6bd4273ffca6b632cbeb3556c914c3";
   };
 
   patches = [
@@ -77,8 +77,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha1Urls = map (n: "${n}.sign") src.urls;
-      pgpKeyFingerprint = "C9E9 416F 76E6 10DB D09D  040F 47B7 0C55 ACC9 965B";
+      sha256Urls = map (n: "${n}.sha256") src.urls;
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

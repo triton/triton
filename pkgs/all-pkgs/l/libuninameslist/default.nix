@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "20170807";
+  version = "20180701";
 in
 stdenv.mkDerivation rec {
   name = "libuninameslist-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/fontforge/libuninameslist/releases/download/"
       + "${version}/libuninameslist-dist-${version}.tar.gz";
-    sha256 = "0afa78c09468738fe92b83bdfda3f1b4b773a57e67f676f6a5203e64de0d1aa4";
+    sha256 = "8aed97d0bc872d893d8bf642a14e49958b0613136e1bfe2a415c69599c803c90";
   };
 
   meta = with lib; {

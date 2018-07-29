@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "3.5.2";
+  version = "3.5.4";
 in
 stdenv.mkDerivation rec {
   name = "libsass-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "sass";
     repo = "libsass";
     rev = "${version}";
-    sha256 = "552b0d83a7611435cbafe9c90952cef2c9f043c7a6648b9fa3d81edc7e3220b0";
+    sha256 = "7cc7cc6efa46b92e97fc6287c94a119425695b671f2867bc7edf795ed752b9fc";
   };
 
   postPatch = ''

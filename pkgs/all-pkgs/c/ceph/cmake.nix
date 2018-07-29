@@ -134,6 +134,7 @@ stdenv.mkDerivation rec {
       -i cmake/modules/GetGitRevisionDescription.cmake
 
     # {PYTHON_LIBRARIES} should be {PYTHON_LIBRARY}
+    grep -q 'PYTHON_LIBRARIES' src/CMakeLists.txt
     sed -i 's,PYTHON_LIBRARIES,PYTHON_LIBRARY,g' src/CMakeLists.txt
 
     # Boost doesn't know how to include python libraries

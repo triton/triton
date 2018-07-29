@@ -11,8 +11,8 @@
 }:
 
 let
-  date = "2018-03-14";
-  rev = "0b4f8f12ecd487314f2c4f3d27c1a11130df5e84";
+  date = "2018-07-23";
+  rev = "c36ae33e5afcd7cbc22b67c3c4d7f28d5b2ef826";
 in
 stdenv.mkDerivation rec {
   name = "iputils-${date}";
@@ -22,13 +22,8 @@ stdenv.mkDerivation rec {
     owner = "iputils";
     repo = "iputils";
     inherit rev;
-    sha256 = "fa15ac68a3546fcb30645e3c478b684d620251491e1ece0e5281dd43f711d9da";
+    sha256 = "d6f32d9b2b614583b843dd3752b01c7c788f899e080d247b6dabb22ff1783808";
   };
-
-  postPatch = /* Fix hardcoded xsltproc path */ ''
-    sed -i doc/Makefile \
-      -e 's,/usr/bin/,,'
-  '';
 
   makeFlags = [
     "LIBC_INCLUDE=${stdenv.cc.libc}/include"

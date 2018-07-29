@@ -4,17 +4,17 @@
 }:
 
 let
-  version = "1.0.2";
+  version = "1.0.3";
 in
 stdenv.mkDerivation {
   name = "mujs-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "ccxvii";
     repo = "mujs";
     rev = "${version}";
-    sha256 = "cfa27ac2572549b7cfe03fe8305e134dcbc7cba76bf2b90022bfa4eca1d63836";
+    sha256 = "aa94d2c17ecdb2494b5832cc6b5930f2b915e8be3d0aff4a48516b68cbec01de";
   };
 
   makeFlags = [

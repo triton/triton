@@ -13,6 +13,7 @@
 , libjpeg
 , libpaper
 , libpng
+, libtiff
 , zlib
 }:
 
@@ -20,7 +21,7 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  version = "9.21";
+  version = "9.23";
   versionNoP = replaceChars ["."] [""] version;
 
   fonts = stdenv.mkDerivation {
@@ -54,13 +55,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "2be1d014888a34187ad4bbec19ab5692cc943bd1cb14886065aeb43a3393d053";
+    sha256 = "1fcedc27d4d6081105cdf35606cb3f809523423a6cf9e3c23cead3525d6ae8d9";
   };
-
-  outputs = [
-    "out"
-    "doc"
-  ];
 
   buildInputs = [
     cups
@@ -74,21 +70,11 @@ stdenv.mkDerivation rec {
     libjpeg
     libpaper
     libpng
+    libtiff
     zlib
   ];
 
-  NIX_ZLIB_INCLUDE = "${zlib}/include";
-
-  NIX_LDFLAGS = [
-    "-L${zlib}/lib -lz"
-  ];
-
   patches = [
-    (fetchTritonPatch {
-      rev = "50998f27713ba0488f098b566f79a92992a79539";
-      file = "g/ghostscript/CVE-2017-8291.patch";
-      sha256 = "9cf9b04c274eba318907807b24d813fdfd5e7e2f88352a4b88dfc728a5b1e6c3";
-    })
     (fetchTritonPatch {
       rev = "16e1e82d413e33a3a46976f64c275c58a7dc3928";
       file = "ghostscript/urw-font-files.patch";
@@ -97,10 +83,13 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    rm -rv freetype jbig2dec jpeg lcms2 libpng tiff zlib ijs
+    rm -r freetype jbig2dec jpeg lcms2art libpng tiff zlib ijs
 
+    grep -q '^INCLUDE=/usr/include' base/unix-aux.mak
     sed -i base/unix-aux.mak \
       -e "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@"
+
+    grep -q '^ZLIBDIR=' configure.ac
     sed "s@^ZLIBDIR=.*@ZLIBDIR=${zlib}/include@" -i configure.ac
   '';
 
@@ -113,11 +102,12 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--with-system-libtiff"
     "--enable-fontconfig"
     "--enable-freetype"
     "--enable-dynamic"
     "--enable-cups"
+    "--with-system-libtiff"
+    "--with-drivers=ALL"
   ];
 
   # don't build/install statically linked bin/gs
@@ -134,9 +124,6 @@ stdenv.mkDerivation rec {
 
     cp -r Resource "$out/share/ghostscript/${version}"
 
-    mkdir -p "$doc/share/ghostscript/${version}"
-    mv "$out/share/ghostscript/${version}"/{doc,examples} "$doc/share/ghostscript/${version}/"
-
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 
@@ -149,8 +136,6 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       md5Url = "${baseUrl}/MD5SUMS";
-      sha1Url = "${baseUrl}/SHA1SUMS";
-      sha256Url = "${baseUrl}/SHA256SUMS";
       sha512Url = "${baseUrl}/SHA512SUMS";
       inherit (src) urls outputHash outputHashAlgo;
     };

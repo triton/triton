@@ -14,6 +14,8 @@ let
   inherit (lib)
     boolEn;
 
+  driverDir = "${opengl-dummy.driverSearchPath}/lib/dri";
+
   version = "2.2.0";
 in
 stdenv.mkDerivation rec {
@@ -44,7 +46,7 @@ stdenv.mkDerivation rec {
     "--${boolEn opengl-dummy.glx}-glx"
     "--enable-wayland"
     "--enable-va-messaging"
-    "--with-drivers-path=${opengl-dummy.driverSearchPath}/lib/dri"
+    "--with-drivers-path=${driverDir}"
   ];
 
   preInstall = ''
@@ -52,6 +54,8 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    inherit driverDir;
+
     srcVerification = fetchurl {
       failEarly = true;
       sha1Url = map (n: "${n}.sha1sum") src.urls;

@@ -1,22 +1,19 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 , lib
 , meson
 , ninja
 }:
 
 let
-  version = "2018-03-21";
+  version = "1.0.5";
 in
 stdenv.mkDerivation rec {
   name = "fribidi-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "fribidi";
-    repo = "fribidi";
-    rev = "47ed4eb33d11ff132d698decd24be4e16ff55c60";
-    sha256 = "9b41531bff1fba6bf692545d586e9def0b4be443ca6439ccd03770907a6e19ee";
+  src = fetchurl {
+    url = "https://github.com/fribidi/fribidi/releases/download/v${version}/${name}.tar.bz2";
+    sha256 = "6a64f2a687f5c4f203a46fa659f43dd43d1f8b845df8d723107e8a7e6158e4ce";
   };
 
   nativeBuildInputs = [

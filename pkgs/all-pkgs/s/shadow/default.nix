@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "4.5";
+  version = "4.6";
 in
 stdenv.mkDerivation rec {
   name = "shadow-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/shadow-maint/shadow/releases/download/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "fc8c858381ad577a5c25ff5beb6ee60a34f8719c73e4e7c61e74188b4e54b741";
+    sha256 = "0998c8d84242a231ab0acb7f8613927ff5bcff095f8aa6b79478893a03f05583";
   };
 
   buildInputs = [
@@ -66,8 +66,9 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    grep -r '/usr/sbin/nscd' .
+    grep -q '/usr/sbin/nscd' lib/nscd.c
     sed -i 's,/usr/sbin/nscd,/run/current-system/sw/bin/nscd,g' lib/nscd.c
+    ! grep -r '/usr/sbin/ncsd' .
   '';
 
   preInstall = ''

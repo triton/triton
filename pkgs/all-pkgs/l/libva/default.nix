@@ -14,7 +14,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "2.1.0";
+  version = "2.2.0";
 in
 stdenv.mkDerivation rec {
   name = "libva-${version}";
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "f3fa953a11d3210c3a4ee79031abdbe0863d5ce13d9b3f93f315f1eec60a4b0f";
+    sha256 = "6f6ca04c785544d30d315ef130a6aeb9435b75f934d7fbe0e4e9ba6084ce4ef2";
   };
 
   buildInputs = [
@@ -40,8 +40,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-docs"
-    "--enable-drm"
     "--enable-x11"
     "--${boolEn opengl-dummy.glx}-glx"
     "--enable-wayland"

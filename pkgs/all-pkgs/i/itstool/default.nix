@@ -1,7 +1,6 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3
 , lib
 
 , libxml2

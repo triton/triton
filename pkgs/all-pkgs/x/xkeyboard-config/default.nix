@@ -2,6 +2,7 @@
 , fetchurl
 , intltool
 , lib
+, libxslt
 , util-macros
 
 , libx11
@@ -9,16 +10,17 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xkeyboard-config-2.23.1";
+  name = "xkeyboard-config-2.24";
 
   src = fetchurl {
     url = "mirror://xorg/individual/data/xkeyboard-config/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "2a4bbc05fea22151b7a7c8ac2655d549aa9b0486bedc7f5a68c72716343b02f3";
+    sha256 = "91b18580f46b4e4ea913707f6c8d68ab5286879c3a6591462f3b9e760d3ac4d7";
   };
 
   nativeBuildInputs = [
     intltool
+    libxslt
     util-macros
   ];
 

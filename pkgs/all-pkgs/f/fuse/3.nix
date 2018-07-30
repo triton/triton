@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-3.2.4";
+  name = "fuse-3.2.5";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.xz";
     hashOutput = false;
-    sha256 = "61fcd35939b7ede710fca6fd3c3f1dd76f2d267bf62b05d4f140ddedd225490a";
+    sha256 = "3fa7534aae3d9523bd0245f085eb753a9b9d0dc9d2902dd51d6959b2b5394cf1";
   };
 
   nativeBuildInputs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
     # Fix hardcoded paths
     sed -i lib/mount_util.c \
-      -e 's@/bin/@/run/current-system/sw/bin/@g'
+      -e 's@\([" ]\)/bin/@\1/run/current-system/sw/bin/@g'
 
     # Can't chmod / chown in a nix-build
     sed -i 's,\(chmod\|chown\|mknod\|mkdir\),true,g' util/install_helper.sh

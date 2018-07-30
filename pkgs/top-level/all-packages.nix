@@ -2532,6 +2532,8 @@ libspectre = callPackage ../all-pkgs/l/libspectre { };
 
 libspiro = callPackage ../all-pkgs/l/libspiro { };
 
+libsquish = callPackage ../all-pkgs/l/libsquish { };
+
 libssh = callPackage ../all-pkgs/l/libssh { };
 
 libssh2 = callPackage ../all-pkgs/l/libssh2 { };

@@ -1,31 +1,30 @@
 { stdenv
 , fetchurl
 , perl
-, python2Packages
 
 , glib
 , libconfig
 , libxml2
 , openssl
+, python3Packages
 , sqlite
 , systemd_lib
 , yajl
 }:
 
 let
-  version = "1.6.1";
+  version = "1.6.2";
 in
 stdenv.mkDerivation rec {
   name = "libstoragemgmt-${version}";
 
   src = fetchurl {
     url = "https://github.com/libstorage/libstoragemgmt/releases/download/${version}/${name}.tar.gz";
-    sha256 = "89d48eefe8981e8484e21f2dd9bebabeaffb18635b25f2d31dfc3a6e431b4cde";
+    sha256 = "2b5e6156caeb96567ce0c165303959e328c5aaca77fbb9616c80c81751fb08eb";
   };
 
   nativeBuildInputs = [
     perl
-    python2Packages.python
   ];
 
   buildInputs = [
@@ -33,8 +32,9 @@ stdenv.mkDerivation rec {
     libconfig
     libxml2
     openssl
-    python2Packages.pyudev
-    python2Packages.pywbem
+    python3Packages.python
+    python3Packages.pywbem
+    python3Packages.six
     sqlite
     systemd_lib
     yajl
@@ -51,6 +51,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--without-test"
     "--without-mem-leak-test"
+    "--with-python3"
   ];
 
   preInstall = ''
@@ -60,11 +61,6 @@ stdenv.mkDerivation rec {
       "bashcompletiondir=$out/etc/bash_completion.d"
     )
   '';
-
-  NIX_CFLAGS_COMPILE = [
-    "-Wno-format-overflow"
-    "-Wno-implicit-fallthrough"
-  ];
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

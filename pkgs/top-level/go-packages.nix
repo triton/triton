@@ -531,6 +531,7 @@ let
     sha256 = "1q5smkv5pdqzvnzl3nx58xq38vpf5da6px5jjnjrab2g1465r52v";
     propagatedBuildInputs = [
       protobuf
+      text
     ];
   };
 
@@ -1432,6 +1433,7 @@ let
       circbuf
       columnize
       copystructure
+      coredns
       dns
       errors
       go-bindata-assetfs
@@ -1454,6 +1456,7 @@ let
       hashicorp_go-uuid
       grpc
       gziphandler
+      hashstructure
       hcl
       hil
       logutils
@@ -1466,8 +1469,12 @@ let
       prometheus_client_golang
       raft-boltdb
       raft
+      reflectwalk
+      sys
+      testify
       time
       ugorji_go
+      vault_api
       hashicorp_yamux
     ];
 
@@ -1626,6 +1633,7 @@ let
     subPackages = [
       "plugin/etcd/msg"
       "plugin/pkg/dnsutil"
+      "plugin/pkg/response"
     ];
     propagatedBuildInputs = [
       dns
@@ -1803,6 +1811,7 @@ let
     propagatedBuildInputs = [
       go-digest
       docker_go-metrics
+      image-spec
       logrus
       mux
       net
@@ -2365,7 +2374,7 @@ let
     repo = "fsnotify";
     rev = "v1.4.7";
     sha256 = "19j58cdxnydx8nad708syyasriwz4l97rjf1qs4b1jv0g8az9paj";
-    goPackagePath = "gopkg.in/fsnotify.v1";
+    goPackagePath = "gopkg.in/fsnotify/fsnotify.v1";
     propagatedBuildInputs = [
       sys
     ];
@@ -2563,8 +2572,9 @@ let
     owner = "onsi";
     repo = "ginkgo";
     sha256 = "160a651a4x5wdafq8zcfpyk0qyl4cmk67dd15844i6sfh8qbj2vp";
-    buildInputs = [
+    propagatedBuildInputs = [
       sys
+      tail
     ];
   };
 
@@ -3630,6 +3640,7 @@ let
       gophercloud
       govmomi
       oauth2
+      packngo
       #scaleway-sdk
       softlayer-go
       triton-go
@@ -8210,6 +8221,15 @@ let
     meta.autoUpdate = false;
   };
 
+  packngo = buildFromGitHub {
+    version = 6;
+    owner = "packethost";
+    repo = "packngo";
+    date = "2018-07-24";
+    rev = "7e9e620eb59bec157d17a8fb9ca3f2dbbe0b4a7f";
+    sha256 = "0k4h63hxvwgk6jbm3khq09pd29q87zm95lvjfxq2h7cr84gxmlcx";
+  };
+
   paho-mqtt-golang = buildFromGitHub {
     version = 6;
     owner = "eclipse";
@@ -8878,6 +8898,15 @@ let
         -e '/dropbox/d'
       sed -i fs/hash/hash.go \
         -e '/dbhash/d'
+
+      # Fix sdnotify
+      grep -q 'sdnotify.SdNotify' cmd/mount/mount.go
+      sed -i cmd/mount/mount.go \
+        -e 's,SdNotifyNoSocket,ErrSdNotifyNoSocket,g' \
+        -e 's,sdnotify\.SdNotify,sdnotify.,g'
+    '';
+    postInstall = ''
+      rm "$bin"/bin/test_all
     '';
     meta.useUnstable = true;
   };
@@ -9668,6 +9697,10 @@ let
     repo = "syncthing";
     sha256 = "144mm6qrw50f8kwyp93mlkrx4y1j5mb4g9dz70b9pgf6lc9rq5r0";
     buildFlags = [ "-tags noupgrade" ];
+    nativeBuildInputs = [
+      gogo_protobuf.bin
+      pkgs.protobuf-cpp
+    ];
     buildInputs = [
       AudriusButkevicius_cli
       crypto
@@ -9683,6 +9716,7 @@ let
       gogo_protobuf
       goleveldb
       groupcache
+      grpc
       net
       notify
       osext

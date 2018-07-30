@@ -23,7 +23,7 @@ let
     optionalString;
 
   channel = "1.42";
-  version = "${channel}.2";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "pango-${version}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "b1e416b4d40416ef6c8224cf146492b86848703264ba88f792290992cf3ca1e2";
+    sha256 = "fb3d875305d5143f02cde5c72fec3903e60dc35844759dc14b2df4955b5dde3a";
   };
 
   nativeBuildInputs = [

@@ -46,12 +46,12 @@ let
       patchSha256 = "1345bf04742096c50eff4de6ba2a2c07ba8779e3c46373cd8076475c36f2e7b0";
     };
     "testing" = {
-      version = "4.18-rc6";
+      version = "4.18-rc7";
       baseSha256 = "9faa1dd896eaea961dc6e886697c0b3301277102e5bc976b2758f9a62d3ccd13";
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];
-      patchSha256 = "60d766aeb1cb957eaa85007dadf07060f6bffb6e018742e1930877ead00babaa";
+      patchSha256 = "8f1230b92b9f1615740d58ee78f478962b05f9bdd37ed6a26ecfb66f5f11cdf2";
     };
     "bcachefs" =
       let

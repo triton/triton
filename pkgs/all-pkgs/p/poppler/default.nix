@@ -38,15 +38,15 @@ let
     boolOn
     boolString;
 
-  version = "0.64.0";
+  version = "0.67.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    multihash = "QmXD9c266c4RWvZumRbSMVJ7awVoGJ3Wnqbx5Eygig5Zr6";
-    sha256 = "b21df92ca99f78067785cf2dc8e06deb04726b62389c0ee1f5d8b103c77f64b1";
+    multihash = "QmcRnWiU6a3qA97fQWcjeRmu4t4YdvKRxPNMH8JerUd3Fe";
+    sha256 = "a34a4f1a0f5b610c584c65824e92e3ba3e08a89d8ab4622aee11b8ceea5366f9";
   };
 
   nativeBuildInputs = [
@@ -81,38 +81,25 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DBUILD_CPP_TESTS=OFF"
     "-DBUILD_GTK_TESTS=OFF"
-    "-DBUILD_QT4_TESTS=OFF"
     "-DBUILD_QT5_TESTS=OFF"
-    "-DENABLE_CMS=${boolString (lcms2 != null) "lcms2" "OFF"}"
-    "-DENABLE_CPP=ON"
-    "-DENABLE_LIBCURL=${boolOn (curl != null)}"
-    "-DENABLE_LIBOPENJPEG=${boolString (openjpeg != null) "openjpeg2" "OFF"}"
-    "-DENABLE_QT4=OFF"
-    "-DENABLE_QT5=${boolOn (qt5 != null)}"
-    #"-DENABLE_SPLASH=ON"
+    "-DBUILD_CPP_TESTS=OFF"
+    "-DENABLE_GLIB=${boolOn (glib != null)}"
     "-DENABLE_UTILS=${boolOn utils}"
-    "-DENABLE_XPDF_HEADERS=ON"
+    "-DENABLE_GOBJECT_INTROSPECTION=${boolOn (gobject-introspection != null)}"
+    "-DENABLE_QT5=${boolOn (qt5 != null)}"
+    "-DENABLE_LIBOPENJPEG=${boolString (openjpeg != null) "openjpeg2" "none"}"
+    "-DENABLE_CMS=${boolString (lcms2 != null) "lcms2" "none"}"
+    "-DENABLE_DCTDECODER=${boolString (libjpeg != null) "libjpeg" "none"}"
+    "-DENABLE_LIBCURL=${boolOn (curl != null)}"
     "-DENABLE_ZLIB=${boolOn (zlib != null)}"
-    "-DENABLE_ZLIB_UNCOMPRESS=${boolOn (zlib != null)}"
-    "-DFONT_CONFIGURATION=${boolString (fontconfig != null) "fontconfig" "OFF"}"
     "-DSPLASH_CMYK=ON"
-    "-DUSE_FIXEDPOINT=OFF"
     "-DUSE_FLOAT=ON"
-    "-DWITH_Cairo=${boolOn (cairo != null)}"
-    "-DWITH_GLIB=${boolOn (
-      cairo != null
-      && glib != null
-      && gobject-introspection != null)}"
-    "-DWITH_GObjectIntrospection=${boolOn (gobject-introspection != null)}"
-    #"-DWITH_GTK=${boolOn (gtk3 != null)}"
-    "-DWITH_Iconv=ON"
     "-DWITH_JPEG=${boolOn (libjpeg != null)}"
-    "-DWITH_NSS3=${boolOn (nss != null)}"
     "-DWITH_PNG=${boolOn (libpng != null)}"
-    "-DWITH_Qt4=OFF"
     "-DWITH_TIFF=${boolOn (libtiff != null)}"
+    "-DWITH_NSS3=${boolOn (nss != null)}"
+    "-DWITH_Cairo=${boolOn (cairo != null)}"
   ];
 
   meta = with lib; {

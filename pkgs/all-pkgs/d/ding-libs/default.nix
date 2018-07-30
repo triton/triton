@@ -10,19 +10,23 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ding-libs-0.6.0";
+  name = "ding-libs-0.6.1";
 
   src = fetchurl {
     url = "https://releases.pagure.org/SSSD/ding-libs/${name}.tar.gz";
+    multihash = "QmW2nGK5yMh6tshJjQQqyTcwEDDqsxdqWm7HXqq1HdpZn9";
     hashOutput = false;
-    sha256 = "764a211f40cbcf2c9a613fc7ce0d77799d5ee469221b8b6739972e76f09e9fad";
+    sha256 = "a319a327deb81f2dfab9ce4a4926e80e1dac5dcfc89f4c7e548cec2645af27c1";
   };
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "E4E3 6675 8CA0 716A AB80  4867 1EC6 AB75 32E7 BC25";
+      pgpKeyFingerprints = [
+        "E4E3 6675 8CA0 716A AB80  4867 1EC6 AB75 32E7 BC25"
+        "16F2 4229 488E 7360 4895  2737 BA88 000F E639 8272"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

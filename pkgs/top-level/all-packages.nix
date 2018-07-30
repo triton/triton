@@ -941,6 +941,8 @@ colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 
 colorhug-client = callPackage ../all-pkgs/c/colorhug-client { };
 
+combine-xml-catalogs = callPackage ../all-pkgs/c/combine-xml-catalogs { };
+
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };

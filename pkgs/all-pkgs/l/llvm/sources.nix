@@ -38,9 +38,9 @@
     };
     patches = [
       {
-        rev = "9bbc7b11d649bbb0c5d8112cdd9a4eb5e437c76d";
+        rev = "b178552fe5e7431bfa98025cb8e4fe2e4927bd69";
         file = "l/llvm/fix-llvm-config.patch";
-        sha256 = "45e71e71de3a8e2f41516832f5044e7226b35a273d25afac076e14fc3ae46036";
+        sha256 = "7cbe2b2d1127c0995cb1af5d7d758e1a9a600ee17045f3a3341a68726ba8f0e8";
       }
     ];
   };

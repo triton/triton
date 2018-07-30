@@ -23,7 +23,7 @@ let
     optionalString;
 
   channel = "1.42";
-  version = "${channel}.0";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "pango-${version}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "9924d88a3dcedff753f0763814a1605307c5c9c931413b8b47ea7267d1b19446";
+    sha256 = "b1e416b4d40416ef6c8224cf146492b86848703264ba88f792290992cf3ca1e2";
   };
 
   nativeBuildInputs = [
@@ -57,12 +57,6 @@ stdenv.mkDerivation rec {
     "-Denable_docs=false"  # gtk-doc
     "-Dgir=true"
   ];
-
-  postPatch = ''
-    # Fix list being cast to a string
-    sed -i meson.build \
-      -e "/PKGCONFIG_CAIRO_REQUIRES/ s/pangocairo_requires/'''.join(pangocairo_requires)/"
-  '';
 
   # preCheck = /* Fontconfig fails to load default config in test */
   #     optionalString doCheck ''

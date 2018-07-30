@@ -3,11 +3,12 @@
 
 , c-ares
 , libevent
-, openssl_1-0-2
+, openssl
+, pam
 }:
 
 let
-  version = "1.7.2";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
   name = "pgbouncer-${version}";
@@ -15,18 +16,21 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "https://pgbouncer.github.io/downloads/files/${version}/${name}.tar.gz";
     sha256Url = "${url}.sha256";
-    sha256 = "de36b318fe4a2f20a5f60d1c5ea62c1ca331f6813d2c484866ecb59265a160ba";
+    sha256 = "fa8bde2a2d2c8c80d53a859f8e48bc6713cf127e31c77d8f787bbc1d673e8dc8";
   };
 
   buildInputs = [
     libevent
-    openssl_1-0-2
+    openssl
+    pam
   ];
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--with-cares=${c-ares}"
+    "--with-pam"
+    "--with-root-ca-file=/etc/ssl/certs/ca-certificates.crt"
   ];
 
   meta = with stdenv.lib; {

@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, fetchTritonPatch
 , lib
 
 , libxml2
@@ -20,6 +21,14 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     libxml2
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "9a5628012d660812c9dbac289a5460d86a3cc908";
+      file = "i/itstool/0001-Be-more-careful-about-libxml2-memory-management.patch";
+      sha256 = "fb7ae169c80778de40944576983640cbf7c3511cceb37727697e6aee8af3200e";
+    })
   ];
 
   # Move our shared data to the correct directory

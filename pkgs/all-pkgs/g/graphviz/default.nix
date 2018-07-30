@@ -1,28 +1,32 @@
 { stdenv
-, bison
-, fetchTritonPatch
 , fetchurl
-, flex
 , lib
-, libtool
-, swig
 
 , cairo
 , devil
 , expat
+, gdk-pixbuf
+, ghostscript
+, glu
 , gts
 , fontconfig
+, freeglut
+, freetype
 , libgd
 , libice
-, libjpeg
-, libpng
+, librsvg
+, libsm
+, libtool
 , libx11
 #, libxaw
+, libxext
 #, libxmu
 #, libxpm
 , libxrender
 , libxt
+, opengl-dummy
 , pango
+, poppler
 , xorg
 , xorgproto
 , zlib
@@ -46,52 +50,47 @@ stdenv.mkDerivation rec {
     sha256 = "ca5218fade0204d59947126c38439f432853543b0818d9d728c589dfe7f3a421";
   };
 
-  nativeBuildInputs = [
-    bison
-    libtool
-    swig
-  ];
-
   buildInputs = [
-    devil
+    # Main dependencies
     expat
-    gts
     fontconfig
-    libgd
+    freetype
+    gts
+    libtool
+
+    # Graphical Deps
+    freeglut
+    glu
     libice
-    libjpeg
-    libpng
+    libsm
     libx11
     #libxaw
     xorg.libXaw
+    libxext
     #libxmu
     xorg.libXmu
+    libxt
+    opengl-dummy
+    xorgproto
+
+    # Plugins
+    devil
+    gdk-pixbuf
+    ghostscript
+    libgd
+    librsvg
     #libxpm
     xorg.libXpm
     libxrender
-    libxt
     pango
-    xorgproto
+    poppler
     zlib
   ];
 
-  configureFlags = [
-    "--with-pngincludedir=${libpng}/include"
-    "--with-pnglibdir=${libpng}/lib"
-    "--with-jpegincludedir=${libjpeg}/include"
-    "--with-jpeglibdir=${libjpeg}/lib"
-    "--with-expatincludedir=${expat}/include"
-    "--with-expatlibdir=${expat}/lib"
-  ];
-
-  preBuild = ''
-    sed -e 's@am__append_5 *=.*@am_append_5 =@' -i lib/gvc/Makefile
-  '';
-
-  # "command -v" is POSIX, "which" is not
-  postInstall = ''
-    sed -i 's|`which lefty`|"'$out'/bin/lefty"|' $out/bin/dotty
-    sed -i 's|which|command -v|' $out/bin/vimdot
+  # Make paths to binaries absolute
+  preFixup = ''
+    grep -q 'leftypath=' "$out"/bin/dotty
+    sed -i "s,^leftypath=.*,^leftypath='$out'/bin/lefty," "$out"/bin/dotty
   '';
 
   # Adding optimizations breaks the internal malloc build

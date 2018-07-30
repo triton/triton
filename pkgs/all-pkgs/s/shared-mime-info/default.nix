@@ -3,23 +3,25 @@
 , gettext
 , intltool
 , lib
+, perl
 
 , glib
 , libxml2
 }:
 
 stdenv.mkDerivation rec {
-  name = "shared-mime-info-1.9";
+  name = "shared-mime-info-1.10";
 
   src = fetchurl {
     url = "https://freedesktop.org/~hadess/${name}.tar.xz";
-    multihash = "QmRuSuazf3cvmybato9Ks23rGLEpT4KXEryPPAPDCAEuyD";
-    sha256 = "5c0133ec4e228e41bdf52f726d271a2d821499c2ab97afd3aa3d6cf43efcdc83";
+    multihash = "QmcuVe36fVrVZQvMcqaj2X1ipL2Qrt56DTYDD1b1PCUWBK";
+    sha256 = "c625a83b4838befc8cafcd54e3619946515d9e44d63d61c4adf7f5513ddfbebf";
   };
 
   nativeBuildInputs = [
     gettext
     intltool
+    perl
   ];
 
   buildInputs = [
@@ -28,8 +30,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-nls"
-    "--enable-default-make-check"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--disable-update-mimedb"
   ];
 

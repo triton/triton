@@ -15,21 +15,21 @@
 , mujs
 , opengl-dummy
 , openjpeg
-, openssl_1-0-2
+, openssl
 , xorgproto
 , zlib
 }:
 
 let
-  version = "1.12.0";
+  version = "1.13.0";
 in
 stdenv.mkDerivation rec {
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "https://mupdf.com/downloads/archive/${name}-source.tar.xz";
-    multihash = "QmckdELFTNVgMdvRdvcpTBCMeqYALcPnH1CGkpzE1Y2xfF";
-    sha256 = "577b3820c6b23d319be91e0e06080263598aa0662d9a7c50af500eb6f003322d";
+    multihash = "Qmc427qqvKzzDi8bUKa4weMMyNCTNNcvYvSxsL8DqH3Fty";
+    sha256 = "746698e0d5cd113bdcb8f65d096772029edea8cf20704f0d15c96cb5449a4904";
   };
 
   buildInputs = [
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     mujs
     opengl-dummy
     openjpeg
-    openssl_1-0-2
+    openssl
     xorgproto
     zlib
   ];
@@ -54,22 +54,12 @@ stdenv.mkDerivation rec {
   # No clue on this one
   preUnpack = ''
     _defaultUnpack() {
-      xz -d <"$1" | tar xv
+      xz -d <"$1" | tar x || true
     }
   '';
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "21df51a39447ab99518058ddb37e245af246f15c";
-      file = "m/mupdf/fix-openjpeg.patch";
-      sha256 = "6a9088440cf12362b4292274e8eab8f509dd0b599a0ef548a4cc36d533c410f1";
-    })
-  ];
-
   postPatch = /* Remove any unused third party utils*/ ''
     rm -r thirdparty
-  '' + /* Remove test junk from the build */ ''
-    sed -i '/INSTALL_APPS/ s,$(MUJSTEST),,g' Makefile
   '';
 
   preBuild = ''
@@ -84,7 +74,8 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    mkdir -p "$out/lib/pkgconfig"
+    mkdir -p "$out"/lib/pkgconfig
+    ! test -e "$out"/lib/pkgconfig/mupdf.pc
     cat >"$out/lib/pkgconfig/mupdf.pc" <<EOF
     prefix=$out
     libdir=$out/lib
@@ -99,6 +90,7 @@ stdenv.mkDerivation rec {
     EOF
 
     mkdir -p $out/share/applications
+    ! test -e "$out"/share/applications/mupdf.desktop
     cat > $out/share/applications/mupdf.desktop <<EOF
     [Desktop Entry]
     Type=Application

@@ -27,7 +27,10 @@ stdenv.mkDerivation rec {
   '';
 
   makeFlags = [
-    "USE_OPENMP=1"
+    # Currently disabled because it is unclear if we want
+    # fundamental libraries to depend on openmp support. This also
+    # currently breaks linking inside of DevIL for graphviz
+    #"USE_OPENMP=1"
     "USE_SHARED=1"
     "USE_SSE=1"
   ];

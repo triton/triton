@@ -3,24 +3,24 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-2.9.7";
+  name = "fuse-2.9.8";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
+    sha256 = "5e84f81d8dd527ea74f39b6bc001c874c02bad6871d7a9b0c14efb57430eafe3";
   };
 
-  preConfigure = ''
-    export MOUNT_FUSE_PATH=$out/sbin
-    export INIT_D_PATH=$out/etc/init.d
-    export UDEV_RULES_PATH=$out/etc/udev/rules.d
+  postPatch = ''
+    sed -i lib/mount_util.c \
+      -e 's@\([" ]\)/bin/@\1/run/current-system/sw/bin/@g'
   '';
 
-  preBuild = ''
-    sed -i lib/mount_util.c \
-      -e 's@/bin/@/run/current-system/sw/bin/@g'
+  preConfigure = ''
+    export MOUNT_FUSE_PATH="$out"/bin
+    export INIT_D_PATH="$TMPDIR"
+    export UDEV_RULES_PATH="$out"/etc/udev/rules.d
   '';
 
   configureFlags = [

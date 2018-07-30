@@ -1902,6 +1902,8 @@ gtkspell_2 = callPackage ../all-pkgs/g/gtkspell/2.x.nix { };
 gtkspell_3 = callPackage ../all-pkgs/g/gtkspell/3.x.nix { };
 gtkspell = callPackageAlias "gtkspell_3" { };
 
+gts = callPackage ../all-pkgs/g/gts { };
+
 guile = callPackage ../all-pkgs/g/guile { };
 
 guitarix = callPackage ../all-pkgs/g/guitarix {
@@ -4387,8 +4389,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   gom = callPackage ../all-pkgs/g/gom { };
 #
   gsl = callPackage ../development/libraries/gsl { };
-#
-  gts = callPackage ../development/libraries/gts { };
 #
   ijs = callPackage ../development/libraries/ijs { };
 #

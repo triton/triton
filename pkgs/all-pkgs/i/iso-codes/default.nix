@@ -8,14 +8,20 @@
 , iso-codes
 }:
 
+let
+  tarHash = "ef8de8bc12e0512d26ed73436a477871";
+  sigHash = "776a6ee6851f12adafd5430d8ebce693";
+in
 stdenv.mkDerivation rec {
-  name = "iso-codes-3.76";
+  name = "iso-codes-3.79";
 
   src = fetchurl {
-    url = "https://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
-    multihash = "QmTzGpqWkWTkZ4K3TciUBb9KMFsCbgXdw5kFz6cCMtRzao";
+    urls = [
+      "https://salsa.debian.org/iso-codes-team/iso-codes/uploads/${tarHash}/${name}.tar.xz"
+      "https://ftp.osuosl.org/pub/blfs/conglomeration/iso-codes/${name}.tar.xz"
+    ];
     hashOutput = false;
-    sha256 = "38ea8c1de7c07d5b4c9603ec65c238c155992a2e2ab0b02725d0926d1ad480c4";
+    sha256 = "cbafd36cd4c588a254c0a5c42e682190c3784ceaf2a098da4c9c4a0cbc842822";
   };
 
   nativeBuildInputs = [
@@ -26,7 +32,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrl = "https://salsa.debian.org/iso-codes-team/iso-codes/uploads/${sigHash}/${name}.tar.xz.sig";
       pgpKeyFingerprints = [
         "D1CB 8F39 BC5D ED24 C5D2  C78C 1302 F1F0 36EB EB19"
         "F972 A168 A270 3B34 CC23  E09F D4E5 EDAC C014 3D2D"

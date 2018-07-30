@@ -6,8 +6,8 @@
   };
 
   "unstable" = {
-    version = "1.13.12";
-    multihash = "QmW7G3q7Cyt4kQekJpfMAAeLo3tL3ntrLLrY9fqRrqKgsR";
-    sha256 = "fb92f5602cdb8d3ab1ad47dbeca151b185d62eedb67d347bbe9d79c1438c85de";
+    version = "1.15.2";
+    multihash = "QmYarAhr8YP4YcyNutUhpinQXVjbeeSbqCHrZNohVsLmQw";
+    sha256 = "eeba09aecfbe8277ac33a5a2486ec2d6731739f3c1c701b42a0c3784af67ad90";
   };
 }

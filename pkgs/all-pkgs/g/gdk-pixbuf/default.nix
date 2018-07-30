@@ -15,6 +15,7 @@
 , libx11
 , jasper
 , shared-mime-info
+, xorgproto
 
 , channel
 , gdk-pixbuf-loaders-cache
@@ -26,8 +27,8 @@ let
 
   sources = {
     "2.36" = {
-      version = "2.36.11";
-      sha256 = "ae62ab87250413156ed72ef756347b10208c00e76b222d82d9ed361ed9dde2f3";
+      version = "2.36.12";
+      sha256 = "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334";
     };
   };
   source = sources."${channel}";
@@ -58,6 +59,7 @@ stdenv.mkDerivation rec {
     libtiff
     libx11
     shared-mime-info
+    xorgproto
   ];
 
   postPatch = ''
@@ -71,16 +73,8 @@ stdenv.mkDerivation rec {
   '';
 
   mesonFlags = [
-    "-Denable_png=true"
-    "-Denable_tiff=true"
-    "-Denable_jpeg=true"
-    "-Denable_jasper=true"
+    "-Djasper=true"
     "-Dbuiltin_loaders=none"
-    "-Dwith_docs=false"
-    "-Dwith_gir=true"
-    "-Dwith_man=false"
-    "-Denable_relocatable=false"
-    "-Denable_native_windows_loaders=false"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

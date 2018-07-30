@@ -11,11 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xkbcomp-1.4.1";
+  name = "xkbcomp-1.4.2";
 
   src = fetchurl {
     url = "mirror://xorg/individual/app/${name}.tar.bz2";
-    sha256 = "748dc4cf58ac95684106bd9cf163ac6ab7de9a236faec02a6f4d4006d63a5736";
+    hashOutput = false;
+    sha256 = "6dd8bcb9be7e85bd7294abe261b8c7b0539d2fc93e41b80fb8bd013767ce8424";
   };
 
   nativeBuildInputs = [

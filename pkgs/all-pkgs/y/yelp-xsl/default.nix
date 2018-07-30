@@ -1,12 +1,9 @@
 { stdenv
 , fetchurl
-, gawk
 , gettext
 , intltool
 , itstool
-
-, libxml2
-, libxslt
+, perl
 
 , channel
 }:
@@ -24,19 +21,13 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    gawk
     gettext
     intltool
     itstool
-  ];
-
-  buildInputs = [
-    libxml2
-    libxslt
+    perl
   ];
 
   configureFlags = [
-    "--enable-nls"
     "--disable-doc"
   ];
 

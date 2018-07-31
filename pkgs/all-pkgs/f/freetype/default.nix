@@ -57,6 +57,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-biarch-config"
+    "--enable-freetype-config"  # Needed by grub
     "--with-zlib"
     "--with-bzip2"
     "--with-png"

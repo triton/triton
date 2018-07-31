@@ -1,24 +1,23 @@
 { stdenv
-, autoreconfHook
 , bison
 , fetchurl
 , flex
-, gettext
 , lib
-, libxslt
 
 , glib
-, gobject-introspection
 , graphviz
 
 , channel
 }:
 
 let
+  inherit (lib)
+    optionalString;
+
   sources = {
     "0.40" = {
-      version = "0.40.6";
-      sha256 = "6da450f1a73e0f1e17506e68cce5b9e8996349e576d3f8cb6b0b73ee22e44be2";
+      version = "0.40.8";
+      sha256 = "5c35e087a7054e9f0a514a0c1f1d0a0d7cf68d3e43c1dbeb840f9b0d815c0fa5";
     };
   };
   source = sources."${channel}";
@@ -33,36 +32,33 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     bison
     flex
-    gettext
-    libxslt
   ];
 
   buildInputs = [
     glib
-    gobject-introspection
     graphviz
   ];
 
   setupHook = ./setup-hook.sh;
 
-  postPatch = ''
+  postPatch = optionalString (doCheck) ''
     patchShebangs tests/testrunner.sh
     patchShebangs valadoc/tests/testrunner.sh
-  '' + /* dbus tests require machine-id */ ''
-    sed -i tests/Makefile.am \
-      -e '/dbus\//d'
+
+    # We can't run dbus tests
+    grep -q 'dbus-run-session' tests/testrunner.sh
+    sed -i 's,dbus-run-session,true,' tests/testrunner.sh
   '';
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-unversioned"
-    "--disable-coverage"
   ];
 
-  #doCheck = true;
+  # Currently tests are broken
+  doCheck = false;
 
   passthru = {
     srcVerification = fetchurl {

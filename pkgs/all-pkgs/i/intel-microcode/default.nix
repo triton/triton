@@ -32,7 +32,6 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    rm intel-ucode*/list
     iucode_tool --write-earlyfw=initrd intel-ucode*/
   '';
 

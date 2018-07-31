@@ -15,7 +15,8 @@
 }:
 
 let
-  name = "ldb-1.4.1";
+  # 1.4.1 breaks samba 4.8.x
+  name = "ldb-1.4.0";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "2df13aa25b376b314ce24182c37691959019523de3cc5356c40c1a333b0890a2";
+    sha256 = "a87edaa35a33a76006a7ccd30f326514db78ac235b3a257402441349bc0da9b4";
   };
 
   nativeBuildInputs = [

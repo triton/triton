@@ -210,12 +210,13 @@ in
       ];
 
       boot = {
-        kernelModules = [ "spl" "zfs" ] ;
-        extraModulePackages = [ splKernelPkg zfsKernelPkg ];
+        kernelModules = [ "zfs" ] ;
+        extraModulePackages = [ zfsKernelPkg ]
+          ++ optionals (!cfgZfs.useDev) [ splKernelPkg ];
       };
 
       boot.initrd = mkIf inInitrd {
-        kernelModules = [ "spl" "zfs" ];
+        kernelModules = [ "zfs" ];
         extraUtilsCommands =
           ''
             copy_bin_and_libs ${zfsUserPkg}/sbin/zfs

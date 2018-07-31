@@ -3620,10 +3620,6 @@ spl = callPackage ../all-pkgs/s/spl {
   channel = "stable";
   type = "user";
 };
-spl_dev = callPackage ../all-pkgs/s/spl {
-  channel = "dev";
-  type = "user";
-};
 
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 
@@ -4144,13 +4140,9 @@ zeromq = callPackage ../all-pkgs/z/zeromq { };
 
 zfs = callPackage ../all-pkgs/z/zfs {
   channel = "stable";
-  type = "user";
-  spl = null;
 };
 zfs_dev = callPackage ../all-pkgs/z/zfs {
   channel = "dev";
-  type = "user";
-  spl = null;
 };
 
 zimg = callPackage ../all-pkgs/z/zimg { };
@@ -4612,27 +4604,18 @@ libstartup_notification =
         inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
-      spl_dev = kCallPackage ../all-pkgs/s/spl {
-        channel = "dev";
-        type = "kernel";
-        inherit (kPkgs) kernel;  # We shouldn't need this
-      };
-
       wireguard = kCallPackage ../all-pkgs/w/wireguard {
         inherit (kPkgs) kernel;
       };
 
-      zfs = kCallPackage ../all-pkgs/z/zfs {
+      zfs = kCallPackage ../all-pkgs/z/zfs/kernel.nix {
         channel = "stable";
-        type = "kernel";
         inherit (kPkgs) kernel spl;  # We shouldn't need this
       };
 
-      zfs_dev = kCallPackage ../all-pkgs/z/zfs {
+      zfs_dev = kCallPackage ../all-pkgs/z/zfs/kernel.nix {
         channel = "dev";
-        type = "kernel";
         inherit (kPkgs) kernel;  # We shouldn't need this
-        spl = kPkgs.spl_dev;
       };
 
     };

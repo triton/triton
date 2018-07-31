@@ -1,4 +1,5 @@
 { stdenv
+, combine-xml-catalogs
 , docbook_xml_dtd_44
 , docbook-xsl
 , fetchurl
@@ -36,30 +37,19 @@
 }:
 
 let
-  xmlcatalog = stdenv.mkDerivation {
-    name = "sssd-xml-catalog";
-
-    nativeBuildInputs = [
-      libxml2
-    ];
-
-    preferLocalBuild = true;
-
-    buildCommand = ''
-      xmlcatalog --noout --create "$out"
-      xmlcatalog --noout --add nextCatalog "$(find ${docbook-xsl} -name catalog.xml)" "" "$out"
-      xmlcatalog --noout --add nextCatalog "$(find ${docbook_xml_dtd_44} -name catalog.xml)" "" "$out"
-    '';
-  };
+  xmlcatalog = combine-xml-catalogs [
+    docbook_xml_dtd_44
+    docbook-xsl
+  ];
 in
 stdenv.mkDerivation rec {
-  name = "sssd-1.16.1";
+  name = "sssd-1.16.2";
 
   src = fetchurl {
     url = "https://releases.pagure.org/SSSD/sssd/${name}.tar.gz";
-    multihash = "Qmf9yD9pzyL4QP3uj1XsUWDjAZRpHRsP66MmsZGCaXyAA1";
+    multihash = "QmZpsxm4T5WC41MTydechEb7L51RpFoqMcQJrHoPpqtYiE";
     hashOutput = false;
-    sha256 = "2dbf677851afdefcdf57eccaf25d59eb682a2994ad2a2dbf419003930a0b506e";
+    sha256 = "fe5b1fcc5b4359631f7edf25f8940f3155de68e2f4ac7bfeb634687ccabc570c";
   };
 
   nativeBuildInputs = [

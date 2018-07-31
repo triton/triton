@@ -1,13 +1,17 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, gettext
 , intltool
 , itstool
 , lib
 , libxml2
+, perl
+, vala
 
 , audit_lib
 , glib
+, gobject-introspection
 , libgcrypt
 , libx11
 , libxcb
@@ -32,23 +36,29 @@ stdenv.mkDerivation rec {
     grep -q '/usr/sbin/nologin' common/user-list.c
     sed -i common/user-list.c \
       -e 's,/usr/sbin/nologin,/usr/sbin/nologin /run/current-system/sw/bin/nologin,'
+
     grep -q '/usr/local/bin' src/session-child.c
     sed -i src/session-child.c \
       -e 's,/usr/local/bin:/usr/bin:/bin,/run/current-system/sw/bin,'
+
     grep -q '/bin/rm' src/shared-data-manager.c
     sed -i src/shared-data-manager.c \
       -e 's,/bin/rm,/run/current-system/sw/bin/rm,'
   '';
 
   nativeBuildInputs = [
+    gettext
     intltool
     itstool
     libxml2
+    perl
+    vala
   ];
 
   buildInputs = [
     audit_lib
     glib
+    gobject-introspection
     libgcrypt
     libx11
     libxcb
@@ -60,6 +70,9 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
+    "--enable-introspection"
+    "--enable-vala"
+    "--enable-libaudit"
     "--disable-tests"
   ];
 

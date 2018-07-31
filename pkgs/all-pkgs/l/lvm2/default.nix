@@ -95,10 +95,6 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  preBuild = ''
-    cat Makefile
-  '';
-
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
@@ -114,6 +110,11 @@ stdenv.mkDerivation rec {
     "install_all_man"
     "install_tmpfiles_configuration"
   ];
+
+  # Metad is deprecated
+  postInstall = ''
+    rm "$out"/lib/udev/rules.d/69-dm-lvm-metad.rules
+  '';
 
   preFixup = ''
     wrapPythonPrograms "$out"/bin

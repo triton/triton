@@ -5,13 +5,14 @@
 , python3Packages
 
 , cyrus-sasl
+, icu
 , openssl
 , snappy
 , zlib
 }:
 
 let
-  version = "1.10.1";
+  version = "1.12.0";
 in
 stdenv.mkDerivation rec {
   name = "mongo-c-driver-${version}";
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "630e83bfc97114a9936f0b6871bfd593b538839caf1d3f93c8038148d1b9a4d6";
+    sha256 = "e5924207f6ccbdf74a9b95305b150e96b3296a71f2aafbb21e647dc28d580c68";
   };
 
   nativeBuildInputs = [
@@ -30,6 +31,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     cyrus-sasl
+    icu
     openssl
     snappy
     zlib
@@ -38,6 +40,7 @@ stdenv.mkDerivation rec {
   cmakeFlags = [
     "-DENABLE_TESTS=OFF"
     "-DENABLE_EXAMPLES=OFF"
+    "-DENABLE_SRV=ON"
     "-DENABLE_CRYPTO_SYSTEM_PROFILE=ON"
     "-DENABLE_MAN_PAGES=ON"
   ];

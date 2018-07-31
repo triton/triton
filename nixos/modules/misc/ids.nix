@@ -53,7 +53,7 @@
       #tape = 25; # unused
       #video = 26; # unused
       #dialout = 27; # unused
-      polkit = 28;
+      polkitd = 28;
       #utmp = 29; # unused
       ddclient = 30;
       davfs2 = 31;
@@ -278,7 +278,7 @@
       tape = 25;
       video = 26;
       dialout = 27;
-      #polkit = 28; # currently unused, polkitd doesn't need a group
+      #polkitd = 28; # currently unused, polkitd doesn't need a group
       utmp = 29;
       #ddclient = 30; # unused
       davfs2 = 31;

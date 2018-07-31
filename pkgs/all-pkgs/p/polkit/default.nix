@@ -1,14 +1,12 @@
 { stdenv
-, autoconf
-, automake
 , docbook_xml_dtd_412
 , docbook-xsl
-, fetchzip
-, gtk-doc
+, fetchurl
+, gettext
 , intltool
 , lib
-, libtool
 , libxslt
+, perl
 
 , glib
 , expat
@@ -19,53 +17,47 @@
 }:
 
 let
-  date = "2018-04-03";
-  rev = "dda431905221a81921492b1d28b96b4bffb57700";
+  version = "0.115";
 in
 stdenv.mkDerivation rec {
-  name = "polkit-${date}";
+  name = "polkit-${version}";
 
-  src = fetchzip {
-    version = 6;
-    url = "https://cgit.freedesktop.org/polkit/snapshot/${rev}.tar.xz";
-    multihash = "Qma5P1infsj9vQ8rsNFoU66YKwLDxcp8c5DoFrBfYR5q5v";
-    sha256 = "20f577d2f9ee618f8f8e3b9035a402bd4cac68026be186f8b7d12d267fcacffa";
+  src = fetchurl {
+    url = "https://www.freedesktop.org/software/polkit/releases/${name}.tar.gz";
+    multihash = "QmUQ3hjxbm3pQnc2L1iPEW3NJuXnNrwuenfKv69jJRVMzi";
+    hashOutput = false;
+    sha256 = "2f87ecdabfbd415c6306673ceadc59846f059b18ef2fce42bac63fe283f12131";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
     docbook_xml_dtd_412
     docbook-xsl
-    gtk-doc
+    gettext
     intltool
-    libtool
     libxslt
+    perl
   ];
 
   buildInputs = [
-    glib
     expat
+    glib
+    gobject-introspection
     pam
     spidermonkey_52
-    gobject-introspection
     systemd_lib
   ];
 
   postPatch = ''
-    patchShebangs .
-
-    # Get rid of a check to see if systemd is running to allow libsystemd linking
-    sed '/does not.*systemd/s/.*/:/' -i configure.ac
+    patchShebangs src/polkitbackend/toarray.pl
 
     # polkit-agent-helper-1 is a setuid binary so remap the path in the codebase.
+    grep -q 'PACKAGE_PREFIX "/lib/polkit-1/polkit-agent-helper-1"' \
+      src/polkitagent/polkitagentsession.c
     sed -i 's,PACKAGE_PREFIX "/lib/polkit-1,"/var/setuid-wrappers,g' \
       src/polkitagent/polkitagentsession.c
   '';
 
   preConfigure = ''
-    NOCONFIGURE=1 ./autogen.sh
-
     configureFlagsArray+=(
       "--with-systemdsystemunitdir=$out/etc/systemd/system"
     )
@@ -75,11 +67,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--datarootdir=/run/current-system/sw/share"
-    "--with-polkitd-user=polkit"
-    "--with-os-type=NixOS" # not recognized but prevents impurities on non-NixOS
-    "--enable-introspection"
-    "--disable-examples"
+    "--enable-man-pages"
     "--disable-test"
+    "--disable-examples"
+    "--enable-libsystemd-login"
+    "--enable-introspection"
+    "--with-authfw=pam"
+    "--with-os-type=triton" # not recognized but prevents impurities
   ];
 
   preInstall = ''
@@ -92,6 +86,17 @@ stdenv.mkDerivation rec {
   '';
 
   installParallel = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sign") src.urls;
+      pgpKeyFingerprints = [
+        "C197 6D9E D91A 7459 CBCE  5314 5A33 F660 B384 79DF"
+      ];
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with lib; {
     homepage = http://www.freedesktop.org/wiki/Software/polkit;

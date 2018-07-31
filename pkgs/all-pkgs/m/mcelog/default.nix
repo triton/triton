@@ -3,17 +3,17 @@
 }:
 
 let
-  version = "157";
+  version = "159";
 in
 stdenv.mkDerivation {
   name = "mcelog-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "andikleen";
     repo = "mcelog";
     rev = "v${version}";
-    sha256 = "4ce55ecc4077777870c42fd3ace43df9ca060d240edcc5b22c8f33463bc4c570";
+    sha256 = "953e0e461e08ae1d0d43d80f7c1a22df7690f4d8b282c76001cbb1ac22ef175d";
   };
 
   preBuild = ''

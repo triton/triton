@@ -1,11 +1,10 @@
 { stdenv
 , autoconf_21x
+, fetchTritonPatch
 , fetchurl
-, fetchzip
 , lib
 , perl
 , python2
-, which
 
 , icu
 , libffi
@@ -14,6 +13,7 @@
 , zlib
 
 , channel
+, ctypes ? true
 }:
 
 # >=45.0.0 should use the releases in the murcurial repo at:
@@ -22,6 +22,7 @@
 let
   inherit (lib)
     optionals
+    optionalString
     replaceStrings
     versionAtLeast;
 
@@ -53,20 +54,16 @@ stdenv.mkDerivation rec {
     autoconf_21x
     perl
     python2
-    which
   ];
 
   buildInputs = [
+    icu
+    readline
+    zlib
+  ] ++ optionals (ctypes) [
     libffi
     nspr
-    zlib
-    readline
-    icu
   ];
-
-  postUnpack = ''
-    srcRoot="$srcRoot/js/src/"
-  '';
 
   # They assume the autoconf binary is named `autoconf-2.13` so detection fails.
   AUTOCONF = "${autoconf_21x}/bin/autoconf";
@@ -74,31 +71,36 @@ stdenv.mkDerivation rec {
   # Fixes an issue with gcc7 c++ strictness
   CXXFLAGS = "-fpermissive";
 
+  patches = optionals (channel == "52") [
+    (fetchTritonPatch {
+      rev = "b87ef54138a1e54298f50eb298b45475d0d0ba0e";
+      file = "s/spidermonkey/52-fix-linking-mozglue.patch";
+      sha256 = "5a84f02521f37de873991dd360a4c4bfdbdd2fb4a218e11be73f9cbbf02050e8";
+    })
+  ];
+
+  # Make sure we don't get spurius regeneration warnings
+  postPatch = optionalString (channel == "52") ''
+    touch js/src/configure
+  '';
+
   preConfigure = /* configure cannot be executed in the build directory */ ''
     mkdir -pv build/
     cd build/
-    configureScript='../configure'
+    configureScript=../js/src/configure
   '';
 
   configureFlags = [
-    "--enable-release"
-    "--enable-pie"
-    "--disable-debug"
-    "--enable-readline"
-    "--with-pthreads"
-    "--enable-shared-js"
-    "--with-system-nspr"
-    "--with-system-zlib"
-    ###"--enable-system-ffi"
     "--disable-tests"
-    "--enable-optimize"
-    "--enable-jemalloc"
-    "--enable-strip"
-    "--enable-install-strip"
+    "--disable-debug-symbols"
     "--enable-readline"
+    "--with-intl-api"
     "--with-system-icu"
-  ] ++ optionals (versionAtLeast channel "45") [
-    "--enable-gold"
+    "--with-system-zlib"
+  ] ++ optionals (ctypes) [
+    "--enable-ctypes"
+    "--with-system-ffi"
+    "--with-system-nspr"
   ];
 
   postFixup = ''
@@ -110,7 +112,6 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  buildParallel = versionAtLeast channel "45";
   installParallel = false;
 
   passthru = {

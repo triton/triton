@@ -1,10 +1,12 @@
 { stdenv
+, cmake
 , fetchurl
 , nasm
+, ninja
 }:
 
 let
-  version = "1.5.3";
+  version = "2.0.0";
 in
 stdenv.mkDerivation rec {
   name = "libjpeg-turbo-${version}";
@@ -12,11 +14,17 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523";
+    sha256 = "778876105d0d316203c928fd2a0374c8c01f755d0a00b12a1c8934aeccff8868";
   };
 
   nativeBuildInputs = [
+    cmake
     nasm
+    ninja
+  ];
+
+  cmakeFlags = [
+    "-DENABLE_STATIC=OFF"
   ];
 
   passthru = {

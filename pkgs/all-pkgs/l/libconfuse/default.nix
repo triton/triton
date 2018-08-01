@@ -3,19 +3,19 @@
 }:
 
 let
-  version = "2.5";
+  version = "3.2.1";
 in
 stdenv.mkDerivation rec {
   name = "libconfuse-${version}";
 
   src = fetchurl {
-    url = "https://www.intra2net.com/en/developer/libftdi/download/confuse-${version}.tar.gz";
-    multihash = "QmVFncTUTxjozp4ARhPgbH7RMH4pyCmWV6nELzSLwmYWGV";
-    sha256 = "65451d8d6f5d4ca1dbd0700f3ef2ef257b52b542b3bab4bbeddd539f1c23f859";
+    url = "https://github.com/martinh/libconfuse/releases/download/v${version}/confuse-${version}.tar.xz";
+    sha256 = "23c63272baf2ef4e2cbbafad2cf57de7eb81f006ec347c00b954819824add25e";
   };
   
   configureFlags = [
-    "--enable-shared"
+    "--sysconfdir=/etc"
+    "--disable-examples"
   ];
 
   meta = with stdenv.lib; {

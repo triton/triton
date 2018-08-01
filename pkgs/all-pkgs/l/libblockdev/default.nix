@@ -1,36 +1,37 @@
 { stdenv
 , fetchurl
 , gobject-introspection
-, python2
 
 , cryptsetup
 , dmraid
 , glib
 , kmod
 , libbytesize
+, libyaml
 , lvm2
-, nss
+, ndctl
 , nspr
+, nss
 , parted
+, python3
 , systemd_lib
 , util-linux_lib
 , volume_key
 }:
 
 let
-  version = "2.16";
+  version = "2.18";
 in
 stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/${name}.tar.gz";
-    sha256 = "d841ae446cf6dc545e4f7386e13dfd8c3e07c4b6a962536b7c0fcd20e3a4d9e4";
+    sha256 = "705d82a5a146c71a1f1159d4579648662f7e4414297eb5a2b3e7199d72bb73a8";
   };
 
   nativeBuildInputs = [
     gobject-introspection
-    python2
   ];
 
   buildInputs = [
@@ -39,27 +40,22 @@ stdenv.mkDerivation rec {
     glib
     kmod
     libbytesize
+    libyaml
     lvm2
-    nss
+    ndctl
     nspr
+    nss
     parted
+    python3
     systemd_lib
     util-linux_lib
     volume_key
   ];
 
-  preConfigure = ''
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${volume_key}/include/volume_key"
-  
-    patchShebangs scripts/boilerplate_generator.py
-  '';
-
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-tests"
-    "--without-python3"
-    "--without-gtk-doc"
   ];
 
   preInstall = ''

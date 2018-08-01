@@ -18,11 +18,6 @@
 
 let
   sources = {
-    "1.8" = {
-      version = "1.8.19";
-      sha1Confirm = "51d7e5329ad86a650f8fc806eb68e581055a3fd1";
-      sha256 = "56e869b0db59519867f7077849c9c0962c599974f1412ea235eab7f98c20e6be";
-    };
     "1.9" = {
       version = "1.9.7";
       sha1Confirm = "874b81749cdc3e88152d103243c3623ac6338388";

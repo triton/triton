@@ -3656,9 +3656,6 @@ sublime-text = callPackage ../all-pkgs/s/sublime-text { };
 subversion_1-9 = callPackage ../all-pkgs/s/subversion {
   channel = "1.9";
 };
-subversion_1-8 = callPackage ../all-pkgs/s/subversion {
-  channel = "1.8";
-};
 subversion = callPackageAlias "subversion_1-9" { };
 
 subunit = callPackage ../all-pkgs/s/subunit { };

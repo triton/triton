@@ -1,6 +1,5 @@
 { stdenv
 , fetchFromGitHub
-, fetchurl
 , lib
 
 , nasm
@@ -15,7 +14,7 @@ let
     optionalString
     platforms;
 
-  version = "1.7.0";
+  version = "1.8.0";
 in
 stdenv.mkDerivation rec {
   name = "openh264-${version}";
@@ -25,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "cisco";
     repo = "openh264";
     rev = "v${version}";
-    sha256 = "8a3e0bf2c5b8a2b3684ddb24b4d3422b31e1cb34ec3ffb193c2ade67b9900f08";
+    sha256 = "16f07de5e382c67d6f672b4a4a1837fdc97d4517dd3905693d8d4d9b166753c1";
   };
 
   nativeBuildInputs = [

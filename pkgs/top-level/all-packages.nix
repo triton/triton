@@ -3927,6 +3927,8 @@ wayland-protocols = callPackage ../all-pkgs/w/wayland-protocols { };
 
 webkitgtk = callPackage ../all-pkgs/w/webkitgtk { };
 
+webrtc-audio-processing = callPackage ../all-pkgs/w/webrtc-audio-processing { };
+
 wget = callPackage ../all-pkgs/w/wget { };
 
 which = callPackage ../all-pkgs/w/which { };
@@ -4469,9 +4471,6 @@ libstartup_notification =
   t1lib = callPackage ../development/libraries/t1lib { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
-#
-  webrtc-audio-processing =
-    callPackage ../development/libraries/webrtc-audio-processing { };
 #
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
 #

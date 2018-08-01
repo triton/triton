@@ -3,11 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "webrtc-audio-processing-0.3";
+  name = "webrtc-audio-processing-0.3.1";
 
   src = fetchurl {
     url = "https://freedesktop.org/software/pulseaudio/webrtc-audio-processing/${name}.tar.xz";
-    sha256 = "756e291d4f557d88cd50c4fe3b8454ec238362d22cedb3e6173240d90f0a80fa";
+    multihash = "QmNRSFLT1tL3uo2uJuY5T8m4NVdmNsyejvHtVFMJWC93pi";
+    sha256 = "a0fdd938fd85272d67e81572c5a4d9e200a0c104753cb3c209ded175ce3c5dbf";
   };
 
   meta = with stdenv.lib; {

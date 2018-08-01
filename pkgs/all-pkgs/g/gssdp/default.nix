@@ -1,34 +1,27 @@
 { stdenv
 , fetchurl
-, gettext
 
 , glib
 , gobject-introspection
 , gtk
 , libsoup
 , vala
-
-, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    boolEn
-    boolWt;
-
-  source = (import ./sources.nix { })."${channel}";
+  major = "1.0";
+  version = "${major}.2";
 in
 stdenv.mkDerivation rec {
-  name = "gssdp-${source.version}";
+  name = "gssdp-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gssdp/${channel}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gssdp/${major}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "a1e17c09c7e1a185b0bd84fd6ff3794045a3cd729b707c23e422ff66471535dc";
   };
 
   nativeBuildInputs = [
-    gettext
     vala
   ];
 
@@ -41,12 +34,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-compile-warnings"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolWt (gtk != null)}-gtk"
   ];
 
   passthru = {
@@ -55,7 +42,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gssdp/${channel}/"
+      sha256Url = "https://download.gnome.org/sources/gssdp/${major}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

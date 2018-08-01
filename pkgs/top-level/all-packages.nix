@@ -1755,12 +1755,7 @@ gsm = callPackage ../all-pkgs/g/gsm { };
 
 gsound = callPackage ../all-pkgs/g/gsound { };
 
-gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
-  channel = "1.0";
-  libsoup = pkgs.libsoup_2-62;
-  vala = pkgs.vala_0-40;
-};
-gssdp = callPackageAlias "gssdp_1-0" { };
+gssdp = callPackage ../all-pkgs/g/gssdp { };
 
 gst-libav_1-14 = callPackage ../all-pkgs/g/gst-libav {
   channel = "1.14";

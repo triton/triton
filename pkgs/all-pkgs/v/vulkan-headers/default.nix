@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.1.75";
+  version = "1.1.82";
 in
 stdenv.mkDerivation rec {
   name = "vulkan-headers-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "KhronosGroup";
     repo = "Vulkan-Docs";
     rev = "v${version}";
-    sha256 = "9178ffb8c28884e2ff4e24fd11cf13aebc1114ac2b28d966306ec86bd5757273";
+    sha256 = "ee26d4277fa3001284633e8657d28c07281c0d974d4bb5471f1d839e89fa9d4f";
   };
 
   configurePhase = "true";

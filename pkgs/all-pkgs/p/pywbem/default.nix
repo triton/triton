@@ -3,6 +3,8 @@
 , fetchPyPi
 
 , pbr
+, ply
+, pyyaml
 }:
 
 let
@@ -19,6 +21,8 @@ buildPythonPackage {
 
   propagatedBuildInputs = [
     pbr
+    ply
+    pyyaml
   ];
 
   meta = with stdenv.lib; {

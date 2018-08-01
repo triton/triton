@@ -8,23 +8,19 @@
 , libxml2
 , util-linux_lib
 , vala
-
-, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    boolEn;
-
-  source = (import ./sources.nix { })."${channel}";
+  major = "1.0";
+  version = "${major}.3";
 in
 stdenv.mkDerivation rec {
-  name = "gupnp-${source.version}";
+  name = "gupnp-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp/${channel}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gupnp/${major}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "794b162ee566d85eded8c3f3e8c9c99f6b718a6b812d8b56f0c2ed72ac37cbbb";
   };
 
   nativeBuildInputs = [
@@ -42,14 +38,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-debug"
-    "--enable-largefile"
-    "--enable-compile-warnings"
-    "--disable-Werror"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     #--with-context-manager=[network-manager/connman/unix/linux]
   ];
 
@@ -59,7 +47,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gupnp/${channel}/"
+      sha256Url = "https://download.gnome.org/sources/gupnp/${major}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

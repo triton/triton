@@ -2893,7 +2893,6 @@ mpv_0-29 = pkgs.mpv_generics {
 mpv_head = pkgs.mpv_generics {
   channel = "999";
   ffmpeg = pkgs.ffmpeg_head;  # Requires newer than latest release
-  waf = pkgs.python3Packages.waf_1-9;
 };
 mpv = callPackageAlias "mpv_0-29" { };
 

@@ -91,10 +91,10 @@ let
       sha256 = "1ab41515f8ab0f713062567885f591299c8d7f67e78477aa04a464edf10d4830";
     };
     "999" = {
-      fetchzipversion = 5;
-      version = "2018-05-02";
-      rev = "7d8eee36a52fe39475b63204e74d25cbd538ea56";
-      sha256 = "e43ca3d168a0c275cd2b8402a03eea84afb341ee69580841cd48ebe933b3bab9";
+      fetchzipversion = 6;
+      version = "2018-07-29";
+      rev = "5532a3da1ee058443d3162582b601f19b59377c2";
+      sha256 = "b4dfcb0912df4d9336b75980dc6e2daccb2027c17b013b67f490c603d8418142";
     };
   };
   source = sources."${channel}";

@@ -31,9 +31,9 @@ let
       sha256 = "4b7b92aaf90828853d57bed9a89a7c0e965d5af3c03717b970d67ff3ae4f2483";
     };
     "2.0" = {
-      version = "2.0.7";
-      multihash = "QmX29vTtyoG6TkFwQYhfisKkrVta2WcQf2MeKCrUHdAj9m";
-      sha256 = "00e188d18b5d160c20eeffb6638254ad9eea8cdb53ae7cd0e63ef657871e3580";
+      version = "2.0.10";
+      multihash = "QmZPsPnS4zXKU7yZjQeJdJewYjjAiKhLDUnMq6HtHFSyT2";
+      sha256 = "6550f9b7b7ad5c5f55c7e3472bdae041f3e2f47c1f905fa3c79c172aa91403ed";
     };
   };
   source = sources."${channel}";

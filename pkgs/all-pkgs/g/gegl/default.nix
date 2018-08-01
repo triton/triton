@@ -5,7 +5,7 @@
 , babl
 , cairo
 , exiv2
-, ffmpeg_3-4
+, ffmpeg
 , gdk-pixbuf
 , gexiv2
 , glib
@@ -36,16 +36,16 @@ let
     platforms;
 
   channel = "0.4";
-  version = "${channel}.2";
+  version = "${channel}.6";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmTN1J6X7sjQ92JBQZptukofZGu6nZvjNKoqhRqndTudVc";
+    multihash = "QmPSjiRoCAUwrf42mUrjKDEXuy15a39xjy4z3zgbJA418e";
     hashOutput = false;
-    sha256 = "6a358bc19d20b8ac1daf645cc8b53cdc2ea6f9c98a6036179a57045a26a07f8d";
+    sha256 = "f8cb45da736131fe29582b74cf6851102ae013bf99c77413a8bcb02e92e57890";
   };
 
   nativeBuildInputs = [
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     babl
     cairo
     exiv2
-    ffmpeg_3-4
+    ffmpeg
     gdk-pixbuf
     gexiv2
     glib
@@ -96,7 +96,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (jasper != null)}-jasper"
     "--without-graphviz"
     "--without-lua"
-    "--${boolWt (ffmpeg_3-4 != null)}-libavformat"
+    "--${boolWt (ffmpeg != null)}-libavformat"
     "--${boolWt (v4l_lib != null)}-libv4l"
     "--${boolWt (lcms2 != null)}-lcms"
     "--${boolWt (libspiro != null)}-libspiro"

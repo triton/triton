@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "0.17.0";
+  version = "0.18.0";
 in
 stdenv.mkDerivation {
   name = "sddm-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.xz";
     hashOutput = false;  # https://github.com/sddm/sddm/releases
-    sha256 = "13ec3e04ecdb0ab83a6ae62c734fdf86f86c1851a90b06f85f5bf8776fcb0632";
+    sha256 = "07ed0c073bbd980613fa7a65d290ef62cbe4dc97c30ec89bd9e2ae876d8a9e45";
   };
 
   nativeBuildInputs = [

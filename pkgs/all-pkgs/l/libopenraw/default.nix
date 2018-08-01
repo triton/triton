@@ -10,21 +10,17 @@
 }:
 
 let
-  version = "0.1.2";
+  version = "0.1.3";
 in
 stdenv.mkDerivation rec {
   name = "libopenraw-${version}";
 
   src = fetchurl {
     url = "https://libopenraw.freedesktop.org/download/${name}.tar.bz2";
-    multihash = "QmXSnWJQFb5cLNYiSqYH9GhFf8TCVY3VmYbQRDAtBZifoq";
+    multihash = "QmXYof3AAd1oBA8S5hU7MwroaTD8upr3cF444oT262zyKc";
     hashOutput = false;
-    sha256 = "d15e86141add6a652f316ab8884895d8399d37c17510b34f61e266f906a99683";
+    sha256 = "6405634f555849eb01cb028e2a63936e7b841151ea2a1571ac5b5b10431cfab9";
   };
-
-  nativeBuildInputs = [
-
-  ];
 
   buildInputs = [
     boost
@@ -41,11 +37,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-static-boost"
-    "--enable-gnome"
-    #"--enable-asan"  # Clang
-    "--without-darwinports"  # Darwin
-    "--without-fink"  # Darwin
   ];
 
   passthru = {

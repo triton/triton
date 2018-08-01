@@ -5,13 +5,14 @@
 
 , click
 , cryptography
+, fido2
 , pyscard
 , pyopenssl
 , pyusb
 }:
 
 let
-  version = "0.4.6";
+  version = "0.7.1";
 in
 buildPythonPackage {
   name = "yubikey-manager-${version}";
@@ -19,12 +20,13 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "yubikey-manager";
     inherit version;
-    sha256 = "6f9aae731e1c71ea65bea48911aa33a29b284afbabe9430f84e07a27cfcfcbeb";
+    sha256 = "177bbf953b8557b8de68bacbbdfc56764e93733f337b2327e322cfc4ed4f7d18";
   };
 
   propagatedBuildInputs = [
     click
     cryptography
+    fido2
     pyscard
     pyopenssl
     pyusb

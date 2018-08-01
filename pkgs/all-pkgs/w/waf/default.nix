@@ -3,8 +3,6 @@
 , lib
 
 , python
-
-, channel
 }:
 
 let
@@ -16,6 +14,7 @@ let
     multihash = "Qmbztdz9ry33VWVtgzASTbXDwcwxKtmFBZ1y5nsHA1rE97";
     sha256 = "6cecb0c26bcbe046f8ef4742ae46834518dabff59dfab68dd2ae1f9704b193bd";
   };
+
   lv2 = fetchurl {
     # r101
     # See autowaf note.
@@ -23,30 +22,15 @@ let
     multihash = "QmSkRjCoADgQ5EDDPrQVDWYfMZCkx9rsYMiHHoE6mYsDfU";
     sha256 = "12ce4d81d9bf32283324c26db40c4ab459b61bc24891969708ec0eeaf96f902d";
   };
-
-  sources = {
-    "1.9" = {
-      version = "1.9.15";
-      multihash = "QmaXJ7fQJTfM77DNnEg4HH6b6odMYtKpHhVVEiqmZV5EQh";
-      sha256 = "4b7b92aaf90828853d57bed9a89a7c0e965d5af3c03717b970d67ff3ae4f2483";
-    };
-    "2.0" = {
-      version = "2.0.10";
-      multihash = "QmZPsPnS4zXKU7yZjQeJdJewYjjAiKhLDUnMq6HtHFSyT2";
-      sha256 = "6550f9b7b7ad5c5f55c7e3472bdae041f3e2f47c1f905fa3c79c172aa91403ed";
-    };
-  };
-  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "waf-${source.version}";
+  name = "waf-2.0.10";
 
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
+    multihash = "QmZPsPnS4zXKU7yZjQeJdJewYjjAiKhLDUnMq6HtHFSyT2";
     hashOutput = false;
-    inherit (source)
-      multihash
-      sha256;
+    sha256 = "6550f9b7b7ad5c5f55c7e3472bdae041f3e2f47c1f905fa3c79c172aa91403ed";
   };
 
   buildInputs = [

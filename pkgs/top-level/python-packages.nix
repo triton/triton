@@ -750,13 +750,7 @@ vapoursynth_head = callPackage ../all-pkgs/v/vapoursynth {
 
 vcversioner = callPackage ../all-pkgs/v/vcversioner { };
 
-waf_1-9 = callPackage ../all-pkgs/w/waf {
-  channel = "1.9";
-};
-waf_2-0 = callPackage ../all-pkgs/w/waf {
-  channel = "2.0";
-};
-waf = callPackageAlias "waf_2-0" { };
+waf = callPackage ../all-pkgs/w/waf { };
 
 webencodings = callPackage ../all-pkgs/w/webencodings { };
 

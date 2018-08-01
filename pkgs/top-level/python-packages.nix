@@ -314,6 +314,8 @@ etcd = callPackage ../all-pkgs/e/etcd { };
 
 fasteners = callPackage ../all-pkgs/f/fasteners { };
 
+fido2 = callPackage ../all-pkgs/f/fido2 { };
+
 flask = callPackage ../all-pkgs/f/flask { };
 
 flask-compress = callPackage ../all-pkgs/f/flask-compress { };

@@ -2035,8 +2035,8 @@ let
     version = 6;
     owner = "elves";
     repo = "elvish";
-    rev = "64d89b3340c55bf5d372084f9c9151e235e357b4";
-    sha256 = "0mriym1v1bgi9i346j3ykcjnxklswipkikv95qz4nwl9dzm0511a";
+    rev = "e33828aa0f298d0acf41f5da2eb512c00aab81ff";
+    sha256 = "16acdyk636585p4q7h12cn8g782nzwh9ijh2ys8bym01gnri8y0x";
     excludedPackages = "website";
     propagatedBuildInputs = [
       bolt
@@ -2045,7 +2045,7 @@ let
       sys
     ];
     meta.useUnstable = true;
-    date = "2018-07-17";
+    date = "2018-08-01";
   };
 
   eme = buildFromGitHub {

@@ -84,11 +84,11 @@ let
       null;
 
   sources = {
-    "0.28" = rec {
+    "0.29" = rec {
       fetchzipversion = 6;
-      version = "0.28.2";
+      version = "0.29.0";
       rev = "v${version}";
-      sha256 = "4242b61dbb6c449d4c1c78d766c4e8acb56ff3e6e13d0450c41a570e9fbc7176";
+      sha256 = "1ab41515f8ab0f713062567885f591299c8d7f67e78477aa04a464edf10d4830";
     };
     "999" = {
       fetchzipversion = 5;

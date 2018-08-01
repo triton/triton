@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 
-, fftw_double
 , libsndfile
 }:
 
@@ -19,18 +18,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    fftw_double
     libsndfile
-  ];
-
-  configureFlags = [
-    # Flag is not a proper boolean
-    #"--disable-gcc-werror"
-    "--enable-gcc-pipe"
-    "--enable-gcc-opt"
-    "--${boolEn (fftw_double != null)}-fftw"
-    "--enable-cpu-clip"
-    "--${boolEn (libsndfile != null)}-sndfile"
   ];
 
   meta = with stdenv.lib; {

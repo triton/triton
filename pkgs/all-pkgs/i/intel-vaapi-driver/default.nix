@@ -1,9 +1,9 @@
 { stdenv
 , fetchFromGitHub
 , fetchurl
+, intel-gpu-tools
 , lib
-, meson
-, ninja
+, python2
 
 , libdrm
 , libva
@@ -13,31 +13,26 @@
 }:
 
 let
-  # Move this back to a stable release once this commit is integrated
-  date = "2018-04-28";
-  rev = "40b15a5c6c0103c23a5db810aef27cf75d0b6723";
+  version = "2.2.0";
 in
 stdenv.mkDerivation rec {
-  name = "intel-vaapi-driver-${date}";
+  name = "intel-vaapi-driver-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "intel";
-    repo = "intel-vaapi-driver";
-    inherit rev;
-    sha256 = "5ac5271ecd9918b3c95d265d0bdf27fd9cb5f5551757a4968a0600a42ff75761";
-  };
-  /*
-  fetchurl {
-    url = "https://github.com/intel/intel-vaapi-driver/releases/download/${version}/${name}.tar.bz2";
+  src = fetchurl rec {
+    urls = [
+      ("https://github.com/intel/intel-vaapi-driver/releases/download/${version}/"
+        + "${name}.tar.bz2")
+      ("https://www.freedesktop.org/software/vaapi/releases/libva/"
+        + "${name}.tar.bz2")
+    ];
     hashOutput = false;
-    sha256 = "5ac5271ecd9918b3c95d265d0bdf27fd9cb5f5551757a4968a0600a42ff7576a";
+    sha256 = "e8a5f54694eb76aad42653b591030b8a53b1513144c09a80defb3d8d8c875c18";
   };
-  */
 
   nativeBuildInputs = [
-    meson
-    ninja
+    # Currently breaks the build
+    # intel-gpu-tools  # Needed to generate gpu asm
+    python2
   ];
 
   buildInputs = [
@@ -48,15 +43,15 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  preConfigure = ''
-    mesonFlagsArray+=("-Ddriverdir=$out/lib/dri")
-  '';
-
-  mesonFlags = [
-    "-Dwith_x11=yes"
-    "-Dwith_wayland=yes"
-    "-Denable_hybrid_codec=true"
+  configureFlags = [
+    "--enable-x11"
+    "--enable-wayland"
+    "--enable-hybrid-codec"
   ];
+
+  preInstall = ''
+    installFlagsArray+=("LIBVA_DRIVERS_PATH=$out/lib/dri")
+  '';
 
   passthru = {
     srcVerification = fetchurl {

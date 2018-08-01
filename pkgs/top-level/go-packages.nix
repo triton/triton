@@ -5158,6 +5158,9 @@ let
     owner = "emicklei";
     repo = "go-restful";
     sha256 = "0vivpb1fi35a05zc12n6hqbh9ia9digiwqjg3jwmidhrw61mi7qa";
+    propagatedBuildInputs = [
+      json-iterator_go
+    ];
   };
 
   go-retryablehttp = buildFromGitHub {

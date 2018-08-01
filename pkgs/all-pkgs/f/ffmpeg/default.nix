@@ -195,9 +195,9 @@ let
       sha256 = "386f7601e865df6bddde05bb6927119b5a853f0b92e2e9834f59c125a17d3fc6";
     };
     "4.0" = {
-      version = "4.0";
-      multihash = "QmQJ5auMPqGMdkEH2codELmUszBfFrngEZdNgLTMbFUySg";
-      sha256 = "ed945daf40b124e77a685893cc025d086f638bc703183460aff49508edb3a43f";
+      version = "4.0.2";
+      multihash = "QmV86CsDaQMo5iSM9HSmPQC79YmNNgj5XQ1Lv18JZQqvHR";
+      sha256 = "a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97";
     };
     "9.9" = {  # Git
       fetchzipversion = 6;

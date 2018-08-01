@@ -1,20 +1,16 @@
 { stdenv
-, autoconf
-, automake
-, fetchTritonPatch
 , fetchurl
 , gettext
 , gnum4
 , intltool
 , lib
-, libtool
+, perl
 
 , alsa-lib
 , avahi
 , bluez
 , dbus
 , fftw_single
-, gconf
 , glib
 , gtk3
 , libasyncns
@@ -22,6 +18,7 @@
 , libice
 , libsm
 , libsndfile
+, libtool
 , jack2_lib
 , libx11
 , libxcb
@@ -50,25 +47,23 @@ let
 
   libOnly = prefix == "lib";
 
-  version = "11.1";
+  version = "12.2";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}pulseaudio-${version}";
 
   src = fetchurl rec {
     url = "https://freedesktop.org/software/pulseaudio/releases/pulseaudio-${version}.tar.xz";
-    multihash = "QmNWwFxdeBJdZekotdku4oxghNT6V2YK6dSwBwfvxHmzH4";
+    multihash = "QmU3RWm7t7PVE9DvjZ6vdQVd2fVj2myHH2yx19KFfjtrCL";
     hashOutput = false;
-    sha256 = "f2521c525a77166189e3cb9169f75c2ee2b82fa3fcf9476024fbc2c3a6c9cd9e";
+    sha256 = "809668ffc296043779c984f53461c2b3987a45b7a25eb2f0a1d11d9f23ba4055";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
     gettext
     gnum4
     intltool
-    libtool
+    perl
   ];
 
   buildInputs = [
@@ -77,6 +72,7 @@ stdenv.mkDerivation rec {
     glib
     libasyncns
     libcap
+    libtool
     libsndfile
     speexdsp
     tdb
@@ -84,7 +80,6 @@ stdenv.mkDerivation rec {
     alsa-lib
     avahi
     bluez
-    gconf
     gtk3
     jack2_lib
     libice
@@ -102,35 +97,17 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "eb290e5c68b1b1492561a04baf072d5b7e600cb0";
-      file = "pulseaudio/caps-fix.patch";
-      sha256 = "840fb49e7d581349ce687345030564f386e92a5dc05431a727a67a8ab879f756";
-    })
-  ];
-
-  postPatch = optionalString (loopbackLatencyMsec != "200")
-      /* Allow patching default latency_msec */ ''
+  postPatch = /* Allow patching default latency_msec */ ''
+    grep -q 'DEFAULT_LATENCY_MSEC [0-9]\+' src/modules/module-loopback.c
     sed -i src/modules/module-loopback.c \
-      -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'
+      -e 's/DEFAULT_LATENCY_MSEC [0-9]\+/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'
   '';
 
-  preConfigure = /* autoreconf */ ''
-    export NOCONFIGURE="yes"
-    patchShebangs bootstrap.sh
-    ./bootstrap.sh
-  '' + /* Move the udev rules under $(prefix). */ ''
-    sed -i "src/Makefile.in" \
-      -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
-  '' + /* don't install proximity-helper as root and setuid */ ''
-    sed -i "src/Makefile.in" \
-      -e "s|chown root|true |" \
-      -e "s|chmod r+s |true |"
-  '' + ''
+  preConfigure = ''
     configureFlagsArray+=(
       "--with-systemduserunitdir=$out/lib/systemd/user"
       "--with-bash-completion-dir=$out/share/bash-completions/completions"
+      "--with-udev-rules-dir=$out/lib/udev/rules.d"
     )
   '';
 
@@ -139,7 +116,6 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--disable-atomic-arm-memory-barrier"
     "--disable-neon-opt"
-    "--with-caps=${libcap}"
     "--disable-tests"
     "--disable-samplerate"  # Deprecated
     "--with-database=tdb"
@@ -150,6 +126,7 @@ stdenv.mkDerivation rec {
     "--disable-solaris"
     "--disable-waveout"  # Windows
     "--enable-glib2"
+    "--disable-gconf"
     "--enable-asyncns"
     "--disable-tcpwrap"
     "--enable-dbus"
@@ -168,7 +145,7 @@ stdenv.mkDerivation rec {
     "--disable-x11"
     "--disable-alsa"
     "--disable-gtk3"
-    "--disable-gconf"
+    "--disable-gsettings"
     "--disable-avahi"
     "--disable-jack"
     "--disable-lirc"
@@ -187,7 +164,7 @@ stdenv.mkDerivation rec {
     "--enable-x11"
     "--enable-alsa"
     "--enable-gtk3"
-    "--enable-gconf"
+    "--enable-gsettings"
     "--enable-avahi"
     "--enable-jack"
     "--enable-lirc"
@@ -212,7 +189,7 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = optionalString libOnly ''
-    rm -rvf $out/{bin,share/{bash-completion,locale,zsh},etc,lib/{pulse-*,systemd}}
+    rm -rvf "$out"/{bin,share/{bash-completion,locale,zsh},etc,lib/{pulse-*,systemd},libexec}
   '';
 
   # FIXME
@@ -221,8 +198,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha1Urls = map (n: "${n}.sha1") src.urls;
-      md5Urls = map (n: "${n}.md5") src.urls;
+      sha256Urls = map (n: "${n}.sha256") src.urls;
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

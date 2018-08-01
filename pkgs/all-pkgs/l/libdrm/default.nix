@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.92";
+  name = "libdrm-2.4.93";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmZFk6yY395FinYREgu1ZR5ebUPQyFVPRCYW1ufv9vqrab";
+    multihash = "QmbEZJcV4NuBqfQqNakXyqVCK3BBLpQJxWqha4N1ACJ66s";
     hashOutput = false;
-    sha256 = "e9e48fdb4de139dc4d9880aa1473158a16ff6aff63d14341367bd30a51ff39fa";
+    sha256 = "6e84d1dc9548a76f20b59a85cf80a0b230cd8196084f5243469d9e65354fcd3c";
   };
 
   nativeBuildInputs = [
@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
+    grep -q "subdir('tests')" meson.build
     sed -i "/subdir('tests')/d" meson.build
   '';
 

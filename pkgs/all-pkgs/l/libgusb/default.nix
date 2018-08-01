@@ -1,42 +1,43 @@
 { stdenv
 , fetchurl
-, gettext
-
 , gobject-introspection
-, libxslt
+, meson
+, ninja
+, vala
+
+, hwdata
 , glib
 , libusb
-, vala
 }:
 
 stdenv.mkDerivation rec {
-  name = "libgusb-0.2.11";
+  name = "libgusb-0.3.0";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/releases/${name}.tar.xz";
-    multihash = "QmRbs4mYpj8vfNSEnViiYi1KZro2qAE9hrtuyaiWWaFtC3";
-    sha256 = "9cb143493fab1dc3d0d0fdba2114b1d8ec8c5b6fad05bfd0f7700e4e4ff8f7de";
+    multihash = "QmVgV6uEaDVWJm17DXm2fRTHDkpMjfCrL2RYPkZ6evdQH6";
+    sha256 = "d8e7950f99b6ae4c3e9b8c65f3692b9635289e6cff8de40c4af41b2e9b348edc";
   };
 
   nativeBuildInputs = [
-    gettext
+    gobject-introspection
+    meson
+    ninja
     vala
   ];
 
   buildInputs = [
     glib
-    gobject-introspection
     libusb
   ];
 
-  configureFlags = [
-    "--enable-introspection"
-    "--enable-vala"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-tests"
+  mesonFlags = [
+    "-Dtests=false"
+    "-Dusb_ids=${hwdata}/share/hwdata/usb.ids"
+    "-Ddocs=false"
   ];
+
+  setVapidirInstallFlag = false;
 
   meta = with stdenv.lib; {
     description = "GObject wrapper for libusb";

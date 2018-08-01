@@ -1,21 +1,25 @@
 { stdenv
 , bison
-, fetchurl
+, fetchFromGitHub
 , flex
 , which
 
 , perl
 }:
 
+let
+  rev = "dcf23676cc264927ad58ae7960f518689372741a";
+  date = "2018-06-29";
+in
 stdenv.mkDerivation rec {
-  name = "lm_sensors-3.4.0";
+  name = "lm_sensors-${date}";
   
-  src = fetchurl rec {
-    url = "http://pkgs.fedoraproject.org/repo/pkgs/lm_sensors/"
-      + "${name}.tar.bz2/${md5Confirm}/${name}.tar.bz2";
-    multihash = "QmRdin9zYKQZRYjBDRF4MBu4w7eHKxttfbH5mwv5vMWVQ7";
-    md5Confirm = "c03675ae9d43d60322110c679416901a";
-    sha256 = "07q6811l4pp0f7pxr8bk3s97ippb84mx5qdg7v92s9hs10b90mz0";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "groeck";
+    repo = "lm-sensors";
+    inherit rev;
+    sha256 = "b16e65e97568bfeeae19c050c3ea62931b21c4abb90c2384eebea267881b4f8a";
   };
 
   nativeBuildInputs = [

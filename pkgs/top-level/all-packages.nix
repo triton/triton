@@ -4109,6 +4109,8 @@ yelp-xsl_3-20 = callPackage ../all-pkgs/y/yelp-xsl {
 };
 yelp-xsl = callPackageAlias "yelp-xsl_3-20" { };
 
+youtube-dl = pkgs.python3Packages.youtube-dl;
+
 yubikey-manager = pkgs.python3Packages.yubikey-manager;
 
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };

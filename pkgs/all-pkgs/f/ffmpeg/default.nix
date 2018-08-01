@@ -190,9 +190,9 @@ let
 
   sources = {
     "3.4" = {
-      version = "3.4.2";
-      multihash = "QmeauNNSeUBumLAq5tkic7FusmmBgynfUSuy7HNt2Xm47x";
-      sha256 = "2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740";
+      version = "3.4.4";
+      multihash = "QmYQDMYbV1CE8gfdBRoxZCnQgtd7KAP7GfHdx1ZwwJmUxT";
+      sha256 = "386f7601e865df6bddde05bb6927119b5a853f0b92e2e9834f59c125a17d3fc6";
     };
     "4.0" = {
       version = "4.0";

@@ -1,18 +1,12 @@
 { stdenv
-, docbook-xsl
-, docbook-xsl-ns
 , fetchurl
 , gettext
-, intltool
-, libxslt
-, makeWrapper
-
-, dbus
-, dbus-glib
-, glib
-, gtk3
-, libxml2
+, meson
+, ninja
+, python3
 , vala
+
+, glib
 
 , channel
 }:
@@ -30,28 +24,22 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    gettext
-    intltool
-    makeWrapper
+    meson
+    ninja
+    python3
     vala
   ];
 
   buildInputs = [
-    dbus
-    dbus-glib
     glib
-    gtk3
-    libxml2
   ];
 
-  configureFlags = [
-    "--disable-man"
-    "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-gcov"
-  ];
+  postPatch = ''
+    chmod +x meson_post_install.py
+    patchShebangs meson_post_install.py
+  '';
+
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {

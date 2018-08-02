@@ -43,6 +43,7 @@
 , libxcursor
 , libxext
 , libxfixes
+, libxmu
 , libxt
 , libzip
 , mypaint-brushes
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
     libxcursor
     libxext
     libxfixes
+    libxmu
     libxt
     libzip
     mypaint-brushes
@@ -129,7 +131,6 @@ stdenv.mkDerivation rec {
     python2Packages.pygtk
     python2Packages.python
     shared-mime-info
-    xorg.libXmu
     xorg.libXpm
     xorgproto
     xz

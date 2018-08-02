@@ -30,7 +30,7 @@
 , libxfont2
 , libxi
 , libxkbfile
-#, libxmu
+, libxmu
 #, libxpm
 , libxrender
 , libxres
@@ -128,7 +128,7 @@ stdenv.mkDerivation rec {
     libxfont2
     libxi
     libxkbfile
-    xorg.libXmu
+    libxmu
     xorg.libXpm
     libxrender
     libxres

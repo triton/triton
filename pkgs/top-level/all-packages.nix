@@ -2673,6 +2673,8 @@ libxklavier = callPackage ../all-pkgs/l/libxklavier { };
 
 libxml2 = callPackage ../all-pkgs/l/libxml2 { };
 
+libxmu = callPackage ../all-pkgs/l/libxmu { };
+
 libxrandr = callPackage ../all-pkgs/l/libxrandr { };
 
 libxrender = callPackage ../all-pkgs/l/libxrender { };

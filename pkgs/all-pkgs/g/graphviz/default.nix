@@ -20,7 +20,7 @@
 , libx11
 #, libxaw
 , libxext
-#, libxmu
+, libxmu
 #, libxpm
 , libxrender
 , libxt
@@ -67,8 +67,7 @@ stdenv.mkDerivation rec {
     #libxaw
     xorg.libXaw
     libxext
-    #libxmu
-    xorg.libXmu
+    libxmu
     libxt
     opengl-dummy
     xorgproto

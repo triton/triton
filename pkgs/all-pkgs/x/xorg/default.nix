@@ -28,6 +28,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxi
 , libxinerama
 , libxkbfile
+, libxmu
 , libxrandr
 , libxrender
 , libxres
@@ -652,9 +653,9 @@ let
       sha256 = "1kdhxplwrn43d9jp3v54llp05kwx210lrsdvqb6944jp29rhdy4f";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXext xorgproto libXmu libXpm libXt ];
+    buildInputs = [ libX11 libXext xorgproto libxmu libXpm libXt ];
 
-  }) // {inherit libX11 libXext xorgproto libXmu libXpm libXt ;};
+  }) // {inherit libX11 libXext xorgproto libxmu libXpm libXt ;};
 
   libXaw3d = (mkDerivation "libXaw3d" {
     name = "libXaw3d-1.6.2";
@@ -663,9 +664,9 @@ let
       sha256 = "0awplv1nf53ywv01yxphga3v6dcniwqnxgnb0cn4khb121l12kxp";
     };
     nativeBuildInputs = [ bison flex utilmacros ];
-    buildInputs = [ libX11 libXext libXmu libXpm xorgproto libXt ];
+    buildInputs = [ libX11 libXext libxmu libXpm xorgproto libXt ];
 
-  }) // {inherit libX11 libXext libXmu libXpm xorgproto libXt ;};
+  }) // {inherit libX11 libXext libxmu libXpm xorgproto libXt ;};
 
   # libXevie = (mkDerivation "libXevie" {
   #   name = "libXevie-1.0.3";
@@ -688,17 +689,6 @@ let
     buildInputs = [ fontcacheproto libX11 libXext xorgproto ];
 
   }) // {inherit fontcacheproto libX11 libXext xorgproto ;};
-
-  libXmu = (mkDerivation "libXmu" {
-    name = "libXmu-1.1.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXmu-1.1.2.tar.bz2;
-      sha256 = "02wx6jw7i0q5qwx87yf94fsn3h0xpz1k7dz1nkwfwm1j71ydqvkm";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXext xorgproto libXt ];
-
-  }) // {inherit libX11 libXext xorgproto libXt ;};
 
   # libXp = (mkDerivation "libXp" {
   #   name = "libXp-1.0.3";
@@ -872,9 +862,9 @@ let
       sha256 = "5afe42ce3cdf4f60520d1658d2b17face45c74050f39af45dccdc95e73fafc4d";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXau libXext libXmu xorgproto ];
+    buildInputs = [ libX11 libXau libXext libxmu xorgproto ];
 
-  }) // {inherit libX11 libXau libXext libXmu xorgproto ;};
+  }) // {inherit libX11 libXau libXext libxmu xorgproto ;};
 
   xbacklight = (mkDerivation "xbacklight" {
     name = "xbacklight-1.2.1";
@@ -1158,9 +1148,9 @@ let
       sha256 = "16n26xw6l01zq31d4qvsaz50misvizhn7iihzdn5f7s72pp1krlk";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXau libXmu xorgproto ];
+    buildInputs = [ libX11 libXau libxmu xorgproto ];
 
-  }) // {inherit libX11 libXau libXmu xorgproto ;};
+  }) // {inherit libX11 libXau libxmu xorgproto ;};
 
   xinput = (mkDerivation "xinput" {
     name = "xinput-1.6.2";
@@ -1224,9 +1214,9 @@ let
   #     sha256 = "1dbcv26w2yand2qy7b3h5rbvw1mdmdd57jw88v53sgdr3vrqvngy";
   #   };
   #   nativeBuildInputs = [ utilmacros ];
-  #   buildInputs = [ libX11 libXmu xproto ];
+  #   buildInputs = [ libX11 libxmu xproto ];
   #
-  # }) // {inherit libX11 libXmu xproto ;};
+  # }) // {inherit libX11 libxmu xproto ;};
 
   # xpyb = (mkDerivation "xpyb" {
   #   name = "xpyb-1.3.1";
@@ -1257,9 +1247,9 @@ let
       sha256 = "0nsnr90wazcdd50nc5dqswy0bmq6qcj14nnrhyi7rln9pxmpp0kk";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXmu xorgproto ];
+    buildInputs = [ libX11 libxmu xorgproto ];
 
-  }) // {inherit libX11 libXmu xorgproto ;};
+  }) // {inherit libX11 libxmu xorgproto ;};
 
   xset = (mkDerivation "xset" {
     name = "xset-1.2.3";
@@ -1268,9 +1258,9 @@ let
       sha256 = "0qw0iic27bz3yz2wynf1gxs70hhkcf9c4jrv7zhlg1mq57xz90j3";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXext libXfontcache libXmu xorgproto libXxf86misc ];
+    buildInputs = [ libX11 libXext libXfontcache libxmu xorgproto libXxf86misc ];
 
-  }) // {inherit libX11 libXext libXfontcache libXmu xorgproto libXxf86misc ;};
+  }) // {inherit libX11 libXext libXfontcache libxmu xorgproto libXxf86misc ;};
 
   xsetroot = (mkDerivation "xsetroot" {
     name = "xsetroot-1.1.1";
@@ -1279,9 +1269,9 @@ let
       sha256 = "1nf3ii31m1knimbidaaym8p61fq3blv8rrdr2775yhcclym5s8ds";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xbitmaps libXcursor libXmu xorgproto ];
+    buildInputs = [ libX11 xbitmaps libXcursor libxmu xorgproto ];
 
-  }) // {inherit libX11 xbitmaps libXcursor libXmu xorgproto ;};
+  }) // {inherit libX11 xbitmaps libXcursor libxmu xorgproto ;};
 
   # xts = (mkDerivation "xts" {
   #   name = "xts-0.99.1";
@@ -1290,8 +1280,8 @@ let
   #     sha256 = "08sanl2nhbbscid767i5zwk0nv2q3ds89w96ils8qfigd57kacc5";
   #   };
   #   nativeBuildInputs = [ utilmacros ];
-  #   buildInputs = [ libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ];
+  #   buildInputs = [ libX11 libXau libXaw libXext libXi libxmu libXt xtrans libXtst ];
   #
-  # }) // {inherit libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ;};
+  # }) // {inherit libX11 libXau libXaw libXext libXi libxmu libXt xtrans libXtst ;};
 
 }; in xorg

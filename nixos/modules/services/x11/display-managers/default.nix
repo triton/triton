@@ -90,11 +90,11 @@ let
       ${config.systemd.package}/bin/systemctl --user import-environment DISPLAY
 
       # Load X defaults.
-      ${xorg.xrdb}/bin/xrdb -merge ${xresourcesXft}
+      ${pkgs.xrdb}/bin/xrdb -merge ${xresourcesXft}
       if test -e ~/.Xresources; then
-          ${xorg.xrdb}/bin/xrdb -merge ~/.Xresources
+          ${pkgs.xrdb}/bin/xrdb -merge ~/.Xresources
       elif test -e ~/.Xdefaults; then
-          ${xorg.xrdb}/bin/xrdb -merge ~/.Xdefaults
+          ${pkgs.xrdb}/bin/xrdb -merge ~/.Xdefaults
       fi
 
       # Speed up application start by 50-150ms according to

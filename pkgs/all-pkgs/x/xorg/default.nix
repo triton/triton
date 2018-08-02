@@ -1240,17 +1240,6 @@ let
 
   }) // {inherit libX11 xorgproto libXrandr libXrender ;};
 
-  xrdb = (mkDerivation "xrdb" {
-    name = "xrdb-1.1.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xrdb-1.1.0.tar.bz2;
-      sha256 = "0nsnr90wazcdd50nc5dqswy0bmq6qcj14nnrhyi7rln9pxmpp0kk";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libxmu xorgproto ];
-
-  }) // {inherit libX11 libxmu xorgproto ;};
-
   xset = (mkDerivation "xset" {
     name = "xset-1.2.3";
     src = fetchurl {

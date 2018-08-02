@@ -467,7 +467,7 @@ in
     environment.systemPackages =
       [ xorg.xorgserver
         xorg.xrandr
-        xorg.xrdb
+        pkgs.xrdb
         xorg.setxkbmap
         pkgs.iceauth # required for KDE applications (it's called by dcopserver)
         pkgs.xlsclients

@@ -4096,6 +4096,8 @@ xorg-server = callPackageAlias "xorg-server_1-19" { };
 
 xprop = callPackage ../all-pkgs/x/xprop { };
 
+xrdb = callPackage ../all-pkgs/x/xrdb { };
+
 xrefresh = callPackage ../all-pkgs/x/xrefresh { };
 
 xtrans = callPackage ../all-pkgs/x/xtrans { };

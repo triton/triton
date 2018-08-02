@@ -601,17 +601,6 @@ let
 
   }) // {inherit xorgproto opengl-dummy libdrm xorgserver ;};
 
-  iceauth = (mkDerivation "iceauth" {
-    name = "iceauth-1.0.7";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/iceauth-1.0.7.tar.bz2;
-      sha256 = "02izdyzhwpgiyjd8brzilwvwnfr72ncjb6mzz3y1icwrxqnsy5hj";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libICE xorgproto ];
-
-  }) // {inherit libICE xorgproto ;};
-
   # ico = (mkDerivation "ico" {
   #   name = "ico-1.0.4";
   #   src = fetchurl {

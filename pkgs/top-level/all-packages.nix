@@ -1980,6 +1980,8 @@ ibus = callPackage ../all-pkgs/i/ibus { };
 
 ice = callPackage ../all-pkgs/i/ice { };
 
+iceauth = callPackage ../all-pkgs/i/iceauth { };
+
 icu = callPackage ../all-pkgs/i/icu { };
 
 id3lib = callPackage ../all-pkgs/i/id3lib { };

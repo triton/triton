@@ -4,6 +4,7 @@
 , lib
 , util-macros
 
+, libpciaccess
 , mtdev
 , xorgproto
 , xorg-server
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libpciaccess
     mtdev
     xorgproto
     xorg-server

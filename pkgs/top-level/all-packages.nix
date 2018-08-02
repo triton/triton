@@ -741,6 +741,8 @@ bcache-tools = callPackage ../all-pkgs/b/bcache-tools { };
 
 bcachefs-tools = callPackage ../all-pkgs/b/bcachefs-tools { };
 
+bdftopcf = callPackage ../all-pkgs/b/bdftopcf { };
+
 beecrypt = callPackage ../all-pkgs/b/beecrypt { };
 
 bind = callPackage ../all-pkgs/b/bind { };

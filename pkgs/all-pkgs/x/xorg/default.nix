@@ -5,6 +5,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
 
+, bdftopcf
 , fontcacheproto
 , libdmx
 , libfontenc
@@ -113,17 +114,6 @@ let
     xorgserver = xorg-server;
 
 ################################################################################
-
-  bdftopcf = (mkDerivation "bdftopcf" {
-    name = "bdftopcf-1.0.5";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/bdftopcf-1.0.5.tar.bz2;
-      sha256 = "09i03sk878cmx2i40lkpsysn7zqcvlczb30j7x3lryb11jz4gx1q";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libXfont ];
-
-  }) // {inherit libXfont ;};
 
   # encodings = (mkDerivation "encodings" {
   #   name = "encodings-1.0.4";

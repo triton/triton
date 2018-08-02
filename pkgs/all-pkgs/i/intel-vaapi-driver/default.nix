@@ -1,6 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , fetchurl
+, gnum4
 , intel-gpu-tools
 , lib
 , python2
@@ -30,8 +31,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    # Currently breaks the build
-    # intel-gpu-tools  # Needed to generate gpu asm
+    gnum4
+    intel-gpu-tools
     python2
   ];
 

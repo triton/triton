@@ -4102,7 +4102,7 @@ xorg-server_1-19 = callPackage ../all-pkgs/x/xorg-server {
 xorg-server_1-20 = callPackage ../all-pkgs/x/xorg-server/meson.nix {
   channel = "1.20";
 };
-xorg-server = callPackageAlias "xorg-server_1-19" { };
+xorg-server = callPackageAlias "xorg-server_1-20" { };
 
 xprop = callPackage ../all-pkgs/x/xprop { };
 

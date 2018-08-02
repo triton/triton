@@ -3967,6 +3967,8 @@ xf86-input-evdev = callPackage ../all-pkgs/x/xf86-input-evdev { };
 
 xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
 
+xf86-input-synaptics = callPackage ../all-pkgs/x/xf86-input-synaptics { };
+
 xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 
 xf86-video-amdgpu = callPackage ../all-pkgs/x/xf86-video-amdgpu { };

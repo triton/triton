@@ -1,7 +1,7 @@
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, opengl-dummy, spice-protocol, spice
-, dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
+, dbus, util-linux_lib, openssl, gperf, gnum4, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
 
@@ -1019,17 +1019,6 @@ let
     buildInputs = [ xorgserver ];
 
   }) // {inherit xorgserver ;};
-
-  xf86inputsynaptics = (mkDerivation "xf86inputsynaptics" {
-    name = "xf86-input-synaptics-1.9.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-synaptics-1.9.0.tar.bz2;
-      sha256 = "afba3289d7a40217a19d90db98ce181772f9ca6d77e1898727b0afcf02073b5a";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto libevdev libX11 libXi xorgserver libXtst ];
-
-  }) // {inherit xorgproto libevdev libX11 libXi xorgserver libXtst ;};
 
   # xf86inputvmmouse = (mkDerivation "xf86inputvmmouse" {
   #   name = "xf86-input-vmmouse-13.1.0";

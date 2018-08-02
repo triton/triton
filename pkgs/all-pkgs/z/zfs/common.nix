@@ -46,7 +46,11 @@ in
       sha256 = "516ed491fc63734dd3cb46ad9e5d031c063c6fade35579d1c37e48cbc476abb5";
     };
     patches = [
-      ../../../../../zfs/0001-Fix-binary-paths.patch
+      (fetchTritonPatch {
+        rev = "3294dce1acb29f03f81d4326e91c0e72613578ca";
+        file = "z/zfs/0001-Fix-binary-paths.patch";
+        sha256 = "8e2b8380c0570c7ea44a8d7c93b2045341f77b94b6c8745c59576eec331c51cc";
+      })
     ];
   };
 }

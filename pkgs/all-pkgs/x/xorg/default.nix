@@ -1173,17 +1173,6 @@ let
 
   }) // {inherit xorgproto libX11 libXext libXi libXinerama libXrandr ;};
 
-  xlsclients = (mkDerivation "xlsclients" {
-    name = "xlsclients-1.1.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xlsclients-1.1.3.tar.bz2;
-      sha256 = "0g9x7rrggs741x9xwvv1k9qayma980d88nhdqw7j3pn3qvy6d5jx";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libxcb ];
-
-  }) // {inherit libxcb ;};
-
   # xman = (mkDerivation "xman" {
   #   name = "xman-1.1.4";
   #   src = fetchurl {

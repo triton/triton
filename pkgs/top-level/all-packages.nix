@@ -3988,6 +3988,8 @@ xkbcomp = callPackage ../all-pkgs/x/xkbcomp { };
 
 xkeyboard-config = callPackage ../all-pkgs/x/xkeyboard-config { };
 
+xlsclients = callPackage ../all-pkgs/x/xlsclients { };
+
 xmlto = callPackage ../all-pkgs/x/xmlto { };
 
 xmltoman = callPackage ../all-pkgs/x/xmltoman { };

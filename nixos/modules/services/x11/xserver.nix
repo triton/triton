@@ -470,7 +470,7 @@ in
         xorg.xrdb
         xorg.setxkbmap
         pkgs.iceauth # required for KDE applications (it's called by dcopserver)
-        xorg.xlsclients
+        pkgs.xlsclients
         xorg.xset
         xorg.xsetroot
         xorg.xinput

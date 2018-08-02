@@ -4102,6 +4102,8 @@ xrdb = callPackage ../all-pkgs/x/xrdb { };
 
 xrefresh = callPackage ../all-pkgs/x/xrefresh { };
 
+xsetroot = callPackage ../all-pkgs/x/xsetroot { };
+
 xtrans = callPackage ../all-pkgs/x/xtrans { };
 
 xvidcore = callPackage ../all-pkgs/x/xvidcore { };

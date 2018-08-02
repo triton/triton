@@ -1240,17 +1240,6 @@ let
 
   }) // {inherit libX11 libXext libXfontcache libxmu xorgproto libXxf86misc ;};
 
-  xsetroot = (mkDerivation "xsetroot" {
-    name = "xsetroot-1.1.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xsetroot-1.1.1.tar.bz2;
-      sha256 = "1nf3ii31m1knimbidaaym8p61fq3blv8rrdr2775yhcclym5s8ds";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xbitmaps libXcursor libxmu xorgproto ];
-
-  }) // {inherit libX11 xbitmaps libXcursor libxmu xorgproto ;};
-
   # xts = (mkDerivation "xts" {
   #   name = "xts-0.99.1";
   #   src = fetchurl {

@@ -472,7 +472,7 @@ in
         pkgs.iceauth # required for KDE applications (it's called by dcopserver)
         pkgs.xlsclients
         xorg.xset
-        xorg.xsetroot
+        pkgs.xsetroot
         xorg.xinput
         pkgs.xprop
         xorg.xauth

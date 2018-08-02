@@ -1091,6 +1091,8 @@ docbook-xsl-ns = callPackageAlias "docbook-xsl" {
   type = "ns";
 };
 
+docutils = pkgs.python3Packages.docutils;
+
 dosfstools = callPackage ../all-pkgs/d/dosfstools { };
 
 dos2unix = callPackage ../all-pkgs/d/dos2unix { };

@@ -2,7 +2,7 @@
 args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, opengl-dummy, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
-, autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
+, autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
 
 , bdftopcf
@@ -975,17 +975,6 @@ let
   #   buildInputs = [ libX11 libXxf86dga ];
   #
   # }) // {inherit libX11 libXxf86dga ;};
-
-  xf86inputevdev = (mkDerivation "xf86inputevdev" {
-    name = "xf86-input-evdev-2.10.5";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-evdev-2.10.5.tar.bz2;
-      sha256 = "9edaa6205baf6d2922cc4db3d8e54a7e7773b5f733b0ae90f6be7725f983b70d";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto libevdev systemd_lib mtdev xorgserver ];
-
-  }) // {inherit xorgproto libevdev systemd_lib mtdev xorgserver ;};
 
   xf86inputjoystick = (mkDerivation "xf86inputjoystick" {
     name = "xf86-input-joystick-1.6.3";

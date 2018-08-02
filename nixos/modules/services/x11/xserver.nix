@@ -533,7 +533,7 @@ in
     services.xserver.modules =
       concatLists (catAttrs "modules" cfg.drivers) ++
       [ xorg.xorgserver
-        xorg.xf86inputevdev
+        pkgs.xf86-input-evdev
       ];
 
     services.xserver.xkbDir = mkDefault "${pkgs.xkeyboard-config}/etc/X11/xkb";

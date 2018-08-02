@@ -3957,6 +3957,8 @@ xapian-core = callPackage ../all-pkgs/x/xapian-core { };
 
 xavs = callPackage ../all-pkgs/x/xavs { };
 
+xbitmaps = callPackage ../all-pkgs/x/xbitmaps { };
+
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
 
 xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };

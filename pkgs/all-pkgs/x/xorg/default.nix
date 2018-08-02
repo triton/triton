@@ -877,17 +877,6 @@ let
 
   }) // {inherit libxcb xcbutil ;};
 
-  xbitmaps = (mkDerivation "xbitmaps" {
-    name = "xbitmaps-1.1.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/data/xbitmaps-1.1.1.tar.bz2;
-      sha256 = "178ym90kwidia6nas4qr5n5yqh698vv8r02js0r4vg3b6lsb0w9n";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ ];
-
-  }) // {inherit ;};
-
   xcbutil = (mkDerivation "xcbutil" {
     name = "xcb-util-0.4.0";
     src = fetchurl {

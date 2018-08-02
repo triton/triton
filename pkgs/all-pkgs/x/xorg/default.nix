@@ -1228,17 +1228,6 @@ let
   #
   # }) // {inherit libX11 libXmu xproto ;};
 
-  xprop = (mkDerivation "xprop" {
-    name = "xprop-1.2.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xprop-1.2.2.tar.bz2;
-      sha256 = "1ilvhqfjcg6f1hqahjkp8qaay9rhvmv2blvj3w9asraq0aqqivlv";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xorgproto ];
-
-  }) // {inherit libX11 xorgproto ;};
-
   # xpyb = (mkDerivation "xpyb" {
   #   name = "xpyb-1.3.1";
   #   src = fetchurl {

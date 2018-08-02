@@ -474,7 +474,7 @@ in
         xorg.xset
         xorg.xsetroot
         xorg.xinput
-        xorg.xprop
+        pkgs.xprop
         xorg.xauth
         pkgs.xdg-utils
       ]

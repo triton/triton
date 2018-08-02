@@ -1,5 +1,6 @@
 { stdenv
 , bison
+, docutils
 , fetchurl
 , flex
 , lib
@@ -18,23 +19,28 @@
 , libxext
 , libxrandr
 , libxv
+, openssl
 , procps
 , systemd_lib
 , xorgproto
 , zlib
 }:
 
+let
+  version = "1.23";
+in
 stdenv.mkDerivation rec {
-  name = "intel-gpu-tools-1.22";
+  name = "intel-gpu-tools-${version}";
 
   src = fetchurl {
-    url = "mirror://xorg/individual/app/${name}.tar.xz";
+    url = "mirror://xorg/individual/app/igt-gpu-tools-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "3d66c1dc5110712ca4d22199b3ce9853f261be1690064edf87e69e5392e39a5c";
+    sha256 = "4d4b086c513bace5c23d0889de3f42ac3ebd3d968c64dedae6e28e006a499ad0";
   };
 
   nativeBuildInputs = [
     bison
+    docutils
     flex
     meson
     ninja
@@ -52,6 +58,7 @@ stdenv.mkDerivation rec {
     libxext
     libxrandr
     libxv
+    openssl
     procps
     systemd_lib
     xorgproto
@@ -59,11 +66,27 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i "/subdir('\(docs\|tests\|benchmarks\)')/d" meson.build
+    # Don't build benchmarks
+    grep -q "subdir('benchmarks')" meson.build
+    sed -i "/subdir('benchmarks')/d" meson.build
+
+    # Fix build impurities
+    grep -q 'IGT_SRCDIR' lib/igt_core.h
     sed -i 's,IGT_SRCDIR,"/no-such-path",g' lib/igt_core.h
+
+    # Fix name of rst2man executable
+    grep -q "'rst2man'" man/meson.build
+    sed -i "s#'rst2man'#'rst2man.py'#" man/meson.build
+    grep -q '^rst2man ' man/rst2man.sh
+    sed -i 's#^rst2man #rst2man.py #' man/rst2man.sh
+
+    patchShebangs man/rst2man.sh
   '';
 
   mesonFlags = [
+    "-Dbuild_tests=false"
+    "-Dbuild_man=true"
+    "-Dbuild_docs=false"
     "-Duse-rpath=true"
   ];
 

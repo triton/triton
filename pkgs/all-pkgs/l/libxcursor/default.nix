@@ -29,11 +29,6 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  configureFlags = [
-    "--enable-maintainer-mode"
-    "--without-lint"
-  ];
-
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

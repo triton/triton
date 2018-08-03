@@ -5,22 +5,20 @@
 , libxslt
 , xmlto
 
-, audit_lib
 , expat
-, libcap-ng
 , libx11
 , systemd_lib
 , xorgproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.12.8";
+  name = "dbus-1.12.10";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmRRASjAqrdBATkohFE7k8QB9p6U5fZdJVNPf3h48x2c7y";
+    multihash = "QmefpXB5sQLwBsECpugje7MvmLkeQRhKLPBHmrxVp63Ucm";
     hashOutput = false;
-    sha256 = "e2dc99e7338303393b6663a98320aba6a63421bcdaaf571c8022f815e5896eb3";
+    sha256 = "4b693d24976258c3f2fa9cc33ad9288c5fbfa7a16481dbd9a8a429f7aa8cdcf7";
   };
 
   nativeBuildInputs = [
@@ -31,9 +29,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    audit_lib
     expat
-    libcap-ng
     libx11
     systemd_lib
     xorgproto
@@ -53,18 +49,11 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
-    "--with-session-socket-dir=/tmp"
-    "--enable-xml-docs"
-    "--enable-libaudit"
-    "--enable-inotify"
-    "--enable-systemd"
-    "--disable-selinux"
-    "--disable-apparmor"
-    "--enable-systemd"
+    "--disable-doxygen-docs"
+    "--disable-ducktype-docs"
     "--disable-tests"
-    "--enable-epoll"
-    "--enable-x11-autolaunch"
     "--enable-user-session"
+    "--with-session-socket-dir=/tmp"
   ];
 
   passthru = {

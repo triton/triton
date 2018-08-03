@@ -22,7 +22,7 @@ let
     "mirror://sourceware/lvm2/releases"
   ];
 
-  version = "2.02.180";
+  version = "2.02.181";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     hashOutput = false;
-    sha256 = "24997e26dfc916151707c9da504d38d0473bec3481a8230b676bc079041bead6";
+    sha256 = "400fead33b3abc2d82bd631b63f644b646e83040699f2e8f91ff5779119bb89e";
   };
 
   nativeBuildInputs = [

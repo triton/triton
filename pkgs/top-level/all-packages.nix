@@ -2378,6 +2378,8 @@ liblqr = callPackage ../all-pkgs/l/liblqr { };
 
 libmatroska = callPackage ../all-pkgs/l/libmatroska { };
 
+libmaxminddb = callPackage ../all-pkgs/l/libmaxminddb { };
+
 libmbim = callPackage ../all-pkgs/l/libmbim { };
 
 libmcrypt = callPackage ../all-pkgs/l/libmcrypt { };

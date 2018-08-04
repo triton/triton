@@ -3,42 +3,37 @@
 , fetchurl
 , flex
 
+, bluez
 , dbus
 , libnl
-, libusb
+, rdma-core
 }:
 
 stdenv.mkDerivation rec {
-  name = "libpcap-1.8.1";
+  name = "libpcap-1.9.0";
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
+    multihash = "QmT79aKdU6rvxhDRt9HXRCahVrsu9y7d9dLWfqS3ooas8H";
     hashOutput = false;
-    multihash = "QmU6LRsVjwXsj8UFCnaNRiBXpSvxCkGrjrmY9sjmsjQiUQ";
-    sha256 = "673dbc69fdc3f5a86fb5759ab19899039a8e5e6c631749e48dcd9c6f0c83541e";
+    sha256 = "2edb88808e5913fdaa8e9c1fcaf272e19b2485338742b5074b9fe44d68f37019";
   };
 
   nativeBuildInputs = [
-    flex
     bison
+    flex
   ];
 
   buildInputs = [
+    bluez
     dbus
     libnl
-    libusb
+    rdma-core
   ];
 
   configureFlags = [
-    "--with-pcap=linux"
-    "--with-libnl"
-    "--enable-ipv6"
-    "--enable-shared"
-    "--enable-usb"
-    "--disable-bluetooth"  # TODO: I think this needs newer headers
-    "--enable-canusb"
-    "--enable-can"
-    "--enable-dbus"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
   ];
 
   preBuild = ''

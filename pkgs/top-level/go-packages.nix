@@ -6485,6 +6485,25 @@ let
     ];
   };
 
+  ipfs-ds-convert = buildFromGitHub {
+    version = 6;
+    rev = "775510ea634911edb8567785c2c7bd31cd1c910f";
+    date = "2018-06-30";
+    owner = "ipfs";
+    repo = "ipfs-ds-convert";
+    sha256 = "962fe317131b37f9d6fee2d4c0258f41f6a1fc76d9c101d686f9e497e8ff3be0";
+    gxSha256 = "1bmiinm5n4h7ygp8m0z157smhwkbzfwf4hki8s8kmf7ilrxwz1wy";
+    nativeBuildInputs = [
+      gx-go.bin
+    ];
+    propagatedBuildInputs = [
+      # Workaround missing vendored dependency
+      go-homedir
+    ];
+    meta.autoUpdate = false;
+    allowVendoredSources = true;
+  };
+
   jaeger-client-go = buildFromGitHub {
     version = 5;
     owner = "jaegertracing";

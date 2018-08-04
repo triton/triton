@@ -2030,6 +2030,8 @@ ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
 ipfs-cluster = pkgs.goPackages.ipfs-cluster.bin // { outputs = [ "bin" ]; };
 
+ipfs-ds-convert = pkgs.goPackages.ipfs-ds-convert.bin // { outputs = [ "bin" ]; };
+
 ipfs-hasher = callPackage ../all-pkgs/i/ipfs-hasher { };
 
 ipmitool = callPackage ../all-pkgs/i/ipmitool { };

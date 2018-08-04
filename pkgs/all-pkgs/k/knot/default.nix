@@ -7,21 +7,21 @@
 , libcap-ng
 , libedit
 , libidn2
+, libmaxminddb
 , liburcu
 , lmdb
-, nettle
 , protobuf-c
 , systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.6.8";
+  name = "knot-2.7.0";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmcVx5RYA54wzjvrWVUMKYF9k9JdnAewmkuc9tNdFTNPUV";
+    multihash = "QmVYneTqzm5PjyvcJeZoup7Kftc4GGTZUpuCPueAwp8L4Z";
     hashOutput = false;
-    sha256 = "0daee8efd6262f10c54ee6f5fb99ca4d0f72e275513ec0902032af594cac1b15";
+    sha256 = "5583af2c78a81d38fa33b6ba349b599548a29a9f489920b2bc0287b4bc79af55";
   };
 
   buildInputs = [
@@ -31,9 +31,9 @@ stdenv.mkDerivation rec {
     libcap-ng
     libedit
     libidn2
+    libmaxminddb
     liburcu
     lmdb
-    nettle
     protobuf-c
     systemd_lib
   ];
@@ -52,8 +52,9 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    sed -i '\,\$(DESTDIR)//.*knot,d' src/Makefile
-    cat src/Makefile
+    grep -q '\$(DESTDIR)//' src/Makefile
+    sed -i '\,\$(DESTDIR)//,d' src/Makefile
+
     installFlagsArray+=(
       "sysconfdir=$out/etc"
       "config_dir=$out/etc/knot"

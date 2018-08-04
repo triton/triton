@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.16";
+  version = "1.17";
 
   tarballUrls = version: [
     "mirror://gnu/gdbm/gdbm-${version}.tar.gz"
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "c8a18bc6259da0c3eefefb018f8aa298fddc6f86c6fc0f0dec73270896ab512f";
+    sha256 = "7cd8cc2e35b1aaede6084ea57cc9447752f498daaea854100a4bad567614977d";
   };
 
   buildInputs = [
@@ -31,11 +31,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.16";
+      urls = tarballUrls "1.17";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "325F 650C 4C2B 6AD5 8807  327A 3602 B07F 55D0 C732";
       inherit (src) outputHashAlgo;
-      outputHash = "c8a18bc6259da0c3eefefb018f8aa298fddc6f86c6fc0f0dec73270896ab512f";
+      outputHash = "7cd8cc2e35b1aaede6084ea57cc9447752f498daaea854100a4bad567614977d";
     };
   };
 

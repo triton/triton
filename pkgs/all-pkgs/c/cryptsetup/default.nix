@@ -7,13 +7,13 @@
 , lvm2
 , openssl
 , popt
-, python
+, systemd-dummy
 , util-linux_lib
 }:
 
 let
   channel = "2.0";
-  version = "${channel}.3";
+  version = "${channel}.4";
 
   baseUrl = "mirror://kernel/linux/utils/cryptsetup/v${channel}";
 in
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "4d6cca04c1f5ff4a68d045d190efb2623087eda0274ded92f92a4b6911e501d4";
+    sha256 = "9d3a3c7033293e0c97f0ad0501fd5b4d4913ae497cbf70cca06633ccc54b5734";
   };
 
   buildInputs = [
@@ -32,15 +32,22 @@ stdenv.mkDerivation rec {
     lvm2
     openssl
     popt
-    python
+    systemd-dummy
     util-linux_lib
   ];
 
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--enable-libargon2"
-    "--enable-python"
     "--with-crypto_backend=openssl"
   ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "tmpfilesddir=$out/lib/tmpfiles.d"
+    )
+  '';
 
   passthru = {
     srcVerification = fetchurl {

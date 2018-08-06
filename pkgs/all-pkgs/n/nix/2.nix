@@ -43,24 +43,44 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "9f8cc90aa574e0259d8d44fb57ce6a0a8e299ccc";
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
       file = "n/nix/0001-Configurable-fixed-output-paths.patch";
-      sha256 = "1e324269d592e10ae2e72d4b1efd490c82cbfdcb9d1f9cb5cec3296818fe49f8";
+      sha256 = "89694ae966850d5c926ca11fb7a19fcc63b8f517b752fa4f0e4384257573f17f";
     })
     (fetchTritonPatch {
-      rev = "9f8cc90aa574e0259d8d44fb57ce6a0a8e299ccc";
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
       file = "n/nix/0002-Remove-hardcoded-nixos.org-references.patch";
-      sha256 = "88888e6d71c9fa07e7bdebbffb1d82c9e2ef1cc095de560ea44d20d6cca2e580";
+      sha256 = "4b8409841f5a5dc37590ed0623ca0af468ab477837bfcf27726bd7e0fa375727";
     })
     (fetchTritonPatch {
-      rev = "9f8cc90aa574e0259d8d44fb57ce6a0a8e299ccc";
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
       file = "n/nix/0003-Remove-nixpkgs-references.patch";
-      sha256 = "1c28d29385b3dfbf840b99efba9fe90ed6842371fc112b8f3602d36f7e904852";
+      sha256 = "d45ca713fb8dd3f0446823d404bc1d0703f1b147c96dd08e8fd1ac3ae837dd7f";
     })
     (fetchTritonPatch {
-      rev = "9f8cc90aa574e0259d8d44fb57ce6a0a8e299ccc";
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
       file = "n/nix/0004-Build-dir-should-be-unique.patch";
-      sha256 = "6e3ba2beaacf59ed6e2120b15bf833826596f0729c9568e0e36e24a3a73561d0";
+      sha256 = "42fdc7e4725b3258525f6d9ca0a6e894e151dd93893cad369ffc6fe75fcf3ce5";
+    })
+    (fetchTritonPatch {
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      file = "n/nix/0005-Always-verify-TLS.patch";
+      sha256 = "cfce63abb5f90e11260bc3f91c25a78488893286d3198300c276bbebf74fec28";
+    })
+    (fetchTritonPatch {
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      file = "n/nix/0006-SSL_CERT_FILE-for-fixed-output.patch";
+      sha256 = "30e696b2d12859213843f6b1a70eba0d19c435e8eb7b856e110765681acc20e9";
+    })
+    (fetchTritonPatch {
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      file = "n/nix/0007-Output-base64-by-default.patch";
+      sha256 = "cb7c47fb97f9a3a7a1163a0f4a25799f328065ec94545fbb765673b1dce58838";
+    })
+    (fetchTritonPatch {
+      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      file = "n/nix/0008-Make-fixed-ouput-message-nicer.patch";
+      sha256 = "1c84f6431342fa9c73db64250aeca3db58185f5d750a94b4ea5ef4a95a1119a1";
     })
   ];
 

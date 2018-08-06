@@ -43,19 +43,19 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "87c8a7e6ef87849eb89909dce74e0c83de571408";
+      rev = "6755e747916ce40339cda63422520813d1c2ed4f";
       file = "n/nix/0001-Include-ca-certs-in-fixed-outputs.patch";
       sha256 = "30b1302bd4c32ed08f7bcf1ca7e5111bfa735cee77560a08ebd082d3245f736f";
     })
     (fetchTritonPatch {
-      rev = "87c8a7e6ef87849eb89909dce74e0c83de571408";
-      file = "n/nix/0002-Remove-nixpkgs-references.patch";
-      sha256 = "00dc9899fb324924529245ab7ae37deb1528f45592b7364626cac5ee68d4deab";
+      rev = "6755e747916ce40339cda63422520813d1c2ed4f";
+      file = "n/nix/0002-Remove-hardcoded-nixos.org-references.patch";
+      sha256 = "38d2d06ff311e40ce31d410565b25b871d2865e82039a1c49dd854bb3bc762cb";
     })
     (fetchTritonPatch {
-      rev = "87c8a7e6ef87849eb89909dce74e0c83de571408";
-      file = "n/nix/0003-Remove-hardcoded-nixos.org-references.patch";
-      sha256 = "af0134f875ed431637184e58468072e1238d59a7aee87af6a437d53bc9a740de";
+      rev = "6755e747916ce40339cda63422520813d1c2ed4f";
+      file = "n/nix/0003-Remove-nixpkgs-references.patch";
+      sha256 = "b1906ca56a149b54297000e3ce17494950817eb939d4aa772a1f05c9e55c10f9";
     })
   ];
 

@@ -19,12 +19,16 @@
 , stateDir ? config.nix.stateDir or "/nix/var"
 }:
 
+let
+  version = "1.11.15";
+in
 stdenv.mkDerivation rec {
-  name = "nix-1.11.15";
+  name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
     multihash = "QmQZZDokYTPBgsgt59BxAsHyUMrXeJqLzkADd7wq6MQq38";
+    hashOutput = false;
     sha256 = "d20f20e45d519f54fae5c61d55eadcf53e6d7cdbde9870eeec80d499f9805165";
   };
 
@@ -80,6 +84,8 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    inherit
+      version;
     srcVerification = fetchurl {
       inherit (src)
         outputHash

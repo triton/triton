@@ -19,12 +19,16 @@
 , storeDir ? config.nix.storeDir or "/nix/store"
 }:
 
+let
+  version = "2.0.4";
+in
 stdenv.mkDerivation rec {
-  name = "nix-2.0.4";
+  name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
     multihash = "Qmdf1xu1r8ifDjVkq5gNbxUBS2c3JpJ8XxqBe1BvVacN15";
+    hashOutput = false;
     sha256 = "166540ff7b8bb41449586b67e5fc6ab9e25525f6724b6c6bcbfb0648fbd6496b";
   };
 
@@ -106,6 +110,8 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    inherit
+      version;
     srcVerification = fetchurl {
       inherit (src)
         outputHash

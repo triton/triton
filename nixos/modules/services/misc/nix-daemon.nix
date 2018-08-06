@@ -15,32 +15,40 @@ let
       # include the entire closure of bash.
       sh = pkgs.stdenv.shell;
       binshDeps = pkgs.writeReferencesToFile sh;
+      version = nix.version;
     in
-      pkgs.runCommand "nix.conf" {extraOptions = cfg.extraOptions; } ''
+      pkgs.runCommand "nix.conf" {extraOptions = cfg.extraOptions; } (optionalString (versionOlder version "2.0.0") ''
         extraPaths=$(for i in $(cat ${binshDeps}); do if test -d $i; then echo $i; fi; done)
+      '' + ''
         cat > $out <<END
         # WARNING: this file is generated from the nix.* options in
         # your NixOS configuration, typically
         # /etc/nixos/configuration.nix.  Do not edit it!
         build-users-group = nixbld
-        build-max-jobs = ${toString (cfg.maxJobs)}
-        build-cores = ${toString (cfg.buildCores)}
-        build-use-sandbox = ${if (builtins.isBool cfg.useSandbox) then (if cfg.useSandbox then "true" else "false") else cfg.useSandbox}
-        build-sandbox-paths = ${toString cfg.sandboxPaths} /bin/sh=${sh} $(echo $extraPaths)
-        binary-caches = ${toString cfg.binaryCaches}
-        trusted-binary-caches = ${toString cfg.trustedBinaryCaches}
-        binary-cache-public-keys = ${toString cfg.binaryCachePublicKeys}
+        ${if versionAtLeast version "2.0.0" then "max-jobs" else "build-max-jobs"} = ${toString (cfg.maxJobs)}
+        ${if versionAtLeast version "2.0.0" then "cores" else "build-cores"} = ${toString (cfg.buildCores)}
+        ${if versionAtLeast version "2.0.0" then "sandbox" else "build-use-sandbox"} = ${if (builtins.isBool cfg.useSandbox) then (if cfg.useSandbox then "true" else "false") else cfg.useSandbox}
+        ${if versionAtLeast version "2.0.0" then ''
+          extra-sandbox-paths = ${toString cfg.sandboxPaths}
+        '' else ''
+          build-sandbox-paths = ${toString cfg.sandboxPaths} /bin/sh=${sh} $(echo $extraPaths)
+        ''}
+        ${if versionAtLeast version "2.0.0" then "substituters" else "binary-caches"} = ${toString cfg.binaryCaches}
+        trusted-${if versionAtLeast version "2.0.0" then "substituters" else "binary-caches"} = ${toString cfg.trustedBinaryCaches}
+        ${if versionAtLeast version "2.0.0" then "trusted-public-keys" else "binary-cache-public-keys"} = ${toString cfg.binaryCachePublicKeys}
         auto-optimise-store = ${if cfg.autoOptimiseStore then "true" else "false"}
         gc-keep-derivations = ${if cfg.gcKeepDerivations then "true" else "false"}
         gc-keep-outputs = ${if cfg.gcKeepOutputs then "true" else "false"}
-        ${optionalString cfg.requireSignedBinaryCaches ''
-          signed-binary-caches = *
+        ${if versionAtLeast version "2.0.0" then ''
+          require-sigs = ${if cfg.requireSignedBinaryCaches then "true" else "false"}
+        '' else ''
+          signed-binary-caches = ${optionalString cfg.requireSignedBinaryCaches "*"}
         ''}
         trusted-users = ${toString cfg.trustedUsers}
         allowed-users = ${toString cfg.allowedUsers}
         $extraOptions
         END
-      '';
+      '');
 
 in
 

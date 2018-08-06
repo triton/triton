@@ -3059,9 +3059,9 @@ nginx = callPackageAlias "nginx_stable" { };
 
 ninja = callPackage ../all-pkgs/n/ninja { };
 
-nix = callPackage ../all-pkgs/n/nix { };
-
+nix_1 = callPackage ../all-pkgs/n/nix { };
 nix_2 = callPackage ../all-pkgs/n/nix/2.nix { };
+nix = callPackageAlias "nix_2" { };
 
 nixos-utils = callPackage ../all-pkgs/n/nixos-utils { };
 

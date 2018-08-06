@@ -351,7 +351,7 @@ fixUrls 'pgpsigSha256Urls'
 fixUrls 'pgpsigSha512Urls'
 fixUrls 'signifyUrls'
 
-export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+export SSL_CERT_FILE=${SSL_CERT_FILE-/etc/ssl/certs/ca-certificates.crt}
 if ! test -f "$SSL_CERT_FILE"; then
   echo "ERROR: downloading without validating SSL cert." >&2
   echo "Please check $SSL_CERT_FILE" >&2

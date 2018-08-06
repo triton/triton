@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.4.51";
+  version = "1.5.7";
 in
 stdenv.mkDerivation {
   name = "aws-sdk-cpp-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation {
     owner = "aws";
     repo = "aws-sdk-cpp";
     rev = version;
-    sha256 = "28c7ae265312174ec6dfd3e88509ea40657afb7dcf4551bd0d3ca1a366258cb1";
+    sha256 = "42c5601d62c27acdc04eadbe34ac6dac4a066dd823e7194f3c3eade431d5b5fe";
   };
 
   nativeBuildInputs = [
@@ -35,6 +35,7 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     "-DENABLE_TESTING=OFF"
+    "-DBUILD_ONLY=s3"
   ];
 
   meta = with stdenv.lib; {

@@ -19,15 +19,6 @@ with lib;
         '';
       };
 
-      enableOSSEmulation = mkOption {
-        type = types.bool;
-        default = true;
-        description = ''
-          Whether to enable ALSA OSS emulation (with certain cards sound
-          mixing may not work!).
-        '';
-      };
-
       enableMediaKeys = mkOption {
         type = types.bool;
         default = false;
@@ -69,8 +60,6 @@ with lib;
 
     # ALSA provides a udev rule for restoring volume settings.
     services.udev.packages = [ pkgs.alsa-utils ];
-
-    boot.kernelModules = optional config.sound.enableOSSEmulation "snd_pcm_oss";
 
     systemd.services."alsa-store" =
       { description = "Store Sound Card State";

@@ -272,11 +272,14 @@ stdenv.mkDerivation rec {
             "$lib"
         fi
       done
-    '' + /* set the default search path for DRI drivers */ ''
-      sed -i "$out/lib/pkgconfig/dri.pc" \
-        -e 's,$(drivers),${driverSearchPath},'
     ''
   );
+
+  preFixup = /* Fix path to dri driver dir */ ''
+    grep -q '^dridriverdir=' "$out"/lib/pkgconfig/dri.pc
+    sed -i "s#^dridriverdir=.*#dridriverdir=${driverSearchPath}/lib/dri#" \
+      "$out"/lib/pkgconfig/dri.pc
+  '';
 
   outputs = [
     "out"

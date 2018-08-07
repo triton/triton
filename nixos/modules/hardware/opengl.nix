@@ -112,7 +112,8 @@ in
     };
 
     system.activation.scripts.setup-opengl = ''
-      find /run -maxdepth 1 -name opengl-driver\* -exec rm -rf {} \;
+      rm -rf /run/opengl-driver*
+      mkdir -p "$(dirname "${package.driverSearchPath}")"
       ln -sfn ${package} ${package.driverSearchPath}
       ${optionalString cfg.driSupport32Bit ''
         ln -sfn ${package32} ${package.driverSearchPath}

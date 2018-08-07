@@ -56,6 +56,11 @@ stdenv.mkDerivation rec {
     "--with-session-socket-dir=/tmp"
   ];
 
+  postInstall = ''
+    grep -q '/usr' "$out"/etc/systemd/user/dbus.socket
+    sed -i 's,/usr,/run/current-system/sw,' "$out"/etc/systemd/user/dbus.socket
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

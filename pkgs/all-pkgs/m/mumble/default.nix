@@ -25,6 +25,7 @@
 , protobuf-cpp
 , pulseaudio_lib
 , qt5
+, rnnoise
 , speech-dispatcher
 , speex
 , speexdsp
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
     opus
     portaudio
     pulseaudio_lib
+    rnnoise
     speech-dispatcher
     speex
     speexdsp
@@ -193,12 +195,15 @@ stdenv.mkDerivation rec {
     "no-oss"
     "${boolNo (portaudio != null)}portaudio"
     "no-wasapi"
+    "no-jackaudio"
     "no-asio"  # TODO: asio support, ASIOInput.h
     "no-bundled-speex"
     "no-sbcelt"
     "bundled-celt"
     "opus"
     "no-bundled-opus"
+    "rnnoise"
+    "no-bundled-rnnoise"
     "vorbis-recording"
     "${boolNo mumbleOverlay}overlay"
     "no-qt4-legacy-compat"

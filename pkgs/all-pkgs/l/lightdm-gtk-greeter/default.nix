@@ -6,7 +6,6 @@
 , makeWrapper
 
 , at-spi2-core
-, exo
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -42,7 +41,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    exo
     glib
     gobject-introspection
     gtk_3
@@ -55,6 +53,12 @@ stdenv.mkDerivation rec {
   # to find objects in the lightdm-gtk-greeter binary like GreeterMenuBar. It seems
   # like this is needed for the static initializations of the Gobject Types.
   NIX_CFLAGS_LINK = "-rdynamic";
+
+  # We don't need exo if we aren't regenerating sources
+  postPatch = ''
+    grep -q 'as_fn_error.*exo' configure
+    sed -i '/exo/s,as_fn_error,true,' configure
+  '';
 
   preConfigure = ''
     configureFlagsArray+=(

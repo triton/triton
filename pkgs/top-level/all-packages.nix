@@ -3486,6 +3486,8 @@ rfkill = callPackage ../all-pkgs/r/rfkill { };
 
 rhash = callPackage ../all-pkgs/r/rhash { };
 
+rnnoise = callPackage ../all-pkgs/r/rnnoise { };
+
 riot = callPackage ../all-pkgs/r/riot { };
 
 rocksdb = callPackage ../all-pkgs/r/rocksdb { };

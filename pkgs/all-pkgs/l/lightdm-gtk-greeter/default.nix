@@ -51,6 +51,11 @@ stdenv.mkDerivation rec {
     libxklavier
   ];
 
+  # This is really important, otherwise we get gobject related errors trying
+  # to find objects in the lightdm-gtk-greeter binary like GreeterMenuBar. It seems
+  # like this is needed for the static initializations of the Gobject Types.
+  NIX_CFLAGS_LINK = "-rdynamic";
+
   preConfigure = ''
     configureFlagsArray+=(
       '--enable-at-spi-command=${at-spi2-core}/libexec/at-spi-bus-launcher --launch-immediately'

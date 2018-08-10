@@ -58,8 +58,8 @@ assert opengl-dummy.glx;
 let
   sources = {
     "1.20" = {
-      version = "1.20.0";
-      sha256 = "9d967d185f05709274ee0c4f861a4672463986e550ca05725ce27974f550d3e6";
+      version = "1.20.1";
+      sha256 = "59c99fe86fe75b8164c6567bfc6e982aecc2e4a51e6fbac1b842d5d00549e918";
     };
   };
 

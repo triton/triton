@@ -8,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwps-0.4.9";
+  name = "libwps-0.4.10";
 
   src = fetchurl {
     url = "mirror://sourceforge/libwps/libwps/${name}/${name}.tar.xz";
-    sha256 = "13beb0c733bb1544a542b6ab1d9d205f218e9a2202d1d4cac056f79f6db74922";
+    sha256 = "1421e034286a9f96d3168a1c54ea570ee7aa008ca07b89de005ad5ce49fb29ca";
   };
 
   buildInputs = [

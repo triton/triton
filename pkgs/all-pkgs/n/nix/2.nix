@@ -86,6 +86,11 @@ stdenv.mkDerivation rec {
       file = "n/nix/0008-Make-fixed-ouput-message-nicer.patch";
       sha256 = "1c84f6431342fa9c73db64250aeca3db58185f5d750a94b4ea5ef4a95a1119a1";
     })
+    (fetchTritonPatch {
+      rev = "826f6361999f548c1adce5e64cd36114266a00e3";
+      file = "n/nix/0009-builtin-fetchurl-Support-multiple-urls.patch";
+      sha256 = "640b92e2d74df004ebc09e3ed1a34d42745034124b5117ef977e1a7b47d9101d";
+    })
   ];
 
   postPatch = ''

@@ -347,7 +347,6 @@ let  # BEGIN let/in 1
         sha256
         version;
       url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-      meta.homepage = "https://github.com/${owner}/${repo}/";
     } // {
       inherit rev;
     };
@@ -366,7 +365,6 @@ let  # BEGIN let/in 1
         sha256
         version;
       url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
-      meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
       extraPostFetch = ''
         # impure file, see https://github.com/NixOS/nixpkgs/pull/12002
         find . -name .hg_archival.txt -delete
@@ -388,7 +386,6 @@ let  # BEGIN let/in 1
       # cgit, snapshot support is optional in cgit
       url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/"
         + "${repo}-${rev}.tar.gz";
-      meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
     };
 
   fetchFromGitLab =
@@ -403,7 +400,6 @@ let  # BEGIN let/in 1
       inherit name sha256 version;
       url = "https://gitlab.com/${owner}/${repo}/repository/"
         + "archive.tar.gz?ref=${rev}";
-      meta.homepage = "https://gitlab.com/${owner}/${repo}/";
     };
 
   fetchFromRepoOrCz =
@@ -417,7 +413,6 @@ let  # BEGIN let/in 1
       inherit name sha256 version;
       # gitweb, snapshot support is optional in gitweb
       url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
-      meta.homepage = "http://repo.or.cz/${repo}.git/";
     };
 
   fetchFromSourceforge =
@@ -433,7 +428,6 @@ let  # BEGIN let/in 1
         + "${lib.substring 0 2 repo}/"
         + "${repo}/code.git/"
         + "${repo}-code-${rev}.zip";
-      meta.homepage = "http://sourceforge.net/p/${repo}/code";
       preFetch = ''
         echo "Telling sourceforge to generate code tarball..."
         $curl --data "path=&" \

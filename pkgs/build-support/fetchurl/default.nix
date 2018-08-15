@@ -1,4 +1,5 @@
-{ stdenv
+{ lib
+, callPackage
 , ...} @ pkgArgs:
 
 { # URL to fetch.
@@ -48,7 +49,7 @@
 } @ args:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     all
     any
     head
@@ -100,6 +101,6 @@ assert urls_ != [ ] || multihash != "";
 assert any (n: n == args_.outputHashAlgo) [ "sha256" "sha512" ];
 
 (if fullOpts != null then
-  import ./full.nix pkgArgs (fullOpts // args_)
+  callPackage ./full.nix pkgArgs (fullOpts // args_)
 else
-  import ./builtin.nix pkgArgs args_) // passthru
+  callPackage ./builtin.nix pkgArgs args_) // passthru

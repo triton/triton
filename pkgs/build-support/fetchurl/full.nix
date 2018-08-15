@@ -1,9 +1,11 @@
 { stdenv
 , curl
-, openssl
-, minisign
 , gnupg
+, lib
+, minisign
+, openssl
 , signify
+, ...
 }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
 { urls
@@ -90,7 +92,7 @@ let
 
   mirrors = import ./mirrors.nix;
 
-  inherit (stdenv.lib)
+  inherit (lib)
     concatStrings
     concatStringsSep
     flip
@@ -154,10 +156,10 @@ stdenv.mkDerivation {
   buildInputs = [
     curl
     openssl
-  ] ++ optionals (minisignPub != "") [
-    minisign
   ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
     gnupg
+  ] ++ optionals (minisignPub != "") [
+    minisign
   ] ++ optionals (signifyPub != "") [
     signify
   ];

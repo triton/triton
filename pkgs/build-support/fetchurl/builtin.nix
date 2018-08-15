@@ -1,4 +1,4 @@
-{ stdenv
+{ lib
 , ...
 }:
 
@@ -20,7 +20,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     concatStringsSep
     hasPrefix
     head

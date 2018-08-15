@@ -73,10 +73,10 @@ let
         inherit (pkgs) stdenv fetchTritonPatch gcc;
 
         fetchurl = pkgs.fetchurl.override {
-          stdenv = stage0Pkgs.stdenv;
-          curl = bootstrapTools;
-          openssl = bootstrapTools;
-          inherit (finalPkgs) gnupg;
+          inherit
+            lib;
+          inherit (finalPkgs)
+            callPackage;
         };
 
         patchelf = stage0Pkgs.stdenv.mkDerivation {
@@ -222,8 +222,8 @@ let
         inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv lib gcc xz zlib attr acl gmp coreutils binutils
-          gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
-          openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
+          gpm ncurses readline bash gettext bison flex
+          libsigsegv pcre findutils diffutils
           gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-5 bzip2
           gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
 
@@ -243,13 +243,11 @@ let
 
         # Do not export these packages to the final stdenv
         inherit (stage0Pkgs) fetchurl fetchTritonPatch;
-        libiconv = null;
         texinfo = pkgs.texinfo.override {
           interactive = false;
         };
-        inherit (pkgs) perl autoconf automake perlPackages
-          libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2_full;
-        jansson = null;
+        inherit (pkgs) autoconf automake buildPerlPackage help2man
+          libtool makeWrapper perl perlPackages;
       };
     });
   };
@@ -302,8 +300,8 @@ let
       inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc7 gcc xz zlib attr acl gmp coreutils binutils
-        gpm ncurses readline bash nghttp2_lib cryptodev_headers gettext bison flex
-        openssl_1-1-0 openssl c-ares curl libsigsegv pcre findutils diffutils
+        gpm ncurses readline bash gettext bison flex
+        libsigsegv pcre findutils diffutils
         gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-5 bzip2
         gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
     };

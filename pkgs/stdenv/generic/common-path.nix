@@ -5,7 +5,6 @@
     brotli
     bzip2
     coreutils
-    curl
     diffutils
     findutils
     gawk

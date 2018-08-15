@@ -1,54 +1,5 @@
 { stdenv
-, curl
-, openssl
-, minisign
-, gnupg
-, signify
-}: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
-
-let
-
-  mirrors = import ./mirrors.nix;
-
-  # Write the list of mirrors to a file that we can reuse between
-  # fetchurl instantiations, instead of passing the mirrors to
-  # fetchurl instantiations via environment variables.  This makes the
-  # resulting store derivations (.drv files) much smaller, which in
-  # turn makes nix-env/nix-instantiate faster.
-  mirrorsFile = stdenv.mkDerivation {
-    name = "mirrors-list";
-    buildCommand = stdenv.lib.concatStrings (
-      stdenv.lib.flip stdenv.lib.mapAttrsToList mirrors (mirror: urls: ''
-        echo '${mirror} ${stdenv.lib.concatStringsSep " " urls}' >> "$out"
-      '')
-    );
-    preferLocalBuild = true;
-  };
-
-  # Names of the master sites that are mirrored (i.e., "sourceforge",
-  # "gnu", etc.).
-  sites = builtins.attrNames mirrors;
-
-  impureEnvVars = [
-    # We borrow these environment variables from the caller to allow
-    # easy proxy configuration.  This is impure, but a fixed-output
-    # derivation like fetchurl is allowed to do so since its result is
-    # by definition pure.
-    "HTTP_PROXY"
-    "HTTPS_PROXY"
-    "FTP_PROXY"
-    "ALL_PROXY"
-    "NO_PROXY"
-
-    # This variable allows the user to pass additional options to curl
-    "NIX_CURL_FLAGS"
-
-    # This allows the end user to specify the local ipfs host:port which hosts
-    # the content
-    "IPFS_API"
-  ] ++ (map (site: "NIX_MIRRORS_${site}") sites);
-
-in
+, ...} @ pkgArgs:
 
 { # URL to fetch.
   url ? ""
@@ -57,80 +8,30 @@ in
   # locations.  They are tried in order.
   urls ? []
 
-, # Additional curl options needed for the download to succeed.
-  curlOpts ? ""
+, # IPFS Content hash to download from
+  multihash ? ""
 
 , # Name of the file.  If empty, use the basename of `url' (or of the
   # first element of `urls').
   name ? ""
 
   # Different ways of specifying the hash.
+, sha256 ? ""
+, sha512 ? ""
 , outputHash ? ""
 , outputHashAlgo ? ""
 
-, hashOutput ? true
-, insecureHashOutput ? false
-, insecureProtocolDowngrade ? false
+, # Prints the output of the hash if download fails
+  hashOutput ? true
 
-, sha256Url ? ""
-, sha256Urls ? []
-, sha256 ? ""
-, sha512Url ? ""
-, sha512Urls ? []
-, sha512 ? ""
+, # Prints the hash even if the download was from an insecure source
+  insecureHashOutput ? false
 
-, sha1Confirm ? ""
-, sha1Url ? ""
-, sha1Urls ? []
-, md5Confirm ? ""
-, md5Url ? ""
-, md5Urls ? []
+, # Allows the download to be downgraded from secure to insecure via redirect
+  insecureProtocolDowngrade ? false
 
-, multihash ? ""
-
-, minisignPub ? ""
-, minisignUrl ? ""
-, minisignUrls ? []
-
-, pgpKeyFingerprint ? ""
-, pgpKeyFingerprints ? []
-, pgpKeyFile ? null
-, pgpsigUrl ? ""
-, pgpsigUrls ? []
-, pgpsigMd5Url ? ""
-, pgpsigMd5Urls ? []
-, pgpsigSha1Url ? ""
-, pgpsigSha1Urls ? []
-, pgpsigSha256Url ? ""
-, pgpsigSha256Urls ? []
-, pgpsigSha512Url ? ""
-, pgpsigSha512Urls ? []
-, pgpDecompress ? false
-
-, signifyPub ? ""
-, signifyUrl ? ""
-, signifyUrls ? []
-
-, failEarly ? false
-
-, recursiveHash ? false
-
-, # Shell code executed before the file has been fetched.
-  # This can do things like force a site to generate the file.
-  preFetch ? ""
-
-, # Shell code executed after the file has been fetched
-  # successfully. This can do things like check or transform the file.
-  postFetch ? ""
-
-, # Shell code executed after the verifications have been performed
-  # This does not include the final checksum
-  postVerification ? ""
-
-, # Whether to download to a temporary path rather than $out. Useful
-  # in conjunction with postFetch. The location of the temporary file
-  # is communicated to postFetch via $downloadedFile.
-  downloadToTemp ? false
+, # If the first download fails, the whole derivation fails
+  failEarly ? false
 
 , # If true, set executable bit on downloaded file
   executable ? false
@@ -142,119 +43,63 @@ in
 , # Passthru data
   passthru ? {}
 
-, # Meta information, if any.
-  meta ? {}
-}:
+, # Full options defined in ./full.nix
+  fullOpts ? null
+} @ args:
 
 let
+  inherit (stdenv.lib)
+    all
+    any
+    head
+    filterAttrs;
 
-  hasHash = showURLs || (outputHash != "" && outputHashAlgo != "")
-    || sha256 != "" || sha512 != "";
+  badAttrs = [
+    "fullOpts"
+    "passthru"
+    "sha256"
+    "sha512"
+    "url"
+  ];
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
-  sha512Urls_ = (if sha512Url != "" then [ sha512Url ] else [ ]) ++ sha512Urls;
-  sha256Urls_ = (if sha256Url != "" then [ sha256Url ] else [ ]) ++ sha256Urls;
-  sha1Urls_ = (if sha1Url != "" then [ sha1Url ] else [ ]) ++ sha1Urls;
-  md5Urls_ = (if md5Url != "" then [ md5Url ] else [ ]) ++ md5Urls;
-  minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
-  pgpsigUrls_ = (if pgpsigUrl != "" then [ pgpsigUrl ] else [ ]) ++ pgpsigUrls;
-  pgpsigMd5Urls_ = (if pgpsigMd5Url != "" then [ pgpsigMd5Url ] else [ ]) ++ pgpsigMd5Urls;
-  pgpsigSha1Urls_ = (if pgpsigSha1Url != "" then [ pgpsigSha1Url ] else [ ]) ++ pgpsigSha1Urls;
-  pgpsigSha256Urls_ = (if pgpsigSha256Url != "" then [ pgpsigSha256Url ] else [ ]) ++ pgpsigSha256Urls;
-  pgpsigSha512Urls_ = (if pgpsigSha512Url != "" then [ pgpsigSha512Url ] else [ ]) ++ pgpsigSha512Urls;
-  pgpKeyFingerprints_ = map (n: stdenv.lib.replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
-  signifyUrls_ = (if signifyUrl != "" then [ signifyUrl ] else [ ]) ++ signifyUrls;
 
-  inherit (stdenv.lib)
-    concatStringsSep
-    hasPrefix
-    head;
+  args_ = filterAttrs (n: _: all (b: b != n) badAttrs) args // {
+    urls = urls_;
+
+    outputHashAlgo =
+      if outputHashAlgo != "" then
+        outputHashAlgo
+      else if sha512 != "" then
+        "sha512"
+      else if sha256 != "" then
+        "sha256"
+      else
+        throw "Unsupported hash";
+
+    outputHash =
+      if outputHash != "" then
+        outputHash
+      else if sha512 != "" then
+        sha512
+      else if sha256 != "" then
+        sha256
+      else
+        throw "Unsupported hash";
+
+    name =
+      if name != "" then
+        name
+      else
+        baseNameOf (toString (head urls_));
+  };
 in
 
 assert urls_ != [ ] || multihash != "";
 
-#assert insecureHashOutput || urls_ == [ ] || (!hasPrefix "http:" (head urls_)) || multihash != "";
+assert any (n: n == args_.outputHashAlgo) [ "sha256" "sha512" ];
 
-if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${concatStringsSep ", " urls_}" else stdenv.mkDerivation {
-  name =
-    if name != "" then name
-    else baseNameOf (toString (builtins.head urls_));
-
-  builder = ./builder.sh;
-
-  buildInputs = [
-    curl
-    openssl
-  ] ++ stdenv.lib.optionals (minisignPub != "") [
-    minisign
-  ] ++ stdenv.lib.optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
-    gnupg
-  ] ++ stdenv.lib.optionals (signifyPub != "") [
-    signify
-  ];
-
-  urls = urls_;
-  sha512Urls = sha512Urls_;
-  sha256Urls = sha256Urls_;
-  sha1Urls = sha1Urls_;
-  md5Urls = md5Urls_;
-  minisignUrls = minisignUrls_;
-  pgpsigUrls = pgpsigUrls_;
-  pgpsigMd5Urls = pgpsigMd5Urls_;
-  pgpsigSha1Urls = pgpsigSha1Urls_;
-  pgpsigSha256Urls = pgpsigSha256Urls_;
-  pgpsigSha512Urls = pgpsigSha512Urls_;
-  pgpKeyFingerprints = pgpKeyFingerprints_;
-  signifyUrls = signifyUrls_;
-
-  # New-style output content requirements.
-  outputHashAlgo =
-    if outputHashAlgo != "" then
-      outputHashAlgo
-    else if sha512 != "" then
-      "sha512"
-    else if sha256 != "" then
-      "sha256"
-    else
-      throw "Unsupported hash";
-
-  outputHash =
-    if outputHash != "" then
-      outputHash
-    else if sha512 != "" then
-      sha512
-    else if sha256 != "" then
-      sha256
-    else
-      throw "Unsupported hash";
-
-  outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
-
-  inherit
-    failEarly
-    hashOutput
-    insecureHashOutput
-    insecureProtocolDowngrade
-    curlOpts
-    showURLs
-    mirrorsFile
-    impureEnvVars
-    preFetch
-    postFetch
-    postVerification
-    downloadToTemp
-    executable
-    sha1Confirm
-    md5Confirm
-    multihash
-    minisignPub
-    pgpKeyFile
-    pgpDecompress
-    signifyPub;
-
-  # Doing the download on a remote machine just duplicates network
-  # traffic, so don't do that.
-  preferLocalBuild = true;
-
-  inherit passthru meta;
-}
+(if fullOpts != null then
+  import ./full.nix pkgArgs (fullOpts // args_)
+else
+  import ./builtin.nix pkgArgs args_) // passthru

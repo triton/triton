@@ -20,19 +20,21 @@ let
     pkgs.fetchurl rec {
       name = "${package}-${version}${type}";
       url = "https://localhost/not-a-url";
-      preFetch = ''
-        $curl 'https://pypi.org/pypi/${package}/json' | \
-          ${pkgs.jq}/bin/jq -r '
-            .releases["${version}"] |
-              reduce .[] as $item ("";
-                if $item.filename == "${name}" then
-                  $item.url
-                else
-                  .
-                end)
-          ' > "$TMPDIR/url"
-        urls=($(cat "$TMPDIR/url"))
-      '';
+      fullOpts = {
+        preFetch = ''
+          $curl 'https://pypi.org/pypi/${package}/json' | \
+            ${pkgs.jq}/bin/jq -r '
+              .releases["${version}"] |
+                reduce .[] as $item ("";
+                  if $item.filename == "${name}" then
+                    $item.url
+                  else
+                    .
+                  end)
+            ' > "$TMPDIR/url"
+          urls=($(cat "$TMPDIR/url"))
+        '';
+      };
       inherit sha256;
     };
 

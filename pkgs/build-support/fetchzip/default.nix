@@ -46,55 +46,57 @@ in
 lib.overrideDerivation (fetchurl (rec {
   name = "${name'}.tar.br";
 
-  downloadToTemp = true;
+  fullOpts = {
+    downloadToTemp = true;
 
-  postFetch = ''
-    export PATH=${unzip}/bin:$PATH
+    postFetch = ''
+      export PATH=${unzip}/bin:$PATH
 
-    unpackDir="$TMPDIR/unpack"
-    rm -rf "$unpackDir"
-    mkdir "$unpackDir"
-    cd "$unpackDir"
+      unpackDir="$TMPDIR/unpack"
+      rm -rf "$unpackDir"
+      mkdir "$unpackDir"
+      cd "$unpackDir"
 
-    mv "$downloadedFile" "$TMPDIR/tarball.${tarball}"
-    unpackFile "$TMPDIR/tarball.${tarball}"
+      mv "$downloadedFile" "$TMPDIR/tarball.${tarball}"
+      unpackFile "$TMPDIR/tarball.${tarball}"
 
-    shopt -s dotglob
-    rm -rf "$TMPDIR/${name'}"
-    mkdir "$TMPDIR/${name'}"
-  '' + (if stripRoot then ''
-    if [ $(ls "$unpackDir" | wc -l) != 1 ]; then
-      echo "error: zip file must contain a single file or directory."
-      exit 1
-    fi
-    fn=$(cd "$unpackDir" && echo *)
-    if [ -f "$unpackDir/$fn" ]; then
-      mv "$unpackDir/$fn" "$TMPDIR/${name'}"
-    else
-      mv "$unpackDir/$fn"/* "$TMPDIR/${name'}"
-    fi
-  '' else ''
-    mv "$unpackDir"/* "$TMPDIR/${name'}"
-  '') + extraPostFetch + ''
-    cd "$TMPDIR"
-  '' + (if purgeTimestamps then ''
-    SOURCE_DATE_EPOCH="946713600"
-  '' else ''
-    SOURCE_DATE_EPOCH=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-    if [ "$NIX_BUILD_START" -lt "$SOURCE_DATE_EPOCH" ]; then
-      str="The newest file is too close to the current date:\n"
-      str+="  File: $(date -d "@$SOURCE_DATE_EPOCH")\n"
-      str+="  Build Start: $NIX_BUILD_START\n"
-      echo -e "$str" >&2
-      exit 1
-    fi
-  '') + ''
-    echo -n "Clamping to date: " >&2
-    date -d "@$SOURCE_DATE_EPOCH" --utc >&2
-  '' + ''
-    echo "Building Archive ${name}" >&2
-    ${deterministic-zip'}/bin/deterministic-zip "${name'}" >"$out"
-  '';
+      shopt -s dotglob
+      rm -rf "$TMPDIR/${name'}"
+      mkdir "$TMPDIR/${name'}"
+    '' + (if stripRoot then ''
+      if [ $(ls "$unpackDir" | wc -l) != 1 ]; then
+        echo "error: zip file must contain a single file or directory."
+        exit 1
+      fi
+      fn=$(cd "$unpackDir" && echo *)
+      if [ -f "$unpackDir/$fn" ]; then
+        mv "$unpackDir/$fn" "$TMPDIR/${name'}"
+      else
+        mv "$unpackDir/$fn"/* "$TMPDIR/${name'}"
+      fi
+    '' else ''
+      mv "$unpackDir"/* "$TMPDIR/${name'}"
+    '') + extraPostFetch + ''
+      cd "$TMPDIR"
+    '' + (if purgeTimestamps then ''
+      SOURCE_DATE_EPOCH="946713600"
+    '' else ''
+      SOURCE_DATE_EPOCH=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+      if [ "$NIX_BUILD_START" -lt "$SOURCE_DATE_EPOCH" ]; then
+        str="The newest file is too close to the current date:\n"
+        str+="  File: $(date -d "@$SOURCE_DATE_EPOCH")\n"
+        str+="  Build Start: $NIX_BUILD_START\n"
+        echo -e "$str" >&2
+        exit 1
+      fi
+    '') + ''
+      echo -n "Clamping to date: " >&2
+      date -d "@$SOURCE_DATE_EPOCH" --utc >&2
+    '' + ''
+      echo "Building Archive ${name}" >&2
+      ${deterministic-zip'}/bin/deterministic-zip "${name'}" >"$out"
+    '';
+  };
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
 (x: {

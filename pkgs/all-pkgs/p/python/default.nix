@@ -105,7 +105,7 @@ stdenv.mkDerivation rec {
   name = "python-${version}";
 
   src = fetchurl {
-    url = tarballUrls source.versionPatch;
+    urls = tarballUrls source.versionPatch;
     inherit (source) sha256;
     hashOutput = false;
   };

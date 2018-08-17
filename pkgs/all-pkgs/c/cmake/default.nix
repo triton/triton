@@ -25,15 +25,15 @@ let
     optionalString;
 
   channel = "3.12";
-  version = "${channel}.0";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
-    multihash = "QmehtGcGvjd55gzD11viEwoCzrw3MnYAFe83kDbHYSjPQ5";
-    sha256 = "d0781a90f6cdb9049d104ac16a150f9350b693498b9dea8a0331e799db6b9d69";
+    multihash = "Qmd9eD4WnRzPL7nCu3gKXmdy6eVgBHoEJNcFH4TSG4b4Mv";
+    sha256 = "c53d5c2ce81d7a957ee83e3e635c8cda5dfe20c9d501a4828ee28e1615e57ab2";
   };
 
   patches = [

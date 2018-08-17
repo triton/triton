@@ -1,22 +1,22 @@
 {
   "9.3" = {
-    version = "9.3.23";
-    sha256 = "1d981006dce3851e470b038e88bf496a80813c614c2e89ed7d2c7fb38e66f6cb";
+    version = "9.3.24";
+    sha256 = "8214a73a3b2135226bdc1394c9efdcb80f79e504ec700cf9b23d0b6bc2b60da9";
   };
   "9.4" = {
-    version = "9.4.18";
-    sha256 = "428337f2b2f5e3ea21b8a44f88eb89c99a07a324559b99aebe777c9abdf4c4c0";
+    version = "9.4.19";
+    sha256 = "03776b036b2a05371083558e10c21cc4b90bde9eb3aff60299c4ce7c084c168b";
   };
   "9.5" = {
-    version = "9.5.13";
-    sha256 = "5408b86a0b56fd0140c6a0016bf9179bc7817fa03d5571cca346c9ab122ea5ee";
+    version = "9.5.14";
+    sha256 = "3e2cd5ea0117431f72c9917c1bbad578ea68732cb284d1691f37356ca0301a4d";
   };
   "9.6" = {
-    version = "9.6.9";
-    sha256 = "b97952e3af02dc1e446f9c4188ff53021cc0eed7ed96f254ae6daf968c443e2e";
+    version = "9.6.10";
+    sha256 = "8615acc56646401f0ede97a767dfd27ce07a8ae9c952afdb57163b7234fe8426";
   };
   "10" = {
-    version = "10.4";
-    sha256 = "1b60812310bd5756c62d93a9f93de8c28ea63b0df254f428cd1cf1a4d9020048";
+    version = "10.5";
+    sha256 = "6c8e616c91a45142b85c0aeb1f29ebba4a361309e86469e0fb4617b6a73c4011";
   };
 }

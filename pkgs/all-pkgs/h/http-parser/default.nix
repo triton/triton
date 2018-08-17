@@ -4,8 +4,8 @@
 }:
 
 let
-  date = "2018-03-30";
-  rev = "54f55a2f02a823e5f5c87abe853bb76d1170718d";
+  date = "2018-07-18";
+  rev = "77310eeb839c4251c07184a5db8885a572a08352";
 in
 stdenv.mkDerivation {
   name = "http-parser-${date}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
     owner = "nodejs";
     repo = "http-parser";
     inherit rev;
-    sha256 = "be29d861db71cbdb8e9723abee049945aa34b37104aa7237d192b363eb134e63";
+    sha256 = "6bb20c129802f57d0675f67e5205221d504138786c22833afcf34025daf6a6bf";
   };
 
   preBuild = ''

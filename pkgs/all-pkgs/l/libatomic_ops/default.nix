@@ -3,16 +3,14 @@
 }:
 
 let
-  version = "7.6.4";
+  version = "7.6.6";
 in
 stdenv.mkDerivation rec {
   name = "libatomic_ops-${version}";
 
   src = fetchurl {
     url = "https://github.com/ivmai/libatomic_ops/releases/download/v${version}/${name}.tar.gz";
-    # We need the multihash because they delete old releases
-    multihash = "QmST5RZsZNuJph591t5aYoBmuzxQqpDmCkQsPn1VMBw5Ai";
-    sha256 = "5b823d5a685dd70caeef8fc50da7d763ba7f6167fe746abca7762e2835b3dd4e";
+    sha256 = "99feabc5f54877f314db4fadeb109f0b3e1d1a54afb6b4b3dfba1e707e38e074";
   };
 
   meta = with stdenv.lib; {

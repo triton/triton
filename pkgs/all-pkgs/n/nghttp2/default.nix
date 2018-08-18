@@ -38,38 +38,30 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = optionals (!isLib) [
-    boost
-    c-ares
-    cunit
-    jansson
-    jemalloc
-    libev
-    libevent
-    libxml2
-    openssl
-    zlib
+    #boost
+    #c-ares
+    #cunit
+    #jansson
+    #jemalloc
+    #libev
+    #libevent
+    #libxml2
+    #openssl
+    #zlib
   ];
 
   configureFlags = [
-    "--disable-werror"
-    "--disable-debug"
-    "--enable-threads"
     "--${boolEn (!isLib)}-app"
     "--${boolEn (!isLib)}-hpack-tools"
-    "--${boolEn (!isLib)}-asio-lib"
+    "--disable-asio-lib" # Enable eventually
     "--disable-examples"
-    "--disable-python-bindings"
+    "--disable-python-bindings" # Make a separate build for python bindings
     "--disable-failmalloc"
-    "--${boolWt (!isLib)}-libxml2"
-    "--${boolWt (!isLib)}-jemalloc"
-    "--without-spdylay"
-    "--without-neverbleed"
-    "--without-cython"
-    "--without-mruby"
-  ] ++ optionals (!isLib) [
-    "--with-boost=${boost.dev}"
-    "--with-boost-libdir=${boost.lib}/lib"
   ];
+
+  postInstall = ''
+    rm -r "$out"/{bin,share}
+  '';
 
   meta = with stdenv.lib; {
     description = "an implementation of HTTP/2 in C";
@@ -79,7 +71,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

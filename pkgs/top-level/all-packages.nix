@@ -976,11 +976,10 @@ cunit = callPackage ../all-pkgs/c/cunit { };
 
 cups = callPackage ../all-pkgs/c/cups { };
 
-curl = callPackage ../all-pkgs/c/curl {
-  suffix = "";
-};
-curl_full = callPackage ../all-pkgs/c/curl {
-  suffix = "full";
+curl = callPackage ../all-pkgs/c/curl { };
+
+curl_minimal = callPackage ../all-pkgs/c/curl {
+  type = "minimal";
 };
 
 cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };

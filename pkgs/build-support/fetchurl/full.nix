@@ -1,5 +1,5 @@
 { stdenv
-, curl
+, curl_minimal
 , gnupg
 , lib
 , minisign
@@ -154,7 +154,7 @@ stdenv.mkDerivation {
   builder = ./builder.sh;
 
   buildInputs = [
-    curl
+    curl_minimal
     openssl
   ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
     gnupg

@@ -1,30 +1,25 @@
 { stdenv
 , fetchurl
-, perl
 
 , brotli
 , c-ares
 , krb5_lib
 , libidn2
+, libmetalink
 , libpsl
 , libssh2
 , nghttp2_lib
 , openldap
 , openssl
-, rtmpdump
 , zlib
 
-# Extra arguments
-, suffix ? ""
+, type ? "full"
 }:
 
 let
   inherit (stdenv.lib)
     optionalString
     optionals;
-
-  isFull = suffix == "full";
-  nameSuffix = optionalString (suffix != "") "-${suffix}";
 
   tarballUrls = version: [
     "https://curl.haxx.se/download/curl-${version}.tar.bz2"
@@ -33,7 +28,7 @@ let
   version = "7.61.0";
 in
 stdenv.mkDerivation rec {
-  name = "curl${nameSuffix}-${version}";
+  name = "curl-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
@@ -42,75 +37,30 @@ stdenv.mkDerivation rec {
     sha256 = "5f6f336921cf5b84de56afbd08dfb70adeef2303751ffb3e570c936c6d656c9c";
   };
 
-  nativeBuildInputs = [
-    perl
-  ];
-
   buildInputs = [
     brotli
     c-ares
     nghttp2_lib
     openssl
     zlib
-  ] ++ optionals isFull [
-    krb5_lib
     libidn2
+  ] ++ optionals (type != "minimal") [
+    krb5_lib
+    libmetalink
     libpsl
     libssh2
     openldap
-    rtmpdump
   ];
 
   configureFlags = [
-    "--enable-http"
-    "--enable-ftp"
-    "--enable-file"
-    "--${if isFull then "enable" else "disable"}-ldap"
-    "--${if isFull then "enable" else "disable"}-ldaps"
-    "--enable-rtsp"
-    "--enable-proxy"
-    "--enable-dict"
-    "--enable-telnet"
-    "--enable-tftp"
-    "--enable-pop3"
-    "--enable-imap"
-    "--enable-smb"
-    "--enable-smtp"
-    "--enable-gopher"
-    "--enable-manual"
-    "--enable-libcurl_option"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--${if stdenv.cc.cc.isGNU then "enable" else "disable"}-libgcc"
-    "--with-zlib"
-    "--with-brotli"
-    "--enable-ipv4"
-    "--with-gssapi"
-    "--without-winssl"
-    "--without-darwinssl"
-    "--with-ssl"
-    "--without-gnutls"
-    "--without-polarssl"
-    "--without-mbedtls"
-    "--without-cyassl"
-    "--without-nss"
-    "--without-axtls"
-    "--${if isFull then "with" else "without"}-libpsl"
-    "--without-libmetalink"
-    # "--without-zsh-functions-dir"
-    "--${if isFull then "with" else "without"}-libssh2"
-    "--${if isFull then "with" else "without"}-librtmp"
-    "--disable-versioned-symbols"
-    "--without-winidn"
-    "--${if isFull then "with" else "without"}-libidn2"
-    "--with-nghttp2"
-    "--disable-sspi"
-    "--enable-crypto-auth"
-    "--enable-tls-srp"
-    "--enable-unix-sockets"
-    "--enable-cookies"
-    "--enable-ares"
-    "--enable-rt"
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
+    "--with-ca-path=/etc/ssl/certs"
     "--with-ca-fallback"
+  ] ++ optionals (type == "minimal") [
+    "--disable-manual"
   ];
 
   passthru = {

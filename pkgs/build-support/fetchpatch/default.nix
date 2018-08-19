@@ -8,7 +8,7 @@
 { stripLen ? 0, ... }@args:
 
 fetchurl ({
-  postFetch = ''
+  fullOpts.postFetch = ''
     tmpfile="$TMPDIR/${args.sha256}"
     "${patchutils}/bin/lsdiff" "$out" \
       | sort -u | sed -e 's/[*?]/\\&/g' \

@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://www.graphviz.org/pub/graphviz/ARCHIVE/${name}.tar.gz";
     multihash = "QmdPD26wXCnji2yTGjkv2EqYNxtoVPC1f86neMjQ7dSJMZ";
-    md5Confirm = "4ea6fd64603536406166600bcc296fc8";
+    hashOutput = false;
     sha256 = "ca5218fade0204d59947126c38439f432853543b0818d9d728c589dfe7f3a421";
   };
 
@@ -95,6 +95,17 @@ stdenv.mkDerivation rec {
   # Adding optimizations breaks the internal malloc build
   fortifySource = false;
   optimize = false;
+
+  passthru = {
+    srcVerification = {
+      failEarly = true;
+      md5Confirm = "4ea6fd64603536406166600bcc296fc8";
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+    };
+  };
 
   meta = with lib; {
     description = "Open source graph visualization software";

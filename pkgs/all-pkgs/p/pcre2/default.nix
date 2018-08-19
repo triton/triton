@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   name = "pcre2-${version}";
 
   src = fetchurl {
-    url = tarballUrls version;
+    urls = tarballUrls version;
     hashOutput = false;
     sha256 = "e07d538704aa65e477b6a392b32ff9fc5edf75ab9a40ddfc876186c4ff4d68ac";
   };

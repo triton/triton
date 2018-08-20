@@ -3,6 +3,7 @@
 , lib
 , makeWrapper
 
+, adwaita-icon-theme
 , alsa-lib
 , atk
 , cairo
@@ -16,7 +17,8 @@
 , git
 , glib
 , gnome-themes-standard
-, gtk_2
+, gsettings-desktop-schemas
+, gtk_3
 , gvfs
 , libcap
 , libgnome-keyring
@@ -54,13 +56,13 @@ let
   sources = {
     "stable" = {
       suffix = "";
-      version = "1.27.1";
-      sha256 = "fd898b3e24805686fac283a5de189f79395e026a0262961b93e2739034da5423";
+      version = "1.29.0";
+      sha256 = "dfa598d38216ab9dc187e40d279cb69a57b6c9dc3d1ca8d0c4140bae90bd1838";
     };
     "beta" = {
       suffix = "-beta";
-      version = "1.28.0-beta1";
-      sha256 = "16cca8ee9709334b038b1804041f0381f1fcea0d5be815ba4c927a7d94c07dd6";
+      version = "1.30.0-beta2";
+      sha256 = "3217d100519578dacf3e770ed3cfc82460825bf5e3fd8ff9453b8540298678cf";
     };
   };
   source = sources."${channel}";
@@ -80,6 +82,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     alsa-lib
     atk
     cairo
@@ -92,7 +95,8 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gnome-themes-standard
-    gtk_2
+    gsettings-desktop-schemas
+    gtk_3
     gvfs
     libcap
     libgnome-keyring
@@ -164,8 +168,10 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
       --prefix 'LIBRARY_PATH' : "${libPath}" \
       --prefix 'LD_LIBRARY_PATH' : "${libPath}" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
 
     wrapProgram $out/bin/apm${source.suffix} \
       --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \

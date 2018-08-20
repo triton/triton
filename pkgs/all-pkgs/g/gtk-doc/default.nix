@@ -8,10 +8,10 @@
 , lib
 , libxml2
 , libxslt
+, python3Packages
 
 # TODO: reenable once texlive is fixed
 #, dblatex
-, python2
 }:
 
 let
@@ -38,8 +38,10 @@ stdenv.mkDerivation rec {
     itstool
   ];
 
-  buildInputs = [
-    python2
+  # FIXME: use wrapPython instead of propagating
+  propagatedBuildInputs = [
+    python3Packages.python
+    python3Packages.six
   ];
 
   configureFlags = [

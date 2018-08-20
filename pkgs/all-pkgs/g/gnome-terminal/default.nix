@@ -2,7 +2,7 @@
 , desktop_file_utils
 , fetchurl
 , gettext
-, gnome_doc_utils
+, gnome-doc-utils
 , intltool
 , itstool
 , lib
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     desktop_file_utils
     gettext
-    gnome_doc_utils
+    gnome-doc-utils
     intltool
     itstool
     libxml2

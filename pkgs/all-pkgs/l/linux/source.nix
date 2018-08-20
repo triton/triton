@@ -65,10 +65,12 @@ let
   srcsVerification = [
     (fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}/linux-${if source ? baseSha256 then unpatchedVersion else version}.tar.sign") directoryUrls;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrls = map (n: "${n}/linux-${if source ? baseSha256 then unpatchedVersion else version}.tar.sign") directoryUrls;
+        inherit pgpKeyFingerprints;
+      };
       inherit (src) urls outputHash outputHashAlgo;
-      inherit pgpKeyFingerprints;
     })
   ] ++ optionals (patch != null) [
     (fetchurl {

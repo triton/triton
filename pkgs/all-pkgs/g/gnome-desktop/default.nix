@@ -11,7 +11,6 @@
 , atk
 , gdk-pixbuf
 , glib
-, gnome_doc_utils
 , gnome-common
 , gobject-introspection
 , gsettings-desktop-schemas

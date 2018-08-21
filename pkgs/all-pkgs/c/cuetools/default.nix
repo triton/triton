@@ -16,9 +16,9 @@ stdenv.mkDerivation rec {
   name = "cuetools-${version}";
 
   src = fetchzip {
-    version = 1;
+    version = 6;
     url = "https://github.com/svend/cuetools/archive/${version}.tar.gz";
-    sha256 = "7ecf7d2775e97f69d49d65a340604850db3dbbd042b753fb90ebbc428f0cc55d";
+    sha256 = "537b04dca0ce4b7a0c1bc4b331119625dd60f09c1b0d5a2eb525d8321af78561";
   };
 
   nativeBuildInputs = [

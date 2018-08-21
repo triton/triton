@@ -201,9 +201,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 6;
-      version = "2018.05.10";
-      rev = "974eb4aaaa7d96a996c61030fca4095c3c2c6284";
-      sha256 = "a91659bba6197e0f44768965b9afa240c33bffc85c2c1a38e15597799d0c3b81";
+      version = "2018.08.21";
+      rev = "24b24e14d64730ed90ae00744f091c74f30cff7a";
+      sha256 = "99f022ee83dea7bee67d6e70e4cc8d905e0122056054e7c76e6eba17f044d80e";
     };
   };
   source = sources."${channel}";
@@ -571,6 +571,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (libcdio != null)}-libcdio"
     /**/"--disable-libcdio"
     /**/(fflag "--disable-libcodec2" "4.0")
+    /**/(fflag "--disable-libdavs2" "4.1")
     "--${boolEn (
       libdc1394 != null
       && libraw1394 != null)}-libdc1394"
@@ -590,6 +591,7 @@ stdenv.mkDerivation rec {
     "--disable-libilbc"
     (fflag "--${boolEn (jack2_lib != null)}-libjack" "4.0")
     "--${boolEn (kvazaar != null)}-libkvazaar"
+    /**/(fflag "--disable-liblensfun" "4.1")
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"
     #"--${boolEn (opencore-amr != null)}-libopencore-amrnb"
@@ -615,6 +617,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (speex != null)}-libspeex"
     /**/(fflag "--disable-libsrt" "4.0")
     "--${boolEn (libssh != null)}-libssh"
+    /**/(fflag "--disable-libtensorflow" "4.1")
     #"--${boolEn (tesseract != null)}-libtesseract"
     /**/"--disable-libtesseract"
     "--${boolEn (libtheora != null)}-libtheora"

@@ -857,7 +857,9 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
      src = pkgs.fetchurl {
        url = "https://pypi.python.org/packages/source/p/pyechonest/${name}.tar.gz";
-       md5Confirm = "c633dce658412e3ec553efd25d7d2686";
+       fullOpts = {
+         md5Confirm = "c633dce658412e3ec553efd25d7d2686";
+       };
        sha256 = "1584nira3rkiman9dm81kdshihmkj21s8navndz2l8spnjwb790x";
      };
 
@@ -873,7 +875,9 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
      src = pkgs.fetchurl {
        url = "https://pypi.python.org/packages/source/b/blinker/${name}.tar.gz";
-       md5Confirm = "8b3722381f83c2813c52de3016b68d33";
+       fullOpts = {
+         md5Confirm = "8b3722381f83c2813c52de3016b68d33";
+       };
        sha256 = "1dpq0vb01p36jjwbhhd08ylvrnyvcc82yxx3mwjx6awrycjyw6j7";
      };
 
@@ -990,7 +994,9 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
      src = pkgs.fetchurl {
        url = "https://pypi.python.org/packages/source/p/pyxdg/${name}.tar.gz";
-       md5Confirm = "bedcdb3a0ed85986d40044c87f23477c";
+       fullOpts = {
+         md5Confirm = "bedcdb3a0ed85986d40044c87f23477c";
+       };
        sha256 = "179767h8m634ydlm4v8lnz01ba42gckfp684id764zaip7h87s41";
      };
 

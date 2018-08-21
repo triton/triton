@@ -16,7 +16,9 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/dejavu/dejavu-fonts-${version}.tar.bz2";
     multihash = "QmYnZ3hkSocQJoBdQX8FqoPCVWbnvwiubciVVxCfLnGPe2";
-    md5Confirm = "41e4ea9f903674923d1ef61bd88bcb41";
+    fullOpts = {
+      md5Confirm = "41e4ea9f903674923d1ef61bd88bcb41";
+    };
     sha256 = "4b21c5203f792343d5e90ab1cb0cf07e99887218abe3d83cd9a98cea9085e799";
   };
 

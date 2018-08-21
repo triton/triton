@@ -57,7 +57,9 @@ stdenv.mkDerivation rec {
     purgeTimestamps = true;
     sha256 = "fa171e7974e195477d1447dc59cd5eeb0c923170c1cbb057f6e926c26eb0fda6";
     # The argyllcms web server doesn't like curl ...
-    curlOpts = "--user-agent 'Mozilla/5.0'";
+    fullOpts = {
+      curlOpts = "--user-agent 'Mozilla/5.0'";
+    };
   };
 
   nativeBuildInputs = [
@@ -104,7 +106,7 @@ stdenv.mkDerivation rec {
         urls
         outputHash
         outputHashAlgo
-        curlOpts
+        fullOpts
         purgeTimestamps;
       insecureHashOutput = true;
     };

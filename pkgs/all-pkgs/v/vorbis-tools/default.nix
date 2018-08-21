@@ -19,9 +19,9 @@ let
     name = "vorbis-tools-debian-patches-${debian-patches-version}";
 
     src = fetchzip {
-    version = 1;
+      version = 6;
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${debian-patches-version}.debian.tar.xz";
-      sha256 = "4310190197e98011a6190d640c905d15561dce269dd5c75b22a4416c5494fa6f";
+      sha256 = "6708f89359ea4c255030fdcdf9ddf9c7c5e6549eb46acf41f6791c8d22ceab7c";
     };
 
     installPhase = ''
@@ -36,7 +36,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://xiph/vorbis/${name}.tar.gz";
-    sha256Url = mirror://xiph/vorbis/SHA256SUMS;
+    fullOpts = {
+      sha256Url = mirror://xiph/vorbis/SHA256SUMS;
+    };
     sha256 = "a389395baa43f8e5a796c99daf62397e435a7e73531c9f44d9084055a05d22bc";
   };
 

@@ -247,7 +247,7 @@ stdenv.mkDerivation rec {
       mkdir -p $out/share/icons/hicolor/scalable/apps
       install -D -m644 -v 'icons/mumble.svg' "$out/share/icons/mumble.svg"
       ln -sv \
-        "$out/share/icon/mumble.svg" \
+        "$out/share/icons/mumble.svg" \
         "$out/share/icons/hicolor/scalable/apps"
     ''
   );

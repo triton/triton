@@ -10,7 +10,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://pagesperso-orange.fr/sebastien.godard/${name}.tar.xz";
-    sha1Confirm = "d60fe0d4789cb377105c9a30f73e8e2158d3d288";
+    fullOpts = {
+      sha1Confirm = "d60fe0d4789cb377105c9a30f73e8e2158d3d288";
+    };
     multihash = "QmfLyAG597r7BGxbJgKjAtTxfn2RtpnVT71foZGRZrRa2x";
     sha256 = "8ea4ffcce8dae68a1cbb6acaa131ae7e3e6c5765134e670aa9baa38c1bcc66ea";
   };

@@ -36,6 +36,7 @@
 , libxv
 #, lua
 , mujs
+, nv-codec-headers
 , nvidia-cuda-toolkit
 , nvidia-drivers
 , openal
@@ -152,6 +153,7 @@ stdenv.mkDerivation rec {
     #lua
     #luasockets
     mujs
+    nv-codec-headers
     nvidia-cuda-toolkit
     nvidia-drivers
     openal
@@ -171,7 +173,6 @@ stdenv.mkDerivation rec {
   ];
 
   wafFlags = [
-    (strNew "--disable-lgpl" "0.28.999")
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -188,6 +189,7 @@ stdenv.mkDerivation rec {
     "--disable-test"
     "--disable-clang-database"
     "--disable-android"  # Android
+    (strNew "--disable-egl-android" "0.30.0")  # Android
     "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
@@ -198,7 +200,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libass != null)}-libass-osd"
     "--${boolEn (zlib != null)}-zlib"
-    (strDepr "--enable-encoding" null "0.28.999")
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libdvdread != null)}-dvdread"
     "--${boolEn (
@@ -215,7 +216,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (libarchive != null)}-libarchive"
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
-    (strDepr "--disable-sdl1" null "0.28.999")
     "--disable-oss-audio"
     "--disable-rsound"
     #"--${boolEn ( != null)}-sndio"
@@ -296,8 +296,8 @@ stdenv.mkDerivation rec {
     #"--${boolEn ( != null)}-dvbin"
     "--disable-apple-remote"
     "--disable-macos-touchbar"
-    (strNew "--disable-macos-cocoa-cb" "0.29.0")
-    #(strNew "--disable-swift-flags" "0.29.0")
+    "--disable-macos-cocoa-cb"
+    #"--disable-swift-flags"
   ];
 
   postInstall = /* Use a standard font */ ''

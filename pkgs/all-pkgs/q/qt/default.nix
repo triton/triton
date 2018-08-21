@@ -74,8 +74,10 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${channel}/${version}"
       + "/single/qt-everywhere-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "c6f0854d7de7bde80cfd8cc85bb7152b";
-    sha1Confirm = "0ac866442a960d4038a51ba3096b2cc5d796b5ee";
+    fullOpts = {
+      md5Confirm = "c6f0854d7de7bde80cfd8cc85bb7152b";
+      sha1Confirm = "0ac866442a960d4038a51ba3096b2cc5d796b5ee";
+    };
     sha256 = "39602cb08f9c96867910c375d783eed00fc4a244bffaa93b801225d17950fb2b";
   };
 

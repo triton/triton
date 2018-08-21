@@ -631,6 +631,9 @@ amrnb = callPackage ../all-pkgs/a/amrnb { };
 amrwb = callPackage ../all-pkgs/a/amrwb { };
 
 aomedia = callPackage ../all-pkgs/a/aomedia { };
+aomedia_head = callPackage ../all-pkgs/a/aomedia {
+  channel = "head";
+};
 
 appstream-glib = callPackage ../all-pkgs/a/appstream-glib { };
 

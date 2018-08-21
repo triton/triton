@@ -4,16 +4,16 @@
 }:
 
 let
-  version = "8.0.14.1";
+  version = "8.0.14.2";
 in
 stdenv.mkDerivation rec {
   name = "nv-codec-headers-${version}";
 
   src = fetchgit {
-    version = 5;
+    version = 6;
     url = https://git.videolan.org/git/ffmpeg/nv-codec-headers.git;
     rev = "refs/tags/n${version}";
-    sha256 = "792267e9856b3f2e91f274d071fec459589e00fdde2365ea7938eb3eedd4c65c";
+    sha256 = "69a0ab6c5ffad7171c63843bf7825ede935dc93a9d812210ad6c436de33bec19";
   };
 
   preBuild = ''

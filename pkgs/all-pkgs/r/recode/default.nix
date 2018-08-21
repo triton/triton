@@ -10,11 +10,11 @@ stdenv.mkDerivation rec {
   name = "recode-2014-02-02";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "pinard";
     repo = "Recode";
     rev = "2d7092a9999194fc0e9449717a8048c8d8e26c18";
-    sha256 = "b77e001979e55091e5bed2981e2355a70822d7dee568cce239587ea279ca4bd1";
+    sha256 = "ab747d1259b7081b8bd19497ecd0292cf5a4e116bbc22ff8d457c74668a0aecd";
   };
 
   nativeBuildInputs = [

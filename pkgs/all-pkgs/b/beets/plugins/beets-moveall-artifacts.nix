@@ -7,11 +7,11 @@ buildPythonPackage rec {
   name = "beets-moveall-artifacts-2016-08-28";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "chlorm";
     repo = "beets-moveall-artifacts";
     rev = "9a193d2a149fc40e3dea0e6e26b57001589e2d02";
-    sha256 = "6420bd62987607396517d0087294ec69036b50b8ce42a63a0f75b983807089fd";
+    sha256 = "4eff767db1f08dc27af5d3345928e06eea72b1d9442fc2b5a5a49d5447dd7095";
   };
 
   postPatch = /* Prevent recursive dependency on beets */ ''

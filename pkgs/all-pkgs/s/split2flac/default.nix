@@ -28,11 +28,11 @@ stdenv.mkDerivation rec {
   version = "122";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 6;
     owner = "ftrvxmtrx";
     repo = "split2flac";
     rev = version;
-    sha256 = "986ccf3dc48e4f03b3d7ceaa7628be11cb6b5ee0934e7e46229ac70dc6ffbd41";
+    sha256 = "106a0bc882030327f1614ac72b993a16e0ca23404b6e37f638aec4bfd94f222d";
   };
 
   nativeBuildInputs = [

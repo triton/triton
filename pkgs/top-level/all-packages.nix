@@ -1225,6 +1225,13 @@ factorio_headless_0-16 = callPackage ../all-pkgs/f/factorio {
   type = "headless";
   channel = "0.16";
 };
+factorio_experimental = callPackage ../all-pkgs/f/factorio {
+  channel = "experimental";
+};
+factorio_headless_experimental = callPackage ../all-pkgs/f/factorio {
+  type = "headless";
+  channel = "experimental";
+};
 factorio = callPackageAlias "factorio_0-15" { };
 factorio_headless = callPackageAlias "factorio_headless_0-15" { };
 

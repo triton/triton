@@ -22,6 +22,7 @@
 let
   inherit (lib)
     concatStringsSep
+    filterAttrs
     hasPrefix
     head
     optionals
@@ -46,7 +47,7 @@ let
       ) urls) ++ optionals (multihash != "")
     (map (n: "${n}/ipfs/${multihash}") mirrors.ipfs-nocache);
 in
-derivation {
+(filterAttrs (n: _: n != "url") (derivation {
   inherit
     name
     outputHash
@@ -65,4 +66,8 @@ derivation {
   urls = tail urls_;
 
   system = "builtin";
+})) // {
+  inherit
+    multihash
+    urls;
 }

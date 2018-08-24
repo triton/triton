@@ -75,6 +75,7 @@ let
   ] ++ optionals (patch != null) [
     (fetchurl {
       failEarly = true;
+      fullOpts = { };
       inherit (patch) urls outputHash outputHashAlgo;
     })
   ];

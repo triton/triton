@@ -6,15 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sysstat-11.7.3";
+  name = "sysstat-12.0.1";
 
   src = fetchurl {
     url = "http://pagesperso-orange.fr/sebastien.godard/${name}.tar.xz";
-    fullOpts = {
-      sha1Confirm = "d60fe0d4789cb377105c9a30f73e8e2158d3d288";
-    };
-    multihash = "QmfLyAG597r7BGxbJgKjAtTxfn2RtpnVT71foZGRZrRa2x";
-    sha256 = "8ea4ffcce8dae68a1cbb6acaa131ae7e3e6c5765134e670aa9baa38c1bcc66ea";
+    multihash = "QmXbfQWjoxNz7LCo3sPhbEqhePFpyz6wQ2iVFJo8ZEUanS";
+    hashOutput = false;
+    sha256 = "a1bc554e2ab81ed4f7443ba0c7c572e90853fc786d588ebe024ca088e3819c84";
   };
 
   nativeBuildInputs = [
@@ -43,6 +41,19 @@ stdenv.mkDerivation rec {
       "SA_DIR=$TMPDIR/var"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha1Confirm = "5bb0000f838e744c306f7bb826c5ca41040c7297";
+      };
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://sebastien.godard.pagesperso-orange.fr/;

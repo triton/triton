@@ -14,8 +14,8 @@
     ];
   };
   "1.10" = {
-    version = "1.10.3";
-    sha256 = "567b1cc66c9704d1c019c50bef946272e911ec6baf244310f87f4e678be155f2";
+    version = "1.10.4";
+    sha256 = "6fe44965ed453cd968a81988523e9b0e794d3a478f91fd7983c28763d52d5781";
     sha256Bootstrap = {
       "x86_64-linux" = "b5a64335f1490277b585832d1f6c7f8c6c11206cba5cd3f771dcb87b98ad1a33";
     };

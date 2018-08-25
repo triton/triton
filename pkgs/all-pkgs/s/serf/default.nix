@@ -15,9 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://apache/serf/${name}.tar.bz2";
     multihash = "QmW49Y4ZNoRj8meZo89mZMrdtvMpQKkgZf9Lv2vxzSK4vW";
-    fullOpts = {
-      sha1Confirm = "26015c63e3bbb108c1689bf2090e4c26351db674";
-    };
+    hashOutput = false;
     sha256 = "549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc";
   };
 
@@ -53,6 +51,19 @@ stdenv.mkDerivation rec {
   installPhase = ''
     scons -j $NIX_BUILD_CORES install
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha1Confirm = "26015c63e3bbb108c1689bf2090e4c26351db674";
+      };
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "HTTP client library based on APR";

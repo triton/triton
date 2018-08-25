@@ -2,12 +2,15 @@
 , fetchurl
 }:
 
+let
+  version = "2.3.0";
+in
 stdenv.mkDerivation rec {
-  name = "ilmbase-2.2.1";
+  name = "ilmbase-${version}";
 
   src = fetchurl {
-    url = "mirror://savannah/openexr/${name}.tar.gz";
-    sha256 = "cac206e63be68136ef556c2b555df659f45098c159ce24804e9d5e9e0286609e";
+    url = "https://github.com/openexr/openexr/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862";
   };
 
   meta = with stdenv.lib; {

@@ -5,16 +5,16 @@
 
 let
   channel = "0.1";
-  version = "${channel}.54";
+  version = "${channel}.56";
 in
 stdenv.mkDerivation rec {
   name = "babl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/babl/${channel}/${name}.tar.bz2";
-    multihash = "QmS4bqtTZfEobQGaxrXBZF9sYBGxmvT4W692jTc5f5NUfZ";
+    multihash = "QmUGTuLgr5xSWZWpzF5D3v3oVA3Rc6x8PKeqhHCueha2Gm";
     hashOutput = false;
-    sha256 = "40f714a0fc043e16ac05c670f39e4db0d0d923480d21952fb0569686479ef76c";
+    sha256 = "8ad26ca717ec3c74e261f454dd6bb316333a39fd1f87db4ac44706a860dc4d28";
   };
 
   configureFlags = [
@@ -24,9 +24,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha1Urls = map (n: "${n}/../SHA1SUMS") src.urls;
-      sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha1Urls = map (n: "${n}/../SHA1SUMS") src.urls;
+        sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
+      };
     };
   };
 

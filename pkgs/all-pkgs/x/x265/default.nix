@@ -34,7 +34,7 @@ let
   sources = {
     "stable" = {
       version = "2.7";
-      multihash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH";
+      multihash = "QmSvMzXbpttW4y6114tAaZ4hmwLG5UPnEMmCUtTm5a1btr";
       sha256 = "d5e75fa62ffe6ed49e691f8eb8ab8c1634ffcc0725dd553c6fdb4d5443b494a2";
     };
     "head" = {

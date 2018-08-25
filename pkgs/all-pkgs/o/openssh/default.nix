@@ -13,12 +13,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.7p1";
+  name = "openssh-7.8p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d73be7e684e99efcd024be15a30bffcbe41b012b2f7b3c9084aed621775e6b8f";
+    sha256 = "1a484bb15152c183bb2514e112aa30dd34138c3cfb032eee5490a66c507144ca";
   };
 
   buildInputs = [
@@ -46,23 +46,20 @@ stdenv.mkDerivation rec {
     sed -i '/INSTALL/s,-m 4,-m 0,' Makefile.in
   '';
 
-  # I set --disable-strip because later we strip anyway. And it fails to strip
-  # properly when cross building.
   configureFlags = [
+    "--sysconfdir=/etc/ssh"
     "--localstatedir=/var"
     "--with-pid-dir=/run"
-    "--with-mantype=man"
-    "--with-libedit=yes"
-    "--disable-strip"
     "--with-ldns"
     "--with-libedit"
     "--with-audit=linux"
+    "--with-pie"
     "--with-ssl-dir=${openssl_1-0-2}"
     "--with-ssl-engine"
     "--with-pam"
+    "--with-kerberos5"
+    "--with-mantype=man"
     "--with-privsep-user=nobody"
-    "--sysconfdir=/etc/ssh"
-    "--with-kerberos5=${kerberos}"
   ];
 
   preInstall = ''
@@ -80,9 +77,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "59C2 118E D206 D927 E667  EBE3 D3E5 F56B 6D92 0D30";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "59C2 118E D206 D927 E667  EBE3 D3E5 F56B 6D92 0D30";
+      };
     };
   };
 

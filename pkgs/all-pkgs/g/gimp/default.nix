@@ -60,7 +60,7 @@
 
 let
   major = "2.10";
-  patch = "4";
+  patch = "6";
 
   version = "${major}.${patch}";
 in
@@ -69,9 +69,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://download.gimp.org/pub/gimp/v${major}/${name}.tar.bz2";
-    multihash = "QmcKvn2bKAUsT8W7QeZJW7V34BVoFEMrKd4LqGavv4EjBD";
+    multihash = "QmUp2FZpWg6KoAYF5mk3KYQAbM2TsaQZGjR4H6niw3vYv6";
     hashOutput = false;
-    sha256 = "ffb0768de14a2631b3d7ed71f283731441a1b48461766c23f0574dce0706f192";
+    sha256 = "4ec8071f828e918384cf7bc7d1219210467c84655123f802bc55a8bf2415101f";
   };
 
   nativeBuildInputs = [
@@ -179,9 +179,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      # Not available for 2.10.2 for some reason
-      #md5Urls = map (n: "${n}.md5") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts.sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
     };
   };
 

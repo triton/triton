@@ -30,19 +30,18 @@ let
   inherit (stdenv.lib)
     flip
     makeOverridable
-    mapAttrsToList
-    replaceChars;
+    mapAttrsToList;
 
   srcs' = flip mapAttrsToList srcs (n: d:
     let
       version' = d.version or version;
     in makeOverridable fetchurl {
-      urls = map (u: "${u}/${replaceChars ["-"] ["/"] version'}/${n}-${replaceChars ["-"] [""] version'}.src.tar.xz") [
-        "https://distfiles.macports.org/llvm"
-        "http://llvm.org/releases"
-        "http://llvm.org/pre-releases"
+      urls = [
+        "https://releases.llvm.org/${version'}/${n}-${version'}.src.tar.xz"
+        "https://distfiles.macports.org/llvm/${n}-${version'}.src.tar.xz"
       ];
-      inherit (d) sha256;
+      inherit (d)
+        sha256;
     }
   );
 in
@@ -53,7 +52,7 @@ stdenv.mkDerivation {
     hashOutput = false;
   });
 
-  srcRoot = "llvm-${replaceChars ["-"] [""] version}.src";
+  srcRoot = "llvm-${version}.src";
 
   nativeBuildInputs = [
     cmake

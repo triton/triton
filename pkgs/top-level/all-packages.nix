@@ -1665,9 +1665,6 @@ gnutar = callPackageAlias "gnutar_1-30" { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go_1-9 = callPackage ../all-pkgs/g/go {
-  channel = "1.9";
-};
 go_1-10 = callPackage ../all-pkgs/g/go {
   channel = "1.10";
 };
@@ -1676,13 +1673,6 @@ go_1-11 = callPackage ../all-pkgs/g/go {
 };
 go = callPackageAlias "go_1-11" { };
 
-goPackages_1-9 = callPackage ./go-packages.nix {
-  go = callPackageAlias "go_1-9" { };
-  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
-    go = callPackageAlias "go_1-9" { };
-  };
-  overrides = (config.goPackageOverrides or (p: { })) pkgs;
-};
 goPackages_1-10 = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1-10" { };
   buildGoPackage = callPackage ../all-pkgs/b/build-go-package {

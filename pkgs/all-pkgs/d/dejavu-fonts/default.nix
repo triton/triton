@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , fontconfig
 , fontforge
@@ -9,16 +10,17 @@
 
 let
   version = "2.37";
+
+  version_ = lib.replaceChars ["."] ["_"] version;
 in
 stdenv.mkDerivation rec {
   name = "dejavu-fonts-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/dejavu/dejavu-fonts-${version}.tar.bz2";
-    multihash = "QmYnZ3hkSocQJoBdQX8FqoPCVWbnvwiubciVVxCfLnGPe2";
-    fullOpts = {
-      md5Confirm = "41e4ea9f903674923d1ef61bd88bcb41";
-    };
+    urls = [
+      "https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_${version_}/${name}.tar.bz2"
+      "mirror://sourceforge/dejavu/${name}.tar.bz2"
+    ];
     sha256 = "4b21c5203f792343d5e90ab1cb0cf07e99887218abe3d83cd9a98cea9085e799";
   };
 
@@ -60,7 +62,7 @@ stdenv.mkDerivation rec {
     done;
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A typeface family based on the Bitstream Vera fonts";
     homepage = http://dejavu-fonts.org/;
     license = licenses.free; # BitstreamVera & public domain

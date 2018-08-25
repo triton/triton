@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.44.3";
+  version = "1.44.4";
 in
 stdenv.mkDerivation rec {
   name = "e2fsprogs-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/e2fsprogs/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "c2ae6d8ce6fb96b55886cf761411fc22ab41976f4f8297fc54c706df442483be";
+    sha256 = "dd707688f0fc353941931c20081f26ec8e54b0bc1ac3f7601f479f9c7675dcb2";
   };
 
   buildInputs = [
@@ -61,9 +61,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "3AB0 57B7 E78D 945C 8C55  91FB D36F 769B C118 04F0";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "3AB0 57B7 E78D 945C 8C55  91FB D36F 769B C118 04F0";
+      };
     };
   };
 

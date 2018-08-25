@@ -15,8 +15,7 @@
 }:
 
 let
-  # 1.4.1 breaks samba 4.8.x
-  name = "ldb-1.4.0";
+  name = "ldb-1.5.1";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -28,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "a87edaa35a33a76006a7ccd30f326514db78ac235b3a257402441349bc0da9b4";
+    sha256 = "232e54b87c53210a6861424ad411b04dbfa0f2ca4bc463aefea188158e0cc963";
   };
 
   nativeBuildInputs = [
@@ -59,10 +58,16 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
-      pgpDecompress = true;
-      inherit (samba_full.pgp.library) pgpKeyFingerprint;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+        pgpDecompress = true;
+        inherit (samba_full.pgp.library)
+          pgpKeyFingerprint;
+      };
     };
   };
 

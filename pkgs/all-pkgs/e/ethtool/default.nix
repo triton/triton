@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "4.17";
+  version = "4.18";
 
   tarballUrls = [
     "mirror://kernel/software/network/ethtool/ethtool-${version}.tar"
@@ -16,21 +16,26 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "c46b1eb417c78793dddb3247b89eb8f50f6e398e12ee4670b092b3570728c585";
+    sha256 = "90948555d4c017561d0d8795f2dc61893a4932c0f3b85e6d422afd7031b7c110";
   };
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
-      pgpDecompress = true;
-      pgpKeyFingerprints = [
-        # Ben Hutchings
-        "AC2B 29BD 34A6 AFDD B3F6  8F35 E7BF C8EC 9586 1109"
-        # John W. Linville
-        "CE4A 4D08 0F0D 304F 23B9  EBDD 972D 5BF4 DC61 3806"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+        pgpDecompress = true;
+        pgpKeyFingerprints = [
+          # Ben Hutchings
+          "AC2B 29BD 34A6 AFDD B3F6  8F35 E7BF C8EC 9586 1109"
+          # John W. Linville
+          "CE4A 4D08 0F0D 304F 23B9  EBDD 972D 5BF4 DC61 3806"
+        ];
+      };
     };
   };
 

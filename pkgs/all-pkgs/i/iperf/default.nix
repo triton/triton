@@ -10,8 +10,8 @@
 let
   sources = {
     "2" = {
-      version = "2.0.11";
-      sha256 = "b7d650d07c6bb0e357b5938a20e4ac33876012fddb952299c5d321e6958da5d2";
+      version = "2.0.12";
+      sha256 = "367f651fb1264b13f6518e41b8a7e08ce3e41b2a1c80e99ff0347561eed32646";
     };
     "3" = {
       fetchzipVersion = 6;

@@ -6,6 +6,7 @@
 , cairo
 , exiv2
 , ffmpeg
+, graphviz
 , gdk-pixbuf
 , gexiv2
 , glib
@@ -36,16 +37,16 @@ let
     platforms;
 
   channel = "0.4";
-  version = "${channel}.6";
+  version = "${channel}.8";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmPSjiRoCAUwrf42mUrjKDEXuy15a39xjy4z3zgbJA418e";
+    multihash = "QmWCA877yfShgJxhcZqCbD2yzBeaPV3sGcvihbrTYq36PZ";
     hashOutput = false;
-    sha256 = "f8cb45da736131fe29582b74cf6851102ae013bf99c77413a8bcb02e92e57890";
+    sha256 = "719468eec56ac5b191626a0cb6238f3abe9117e80594890c246acdc89183ae49";
   };
 
   nativeBuildInputs = [
@@ -57,6 +58,7 @@ stdenv.mkDerivation rec {
     cairo
     exiv2
     ffmpeg
+    graphviz
     gdk-pixbuf
     gexiv2
     glib
@@ -71,7 +73,7 @@ stdenv.mkDerivation rec {
     libspiro
     libtiff
     libwebp
-    openexr
+    #openexr 2.3.0 is broken for gegl 0.4.8
     pango
     v4l_lib
   ];
@@ -94,7 +96,7 @@ stdenv.mkDerivation rec {
     "--without-sdl"
     "--${boolWt (libraw != null)}-libraw"
     "--${boolWt (jasper != null)}-jasper"
-    "--without-graphviz"
+    "--${boolWt (graphviz != null)}-graphviz"
     "--without-lua"
     "--${boolWt (ffmpeg != null)}-libavformat"
     "--${boolWt (v4l_lib != null)}-libv4l"
@@ -109,8 +111,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts.sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
     };
   };
 

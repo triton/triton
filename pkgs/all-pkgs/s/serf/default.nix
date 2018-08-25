@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://apache/serf/${name}.tar.bz2";
-    multihash = "QmW49Y4ZNoRj8meZo89mZMrdtvMpQKkgZf9Lv2vxzSK4vW";
+    multihash = "QmU9WdwwBh3B1K9whB47PjjGwDZRvwj5T3N9tnmiMwDV4G";
     hashOutput = false;
     sha256 = "549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc";
   };

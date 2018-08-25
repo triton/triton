@@ -15,12 +15,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "libX11-1.6.5";
+  name = "libX11-1.6.6";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "4d3890db2ba225ba8c55ca63c6409c1ebb078a2806de59fb16342768ae63435d";
+    sha256 = "65fe181d40ec77f45417710c6a67431814ab252d21c2e85c75dd1ed568af414f";
   };
 
   nativeBuildInputs = [
@@ -65,13 +65,15 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Matt Turner
-        "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
-        # Matthieu Herrb
-        "C41C 985F DCF1 E536 4576  638B 6873 93EE 37D1 28F8"
-      ];
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Matt Turner
+          "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
+          # Matthieu Herrb
+          "C41C 985F DCF1 E536 4576  638B 6873 93EE 37D1 28F8"
+        ];
+      };
       failEarly = true;
     };
   };

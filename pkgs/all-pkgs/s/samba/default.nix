@@ -50,7 +50,7 @@ let
     optionals
     optionalString;
 
-  version = "4.8.4";
+  version = "4.8.5";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "f5044d149e01894a08b1d114b8b69aed78171a7bb19608bd1fd771453b9a5406";
+    sha256 = "e58ee6b1262d4128b8932ceee59d5f0b0a9bbe00547eb3cc4c41552de1a65155";
   };
 
   nativeBuildInputs = [
@@ -279,10 +279,16 @@ stdenv.mkDerivation rec {
   passthru = rec {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
-      pgpDecompress = true;
-      inherit (pgp.samba) pgpKeyFingerprint;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+        pgpDecompress = true;
+        inherit (pgp.samba)
+          pgpKeyFingerprint;
+      };
     };
 
     pgp = {

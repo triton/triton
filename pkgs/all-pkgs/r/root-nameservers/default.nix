@@ -1,43 +1,40 @@
 { stdenv
+, lib
 , fetchurl
 }:
 
-let
-  filePath = "share/dns/named.root";
+stdenv.mkDerivation rec {
+  name = "root-nameservers-2018-08-24";
 
-  pkg = fetchurl rec {
-    name = "root-nameservers-2016-10-20";
-    multihash = "QmSFUFrTp1kwRC9UTSyADymSv8gRhHuEX5LhkUWmoceu7t";
-    sha256 = "1grymcyzvpl7ag7rbr92yvvwqn8p20fwz4w252i7rq783sky3p05";
-    downloadToTemp = true;
-    recursiveHash = true;
+  src = fetchurl {
+    name = "${name}.src";
+    multihash = "QmRYtiiMYJGUGxSqo2gVN9KbPBNtkRXcRspsTJzLkLgfUQ";
+    sha256 = "ead216a387e68703a669f30d3be60aa5453e18d0ae1e11e54080f007715e8652";
+  };
 
-    postFetch = ''
-      if [ "$(openssl ${passthru.srcFile.outputHashAlgo} -r -hex "$downloadedFile" 2>/dev/null | tail -n 1 | awk '{print $1}')" != "${passthru.srcFile.outputHash}" ]; then
-        echo "Hash does not match the source file" >&2
-        exit 1
-      fi
-      install -Dm644 "$downloadedFile" "$out/${filePath}"
-    '';
+  file = "${placeholder "out"}/share/dns/named.root";
 
-    passthru = {
-      srcFile = fetchurl rec {
-        failEarly = true;
-        url = "https://www.internic.net/domain/named.root";
+  buildCommand = ''
+    install -Dm644 "$src" "$file"
+  '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      url = "https://www.internic.net/domain/named.root";
+      fullOpts = {
         pgpsigUrl = "${url}.sig";
         pgpKeyFingerprint = "F0CB 1A32 6BDF 3F3E FA3A  01FA 937B B869 E3A2 38C5";
-        sha256 = "e3a76ae953ac11e6598e80b14fd8a93bddd7b3a57830fd9ce16fe820fe1df7a2";
       };
-    };
-
-    meta = with stdenv.lib; {
-      maintainers = with maintainers; [
-        wkennington
-      ];
-      platforms = with platforms;
-        x86_64-linux;
+      sha256 = "e3a76ae953aa11e6598e80b14fd8a93bddd7b3a57830fd9ce16fe820fe1df7a2";
     };
   };
-in pkg // {
-  file = "${pkg}/${filePath}";
+
+  meta = with lib; {
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
+  };
 }

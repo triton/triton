@@ -37,7 +37,8 @@ stdenv.mkDerivation rec {
   name = "mft-${version}${optionalString (kernel != null) "-${kernel.version}"}";
 
   src = fetchurl {
-    inherit urls md5Confirm sha256;
+    inherit urls sha256;
+    hashOutput = false;
   };
 
   nativeBuildInputs = optionals (kernel != null) [
@@ -103,6 +104,14 @@ stdenv.mkDerivation rec {
 
   # Binaries are broken by this
   dontStrip = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit urls sha256;
+      fullOpts.md5Confirm = md5Confirm;
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

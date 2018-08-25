@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sudo-1.8.23";
+  name = "sudo-1.8.24";
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
-    multihash = "QmaJ3BjFk6YQhUspbd5EiN2FmBid2m3WmAkazBU9JmsbYQ";
+    multihash = "QmZdgbKcUqLzbwe5MCKk5NNCQyKXVEeSykWAqiJvbsbNAs";
     hashOutput = false;
-    sha256 = "d863d29b6fc87bc784a3223350e2b28a2ff2c4738f0fb8f1c92bb38c3017e679";
+    sha256 = "b488557a198ecef30b7ad4011b59a66232dec2364ad956e11d8e17906c225be8";
   };
 
   nativeBuildInputs = [
@@ -83,13 +83,18 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Todd C. Miller
-        "59D1 E9CC BA2B 3767 04FD  D35B A9F4 C021 CEA4 70FB"
-        "CCB2 4BE9 E948 1B15 D341  5953 5A89 DFA2 7EE4 70C4"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Todd C. Miller
+          "59D1 E9CC BA2B 3767 04FD  D35B A9F4 C021 CEA4 70FB"
+          "CCB2 4BE9 E948 1B15 D341  5953 5A89 DFA2 7EE4 70C4"
+        ];
+      };
     };
   };
 

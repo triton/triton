@@ -26,9 +26,6 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "http://pkgs.fedoraproject.org/repo/pkgs/libxklavier/${name}.tar.bz2/${fullOpts.md5Confirm}/${name}.tar.bz2";
     multihash = "QmNdE3S2pGqMgj7vkNg8XwMxKiws8zfupnm3FnpXGnEQc8";
-    fullOpts = {
-      md5Confirm = "13af74dcb6011ecedf1e3ed122bd31fa";
-    };
     sha256 = "17a34194df5cbcd3b7bfd0f561d95d1f723aa1c87fca56bc2c209514460a9320";
   };
 

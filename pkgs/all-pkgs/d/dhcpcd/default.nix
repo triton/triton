@@ -6,12 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-7.0.7";
+  name = "dhcpcd-7.0.8";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    multihash = "Qmc4jdwf8SpQgjRnSmDasGmpPb3X7AUvCDWZjADzBXm7Ym";
-    sha256 = "af23f11cf7a6d6cbbe236ac7c4b45db5765a4c1e468e88f2ef37ac2fa2de3a49";
+    multihash = "QmYMsd6vsWbWUQYc74wgLUWod791f3wdHuNmDcTAmq7viL";
+    hashOutput = false;
+    sha256 = "96968e883369ab4afd11eba9dfd9bb109f5dfff65b2814ce6c432f36362dc9b5";
   };
 
   buildInputs = [
@@ -29,6 +30,20 @@ stdenv.mkDerivation rec {
       "SYSCONFDIR=$out/etc"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        sha256Urls = map (n: "${n}.distinfo.asc") src.urls;
+        pgpKeyFingerprint = "A785 ED27 5595 5D9E 93EA 59F6 597F 97EA 9AD4 5549";
+      };
+    };
+  };
 
   meta = with lib; {
     description = "A client for the Dynamic Host Configuration Protocol (DHCP)";

@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "3.2.1";
+  version = "3.2.2";
 in
 stdenv.mkDerivation rec {
   name = "libconfuse-${version}";
 
   src = fetchurl {
     url = "https://github.com/martinh/libconfuse/releases/download/v${version}/confuse-${version}.tar.xz";
-    sha256 = "23c63272baf2ef4e2cbbafad2cf57de7eb81f006ec347c00b954819824add25e";
+    sha256 = "a9240b653d02e8cfc52db48e8c4224426e528e1faa09b65e8ca08a197fad210b";
   };
   
   configureFlags = [

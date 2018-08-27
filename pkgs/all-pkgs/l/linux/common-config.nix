@@ -100,6 +100,9 @@ with stdenv.lib;
   X86_INTEL_LPSS y
   X86_INTEL_PSTATE y
   INTEL_IDLE y
+  ${optionalString (versionAtLeast version "4.19") ''
+    IDLE_INJECT y
+  ''}
   ${optionalString (versionAtLeast version "4.11") ''
     INTEL_TURBO_MAX_3 y
   ''}
@@ -114,9 +117,9 @@ with stdenv.lib;
   HOTPLUG_PCI_CPCI y
 
   ${optionalString (versionAtLeast version "4.15") ''
-    #CPU_ISOLATION y
-    CHECKPOINT_RESTORE y
+    CPU_ISOLATION y
   ''}
+  CHECKPOINT_RESTORE y
   GCC_PLUGINS y
   CPU_FREQ_STAT y
   PCIE_DPC y
@@ -256,7 +259,6 @@ with stdenv.lib;
   ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y
-  SSB_SILENT y
   SSB_DRIVER_GPIO y
   BCMA_HOST_SOC y
   BCMA_DRIVER_GMAC_CMN y
@@ -271,6 +273,9 @@ with stdenv.lib;
   V4L_MEM2MEM_DRIVERS y
   DVB_PLATFORM_DRIVERS y
   DRM_DP_AUX_CHARDEV y
+  ${optionalString (versionAtLeast version "4.19") ''
+    DRM_DP_CEC y
+  ''}
   DRM_RADEON_USERPTR y
   DRM_AMDGPU_CIK y
   DRM_AMDGPU_USERPTR y
@@ -288,7 +293,6 @@ with stdenv.lib;
   POWERCAP y
   ISCSI_IBFT_FIND y
 
-  CAN_LEDS y
   LEDS_TRIGGER_DISK y
   ${optionalString (versionAtLeast version "4.10") ''
     LED_TRIGGER_PHY y
@@ -394,7 +398,6 @@ with stdenv.lib;
   FSCACHE_STATS y
   FSCACHE_HISTOGRAM y
   NTFS_RW y
-  HFSPLUS_FS_POSIX_ACL y
   ${optionalString (versionAtLeast version "4.10") ''
     #OVERLAY_FS_REDIRECT_DIR y
   ''}
@@ -430,7 +433,6 @@ with stdenv.lib;
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
   NFSD_FLEXFILELAYOUT y
-  CIFS_STATS y
   CIFS_UPCALL y
   CIFS_ACL y
   CIFS_XATTR y
@@ -440,7 +442,10 @@ with stdenv.lib;
   ${optionalString (versionOlder version "4.13") ''
     CIFS_SMB2 y
   ''}
-  CIFS_SMB311 y
+  ${optionalString (versionOlder version "4.19") ''
+    CIFS_SMB311 y
+    CIFS_STATS y
+  ''}
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
   CEPH_LIB_USE_DNS_RESOLVER y
@@ -449,6 +454,9 @@ with stdenv.lib;
   PSTORE_FTRACE y
   ${optionalString (versionAtLeast version "4.17") ''
     PSTORE_842_COMPRESS y
+  ''}
+  ${optionalString (versionAtLeast version "4.19") ''
+    PSTORE_ZSTD_COMPRESS y
   ''}
   SQUASHFS_FILE_DIRECT y
   SQUASHFS_DECOMP_MULTI_PERCPU y
@@ -693,8 +701,22 @@ with stdenv.lib;
   PREEMPT y
   MEMORY y
   MEMORY_HOTPLUG y
+  MEMORY_HOTPLUG_DEFAULT_ONLINE y
   MEMORY_HOTREMOVE y
   MEMORY_FAILURE y
+  MEM_SOFT_DIRTY y
+  ZONE_DEVICE y
+  ${optionalString (versionAtLeast version "4.14") ''
+    MIGRATE_VMA_HELPER y
+    HMM y
+    HMM_MIRROR y
+  ''}
+  ${optionalString (versionAtLeast version "4.18") ''
+    DEV_PAGEMAP_OPS y
+    DEVICE_PRIVATE y
+    DEVICE_PUBLIC y
+  ''}
+  FRAME_VECTOR y
   HZ_300 y
   KEXEC_FILE y
   KEXEC_JUMP y
@@ -785,7 +807,6 @@ with stdenv.lib;
     MEDIA_CEC_SUPPORT y
   ''}
   ${optionalString (versionAtLeast version "4.12") ''
-    MEDIA_CEC_RC y
     CEC_PLATFORM_DRIVERS y
   ''}
 

@@ -10,7 +10,7 @@ let
     "mirror://gnu/bison/bison-${version}.tar.xz"
   ];
 
-  version = "3.0.5";
+  version = "3.1";
 in
 stdenv.mkDerivation rec {
   name = "bison-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "075cef2e814642e30e10e8155e93022e4a91ca38a65aa1d5467d4e969f97f338";
+    sha256 = "7c2464ad6cb7b513b2c350a092d919327e1f63d12ff024836acbb504475da5c6";
   };
 
   nativeBuildInputs = [
@@ -35,11 +35,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.0.5";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "7DF8 4374 B1EE 1F97 64BB  E25D 0DDC AA32 78D5 264E";
+      urls = tarballUrls "3.1";
       inherit (src) outputHashAlgo;
-      outputHash = "075cef2e814642e30e10e8155e93022e4a91ca38a65aa1d5467d4e969f97f338";
+      outputHash = "7c2464ad6cb7b513b2c350a092d919327e1f63d12ff024836acbb504475da5c6";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "7DF8 4374 B1EE 1F97 64BB  E25D 0DDC AA32 78D5 264E";
+      };
     };
   };
 

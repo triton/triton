@@ -2065,6 +2065,8 @@ iucode-tool = callPackage ../all-pkgs/i/iucode-tool { };
 
 iw = callPackage ../all-pkgs/i/iw { };
 
+iwd = callPackage ../all-pkgs/i/iwd { };
+
 jack2_full = callPackage ../all-pkgs/j/jack2 { };
 jack2_lib = callPackageAlias "jack2_full" {
   prefix = "lib";

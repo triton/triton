@@ -3754,6 +3754,8 @@ tevent = callPackage ../all-pkgs/t/tevent { };
 
 texinfo = callPackage ../all-pkgs/t/texinfo { };
 
+textencode = callPackage ../all-pkgs/t/textencode { };
+
 thermal_daemon = callPackage ../all-pkgs/t/thermal_daemon { };
 
 thin-provisioning-tools = callPackage ../all-pkgs/t/thin-provisioning-tools { };

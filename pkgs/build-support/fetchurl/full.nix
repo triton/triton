@@ -5,6 +5,7 @@
 , minisign
 , openssl
 , signify
+, textencode
 , ...
 }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
@@ -156,6 +157,7 @@ stdenv.mkDerivation {
   buildInputs = [
     curl_minimal
     openssl
+    textencode
   ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
     gnupg
   ] ++ optionals (minisignPub != "") [

@@ -33,64 +33,53 @@ downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi
 
 # We need to normalize the hash for openssl
-HEX_HASH="$(echo "$outputHash" | awk -v algo="$outputHashAlgo" \
-'
-function ceil(val) {
-  if (val == int(val)) {
-    return val;
-  }
-  return int(val) + 1;
+base16len() {
+  local nbytes="$1"
+
+  echo $(( nbytes * 2 ))
+}
+base32len() {
+  local nbytes="$1"
+
+  echo $(( (nbytes + 4) / 5 * 5 ))
+}
+base64len() {
+  local nbytes="$1"
+
+  echo $(( (nbytes + 2) / 3 * 4 ))
+}
+nix32len() {
+  local nbytes="$1"
+
+  echo $(( (8 * nbytes + 4) / 5 ))
+}
+declare -r -A hashLen=(
+  [sha256]=32
+  [sha512]=64
+)
+encodingType() {
+  local hash="$1"
+  local hashType="$2"
+
+  local len="${hashLen["$hashType"]}"
+  declare -A map=(
+    [$(base16len "$len")]="base16"
+    [$(base32len "$len")]="base32"
+    [$(base64len "$len")]="base64"
+    [$(nix32len "$len")]="nix32"
+  )
+
+  echo "${map["${#hash}"]}"
+}
+transcodeHash() {
+  local encodingType="$1"
+  local hash="$2"
+  shift 2
+
+  echo "$hash" | textencode --from="$(encodingType "$hash" "$@")" --to="$encodingType"
 }
 
-BEGIN {
-  split("0123456789abcdfghijklmnpqrsvwxyz", b32chars, "");
-  for (i in b32chars) {
-    b32val[b32chars[i]] = i-1;
-  }
-  split("0123456789abcdef", b16chars, "");
-  for (i in b16chars) {
-    b16val[b16chars[i]] = i-1;
-  }
-  if (algo == "sha256") {
-    b32len = ceil(256 / 5);
-    b16len = 256 / 4;
-    blen = 256 / 8;
-  } else if (algo == "sha512") {
-    b32len = ceil(512 / 5);
-    b16len = 512 / 4;
-    blen = 512 / 8;
-  } else {
-    print "Unsupported hash algo" > "/dev/stderr";
-    exit(1);
-  }
-}
-
-{
-  len = length($0);
-  split($0, chars, "");
-  if (len == b32len) {
-    split("", bin);
-    for (n = 0; n < len; n++) {
-      c = chars[len - n];
-      digit = b32val[c];
-      b = n * 5;
-      i = rshift(b, 3);
-      j = and(b, 0x7);
-      bin[i] = or(bin[i], and(lshift(digit, j), 0xff));
-      bin[i+1] = or(bin[i+1], rshift(digit, 8-j));
-    }
-    out = "";
-    for (i = 0; i < blen; i++) {
-      out = out b16chars[rshift(bin[i], 4) + 1];
-      out = out b16chars[and(bin[i], 0xf) + 1];
-    }
-    print out;
-  } else if (len == b16len) {
-    print $0;
-  } else {
-    print "Unsupported hash encoding" > "/dev/stderr";
-  }
-}')"
+HEX_HASH="$(transcodeHash base16 "$outputHash" "$outputHashAlgo")"
 
 tryDownload() {
   local url
@@ -255,7 +244,7 @@ tryDownload() {
 
         local lhash
         lhash="$(openssl "$outputHashAlgo" -r -hex "$out" 2>/dev/null | awk '{print $1;}')"
-        if [ "$lhash" = "$HEX_HASH" ]; then
+        if [ "$lhash" = "${HEX_HASH,,}" ]; then
           success=1
         else
           rm -f $out

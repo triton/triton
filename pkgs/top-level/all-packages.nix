@@ -4557,11 +4557,6 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_4-17 = callPackage ../all-pkgs/l/linux {
-    channel = "4.17";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_4-18 = callPackage ../all-pkgs/l/linux {
     channel = "4.18";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4660,9 +4655,6 @@ libstartup_notification =
   });
   linuxPackages_4-14 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-14;
-  });
-  linuxPackages_4-17 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4-17;
   });
   linuxPackages_4-18 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-18;

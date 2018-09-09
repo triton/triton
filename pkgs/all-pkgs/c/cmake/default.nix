@@ -25,15 +25,16 @@ let
     optionalString;
 
   channel = "3.12";
-  version = "${channel}.1";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
-    multihash = "Qmd9eD4WnRzPL7nCu3gKXmdy6eVgBHoEJNcFH4TSG4b4Mv";
-    sha256 = "c53d5c2ce81d7a957ee83e3e635c8cda5dfe20c9d501a4828ee28e1615e57ab2";
+    multihash = "QmW2VR8PzWyvhXLDmE4MyRceJC6GPkmbxTMhbrVPfXEE5h";
+    hashOutput = false;
+    sha256 = "0f97485799e51a7070cc11494f3e02349b0fc3a24cc12b082e737bf67a0581a4";
   };
 
   patches = [
@@ -92,6 +93,17 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
   cmakeConfigure = !bootstrap;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with lib; {
     description = "Cross-Platform Makefile Generator";

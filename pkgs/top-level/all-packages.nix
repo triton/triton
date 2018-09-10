@@ -3346,6 +3346,8 @@ ppp = callPackage ../all-pkgs/p/ppp { };
 
 pptp = callPackage ../all-pkgs/p/pptp { };
 
+processor-trace = callPackage ../all-pkgs/p/processor-trace { };
+
 procps = callPackageAlias "procps-ng" { };
 
 procps-ng = callPackage ../all-pkgs/p/procps-ng { };

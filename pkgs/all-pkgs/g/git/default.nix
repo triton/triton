@@ -34,7 +34,7 @@ let
     gnused
   ];
 
-  version = "2.18.0";
+  version = "2.19.0";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "8b40be383a603147ae29337136c00d1c634bdfdc169a30924a024596a7e30e92";
+    sha256 = "180feff58fc0d965d23ea010aa2c69ead92ec318eb9b09cf737529aec62f3ef4";
   };
 
   nativeBuildInputs = [
@@ -103,10 +103,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
-      pgpKeyFingerprint = "96E0 7AF2 5771 9559 80DA  D100 20D0 4E5A 7136 60A7";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+        pgpKeyFingerprint = "96E0 7AF2 5771 9559 80DA  D100 20D0 4E5A 7136 60A7";
+      };
     };
   };
 

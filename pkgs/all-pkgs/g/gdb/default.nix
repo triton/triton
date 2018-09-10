@@ -2,20 +2,51 @@
 , fetchurl
 , perl
 , texinfo
+
+, babeltrace
+, expat
+, gmp
+, mpfr
+, ncurses
+, readline
+, processor-trace
+, python3
+, xz
+, zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "gdb-8.1.1";
+  name = "gdb-8.2";
 
   src = fetchurl {
     url = "mirror://gnu/gdb/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "97dcc3169bd430270fc29adb65145846a58c1b55cdbb73382a4a89307bdad03c";
+    sha256 = "c3a441a29c7c89720b734e5a9c6289c0a06be7e0c76ef538f7bbcef389347c39";
   };
 
   nativeBuildInputs = [
     perl
     texinfo
+  ];
+
+  buildInputs = [
+    babeltrace
+    expat
+    gmp
+    mpfr
+    ncurses
+    readline
+    processor-trace
+    python3
+    xz
+    zlib
+  ];
+
+  configureFlags = [
+    "--with-system-zlib"
+    "--with-system-readline"
+    "--with-python=${python3.interpreter}"
+    "--with-mpfr=${mpfr}"
   ];
 
   # The install junks up lib / include with some static library
@@ -27,9 +58,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "F40A DB90 2B24 264A A42E  50BF 92ED B04B FF32 5CF3";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "F40A DB90 2B24 264A A42E  50BF 92ED B04B FF32 5CF3";
+      };
     };
   };
 

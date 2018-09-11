@@ -726,6 +726,8 @@ avahi = callPackage ../all-pkgs/a/avahi { };
 
 aws-sdk-cpp = callPackage ../all-pkgs/a/aws-sdk-cpp { };
 
+babeltrace = callPackage ../all-pkgs/b/babeltrace { };
+
 babl = callPackage ../all-pkgs/b/babl { };
 
 bash = callPackage ../all-pkgs/b/bash { };

@@ -35,10 +35,24 @@ let
         })
       ];
     };
+    "1.1.1" = {
+      version = "1.1.1";
+      multihash = "QmfLksbQmo1HvKRsZv4pL5qzedp7BZJn8HvVqbFcnUZvU1";
+      sha256 = "2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d";
+      patches = [
+        (fetchTritonPatch {
+          rev = "29569cdc2793ba0e4902c2134fa3f3bbe9eb6a9f";
+          file = "o/openssl/use-etc-ssl-certs.patch";
+          sha256 = "db8dee66e41ea0a0186d4194d782f490f7222e9bce79f5496a578c1ed444b158";
+        })
+      ];
+    };
   };
 
   inherit (stdenv.lib)
     optionals
+    optionalString
+    versionAtLeast
     versionOlder;
 
   inherit (sources."${channel}")
@@ -49,7 +63,6 @@ let
 
   tarballUrls = version: [
     "https://www.openssl.org/source/openssl-${version}.tar.gz"
-    #"http://openssl.linux-mirror.org/source/${name}.tar.gz"
   ];
 in
 stdenv.mkDerivation rec {
@@ -71,6 +84,10 @@ stdenv.mkDerivation rec {
     cryptodev_headers
     zlib
   ];
+
+  preConfigure = optionalString (versionAtLeast version "1.1.1") ''
+    sed -i 's,/usr/bin/env,env,g' config
+  '';
 
   configureScript = "./config";
 
@@ -117,15 +134,18 @@ stdenv.mkDerivation rec {
     inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.1.0h";
-      pgpsigUrls = map (n: "${n}.asc") urls;
-      sha256Urls = map (n: "${n}.sha256") urls;
-      pgpKeyFingerprints = [
-        "EFC0 A467 D613 CB83 C7ED  6D30 D894 E2CE 8B3D 79F5"
-        "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
-      ];
-      inherit (src) outputHashAlgo;
-      outputHash = "5835626cde9e99656585fc7aaa2302a73a7e1340bf8c14fd635a62c66802a517";
+      urls = tarballUrls "1.1.1";
+      inherit (src)
+        outputHashAlgo;
+      outputHash = "2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        sha256Urls = map (n: "${n}.sha256") urls;
+        pgpKeyFingerprints = [
+          "EFC0 A467 D613 CB83 C7ED  6D30 D894 E2CE 8B3D 79F5"
+          "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
+        ];
+      };
     };
   };
 

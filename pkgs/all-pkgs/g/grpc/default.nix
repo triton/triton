@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.14.0";
+  version = "1.15.0";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    sha256 = "81ac28b5b69bbecffc58e7eb529f77125763ee8b6a71fcf85bbf0ac8a7ea394d";
+    sha256 = "10447120a6bd14b4bed93ef30251b2ae59ea2f89c38c4b1c274bf1a7e9f619c0";
   };
 
   nativeBuildInputs = [
@@ -47,6 +47,7 @@ stdenv.mkDerivation {
     unpackFile ${protobuf-cpp.src}
     mv -v protobuf* third_party/protobuf
 
+    grep -q '\-Werror' Makefile
     sed -i 's, -Werror,,g' Makefile
   '';
 

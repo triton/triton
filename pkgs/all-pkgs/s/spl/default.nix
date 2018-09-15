@@ -1,11 +1,8 @@
 { stdenv
-, autoconf
-, automake
 , elfutils
 , fetchFromGitHub
 , fetchTritonPatch
 , fetchurl
-, libtool
 
 , kernel ? null
 
@@ -38,26 +35,12 @@ assert buildKernel && !(kernel.isCompatibleVersion source.maxLinuxVersion "0") -
 stdenv.mkDerivation rec {
   name = "spl-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";
 
-  src = if source ? fetchzipVersion then
-    fetchFromGitHub {
-      owner = "zfsonlinux";
-      repo = "spl";
-      rev = "${if source ? version then "zfs-${source.version}" else source.rev}";
-      inherit (source) sha256;
-      version = source.fetchzipVersion;
-    }
-  else
-    fetchurl {
-      url = "https://github.com/zfsonlinux/zfs/releases/download/zfs-${version}/spl-${version}.tar.gz";
-      inherit (source) sha256;
-    };
+  src = fetchurl {
+    url = "https://github.com/zfsonlinux/zfs/releases/download/zfs-${version}/spl-${version}.tar.gz";
+    inherit (source) sha256;
+  };
 
-
-  nativeBuildInputs = [
-    autoconf
-    automake
-    libtool
-  ] ++ optionals buildKernel [
+  nativeBuildInputs = optionals buildKernel [
     elfutils
   ];
 
@@ -73,10 +56,6 @@ stdenv.mkDerivation rec {
       sha256 = "77ee1b103a6144b31d5a8af9ec30e923ff8cef1e98584a3375a1e55d0ba93d41";
     })
   ];
-
-  preConfigure = ''
-    ./autogen.sh
-  '';
 
   configureFlags = [
     "--with-config=${type}"

@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libcacard-2.5.3";
+  name = "libcacard-2.6.1";
 
   src = fetchurl {
     url = "https://www.spice-space.org/download/libcacard/${name}.tar.xz";
-    multihash = "QmS1N1L2FcmK4aZmr2bBoDe6rxbrXMDc2iwDHWQngboC1k";
-    sha256 = "243ff03c563a95faed497db7f524fcb34ccd6f388d1175ecf31c371a3188963b";
+    multihash = "QmSHukp2V22NVpxs5y3AgJVgBkHg4Mp5DxpxmYDEi65eh9";
+    sha256 = "6276c6a2bd018bf14f1b97260fff093b4a2325a9177be4fc6be7c1a9e204def0";
   };
 
   buildInputs = [

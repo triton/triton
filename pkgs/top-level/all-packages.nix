@@ -762,7 +762,10 @@ boost_1-66 = callPackage ../all-pkgs/b/boost {
 boost_1-67 = callPackage ../all-pkgs/b/boost {
   channel = "1.67";
 };
-boost = callPackageAlias "boost_1-67" { };
+boost_1-68 = callPackage ../all-pkgs/b/boost {
+  channel = "1.68";
+};
+boost = callPackageAlias "boost_1-68" { };
 
 borgbackup = pkgs.python3Packages.borgbackup;
 

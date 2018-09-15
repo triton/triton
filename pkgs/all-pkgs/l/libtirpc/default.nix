@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "1.0.3";
+  version = "1.1.4";
 in
 stdenv.mkDerivation rec {
   name = "libtirpc-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/libtirpc/libtirpc/${version}/${name}.tar.bz2";
-    sha256 = "86c3a78fc1bddefa96111dd233124c703b22a78884203c55c3e06b3be6a0fd5e";
+    sha256 = "2ca529f02292e10c158562295a1ffd95d2ce8af97820e3534fe1b0e3aec7561d";
   };
 
   propagatedBuildInputs = [

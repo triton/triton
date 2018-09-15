@@ -11,16 +11,16 @@
 
 let
   major = "0.8";
-  version = "${major}.1";
+  version = "${major}.2";
 in
 stdenv.mkDerivation rec {
   name = "libssh-${version}";
 
   src = fetchurl {
     url = "https://www.libssh.org/files/${major}/${name}.tar.xz";
-    multihash = "Qmc1sQATgtmjEjCRjpPMw8C23FF2nqGAfmqtU6xUgSz8aM";
+    multihash = "QmQd4Ptkp1xpGwMA5yQtvUPcmG1vjh8TZWqLnYTdNpUnx2";
     hashOutput = false;
-    sha256 = "d17f1267b4a5e46c0fbe66d39a3e702b8cefe788928f2eb6e339a18bb00b1924";
+    sha256 = "8d1290f0fac4f8a75a9001dd404a8a093daba4e86c90c45ecf77d62f14c7b8a5";
   };
 
   nativeBuildInputs = [
@@ -49,10 +49,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
+      };
     };
   };
 

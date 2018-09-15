@@ -23,11 +23,11 @@ let
 in
 {
   "stable" = rec {
-    version = "0.7.9";
-    maxLinuxVersion = "4.17";
+    version = "0.7.11";
+    maxLinuxVersion = "4.18";
     src = fetcher {
       inherit version;
-      sha256 = "f50ca2441c6abde4fe6b9f54d5583a45813031d6bb72b0011b00fc2683cd9f7a";
+      sha256 = "4dff9ecce6e02061242d9435febe88c1250de83b96d392b712bccf31c459517a";
     };
     patches = [
       (fetchTritonPatch {

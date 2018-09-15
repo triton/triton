@@ -13,7 +13,7 @@ let
     "mirror://sourceforge/pcre/pcre/${version}/pcre2-${version}.tar.bz2"
   ];
 
-  version = "10.31";
+  version = "10.32";
 in
 stdenv.mkDerivation rec {
   name = "pcre2-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "e07d538704aa65e477b6a392b32ff9fc5edf75ab9a40ddfc876186c4ff4d68ac";
+    sha256 = "f29e89cc5de813f45786580101aaee3984a65818631d4ddbda7b32f699b87c2e";
   };
 
   buildInputs = [
@@ -50,11 +50,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "10.31";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-        # Philip Hazel
-      pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
-      inherit (src) outputHash outputHashAlgo;
+      urls = tarballUrls "10.32";
+      inherit (src)
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+          # Philip Hazel
+        pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
+      };
     };
   };
 

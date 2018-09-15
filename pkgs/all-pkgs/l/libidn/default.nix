@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "1.34";
+  version = "1.35";
 
   tarballUrls = version: [
     "mirror://gnu/libidn/libidn-${version}.tar.gz"
@@ -15,23 +15,20 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "3719e2975f2fb28605df3479c380af2cf4ab4e919e1506527e4c7670afff6e3c";
+    sha256 = "f11af1005b46b7b15d057d7f107315a1ad46935c7fcdf243c16e46ec14f0fe1e";
   };
-
-  postPatch = ''
-    SOURCE_TIME=$(stat -c "%Y" configure)
-    sed -i 's,gl_cv_cc_vis_werror=yes,gl_cv_cc_vis_werror=no,g' configure
-    touch -d "@$SOURCE_TIME" configure
-  '';
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = tarballUrls "1.34";
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "9AA9 BDB1 1BB1 B99A 2128  5A33 0664 A769 5426 5E8C";
-      inherit (src) outputHashAlgo;
-      outputHash = "3719e2975f2fb28605df3479c380af2cf4ab4e919e1506527e4c7670afff6e3c";
+      urls = tarballUrls "1.35";
+      inherit (src)
+        outputHashAlgo;
+      outputHash = "f11af1005b46b7b15d057d7f107315a1ad46935c7fcdf243c16e46ec14f0fe1e";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1CB2 7DBC 9861 4B2D 5841  646D 0830 2DB6 A267 0428";
+      };
     };
   };
 

@@ -26,15 +26,19 @@ in
 let
   isLib = prefix == "lib";
 
-  version = "1.32.0";
+  tarballUrls = version: [
+    "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz"
+  ];
+
+  version = "1.33.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
 
   src = fetchurl {
-    url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/"
-      + "v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "700a89d59fcc55acc2b18184001bfb3220fa6a6e543486aca35f40801cba6f7d";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "4879ce9ff3320f5344b910ee1c46ed5e366edc2272620cf17d8e762724d7df1e";
   };
 
   buildInputs = optionals (!isLib) [
@@ -62,6 +66,17 @@ stdenv.mkDerivation rec {
   postInstall = ''
     rm -r "$out"/{bin,share}
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      url = tarballUrls "1.33.0";
+      outputHash = "4879ce9ff3320f5344b910ee1c46ed5e366edc2272620cf17d8e762724d7df1e";
+      inherit (src)
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "an implementation of HTTP/2 in C";

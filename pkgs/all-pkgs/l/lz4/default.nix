@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "1.8.2";
+  version = "1.8.3";
 in
 stdenv.mkDerivation rec {
   name = "lz4-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "lz4";
     repo = "lz4";
     rev = "v${version}";
-    sha256 = "7c052ef43e0fd7f2b1c81b1e2909b323becef9b110ecf58d60c5d925f162dec2";
+    sha256 = "1cd1213d473e8550a109faf6762cc3493ea2ec4cd4e34edaf9c85ac1479da17c";
   };
 
   preBuild = ''

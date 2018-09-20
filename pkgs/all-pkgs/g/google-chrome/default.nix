@@ -37,6 +37,7 @@
 , pango
 , shared-mime-info
 , systemd_lib
+, util-linux_lib
 , xdg-utils
 
 , channel
@@ -120,6 +121,7 @@ stdenv.mkDerivation rec {
     stdenv.cc.cc
     stdenv.libc
     systemd_lib
+    util-linux_lib
     xdg-utils
   ];
 

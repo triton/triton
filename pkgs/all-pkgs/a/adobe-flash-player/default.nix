@@ -16,8 +16,8 @@ let
 
   sources = {
     "stable" = {
-      version = "30.0.0.154";
-      sha256 = "b7a74ac30996cb6a7c862559c257df6e0c3037ca1960d585eb1cb94858df20a5";
+      version = "31.0.0.108";
+      sha256 = "iA+Z/cArsqmwIIt9gz7cqxw4xE2t0W7VJ0vpwD3LycA=";
     };
     "beta" = {
       version = "24.0.0.154";

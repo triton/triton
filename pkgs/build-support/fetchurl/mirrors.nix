@@ -131,6 +131,7 @@ rec {
   ];
 
   ipfs-nocache = [
+    https://cloudflare-ipfs.com
     https://ipfs.io
   ];
 

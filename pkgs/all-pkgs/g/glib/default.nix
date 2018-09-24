@@ -33,7 +33,7 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  channel = "2.56";
+  channel = "2.58";
   version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "40ef3f44f2c651c7a31aedee44259809b6f03d3d20be44545cd7d177221c0b8d";
+    sha256 = "97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6";
   };
 
   nativeBuildInputs = [
@@ -56,7 +56,6 @@ stdenv.mkDerivation rec {
     libffi
     libselinux
     pcre
-    stdenv.libc
     util-linux_lib
     zlib
   ];
@@ -69,29 +68,23 @@ stdenv.mkDerivation rec {
       -e 's,#!/usr/bin/env python.*,#!${python3.interpreter},'
   '';
 
-  mesonFlags = [
-    "-Diconv=libc"  # FIXME: assumes glibc is libc
-    "-Dselinux=true"
-    "-Dxattr=true"
-    "-Dlibmount=true"
-    # The internal pcre is not patched to support gcc5, among other
-    "-Dinternal_pcre=false"
-    "-Dman=false"
-    "-Dsystemtap=false"
-    "-Dgtk_doc=false"
-  ];
-
   postInstall = ''
-    rm -rvf $out/share/gtk-doc
-
     # Exit the ninja build directory
     cd ../$srcRoot
     # M4 macros are not installed by meson, but still needed by other
     # packages during the meson transition.
     for i in 'glib-2.0.m4' 'glib-gettext.m4' 'gsettings.m4'; do
-      ls -al
-      install -D -m 644 -v m4macros/$i $out/share/aclocal/$i
+      ! find "$out" -name "$i"
+      install -D -m 644 -v m4macros/"$i" "$out"/share/aclocal/"$i"
     done
+
+    # Remove unneeded dependencies from .pc file
+    grep -q ' \-lcharset' "$out"/lib/pkgconfig/glib-2.0.pc
+    sed -i 's, -lcharset,,' "$out"/lib/pkgconfig/glib-2.0.pc
+    grep -q ' \-lxdgmime' "$out"/lib/pkgconfig/gio-2.0.pc
+    grep -q ' \-linotify' "$out"/lib/pkgconfig/gio-2.0.pc
+    sed -i 's, -linotify,,' "$out"/lib/pkgconfig/gio-2.0.pc
+    sed -i 's, -lxdgmime,,' "$out"/lib/pkgconfig/gio-2.0.pc
   '';
 
   passthru = {
@@ -99,13 +92,15 @@ stdenv.mkDerivation rec {
     inherit flattenInclude;
 
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/glib/${channel}/"
-        + "${name}.sha256sum";
-      failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/glib/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

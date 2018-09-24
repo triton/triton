@@ -181,6 +181,8 @@ aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };
 
 ansible = callPackage ../all-pkgs/a/ansible { };
 
+antlr4-python3-runtime = callPackage ../all-pkgs/a/antlr4-python3-runtime { };
+
 apache-libcloud = callPackage ../all-pkgs/a/apache-libcloud { };
 
 appdirs = callPackage ../all-pkgs/a/appdirs {

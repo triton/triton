@@ -16,16 +16,16 @@ let
     "https://unbound.net/downloads/unbound-${version}.tar.gz"
   ];
 
-  version = "1.7.3";
+  version = "1.8.0";
 in
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmeoDAkmudmjJ5sTWThoKFpBX3gfsCiTPsgb6axZdJu2n8";
+    multihash = "QmcFV58VRqpDN3JXvqqGZLvXpJmZRBPEQzQuo4Q79yToit";
     hashOutput = false;
-    sha256 = "c11de115d928a6b48b2165e0214402a7a7da313cd479203a7ce7a8b62cba602d";
+    sha256 = "78f79d6d3b643fdcd74a14fc76542250da886c82f82bc55b51e189663d61b83f";
   };
 
   buildInputs = [
@@ -38,6 +38,10 @@ stdenv.mkDerivation rec {
     protobuf-c
     systemd_lib
   ];
+
+  # 1.8.0 broke autoconf pkg-config detection so we have to set
+  # the location of the binary manually
+  PKG_CONFIG = "pkg-config";
 
   configureFlags = [
     "--localstatedir=/var"
@@ -67,11 +71,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.7.3";
-      pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprint = "EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D";
-      inherit (src) outputHashAlgo;
-      outputHash = "c11de115d928a6b48b2165e0214402a7a7da313cd479203a7ce7a8b62cba602d";
+      urls = tarballUrls "1.8.0";
+      outputHash = "78f79d6d3b643fdcd74a14fc76542250da886c82f82bc55b51e189663d61b83f";
+      inherit (src)
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        pgpKeyFingerprint = "EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D";
+      };
     };
   };
 

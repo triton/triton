@@ -17,8 +17,8 @@
 }:
 
 let
-  rev = "0cda60af13e709e670af90553b2271bf194e7ccd";
-  date = "2018-09-09";
+  rev = "c16ce12acb997e6ebd81eeb37bf5f9a20e95ea19";
+  date = "2018-09-22";
 in
 stdenv.mkDerivation rec {
   name = "libarchive-${date}";
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     owner = "libarchive";
     repo = "libarchive";
     inherit rev;
-    sha256 = "d0229c6da0066e1792ec826f457efd476d87560e22c51e990494cce8ac9dfbf2";
+    sha256 = "0021af1297082e99c09b85f611421ceea12ca440aac87311effae81183b51938";
   };
 
   nativeBuildInputs = [

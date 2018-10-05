@@ -10,16 +10,16 @@
 
 let
   major = "1.8";
-  version = "${major}.13";
+  version = "${major}.14";
 in
 stdenv.mkDerivation rec {
   name = "haproxy-${version}";
   
   src = fetchurl {
     url = "https://www.haproxy.org/download/${major}/src/${name}.tar.gz";
-    multihash = "QmdqiHxAMnY8RunqSHnCbfTQFcRTm38Xbo9MGdL3zxSFiu";
+    multihash = "QmXcykWvsdxrAQK9qxXgt1PdPwsuDELaBHwtyMmYPRKXjG";
     hashOutput = false;
-    sha256 = "2bf5dafbb5f1530c0e67ab63666565de948591f8e0ee2a1d3c84c45e738220f1";
+    sha256 = "b17e402578be85e58af7a3eac99b1f675953bea9f67af2e964cf8bdbd1bd3fdf";
   };
 
   buildInputs = [
@@ -51,8 +51,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      md5Urls = map (n: "${n}.md5") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Urls = map (n: "${n}.md5") src.urls;
+      };
     };
   };
 

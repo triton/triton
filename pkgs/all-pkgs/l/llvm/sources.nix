@@ -1,4 +1,49 @@
 {
+  "7" = {
+    version = "7.0.0";
+    srcs = {
+      cfe = {
+        sha256 = "550212711c752697d2f82c648714a7221b1207fd9441543ff4aa9e3be45bba55";
+      };
+      clang-tools-extra = {
+        sha256 = "937c5a8c8c43bc185e4805144744799e524059cac877a44d9063926cd7a19dbe";
+      };
+      compiler-rt = {
+        sha256 = "bdec7fe3cf2c85f55656c07dfb0bd93ae46f2b3dd8f33ff3ad6e7586f4c670d6";
+      };
+      libcxx = {
+        sha256 = "9b342625ba2f4e65b52764ab2061e116c0337db2179c6bce7f9a0d70c52134f0";
+      };
+      libcxxabi = {
+        sha256 = "9b45c759ff397512eae4d938ff82827b1bd7ccba49920777e5b5e460baeb245f";
+      };
+      libunwind = {
+        sha256 = "50aee87717421e70450f1e093c6cd9a27f2b111025e1e08d64d5ace36e338a9c";
+      };
+      lld = {
+        sha256 = "fbcf47c5e543f4cdac6bb9bbbc6327ff24217cd7eafc5571549ad6d237287f9c";
+      };
+      lldb = {
+        sha256 = "7ff6d8fee49977d25b3b69be7d22937b92592c7609cf283ed0dcf9e5cd80aa32";
+      };
+      llvm = {
+        sha256 = "8bc1f844e6cbde1b652c19c1edebc1864456fd9c78b8c1bea038e51b363fe222";
+      };
+      openmp = {
+        sha256 = "30662b632f5556c59ee9215c1309f61de50b3ea8e89dcc28ba9a9494bba238ff";
+      };
+      polly = {
+        sha256 = "919810d3249f4ae79d084746b9527367df18412f30fe039addbf941861c8534b";
+      };
+    };
+    patches = [
+      {
+        rev = "b178552fe5e7431bfa98025cb8e4fe2e4927bd69";
+        file = "l/llvm/fix-llvm-config.patch";
+        sha256 = "7cbe2b2d1127c0995cb1af5d7d758e1a9a600ee17045f3a3341a68726ba8f0e8";
+      }
+    ];
+  };
   "6" = {
     version = "6.0.1";
     srcs = {

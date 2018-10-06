@@ -15,13 +15,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.7.1";
+  name = "knot-2.7.2";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmYK9fxz1rJEmQCHz5QCHjGMoVEYUG5j3kkmhLcQsWqbrM";
+    multihash = "QmVZdr1fWywCTRsuoczzoT6ReoKVp1m96AmyJr1TQB8hrw";
     hashOutput = false;
-    sha256 = "7d6ae20ada0f0ee7700d5df17f47f86b49eb21ee34977d0d70de6a0947371381";
+    sha256 = "cb70b2ee1c7ecbaad8774a1e0c449a68c6a6f7c9d60595524f003201d6e38431";
   };
 
   buildInputs = [
@@ -64,10 +64,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      sha256Urls = map (n: "${n}.sha256") src.urls;
-      pgpKeyFingerprint = "742F A4E9 5829 B6C5 EAC6  B857 10BB 7AF6 FEBB D6AB";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        sha256Urls = map (n: "${n}.sha256") src.urls;
+        pgpKeyFingerprint = "742F A4E9 5829 B6C5 EAC6  B857 10BB 7AF6 FEBB D6AB";
+      };
     };
   };
 

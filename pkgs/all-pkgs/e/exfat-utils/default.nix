@@ -3,14 +3,26 @@
 }:
 
 let
-  version = "1.2.8";
+  version = "1.3.0";
 in
 stdenv.mkDerivation rec {
   name = "exfat-utils-${version}";
 
   src = fetchurl {
     url = "https://github.com/relan/exfat/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "5c1643d23d24663b4e483292a643a791d2af7269870cac2f781c5dfe6a20ce27";
+    hashOutput = false;
+    sha256 = "dfebd07a7b907e2d603d3a9626e6440bd43ec6c4e8c07ccfc57ce9502b724835";
+  };
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
   };
 
   meta = with stdenv.lib; {

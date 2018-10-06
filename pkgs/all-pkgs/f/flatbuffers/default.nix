@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.9.0";
+  version = "1.10.0";
 in
 stdenv.mkDerivation {
   name = "flatbuffers-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     owner = "google";
     repo = "flatbuffers";
     rev = "v${version}";
-    sha256 = "060cf9317d187cc2228835cb81d7e06acdc4bf635d9c9d19a7547567f1fbcfc3";
+    sha256 = "810db89d0354ce12b3fb0c46edce6137cb28391a12cf89aea226bc12dcd57f57";
   };
 
   nativeBuildInputs = [

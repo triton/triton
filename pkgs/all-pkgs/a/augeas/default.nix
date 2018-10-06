@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "augeas-1.10.1";
+  name = "augeas-1.11.0";
 
   src = fetchurl {
     url = "http://download.augeas.net/${name}.tar.gz";
-    multihash = "QmRmKKpszor3JyzdawkFJcW7eJnMNB5NpYz9Me29EgEzeT";
+    multihash = "QmaW7QAgt492ZPomXmw94LVwxvUERseif6kHbBY3C34GWy";
     hashOutput = false;
-    sha256 = "52db256afab261d31cc147eaa1a71795a5fec59e888dfd0b65a84c7aacd6364d";
+    sha256 = "393ce8f4055af89cd4c20bf903eacbbd909cf427891f41b56dc2ba66243ea0b0";
   };
 
   buildInputs = [
@@ -23,9 +23,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      };
     };
   };
 

@@ -19,7 +19,7 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "8.1.0290";
+  version = "8.1.0451";
 in
 stdenv.mkDerivation rec {
   name = "vim-${version}";
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "938bc7da1b2437e9289cf045bf0c3a12545378d21d5f241ebe32782bc68f23bc";
+    sha256 = "b8ee974898749544a476ac798bb7ab19b68396181610a65adb779debe7eb47e3";
   };
 
   nativeBuildInputs = [

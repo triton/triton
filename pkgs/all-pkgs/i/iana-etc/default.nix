@@ -4,17 +4,17 @@
 }:
 
 let
-  version = "2018-02-12";
+  version = "2018-10-04";
 in
 stdenv.mkDerivation rec {
   name = "iana-etc-${version}";
 
   srcs = [
     (fetchurl {
-      # 2018-02-12
+      # 2018-10-04
       url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml";
-      multihash = "QmYfWX6w9gzUqir3eb6zUJ75EQnzAmP9mC8Jormoetw91B";
-      sha256 = "1262abb7c0cb83d374fc402bd95c0241eef50455a722af02004749b8121f3a23";
+      multihash = "QmTv56KqERBXzA6ne2k4umfpmnnN73rbaPa82PNeXGNGp1";
+      sha256 = "39cd8578705974d0c9a1eb645c7374b4f72d9ceed82ec3eefc5670121036ca52";
     })
     (fetchurl {
       # 2017-10-13

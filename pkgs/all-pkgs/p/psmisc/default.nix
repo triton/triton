@@ -6,11 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "psmisc-23.1";
+  name = "psmisc-23.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/psmisc/psmisc/${name}.tar.xz";
-    sha256 = "2e84d474cf75dfbe3ecdacfb797bbfab71a35c7c2639d1b9f6d5f18b2149ba30";
+    hashOutput = false;
+    sha256 = "4b7cbffdc9373474da49b85dc3457ae511c43dc7fa7d94513fe06f89dcb87880";
   };
 
   buildInputs = [
@@ -21,6 +22,17 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-selinux"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A set of tools that use the proc filesystem";

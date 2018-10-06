@@ -764,7 +764,9 @@ with stdenv.lib;
   XEN_PVH y
   XEN_PVHVM y
   XEN_SAVE_RESTORE y
-  XEN_SCRUB_PAGES y
+  ${optionalString (versionOlder version "4.19") ''
+    XEN_SCRUB_PAGES y
+  ''}
   #XEN_STUB y
   XEN_SYMS y
   XEN_SYS_HYPERVISOR y

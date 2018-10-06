@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "1.12.0";
+  version = "1.13.0";
 in
 stdenv.mkDerivation rec {
   name = "mongo-c-driver-${version}";
@@ -20,7 +20,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "e5924207f6ccbdf74a9b95305b150e96b3296a71f2aafbb21e647dc28d580c68";
+    hashOutput = false;
+    sha256 = "25164e03b08baf9f2dd88317f1a36ba36b09f563291a7cf241f0af8676155b8d";
   };
 
   nativeBuildInputs = [
@@ -44,6 +45,17 @@ stdenv.mkDerivation rec {
     "-DENABLE_CRYPTO_SYSTEM_PROFILE=ON"
     "-DENABLE_MAN_PAGES=ON"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

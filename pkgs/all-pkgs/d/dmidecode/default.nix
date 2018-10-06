@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dmidecode-3.1";
+  name = "dmidecode-3.2";
 
   src = fetchurl {
     url = "mirror://savannah/dmidecode/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "d766ce9b25548c59b1e7e930505b4cad9a7bb0b904a1a391fbb604d529781ac0";
+    sha256 = "077006fa2da0d06d6383728112f2edef9684e9c8da56752e97cd45a11f838edd";
   };
 
   preBuild = ''
@@ -18,9 +18,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "90DF D652 3C57 373D 81F6  3D19 8656 88D0 38F0 2FC8";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "90DF D652 3C57 373D 81F6  3D19 8656 88D0 38F0 2FC8";
+      };
     };
   };
   meta = with stdenv.lib; {

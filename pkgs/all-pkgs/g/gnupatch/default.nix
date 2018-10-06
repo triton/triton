@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
 
 , attr
 }:
@@ -22,6 +23,19 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     attr
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "ba71067ce3694be838da1c42b40d61168334475c";
+      file = "g/gnupatch/CVE-2018-6951.patch";
+      sha256 = "a1fde199bc091f5a015181903ad34812de474283b83067b5517e9dbd9ba5cce7";
+    })
+    (fetchTritonPatch {
+      rev = "ba71067ce3694be838da1c42b40d61168334475c";
+      file = "g/gnupatch/CVE-2018-6952.patch";
+      sha256 = "16e3eea6c24c20979b79de27ce8b2211d8d5e15f1534955fbf75dd90f9857c77";
+    })
   ];
 
   passthru = {

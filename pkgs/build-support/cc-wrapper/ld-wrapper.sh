@@ -16,6 +16,10 @@ source @out@/nix-support/utils.sh
 
 params=()
 
+if [ "${dtRpath-$extraCCFlags}" = "1" ]; then
+  params+=("--enable-new-dtags")
+fi
+
 if [ "${relro-$extraCCFlags}" = "1" ]; then
   params+=("-z" "relro")
 fi

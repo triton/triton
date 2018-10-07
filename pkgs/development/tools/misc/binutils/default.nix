@@ -36,15 +36,6 @@ stdenv.mkDerivation rec {
       file = "binutils/deterministic.patch";
       sha256 = "912815241d4f64f971b22deb456217b8288b44b2f96ae0e50289a911dbecddc8";
     })
-
-    # Always add PaX flags section to ELF files.
-    # This is needed, for instance, so that running "ldd" on a binary that is
-    # PaX-marked to disable mprotect doesn't fail with permission denied.
-    (fetchTritonPatch {
-      rev = "a998b3cf816a979c701495a9cb4379d5fae83eee";
-      file = "binutils/pt-pax-flags-20121023.patch";
-      sha256 = "6f01fa85cbc2428ac40e2325bafcc01dcbd3dde6ec9f0dc7367b8474049021a2";
-    })
   ];
 
   nativeBuildInputs = [

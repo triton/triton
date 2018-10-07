@@ -21,15 +21,6 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    # Turn on --enable-new-dtags by default to make the linker set
-    # RUNPATH instead of RPATH on binaries.  This is important because
-    # RUNPATH can be overriden using LD_LIBRARY_PATH at runtime.
-    (fetchTritonPatch {
-      rev = "a998b3cf816a979c701495a9cb4379d5fae83eee";
-      file = "binutils/new-dtags.patch";
-      sha256 = "c2c3e8ce7ec166bfaea20db66d7358942757214bcc7c4b75f005f78ea5b2ba03";
-    })
-
     # Since binutils 2.22, DT_NEEDED flags aren't copied for dynamic outputs.
     # That requires upstream changes for things to work. So we can patch it to
     # get the old behaviour by now.

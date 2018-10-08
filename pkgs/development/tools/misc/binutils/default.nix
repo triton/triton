@@ -21,15 +21,6 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    # Since binutils 2.22, DT_NEEDED flags aren't copied for dynamic outputs.
-    # That requires upstream changes for things to work. So we can patch it to
-    # get the old behaviour by now.
-    (fetchTritonPatch {
-      rev = "a998b3cf816a979c701495a9cb4379d5fae83eee";
-      file = "binutils/dtneeded.patch";
-      sha256 = "16dca5a36a94de8f677450b6b83abd96a692be322b4a49e3d0cd2e2cdc3d11b7";
-    })
-
     # Make binutils output deterministic by default.
     (fetchTritonPatch {
       rev = "a998b3cf816a979c701495a9cb4379d5fae83eee";

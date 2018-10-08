@@ -20,15 +20,6 @@ stdenv.mkDerivation rec {
     sha256 = "06bs5v5ndb4g5qx96d52lc818gkbskd1m0sz57314v887sqfbcia";
   };
 
-  patches = [
-    # Make binutils output deterministic by default.
-    (fetchTritonPatch {
-      rev = "a998b3cf816a979c701495a9cb4379d5fae83eee";
-      file = "binutils/deterministic.patch";
-      sha256 = "912815241d4f64f971b22deb456217b8288b44b2f96ae0e50289a911dbecddc8";
-    })
-  ];
-
   nativeBuildInputs = [
     bison
   ];

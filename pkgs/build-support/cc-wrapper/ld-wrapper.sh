@@ -20,6 +20,10 @@ if [ "${dtRpath-$extraCCFlags}" = "1" ]; then
   params+=("--enable-new-dtags")
 fi
 
+if [ "${copyNeeded-$extraCCFlags}" = "1" ]; then
+  params+=("--copy-dt-needed-entries")
+fi
+
 if [ "${relro-$extraCCFlags}" = "1" ]; then
   params+=("-z" "relro")
 fi

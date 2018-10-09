@@ -51,6 +51,5 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux
       ++ i686-linux;
-    branch = "1.15";
   };
 }

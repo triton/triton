@@ -2062,7 +2062,10 @@ isl_0-14 = callPackage ../all-pkgs/i/isl {
 isl_0-18 = callPackage ../all-pkgs/i/isl {
   channel = "0.18";
 };
-isl = callPackageAlias "isl_0-18" { };
+isl_0-20 = callPackage ../all-pkgs/i/isl {
+  channel = "0.20";
+};
+isl = callPackageAlias "isl_0-20" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 

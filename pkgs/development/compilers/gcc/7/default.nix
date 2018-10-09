@@ -11,7 +11,7 @@
 , perl ? null # optional, for texi2pod (then pod2man); required for Java
 , gmp, mpfr, libmpc, gettext, which
 , libelf                      # optional, for link-time optimizations (LTO)
-, isl ? null # optional, for the Graphite optimization framework.
+, isl_0-18 ? null # optional, for the Graphite optimization framework.
 , zlib ? null, boehmgc ? null
 , zip ? null, unzip ? null, pkgconfig ? null
 , gtk ? null, libart_lgpl ? null, xorg ? null
@@ -287,7 +287,7 @@ stdenv.mkDerivation ({
     ${if enableMultilib then "--enable-multilib --disable-libquadmath" else "--disable-multilib"}
     ${if enableShared then "" else "--disable-shared"}
     ${if enablePlugin then "--enable-plugin" else "--disable-plugin"}
-    ${optionalString (isl != null) "--with-isl=${isl}"}
+    ${optionalString (isl_0-18 != null) "--with-isl=${isl_0-18}"}
     ${if langJava then
       "--with-ecj-jar=${javaEcj} " +
 

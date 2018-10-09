@@ -164,7 +164,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit (stage1Pkgs) glibc linux-headers_4-9 linux-headers;
-        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc isl;
+        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc;
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
         gmp = pkgs.gmp.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };

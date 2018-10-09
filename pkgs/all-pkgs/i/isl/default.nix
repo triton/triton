@@ -8,6 +8,11 @@
 
 let
   sources = {
+    "0.20" = {
+      version = "0.20";
+      multihash = "QmX4H1gPmNoYiZQ4WYyJspr3PyUmw2W2vsaytzDocoGgyr";
+      sha256 = "a5596a9fb8a5b365cb612e4b9628735d6e67e9178fae134a816ae195017e77aa";
+    };
     "0.18" = {
       version = "0.18";
       multihash = "QmPTtYQfodApCrwdwgKg2B9yY8n21MAT1MwUuwPDQqTDNK";
@@ -34,6 +39,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     gmp
+  ];
+
+  configureFlags = [
+    "--enable-portable-binary"
   ];
 
   meta = with stdenv.lib; {

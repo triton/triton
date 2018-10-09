@@ -11,8 +11,8 @@ let
     optionals
     optionalString;
 
-  rev = "33523a57554df852177a6f06c3d39b44d212040a";
-  date = "2018-09-25";
+  rev = "64750c121ae4f83713882072de9a9ad5935ee3a2";
+  date = "2018-10-07";
 in
 stdenv.mkDerivation {
   name = "wireguard-${date}${optionalString (kernel != null) "-${kernel.version}"}";
@@ -20,8 +20,8 @@ stdenv.mkDerivation {
   src = fetchzip {
     version = 6;
     url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
-    multihash = "QmaSKzXCB6CWNA2zCn6sxC7bKMa1AkNNLLBTPmsediWdDF";
-    sha256 = "8f7c8be11a308d27758f67ec834321a9af57897b24efe5d0e1fdcce690893873";
+    multihash = "QmdBwDFDqB7aHteSWoMAvSJebf3tx7QLSgMi7z5DgBZwaf";
+    sha256 = "859ec85138e369606ee13ade838d054f2ad7e63b83a55ae232e7f0231d71017a";
   };
 
   nativeBuildInputs = optionals (kernel != null) [

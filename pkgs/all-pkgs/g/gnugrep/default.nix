@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
     pcre
   ];
 
-  doCheck = true;
-
   # Fix reference to sh in bootstrap-tools, and invoke grep via
   # absolute path rather than looking at argv[0].
   postInstall = ''

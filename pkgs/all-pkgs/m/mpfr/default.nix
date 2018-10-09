@@ -42,8 +42,6 @@ stdenv.mkDerivation rec {
     "--with-pic"
   ];
 
-  doCheck = true;
-
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

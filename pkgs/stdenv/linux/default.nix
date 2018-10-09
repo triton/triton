@@ -123,7 +123,7 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (pkgs) stdenv glibc linux-headers_4-4 linux-headers;
+        inherit (pkgs) stdenv glibc linux-headers_4-9 linux-headers;
 
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -163,7 +163,7 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
+        inherit (stage1Pkgs) glibc linux-headers_4-9 linux-headers;
         inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc isl;
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
@@ -219,7 +219,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage3Pkgs is missing package definition for `${n}`") pkgs) // {
         pkgs = stage3Pkgs;
-        inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
+        inherit (stage1Pkgs) glibc linux-headers_4-9 linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv lib gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash gettext bison flex
@@ -297,7 +297,7 @@ let
     };
 
     overrides = pkgs: {
-      inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
+      inherit (stage1Pkgs) glibc linux-headers_4-9 linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc7 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash gettext bison flex

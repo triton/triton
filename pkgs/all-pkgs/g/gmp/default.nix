@@ -30,8 +30,6 @@ stdenv.mkDerivation rec {
     "--enable-cxx"
   ];
 
-  doCheck = true;
-
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

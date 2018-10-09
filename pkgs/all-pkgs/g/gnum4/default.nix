@@ -14,12 +14,12 @@ stdenv.mkDerivation rec {
     sha256 = "6640d76b043bc658139c8903e293d5978309bf0f408107146505eca701e67cf6";
   };
 
-  # We don't want to depend on the bootstraped shell
   configureFlags = [
+    "--enable-c++"
+    "--enable-changeword"
+    # We don't want to depend on the bootstraped shell
     "--with-syscmd-shell=/bin/sh"
   ];
-
-  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl {

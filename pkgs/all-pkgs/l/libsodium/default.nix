@@ -20,11 +20,6 @@ stdenv.mkDerivation rec {
     sha256 = "eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533";
   };
 
-  # FIXME: Hack to not use AVX512 since our binutils is too old
-  preConfigure = ''
-    sed -i 's,avx512,avx513,g' configure
-  '';
-
   doCheck = true;
 
   postInstall = ''

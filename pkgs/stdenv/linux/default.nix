@@ -123,6 +123,7 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
+        inherit lib;
         inherit (pkgs) stdenv glibc linux-headers_4-9 linux-headers;
 
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {

@@ -6,16 +6,14 @@
 }:
 
 let
-  version = "7.6.6";
+  version = "8.0.0";
 in
 stdenv.mkDerivation rec {
   name = "boehm-gc-${version}";
 
   src = fetchurl {
     url = "https://github.com/ivmai/bdwgc/releases/download/v${version}/gc-${version}.tar.gz";
-    # We need the multihash because they delete old releases
-    multihash = "QmZCCEGDkqYPG3TJU9M5YcmiMgJAeCBYLtqGjrszHSQvXs";
-    sha256 = "e968edf8f80d83284dd473e00a5e3377addc2df261ffb7e6dc77c9a34a0039dc";
+    sha256 = "8f23f9a20883d00af2bff122249807e645bdf386de0de8cbd6cce3e0c6968f04";
   };
 
   buildInputs = [
@@ -25,6 +23,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-cplusplus"
     "--enable-large-config"
+    "--disable-docs"
   ];
 
   meta = with lib; {

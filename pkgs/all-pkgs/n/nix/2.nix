@@ -7,6 +7,7 @@
 , aws-sdk-cpp
 , busybox
 , boehm-gc
+, boost
 , brotli
 , bzip2
 , curl
@@ -20,21 +21,22 @@
 }:
 
 let
-  version = "2.0.4";
+  version = "2.1.3";
 in
 stdenv.mkDerivation rec {
   name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
-    multihash = "Qmdf1xu1r8ifDjVkq5gNbxUBS2c3JpJ8XxqBe1BvVacN15";
+    multihash = "QmP8tLiMweiCRV1bPYU5MGbca3dJEn3P3x8GLHxYYgXizs";
     hashOutput = false;
-    sha256 = "166540ff7b8bb41449586b67e5fc6ab9e25525f6724b6c6bcbfb0648fbd6496b";
+    sha256 = "5d22dad058d5c800d65a115f919da22938c50dd6ba98c5e3a183172d149840a4";
   };
 
   buildInputs = [
     #aws-sdk-cpp
     boehm-gc
+    boost
     brotli
     bzip2
     curl
@@ -47,49 +49,49 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0001-Configurable-fixed-output-paths.patch";
-      sha256 = "89694ae966850d5c926ca11fb7a19fcc63b8f517b752fa4f0e4384257573f17f";
+      sha256 = "887c35d5b46b61c8368d8ae66d621759ac6ece368063640db30b8f503bca21a5";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0002-Remove-hardcoded-nixos.org-references.patch";
-      sha256 = "4b8409841f5a5dc37590ed0623ca0af468ab477837bfcf27726bd7e0fa375727";
+      sha256 = "ac2e60243c32f9a273b36319726172a5bf9284e4e25a70bcd0d7c9408014ab44";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0003-Remove-nixpkgs-references.patch";
-      sha256 = "d45ca713fb8dd3f0446823d404bc1d0703f1b147c96dd08e8fd1ac3ae837dd7f";
+      sha256 = "a3e907634bdd727a7b425f84b05b8eee1d4557c6bb93fab44db5868cf50ec4bb";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0004-Build-dir-should-be-unique.patch";
-      sha256 = "42fdc7e4725b3258525f6d9ca0a6e894e151dd93893cad369ffc6fe75fcf3ce5";
+      sha256 = "44ed78276bdc81a627c9b87462231c4638a59523f9ee7d8daf9fbf312e8de9f5";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0005-Always-verify-TLS.patch";
-      sha256 = "cfce63abb5f90e11260bc3f91c25a78488893286d3198300c276bbebf74fec28";
+      sha256 = "7e4b5c383a3a441418c611e4d7d4a888f69265aafafc2a669a959f0333cb0f33";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0006-SSL_CERT_FILE-for-fixed-output.patch";
-      sha256 = "30e696b2d12859213843f6b1a70eba0d19c435e8eb7b856e110765681acc20e9";
+      sha256 = "43daa4a29fb7c06de423e298a2803ffd890fb7edd8d16805c4bc5408770a0cfe";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
-      file = "n/nix/0007-Output-base64-by-default.patch";
-      sha256 = "cb7c47fb97f9a3a7a1163a0f4a25799f328065ec94545fbb765673b1dce58838";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      file = "n/nix/0007-Output-base16-by-default.patch";
+      sha256 = "ae2e6ce7c0ac99ec805e93114904df9978fb72fb51c1b87715327d02df8cbdb7";
     })
     (fetchTritonPatch {
-      rev = "1e9615b6dbafda8140c68c3a16c72c5d41f9c1bd";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0008-Make-fixed-ouput-message-nicer.patch";
-      sha256 = "1c84f6431342fa9c73db64250aeca3db58185f5d750a94b4ea5ef4a95a1119a1";
+      sha256 = "69d9b8052afc52a0946197f2d85b98556bfba16bd77db521e1012bf17236b9c4";
     })
     (fetchTritonPatch {
-      rev = "e747299fd079ecaa42efd41599f90f944cfd7342";
+      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
       file = "n/nix/0009-builtin-fetchurl-Support-multiple-urls.patch";
-      sha256 = "7c577670017b387d49e1335443a98313eea24a76b5423f1570b1e67fa70e867d";
+      sha256 = "d03182cbd8623cd70596d5f0d1b317110599395e951b131650221eac1d4f1bef";
     })
   ];
 
@@ -105,7 +107,6 @@ stdenv.mkDerivation rec {
     # we can't use upstream binaries
     "--localstatedir=/nix/var"
     "--enable-gc"
-    "--disable-init-state"
     "--with-store-dir=${storeDir}"
     "--with-sandbox-shell=${busybox}/bin/busybox"
   ];
@@ -118,12 +119,14 @@ stdenv.mkDerivation rec {
     inherit
       version;
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = map (x: "${x}.sha256") src.urls;
-      failEarly = true;
+      fullOpts = {
+        sha256Url = map (x: "${x}.sha256") src.urls;
+      };
     };
   };
 

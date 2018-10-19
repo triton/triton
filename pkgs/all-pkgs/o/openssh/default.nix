@@ -7,18 +7,18 @@
 , ldns
 , libbsd
 , libedit
-, openssl_1-0-2
+, openssl
 , pam
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.8p1";
+  name = "openssh-7.9p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "1a484bb15152c183bb2514e112aa30dd34138c3cfb032eee5490a66c507144ca";
+    sha256 = "6b4b3ba2253d84ed3771c8050728d597c91cfce898713beb7b64a305b6f11aad";
   };
 
   buildInputs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     ldns
     libbsd
     libedit
-    openssl_1-0-2
+    openssl
     pam
     zlib
   ];
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     "--with-libedit"
     "--with-audit=linux"
     "--with-pie"
-    "--with-ssl-dir=${openssl_1-0-2}"
+    "--with-ssl-dir=${openssl}"
     "--with-ssl-engine"
     "--with-pam"
     "--with-kerberos5"

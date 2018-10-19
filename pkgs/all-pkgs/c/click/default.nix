@@ -5,15 +5,15 @@
 }:
 
 let
-  version = "6.7";
+  version = "7.0";
 in
 buildPythonPackage {
   name = "click-${version}";
 
   src = fetchPyPi {
-    package = "click";
+    package = "Click";
     inherit version;
-    sha256 = "f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b";
+    sha256 = "5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7";
   };
 
   meta = with lib; {

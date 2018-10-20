@@ -10,7 +10,7 @@
 }:
 
 let
-  name = "chrony-3.3";
+  name = "chrony-3.4";
 
   baseUrls = [
     "https://download.tuxfamily.org/chrony/${name}"
@@ -21,9 +21,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.tar.gz") baseUrls;
-    multihash = "Qmf9XJVJCv25hnoYfzLSTsAzDLTAbEzNBwhbSxp2msLGkE";
+    multihash = "Qmev3vcNHk4yB4dy2YDhy3fngP8KsiCXDVbKVuubzuRwmX";
     hashOutput = false;
-    sha256 = "0d1fb2d5875032f2d5a86f3770374c87ee4c941916f64171e81f7684f2a73128";
+    sha256 = "af77e47c2610a7e55c8af5b89a8aeff52d9a867dd5983d848b52d374bc0e6b9f";
   };
   
   buildInputs = [
@@ -56,9 +56,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}-tar-gz-asc.txt") baseUrls;
-      pgpKeyFingerprint = "8B1F 4A9A DA73 D401 E308  5A0B 5FF0 6F29 BA1E 013B";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}-tar-gz-asc.txt") baseUrls;
+        pgpKeyFingerprint = "8B1F 4A9A DA73 D401 E308  5A0B 5FF0 6F29 BA1E 013B";
+      };
     };
   };
 

@@ -95,12 +95,17 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        # 2017-2018
-        "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
-      ];
-      inherit (src) urls outputHashAlgo outputHash;
+      inherit (src)
+        urls
+        outputHashAlgo
+        outputHash;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # 2017-2018
+          "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
+        ];
+      };
     };
   };
 

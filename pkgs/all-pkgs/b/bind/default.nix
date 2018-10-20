@@ -33,16 +33,16 @@ let
     optionals
     optionalString;
 
-  version = "9.13.2";
+  version = "9.13.3";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmXDbzoJTN3gJWFZK5PkWvFpy4fz5eZRR3EVHovorRHBkB";
+    multihash = "QmZFthTXYkKCpqGbtPwuhjod5vVM5b8Gwn8Q2K7rUbu9Mw";
     hashOutput = false;
-    sha256 = "6c044e9ea81add9dbbd2f5dfc224964cc6b6e364e43a8d6d8b574d9282651802";
+    sha256 = "76674cf2a3e61766aed5c7fd1ee6ed3da133a9e331b35b24f40efdf1bbac5b44";
   };
 
   nativeBuildInputs = [
@@ -158,12 +158,17 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
-      pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
-      pgpKeyFingerprints = [
-        "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
-      ];
-      inherit (src) urls outputHashAlgo outputHash;
+      inherit (src)
+        urls
+        outputHashAlgo
+        outputHash;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
+        pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
+        pgpKeyFingerprints = [
+          "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
+        ];
+      };
     };
   };
 

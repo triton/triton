@@ -50,7 +50,7 @@ let
     };
     "bcachefs" =
       let
-        date = "2018-10.19";
+        date = "2018-10-19";
       in {
         version = "4.18.15";
         patchUrls = [

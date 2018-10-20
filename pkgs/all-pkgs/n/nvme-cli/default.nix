@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.5";
+  version = "1.6";
 in
 stdenv.mkDerivation rec {
   name = "nvme-cli-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "linux-nvme";
     repo = "nvme-cli";
     rev = "v${version}";
-    sha256 = "045244031db9f9b0fd51c033d98f1e0d9cf2fb47efaf3740014cb975470f0396";
+    sha256 = "3f881dbbe1e5976f3b694bdcebbd23f6e7a1d218ebd63becc0b8ea86ecdfbdf7";
   };
 
   buildInputs = [

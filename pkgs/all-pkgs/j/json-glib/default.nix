@@ -11,14 +11,15 @@
 
 let
   channel = "1.4";
-  version = "${channel}.2";
+  version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${channel}/${name}.tar.xz";
-    sha256 = "2d7709a44749c7318599a6829322e081915bdc73f5be5045882ed120bb686dc8";
+    hashOutput = false;
+    sha256 = "720c5f4379513dc11fd97dc75336eb0c0d3338c53128044d9fabec4374f4bc47";
   };
 
   nativeBuildInputs = [
@@ -44,13 +45,15 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/json-glib/${channel}/"
-        + "${name}.sha256sum";
-      failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/json-glib/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

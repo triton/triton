@@ -25,9 +25,9 @@ let
 
   sources = {
     "stable" = {
-      version = "1.2.1";
-      multihash = "QmT3msAH9XUDrWe43kP9Mpw47y6tmKBTrXmudNhXpKTji3";
-      sha256 = "cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732";
+      version = "1.3";
+      multihash = "QmZ26cTAXDkHJhj1ABJoUUUh1TN7SmzYQpuqenzTukAo9x";
+      sha256 = "4f3d69aefdf2dbaf9825408e452a8a414ffc60494c70633560700398820dc550";
     };
     "head" = {
       fetchzipversion = 5;
@@ -66,25 +66,12 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--${boolEn fixedPoint}-fixed-point"
-    "--disable-fixed-point-debug"
     "--${boolEn (!fixedPoint)}-float-api"
     # non-Opus modes, e.g. 44.1 kHz & 2^n frames
     "--enable-custom-modes"
-    # Requires IEEE 754 floating point
     "--enable-float-approx"
-    "--enable-asm"
-    "--enable-rtcd"
-    # Enable intrinsics optimizations for ARM & X86
-    "--${boolEn (
-      (elem targetSystem platforms.arm-all)
-      || (elem targetSystem platforms.x86-all))}-intrinsics"
-    "--disable-assertions"
-    "--disable-fuzzing"
-    "--enable-ambisonics"
     "--disable-doc"
     "--disable-extra-programs"
-    "--enable-update-draft"
-    #--with-NE10
   ];
 
   passthru = {
@@ -93,10 +80,12 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      md5Urls = map (n: "${n}/MD5SUMS") releaseUrls;
-      sha1Urls = map (n: "${n}/SHA1SUMS") releaseUrls;
-      sha256Urls = map (n: "${n}/SHA256SUMS.txt") releaseUrls;
       failEarly = true;
+      fullOpts = {
+        md5Urls = map (n: "${n}/MD5SUMS") releaseUrls;
+        sha1Urls = map (n: "${n}/SHA1SUMS") releaseUrls;
+        sha256Urls = map (n: "${n}/SHA256SUMS.txt") releaseUrls;
+      };
     };
   };
 

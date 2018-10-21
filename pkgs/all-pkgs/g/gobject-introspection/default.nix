@@ -4,13 +4,10 @@
 , fetchurl
 , flex
 , lib
-# , meson
-# , ninja
 
-, bzip2
 , glib
 , libffi
-, python2
+, python3
 
 , cairo
 }:
@@ -21,8 +18,8 @@ let
     optionals
     optionalString;
 
-  channel = "1.56";
-  version = "${channel}.1";
+  channel = "1.58";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "gobject-introspection-${version}";
@@ -30,21 +27,18 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5b2875ccff99ff7baab63a34b67f8c920def240e178ff50add809e267d9ea24b";
+    sha256 = "27c1590a32749de0a5481ce897772547043e94bccba4bc0a7edb3d8513e401ec";
   };
 
   nativeBuildInputs = [
     bison
     flex
-    # meson
-    # ninja
   ];
 
   buildInputs = [
-    bzip2
     glib
     libffi
-    python2
+    python3
   ] ++ optionals doCheck [
     cairo
   ];
@@ -59,48 +53,31 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = /* patchShebangs does not catch @PYTHON@ */ ''
-    sed -i tools/g-ir-tool-template.in \
-      -e 's|#!/usr/bin/env @PYTHON@|#!${python2.interpreter}|'
-  '' + /* Fix broken glib version check */ ''
-    sed -i configure{,.ac} \
-      -e 's/2.56.1/2.56.0/g'
-  '' +
-  optionalString doCheck (''
-      patchShebangs ./tests/gi-tester
-    '' + /* Fix tests broken by absolute_shlib_path.patch */ ''
-      sed -i tests/scanner/{GetType,GtkFrob,Regress,SLetter,Typedefs,Utility}-1.0-expected.gir \
-        -e 's|shared-library="|shared-library="/unused/|'
-    ''
-  );
+  postPatch = ''
+    # Fix python patching
+    grep -q 's,@PYTHON_CMD\\@,.*$(PYTHON),' Makefile.in
+    sed -i 's#s,@PYTHON_CMD\\@,.*$(PYTHON),#s,@PYTHON_CMD\\@,$(PYTHON),#' Makefile.in
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--disable-doctool"
-    "--enable-Bsymbolic"
-    "--${boolWt doCheck}-cairo"
   ];
-
-  # meonFlags = [
-  #   "-Ddoctool=false"
-  # ];
-
-  postInstall = "rm -frv $out/share/gtk-doc";
 
   doCheck = false;
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gobject-introspection/"
-        + "${channel}/${name}.sha256sum";
-      failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gobject-introspection/"
+          + "${channel}/${name}.sha256sum";
+      };
     };
   };
 

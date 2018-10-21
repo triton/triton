@@ -2,19 +2,41 @@
 , fetchurl
 }:
 
+let
+  gsver = "gs924";
+  version = "0.15";
+
+  baseUrl = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/"
+    + "download/${gsver}";
+in
 stdenv.mkDerivation rec {
-  name = "jbig2dec-0.13";
+  name = "jbig2dec-${version}";
 
   src = fetchurl {
-    url = "http://downloads.ghostscript.com/public/jbig2dec/${name}.tar.gz";
-    multihash = "QmWnL9shuX5XeeJcbGb1ndjiUz66RnHSb9Fuqh5vCUm29M";
-    sha256 = "5aaca0070992cc2e971e3bb2338ee749495613dcecab4c868fc547b4148f5311";
+    url = "${baseUrl}/${name}.tar.gz";
+    hashOutput = false;
+    sha256 = "6bfa1af72de37c7929315933a1ba696540d860936ad98f9de02fc725d7e53854";
   };
 
   # Fix the lack of memento.h
   postInstall = ''
-    cp memento.h $out/include
+    ! test -e "$out"/include/memento.h
+    cp memento.h "$out"/include
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Url = "${baseUrl}/MD5SUMS";
+        sha512Url = "${baseUrl}/SHA512SUMS";
+      };
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://jbig2dec.sourceforge.net/;

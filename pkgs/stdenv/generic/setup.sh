@@ -336,6 +336,7 @@ stripHash() {
 
 _defaultUnpack() {
   local fn="$1"
+  local ret="1"
 
   if [ -d "$fn" ]; then
     stripHash "$fn"
@@ -344,25 +345,21 @@ _defaultUnpack() {
     # introduced by store optimization, which might break things
     # in the build.
     cp -pr --reflink=auto "$fn" "$strippedName"
+    ret=0
   else
     case "$fn" in
-      *.tar.brotli | *.tar.bro | *.tar.br)
-        brotli -d < "$fn" | tar x
+      *.tar.brotli | *.tar.bro | *.tar.br | *.tbr)
+        brotli -d < "$fn" | tar x && ret=0 || ret="$?"
         ;;
-      *.tar.xz | *.tar.lzma)
-        # Don't rely on tar knowing about .xz.
-        xz -d < "$fn" | tar x
-        ;;
-      *.tar | *.tar.* | *.tgz | *.tbz2)
+      *.tar | *.tar.* | *.tgz | *.tbz2 | *.txz)
         # GNU tar can automatically select the decompression method
         # (info "(tar) gzip").
-        tar xf "$fn"
-        ;;
-      *)
-        return 1
+        tar xf "$fn" && ret=0 || ret="$?"
         ;;
     esac
   fi
+
+  [ "$ret" -eq "0" ] || [ "$ret" -eq "141" ]
 }
 
 unpackFile() {

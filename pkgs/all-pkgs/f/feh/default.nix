@@ -15,13 +15,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "feh-2.27.1";
+  name = "feh-2.28";
 
   src = fetchurl {
     url = "https://feh.finalrewind.org/${name}.tar.bz2";
-    multihash = "QmPF1dcyctNTyB3VGzMk4EACu9SVVGVHPb6Hkk11SUDsWB";
+    multihash = "QmeP5cQEnBcToZninaDu1ejnCLYyx7uCU3Yiq1TmfDTq3J";
     hashOutput = false;
-    sha256 = "6ec338f80c3f4c30d715f44780f1a09ebfbb99e92a1bb43316428744a839f383";
+    sha256 = "13d22d7c5fe5057612ce3df88857aee89fcab9c8cd6fd4f95a42fe6bf851d3d9";
   };
 
   nativeBuildInputs = [
@@ -55,9 +55,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "781B B707 1C6B F648 EAEB  08A1 100D 5BFB 5166 E005";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "781B B707 1C6B F648 EAEB  08A1 100D 5BFB 5166 E005";
+      };
     };
   };
 

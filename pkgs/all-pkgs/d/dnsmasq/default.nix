@@ -17,13 +17,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "dnsmasq-2.79";
+  name = "dnsmasq-2.80";
 
   src = fetchurl {
     url = "http://www.thekelleys.org.uk/dnsmasq/${name}.tar.xz";
-    multihash = "QmRfdEB2CrJd92u8UjTUxNkVCZNBUaGKh86JvbKKsxU8kU";
+    multihash = "QmPekN49v1WgC77JZZbgcbZgtZWiaq8xB4o7afu5ofcVWn";
     hashOutput = false;
-    sha256 = "78ad74f5ca14fd85a8bac93f764cd9d60b27579e90eabd3687ca7b030e67861f";
+    sha256 = "cdaba2785e92665cf090646cba6f94812760b9d7d8c8d0cfb07ac819377a63bb";
   };
 
   buildInputs = [
@@ -65,12 +65,17 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7"
-        "D6EA CBD6 EE46 B834 248D  1112 15CD DA6A E191 35A2"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7"
+          "D6EA CBD6 EE46 B834 248D  1112 15CD DA6A E191 35A2"
+        ];
+      };
     };
   };
 

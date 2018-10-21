@@ -22,8 +22,9 @@ let
       sha256 = "18c83b147cc3e2133a7ac2543eeb014d52070de01c7474287d3ccecc9b16895e";
     };
     "1.1" = {
-      version = "1.1pre16";
-      sha256 = "9934c53f8b22bbcbfa0faae0cb7ea13875fe1990cce75af728a7f4ced2c0230b";
+      version = "1.1pre17";
+      multihash = "QmQA2SwSAs41EkBvJwaq3KYpeoiPTSzK9mubo1yMBymLhZ";
+      sha256 = "61b9c9f9f396768551f39216edcc41918c65909ffd9af071feb3b5f9f9ac1c27";
     };
   };
   source = sources."${channel}";
@@ -54,9 +55,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "D62B DD16 8EFB E48B C60E  8E23 4A60 84B9 C0D7 1F4A";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "D62B DD16 8EFB E48B C60E  8E23 4A60 84B9 C0D7 1F4A";
+      };
     };
   };
 

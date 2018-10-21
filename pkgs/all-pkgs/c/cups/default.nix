@@ -23,7 +23,7 @@ let
     boolEn
     boolWt;
 
-  version = "2.2.7";
+  version = "2.2.8";
 in
 stdenv.mkDerivation rec {
   name = "cups-${version}";
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/apple/cups/releases/download/v${version}/"
       + "cups-${version}-source.tar.gz";
     hashOutput = false;
-    sha256 = "3c4b637b737077565ccdfbd5f61785d03f49461ae736fcc2c0ffaf41d2c6ea6a";
+    sha256 = "3968fc1d26fc48727508db1c1380e36c6694ab90177fd6920aec5f6cc73af9e4";
   };
 
   buildInputs = [
@@ -178,8 +178,10 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "45D0 8394 6E30 3528 2B3C  CA9A F434 1042 35DA 97EB";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "45D0 8394 6E30 3528 2B3C  CA9A F434 1042 35DA 97EB";
+      };
     };
   };
 

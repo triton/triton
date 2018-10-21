@@ -14,11 +14,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "libSM-1.2.2";
+  name = "libSM-1.2.3";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
-    sha256 = "0baca8c9f5d934450a70896c4ad38d06475521255ca63b717a6510fdb6e287bd";
+    hashOutput = false;
+    sha256 = "2d264499dcb05f56438dee12a1b4b71d76736ce7ba7aa6efbf15ebb113769cbb";
   };
 
   nativeBuildInputs = [
@@ -45,6 +46,25 @@ stdenv.mkDerivation rec {
     "--without-xsltproc"
     "--${boolWt (util-linux_lib != null)}-libuuid"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Matt Turner
+          "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
+          # Matthieu Herrb
+          "C41C 985F DCF1 E536 4576  638B 6873 93EE 37D1 28F8"
+        ];
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "X.Org Session Management library";

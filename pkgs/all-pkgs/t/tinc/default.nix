@@ -17,8 +17,9 @@ let
 
   sources = {
     "1.0" = {
-      version = "1.0.34";
-      sha256 = "c03a9b61dedd452116dd9a8db231545ba08a7c96bce011e0cbd3cfd2c56dcfda";
+      version = "1.0.35";
+      multihash = "Qma6sTzNcPA1t1qD4ZF74S6GjrCXBvxR7WLDmh3mJPrQEX";
+      sha256 = "18c83b147cc3e2133a7ac2543eeb014d52070de01c7474287d3ccecc9b16895e";
     };
     "1.1" = {
       version = "1.1pre16";

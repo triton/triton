@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.93";
+  name = "libdrm-2.4.96";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmbEZJcV4NuBqfQqNakXyqVCK3BBLpQJxWqha4N1ACJ66s";
+    multihash = "QmQ5uPgmd7ENdSYhArfwKgG7snum86itBQyzQfXr1MzopT";
     hashOutput = false;
-    sha256 = "6e84d1dc9548a76f20b59a85cf80a0b230cd8196084f5243469d9e65354fcd3c";
+    sha256 = "0d561acf7bb4cc59dc82415100e6c1a44860e8c380e00f9592923e3cd08db393";
   };
 
   nativeBuildInputs = [
@@ -42,28 +42,33 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Emil Velikov
-        "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D"
-        # Kenneth Graunke
-        "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38"
-        # Eric Anholt
-        "FC9B AE14 35A9 F7F6 64B8  2057 B5D6 2936 D1FC 9EE8"
-        # Rob Clark
-        "D628 5B5E 8992 99F3 DA74  6184 191C 9B90 5522 B045"
-        # Robert Bragg
-        "C20F 5C44 90D7 D64B 4C9A  0999 8CD1 DF55 2975 297B"
-        # David Airlie
-        "10A6 D91D A1B0 5BD2 9F6D  EBAC 0C74 F359 79C4 86BE"
-        # Marek Olšák
-        "CD47 C534 1A37 5F33 BEF7  BAFA FDD1 5D5A CEF0 F2B1"
-        # Lucas Stach
-        "CFD0 E654 BCBE 5DD2 D030  D222 CFCC 297C 6D0A 120B"
-        # Daniel Stone
-        "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Emil Velikov
+          "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D"
+          # Kenneth Graunke
+          "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38"
+          # Eric Anholt
+          "FC9B AE14 35A9 F7F6 64B8  2057 B5D6 2936 D1FC 9EE8"
+          # Rob Clark
+          "D628 5B5E 8992 99F3 DA74  6184 191C 9B90 5522 B045"
+          # Robert Bragg
+          "C20F 5C44 90D7 D64B 4C9A  0999 8CD1 DF55 2975 297B"
+          # David Airlie
+          "10A6 D91D A1B0 5BD2 9F6D  EBAC 0C74 F359 79C4 86BE"
+          # Marek Olšák
+          "CD47 C534 1A37 5F33 BEF7  BAFA FDD1 5D5A CEF0 F2B1"
+          # Lucas Stach
+          "CFD0 E654 BCBE 5DD2 D030  D222 CFCC 297C 6D0A 120B"
+          # Daniel Stone
+          "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
+        ];
+      };
     };
   };
 

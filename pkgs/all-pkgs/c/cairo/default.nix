@@ -29,16 +29,16 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "cairo-1.15.12";
+  name = "cairo-1.16.0";
 
   src = fetchurl {
     urls = [
       "https://cairographics.org/releases/${name}.tar.xz"
       "https://cairographics.org/snapshots/${name}.tar.xz"
     ];
-    multihash = "QmVKRF9CrXnZGJ65g6QvsfDthQGsBZG7XLD4tzgUxhFZdC";
+    multihash = "QmShc68SuMhes22Uqts2BSXB2HKnPFFgguvztG3YmMdVxk";
     hashOutput = false;
-    sha256 = "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9";
+    sha256 = "5e7b29b3f113ef870d1e3ecf8adf21f923396401604bda16d44be45e66052331";
   };
 
   nativeBuildInputs = [
@@ -151,8 +151,10 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      sha1Urls = map (n: "${n}.sha1.asc") src.urls;
-      pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
+      fullOpts = {
+        sha1Urls = map (n: "${n}.sha1.asc") src.urls;
+        pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
+      };
     };
   };
 

@@ -1,8 +1,0 @@
-includedir=@includedir@
-
-Name: Pycairo
-Description: Python bindings for cairo
-Version: @version@
-Requires: cairo
-Cflags: -I${includedir}
-Libs:

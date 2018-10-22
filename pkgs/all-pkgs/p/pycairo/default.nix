@@ -1,53 +1,36 @@
 { stdenv
-, buildPythonPackage
-, fetchurl
-, isPy3
+, fetchPyPi
 , lib
+, pkgs
 
 , cairo
+, python
 }:
 
 let
-  inherit (lib)
-    optionalString;
-
-  version = "1.17.0";
+  version = "1.17.1";
 in
-buildPythonPackage rec {
+stdenv.mkDerivation rec {
   name = "pycairo-${version}";
 
-  src = fetchurl {
-    url = "https:/github.com/pygobject/pycairo/releases/download/v${version}/"
-      + "pycairo-${version}.tar.gz";
-    hashOutput = false;
-    sha256 = "cdd4d1d357325dec3a21720b85d273408ef83da5f15c184f2eff3212ff236b9f";
+  src = fetchPyPi {
+    package = "pycairo";
+    inherit version;
+    sha256 = "0f0a35ec923d87bc495f6753b1e540fd046d95db56a35250c44089fbce03b698";
   };
+
+  nativeBuildInputs = [
+    pkgs.meson
+    pkgs.ninja
+  ];
 
   buildInputs = [
     cairo
   ];
 
-  # PC is no longer installed during bdist install
-  # Make our own instead
-  postInstall = ''
-    mkdir -pv "$out"/share/pkgconfig
-    includedir="$(dirname "$(find "$out" -name py${if isPy3 then "3" else ""}cairo.h)")"
-    sed \
-      -e "s,@includedir@,$includedir," \
-      -e 's/@version@/${version}/' \
-      '${./pycairo.pc.in}' \
-      >"$out"/share/pkgconfig/py${if isPy3 then "3" else ""}cairo.pc
-  '';
-
-  passthru = {
-    srcVerification = fetchurl {
-      failEarly = true;
-      sha256Url = map (n: "${n}.sha256") src.urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "0EBF 782C 5D53 F7E5 FB02  A667 46BD 761F 7A49 B0EC";
-      inherit (src) urls outputHash outputHashAlgo;
-    };
-  };
+  mesonFlags = [
+    "-Dpython=${python.interpreter}"
+  ];
 
   meta = with lib; {
     description = "Python bindings for the cairo library";
@@ -59,6 +42,7 @@ buildPythonPackage rec {
     ];
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

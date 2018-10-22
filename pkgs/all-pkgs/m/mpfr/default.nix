@@ -26,6 +26,10 @@ stdenv.mkDerivation rec {
     sha256 = "67874a60826303ee2fb6affc6dc0ddd3e749e9bfcb4c8655e3953d0458a6e16e";
   };
 
+  buildInputs = [
+    gmp
+  ];
+
   patches = flip mapAttrsToList patchSha256s (n: { multihash, sha256 }: fetchurl {
     name = "mpfr-${version}-${n}";
     url = "http://www.mpfr.org/mpfr-${version}/${n}";
@@ -34,9 +38,11 @@ stdenv.mkDerivation rec {
       sha256;
   });
 
-  buildInputs = [
-    gmp
-  ];
+  # Only build the library
+  postPatch = ''
+    grep -q '^SUBDIRS = ' Makefile.in
+    sed -i 's,^SUBDIRS = .*$,SUBDIRS = src,' Makefile.in
+  '';
 
   configureFlags = [
     "--with-pic"

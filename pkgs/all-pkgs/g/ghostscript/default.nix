@@ -6,7 +6,6 @@
 , dbus
 , fontconfig
 , freetype
-, ijs
 , jbig2dec
 , lcms2
 , libidn
@@ -21,7 +20,7 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  version = "9.23";
+  version = "9.25";
   versionNoP = replaceChars ["."] [""] version;
 
   fonts = stdenv.mkDerivation {
@@ -55,7 +54,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "1fcedc27d4d6081105cdf35606cb3f809523423a6cf9e3c23cead3525d6ae8d9";
+    sha256 = "a2971a23bf15bbd9ddcd173141b15504e51ddc1d5a0a0144b00a6a8b14a62fed";
   };
 
   buildInputs = [
@@ -63,7 +62,6 @@ stdenv.mkDerivation rec {
     dbus
     fontconfig
     freetype
-    ijs
     jbig2dec
     lcms2
     libidn
@@ -83,7 +81,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    rm -r freetype jbig2dec jpeg lcms2art libpng tiff zlib ijs
+    rm -r freetype jbig2dec jpeg lcms2mt libpng tiff zlib
 
     grep -q '^INCLUDE=/usr/include' base/unix-aux.mak
     sed -i base/unix-aux.mak \
@@ -102,10 +100,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-fontconfig"
-    "--enable-freetype"
     "--enable-dynamic"
-    "--enable-cups"
     "--with-system-libtiff"
     "--with-drivers=ALL"
   ];
@@ -127,17 +122,19 @@ stdenv.mkDerivation rec {
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 
-  # Sometimes throws weird errors for 9.18
-  installParallel = false;
-
   passthru = {
     inherit version fonts;
 
     srcVerification = fetchurl {
       failEarly = true;
-      md5Url = "${baseUrl}/MD5SUMS";
-      sha512Url = "${baseUrl}/SHA512SUMS";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Url = "${baseUrl}/MD5SUMS";
+        sha512Url = "${baseUrl}/SHA512SUMS";
+      };
     };
   };
 

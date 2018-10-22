@@ -6,21 +6,14 @@
 , libusb
 }:
 
-let
-  name = "ccid-1.4.29";
-
-  tarballUrls = id: [
-    "https://alioth.debian.org/frs/download.php/file/${id}/${name}.tar.bz2"
-  ];
-in
 stdenv.mkDerivation rec {
-  inherit name;
+  name = "ccid-1.4.30";
 
   src = fetchurl {
-    urls = tarballUrls "4238";
-    multihash = "QmVJEjQGgUa5DPMXDqMrMPNsS8r3zvfAZsvtt8eMZbnhem";
+    url = "https://ccid.apdu.fr/files/${name}.tar.bz2";
+    multihash = "QmdvYzHHYqCZsQZdh4eNoiWjt8KCtZJEvBV4RRgRZhbCeP";
     hashOutput = false;
-    sha256 = "a5432ae845730493c04e59304b5c0c6103cd0e2c8827df57d69469a3eaaab84d";
+    sha256 = "ac17087be08880a0cdf99a8a2799a4ef004dc6ffa08b4d9b0ad995f39a53ff7c";
   };
 
   nativeBuildInputs = [
@@ -51,9 +44,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4239");
-      pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
-      inherit (src) urls outputHashAlgo outputHash;
+      inherit (src)
+        urls
+        outputHashAlgo
+        outputHash;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
+      };
     };
   };
 

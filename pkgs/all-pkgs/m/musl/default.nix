@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "musl-1.1.19";
+  name = "musl-1.1.20";
 
   src = fetchurl {
     url = "https://www.musl-libc.org/releases/${name}.tar.gz";
-    multihash = "QmbqyLycatmuY8wSuNZHXMCJwQYqkxx2vdBitj9tKCXevL";
+    multihash = "QmeeVzpstMMaRrY8AL9MYmDh3kZjFv2Pw4Q12vhWeQ1AEV";
     hashOutput = false;
-    sha256 = "db59a8578226b98373f5b27e61f0dd29ad2456f4aa9cec587ba8c24508e4c1d9";
+    sha256 = "44be8771d0e6c6b5f82dd15662eb2957c9a3173a19a8b49966ac0542bbd40d61";
   };
 
   preConfigure = ''
@@ -34,9 +34,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "8364 8929 0BB6 B70F 99FF  DA05 56BC DB59 3020 450F";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "8364 8929 0BB6 B70F 99FF  DA05 56BC DB59 3020 450F";
+      };
     };
   };
 

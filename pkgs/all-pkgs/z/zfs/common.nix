@@ -39,7 +39,7 @@ in
   };
   "dev" = {
     date = "2018-10-18";
-    maxLinuxVersion = "4.18";
+    maxLinuxVersion = "4.19";
     src = fetcher {
       fetchzipVersion = 6;
       rev = "80a91e7469669e2a5da5873b8f09a752f7869062";

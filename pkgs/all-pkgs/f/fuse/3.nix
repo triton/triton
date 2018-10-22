@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-3.2.5";
+  name = "fuse-3.2.6";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.xz";
     hashOutput = false;
-    sha256 = "3fa7534aae3d9523bd0245f085eb753a9b9d0dc9d2902dd51d6959b2b5394cf1";
+    sha256 = "cea4dad559b3fbdbb8e4ad5f9df6083fdb7f2b904104bd507ef790d311d271cf";
   };
 
   nativeBuildInputs = [
@@ -42,9 +42,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "ED31 791B 2C5C 1613 AF38  8B8A D113 FCAC 3C4E 599F";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "ED31 791B 2C5C 1613 AF38  8B8A D113 FCAC 3C4E 599F";
+      };
     };
   };
 

@@ -4,7 +4,9 @@
 
 , flac
 , libogg
+, libopusenc
 , opus
+, opusfile
 }:
 
 let
@@ -16,37 +18,42 @@ let
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "opus-tools-0.1.10";
+  name = "opus-tools-0.2";
 
   src = fetchurl {
     url = "mirror://xiph/opus/${name}.tar.gz";
-    multihash = "QmeBwLLdV5fnjXKQFpngiBPPJrA3b2g68jLYFJGiCY3JKS";
+    multihash = "QmNq7a5wye4nYGkzj7murvfjGyK6u1Abmar6dxM7xNrnUR";
     hashOutput = false;
-    sha256 = "a2357532d19471b70666e0e0ec17d514246d8b3cb2eb168f68bb0f6fd372b28c";
+    sha256 = "b4e56cb00d3e509acfba9a9b627ffd8273b876b4e2408642259f6da28fa0ff86";
   };
 
   buildInputs = [
     flac
     libogg
+    libopusenc
     opus
+    opusfile
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-assertions"
     "--disable-oggtest"
     "--disable-opustest"
+    "--disable-opusfiletest"
+    "--disable-libopusenctest"
     "--${boolEn (elem targetSystem platforms.x86_64)}-sse"
-    "--enable-stack-protector"
-    "--enable-pie"
-    "--with-flac"
   ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Url = "https://archive.mozilla.org/pub/opus/SHA256SUMS.txt";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha256Url = "https://archive.mozilla.org/pub/opus/SHA256SUMS.txt";
+      };
     };
   };
 

@@ -11,16 +11,16 @@
 
 let
   major = "0.8";
-  version = "${major}.2";
+  version = "${major}.4";
 in
 stdenv.mkDerivation rec {
   name = "libssh-${version}";
 
   src = fetchurl {
     url = "https://www.libssh.org/files/${major}/${name}.tar.xz";
-    multihash = "QmQd4Ptkp1xpGwMA5yQtvUPcmG1vjh8TZWqLnYTdNpUnx2";
+    multihash = "QmPnMTY74CGD99YrjY72QygrZUv1fk7mNP4YnR6eFxrqo4";
     hashOutput = false;
-    sha256 = "8d1290f0fac4f8a75a9001dd404a8a093daba4e86c90c45ecf77d62f14c7b8a5";
+    sha256 = "6bb07713021a8586ba2120b2c36c468dc9ac8096d043f9b1726639aa4275b81b";
   };
 
   nativeBuildInputs = [
@@ -54,7 +54,6 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        pgpDecompress = true;
         pgpsigUrls = map (n: "${n}.asc") src.urls;
         pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
       };

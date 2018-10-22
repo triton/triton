@@ -785,10 +785,10 @@ brotli_1-0-2 = callPackage ../all-pkgs/b/brotli {
 brotli_1-0-3 = callPackage ../all-pkgs/b/brotli {
   version = "1.0.3";
 };
-brotli_1-0-5 = callPackage ../all-pkgs/b/brotli {
-  version = "1.0.5";
+brotli_1-0-6 = callPackage ../all-pkgs/b/brotli {
+  version = "1.0.6";
 };
-brotli = callPackageAlias "brotli_1-0-5" { };
+brotli = callPackageAlias "brotli_1-0-6" { };
 brotli_dist = callPackage ../all-pkgs/b/brotli/dist.nix { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };

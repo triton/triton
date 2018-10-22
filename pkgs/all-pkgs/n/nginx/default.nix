@@ -116,9 +116,11 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       urls = src.urls;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFile = ./mdounin.key;
       inherit sha256;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFile = ./mdounin.key;
+      };
     };
   };
 

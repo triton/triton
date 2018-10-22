@@ -38,15 +38,16 @@ let
     boolOn
     boolString;
 
-  version = "0.67.0";
+  version = "0.70.1";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    multihash = "QmcRnWiU6a3qA97fQWcjeRmu4t4YdvKRxPNMH8JerUd3Fe";
-    sha256 = "a34a4f1a0f5b610c584c65824e92e3ba3e08a89d8ab4622aee11b8ceea5366f9";
+    multihash = "QmNiNkatku7gmG2KL58d7TH4VGRvBwWQyumoEvYF2kSisa";
+    hashOutput = false;
+    sha256 = "66972047d9ef8162cc8c389d7e7698291dfc9f2b3e4ea9a9f08ae604107451bd";
   };
 
   nativeBuildInputs = [
@@ -101,6 +102,17 @@ stdenv.mkDerivation rec {
     "-DWITH_NSS3=${boolOn (nss != null)}"
     "-DWITH_Cairo=${boolOn (cairo != null)}"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with lib; {
     description = "A PDF rendering library";

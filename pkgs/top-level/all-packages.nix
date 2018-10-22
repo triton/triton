@@ -2449,6 +2449,8 @@ libopenraw = callPackage ../all-pkgs/l/libopenraw { };
 
 liboping = callPackage ../all-pkgs/l/liboping { };
 
+libopusenc = callPackage ../all-pkgs/l/libopusenc { };
+
 libosinfo = callPackage ../all-pkgs/l/libosinfo { };
 
 libossp-uuid = callPackage ../all-pkgs/l/libossp-uuid { };

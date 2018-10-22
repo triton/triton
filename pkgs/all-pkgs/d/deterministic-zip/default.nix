@@ -1,7 +1,6 @@
 { stdenv
 , lib
 
-, brotli_1-0-2
 , brotli_1-0-3
 , gnutar_1-30
 
@@ -10,10 +9,6 @@
 
 let
   versions = {
-    "5" = {
-      brotli = brotli_1-0-2;
-      tar = gnutar_1-30;
-    };
     "6" = {
       brotli = brotli_1-0-3;
       tar = gnutar_1-30;

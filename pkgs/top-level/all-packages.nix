@@ -1625,7 +1625,6 @@ gnome-terminal_3-26 = callPackage ../all-pkgs/g/gnome-terminal {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   nautilus = pkgs.nautilus_unwrapped_3-26;
-  vala = pkgs.vala_0-40;
   vte = pkgs.vte_0-50;
 };
 gnome-terminal = callPackageAlias "gnome-terminal_3-26" { };
@@ -1893,7 +1892,6 @@ gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.24";
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  vala = pkgs.vala_0-40;
 };
 gtksourceview = callPackageAlias "gtksourceview_3-24" { };
 
@@ -2279,7 +2277,6 @@ libgdiplus = callPackage ../all-pkgs/l/libgdiplus { };
 
 libgee_0-20 = callPackage ../all-pkgs/l/libgee {
   channel = "0.20";
-  vala = pkgs.vala_0-40;
 };
 libgee = callPackageAlias "libgee_0-20" { };
 
@@ -2322,7 +2319,6 @@ libgweather_3-28 = callPackage ../all-pkgs/l/libgweather {
   atk = pkgs.atk_2-28;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   libsoup = pkgs.libsoup_2-62;
-  vala = pkgs.vala_0-40;
 };
 libgweather = callPackageAlias "libgweather_3-28" { };
 
@@ -3875,10 +3871,10 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-40 = callPackage ../all-pkgs/v/vala {
-  channel = "0.40";
+vala_0-42 = callPackage ../all-pkgs/v/vala {
+  channel = "0.42";
 };
-vala = callPackageAlias "vala_0-40" { };
+vala = callPackageAlias "vala_0-42" { };
 
 valgrind = callPackage ../all-pkgs/v/valgrind { };
 

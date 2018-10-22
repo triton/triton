@@ -15,9 +15,9 @@ let
     optionalString;
 
   sources = {
-    "0.40" = {
-      version = "0.40.8";
-      sha256 = "5c35e087a7054e9f0a514a0c1f1d0a0d7cf68d3e43c1dbeb840f9b0d815c0fa5";
+    "0.42" = {
+      version = "0.42.2";
+      sha256 = "9e89aa42152b1cef551568f827aa2deea2a9b5487d78c91474c8617b618e5f07";
     };
   };
   source = sources."${channel}";
@@ -62,13 +62,15 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/vala/${channel}/"
-        + "${name}.sha256sum";
-      failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/vala/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

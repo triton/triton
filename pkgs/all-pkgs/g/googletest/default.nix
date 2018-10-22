@@ -5,8 +5,8 @@
 }:
 
 let
-  date = "2018-06-14";
-  rev = "ba96d0b1161f540656efdaed035b3c062b60e006";
+  date = "2018-10-22";
+  rev = "82987067d8cc6ee034abd18a78bd444cb41fd2c5";
 in
 stdenv.mkDerivation rec {
   name = "googletest-${date}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "googletest";
     inherit rev;
-    sha256 = "e319a90f13fa19f6f4cbe36f46f7d274b53f108627adf3c3350d2f58397bd9ad";
+    sha256 = "b1060a56b8129c062ffcf123af2943ec6cba9f943a712e6c16e6ab771910a592";
   };
 
   nativeBuildInputs = [

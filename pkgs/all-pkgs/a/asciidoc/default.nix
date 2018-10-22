@@ -16,11 +16,11 @@ stdenv.mkDerivation rec {
   name = "asciidoc-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "asciidoc";
     repo = "asciidoc";
     rev = version;
-    sha256 = "6534194fe2de087eb6e9fb3ab6ac393e3690380ee9ec8a18b9dc46171a0e3691";
+    sha256 = "0f90e25f46d1ba2c5b12a2db896c80a1d82c145606ce536dd9766b814b7be929";
   };
 
   nativeBuildInputs = [

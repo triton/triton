@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.2.0";
+  version = "0.2.1";
 in
 buildPythonPackage {
   name = "m2r-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "m2r";
     inherit version;
-    sha256 = "b64ee5ac870311a69967fe787be8607df67b02a329f0fc76c8bf477336a99c78";
+    sha256 = "bf90bad66cda1164b17e5ba4a037806d2443f2a4d5ddc9f6a5554a0322aaed99";
   };
 
   propagatedBuildInputs = [

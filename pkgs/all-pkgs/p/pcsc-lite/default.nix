@@ -12,11 +12,10 @@
 }:
 
 let
-  id = "4235";
-  version = "1.8.23";
+  version = "1.8.24";
 
-  tarballUrls = id: version: [
-    "https://alioth.debian.org/frs/download.php/file/${id}/pcsc-lite-${version}.tar.bz2"
+  tarballUrls = version: [
+    "https://pcsclite.apdu.fr/files/pcsc-lite-${version}.tar.bz2"
   ];
 
   inherit (stdenv.lib)
@@ -27,10 +26,10 @@ stdenv.mkDerivation rec {
   name = "${if libOnly then "lib" else ""}pcsc-lite-${version}";
 
   src = fetchurl {
-    urls = tarballUrls id version;
-    multihash = "QmQ1Zf2kegxhjFSSsKRvEagDjPim4fkZoGA299pbmRTKac";
+    urls = tarballUrls version;
+    multihash = "QmaUHWFuu8kxP9wNNCdW1xrDD4zifu6qFSeb8cXbYWMUGE";
     hashOutput = false;
-    sha256 = "5a27262586eff39cfd5c19aadc8891dd71c0818d3d629539bd631b958be689c9";
+    sha256 = "b81864fa6a5ec776639c02ae89998955f7702a8d10e8b8f70023c5a599d97568";
   };
 
   nativeBuildInputs = optionals (!libOnly) [
@@ -90,11 +89,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4235" "1.8.23";
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4236" "1.8.23");
-      pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
-      inherit (src) outputHashAlgo;
-      outputHash = "6a358f61ed3b66a7f6e1f4e794a94c7be4c81b7a58ec360c33791e8d7d9bd405";
+      urls = tarballUrls "1.8.24";
+      inherit (src)
+        outputHashAlgo;
+      outputHash = "b81864fa6a5ec776639c02ae89998955f7702a8d10e8b8f70023c5a599d97568";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
+      };
     };
   };
 

@@ -7,12 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "opusfile-0.10";
+  name = "opusfile-0.11";
 
   src = fetchurl {
     url = "mirror://xiph/opus/${name}.tar.gz";
+    multihash = "QmcFnKJ373koq45RhrNfF2DauZDPtiSgtaxBXXVGzhc7HB";
     hashOutput = false;
-    sha256 = "48e03526ba87ef9cf5f1c47b5ebe3aa195bd89b912a57060c36184a6cd19412f";
+    sha256 = "74ce9b6cf4da103133e7b5c95df810ceb7195471e1162ed57af415fabf5603bf";
   };
 
   buildInputs = [
@@ -23,8 +24,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-assertions"
-    "--enable-http"
     "--enable-fixed-point"
     "--enable-float"
     "--disable-examples"
@@ -34,8 +33,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Url = "mirror://xiph/opus/SHA256SUMS.txt";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha256Url = "mirror://xiph/opus/SHA256SUMS.txt";
+      };
     };
   };
 

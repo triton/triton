@@ -32,10 +32,6 @@ let
       sha256 = "8a7a304d2df31ef0523cd733ab3ff5f3e595b048bb9fcd59920223935d4a6477";
       fetchzipversion = 6;
     };
-    "3.28" = {
-      version = "3.28.2";
-      sha256 = "ac443afd14fcb9ff5744b65d6e2b380e70510278404fb8684a9b9fb089e6f2ca";
-    };
   };
   source = sources."${channel}";
 
@@ -110,9 +106,11 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/pygobject/${channel}/"
-        + "${name}.sha256sum";
       failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/pygobject/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

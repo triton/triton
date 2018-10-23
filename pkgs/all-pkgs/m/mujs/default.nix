@@ -1,10 +1,12 @@
 { stdenv
 , fetchFromGitHub
 , lib
+
+, readline
 }:
 
 let
-  version = "1.0.3";
+  version = "1.0.5";
 in
 stdenv.mkDerivation {
   name = "mujs-${version}";
@@ -14,8 +16,12 @@ stdenv.mkDerivation {
     owner = "ccxvii";
     repo = "mujs";
     rev = "${version}";
-    sha256 = "aa94d2c17ecdb2494b5832cc6b5930f2b915e8be3d0aff4a48516b68cbec01de";
+    sha256 = "a0a87db8c06d147c9285695728226468bb1dce3ab4bf84af1d82434808bc0b5c";
   };
+
+  buildInputs = [
+    readline
+  ];
 
   makeFlags = [
     # If building from an arbitrary commit, this still needs to

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.3.6";
+  version = "1.3.7";
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "b77372b37639e0f3fbd7ff424bf379b5a6bf62c702a7d656585316b7310d6e61";
+    sha256 = "3fbef86029710fa8ad72ca473677163b4fdc0bbda0aac2b28151a7fd067bc026";
   };
 
   nativeBuildInputs = [

@@ -1,10 +1,8 @@
 { stdenv
-, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , lib
 
-#, cogl
 , fontconfig
 , freetype
 , glib
@@ -41,12 +39,7 @@ stdenv.mkDerivation rec {
     sha256 = "5e7b29b3f113ef870d1e3ecf8adf21f923396401604bda16d44be45e66052331";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
   buildInputs = [
-    #cogl
     fontconfig
     freetype
     glib
@@ -70,11 +63,6 @@ stdenv.mkDerivation rec {
       file = "cairo/cairo-respect-fontconfig.patch";
       sha256 = "1732f21adfe5ab291d987b7537b13470266253f599901a4707d27fd2b3d66734";
     })
-    (fetchTritonPatch {
-      rev = "082637366675031d5c64f34f3ff866cc965f7c9f";
-      file = "cairo/cairo-1.12.18-disable-test-suite.patch";
-      sha256 = "3ec119ac2380f8565cebbcea4f745e89eeb78686e76e6b15345a76f05812c254";
-    })
   ];
 
   postPatch =
@@ -82,9 +70,13 @@ stdenv.mkDerivation rec {
        Freetype `-I' cflags from being propagated. */ ''
       sed -i src/cairo.pc.in \
         -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
+    '' + /* Don't build tests */ ''
+      grep -q 'am__append_1 = .*test' Makefile.in
+      sed -i Makefile.in \
+        -e '/am__append_1 =/ s# test##'
     '' + optionalString (!opengl-dummy.glx) /* tests and perf tools require Xorg */ ''
-      sed -i Makefile.am \
-        -e '/^SUBDIRS/ s#boilerplate test perf# #'
+      sed -i Makefile.in \
+        -e '/am__append_1 =/ s# \(boilerplate\|perf\)##'
     '';
 
   configureFlags = [
@@ -94,53 +86,29 @@ stdenv.mkDerivation rec {
     "--${boolEn opengl-dummy.glx}-xcb"
     "--${boolEn opengl-dummy.glx}-xlib-xcb"
     "--${boolEn opengl-dummy.glx}-xcb-shm"
-    "--disable-qt"
     "--disable-quartz"
     "--disable-quartz-font"  # macOS
     "--disable-quartz-image"  # macOS
     "--disable-win32"  # Windows
     "--disable-win32-font"  # Windows
-    # TODO: package skia
-    "--disable-skia"
-    "--disable-os2"
-    "--disable-beos"
-    "--disable-drm"
-    "--disable-gallium"
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
     "--${boolEn opengl-dummy.glx}-gl"
     "--${boolEn (opengl-dummy.glesv2 && !opengl-dummy.glx)}-glesv2"
-    "--disable-cogl"  # recursive dependency
-    # FIXME: fix directfb mirroring
-    "--disable-directfb"
-    "--disable-vg"
+    "--${boolEn (opengl-dummy.glesv3 && !opengl-dummy.glx)}-glesv3"
     "--${boolEn (opengl-dummy.egl)}-egl"
     "--${boolEn (opengl-dummy.glx)}-glx"
     "--disable-wgl"  # Windows
-    "--enable-script"
     "--enable-ft"
     "--enable-fc"
-    "--enable-ps"
-    "--enable-pdf"
-    "--enable-svg"
-    "--disable-test-surfaces"
     "--${boolEn opengl-dummy.glx}-tee"
     "--enable-xml"
-    "--enable-pthread"
     "--enable-gobject"
     "--disable-full-testing"
-    "--disable-trace"
-    "--enable-interpreter"
-    "--disable-symbol-lookup"
     "--${boolWt opengl-dummy.glx}-x"
-    #(wtFlag "skia" true "yes")
-    #(wtFlag "skia-build-type" true "Release")
-    "--without-gallium"
   ];
 
-  postInstall = ''
-    rm -rvf $out/share/gtk-doc
-  '' + glib.flattenInclude;
+  postInstall = glib.flattenInclude;
 
   bindnow = false;
 

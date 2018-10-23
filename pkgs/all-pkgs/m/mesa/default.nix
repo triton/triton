@@ -323,6 +323,7 @@ stdenv.mkDerivation rec {
     gbm = true;
     glesv1 = true;
     glesv2 = true;
+    glesv3 = true;
     glx = true;
   };
 

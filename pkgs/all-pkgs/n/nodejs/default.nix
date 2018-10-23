@@ -10,7 +10,7 @@
 , libuv
 , nghttp2_lib
 , openssl_1-0-2
-, openssl_1-1-0
+, openssl
 , zlib
 
 , channel
@@ -33,8 +33,8 @@ let
       sha256 = "40a6eb51ea37fafcf0cfb58786b15b99152bec672cccf861c14d1cca0ad4758a";
     };
     "10" = {
-      version = "10.4.0";
-      sha256 = "b58f5a39253921c668eb7678679df36f9fb5e46c885242d20f13168973603762";
+      version = "10.12.0";
+      sha256 = "d9cd890d6c3b060f7a5497a522564328fe73ec39dda082f41c4141a73ac30ae4";
     };
   };
 
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     nghttp2_lib
   ] ++ (
     if versionAtLeast source.version "8.0.0" then [
-      openssl_1-1-0
+      openssl
     ] else [
       openssl_1-0-2
     ]
@@ -133,28 +133,34 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
-      #pgpsigSha256Urls = map (n: "${n}.asc") sha256Urls;
-      # https://github.com/nodejs/node#release-team
-      pgpKeyFingerprints = [
-        # Colin Ihrig
-        "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
-        # Evan Lucas
-        "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
-        # Gibson Fahnestock
-        "7798 4A98 6EBC 2AA7 86BC  0F66 B01F BB92 821C 587A"
-        # Italo A. Casas
-        "5673 0D54 0102 8683 275B  D23C 23EF EFE9 3C4C FFFE"
-        # James M Snell
-        "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
-        # Jeremiah Senkpiel
-        "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
-        # Myles Borins
-        "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
-        # Rod Vagg
-        "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
+        # https://github.com/nodejs/node#release-team
+        pgpKeyFingerprints = [
+          # Colin Ihrig
+          "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
+          # Evan Lucas
+          "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
+          # Gibson Fahnestock
+          "7798 4A98 6EBC 2AA7 86BC  0F66 B01F BB92 821C 587A"
+          # Italo A. Casas
+          "5673 0D54 0102 8683 275B  D23C 23EF EFE9 3C4C FFFE"
+          # James M Snell
+          "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
+          # Jeremiah Senkpiel
+          "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
+          # Myles Borins
+          "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
+          # Rod Vagg
+          "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
+          # Michael Zasso
+          "8FCC A13F EF1D 0C2E 9100  8E09 770F 7A9A 5AE1 5600"
+        ];
+      };
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
     };
   };
 

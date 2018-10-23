@@ -3323,15 +3323,6 @@ postgresql_10 = callPackage ../all-pkgs/p/postgresql {
 postgresql_9-6 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.6";
 };
-postgresql_9-5 = callPackage ../all-pkgs/p/postgresql {
-  channel = "9.5";
-};
-postgresql_9-4 = callPackage ../all-pkgs/p/postgresql {
-  channel = "9.4";
-};
-postgresql_9-3 = callPackage ../all-pkgs/p/postgresql {
-  channel = "9.3";
-};
 postgresql = callPackageAlias "postgresql_10" { };
 
 potrace = callPackage ../all-pkgs/p/potrace { };

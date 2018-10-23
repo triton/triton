@@ -40,13 +40,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.11.3";
+  name = "libinput-1.12.1";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    multihash = "QmXLBB1JvACFsVqB4gsyDSKoes7fjbi9D4v8FBPHVBDcdo";
+    multihash = "QmcAXggwyQLAVr3MLXkU8nF7uwasZ8qddMQjMvHX2Vhzqo";
     hashOutput = false;
-    sha256 = "f31191d96e425b4f16319842279d65946d9d983dcd3d9e466ae1206aa10ecb06";
+    sha256 = "570c48cc7b744b9b4da711ed0c5e8c3de132484684b0c4f0309a9a83df5e8692";
   };
 
   nativeBuildInputs = [
@@ -86,9 +86,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = false;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
+      };
     };
   };
 

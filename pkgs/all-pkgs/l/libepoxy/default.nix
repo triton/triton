@@ -14,7 +14,7 @@ let
     replaceChars;
 
   channel = "1.5";
-  version = "${channel}.2";
+  version = "${channel}.3";
 
   versionFormatted =
     # For initial minor releases drop the trailing zero
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
       "mirror://gnome/sources/libepoxy/${channel}/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "a9562386519eb3fd7f03209f279f697a8cba520d3c155d6e253c3e138beca7d8";
+    sha256 = "002958c5528321edd53440235d3c44e71b5b1e09b9177e8daf677450b6c4433d";
   };
 
   nativeBuildInputs = [
@@ -59,9 +59,11 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libepoxy/${channel}/"
-        + "${name}.sha256sum";
       failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/libepoxy/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

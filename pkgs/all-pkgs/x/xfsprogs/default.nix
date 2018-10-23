@@ -15,7 +15,7 @@ let
     "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
   ];
 
-  version = "4.17.0";
+  version = "4.18.0";
 in
 stdenv.mkDerivation rec {
   name = "xfsprogs-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "f53f5169cb98cfca471ddea30092738c427ba284c5356e01b45dd1ae3b297e0d";
+    sha256 = "397dc96f51aeeff73d021d3418d3172377b2685f2740ca60525096c070aa3df1";
   };
 
   nativeBuildInputs = [
@@ -109,15 +109,17 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrl = map (n: "${n}.sign") (tarballUrls version);
-      pgpKeyFingerprints = [
-        # Dave Chinner
-        "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D"
-        # Eric R. Sandeen
-        "2B81 8591 9E8D 2489 8186  9DED 20AE 1692 E13D DEE0"
-      ];
       failEarly = true;
-      pgpDecompress = true;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrl = map (n: "${n}.sign") (tarballUrls version);
+        pgpKeyFingerprints = [
+          # Dave Chinner
+          "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D"
+          # Eric R. Sandeen
+          "2B81 8591 9E8D 2489 8186  9DED 20AE 1692 E13D DEE0"
+        ];
+      };
     };
   };
 

@@ -10,14 +10,14 @@
 }:
 
 let
-  version = "1.3";
+  version = "1.4";
 in
 stdenv.mkDerivation rec {
   name = "libbytesize-${version}";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/libbytesize/releases/download/${version}/${name}.tar.gz";
-    sha256 = "d1991726a67ee44e4c9b3deaba5bbacd5392d3364439efce08060abc45edf5d0";
+    sha256 = "bb4ddc577cf2881834089c2c8d698a73c3f124990937afc2a15d421b2cfd782d";
   };
 
   nativeBuildInputs = [

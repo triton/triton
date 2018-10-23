@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.23";
+  version = "1.24";
 in
 buildPythonPackage {
   name = "urllib3-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "urllib3";
     inherit version;
-    sha256 = "a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf";
+    sha256 = "41c3db2fc01e5b907288010dec72f9d0a74e37d6994e6eb56849f59fea2265ae";
   };
 
   meta = with lib; {

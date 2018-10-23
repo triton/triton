@@ -169,7 +169,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy" && libglvnd != null)}-libglvnd"
     "--disable-mangling"
     "--disable-libunwind"
-    "--enable-texture-float"
     "--enable-asm"
     # TODO: selinux support
     "--disable-selinux"

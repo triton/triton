@@ -29,8 +29,8 @@ let
       sha256 = "b3a534b2ad5e96c6ff67f3a1356b94f7a28ef118eb1d420b314fe5aafe6d62d1";
     };
     "8" = {
-      version = "8.11.1";
-      sha256 = "40a6eb51ea37fafcf0cfb58786b15b99152bec672cccf861c14d1cca0ad4758a";
+      version = "8.12.0";
+      sha256 = "5a9dff58016c18fb4bf902d963b124ff058a550ebcd9840c677757387bce419a";
     };
     "10" = {
       version = "10.12.0";
@@ -78,19 +78,6 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs configure
-  '' + optionalString ((versionOlder source.version "10.0.0") &&
-       (versionAtLeast source.version "7.0.0"))
-    /* Fix compat with ICU 61+, Remove if fixed upstream
-       https://github.com/nodejs/node/commit/b8f47b27571f8d763f811f017be3fb37d466c4fc */ ''
-    sed -i src/inspector_io.cc \
-      -e 's/UnicodeString/icu::UnicodeString/g' \
-      -e 's/CheckedArrayByteSink/icu::CheckedArrayByteSink/g' \
-      -e 's/StringPiece/icu::StringPiece/g'
-    sed -i src/node_i18n.cc \
-      -e 's/TimeZone::getTZDataVersion/icu::TimeZone::getTZDataVersion/g'
-    sed -i tools/icu/iculslocs.cc \
-      -e 's/CharString/icu::CharString/g' \
-      -e 's/LocalUResourceBundlePointer/icu::LocalUResourceBundlePointer/g'
   '';
 
   configureFlags = optionals (versionAtLeast source.version "7.0.0") [

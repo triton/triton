@@ -95,7 +95,6 @@ stdenv.mkDerivation rec {
     "--with-blocksize=${toString blockSizeKB}"
     "--with-segsize=${toString segmentSizeGB}"
     "--with-wal-blocksize=${toString walBlockSizeKB}"
-    "--with-wal-segsize=${toString walSegmentSizeMB}"
     "--enable-depend"
     "--disable-cassert"
     "--enable-thread-safety"
@@ -118,6 +117,10 @@ stdenv.mkDerivation rec {
     "--with-systemd"
   ] ++ optionals (versionAtLeast source.version "10.0") [
     "--with-icu"
+  ] ++ optionals (versionOlder source.version "11.0") [
+    "--with-wal-segsize=${toString walSegmentSizeMB}"
+  ] ++ optionals (versionAtLeast source.version "11.0") [
+    #"--with-llvm"  # jit
   ];
 
   outputs = [ "out" "doc" ];

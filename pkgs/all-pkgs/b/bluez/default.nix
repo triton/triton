@@ -1,7 +1,9 @@
 { stdenv
 , fetchurl
 
+, alsa-lib
 , dbus
+, ell
 , glib
 , json-c
 , libical
@@ -13,16 +15,18 @@ let
   baseUrl = "mirror://kernel/linux/bluetooth";
 in
 stdenv.mkDerivation rec {
-  name = "bluez-5.49";
+  name = "bluez-5.50";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "33301d7a514c73d535ee1f91c2aed1af1f2e53efe11d3ac06bcf0d7abed2ce95";
+    sha256 = "5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911";
   };
 
   buildInputs = [
+    alsa-lib
     dbus
+    ell
     glib
     json-c
     libical
@@ -56,6 +60,8 @@ stdenv.mkDerivation rec {
     "--enable-sap"
     "--enable-health"
     "--enable-mesh"
+    "--enable-midi"
+    "--enable-btpclient"
     "--enable-manpages"
     "--enable-sixaxis"
   ];
@@ -69,10 +75,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = "${baseUrl}/${name}.tar.sign";
-      pgpDecompress = true;
-      pgpKeyFingerprint = "E932 D120 BC2A EC44 4E55  8F01 06CA 9F5D 1DCF 2659";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = "${baseUrl}/${name}.tar.sign";
+        pgpDecompress = true;
+        pgpKeyFingerprint = "E932 D120 BC2A EC44 4E55  8F01 06CA 9F5D 1DCF 2659";
+      };
     };
   };
 

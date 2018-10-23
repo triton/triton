@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.15.1";
+  version = "1.16.0";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    sha256 = "8ae1553d4a356413aa98d96cd56979bd005c694115c06299017562f7b5adf5de";
+    sha256 = "01bd32d5bc95f5d64c6bc64d07056d608f5db3627a9a98a774a3860fe0412747";
   };
 
   nativeBuildInputs = [

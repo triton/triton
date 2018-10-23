@@ -1,17 +1,29 @@
 { stdenv
 , fetchurl
+
+, gmp
+, nettle
 }:
 
 let
-  version = "0.13.0";
+  version = "0.15.0";
 in
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
 
   src = fetchurl {
     url = "mirror://filezilla/libfilezilla/${name}.tar.bz2";
-    sha256 = "ffca3c40dbe729dfc9389034f420809dec1b6f2674dc2cd39dc7edfcc59f686a";
+    sha256 = "9e68d35b23423d95e40126cadce6b07f1e82db3721227d577450f358d5482317";
   };
+
+  buildInputs = [
+    gmp
+    nettle
+  ];
+
+  configureFlags = [
+    "--disable-doxygen-doc"
+  ];
 
   meta = with stdenv.lib; {
     homepage = "https://lib.filezilla-project.org/index.php";

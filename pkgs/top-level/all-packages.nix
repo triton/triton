@@ -1137,6 +1137,8 @@ elasticsearch = callPackageAlias "elasticsearch_5" { };
 
 elfutils = callPackage ../all-pkgs/e/elfutils { };
 
+ell = callPackage ../all-pkgs/e/ell { };
+
 elvish = pkgs.goPackages.elvish.bin // { outputs = [ "bin" ]; };
 
 emacs = callPackage ../all-pkgs/e/emacs { };

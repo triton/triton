@@ -11,11 +11,11 @@ stdenv.mkDerivation rec {
   name = "geoip-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "maxmind";
     repo = "geoip-api-c";
     rev = "v${version}";
-    sha256 = "f4c92ebaf787b0329c7a3549ec250c7c60904d579dc2324d3e14e550c408d37e";
+    sha256 = "6aab70432c755e3063f558401b1c39858cee2c3d253324980f696d0c35f7a3eb";
   };
 
   nativeBuildInputs = [

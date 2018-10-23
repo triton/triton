@@ -11,12 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gpgme-1.11.1";
+  name = "gpgme-1.12.0";
 
   src = fetchurl {
     url = "mirror://gnupg/gpgme/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "2d1b111774d2e3dd26dcd7c251819ce4ef774ec5e566251eb9308fa7542fbd6f";
+    sha256 = "b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8";
   };
 
   nativeBuildInputs = [
@@ -43,9 +43,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      inherit (gnupg.srcVerification) pgpKeyFingerprints;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        inherit (gnupg.srcVerification) pgpKeyFingerprints;
+      };
     };
   };
 

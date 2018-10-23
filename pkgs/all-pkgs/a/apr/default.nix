@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "apr-1.6.3";
+  name = "apr-1.6.5";
 
   src = fetchurl {
     url = "mirror://apache/apr/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "131f06d16d7aabd097fa992a33eec2b6af3962f93e6d570a9bd4d85e95993172";
+    sha256 = "a67ca9fcf9c4ff59bce7f428a323c8b5e18667fdea7b0ebad47d194371b0a105";
   };
 
   preFixup = ''
@@ -19,14 +19,19 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        # Jeff Trawick
-        "5B51 81C2 C0AB 13E5 9DA3  F7A3 EC58 2EB6 39FF 092C"
-        # Nick Kew
-        "B1B9 6F45 DFBD CCF9 7401  9235 193F 180A B55D 9977"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # Jeff Trawick
+          "5B51 81C2 C0AB 13E5 9DA3  F7A3 EC58 2EB6 39FF 092C"
+          # Nick Kew
+          "B1B9 6F45 DFBD CCF9 7401  9235 193F 180A B55D 9977"
+        ];
+      };
     };
   };
 

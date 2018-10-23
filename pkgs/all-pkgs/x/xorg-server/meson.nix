@@ -58,8 +58,8 @@ assert opengl-dummy.glx;
 let
   sources = {
     "1.20" = {
-      version = "1.20.1";
-      sha256 = "59c99fe86fe75b8164c6567bfc6e982aecc2e4a51e6fbac1b842d5d00549e918";
+      version = "1.20.2";
+      sha256 = "0ed5f7bc48f22f54e1ae0229ad6f35a521da4232d9d5529d7cebb5e79b3ccee2";
     };
   };
 
@@ -154,13 +154,15 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Adam Jackson
-        "DD38 563A 8A82 2453 7D1F  90E4 5B8A 2D50 A0EC D0D3"
-        "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
-      ];
       failEarly = true;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Adam Jackson
+          "DD38 563A 8A82 2453 7D1F  90E4 5B8A 2D50 A0EC D0D3"
+          "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
+        ];
+      };
     };
   };
 

@@ -3,14 +3,15 @@
 }:
 
 let
-  version = "9b";
+  version = "9c";
 in
 stdenv.mkDerivation rec {
   name = "libjpeg-${version}";
 
   src = fetchurl {
-    url = "http://www.ijg.org/files/jpegsrc.v${version}.tar.gz";
-    sha256 = "0lnhpahgdwlrkd41lx6cr90r199f8mc6ydlh7jznj5klvacd63r4";
+    url = "https://www.ijg.org/files/jpegsrc.v${version}.tar.gz";
+    multihash = "QmPmVAq9Znb4htYfD7zBQWQ17ntsJwNXigush3cJN1jGyg";
+    sha256 = "650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122";
   };
 
   passthru = {

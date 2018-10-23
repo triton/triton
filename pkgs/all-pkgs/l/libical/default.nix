@@ -13,14 +13,14 @@
 }:
 
 let
-  version = "3.0.3";
+  version = "3.0.4";
 in
 stdenv.mkDerivation rec {
   name = "libical-${version}";
 
   src = fetchurl {
     url = "https://github.com/libical/libical/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "5b91eb8ad2d2dcada39d2f81d5e3ac15895823611dc7df91df39a35586f39241";
+    sha256 = "72b216e10233c3f60cb06062facf41f3b0f70615e5a60b47f9853341a0d5d145";
   };
 
   nativeBuildInputs = [

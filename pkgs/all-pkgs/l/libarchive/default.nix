@@ -6,6 +6,7 @@
 , acl
 , bzip2
 , e2fsprogs
+, libb2
 , libxml2
 , lz4
 , lzo
@@ -17,8 +18,8 @@
 }:
 
 let
-  rev = "c16ce12acb997e6ebd81eeb37bf5f9a20e95ea19";
-  date = "2018-09-22";
+  rev = "d5f35a90a4cb1eeb918213bff9d78e8b0471dc0a";
+  date = "2018-10-06";
 in
 stdenv.mkDerivation rec {
   name = "libarchive-${date}";
@@ -28,7 +29,7 @@ stdenv.mkDerivation rec {
     owner = "libarchive";
     repo = "libarchive";
     inherit rev;
-    sha256 = "0021af1297082e99c09b85f611421ceea12ca440aac87311effae81183b51938";
+    sha256 = "f522b220433b3994af82da66c5be8a8906d4dd6825ca5f7fae084affd1db3c61";
   };
 
   nativeBuildInputs = [
@@ -40,6 +41,7 @@ stdenv.mkDerivation rec {
     acl
     bzip2
     e2fsprogs
+    libb2
     libxml2
     lz4
     lzo
@@ -51,7 +53,8 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DENABLE_LZO=yes"
+    "-DENABLE_NETTLE=OFF"
+    "-DENABLE_LZO=ON"
     "-DPOSIX_REGEX_LIB=LIBPCREPOSIX"
   ];
 

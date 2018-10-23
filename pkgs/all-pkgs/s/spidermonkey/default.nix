@@ -115,13 +115,18 @@ stdenv.mkDerivation rec {
   installParallel = false;
 
   passthru = {
-    srcVerification = fetchurl rec {
+    srcVerification = fetchurl {
       failEarly = true;
-      sha512Url = "https://archive.mozilla.org/pub/firefox/releases/"
-        + "${source.version}esr/SHA512SUMS";
-      pgpsigSha512Url = "${sha512Url}.asc";
-      pgpKeyFingerprint = "14F2 6682 D091 6CDD 81E3  7B6D 61B7 B526 D98F 0353";
-      inherit (src) urls outputHashAlgo outputHash;
+      inherit (src)
+        urls
+        outputHashAlgo
+        outputHash;
+      fullOpts = rec {
+        sha512Url = "https://archive.mozilla.org/pub/firefox/releases/"
+          + "${source.version}esr/SHA512SUMS";
+        pgpsigSha512Url = "${sha512Url}.asc";
+        pgpKeyFingerprint = "14F2 6682 D091 6CDD 81E3  7B6D 61B7 B526 D98F 0353";
+      };
     };
   };
 

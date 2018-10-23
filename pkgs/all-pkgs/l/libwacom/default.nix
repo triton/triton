@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwacom-0.30";
+  name = "libwacom-0.31";
 
   src = fetchurl {
     url = "https://github.com/linuxwacom/libwacom/releases/download/${name}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "523408680514c0f01052e478503d8e89f86d72ddc7129fdd63988c221c492259";
+    sha256 = "18d58c254bee88527f5d58f6fd18458a9f0097641a1ee116dc2b6950619fbf03";
   };
 
   postPatch = /* Disable docs */ ''
@@ -31,9 +31,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
+      };
     };
   };
 

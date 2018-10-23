@@ -61,10 +61,10 @@ let
     };
     # Upstream did not create a release tarball
     "1.7" = {
-      fetchzipversion = 5;
+      fetchzipversion = 6;
       version = "1.7.0";
       rev = "v1.7.0";
-      sha256 = "909bfc0fde23940450ba0b1ebc6f0f4d3dc9ecc3c8f5281b8be53275a5c84348";
+      sha256 = "041f332578e3e9ad150ff2c782293b3f191b79932d569fbeb9a1bfe394958955";
     };
     # master
     "1.999" = {
@@ -128,9 +128,7 @@ stdenv.mkDerivation rec {
   # uses FFmpeg's shell configure script and actual optionals are
   # defined in lists.  The help info is static and does not always
   # represent current options. See CMDLINE_SELECT in the configure script.
-  configureFlags = optionals (versionAtLeast source.version "1.6.2") [
-    "--disable-avx512"  # FIXME: our glibc/binutils are to old..
-  ] ++ [
+  configureFlags = [
     "--enable-dependency-tracking"
     #external_build
     "--enable-extra-warnings"

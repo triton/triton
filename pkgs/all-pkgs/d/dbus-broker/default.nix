@@ -8,21 +8,23 @@
 , dbus
 , expat
 , glib
-, linux-headers_4-14
+, libcap-ng
+, linux-headers_triton
 , libselinux
 , systemd_lib
 , systemd-dummy
 }:
 
 let
-  version = "13";
+  version = "16";
 in
 stdenv.mkDerivation rec {
   name = "dbus-broker-${version}";
 
   src = fetchurl {
     url = "https://github.com/bus1/dbus-broker/releases/download/v${version}/${name}.tar.xz";
-    sha256 = "6ac2851d0c7fc985add872439ea5a501d9d7996b7c22315cf5d237f99489335d";
+    hashOutput = false;
+    sha256 = "5c0c5d01e521852c08fda6de156e2e56a38ba999ca214ec8064c2d067a8a5d03";
   };
 
   nativeBuildInputs = [
@@ -35,7 +37,8 @@ stdenv.mkDerivation rec {
     expat
     dbus
     glib
-    linux-headers_4-14
+    libcap-ng
+    linux-headers_triton
     libselinux
     systemd_lib
     systemd-dummy
@@ -43,6 +46,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     # Don't build any tests
+    grep -q -r "subdir('test" --include meson.build .
     find . -name meson.build -exec sed -i -e "/subdir('test/d" -e '/^[ ]*test/d' {} \;
 
     # Fix systemd unit dirs
@@ -57,6 +61,17 @@ stdenv.mkDerivation rec {
     "-Daudit=true"
     "-Dselinux=true"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with lib; {
     maintainers = with maintainers; [

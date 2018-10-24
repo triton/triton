@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sysstat-12.0.1";
+  name = "sysstat-12.0.2";
 
   src = fetchurl {
     url = "http://pagesperso-orange.fr/sebastien.godard/${name}.tar.xz";
-    multihash = "QmXbfQWjoxNz7LCo3sPhbEqhePFpyz6wQ2iVFJo8ZEUanS";
+    multihash = "QmTPEC5MTVUbgFbitAypsJeW4n9B9ThSkWnVsEhyR61eud";
     hashOutput = false;
-    sha256 = "a1bc554e2ab81ed4f7443ba0c7c572e90853fc786d588ebe024ca088e3819c84";
+    sha256 = "2d30947c8fabbb5015c229fbc149f2891db4926cdf165e5f099310795d8dac80";
   };
 
   nativeBuildInputs = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        sha1Confirm = "5bb0000f838e744c306f7bb826c5ca41040c7297";
+        sha1Confirm = "c71d27faffd05198beb1005f1d0a2632666a37ca";
       };
     };
   };

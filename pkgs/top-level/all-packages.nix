@@ -776,10 +776,10 @@ borgmatic = pkgs.python3Packages.borgmatic;
 brotli_1-0-3 = callPackage ../all-pkgs/b/brotli {
   version = "1.0.3";
 };
-brotli_1-0-6 = callPackage ../all-pkgs/b/brotli {
-  version = "1.0.6";
+brotli_1-0-7 = callPackage ../all-pkgs/b/brotli {
+  version = "1.0.7";
 };
-brotli = callPackageAlias "brotli_1-0-6" { };
+brotli = callPackageAlias "brotli_1-0-7" { };
 brotli_dist = callPackage ../all-pkgs/b/brotli/dist.nix { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };

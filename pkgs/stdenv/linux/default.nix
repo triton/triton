@@ -225,7 +225,7 @@ let
         inherit (pkgs) stdenv lib gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash gettext bison flex
           libsigsegv pcre findutils diffutils
-          gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-6 bzip2
+          gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-7 bzip2
           gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
 
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
@@ -303,7 +303,7 @@ let
       inherit (stage3Pkgs) gcc7 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash gettext bison flex
         libsigsegv pcre findutils diffutils
-        gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-6 bzip2
+        gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-7 bzip2
         gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
     };
   });

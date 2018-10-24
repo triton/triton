@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.0.4";
+  version = "1.0.7";
 
   tarFlags = [
     "--sort=name"
@@ -38,7 +38,7 @@ stdenv.mkDerivation {
     owner = "google";
     repo = "brotli";
     rev = "v${version}";
-    sha256 = "333397c592c055a6a63db056a0263a72f0e78110c911838ae2f6c2aa54ac77ef";
+    sha256 = "685126f1d175d798bdeaaf2dcf6326b022751000f2ea100a353e5682d5ac42bd";
   };
   
   nativeBuildInputs = [

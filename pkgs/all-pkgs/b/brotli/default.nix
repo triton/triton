@@ -7,7 +7,7 @@
 let
   sha256s = {
     "1.0.3" = "0136ed31d129df55dc47eeb24c59336514ba72e1cced0973687a0c7b21a3ddf7";
-    "1.0.6" = "4d5b539689ed6d050d2465dfd316a2d542f0b744f30a225dcfe2731bfa9df358";
+    "1.0.7" = "992393e77eacd48120d4dc9c2ddc36eb107f3c7ca14ce216803b1cefd16b83a5";
   };
 in
 stdenv.mkDerivation {

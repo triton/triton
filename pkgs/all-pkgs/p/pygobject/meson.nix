@@ -17,7 +17,8 @@
 
 let
   inherit (lib)
-    boolTf;
+    boolTf
+    optionals;
 
   sources = {
     "3.30" = {
@@ -42,10 +43,11 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    cairo
     glib
     gobject-introspection
     libffi
+  ] ++ optionals (!nocairo) [
+    cairo
     pycairo
   ];
 

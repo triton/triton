@@ -16,6 +16,9 @@ stdenv.mkDerivation rec {
     sha256 = "812ecfb0dcbc5bd409aaa8f61c7de94c5b8752a7b00c632883d15b2ed6452573";
   };
 
+  # Needed with 2.13.03 and gcc8
+  NIX_CFLAGS_COMPILE = "-Wno-error=attributes";
+
   meta = with lib; {
     description = "An assembler for x86 and x86_64 instruction sets";
     homepage = http://www.nasm.us/;

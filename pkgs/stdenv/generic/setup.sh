@@ -769,6 +769,10 @@ PATH_DELIMITER=':'
 
 nestingLevel=0
 
+# Set a default locale that should be used by everything
+export LC_ALL
+: ${LC_ALL:=C}
+
 # Set a fallback default value for SOURCE_DATE_EPOCH, used by some
 # build tools to provide a deterministic substitute for the "current"
 # time. Note that 1 = 1970-01-01 00:00:01. We don't use 0 because it

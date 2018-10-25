@@ -146,7 +146,7 @@ if [ "$NIX_ENFORCE_PURITY" = 1 ]; then
     echo "Missing NIX_BUILD_TOP" >&2
     exit 1
   fi
-  params+=("-fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+  params+=("-ffile-prefix-map=$NIX_BUILD_TOP=/no-such-path")
 fi
 
 if [[ "@prog@" = *++ ]]; then

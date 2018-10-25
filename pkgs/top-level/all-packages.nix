@@ -833,6 +833,8 @@ cairomm = callPackage ../all-pkgs/c/cairomm { };
 
 caribou = callPackage ../all-pkgs/c/caribou { };
 
+cc-regression = callPackage ../all-pkgs/c/cc-regression { };
+
 ccid = callPackage ../all-pkgs/c/ccid { };
 
 cdparanoia = callPackage ../all-pkgs/c/cdparanoia { };

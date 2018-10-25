@@ -41,7 +41,7 @@ _buildDirCheck() {
         reader=(cat "$file")
         ;;
     esac
-    output+="$("${reader[@]}" | grep -H --label="$file" "$NIX_BUILD_TOP" || true)"
+    output+="$("${reader[@]}" | grep -H --label="$file" "$NIX_BUILD_TOP" || true)"$'\n'
   done
 
   if [ -n "$output" ]; then

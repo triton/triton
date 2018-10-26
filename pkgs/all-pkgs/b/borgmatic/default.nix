@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.1.8";
+  version = "1.2.9";
 in
 buildPythonPackage {
   name = "borgmatic-${version}";
@@ -16,13 +16,8 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "borgmatic";
     inherit version;
-    sha256 = "13ac4c0fc64ee85a9afa0ce5dc4aaf9201b5f3b7f4a24cef83089f1cb4e3fb1f";
+    sha256 = "37390bd684eb67a03c54565469153942f4b2e4fd83a250dea80222531960f9c0";
   };
-
-  postPatch = ''
-    grep -q 'ruamel.yaml<=0.15' setup.py
-    sed -i 's,ruamel.yaml<=0.15,ruamel.yaml<0.16,' setup.py
-  '';
 
   propagatedBuildInputs = [
     pykwalify

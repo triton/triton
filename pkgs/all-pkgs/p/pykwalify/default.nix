@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.6.0";
+  version = "1.7.0";
 in
 buildPythonPackage {
   name = "pykwalify-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pykwalify";
     inherit version;
-    sha256 = "2298fafe84dc68161835f62a1b8d0d72dd749d5742baa196224882a6ac2ff844";
+    sha256 = "7e8b39c5a3a10bc176682b3bd9a7422c39ca247482df198b402e8015defcceb2";
   };
 
   propagatedBuildInputs = [

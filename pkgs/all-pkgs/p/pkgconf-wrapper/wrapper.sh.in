@@ -1,0 +1,9 @@
+#!/bin/sh
+BIN='@BIN@'
+for arg in "$@"; do
+  if [ "$arg" = "${arg#-}" ]; then
+    # Only add arguments if passed a file to lookup
+    exec "$BIN" @ARGS@ "$@"
+  fi
+done
+exec "$BIN" "$@"

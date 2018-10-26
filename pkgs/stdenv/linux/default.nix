@@ -70,11 +70,14 @@ let
       cc = null;
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
-        inherit (pkgs) stdenv fetchTritonPatch gcc;
+        inherit lib;
+        inherit (pkgs) stdenv fetchTritonPatch gcc pkgconfig pkgconf-wrapper;
+
+        pkgconf = pkgs.pkgconf.override {
+          pkg-config = bootstrapTools;
+        };
 
         fetchurl = pkgs.fetchurl.override {
-          inherit
-            lib;
           inherit (finalPkgs)
             callPackage;
         };
@@ -114,7 +117,7 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1";
       cc = stage0Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      extraBuildInputs = [ stage0Pkgs.patchelf stage0Pkgs.pkgconfig ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -155,7 +158,7 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage2";
       cc = stage1Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      extraBuildInputs = [ stage0Pkgs.patchelf stage0Pkgs.pkgconfig ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -210,7 +213,7 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage3";
       cc = stage2Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      extraBuildInputs = [ stage0Pkgs.patchelf stage0Pkgs.pkgconfig ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -226,7 +229,8 @@ let
           gpm ncurses readline bash gettext bison flex
           libsigsegv pcre findutils diffutils
           gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-7 bzip2
-          gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
+          gnumake gnupatch pkgconf-wrapper pkgconf_unwrapped pkgconf pkgconfig
+          patchelf mpfr libcap;
 
         gcc8 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -304,7 +308,8 @@ let
         gpm ncurses readline bash gettext bison flex
         libsigsegv pcre findutils diffutils
         gnused gnugrep gawk gnutar gnutar_1-30 gzip brotli brotli_1-0-7 bzip2
-        gnumake gnupatch pkgconf pkgconfig patchelf mpfr libcap;
+        gnumake gnupatch pkgconf_unwrapped pkgconf pkgconfig
+        patchelf mpfr libcap;
     };
   });
 

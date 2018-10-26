@@ -3286,9 +3286,18 @@ pipewire = callPackage ../all-pkgs/p/pipewire { };
 
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 
-pkg-config = callPackage ../all-pkgs/p/pkg-config { };
+pkgconf-wrapper = callPackage ../all-pkgs/p/pkgconf-wrapper { };
 
-pkgconf = callPackage ../all-pkgs/p/pkgconf { };
+pkg-config_unwrapped = callPackage ../all-pkgs/p/pkg-config { };
+pkg-config = callPackage (a: pkgs.pkgconf-wrapper a) {
+  pkg-config = pkgs.pkg-config_unwrapped;
+};
+
+pkgconf_unwrapped = callPackage ../all-pkgs/p/pkgconf { };
+pkgconf = callPackage (a: pkgs.pkgconf-wrapper a) {
+  pkg-config = pkgs.pkgconf_unwrapped;
+};
+
 pkgconfig = callPackageAlias "pkgconf" { };
 
 plex-media-server = callPackage ../all-pkgs/p/plex-media-server { };

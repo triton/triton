@@ -7,15 +7,15 @@ let
   inherit (lib)
     boolEn;
 
-  version = "0.1";
+  version = "0.1.1";
 in
 stdenv.mkDerivation rec {
   name = "textencode-${version}";
 
   src = fetchurl {
     url = "https://github.com/triton/textencode/releases/download/v${version}/${name}.tar.xz";
-    multihash = "QmWsThAGsQYUoo3foaAKWvLR8f76KnMwjEdN4t4xL46C7x";
-    sha256 = "d3c47856f44a1c92f868223874c73da6ce6fdffe213fbf7297b6d77addb6f455";
+    multihash = "QmP9MUrj2V3B5PuN4qmuDYo2LowMZYJJmLwGpZUnWYaZWq";
+    sha256 = "f4584eb7bb725dee1aef745fd53846a8599fc5192f6c2c6e2416e59607b0f12a";
   };
 
   configureFlags = [

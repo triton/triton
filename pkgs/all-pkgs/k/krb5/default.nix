@@ -37,10 +37,6 @@ stdenv.mkDerivation rec {
     sha256 = "214ffe394e3ad0c730564074ec44f1da119159d94281bbec541dc29168d21117";
   };
 
-  prePatch= ''
-    cd src
-  '';
-
   nativeBuildInputs = [
     bison
     perl
@@ -49,30 +45,39 @@ stdenv.mkDerivation rec {
   # We prefer openssl over nss since it supports all crypto features
   # We prefer libedit as it is more stable in krb5
   buildInputs = [
-    libverto
     openssl
   ] ++ optionals (!libOnly) [
     libedit
+    libverto
     openldap
   ];
+
+  prePatch = ''
+    cd src
+  '';
+
+  # KRad is only used interally and is the only dependency on libverto
+  # If we don't provide verto it will be built unnecessarily so disable it
+  postPatch = optionalString libOnly ''
+    grep -q '^SUBDIRS=.*krad' lib/Makefile.in
+    sed -i '/^SUBDIRS=/s,\(krad\|apputils\),,g' lib/Makefile.in
+
+    grep -q 'krad.h' include/Makefile.in
+    sed -i '/INSTALL.*krad.h/d' include/Makefile.in
+
+    grep -q '^MAYBE_VERTO.*verto' util/Makefile.in
+    sed -i '/^MAYBE_VERTO/s, verto,,g' util/Makefile.in
+  '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-athena"
-    "--without-vague-errors"
+    "--${if libOnly then "without" else "with"}-ldap"
     "--with-crypto-impl=openssl"
     "--with-tls-impl=openssl"
-    #"--enable-asan"  # FIXME: causes undefined reference errors
-    "--enable-aesni"
-    "--enable-kdc-lookaside-cache"
-    "--enable-pkinit"
     "--${if libOnly then "without" else "with"}-libedit"
-    "--without-readline"
-    "--with-system-verto"
-    "--${if libOnly then "without" else "with"}-ldap"
-    "--without-tcl"
-    "--without-system-db"  # Requires db v1.85
+    "--${if libOnly then "without" else "with"}-system-verto"
   ];
 
   buildPhase = optionalString libOnly ''

@@ -1,0 +1,6 @@
+install_sys_dir=/no-such-path
+udevdir=${install_sys_dir}/lib/udev
+
+Name: udev
+Description: udev dummy
+Version: 0

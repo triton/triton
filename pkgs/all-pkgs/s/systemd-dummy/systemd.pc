@@ -1,4 +1,5 @@
-prefix=@PREFIX@
+install_sys_dir=/no-such-path
+prefix=${install_sys_dir}
 systemdutildir=${prefix}/lib/systemd
 systemdsystemunitdir=${systemdutildir}/system
 systemdsystempresetdir=${systemdutildir}/system-preset
@@ -23,5 +24,4 @@ systemgidmax=999
 
 Name: systemd
 Description: systemd dummy
-URL: https://www.freedesktop.org/wiki/Software/systemd
-Version: @VERSION@
+Version: 0

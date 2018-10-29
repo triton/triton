@@ -1,0 +1,11 @@
+install_sys_dir=/no-such-path
+system_bus_default_address=unix:path=/var/run/dbus/system_bus_socket
+datarootdir=${install_sys_dir}/share
+datadir=${datarootdir}
+session_bus_services_dir=${datadir}/dbus-1/services
+system_bus_services_dir=${datadir}/dbus-1/system-services
+interfaces_dir=${datadir}/dbus-1/interfaces
+
+Name: dbus
+Description: Free desktop message bus dummy
+Version: 0

@@ -1001,6 +1001,8 @@ dbus = callPackage ../all-pkgs/d/dbus { };
 
 dbus-broker = callPackage ../all-pkgs/d/dbus-broker { };
 
+dbus-dummy = callPackage ../all-pkgs/d/dbus-dummy { };
+
 dbus-glib = callPackage ../all-pkgs/d/dbus-glib { };
 
 dcadec = callPackage ../all-pkgs/d/dcadec { };

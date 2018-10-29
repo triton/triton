@@ -29,7 +29,7 @@ stdenv.mkDerivation {
 
     mkdir -p "$out"/bin
     sed '${./wrapper.sh.in}' \
-      -e "s#@ARGS@#${args}#g" \
+      -e 's#@ARGS@#${args}#g' \
       -e "s#@BIN@#$BIN#g" \
       >"$out"/bin/pkg-config
     chmod +x "$out"/bin/pkg-config
@@ -39,17 +39,19 @@ stdenv.mkDerivation {
     echo "Description: test" >>test.pc
     echo "Version: 0.1" >>test.pc
     echo "Cflags: -I1" >>test.pc
+    source '${./setup-hook.sh}'
 
     set -x
     test "$("$BIN" --version)" = "$("$out"/bin/pkg-config --version)"
     test -I1 = $("$out"/bin/pkg-config --cflags test.pc)
-    test "/no-such-path" = "$("$out"/bin/pkg-config --variable=install_sys_dir test.pc)"
+    test "$INSTALL_SYS_DIR" = "$("$out"/bin/pkg-config --variable=install_sys_dir test.pc)"
     set +x
 
     ln -sv "${pkg-config}/share" "$out"
-  '';
 
-  setupHook = ./setup-hook.sh;
+    mkdir -p "$out"/nix-support
+    cp '${./setup-hook.sh}' "$out"/nix-support/setup-hook
+  '';
 
   passthru = {
     inherit variable;

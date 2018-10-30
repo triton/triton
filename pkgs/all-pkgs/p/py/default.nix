@@ -2,10 +2,12 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+
+, setuptools-scm
 }:
 
 let
-  version = "1.5.3";
+  version = "1.7.0";
 in
 buildPythonPackage rec {
   name = "py-${version}";
@@ -13,8 +15,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "py";
     inherit version;
-    sha256 = "29c9fab495d7528e80ba1e343b958684f4ace687327e6f789a94bf3d1915f881";
+    sha256 = "bf92637198836372b520efcba9e020c330123be8ce527e535d185ed4b6f45694";
   };
+
+  propagatedBuildInputs = [
+    setuptools-scm
+  ];
 
   doCheck = false;
 

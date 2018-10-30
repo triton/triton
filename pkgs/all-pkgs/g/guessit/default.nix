@@ -23,15 +23,15 @@ let
     optionals;
 
   sources = {
-    "stable" = {
+    stable = {
       version = "2.1.4";
       sha256 = "90e6f9fb49246ad27f34f8b9984357e22562ccc3059241cbc08b4fac1d401c56";
     };
     head = {
-      fetchzipversion = 5;
-      version = "2018-05-21";
-      rev = "a54e8acdd37ba3fac2be3c651e2d22f8742608c6";
-      sha256 = "01a35a128d6e58251f98018d5dbe5eabb91b1370c0f74c869906e4bd4a3fa205";
+      fetchzipversion = 6;
+      version = "2018-10-23";
+      rev = "5c2cfeee519f3027588a5f5afafc5eb22ffbd439";
+      sha256 = "34c42efa4d1e04bb4ccac9d63ce02fcdbd7324c098d284771f6d1fbfea1302a7";
     };
   };
   source = sources."${channel}";

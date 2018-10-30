@@ -12,9 +12,9 @@
 
 let
   sources = {
-    "3.26" = {
-      version = "3.26.1";
-      sha256 = "28ba7392c7761996efd780779167ea6c940eedfb1bf37cfe9bccb7021f54d79d";
+    "3.30" = {
+      version = "3.30.0";
+      sha256 = "9106729174a3e6cc183d14f74454987f5378b46f213e698a6ab2702f70e4e64b";
     };
   };
   source = sources."${channel}";
@@ -60,8 +60,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/adwaita-icon-theme/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/adwaita-icon-theme/"
+          + "${channel}/${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

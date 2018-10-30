@@ -47,8 +47,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/atkmm/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/atkmm/"
+          + "${channel}/${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

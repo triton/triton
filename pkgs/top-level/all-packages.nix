@@ -662,12 +662,12 @@ asio = callPackage ../all-pkgs/a/asio { };
 
 aspell = callPackage ../all-pkgs/a/aspell { };
 
-at-spi2-atk_2-26 = callPackage ../all-pkgs/a/at-spi2-atk {
-  channel = "2.26";
+at-spi2-atk_2-30 = callPackage ../all-pkgs/a/at-spi2-atk {
+  channel = "2.30";
   at-spi2-core = pkgs.at-spi2-core_2-30;
   atk = pkgs.atk_2-30;
 };
-at-spi2-atk = callPackageAlias "at-spi2-atk_2-26" { };
+at-spi2-atk = callPackageAlias "at-spi2-atk_2-30" { };
 
 at-spi2-core_2-30 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.30";
@@ -1870,7 +1870,7 @@ gtk2 = callPackageAlias "gtk_2" { };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk {
   channel = "3.22";
   atk = pkgs.atk_2-30;
-  at-spi2-atk = pkgs.at-spi2-atk_2-26;
+  at-spi2-atk = pkgs.at-spi2-atk_2-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gtk_3 = callPackageAlias "gtk_3-22" { };

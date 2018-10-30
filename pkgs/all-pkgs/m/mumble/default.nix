@@ -55,19 +55,19 @@ let
     optionalString;
 
   mumble-theme = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "mumble-voip";
     repo = "mumble-theme";
     rev = "212f8e336d3c2b385c10a7462ceedb88919edd00";
-    sha256 = "fca086c622b6cde4530647b5c3fa7b05e50adfdbb99705df54efbc6c18668b7f";
+    sha256 = "75590d5549e0ca3b801ea983fce0aba9c12a8735d6de08c5d17dded3f318227e";
   };
 
   celt_mumble-src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "mumble-voip";
     repo = "celt-0.7.0";
     rev = "5a16cda6d78cda0cd14eb13c56c65d82724842e5";
-    sha256 = "1a6de45d1a2ccf5d08596adc16bff3f9ec257e9fcba77504250f8d9bf0545166";
+    sha256 = "b62d65ef19650cf9a309fd32cbe50bf07ecb220171adde34624b1aa6239e81b2";
   };
 
   sources = {

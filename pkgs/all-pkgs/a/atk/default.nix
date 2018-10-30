@@ -16,9 +16,9 @@ let
     boolEn;
 
   sources = {
-    "2.28" = {
-      version = "2.28.1";
-      sha256 = "cd3a1ea6ecc268a2497f0cd018e970860de24a6d42086919d6bf6c8e8d53f4fc";
+    "2.30" = {
+      version = "2.30.0";
+      sha256 = "dd4d90d4217f2a0c1fee708a555596c2c19d26fef0952e1ead1938ab632c027b";
     };
   };
   source = sources."${channel}";
@@ -43,15 +43,13 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  postPatch = /* Remove hardcoded references to the build directory */ ''
+  postPatch = /* Remove hardcoded references to the build directory, fixed in a future release */ ''
+    grep -q '@filename@' atk/atk-enum-types.h.template
     sed -i atk/atk-enum-types.h.template \
-      -e '/@filename@/d'
+      -i atk/atk-enum-types.c.template \
+      -i atk/makefile.msc \
+      -e 's/@filename@/@basename@/g'
   '';
-
-  mesonFlags = [
-    "-Denable_docs=false"
-    "-Ddisable_introspection=false"
-  ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
@@ -61,8 +59,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/atk/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/atk/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

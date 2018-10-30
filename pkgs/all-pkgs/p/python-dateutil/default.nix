@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.7.2";
+  version = "2.7.5";
 in
 buildPythonPackage {
   name = "python-dateutil-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-dateutil";
     inherit version;
-    sha256 = "9d8074be4c993fbe4947878ce593052f71dac82932a677d49194d8ce9778002e";
+    sha256 = "88f9287c0174266bb0d8cedd395cfba9c58e87e5ad86b2ce58859bc11be3cf02";
   };
 
   propagatedBuildInputs = [

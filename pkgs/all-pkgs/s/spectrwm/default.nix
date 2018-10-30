@@ -20,14 +20,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "spectrwm-2017-10-14";
+  name = "spectrwm-2018-09-09";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "conformal";
     repo = "spectrwm";
-    rev = "ea3e6da62247572e92c4ba00f70eab73f6254adf";
-    sha256 = "de6c2c7d9931d228a8ac0827c6a484b62ed8e1b990f75806af42419f5a242015";
+    rev = "b365987d3871d587663ad9204880df0504b31f72";
+    sha256 = "3d778eeae78bd62f6bba55bc1e0a0723ba937a4ca485782b2dd25b1dd9d5883b";
   };
 
   nativeBuildInputs = [
@@ -55,11 +55,10 @@ stdenv.mkDerivation rec {
     srcRoot="$srcRoot/linux"
   '';
 
-  postPatch =
-    /* Remove legacy scrotwm alias */ ''
-      sed -i Makefile \
-        -e '/scrotwm/d';
-    '';
+  postPatch = /* Remove legacy scrotwm alias */ ''
+    sed -i Makefile \
+      -e '/scrotwm/d';
+  '';
 
   configurePhase = ":";
 

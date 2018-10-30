@@ -514,6 +514,8 @@ py = callPackage ../all-pkgs/p/py { };
 
 py-bcrypt = callPackage ../all-pkgs/p/py-bcrypt { };
 
+py-cpuinfo = callPackage ../all-pkgs/p/py-cpuinfo { };
+
 py-lua-parser = callPackage ../all-pkgs/p/py-lua-parser { };
 
 py-lua-style = callPackage ../all-pkgs/p/py-lua-style { };

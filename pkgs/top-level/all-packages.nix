@@ -608,7 +608,7 @@ adobe-flash-player = callPackageAlias "adobe-flash-player_stable" { };
 
 adwaita-icon-theme_3-26 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.26";
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-26" { };
 
@@ -901,7 +901,7 @@ clr-boot-manager = callPackage ../all-pkgs/c/clr-boot-manager { };
 
 clutter_1-26 = callPackage ../all-pkgs/c/clutter {
   channel = "1.26";
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 clutter = callPackageAlias "clutter_1-26" { };
 
@@ -1015,7 +1015,7 @@ dconf = callPackageAlias "dconf_0-28" { };
 dconf-editor_3-26 = callPackage ../all-pkgs/d/dconf-editor {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 dconf-editor = callPackageAlias "dconf-editor_3-26" { };
 
@@ -1155,7 +1155,7 @@ eog_3-26 = callPackage ../all-pkgs/e/eog {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 eog = callPackageAlias "eog_3-26" { };
@@ -1176,7 +1176,7 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
   nautilus = pkgs.nautilus_unwrapped_3-26;
@@ -1354,7 +1354,7 @@ file = callPackage ../all-pkgs/f/file { };
 file-roller_3-26 = callPackage ../all-pkgs/f/file-roller {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   nautilus = pkgs.nautilus_unwrapped_3-26;
 };
 file-roller = callPackageAlias "file-roller_3-26" { };
@@ -1443,13 +1443,13 @@ gdb = callPackage ../all-pkgs/g/gdb { };
 
 gdbm = callPackage ../all-pkgs/g/gdbm { };
 
-gdk-pixbuf_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf {
-  channel = "2.36";
+gdk-pixbuf_2-38 = callPackage ../all-pkgs/g/gdk-pixbuf {
+  channel = "2.38";
   gdk-pixbuf-loaders-cache = callPackageAlias "gdk-pixbuf-loaders-cache" {
-    gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+    gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   };
 };
-gdk-pixbuf = callPackageAlias "gdk-pixbuf_2-36" { };
+gdk-pixbuf = callPackageAlias "gdk-pixbuf_2-38" { };
 
 gdk-pixbuf-loaders-cache = callPackage ../all-pkgs/g/gdk-pixbuf-loaders-cache { };
 
@@ -1487,12 +1487,12 @@ git = callPackage ../all-pkgs/g/git { };
 gjs_1-46 = callPackage ../all-pkgs/g/gjs {
   channel = "1.46";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 gjs_1-48 = callPackage ../all-pkgs/g/gjs {
   channel = "1.48";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 gjs = callPackageAlias "gjs_1-46" { };
 
@@ -1539,14 +1539,14 @@ gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
   channel = "3.20";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 gnome-bluetooth = callPackageAlias "gnome-bluetooth_3-20" { };
 
 gnome-calculator_3-26 = callPackage ../all-pkgs/g/gnome-calculator {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gtksourceview = pkgs.gtksourceview_3-24;
@@ -1563,7 +1563,7 @@ gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 gnome-desktop_3-26 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.26";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 gnome-desktop = callPackageAlias "gnome-desktop_3-26" { };
@@ -1596,7 +1596,7 @@ gnome-raw-thumbnailer = callPackage ../all-pkgs/g/gnome-raw-thumbnailer { };
 gnome-screenshot_3-26 = callPackage ../all-pkgs/g/gnome-screenshot {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
 gnome-screenshot = callPackageAlias "gnome-screenshot_3-26" { };
@@ -1604,7 +1604,7 @@ gnome-screenshot = callPackageAlias "gnome-screenshot_3-26" { };
 gnome-session_3-26 = callPackage ../all-pkgs/g/gnome-session {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
@@ -1614,7 +1614,7 @@ gnome-settings-daemon_3-26 =
   callPackage ../all-pkgs/g/gnome-settings-daemon {
     channel = "3.26";
     adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-    gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+    gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
     gnome-desktop = pkgs.gnome-desktop_3-26;
     gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
     gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
@@ -1628,7 +1628,7 @@ gnome-shell-extensions = callPackage ../all-pkgs/g/gnome-shell-extensions { };
 gnome-terminal_3-26 = callPackage ../all-pkgs/g/gnome-terminal {
   channel = "3.26";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   nautilus = pkgs.nautilus_unwrapped_3-26;
   vte = pkgs.vte_0-50;
@@ -1871,7 +1871,7 @@ gtk_3-22 = callPackage ../all-pkgs/g/gtk {
   channel = "3.22";
   atk = pkgs.atk_2-30;
   at-spi2-atk = pkgs.at-spi2-atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 gtk_3 = callPackageAlias "gtk_3-22" { };
 # Deprecated alias
@@ -1888,7 +1888,7 @@ gtkmm_2 = callPackage ../all-pkgs/g/gtkmm/2.x.nix { };
 gtkmm_3-22 = callPackage ../all-pkgs/g/gtkmm {
   channel = "3.22";
   atkmm = pkgs.atkmm_2-24;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gtk = pkgs.gtk_3-22;
   pangomm = pkgs.pangomm_2-40;
 };
@@ -1897,7 +1897,7 @@ gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
 gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.24";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 gtksourceview = callPackageAlias "gtksourceview_3-24" { };
 
@@ -2323,7 +2323,7 @@ libgusb = callPackage ../all-pkgs/l/libgusb { };
 libgweather_3-28 = callPackage ../all-pkgs/l/libgweather {
   channel = "3.28";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   libsoup = pkgs.libsoup_2-62;
 };
 libgweather = callPackageAlias "libgweather_3-28" { };
@@ -2952,7 +2952,7 @@ musl = callPackage ../all-pkgs/m/musl { };
 mutter_3-26 = callPackage ../all-pkgs/m/mutter {
   channel = "3.26";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gnome-settings-daemon = pkgs.gnome-settings-daemon_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
@@ -2970,7 +2970,7 @@ nasm = callPackage ../all-pkgs/n/nasm { };
 nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
   channel = "3.26";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-desktop = pkgs.gnome-desktop_3-26;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
@@ -2978,7 +2978,7 @@ nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
 };
 nautilus_3-26 = callPackage ../all-pkgs/n/nautilus {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gvfs = pkgs.gvfs_1-34;
 };
@@ -3795,7 +3795,7 @@ tracker_2-0 = callPackage ../all-pkgs/t/tracker {
   channel = "2.0";
   #evolution
   evolution-data-server = pkgs.evolution-data-server_3-28;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
 };
@@ -3917,7 +3917,7 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 vte_0-50 = callPackage ../all-pkgs/v/vte {
   channel = "0.50";
   atk = pkgs.atk_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 vte = callPackageAlias "vte_0-50" { };
 
@@ -4158,7 +4158,7 @@ zenity_3-24 = pkgs.zenity_generics {
   channel = "3.24";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-26;
   at-spi2-core = pkgs.at-spi2-core_2-30;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
 zenity = callPackageAlias "zenity_3-24" { };
 

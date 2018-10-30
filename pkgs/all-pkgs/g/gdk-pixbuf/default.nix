@@ -26,9 +26,9 @@ let
   loadersCacheFile = "${loadersCachePath}/loaders.cache";
 
   sources = {
-    "2.36" = {
-      version = "2.36.12";
-      sha256 = "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334";
+    "2.38" = {
+      version = "2.38.0";
+      sha256 = "dd50973c7757bcde15de6bcd3a6d462a445efd552604ae6435a0532fbbadae47";
     };
   };
   source = sources."${channel}";
@@ -67,14 +67,20 @@ stdenv.mkDerivation rec {
       -i build-aux/gen-resources.py \
       -i build-aux/gen-thumbnailer.py \
       -e 's,^#!.*,#!${python3}/bin/python3,g'
-  '' + /* Remove hardcoded references to build directory */ ''
+  '' + /* Fix should be included in 2.40 */ ''
+    grep -q '@filename@' gdk-pixbuf/gdk-pixbuf-enum-types.h.template
     sed -i gdk-pixbuf/gdk-pixbuf-enum-types.h.template \
-      -e '/@filename@/d'
+      -i gdk-pixbuf/gdk-pixbuf-enum-types.c.template \
+      -e 's/@filename@/@basename@/g'
+  '' + /* Don't generate loaders, we do this separately */ ''
+    grep -q 'build-aux/post-install.sh' meson.build
+    sed -i meson.build \
+      -e '/build-aux\/post-install\./,+3d'
   '';
 
   mesonFlags = [
     "-Djasper=true"
-    "-Dbuiltin_loaders=none"
+    "-Dinstalled_tests=false"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -106,8 +112,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gdk-pixbuf/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gdk-pixbuf/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

@@ -33,16 +33,6 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  postPatch = /* Remove hardcoded reference to the build directory */ ''
-    sed -i json-glib/json-enum-types.h.in \
-      -e '/@filename@/d'
-  '';
-
-  mesonFlags = [
-    "-Dintrospection=true"
-    "-Ddocs=false"
-  ];
-
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

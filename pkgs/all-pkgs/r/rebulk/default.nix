@@ -14,7 +14,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "0.9.0";
+  version = "1.0.0";
 in
 buildPythonPackage rec {
   name = "rebulk-${version}";
@@ -22,7 +22,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "rebulk";
     inherit version;
-    sha256 = "e0c69bdddccbba3ef881948ea96f1d62eda91201c306ea568a676507a30985eb";
+    sha256 = "1d49e4f7ef6fb874e60efccacbbe661092fabdb7770cdf7f7de4516d50535998";
   };
 
   propagatedBuildInputs = [

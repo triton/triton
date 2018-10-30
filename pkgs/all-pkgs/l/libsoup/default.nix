@@ -1,14 +1,15 @@
 { stdenv
 , fetchurl
 , gettext
-, intltool
 , lib
-, python3
+, meson
+, ninja
 
 , glib
 , glib-networking
 , gobject-introspection
 , kerberos
+, libpsl
 , libxml2
 , sqlite
 , vala
@@ -22,9 +23,9 @@ let
     boolWt;
 
   sources = {
-    "2.62" = {
-      version = "2.62.2";
-      sha256 = "9e536fe3da60b25d2c63addb84a9d5072d00b0d8b8cbeabc629a6bcd63f879b6";
+    "2.64" = {
+      version = "2.64.2";
+      sha256 = "75ddc194a5b1d6f25033bb9d355f04bfe5c03e0e1c71ed0774104457b3a786c6";
     };
   };
   source = sources."${channel}";
@@ -40,8 +41,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    intltool
-    python3
+    meson
+    ninja
     vala
   ];
 
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     kerberos
+    libpsl
     libxml2
     sqlite
   ];
@@ -57,25 +59,13 @@ stdenv.mkDerivation rec {
     patchShebangs ./libsoup/
   '';
 
-  # glib-networking is a runtime dependency, not a compile-time dependency
-  configureFlags = [
-    "--disable-debug"
-    "--enable-glibtest"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--enable-nls"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala"
-    "--disable-tls-check"
-    "--disable-code-coverage"
-    "--enable-more-warnings"
-    "--with-gnome"
-    "--without-apache-httpd"
-    "--${boolWt (kerberos != null)}-gssapi"
+  mesonFlags = [
+    #"-Dkrb5_config=/path"
+    "-Dtls_check=false"  # glib-networking is only a runtime dependency.
+    "-Dtests=false"
   ];
+
+  setVapidirInstallFlag = false;
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
@@ -89,8 +79,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libsoup/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/libsoup/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

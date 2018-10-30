@@ -1189,7 +1189,7 @@ evolution-data-server_3-28 = callPackage ../all-pkgs/e/evolution-data-server {
   channel = "3.28";
   #gnome-online-accounts
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
-  libsoup = pkgs.libsoup_2-62;
+  libsoup = pkgs.libsoup_2-64;
 };
 evolution-data-server = callPackageAlias "evolution-data-server_3-28" { };
 
@@ -1550,7 +1550,7 @@ gnome-calculator_3-26 = callPackage ../all-pkgs/g/gnome-calculator {
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   gtksourceview = pkgs.gtksourceview_3-24;
-  libsoup = pkgs.libsoup_2-62;
+  libsoup = pkgs.libsoup_2-64;
 };
 gnome-calculator = callPackageAlias "gnome-calculator_3-26" { };
 
@@ -1925,7 +1925,7 @@ gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 gvfs_1-34 = callPackage ../all-pkgs/g/gvfs {
   channel = "1.34";
   libbluray = null;
-  libsoup = pkgs.libsoup_2-62;
+  libsoup = pkgs.libsoup_2-64;
 };
 gvfs = callPackageAlias "gvfs_1-34" { };
 
@@ -2324,7 +2324,7 @@ libgweather_3-28 = callPackage ../all-pkgs/l/libgweather {
   channel = "3.28";
   atk = pkgs.atk_2-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
-  libsoup = pkgs.libsoup_2-62;
+  libsoup = pkgs.libsoup_2-64;
 };
 libgweather = callPackageAlias "libgweather_3-28" { };
 
@@ -2531,10 +2531,10 @@ libsndfile = callPackage ../all-pkgs/l/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/l/libsodium { };
 
-libsoup_2-62 = callPackage ../all-pkgs/l/libsoup {
-  channel = "2.62";
+libsoup_2-64 = callPackage ../all-pkgs/l/libsoup {
+  channel = "2.64";
 };
-libsoup = callPackageAlias "libsoup_2-62" { };
+libsoup = callPackageAlias "libsoup_2-64" { };
 
 libspectre = callPackage ../all-pkgs/l/libspectre { };
 
@@ -3900,7 +3900,7 @@ vim = callPackage ../all-pkgs/v/vim { };
 vino_3-22 = callPackage ../all-pkgs/v/vino {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-30;
-  libsoup = pkgs.libsoup_2-62;
+  libsoup = pkgs.libsoup_2-64;
 };
 vino = callPackageAlias "vino_3-22" { };
 

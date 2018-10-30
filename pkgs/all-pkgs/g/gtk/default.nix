@@ -54,9 +54,9 @@ let
   x11_backend = opengl-dummy.glx && libx11 != null;
 
   sources = {
-    "3.22" = {
-      version = "3.22.30";
-      sha256 = "a1a4a5c12703d4e1ccda28333b87ff462741dc365131fbc94c218ae81d9a6567";
+    "3.24" = {
+      version = "3.24.1";
+      sha256 = "68387be307b99aadcdc653561d7a2a7f0113b93561fb18ded7075ec9ced5b02f";
     };
     "3.91" = {
       version = "3.91.1";
@@ -118,11 +118,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-largefile"
     "--disable-debug"
-    "--disable-installed-tests"
     "--${boolEn (x11_backend && libxkbcommon != null)}-xkb"
     "--${boolEn (x11_backend && libxinerama != null)}-xinerama"
     "--${boolEn (x11_backend && libxrandr != null)}-xrandr"
@@ -143,12 +139,9 @@ stdenv.mkDerivation rec {
     "--disable-papi"
     "--${boolEn (rest != null && json-glib != null)}-cloudprint"
     "--${boolEn (cups != null)}-test-print-backend"
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--enable-introspection"
     "--enable-colord"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--disable-man"
     "--disable-doc-cross-references"
     "--enable-Bsymbolic"
@@ -185,8 +178,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

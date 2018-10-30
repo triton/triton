@@ -1867,13 +1867,13 @@ gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-14" { };
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 # Deprecated alias
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3-22 = callPackage ../all-pkgs/g/gtk {
-  channel = "3.22";
+gtk_3-24 = callPackage ../all-pkgs/g/gtk {
+  channel = "3.24";
   atk = pkgs.atk_2-30;
   at-spi2-atk = pkgs.at-spi2-atk_2-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
 };
-gtk_3 = callPackageAlias "gtk_3-22" { };
+gtk_3 = callPackageAlias "gtk_3-24" { };
 # Deprecated alias
 gtk3 = callPackageAlias "gtk_3" { };
 gtk = callPackageAlias "gtk_3" { };
@@ -1889,7 +1889,7 @@ gtkmm_3-22 = callPackage ../all-pkgs/g/gtkmm {
   channel = "3.22";
   atkmm = pkgs.atkmm_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
-  gtk = pkgs.gtk_3-22;
+  gtk = pkgs.gtk_3-24;
   pangomm = pkgs.pangomm_2-40;
 };
 gtkmm_3 = callPackageAlias "gtkmm_3-22" { };

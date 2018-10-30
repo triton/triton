@@ -45,12 +45,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-pixbuf-loader"
-    "--enable-Bsymbolic"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--disable-tools"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-vala"

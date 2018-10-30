@@ -15,7 +15,7 @@
 , pytest-capturelog
 , pyyaml
 
-, channel ? "head"
+, channel ? "stable"
 }:
 
 let
@@ -24,8 +24,8 @@ let
 
   sources = {
     stable = {
-      version = "2.1.4";
-      sha256 = "90e6f9fb49246ad27f34f8b9984357e22562ccc3059241cbc08b4fac1d401c56";
+      version = "3.0.3";
+      sha256 = "590cfaac6adbc65a0297f7b2a44c2accf2cc660eeed6283b43cbad30e65806e0";
     };
     head = {
       fetchzipversion = 6;

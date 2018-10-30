@@ -2,6 +2,7 @@
 , buildPythonPackage
 , cython
 , fetchPyPi
+, lib
 
 , libyaml
 }:
@@ -30,7 +31,7 @@ buildPythonPackage {
     rm ext/*.c || true
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

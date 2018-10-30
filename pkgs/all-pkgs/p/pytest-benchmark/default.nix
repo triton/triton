@@ -1,15 +1,19 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy2
 , lib
 , unzip
 
+, py-cpuinfo
 , pytest
 , statistics
 }:
 
 let
-  version = "3.0.0";
+  inherit (lib) optionals;
+
+  version = "3.1.1";
 in
 buildPythonPackage rec {
   name = "pytest-benchmark-${version}";
@@ -17,8 +21,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytest-benchmark";
     inherit version;
-    type = ".zip";
-    sha256 = "cec1d1d259b9869ac306f91936f9607508a119c34f21cca79d50521bc29bf980";
+    sha256 = "185526b10b7cf1804cb0f32ac0653561ef2f233c6e50a9b3d8066a9757e36480";
   };
 
   nativeBuildInputs = [
@@ -26,11 +29,13 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
+    py-cpuinfo
     pytest
+  ] ++ optionals isPy2 /* <3.4 */ [
     statistics
   ];
 
-  doCheck = true;
+  #doCheck = true;
 
   meta = with lib; {
     description = "py.test fixture for benchmarking code";

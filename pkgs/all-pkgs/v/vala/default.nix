@@ -53,7 +53,6 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-maintainer-mode"
     "--enable-unversioned"
   ];
 

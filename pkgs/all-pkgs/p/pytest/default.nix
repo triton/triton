@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "3.5.1";
+  version = "3.9.3";
 in
 buildPythonPackage rec {
   name = "pytest-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytest";
     inherit version;
-    sha256 = "54713b26c97538db6ff0703a12b19aeaeb60b5e599de542e7fca0ec83b9038e8";
+    sha256 = "a9e5e8d7ab9d5b0747f37740276eb362e6a76275d76cebbb52c6049d93b475db";
   };
 
   propagatedBuildInputs = [

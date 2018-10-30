@@ -23,7 +23,7 @@ buildPythonPackage rec {
     docutils
   ];
 
-  disabled = isPy3;
+  disabled = isPy3;  # >3.4
   doCheck = false;
 
   meta = with lib; {

@@ -46,11 +46,13 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      sha1Urls = map (n: "${n}.sha1.asc") src.urls;
-      pgpKeyFingerprints = [
-        # Murray Cumming
-        "7835 91DD 0B84 B151 C957  3D66 3B76 CE0E B51B D20A"
-      ];
+      fullOpts = {
+        sha1Urls = map (n: "${n}.sha1.asc") src.urls;
+        pgpKeyFingerprints = [
+          # Murray Cumming
+          "7835 91DD 0B84 B151 C957  3D66 3B76 CE0E B51B D20A"
+        ];
+      };
     };
   };
 

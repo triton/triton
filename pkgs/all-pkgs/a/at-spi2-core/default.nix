@@ -26,9 +26,9 @@ let
     boolWt;
 
   sources = {
-    "2.28" = {
-      version = "2.28.0";
-      sha256 = "42a2487ab11ce43c288e73b2668ef8b1ab40a0e2b4f94e80fca04ad27b6f1c87";
+    "2.30" = {
+      version = "2.30.0";
+      sha256 = "0175f5393d19da51f4c11462cba4ba6ef3fa042abf1611a70bdfed586b7bfb2b";
     };
   };
   source = sources."${channel}";
@@ -60,17 +60,12 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  postPatch = /* Remove hardcoded references to the build driectory */ ''
-    sed -i atspi/atspi-enum-types.h.template \
-      -e '/@filename@/d'
-  '';
-
   mesonFlags = [
     #"-Ddbus_services_dir"
     "-Ddbus_daemon=/run/current-system/sw/bin/dbus-daemon"
-    #"-Dsystemd_user_dir"
-    "-Denable_docs=false"
+    #"-Dsystemd_user_dir="
     "-Denable-introspection=yes"
+    "-Denable-x11=yes"
   ];
 
   passthru = {
@@ -79,8 +74,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/at-spi2-core/"
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/at-spi2-core/"
         + "${channel}/${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

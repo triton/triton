@@ -53,11 +53,6 @@ stdenv.mkDerivation rec {
     libxrender
   ];
 
-  mesonFlags = [
-    "-Denable_docs=false"  # gtk-doc
-    "-Dgir=true"
-  ];
-
   # preCheck = /* Fontconfig fails to load default config in test */
   #     optionalString doCheck ''
   #   export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"

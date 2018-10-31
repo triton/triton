@@ -17,8 +17,8 @@ let
 
   sources ={
     "3.28" = {
-      version = "3.28.0";
-      sha256 = "4cb4cd7790b77e5542ec75275237613ad22f3a1f2f41903a298cf6cc996a9167";
+      version = "3.28.1";
+      sha256 = "f88ea6849ffe897c51cfeca5e45c3890010c82c58be2aee18b01349648e5502f";
     };
   };
   source = sources."${channel}";
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--${boolEn (gobject-introspection != null)}-introspection"
   ];
 
@@ -59,8 +59,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/"
-        + "gsettings-desktop-schemas/${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/"
+          + "gsettings-desktop-schemas/${channel}/${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

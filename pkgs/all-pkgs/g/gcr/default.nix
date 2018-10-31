@@ -55,15 +55,11 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--enable-introspection"
     "--${boolEn (vala != null)}-vala"
     "--disable-update-mime"
     "--disable-update-icon-cache"
     "--disable-debug"
-    "--disable-coverage"
     "--disable-valgrind"
   ];
 
@@ -75,8 +71,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gcr/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gcr/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

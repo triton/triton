@@ -29,9 +29,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-umockdev"
   ];
@@ -42,8 +39,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libgudev/${version}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/libgudev/${version}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

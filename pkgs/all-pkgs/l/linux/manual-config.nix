@@ -220,7 +220,7 @@ let
 
       # Remove build directory impurities
       preFixup = ''
-        find "$dev" -name '*.s' -exec sed -i '/-fdebug-prefix-map/d' {} \;
+        find "$dev" -name '*.s' -exec sed -i '/-f[^ ]\+-prefix-map/d' {} \;
         find "$dev" -name '*.cmd' -delete
         find "$dev" -name '*.d' -exec sed -i "s,$TMPDIR,/no-such-path,g" {} \;
       '';

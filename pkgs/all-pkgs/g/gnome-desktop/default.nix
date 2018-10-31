@@ -1,17 +1,13 @@
 { stdenv
-, autoreconfHook
 , fetchurl
 , gettext
-, intltool
-, itstool
 , lib
-, libxslt
-, which
+, meson
+, ninja
 
 , atk
 , gdk-pixbuf
 , glib
-, gnome-common
 , gobject-introspection
 , gsettings-desktop-schemas
 , gtk
@@ -39,9 +35,9 @@ let
     optionals;
 
   sources = {
-    "3.26" = {
-      version = "3.26.2";
-      sha256 = "f7561a7a313fc474b2c390cd9696df1f5c1e1556080e43f4afe042b1060e5f2a";
+    "3.31" = {
+      version = "3.31.1";
+      sha256 = "67f17d329b06b58652752c13b69a34e63c3c68529e7a06b043b7db9c22c7d188";
     };
   };
   source = sources."${channel}";
@@ -56,13 +52,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     gettext
-    gnome-common
-    intltool
-    itstool
-    libxslt
-    which
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -85,27 +77,15 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--disable-date-in-gnome-version"
-    "--enable-compile-warnings"
-    "--disable-iso-c"
-    "--disable-deprecation-flags"
-    "--disable-desktop-docs"
-    "--disable-debug-tools"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--${boolEn (systemd_lib != null)}-udev"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolWt (libx11 != null)}-x"
+  mesonFlags = [
+    "-Ddate_in_gnome_version=false"
+    "-Ddesktop_docs=false"
+    "-Ddebug_tools=false"
+    "-Dudev=enabled"
   ];
 
   postPatch = /* FIXME: find way to support bwrap */ ''
-    sed -i configure.ac \
+    sed -i meson.build \
       -e '/HAVE_BWRAP/d'
   '' + /* Fix hardcoded bubblewrap paths */ ''
     sed -i libgnome-desktop/gnome-desktop-thumbnail-script.c \
@@ -122,8 +102,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gnome-desktop/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gnome-desktop/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

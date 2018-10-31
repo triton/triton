@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , which
 , autoconf
@@ -40,13 +41,15 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gnome-common/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gnome-common/"
+          + "${channel}/${name}.sha256sum";
+      };
       failEarly = true;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Common files for development of Gnome packages";
     homepage = https://git.gnome.org/browse/gnome-common;
     license = licenses.gpl3;

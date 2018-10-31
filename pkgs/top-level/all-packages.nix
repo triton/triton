@@ -1530,10 +1530,10 @@ gn = callPackage ../all-pkgs/g/gn { };
 
 gnome-autoar = callPackage ../all-pkgs/g/gnome-autoar { };
 
-gnome-backgrounds_3-24 = callPackage ../all-pkgs/g/gnome-backgrounds {
-  channel = "3.24";
+gnome-backgrounds_3-30 = callPackage ../all-pkgs/g/gnome-backgrounds {
+  channel = "3.30";
 };
-gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-24" { };
+gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-30" { };
 
 gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
   channel = "3.20";
@@ -1751,7 +1751,7 @@ grub_efi-i386 = callPackage ../all-pkgs/g/grub {
 gsettings-desktop-schemas_3-28 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
     channel = "3.28";
-    gnome-backgrounds = pkgs.gnome-backgrounds_3-24;
+    gnome-backgrounds = pkgs.gnome-backgrounds_3-30;
   };
 gsettings-desktop-schemas =
   callPackageAlias "gsettings-desktop-schemas_3-28" { };

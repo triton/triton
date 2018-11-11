@@ -15,7 +15,7 @@
 }:
 
 let
-  version = "4.17.1";
+  version = "4.19";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "bf0b34f1538c0b6e88f959937b0419678cadbf2ba7044336dcbfb2bcdc28cd74";
+    sha256 = "d591fbe586cf83741fcf9df51859f8e9058ef5187c002b50d6fe84309e5ea349";
   };
 
   nativeBuildInputs = [
@@ -53,10 +53,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
-      pgpKeyFingerprint = "F2B4 1200 C54E FB30 380C  1756 C565 D5F9 D76D 583B";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+        pgpKeyFingerprint = "F2B4 1200 C54E FB30 380C  1756 C565 D5F9 D76D 583B";
+      };
     };
   };
 

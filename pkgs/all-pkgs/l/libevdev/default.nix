@@ -2,29 +2,34 @@
 , fetchurl
 , lib
 
-, python
+, python3
 }:
 
 stdenv.mkDerivation rec {
-  name = "libevdev-1.5.9";
+  name = "libevdev-1.6.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libevdev/${name}.tar.xz";
-    multihash = "QmVGvpKPu8vhKHUrx2Vtco3PoMcjzW76pxChwv32vYr5VS";
+    multihash = "QmWVBYNHH8J6JZXRu7NucPhBjKZfUDAv8LNePvjd2Fw4Bj";
     hashOutput = false;
-    sha256 = "e1663751443bed9d3e76a4fe2caf6fa866a79705d91cacad815c04e706198a75";
+    sha256 = "f5005c865987d980cc1279b9ec6131b06a89fd9892f649f2a68262b8786ef814";
   };
 
-  buildInputs = [
-    python
+  nativeBuildInputs = [
+    python3
   ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
+      };
     };
   };
 

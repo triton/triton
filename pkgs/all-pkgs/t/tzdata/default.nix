@@ -1,40 +1,33 @@
 { stdenv
 , fetchurl
+, lzip
 }:
 
 let
-  version = "2018e";
+  version = "2018g";
 in
 stdenv.mkDerivation rec {
   name = "tzdata-${version}";
 
-  srcs = [
-    (fetchurl {
-      url = "https://www.iana.org/time-zones/repository/releases/tzdata${version}.tar.gz";
-      multihash = "QmY44fAUFv66ajQhR7sP4FAQPhKrz82gpfc2si9qeDQoTr";
-      sha256 = "6b288e5926841a4cb490909fe822d85c36ae75538ad69baf20da9628b63b692e";
-    })
-    (fetchurl {
-      url = "https://www.iana.org/time-zones/repository/releases/tzcode${version}.tar.gz";
-      multihash = "Qmd4ow4q4nNGRfWnUoRzEPxXRQjNFeaMG5j7KG51dLr4Uo";
-      sha256 = "ca340cf20e80b699d6e5c49b4ba47361b3aa681f06f38a0c88a8e8308c00ebce";
-    })
+  src = fetchurl {
+    url = "https://data.iana.org/time-zones/releases/tzdb-${version}.tar.lz";
+    multihash = "QmSDQAzKyQJCPHJcMggKMjKKMhDJUYXNzuPR7dSDp6eF96";
+    sha256 = "bdbdc46c1927f172d9b9eae01ce38a6e94764324f39be7773daf6d3df94485bb";
+  };
+
+  nativeBuildInputs = [
+    lzip
   ];
 
-  srcRoot = ".";
-
-  preUnpack = ''
-    mkdir src
-    cd src
+  postPatch = ''
+    ls -la
+    cat Makefile
   '';
 
   preBuild = ''
     makeFlagsArray+=(
       "TOPDIR=$out"
-      "TZDIR=$out/share/zoneinfo"
-      "MANDIR=$TMPDIR/share/man"
-      "LIBDIR=$TMPDIR/lib"
-      "ETCDIR=$TMPDIR/bin"
+      "USRDIR="
     )
   '';
 

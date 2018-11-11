@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "4.24";
+  version = "4.25";
 in
 stdenv.mkDerivation rec {
   name = "strace-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/strace/strace/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "1f4e59fc1edfa2bfb4adf2a748623dc25b105ec79713dd84404199f91b0b0634";
+    sha256 = "d685f8e65470b7832c3aff60c57ab4459f26ff89f07c10f92bd70ee89efac701";
   };
 
   nativeBuildInputs = [
@@ -30,9 +30,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "296D 6F29 A020 808E 8717  A884 2DB5 BD89 A340 AEB7";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "296D 6F29 A020 808E 8717  A884 2DB5 BD89 A340 AEB7";
+      };
     };
   };
 

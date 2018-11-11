@@ -28,10 +28,12 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "1.20";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
       inherit (src) outputHashAlgo;
       outputHash = "c93b81a5a7788ef5812423d311345ba5d3bd4f5ebf1f693911e3a13553c1290c";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
+      };
     };
   };
 

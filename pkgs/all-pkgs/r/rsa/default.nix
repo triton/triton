@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "3.4.2";
+  version = "4.0";
 in
 buildPythonPackage rec {
   name = "rsa-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "rsa";
     inherit version;
-    sha256 = "25df4e10c263fb88b5ace923dd84bf9aa7f5019687b5e55382ffcdb8bede9db5";
+    sha256 = "1a836406405730121ae9823e19c6e806c62bbad73f890574fff50efa4122c487";
   };
 
   propagatedBuildInputs = [

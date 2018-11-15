@@ -1,31 +1,28 @@
 { stdenv
 , fetchurl
-, file
 }:
 
 stdenv.mkDerivation rec {
-  name = "keyutils-1.5.10";
+  name = "keyutils-1.6";
 
   src = fetchurl {
     url = "https://people.redhat.com/dhowells/keyutils/${name}.tar.bz2";
-    multihash = "QmU7esZtorARS6QNwsL8v2nm4kkVyT8tYLGzgicp1KyYZp";
-    sha256 = "115c3deae7f181778fd0e0ffaa2dad1bf1fe2f5677cf2e0e348cdb7a1c93afb6";
+    multihash = "QmWHYXov2iaiftkQnXrZwsW1ovTLZHayVnrnx4nxbaQAoK";
+    sha256 = "d3aef20cec0005c0fa6b4be40079885567473185b1a57b629b030e67942c7115";
   };
 
-  nativeBuildInputs = [
-    file
-  ];
-
-  patchPhase = ''
-    sed \
-      -e "s,/usr/bin/make,$(type -P make)," \
-      -e "s, /usr, ," \
-      -e "s,\$(LNS) \$(LIBDIR)/\$(SONAME),\$(LNS) \$(SONAME)," \
-      -i Makefile
-  '';
-
-  preInstall = ''
-    installFlagsArray+=("DESTDIR=$out")
+  preBuild = ''
+    makeFlagsArray+=(
+      "ETCDIR=$out/etc"
+      "BINDIR=$out/bin"
+      "SBINDIR=$out/bin"
+      "SHAREDIR=$out/share/keyutils"
+      "MANDIR=$out/share/man"
+      "INCLUDEDIR=$out/include"
+      "PREFIX=$out"
+      "LIBDIR=$out/lib"
+      "USRLIBDIR=$out/lib"
+    )
   '';
 
   meta = with stdenv.lib; {

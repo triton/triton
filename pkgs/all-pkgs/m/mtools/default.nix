@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mtools-4.0.19";
+  name = "mtools-4.0.20";
 
   src = fetchurl {
     url = "mirror://gnu/mtools/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "1bc197199ea1c2c317f597879486eeb817f3199b526d94cc6841624768d910df";
+    sha256 = "6061d31c9f65274cf6de3264907028c90badd8b7f22dd1b385617fa353868aed";
   };
 
   # Fails to install correctly in parallel

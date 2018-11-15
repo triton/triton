@@ -2,10 +2,11 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+, unzip
 }:
 
 let
-  version = "0.3.9";
+  version = "0.4.0";
 in
 buildPythonPackage rec {
   name = "colorama-${version}";
@@ -13,8 +14,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "colorama";
     inherit version;
-    sha256 = "48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1";
+    type = ".zip";
+    sha256 = "c9b54bebe91a6a803e0772c8561d53f2926bfeb17cd141fbabcb08424086595c";
   };
+
+  nativeBuildInputs = [
+    unzip
+  ];
 
   meta = with lib; {
     description = "Cross-platform colored terminal text";

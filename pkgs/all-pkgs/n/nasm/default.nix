@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.13.03";
+  version = "2.14";
 in
 stdenv.mkDerivation rec {
   name = "nasm-${version}";
@@ -12,12 +12,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.nasm.us/pub/nasm/releasebuilds/${version}/"
       + "${name}.tar.xz";
-    multihash = "QmaYeHp1JoEH5kGKr8Vo6C3aZpRTvMdA6JiSvGFmUx9h6e";
-    sha256 = "812ecfb0dcbc5bd409aaa8f61c7de94c5b8752a7b00c632883d15b2ed6452573";
+    multihash = "QmaZG2ZVmqxcUY38z2RYGRBzfyKi88VdpFMAYDHZb5weHy";
+    sha256 = "97c615dbf02ef80e4e2b6c385f7e28368d51efc214daa98e600ca4572500eec0";
   };
 
-  # Needed with 2.13.03 and gcc8
-  NIX_CFLAGS_COMPILE = "-Wno-error=attributes";
+  configureFlags = [
+    "--enable-lto"
+  ];
 
   meta = with lib; {
     description = "An assembler for x86 and x86_64 instruction sets";

@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libnftnl-1.1.1";
+  name = "libnftnl-1.1.2";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnftnl/files/${name}.tar.bz2";
-    multihash = "QmQXBWZTmuxZsntQ9vGoJF39yaY6mPLZemjWL3wWnLonPy";
+    multihash = "QmQqp9uTNYKK4F2LkQARzJx6V4JamKMpQWNE9JcmuUFbGH";
     hashOutput = false;
-    sha256 = "5d6a65413f27ec635eedf6aba033f7cf671d462a2afeacc562ba96b19893aff2";
+    sha256 = "a5c7b7a6c13c9c5898b13fcb1126fefce2015d5a96d7c354b19aaa40b6aece5d";
   };
 
   buildInputs = [
@@ -28,9 +28,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      };
     };
   };
 

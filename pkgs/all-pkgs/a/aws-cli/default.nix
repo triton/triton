@@ -1,47 +1,44 @@
 { stdenv
 , buildPythonPackage
-, fetchzip
+, fetchFromGitHub
 , lib
 
 , botocore
 , colorama
 , docutils
+, pyasn1
 , pyyaml
 , rsa
 , s3transfer
 }:
 
 let
-  version = "1.15.24";
+  version = "1.16.52";
 in
 buildPythonPackage rec {
   name = "aws-cli-${version}";
 
-  src = fetchzip {
+  src = fetchFromGitHub {
     version = 6;
-    url = "https://github.com/aws/aws-cli/archive/${version}.tar.gz";
-    sha256 = "f2e0c27817c525c33257bf6af17e7a356846edd06e8d3bff0cf48df157f04b0c";
+    owner = "aws";
+    repo = "aws-cli";
+    rev = version;
+    sha256 = "0cc559a4db8b396dcb6d3d55a20a3b76efbe7ff8f074cf33a5e7659cbecefc52";
   };
 
   propagatedBuildInputs = [
     botocore
     colorama
     docutils
+    pyasn1
     pyyaml
     rsa
     s3transfer
   ];
 
-  postPatch = /* Allow using newer dependencies */ ''
-    sed -i setup.py \
-      -e "s/colorama.*/colorama',/"
-    sed -i requirements.txt \
-      -i setup.cfg \
-      -e "s/,<.*//g"
-  '';
-
+  # Remove examples
   postInstall = ''
-    rm -f "$out"/bin/{aws.cmd,aws_completer,aws_bash_completer,aws_zsh_completer.sh}
+    find "$out" -name examples -exec rm -rv {} \; -prune
   '';
 
   meta = with lib; {

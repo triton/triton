@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ipset-6.38";
+  name = "ipset-7.0";
 
   src = fetchurl {
     url = "http://ipset.netfilter.org/${name}.tar.bz2";
-    multihash = "QmYRzzDYxdx7CLuCiFoUFKcLAmUtpDgJeeDVcxCNNRtEfj";
+    multihash = "QmYVhqBr4ZfNB67bg4neFL8trzmRuaC5cPhgtQdN5ufWS3";
     hashOutput = false;
-    sha256 = "ceef625ba31fe0aaa422926c7231a819de0b07644c02c17ebdd3022a29e3e244";
+    sha256 = "c6fa0f3b7d514e3edd0113ea02f82ab299e5467a4b7733dc31e127cdccc741af";
   };
 
   buildInputs = [
@@ -26,8 +26,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      md5Urls = map (n: "${n}.md5sum.txt") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Urls = map (n: "${n}.md5sum.txt") src.urls;
+      };
     };
   };
 

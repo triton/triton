@@ -3,13 +3,13 @@
 , fetchPyPi
 , lib
 
-, docutils
 , jmespath
 , python-dateutil
+, urllib3
 }:
 
 let
-  version = "1.10.24";
+  version = "1.12.42";
 in
 buildPythonPackage rec {
   name = "botocore-${version}";
@@ -17,13 +17,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "botocore";
     inherit version;
-    sha256 = "b7a23361bcd6ce2d9cf56a3e5bc7c6b2e3233f3d902d41cb2dfb37472ea41986";
+    sha256 = "0e495bcf2e474b82da7938b35ad2f71e28384c246b47ca131779f736621da504";
   };
 
   propagatedBuildInputs = [
-    docutils
     jmespath
     python-dateutil
+    urllib3
   ];
 
   meta = with lib; {

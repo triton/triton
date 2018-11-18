@@ -49,6 +49,9 @@ with stdenv.lib;
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
   CRYPTO_LZO y
+  ${optionalString (versionAtLeast version "4.20") ''
+    CRYPTO_STATS y
+  ''}
   LZ4_COMPRESS y
   LZ4_DECOMPRESS y
   LZ4HC_COMPRESS y
@@ -132,6 +135,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.12") ''
     PCI_ENDPOINT y
     PCI_ENDPOINT_CONFIGFS y
+  ''}
+  ${optionalString (versionAtLeast version "4.20") ''
+    PCI_P2PDMA y
   ''}
 
   # Support drivers that need external firmware.
@@ -280,8 +286,14 @@ with stdenv.lib;
   DRM_AMDGPU_CIK y
   DRM_AMDGPU_USERPTR y
   DRM_AMDGPU_SI y
+  ${optionalString (versionAtLeast version "4.20") ''
+    HSA_AMD y
+  ''}
   DRM_VMWGFX_FBCON y
   DRM_I915_GVT y
+  ${optionalString (versionAtLeast version "4.20") ''
+    UDMABUF y
+  ''}
   FIRMWARE_EDID y
   LOGO y
   HID_BATTERY_STRENGTH y
@@ -534,7 +546,6 @@ with stdenv.lib;
   BT_HCIUART_AG6XX y
   BT_HCIUART_MRVL y
   MAC80211_MESH y
-  MAC80211_RC_MINSTREL_VHT y
   RFKILL_INPUT y
   NFC_SHDLC y
   CRASH_DUMP n
@@ -581,18 +592,23 @@ with stdenv.lib;
   ''}
   RT2800USB_RT55XX y
   RTC_DRV_DS1307_CENTURY y
-  ${optionalString (versionOlder version "4.13") ''
-    SCSI_MQ_DEFAULT y
+  ${optionalString (versionOlder version "4.20") ''
+    DM_MQ_DEFAULT y
   ''}
-  DM_MQ_DEFAULT y
   DM_UEVENT y
   DM_VERITY_FEC y
   ${optionalString (versionAtLeast version "4.15") ''
     NVME_MULTIPATH y
   ''}
+  ${optionalString (versionOlder version "4.13") ''
+    SCSI_MQ_DEFAULT y
+  ''}
   SCSI_SCAN_ASYNC y
   SCSI_DH y
   SCSI_LOGGING y # SCSI logging facility
+  ${optionalString (versionAtLeast version "4.20") ''
+    SCSI_UFS_BSG y
+  ''}
   SERIAL_8250 y # 8250/16550 and compatible serial support
   SLIP_COMPRESSED y # CSLIP compressed headers
   SLIP_SMART y
@@ -642,6 +658,10 @@ with stdenv.lib;
   ''}
   CFQ_GROUP_IOSCHED y
   CFS_BANDWIDTH y
+
+  ${optionalString (versionAtLeast version "4.20") ''
+    PSI y
+  ''}
 
   # Enable staging drivers.  These are somewhat experimental, but
   # they generally don't hurt.
@@ -733,6 +753,10 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.14") ''
     GCC_PLUGIN_STRUCTLEAK_BYREF_ALL y
+  ''}
+  ${optionalString (versionAtLeast version "4.20") ''
+    GCC_PLUGIN_STACKLEAK y
+    STACKLEAK_METRICS y
   ''}
 
   # Easier debugging of NFS issues.

@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, groff
 
 , ncurses
 }:
@@ -14,15 +13,12 @@ stdenv.mkDerivation rec {
     sha256 = "c41bea8fd140fb57ba67a98ec1d8ae0b8ffa82f4aba9c35a87e5a9499e653116";
   };
 
-  # Have `configure' avoid `/usr/bin/nroff' in non-chroot builds.
-  NROFF = "${groff}/bin/nroff";
-
   buildInputs = [
     ncurses
   ];
 
   configureFlags = [
-    "--enable-widec"
+    "--disable-examples"
   ];
 
   meta = with stdenv.lib; {

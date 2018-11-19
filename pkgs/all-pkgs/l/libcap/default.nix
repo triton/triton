@@ -4,12 +4,20 @@
 , perl
 }:
 
+let
+  name = "libcap-2.26";
+
+  tarballUrls = [
+    "mirror://kernel/linux/libs/security/linux-privs/libcap2/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "libcap-2.25";
+  name = "libcap-2.26";
   
   src = fetchurl {
-    url = "mirror://kernel/linux/libs/security/linux-privs/libcap2/${name}.tar.xz";
-    sha256 = "0qjiqc5pknaal57453nxcbz3mn1r4hkyywam41wfcglq3v2qlg39";
+    urls = map (n: "${n}.xz") tarballUrls;
+    hashOutput = false;
+    sha256 = "b630b7c484271b3ba867680d6a14b10a86cfa67247a14631b14c06731d5a458b";
   };
   
   nativeBuildInputs = [
@@ -27,6 +35,21 @@ stdenv.mkDerivation rec {
   preBuild = ''
     makeFlagsArray+=("prefix=$out")
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sign") tarballUrls;
+        pgpDecompress = true;
+        pgpKeyFingerprint = "EAB3 3C96 9001 3C73 3916  AC83 9BA2 A5A6 30CB EA53";
+      };
+    };
+  };
 
   meta = with lib; {
     description = "Library for working with POSIX capabilities";

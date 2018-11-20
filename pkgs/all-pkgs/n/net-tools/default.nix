@@ -1,6 +1,6 @@
 { stdenv
-, fetchurl
 , fetchgit
+, fetchurl
 , gettext
 }:
 
@@ -22,9 +22,62 @@ stdenv.mkDerivation rec {
     gettext
   ];
 
+  postPatch = ''
+    patchShebangs configure.sh
+
+    # Force configure to ignore input
+    grep -q 'read ans' configure.sh
+    sed -i configure.sh \
+      -e 's/read ans/true/'
+  '';
+
+  configurePhase = ''
+    set_opt() {
+      local opt="$1"
+      local ans="$2"
+      grep -q "$opt" config.in || {
+        echo "invalid netToolsFlag"
+        return 1
+      }
+      sed -i config.in \
+        -e "/^bool.* $opt / s:[yn]$:$ans:"
+    }
+
+    local -A netToolsFlags=(
+      ["I18N"]=y  # gettext
+      # Protocols
+      ["HAVE_AFIPX"]=n
+      ["HAVE_AFATALK"]=n
+      ["HAVE_AFAX25"]=n
+      ["HAVE_AFNETROM"]=n
+      ["HAVE_AFROSE"]=n
+      ["HAVE_AFX25"]=n
+      ["HAVE_AFECONET"]=n
+      ["HAVE_AFDECnet"]=n
+      ["HAVE_AFASH"]=n
+      ["HAVE_AFBLUETOOTH"]=n
+      # Devices
+      ["HAVE_HWARC"]=n
+      ["HAVE_HWAX25"]=n
+      ["HAVE_HWROSE"]=n
+      ["HAVE_HWNETROM"]=n
+      ["HAVE_HWX25"]=n
+      ["HAVE_HWFR"]=n
+      ["HAVE_HWASH"]=n
+      ["HAVE_HWHDLCLAPB"]=n
+      ["HAVE_HWIRDA"]=n
+      # Other
+      ["HAVE_SELINUX"]=n
+    )
+
+    for i in "''${!netToolsFlags[@]}"; do
+      set_opt "$i" "''${netToolsFlags["$i"]}"
+    done
+
+    ./configure.sh config.in
+  '';
+
   preBuild = ''
-    cp ${./config.h} config.h
-    cp ${./config.make} config.make
     makeFlagsArray+=(
       "BASEDIR=$out"
       "mandir=/share/man"

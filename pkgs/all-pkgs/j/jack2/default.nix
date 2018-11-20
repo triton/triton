@@ -30,17 +30,17 @@ let
   libOnly = prefix == "lib";
   libBool = if libOnly then "no" else "yes";
 
-  version = "2017-12-20";
+  version = "2018-11-15";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "jackaudio";
     repo = "jack2";
-    rev = "f6f7f11b387c49973d8637fa51a4e16eaa12ffb9";
-    sha256 = "dd17461b52ad140ffe866e6b1b174bd50a0d2e5597bd176f681f12eb867cfe4d";
+    rev = "c5a16d0ed3dbfeb2bf60717cb5aaec717a229591";
+    sha256 = "d5d38af2c3f39dc88372c9ce7ff0bb8f90b1f1625454e719a0f3be21f6f02342";
   };
 
   nativeBuildInputs = [

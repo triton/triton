@@ -29,6 +29,11 @@ stdenv.mkDerivation rec {
     grep -q 'read ans' configure.sh
     sed -i configure.sh \
       -e 's/read ans/true/'
+
+    # FIXME: remove hack when updating
+    grep -q '<netinet/ip.h>' iptunnel.c
+    sed -i iptunnel.c \
+      -e '/<netinet\/ip.h>/d'
   '';
 
   configurePhase = ''

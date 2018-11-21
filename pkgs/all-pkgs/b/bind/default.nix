@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
     "--with-libtool"
     "--disable-native-pkcs11"
     "--with-openssl=${openssl}"
-    "--with-pkcs11"
+    "--with-pkcs11=${openssl}"
     "--with-ecdsa"
     "--without-gost"  # Insecure cipher
     "--with-aes"

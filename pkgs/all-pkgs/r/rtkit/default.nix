@@ -34,6 +34,11 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  # FIXME
+  NIX_LDFLAGS = [
+    "-lrt"
+  ];
+
   meta = with stdenv.lib; {
     homepage = http://0pointer.de/blog/projects/rtkit;
     descriptions = "A daemon that hands out real-time priority to processes";

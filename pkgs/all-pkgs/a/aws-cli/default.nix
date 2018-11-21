@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.16.52";
+  version = "1.16.57";
 in
 buildPythonPackage rec {
   name = "aws-cli-${version}";
@@ -23,7 +23,7 @@ buildPythonPackage rec {
     owner = "aws";
     repo = "aws-cli";
     rev = version;
-    sha256 = "0cc559a4db8b396dcb6d3d55a20a3b76efbe7ff8f074cf33a5e7659cbecefc52";
+    sha256 = "c9a1c13d3fdffbd06d4e256741794a7f4793023eb588f6e88846ea9f02522556";
   };
 
   propagatedBuildInputs = [

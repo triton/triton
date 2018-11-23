@@ -36,9 +36,9 @@ let
       ];
     };
     "1.1.1" = {
-      version = "1.1.1";
-      multihash = "QmfLksbQmo1HvKRsZv4pL5qzedp7BZJn8HvVqbFcnUZvU1";
-      sha256 = "2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d";
+      version = "1.1.1a";
+      multihash = "QmRhKw3UoTf6qniPZUuNwhhWednuAqGyyhCbSSCbJ85Tvk";
+      sha256 = "fc20130f8b7cbd2fb918b2f14e2f429e109c31ddd0fb38fc5d71d9ffed3f9f41";
       patches = [
         (fetchTritonPatch {
           rev = "29569cdc2793ba0e4902c2134fa3f3bbe9eb6a9f";
@@ -134,10 +134,10 @@ stdenv.mkDerivation rec {
     inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.1.1";
+      urls = tarballUrls "1.1.1a";
       inherit (src)
         outputHashAlgo;
-      outputHash = "2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d";
+      outputHash = "fc20130f8b7cbd2fb918b2f14e2f429e109c31ddd0fb38fc5d71d9ffed3f9f41";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         sha256Urls = map (n: "${n}.sha256") urls;

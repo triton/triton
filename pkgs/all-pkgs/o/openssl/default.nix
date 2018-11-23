@@ -24,9 +24,9 @@ let
       ];
     };
     "1.1.0" = {
-      version = "1.1.0i";
-      multihash = "QmW6dVnte9tHAT652PjixX4ixa6gZcAK7zUcpPXU8ZSYKL";
-      sha256 = "ebbfc844a8c8cc0ea5dc10b86c9ce97f401837f3fa08c17b2cdadc118253cf99";
+      version = "1.1.0j";
+      multihash = "QmWGg4NuccUTKoJTHboFtzg69Rw6MemRcr7Lf1X3ZXzk4d";
+      sha256 = "31bec6c203ce1a8e93d5994f4ed304c63ccf07676118b6634edded12ad1b3246";
       patches = [
         (fetchTritonPatch {
           rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";

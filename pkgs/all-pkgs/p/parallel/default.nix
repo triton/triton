@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "parallel-20180322";
+  name = "parallel-20181022";
 
   src = fetchurl {
     url = "mirror://gnu/parallel/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "6389ad5318247ea28a8e9ddc9e69bc2713ae5c19e3783edda81da54ff6356497";
+    sha256 = "2e84dee3556cbb8f6a3794f5b21549faffb132db3fc68e2e95922963adcbdbec";
   };
 
   nativeBuildInputs = [
@@ -30,9 +30,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "CDA0 1A42 08C4 F745 0610  7E7B D1AB 4516 8888 8888";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "CDA0 1A42 08C4 F745 0610  7E7B D1AB 4516 8888 8888";
+      };
     };
   };
 

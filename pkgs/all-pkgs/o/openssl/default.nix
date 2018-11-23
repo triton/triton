@@ -23,18 +23,6 @@ let
         })
       ];
     };
-    "1.1.0" = {
-      version = "1.1.0j";
-      multihash = "QmWGg4NuccUTKoJTHboFtzg69Rw6MemRcr7Lf1X3ZXzk4d";
-      sha256 = "31bec6c203ce1a8e93d5994f4ed304c63ccf07676118b6634edded12ad1b3246";
-      patches = [
-        (fetchTritonPatch {
-          rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";
-          file = "openssl/use-etc-ssl-certs.patch";
-          sha256 = "59d8c72f5ec030d26ef75e6da199da6a8cba5ed9c05c66296c8a0ea27bf63048";
-        })
-      ];
-    };
     "1.1.1" = {
       version = "1.1.1a";
       multihash = "QmRhKw3UoTf6qniPZUuNwhhWednuAqGyyhCbSSCbJ85Tvk";

@@ -3196,9 +3196,6 @@ openssh = callPackage ../all-pkgs/o/openssh { };
 openssl_1-0-2 = callPackage ../all-pkgs/o/openssl {
   channel = "1.0.2";
 };
-openssl_1-1-0 = callPackage ../all-pkgs/o/openssl {
-  channel = "1.1.0";
-};
 openssl_1-1-1 = callPackage ../all-pkgs/o/openssl {
   channel = "1.1.1";
 };

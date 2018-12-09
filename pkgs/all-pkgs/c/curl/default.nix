@@ -55,6 +55,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--enable-ares"
     "--${if stdenv.cc.cc.isGNU then "enable" else "disable"}-libgcc"
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
     "--with-ca-path=/etc/ssl/certs"

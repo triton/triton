@@ -2,7 +2,7 @@
 , fetchurl
 , perl
 
-, interactive ? true, ncurses
+, ncurses
 }:
 
 let
@@ -28,12 +28,18 @@ stdenv.mkDerivation rec {
     perl
   ];
 
-  buildInputs = optionals interactive [
+  buildInputs = [
     ncurses
   ];
 
+  configureFlags = [
+    "--disable-tp-tests"
+    "--enable-perl-api-texi-build"
+    "--disable-pod-simple-texinfo-tests"
+  ];
+
   preInstall = ''
-    installFlagsArray+=("TEXMF=$out/texmf-dist")
+    installFlagsArray+=("TEXMF=$out/share")
   '';
 
   installTargets = [

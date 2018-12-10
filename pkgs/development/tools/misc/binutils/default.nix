@@ -1,8 +1,5 @@
 { stdenv
-, bison
-, fetchTritonPatch
 , fetchurl
-, texinfo
 
 , zlib
 }:
@@ -22,22 +19,14 @@ stdenv.mkDerivation rec {
     sha256 = "5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86";
   };
 
-  nativeBuildInputs = [
-    bison
-    texinfo
-  ];
-
   buildInputs = [
     zlib
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "ee7246d6cd30ae3d8ba0f9531684f2cb0c40abeb";
-      file = "b/binutils/0000-2.31.1-2018-10-09.patch";
-      sha256 = "6246b9a14eebca5aeac7cc35f7aaa4351b5d1e3d5aca84d8b4b75bcf5b0359a0";
-    })
-  ];
+  # Don't rebuild the docs for bfd
+  postPatch = ''
+    sed -i '/SUBDIRS/s, doc,,' bfd/Makefile.in
+  '';
 
   preConfigure = ''
     # Clear the default library search path.

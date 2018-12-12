@@ -3080,7 +3080,10 @@ nodejs_8 = callPackage ../all-pkgs/n/nodejs {
 nodejs_10 = callPackage ../all-pkgs/n/nodejs {
   channel = "10";
 };
-nodejs = callPackageAlias "nodejs_10" { };
+nodejs_11 = callPackage ../all-pkgs/n/nodejs {
+  channel = "11";
+};
+nodejs = callPackageAlias "nodejs_11" { };
 
 noise = callPackage ../all-pkgs/n/noise { };
 

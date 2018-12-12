@@ -2,7 +2,7 @@
 , fetchurl
 , lib
 , ninja
-, python
+, python2
 
 , c-ares
 , http-parser
@@ -25,16 +25,20 @@ let
 
   sources = {
     "6" = {
-      version = "6.14.2";
-      sha256 = "b3a534b2ad5e96c6ff67f3a1356b94f7a28ef118eb1d420b314fe5aafe6d62d1";
+      version = "6.15.1";
+      sha256 = "c3bde58a904b5000a88fbad3de630d432693bc6d9d6fec60a5a19e68498129c2";
     };
     "8" = {
-      version = "8.12.0";
-      sha256 = "5a9dff58016c18fb4bf902d963b124ff058a550ebcd9840c677757387bce419a";
+      version = "8.14.0";
+      sha256 = "8ce252913c9f6aaa9871f2d9661b6e54858dae2f0064bd3c624676edb09083c4";
     };
     "10" = {
-      version = "10.12.0";
-      sha256 = "d9cd890d6c3b060f7a5497a522564328fe73ec39dda082f41c4141a73ac30ae4";
+      version = "10.14.1";
+      sha256 = "3def67bf1679e0606af4eb3d7ce3c0a3fe4548f2d0a87320d43a30e2207ab034";
+    };
+    "11" = {
+      version = "11.4.0";
+      sha256 = "b7261dd70dcac28f208e8f444dd91dc919e7ec2f5a0aeba9416eb07165a0d684";
     };
   };
 
@@ -56,7 +60,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = optionals (versionAtLeast source.version "7.0.0") [
     ninja
   ] ++ [
-    python
+    python2
   ];
 
   buildInputs = [
@@ -107,7 +111,7 @@ stdenv.mkDerivation rec {
     # Install must be run manually when using ninja setup hook
     sed -i tools/install.py \
       -e "s,/usr/local,$out,"
-    ${python.interpreter} tools/install.py
+    ${python2.interpreter} tools/install.py
 
     # Fix scripts like npm that depend on node
     export PATH="$out/bin:$PATH"
@@ -124,14 +128,14 @@ stdenv.mkDerivation rec {
         sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
         # https://github.com/nodejs/node#release-team
         pgpKeyFingerprints = [
+          # Beth Griggs
+          "4ED7 78F5 39E3 634C 779C  87C6 D706 2848 A1AB 005C"
           # Colin Ihrig
           "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
           # Evan Lucas
           "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
           # Gibson Fahnestock
           "7798 4A98 6EBC 2AA7 86BC  0F66 B01F BB92 821C 587A"
-          # Italo A. Casas
-          "5673 0D54 0102 8683 275B  D23C 23EF EFE9 3C4C FFFE"
           # James M Snell
           "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
           # Jeremiah Senkpiel
@@ -140,8 +144,8 @@ stdenv.mkDerivation rec {
           "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
           # Rod Vagg
           "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
-          # Michael Zasso
-          "8FCC A13F EF1D 0C2E 9100  8E09 770F 7A9A 5AE1 5600"
+          # Ruben Bridgewater
+          "A48C 2BEE 680E 8416 32CD  4E44 F074 96B3 EB3C 1762"
         ];
       };
       inherit (src)

@@ -16,6 +16,9 @@
 , channel
 }:
 
+# FIXME: Need to add llhttp dependency, currently using the vendored
+#        http_parser/llhttp sources for >=11.
+
 let
   inherit (lib)
     optionals
@@ -65,7 +68,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     c-ares
+  ] ++ optionals (!(versionAtLeast source.version "11.0.0")) [
     http-parser
+  ] ++ [
     icu
     libuv
   ] ++ optionals (versionAtLeast source.version "8.0.0") [
@@ -86,8 +91,9 @@ stdenv.mkDerivation rec {
 
   configureFlags = optionals (versionAtLeast source.version "7.0.0") [
     "--ninja"
-  ] ++ [
+  ] ++ optionals (!(versionAtLeast source.version "11.0.0")) [
     "--shared-http-parser"
+  ] ++ [
     "--shared-libuv"
   ] ++ optionals (versionAtLeast source.version "8.0.0") [
     "--shared-nghttp2"

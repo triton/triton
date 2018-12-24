@@ -79,6 +79,24 @@ in
 
             script =
               ''
+                doSetOnline=
+
+                # Set the default gateway.
+                ${optionalString (cfg.defaultGateway != null && cfg.defaultGateway != "") ''
+                  # FIXME: get rid of "|| true" (necessary to make it idempotent).
+                  ip route add default via "${cfg.defaultGateway}" ${
+                    optionalString (cfg.defaultGatewayWindowSize != null)
+                      "window ${toString cfg.defaultGatewayWindowSize}"} || true
+                  doSetOnline=1
+                ''}
+                ${optionalString (cfg.defaultGateway6 != null && cfg.defaultGateway6 != "") ''
+                  # FIXME: get rid of "|| true" (necessary to make it idempotent).
+                  ip -6 route add ::/0 via "${cfg.defaultGateway6}" ${
+                    optionalString (cfg.defaultGatewayWindowSize != null)
+                      "window ${toString cfg.defaultGatewayWindowSize}"} || true
+                  doSetOnline=1
+                ''}
+
                 # Set the static DNS configuration, if given.
                 ${pkgs.openresolv}/sbin/resolvconf -m 1 -a static <<EOF
                 ${optionalString (cfg.nameservers != [] && cfg.domain != null) ''
@@ -90,21 +108,9 @@ in
                 '')}
                 EOF
 
-                # Set the default gateway.
-                ${optionalString (cfg.defaultGateway != null && cfg.defaultGateway != "") ''
-                  # FIXME: get rid of "|| true" (necessary to make it idempotent).
-                  ip route add default via "${cfg.defaultGateway}" ${
-                    optionalString (cfg.defaultGatewayWindowSize != null)
-                      "window ${toString cfg.defaultGatewayWindowSize}"} || true
+                if [ -n "doSetOnline" ]; then
                   ${config.systemd.package}/bin/systemctl start --no-block network-online.target
-                ''}
-                ${optionalString (cfg.defaultGateway6 != null && cfg.defaultGateway6 != "") ''
-                  # FIXME: get rid of "|| true" (necessary to make it idempotent).
-                  ip -6 route add ::/0 via "${cfg.defaultGateway6}" ${
-                    optionalString (cfg.defaultGatewayWindowSize != null)
-                      "window ${toString cfg.defaultGatewayWindowSize}"} || true
-                  ${config.systemd.package}/bin/systemctl start --no-block network-online.target
-                ''}
+                fi
               '';
           };
 

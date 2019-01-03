@@ -146,13 +146,13 @@ if [ "$NIX_ENFORCE_PURITY" = 1 ]; then
     echo "Missing NIX_BUILD_TOP" >&2
     exit 1
   fi
-  params+=("-ffile-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+  params+=("@prefixMapFlag@=$NIX_BUILD_TOP=/no-such-path")
 fi
 
 if [[ "@prog@" = *++ ]]; then
     if  echo "$@" | grep -qv -- -nostdlib; then
         NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE ${NIX_CXXSTDLIB_COMPILE-@default_cxx_stdlib_compile@}"
-        NIX_CFLAGS_LINK="$NIX_CFLAGS_LINK $NIX_CXXSTDLIB_LINK"
+        NIX_CFLAGS_LINK="$NIX_CFLAGS_LINK ${NIX_CXXSTDLIB_LINK-@default_cxx_stdlib_link@}"
     fi
 fi
 

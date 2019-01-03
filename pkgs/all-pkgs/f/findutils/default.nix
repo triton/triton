@@ -1,8 +1,14 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
-, coreutils
+
+, type ? "full"
 }:
 
+let
+  inherit (stdenv.lib)
+    optionalString;
+in
 stdenv.mkDerivation rec {
   name = "findutils-4.6.0";
 
@@ -11,11 +17,32 @@ stdenv.mkDerivation rec {
     sha256 = "178nn4dl7wbcw499czikirnkniwnx36argdnqgz4ik9i6zvwkm6y";
   };
 
+  patches = [
+    (fetchTritonPatch {
+      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      file = "f/findutils/glibc-2.28-1.patch";
+      sha256 = "84b916c0bf8c51b7e7b28417692f0ad3e7030d1f3c248ba77c42ede5c1c5d11e";
+    })
+    (fetchTritonPatch {
+      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      file = "f/findutils/glibc-2.28-2.patch";
+      sha256 = "482e1a2f7acdca9f73affdce8cad51beaabb5ab99f64ed66391a8b36ed3dc822";
+    })
+  ];
+
   # We don't want to depend on bootstrap-tools
-  # This input forces the build system to use our
-  # newly built coreutils instead.
-  buildInputs = [
-    coreutils
+  ac_cv_path_SORT = "sort";
+
+  postInstall = optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
+
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
   ];
 
   meta = with stdenv.lib; {

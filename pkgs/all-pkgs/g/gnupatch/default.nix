@@ -3,9 +3,15 @@
 , fetchTritonPatch
 
 , attr
+
+, type ? "full"
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
   tarballUrls = version: [
     "mirror://gnu/patch/patch-${version}.tar.xz"
   ];
@@ -13,7 +19,7 @@ let
   version = "2.7.6";
 in
 stdenv.mkDerivation rec {
-  name = "gnupatch-${version}";
+  name = "gnupatch-${type}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
@@ -21,7 +27,7 @@ stdenv.mkDerivation rec {
     sha256 = "ac610bda97abe0d9f6b7c963255a11dcb196c25e337c61f94e4778d632f1d8fd";
   };
 
-  buildInputs = [
+  buildInputs = optionals (type == "full") [
     attr
   ];
 
@@ -36,6 +42,16 @@ stdenv.mkDerivation rec {
       file = "g/gnupatch/CVE-2018-6952.patch";
       sha256 = "16e3eea6c24c20979b79de27ce8b2211d8d5e15f1534955fbf75dd90f9857c77";
     })
+  ];
+
+  postInstall = optionalString (type == "small") ''
+    rm -r "$out"/share
+  '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
   ];
 
   passthru = {

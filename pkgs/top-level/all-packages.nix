@@ -734,6 +734,14 @@ babl = callPackage ../all-pkgs/b/babl { };
 
 bash = callPackage ../all-pkgs/b/bash { };
 
+bash_small = callPackage ../all-pkgs/b/bash {
+  type = "small";
+  gettext = null;
+  texinfo = null;
+  readline = null;
+  ncurses = null;
+};
+
 bash-completion = callPackage ../all-pkgs/b/bash-completion { };
 
 bc = callPackage ../all-pkgs/b/bc { };
@@ -751,6 +759,8 @@ bind = callPackage ../all-pkgs/b/bind { };
 bind_tools = callPackageAlias "bind" {
   suffix = "tools";
 };
+
+binutils = callPackage ../all-pkgs/b/binutils { };
 
 bison = callPackage ../all-pkgs/b/bison { };
 
@@ -832,6 +842,10 @@ cairo = callPackage ../all-pkgs/c/cairo { };
 cairomm = callPackage ../all-pkgs/c/cairomm { };
 
 caribou = callPackage ../all-pkgs/c/caribou { };
+
+cc = pkgs.cc_gcc;
+
+cc_gcc = wrapCC pkgs.gcc;
 
 cc-regression = callPackage ../all-pkgs/c/cc-regression { };
 
@@ -953,6 +967,16 @@ consul-replicate = pkgs.goPackages.consul-replicate.bin // { outputs = [ "bin" ]
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
 coreutils = callPackage ../all-pkgs/c/coreutils { };
+
+coreutils_small = callPackage ../all-pkgs/c/coreutils {
+  type = "small";
+  acl = null;
+  attr = null;
+  gmp = null;
+  libcap = null;
+  libselinux = null;
+  libsepol = null;
+};
 
 corosync = callPackage ../all-pkgs/c/corosync { };
 
@@ -1433,7 +1457,17 @@ game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };
 
 gawk = callPackage ../all-pkgs/g/gawk { };
 
+gawk_small = callPackage ../all-pkgs/g/gawk {
+  type = "small";
+  gmp = null;
+  libsigsegv = null;
+  mpfr = null;
+  readline = null;
+};
+
 gcab = callPackage ../all-pkgs/g/gcab { };
+
+gcc = callPackage ../all-pkgs/g/gcc { };
 
 gconf = callPackage ../all-pkgs/g/gconf { };
 
@@ -1503,6 +1537,8 @@ glew = callPackage ../all-pkgs/g/glew { };
 glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };
+
+glibc = callPackage ../all-pkgs/g/glibc { };
 
 glib-networking_2-54 = callPackage ../all-pkgs/g/glib-networking {
   channel = "2.54";
@@ -1654,14 +1690,33 @@ gnumake = callPackage ../all-pkgs/g/gnumake { };
 
 gnupatch = callPackage ../all-pkgs/g/gnupatch { };
 
+gnupatch_small = callPackage ../all-pkgs/g/gnupatch {
+  type = "small";
+  attr = null;
+};
+
 gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
 
+gnused_small = callPackage ../all-pkgs/g/gnused {
+  type = "small";
+  perl = null;
+  acl = null;
+};
+
 gnutar_1-30 = callPackage ../all-pkgs/g/gnutar {
   version = "1.30";
 };
-gnutar = callPackageAlias "gnutar_1-30" { };
+gnutar_1-31 = callPackage ../all-pkgs/g/gnutar {
+  version = "1.31";
+};
+gnutar = callPackageAlias "gnutar_1-31" { };
+
+gnutar_small = callPackage ../all-pkgs/g/gnutar {
+  type = "small";
+  acl = null;
+};
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
@@ -2048,12 +2103,6 @@ iputils = callPackage ../all-pkgs/i/iputils { };
 
 irqbalance = callPackage ../all-pkgs/i/irqbalance { };
 
-isl_0-14 = callPackage ../all-pkgs/i/isl {
-  channel = "0.14";
-};
-isl_0-18 = callPackage ../all-pkgs/i/isl {
-  channel = "0.18";
-};
 isl_0-20 = callPackage ../all-pkgs/i/isl {
   channel = "0.20";
 };
@@ -2200,6 +2249,8 @@ libbsd = callPackage ../all-pkgs/l/libbsd { };
 libburn = callPackage ../all-pkgs/l/libburn { };
 
 libbytesize = callPackage ../all-pkgs/l/libbytesize { };
+
+libc = pkgs.glibc;
 
 libcacard = callPackage ../all-pkgs/l/libcacard { };
 
@@ -2546,6 +2597,8 @@ libssh = callPackage ../all-pkgs/l/libssh { };
 
 libssh2 = callPackage ../all-pkgs/l/libssh2 { };
 
+libstdcxx = callPackage ../all-pkgs/l/libstdcxx { };
+
 libstoragemgmt = callPackage ../all-pkgs/l/libstoragemgmt { };
 
 libtasn1 = callPackage ../all-pkgs/l/libtasn1 { };
@@ -2782,8 +2835,6 @@ lz4 = callPackage ../all-pkgs/l/lz4 { };
 lzip = callPackage ../all-pkgs/l/lzip { };
 
 lzo = callPackage ../all-pkgs/l/lzo { };
-
-m4 = callPackageAlias "gnum4" { };
 
 mac = callPackage ../all-pkgs/m/mac { };
 
@@ -4226,75 +4277,6 @@ zstd = callPackage ../all-pkgs/z/zstd {
   systemd-cryptsetup-generator =
     callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #
-  gcc = callPackageAlias "gcc8" { };
-#
-  gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
-    noSysDirs = true;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = true;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = null;
-
-    isl = pkgs.isl_0_14;
-  }));
-#
-  gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
-    noSysDirs = true;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = true;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = null;
-  }));
-
-  gcc6 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/6 {
-    noSysDirs = true;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = true;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = null;
-  }));
-
-  gcc7 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/7 {
-    noSysDirs = true;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = true;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = null;
-  }));
-
-  gcc8 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/8 {
-    noSysDirs = true;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = true;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = null;
-  }));
-#
   haskell = callPackage ./haskell-packages.nix { };
 #
   haskellPackages = pkgs.haskell.packages.ghc7103.override {
@@ -4369,8 +4351,6 @@ zstd = callPackage ../all-pkgs/z/zstd {
 #
   automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #
-  binutils = callPackage ../development/tools/misc/binutils { };
-#
   doxygen = callPackage ../development/tools/documentation/doxygen {
     qt4 = null;
   };
@@ -4415,11 +4395,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
     };
 #
   giblib = callPackage ../development/libraries/giblib { };
-#
-  glibc = callPackage ../development/libraries/glibc { };
-
-  # Only supported on Linux
-  glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
 #
   gom = callPackage ../all-pkgs/g/gom { };
 #

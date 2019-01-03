@@ -51,7 +51,14 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
   ];
 
-  doCheck = true;
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.libstdcxx
+    stdenv.cc.cc
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

@@ -1,18 +1,18 @@
 { pkgs }:
 {
   inherit (pkgs)
-    bash
+    bash_small
     brotli
     bzip2
-    coreutils
+    coreutils_small
     diffutils
     findutils
-    gawk
+    gawk_small
     gnugrep
     gnumake
-    gnupatch
-    gnused
-    gnutar
+    gnupatch_small
+    gnused_small
+    gnutar_small
     gzip
     pkgconfig
     xz;

@@ -1,11 +1,15 @@
 { stdenv
 , fetchurl
 , pcre
-, perl
+
+, type ? "full"
 }:
 
 let
-  version = "3.1";
+  inherit (stdenv.lib)
+    optionalString;
+
+  version = "3.3";
 
   tarballUrls = version: [
     "mirror://gnu/grep/grep-${version}.tar.xz"
@@ -17,12 +21,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "db625c7ab3bb3ee757b3926a5cfa8d9e1c3991ad24707a83dde8a5ef2bf7a07e";
+    sha256 = "b960541c499619efd6afe1fa795402e4733c8e11ebf9fafccc0bb4bccdc5b514";
   };
-
-  nativeBuildInputs = [
-    perl
-  ];
 
   buildInputs = [
     pcre
@@ -37,16 +37,29 @@ stdenv.mkDerivation rec {
     echo "#! /bin/sh" > $out/bin/fgrep
     echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
     chmod +x $out/bin/egrep $out/bin/fgrep
+  '' + optionalString (type != "full") ''
+    rm -r "$out"/share
   '';
+
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+    pcre
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.1";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
+      urls = tarballUrls "3.3";
       inherit (src) outputHashAlgo;
-      outputHash = "db625c7ab3bb3ee757b3926a5cfa8d9e1c3991ad24707a83dde8a5ef2bf7a07e";
+      outputHash = "b960541c499619efd6afe1fa795402e4733c8e11ebf9fafccc0bb4bccdc5b514";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
+      };
     };
   };
 

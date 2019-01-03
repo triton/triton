@@ -1,9 +1,16 @@
 { stdenv
 , fetchurl
-, m4
+, gnum4
+
+, cxx ? false
 }:
 
 let
+  inherit (stdenv.lib)
+    boolEn
+    optionals
+    optionalString;
+
   version = "6.1.2";
 
   tarballUrls = version: [
@@ -12,7 +19,7 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "gmp-${version}";
+  name = "gmp${optionalString (!cxx) "-nocxx"}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
@@ -21,14 +28,19 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    m4
+    gnum4
   ];
 
   configureFlags = [
     "--with-pic"
     "--enable-fat"
-    "--enable-cxx"
+    "--${boolEn cxx}-cxx"
   ];
+
+  # Only provides some info files
+  postInstall = ''
+    rm -r "$out"/share
+  '';
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -40,6 +52,14 @@ stdenv.mkDerivation rec {
       outputHash = "87b565e89a9a684fe4ebeeddb8399dce2599f9c9049854ca8c0dfbdea0e21912";
     };
   };
+
+  # Ensure we don't depend on anything unexpected
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+  ] ++ optionals cxx [
+    stdenv.cc.libstdcxx
+  ];
 
   meta = with stdenv.lib; {
     homepage = "http://gmplib.org/";

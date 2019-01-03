@@ -1,7 +1,13 @@
 { stdenv
 , fetchurl
+
+, type ? "full"
 }:
 
+let
+  inherit (stdenv.lib)
+    optionalString;
+in
 stdenv.mkDerivation rec {
   name = "pkgconf-1.5.4";
 
@@ -26,7 +32,15 @@ stdenv.mkDerivation rec {
 
     # We want compatability with pkg-config
     ln -sv pkgconf "$out"/bin/pkg-config
+  '' + optionalString (type != "full") ''
+    rm -r "$out"/share/{doc,man}
   '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ];
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/pkgconf/pkgconf";

@@ -115,6 +115,7 @@ if [ "$NIX_DONT_SET_RPATH" != 1 ]; then
     # First, find all -L... switches.
     allParams=("${params[@]}" ${extra[@]})
     n=0
+    skipStatic=0
     while [ $n -lt ${#allParams[*]} ]; do
         p=${allParams[n]}
         p2=${allParams[$((n+1))]}
@@ -123,15 +124,29 @@ if [ "$NIX_DONT_SET_RPATH" != 1 ]; then
         elif [ "$p" = -L ]; then
             addToLibPath ${p2}
             n=$((n + 1))
+        elif [ "$p" = -Bdynamic ]; then
+            skipStatic=0
+        elif [ "$p" = -Bstatic ]; then
+            skipStatic=1
         elif [ "$p" = -l ]; then
-            addToLibs ${p2}
+            if [ "$skipStatic" -ne "1" ]; then
+              addToLibs ${p2}
+            fi
             n=$((n + 1))
         elif [ "${p:0:2}" = -l ]; then
-            addToLibs ${p:2}
+            if [ "$skipStatic" -ne "1" ]; then
+              addToLibs ${p:2}
+            fi
         elif [ "$p" = -dynamic-linker ]; then
             # Ignore the dynamic linker argument, or it
             # will get into the next 'elif'. We don't want
             # the dynamic linker path rpath to go always first.
+            n=$((n + 1))
+        elif [ "$p" = -plugin ]; then
+            # Ignore the plugin argument, or it
+            # will get into the next 'elif'. We don't want
+            # the linker plugins added to the rpath since they are only used
+            # by the linker itself
             n=$((n + 1))
         elif [[ "$p" =~ ^[^-].*\.so($|\.) ]]; then
             # This is a direct reference to a shared library, so add

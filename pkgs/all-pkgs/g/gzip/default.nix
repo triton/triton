@@ -1,13 +1,18 @@
 { stdenv
 , fetchurl
+
+, type ? "full"
 }:
 
 let
+  inherit (stdenv.lib)
+    optionalString;
+
   tarballUrls = version: [
     "mirror://gnu/gzip/gzip-${version}.tar.xz"
   ];
 
-  version = "1.9";
+  version = "1.10";
 in
 stdenv.mkDerivation rec {
   name = "gzip-${version}";
@@ -15,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "ae506144fc198bd8f81f1f4ad19ce63d5a2d65e42333255977cf1dcf1479089a";
+    sha256 = "8425ccac99872d544d4310305f915f5ea81e04d0f437ef1a230dc9d1c819d7c0";
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
@@ -24,13 +29,25 @@ stdenv.mkDerivation rec {
     "GREP=grep"
   ];
 
+  postInstall = optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
+
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.9";
+      urls = tarballUrls "1.10";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
-      outputHash = "ae506144fc198bd8f81f1f4ad19ce63d5a2d65e42333255977cf1dcf1479089a";
+      outputHash = "8425ccac99872d544d4310305f915f5ea81e04d0f437ef1a230dc9d1c819d7c0";
       inherit (src) outputHashAlgo;
     };
   };

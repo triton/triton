@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
-, shared ? true
-, static ? true
+
+, type ? "full"
 }:
 
-assert static || shared;
-
 let
+  inherit (stdenv.lib)
+    optionalString;
+
   version = "1.2.11";
 
   tarballUrls = version: [
@@ -22,9 +23,14 @@ stdenv.mkDerivation rec {
     sha256 = "4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066";
   };
 
-  configureFlags = [
-    (if static then "--static" else "")
-    (if shared then "--shared" else "")
+  postInstall = optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
+
+  # Ensure we don't depend on anything unexpected
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
   ];
 
   passthru = {

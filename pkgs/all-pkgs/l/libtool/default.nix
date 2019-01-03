@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , help2man
-, m4
+, gnum4
 , makeWrapper
 , perl
 }:
@@ -16,14 +16,14 @@ stdenv.mkDerivation rec {
   
   nativeBuildInputs = [
     help2man
-    m4
+    gnum4
     makeWrapper
     perl
   ];
 
   preFixup = ''
     wrapProgram $out/bin/libtoolize \
-      --prefix PATH : "${m4}/bin"
+      --prefix PATH : "${gnum4}/bin"
   '';
 
   meta = with stdenv.lib; {

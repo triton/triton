@@ -2,8 +2,14 @@
 , autoreconfHook
 , fetchFromGitHub
 , fetchurl
+
+, type ? "full"
 }:
 
+let
+  inherit (stdenv.lib)
+    optionalString;
+in
 stdenv.mkDerivation rec {
   name = "patchelf-0.9";
 
@@ -14,6 +20,16 @@ stdenv.mkDerivation rec {
   };
 
   setupHook = ./setup-hook.sh;
+
+  postInstall = optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.libstdcxx
+  ];
 
   passthru = {
     dist = stdenv.mkDerivation rec {

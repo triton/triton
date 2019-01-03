@@ -2,15 +2,12 @@
 , fetchTritonPatch
 , fetchurl
 
-, static ? true
-, shared ? true
+, type ? "full"
 }:
-
-assert shared || static;
 
 let
   inherit (stdenv.lib)
-    boolEn;
+    optionalString;
 
   version = "1.0.6.0.2";
 in
@@ -58,12 +55,17 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  configureFlags = [
-    "--${boolEn static}-static"
-    "--${boolEn shared}-shared"
-  ];
+  postInstall = optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
 
-  disableStatic = (!static);
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ];
 
   meta = with stdenv.lib; {
     description = "high-quality data compression program";

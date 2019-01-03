@@ -13,15 +13,6 @@ let
       multihash = "QmX4H1gPmNoYiZQ4WYyJspr3PyUmw2W2vsaytzDocoGgyr";
       sha256 = "a5596a9fb8a5b365cb612e4b9628735d6e67e9178fae134a816ae195017e77aa";
     };
-    "0.18" = {
-      version = "0.18";
-      multihash = "QmPTtYQfodApCrwdwgKg2B9yY8n21MAT1MwUuwPDQqTDNK";
-      sha256 = "0f35051cc030b87c673ac1f187de40e386a1482a0cfdf2c552dd6031b307ddc4";
-    };
-    "0.14" = {
-      version = "0.14.1";
-      sha256 = "1m922l5bz69lvkcxrib7lvjqwfqsr8rpbzgmb2aq07bp76460jha";
-    };
   };
 
   inherit (sources."${channel}")
@@ -42,7 +33,22 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-silent-rules"
     "--enable-portable-binary"
+  ];
+
+  # For some reason the binaries built during the build process
+  # don't maintain references to libgmp. This is a workaround to
+  # make the build work.
+  preBuild = ''
+    export NIX_LDFLAGS="$NIX_LDFLAGS -lgmp"
+  '';
+
+  # Ensure we don't depend on anything unexpected
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    gmp
   ];
 
   meta = with stdenv.lib; {

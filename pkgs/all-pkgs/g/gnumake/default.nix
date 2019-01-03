@@ -1,9 +1,14 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+
+, type ? "full"
 }:
 
 let
+  inherit (stdenv.lib)
+    optionalString;
+
   version = "4.2.1";
 
   tarballUrls = version: [
@@ -20,6 +25,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
+    (fetchTritonPatch {
+      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      file = "g/gnumake/glibc-2.28.patch";
+      sha256 = "fe5b60d091c33f169740df8cb718bf4259f84528b42435194ffe0dd5b79cd125";
+    })
     # Purity: don't look for library dependencies (of the form `-lfoo') in /lib
     # and /usr/lib. It's a stupid feature anyway. Likewise, when searching for
     # included Makefiles, don't look in /usr/include and friends.
@@ -28,6 +38,24 @@ stdenv.mkDerivation rec {
       file = "gnumake/impure-dirs.patch";
       sha256 = "64efcd56eb445568f2e83d3c4535f645750a3f48ae04999ca4852e263819d416";
     })
+  ];
+
+  configureFlags = [
+    # Workaround broken autodetection
+    "make_cv_sys_gnu_glob=yes"
+  ];
+
+  postInstall = ''
+    # Nothing should be using the header
+    rm -r "$out"/include
+  '' + optionalString (type != "full") ''
+    rm -r "$out"/share
+  '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
   ];
 
   passthru = {

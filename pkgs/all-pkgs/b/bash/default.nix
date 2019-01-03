@@ -5,6 +5,8 @@
 
 , ncurses
 , readline
+
+, type ? "full"
 }:
 
 let
@@ -12,26 +14,28 @@ let
     attrNames
     flip
     length
-    mapAttrsToList;
+    mapAttrsToList
+    optionals
+    optionalString;
 
   patchSha256s = import ./patches.nix;
 
   version = "4.4";
 in
 stdenv.mkDerivation rec {
-  name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
+  name = "bash-${type}-${version}-p${toString (length (attrNames patchSha256s))}";
 
   src = fetchurl {
     url = "mirror://gnu/bash/bash-${version}.tar.gz";
     sha256 = "1jyz6snd63xjn6skk7za6psgidsd53k05cr3lksqybi0q6936syq";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = optionals (type == "full") [
     gettext
     texinfo
   ];
 
-  buildInputs = [
+  buildInputs = optionals (type == "full") [
     ncurses
     readline
   ];
@@ -54,7 +58,16 @@ stdenv.mkDerivation rec {
     url = "mirror://gnu/bash/bash-${version}-patches/${name}";
   });
 
-  configureFlags = [
+  postPatch = optionalString (type == "small") ''
+    # Make sure we don't build readline
+    find lib/readline -name '*'.c -delete
+  '';
+
+  configureFlags = optionals (type == "small") [
+    "--disable-bang-history"
+    "--disable-readline"
+    "--disable-history"
+  ] ++ optionals (type == "full") [
     "--with-installed-readline=${readline}"
   ];
 
@@ -62,12 +75,26 @@ stdenv.mkDerivation rec {
     ln -s bash "$out/bin/sh"
   '';
 
-  # Remove impurities
   preFixup = ''
+    rm -r "$out"/include
+
+    # Remove impurities
     rm "$out"/lib/bash/Makefile.inc
+    rm "$out"/bin/bashbug
+  '' + optionalString (type == "small") ''
+    rm -r "$out"/share
   '';
 
-  passthru = {
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ] ++ optionals (type == "full") [
+    ncurses
+    readline
+  ];
+
+  passthru = rec {
     shellPath = "/bin/bash";
     systemBashrcName = "bash.bashrc";
     systemBashlogoutName = "bash.bash_logout";

@@ -19,6 +19,11 @@ stdenv.mkDerivation {
     sha256 = sha256s."${version}";
   };
 
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+  ];
+
   passthru = {
     inherit version;
   };

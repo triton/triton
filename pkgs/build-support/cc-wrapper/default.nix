@@ -6,9 +6,9 @@
 # compiler and the linker just "work".
 
 { name ? "", stdenv, nativeTools, nativeLibc, nativePrefix ? ""
-, cc ? null, libc ? null, binutils ? null, coreutils ? null, shell ? stdenv.shell
-, zlib ? null, extraPackages ? [], extraBuildCommands ? ""
-, isGNU ? false, isClang ? cc.isClang or false, gnugrep ? null
+, cc ? null, libc ? null, linux-headers ? null, libstdcxx ? null
+, binutils ? null, coreutils ? null, shell ? stdenv.shell
+, zlib ? null, extraPackages ? [], extraBuildCommands ? "", gnugrep ? null
 }:
 
 with stdenv.lib;
@@ -60,13 +60,14 @@ stdenv.mkDerivation {
       [ ];
 
   libc = if nativeLibc then null else libc;
+  libstdcxx = if nativeLibc then null else if libstdcxx != null then libstdcxx else cc;
   binutils = if nativeTools then "" else binutils;
   # The wrapper scripts use 'cat' and 'grep', so we may need coreutils
   # and gnugrep.
   coreutils = if nativeTools then "" else coreutils;
   gnugrep = if nativeTools then "" else gnugrep;
 
-  passthru = { inherit nativeTools nativeLibc nativePrefix isGNU isClang; };
+  passthru = { inherit nativeTools nativeLibc nativePrefix isClang; inherit (cc) isGNU; };
 
   buildCommand =
     ''
@@ -100,15 +101,11 @@ stdenv.mkDerivation {
       # against the crt1.o from our own glibc, rather than the one in
       # /usr/lib.  (This is only an issue when using an `impure'
       # compiler/linker, i.e., one that searches /usr/lib and so on.)
-      #
-      # Unfortunately, setting -B appears to override the default search
-      # path. Thus, the gcc-specific "../includes-fixed" directory is
-      # now longer searched and glibc's <limits.h> header fails to
-      # compile, because it uses "#include_next <limits.h>" to find the
-      # limits.h file in ../includes-fixed. To remedy the problem,
-      # another -idirafter is necessary to add that directory again.
-      echo "-B$libc/lib/ -idirafter $libc/include -idirafter $cc/lib/gcc/*/*/include-fixed" > $out/nix-support/libc-cflags
-
+      echo -n "-B$libc/lib/ -idirafter $libc/include" >"$out"/nix-support/libc-cflags
+      ${optionalString (linux-headers != null) ''
+        echo -n " -idirafter ${linux-headers}/include" >>"$out"/nix-support/libc-cflags
+      ''}
+      echo "" >> $out/nix-support/libc-cflags
       echo "-L$libc/lib" > $out/nix-support/libc-ldflags
 
       echo $libc > $out/nix-support/orig-libc
@@ -155,6 +152,12 @@ stdenv.mkDerivation {
       ccPath="$cc/bin"
       ldPath="$binutils/bin"
 
+      # Determine the prefix mapping flag
+      export prefixMapFlag="-fdebug-prefix-map"
+      if echo "" | "$ccPath"/cc -ffile-prefix-map=hi=hi -E - >/dev/null; then
+        prefixMapFlag="-ffile-prefix-map"
+      fi
+
       # Propagate the wrapped cc so that if you install the wrapper,
       # you get tools like gcov, the manpages, etc. as well (including
       # for binutils and Glibc).
@@ -183,12 +186,16 @@ stdenv.mkDerivation {
 
       export real_cc=cc
       export real_cxx=c++
-      export default_cxx_stdlib_compile="${
-        if !(cc.isGNU or false)
-          then "-isystem $(echo -n ${cc.gcc}/include/c++/*) -isystem $(echo -n ${cc.gcc}/include/c++/*)/$(${cc.gcc}/bin/gcc -dumpmachine)"
-          else ""
-      }"
+      export default_cxx_stdlib_compile=""
+      export default_cxx_stdlib_link=""
+    ''
 
+    + optionalString (libstdcxx != null) ''
+      default_cxx_stdlib_compile="-isystem $(echo "${libstdcxx}"/include/c++/*)"
+      default_cxx_stdlib_link="-L${libstdcxx}/lib"
+    ''
+
+    + ''
       if [ -e $ccPath/gcc ]; then
         wrap gcc ${./cc-wrapper.sh} $ccPath/gcc
         ln -s gcc $out/bin/cc

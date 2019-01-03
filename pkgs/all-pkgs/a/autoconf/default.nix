@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, m4
+, gnum4
 , perl
 
 , channel ? "latest"
@@ -33,8 +33,8 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  nativeBuildInputs = [
-    m4
+  buildInputs = [
+    gnum4
     perl
   ];
 

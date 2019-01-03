@@ -5,14 +5,16 @@
 , attr
 , gmp
 , libcap
-, selinuxSupport? false
-  , libselinux
-  , libsepol
+, libselinux
+, libsepol
+
+, type ? "full"
 }:
 
 let
   inherit (stdenv.lib)
-    optionals;
+    optionals
+    optionalString;
 
   tarballUrls = version: [
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
@@ -21,7 +23,7 @@ let
   version = "8.30";
 in
 stdenv.mkDerivation rec {
-  name = "coreutils-${version}";
+  name = "coreutils-${type}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
@@ -29,12 +31,34 @@ stdenv.mkDerivation rec {
     sha256 = "e831b3a86091496cdba720411f9748de81507798f6130adeaef872d206e1b057";
   };
 
-  buildInputs = [
+  buildInputs = optionals (type == "full") [
     acl
     attr
     gmp
     libcap
-  ] ++ optionals selinuxSupport [
+    libselinux
+    libsepol
+  ];
+
+  configureFlags = [
+    "--with-linux-crypto"
+  ] ++ optionals (type == "small") [
+    "--enable-single-binary=symlinks"
+  ];
+
+  postInstall = optionalString (type == "small") ''
+    rm -r "$out"/share
+  '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ] ++ optionals (type == "full") [
+    acl
+    attr
+    gmp
+    libcap
     libselinux
     libsepol
   ];

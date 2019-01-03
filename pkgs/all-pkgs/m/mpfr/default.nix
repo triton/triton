@@ -48,6 +48,18 @@ stdenv.mkDerivation rec {
     "--with-pic"
   ];
 
+  # Only provides some doc files
+  postInstall = ''
+    rm -r "$out"/share
+  '';
+
+  # Ensure we don't depend on anything unexpected
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    gmp
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

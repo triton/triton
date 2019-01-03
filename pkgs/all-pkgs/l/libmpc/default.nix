@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+
 , gmp
 , mpfr
 }:
@@ -25,7 +26,18 @@ stdenv.mkDerivation rec {
     mpfr
   ];
 
-  doCheck = true;
+  # Only provides some info files
+  postInstall = ''
+    rm -r "$out"/share
+  '';
+
+  # Ensure we don't depend on anything unexpected
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    gmp
+    mpfr
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

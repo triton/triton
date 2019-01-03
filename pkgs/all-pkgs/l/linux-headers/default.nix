@@ -8,14 +8,14 @@
 let
   sources = {
     "4.9" = {
-      version = "4.9.135";
+      version = "4.9.147";
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "daa1463233ece4eaad4c43a98bc54f165ae598927128ca63715f12d9e43772eb";
+      patchSha256 = "2aca19879371b59a984f9d977983f7db14e88dd790573b3ab08ea7aff4eaa883";
     };
     "4.14" = {
-      version = "4.14.78";
+      version = "4.14.90";
       baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
-      patchSha256 = "d491f69f4075e514c5f2e8d520980a96066b6f5e087decff23c79a799ac199a2";
+      patchSha256 = "2aca19879371b59a984f9d977983f7db14e88dd790573b3ab08ea7aff4eaaa83";
     };
   };
 

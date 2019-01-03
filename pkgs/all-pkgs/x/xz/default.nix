@@ -1,8 +1,13 @@
 { stdenv
 , fetchurl
+
+, type ? "full"
 }:
 
 let
+  inherit (stdenv.lib)
+    optionalString;
+
   tarballUrls = version: [
     "https://tukaani.org/xz/xz-${version}.tar.xz"
   ];
@@ -25,10 +30,20 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    rm -rf $out/share/doc
+    rm -r "$out"/share/doc
+  '' + optionalString (type != "full") ''
+    rm -r "$out"/share
   '';
 
   disableStatic = false;
+
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

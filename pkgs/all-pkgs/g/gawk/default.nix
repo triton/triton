@@ -5,9 +5,15 @@
 , libsigsegv
 , mpfr
 , readline
+
+, type ? "full"
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
   version = "4.2.1";
 
   tarballUrls = version: [
@@ -15,7 +21,7 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "gawk-${version}";
+  name = "gawk-${type}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
@@ -23,14 +29,17 @@ stdenv.mkDerivation rec {
     sha256 = "d1119785e746d46a8209d28b2de404a57f983aa48670f4e225531d3bdc175551";
   };
 
-  buildInputs = [
-    gmp
+  # Small build doesn't need floating point with gmp / mpfr
+  # Small build doesn't need libsigsegv output on crash
+  # Small build doesn't need readline since it's only used in non-interactive
+  buildInputs = optionals (type == "full") [
     libsigsegv
+    gmp
     mpfr
     readline
   ];
 
-  configureFlags = [
+  configureFlags = optionals (type == "full") [
     "--with-libsigsegv-prefix=${libsigsegv}"
     "--with-readline=${readline}"
   ];
@@ -38,6 +47,17 @@ stdenv.mkDerivation rec {
   postInstall = ''
     rm -v $out/bin/gawk-*
   '';
+
+  preFixup = optionalString (type != "full") ''
+    rm -r "$out"/etc
+    rm -r "$out"/share/{locale,info,man}
+  '';
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.cc
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

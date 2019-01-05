@@ -35,6 +35,10 @@ stdenv.mkDerivation rec {
     };
   };
 
+  allowedReferences = [
+    "out"
+  ] ++ stdenv.cc.runtimeLibcLibs;
+
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/libidn/;
     description = "Library for internationalized domain names";

@@ -247,5 +247,5 @@ stdenv.mkDerivation (rec {
     linux-headers
     mpfr
     zlib
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  ] ++ stdenv.cc.runtimeLibcxxLibs;
 })

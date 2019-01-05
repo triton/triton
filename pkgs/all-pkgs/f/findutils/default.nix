@@ -41,9 +41,7 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.cc
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   meta = with stdenv.lib; {
     description = "GNU Find Utilities, basic directory searching utilities";

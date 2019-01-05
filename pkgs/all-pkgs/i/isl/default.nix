@@ -47,9 +47,8 @@ stdenv.mkDerivation rec {
   # Ensure we don't depend on anything unexpected
   allowedReferences = [
     "out"
-    stdenv.cc.libc
     gmp
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   meta = with stdenv.lib; {
     homepage = http://www.kotnet.org/~skimo/isl/;

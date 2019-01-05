@@ -260,6 +260,7 @@ let
           libc = stage12Pkgs.libc;
           cc = stage11Pkgs.gcc;
           linux-headers = stage01Pkgs.linux-headers;
+          libgcc = stage11Pkgs.gcc;
           binutils = stage11Pkgs.binutils;
           coreutils = bootstrapTools;
           gnugrep = bootstrapTools;
@@ -336,6 +337,7 @@ let
           libc = stage12Pkgs.libc;
           cc = stage11Pkgs.gcc;
           linux-headers = stage01Pkgs.linux-headers;
+          libgcc = stage11Pkgs.gcc;
           binutils = stage11Pkgs.binutils;
           coreutils = stage13Pkgs.coreutils_small;
           gnugrep = stage13Pkgs.gnugrep;

@@ -52,9 +52,8 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.cc
-  ] ++ optionals (type == "full") [
+  ] ++ stdenv.cc.runtimeLibcLibs
+    ++ optionals (type == "full") [
     acl
     attr
     gmp

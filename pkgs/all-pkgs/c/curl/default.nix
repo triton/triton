@@ -25,16 +25,16 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.bz2"
   ];
 
-  version = "7.62.0";
+  version = "7.63.0";
 in
 stdenv.mkDerivation rec {
   name = "curl-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmeRsJZNyfu1bjU4ETzCtaKNKVxsM2mFFc2xtGVSwKCAsY";
+    multihash = "QmNvWFwVyXUCwAWihKQRtYKB4yCvVVnVHjnFLeuZDxjN5W";
     hashOutput = false;
-    sha256 = "7802c54076500be500b171fde786258579d60547a3a35b8c5a23d8c88e8f9620";
+    sha256 = "9bab7ed4ecff77020a312d84cc5fb7eb02d58419d218f267477a724a17fd8dd8";
   };
 
   buildInputs = [
@@ -56,7 +56,6 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-ares"
-    "--${if stdenv.cc.cc.isGNU then "enable" else "disable"}-libgcc"
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
     "--with-ca-path=/etc/ssl/certs"
     "--with-ca-fallback"
@@ -67,13 +66,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "7.62.0";
+      urls = tarballUrls "7.63.0";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";
       };
       inherit (src) outputHashAlgo;
-      outputHash = "7802c54076500be500b171fde786258579d60547a3a35b8c5a23d8c88e8f9620";
+      outputHash = "9bab7ed4ecff77020a312d84cc5fb7eb02d58419d218f267477a724a17fd8dd8";
     };
   };
 

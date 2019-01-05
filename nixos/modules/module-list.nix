@@ -266,7 +266,7 @@
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
 
-  ../../services/a/accountsservice
+  ../../pkgs/all-pkgs/a/accountsservice/system.nix
   ../../services/a/alsa
   ../../services/a/at-spi2-core
   ../../services/b/bumblebee

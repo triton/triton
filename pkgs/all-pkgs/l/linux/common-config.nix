@@ -49,9 +49,6 @@ with stdenv.lib;
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
   CRYPTO_LZO y
-  ${optionalString (versionAtLeast version "4.20") ''
-    CRYPTO_STATS y
-  ''}
   LZ4_COMPRESS y
   LZ4_DECOMPRESS y
   LZ4HC_COMPRESS y
@@ -445,10 +442,12 @@ with stdenv.lib;
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
   NFSD_FLEXFILELAYOUT y
+  ${optionalString (versionAtLeast version "4.19") ''
+    CIFS_ALLOW_INSECURE_LEGACY n
+  ''}
   CIFS_UPCALL y
   CIFS_ACL y
   CIFS_XATTR y
-  CIFS_POSIX y
   CIFS_FSCACHE y
   CIFS_DFS_UPCALL y
   ${optionalString (versionOlder version "4.13") ''

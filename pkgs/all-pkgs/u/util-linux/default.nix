@@ -1,15 +1,16 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
-, gettext
-, libxslt
-, perl
 
 , audit_lib
 , libcap-ng
+, linux-headers_triton
+, libselinux
+, libutempter
 , ncurses
 , pam
 , readline
+, systemd-dummy
 , systemd_lib
 , zlib
 
@@ -33,8 +34,8 @@ let
 
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
-  base = "2.32";
-  patch = "1";
+  base = "2.33";
+  patch = null;
 in
 stdenv.mkDerivation rec {
   name = "${type}util-linux-${version base patch}";
@@ -42,24 +43,20 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2";
+    sha256 = "f261b9d73c35bfeeea04d26941ac47ee1df937bd3b0583e748217c1ea423658a";
   };
 
-  nativeBuildInputs = [
-    perl
-  ] ++ optionals (!libOnly) [
-    gettext
-    libxslt
-  ];
-
-  buildInputs = [
-    libcap-ng
-  ] ++ optionals (!libOnly) [
+  buildInputs = optionals (!libOnly) [
     audit_lib
+    libcap-ng
+    linux-headers_triton
+    libselinux
+    libutempter
     ncurses
     pam
     readline
     systemd_lib
+    systemd-dummy
     zlib
   ];
 
@@ -71,74 +68,56 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  # !!! It would be better to obtain the path to the mount helpers
-  # (/sbin/mount.*) through an environment variable, but that's
-  # somewhat risky because we have to consider that mount can setuid
-  # root...
   configureFlags = [
-    "--with-cap-ng"  # We can't disable this at the moment even though it isn't needed for libs
+    "--without-python"
+    "--disable-pylibmount"
+    "--enable-fs-paths-default=/var/setuid-wrappers:/run/current-system/sw/bin:/sbin:/bin"
+  ] ++ (if libOnly then [
+  ] else [
+    "--with-selinux"
+    "--with-audit"
+    "--with-utempter"
+    #"--with-smack"
     "--enable-tunelp"
     "--enable-line"
     "--enable-vipw"
     "--enable-newgrp"
-    "--enable-write"
-    "--without-smack"
-    #"--with-python"  # Only needed for libmount bindings
-    # Make a separate python package for this if needed
-    "--enable-fs-paths-default=/var/setuid-wrappers:/run/current-system/sw/bin:/sbin:/bin"
-    "--disable-use-tty-group"
-  ] ++ (if libOnly then [
-    "--without-audit"
-    "--without-udev"
-    "--without-ncurses"
-    "--without-readline"
-    "--without-libz"
-    "--without-systemd"
-    "--disable-chfn-chsh"
-  ] else [
-    "--with-audit"
-    "--with-udev"
-    "--with-ncursesw"
-    "--with-readline"
-    "--with-libz"
-    "--with-systemd"
     "--enable-chfn-chsh"
     "--enable-pg"
+    "--enable-write"
+    "--disable-use-tty-group"
     "--disable-makeinstall-chown"
     "--disable-makeinstall-setuid"
   ]);
 
   preBuild = optionalString libOnly ''
-    echo 'myBuildLibs: $(usrlib_exec_LTLIBRARIES) $(pylibmountexec_LTLIBRARIES)' >> Makefile
-    installTargets="$installTargets $(awk -F: '{ if (/^install.*(LTLIBRARIES|HEADERS)/) { printf $1 " " } }' Makefile)"
+    for file in $(find . -name Makefile); do
+      sed -i 's,^\(all\|install\)-am:,\1-oldam:,' "$file"
+      echo 'all-am: $(LTLIBRARIES) $(HEADERS) $(pkgconfig_DATA)' >>"$file"
+      echo 'install-am:' >>"$file"
+      if grep -q 'install-pkgconfigDATA' "$file"; then
+        echo 'install-am: install-pkgconfigDATA' >>"$file"
+      fi
+      sed -n 's,^\(install-.*\(LTLIBRARIES\|HEADERS\)\):.*$,\1,p' "$file" | \
+        xargs echo 'install-am:' >>"$file"
+    done
   '';
-
-  buildFlags = optionals libOnly [
-    "myBuildLibs"
-  ];
-
-  installTargets = optionals libOnly [
-    "install-pkgconfigDATA"
-  ];
 
   installParallel = false;
 
   passthru = {
-    srcVerification =
-      let
-        base = "2.32";
-        patch = "1";
-      in
-      fetchurl {
-        failEarly = true;
-        urls = map (n: "${n}.xz") (tarballUrls base patch);
+    srcVerification = fetchurl {
+      failEarly = true;
+      urls = map (n: "${n}.xz") (tarballUrls "2.33" null);
+      outputHash = "f261b9d73c35bfeeea04d26941ac47ee1df937bd3b0583e748217c1ea423658a";
+      inherit (src) outputHashAlgo;
+      fullOpts = {
         pgpsigUrls = map (n: "${n}.sign") (tarballUrls base patch);
         pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls base);
         pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
         pgpDecompress = true;
-        outputHash = "86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2";
-        inherit (src) outputHashAlgo;
       };
+    };
   };
 
   meta = with stdenv.lib; {

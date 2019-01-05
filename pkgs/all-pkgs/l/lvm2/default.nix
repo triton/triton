@@ -23,7 +23,7 @@ let
     "mirror://sourceware/lvm2/releases"
   ];
 
-  version = "2.03.01";
+  version = "2.03.02";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     hashOutput = false;
-    sha256 = "424e58b074195ec08e0315fa1aff2550590998c33aea5c43bdceb8c1d135530b";
+    sha256 = "550ba750239fd75b7e52c9877565cabffef506bbf6d7f6f17b9700dee56c720f";
   };
 
   nativeBuildInputs = [
@@ -116,6 +116,12 @@ stdenv.mkDerivation rec {
 
     ! grep -r '/usr' "$out"
     ! grep -r '"/\(sbin\|bin\|libexec\)' "$out"
+
+
+    grep -q "$out/bin/systemd-run" "$out"/lib/udev/rules.d/69-dm-lvm-metad.rules
+    sed -i "s,$out/bin/systemd-run,/run/current-system/sw/bin/systemd-run," \
+      "$out"/lib/udev/rules.d/69-dm-lvm-metad.rules
+    ! grep -r "$out/bin/system.*" "$out"
   '';
 
   passthru = {

@@ -1,35 +1,38 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
 , lib
-, ninja
+
+, version
 }:
 
 let
-  version = "1.3.7";
+  sha256s = {
+    "1.3.8" = "293fa004dfacfbe90b42660c474920ff27093e3fb6c99f7b76e6083b21d6d48e";
+  };
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "facebook";
-    repo = "zstd";
-    rev = "v${version}";
-    sha256 = "3fbef86029710fa8ad72ca473677163b4fdc0bbda0aac2b28151a7fd067bc026";
+  src = fetchurl {
+    url = "https://github.com/facebook/zstd/releases/download/v${version}/${name}.tar.gz";
+    sha256 = sha256s."${version}";
   };
 
-  nativeBuildInputs = [
-    cmake
-    ninja
-  ];
-
-  postPatch = ''
-    cd build/cmake
+  preBuild = ''
+    makeFlagsArray+=(
+      "PREFIX=$out"
+    )
   '';
 
-  cmakeFlags = [
-    "-DZSTD_BUILD_CONTRIB=ON"
+  dontPatchShebangs = true;
+
+  allowedReferences = [
+    "out"
+    stdenv.cc.libc
+    stdenv.cc.libidn2
+    stdenv.cc.libstdcxx
+    stdenv.cc.cc
   ];
 
   meta = with lib; {

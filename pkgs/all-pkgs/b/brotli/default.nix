@@ -23,6 +23,7 @@ stdenv.mkDerivation {
     "out"
     stdenv.cc.libc
     stdenv.cc.libgcc
+    stdenv.cc.libidn2
   ];
 
   passthru = {

@@ -44,6 +44,8 @@ stdenv.mkDerivation rec {
     "out"
     stdenv.cc.libc
     stdenv.cc.cc
+  ] ++ optionals (type == "full") [
+    acl
   ];
 
   passthru = {

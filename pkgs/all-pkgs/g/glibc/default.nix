@@ -113,6 +113,10 @@ stdenv.mkDerivation rec {
   # We can't have references to any of our bootstrapping derivations
   allowedReferences = [ "out" ];
 
+  passthru = {
+    impl = "glibc";
+  };
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

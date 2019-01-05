@@ -22,6 +22,7 @@ stdenv.mkDerivation {
   allowedReferences = [
     "out"
     stdenv.cc.libc
+    stdenv.cc.libgcc
   ];
 
   passthru = {

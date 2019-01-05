@@ -125,6 +125,7 @@ stdenv.mkDerivation (rec {
   allowedReferences = [
     "out"
     stdenv.cc.libc
+    stdenv.cc.libgcc
     zlib
   ];
 })

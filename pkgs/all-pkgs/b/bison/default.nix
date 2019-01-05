@@ -49,6 +49,8 @@ stdenv.mkDerivation (rec {
     rm -r "$out"/share/{doc,man,info}
   '';
 
+  dontPatchShebangs = true;
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
@@ -77,6 +79,7 @@ stdenv.mkDerivation (rec {
   allowedReferences = [
     "out"
     stdenv.cc.libc
+    stdenv.cc.libidn2
     stdenv.cc.cc
     gnum4
   ];

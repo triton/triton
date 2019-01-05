@@ -66,6 +66,7 @@ stdenv.mkDerivation (rec {
   allowedReferences = [
     "out"
     stdenv.cc.libc
+    stdenv.cc.libidn2
     stdenv.cc.cc
   ];
 })

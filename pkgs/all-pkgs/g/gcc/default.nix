@@ -89,7 +89,7 @@ stdenv.mkDerivation (rec {
     })
   ];
 
-  postPatch = optionalString (type == "bootstrap") ''
+  prePatch = optionalString (type == "bootstrap") ''
     ! test -e gmp
     unpackFile '${gmp.src}'
     mv gmp-* gmp
@@ -226,7 +226,7 @@ stdenv.mkDerivation (rec {
 
   passthru = {
     inherit version;
-    isGNU = true;
+    impl = "gcc";
   };
 
   meta = with stdenv.lib; {

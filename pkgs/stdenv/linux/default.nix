@@ -180,7 +180,7 @@ let
           nativeLibc = false;
           libc = stage02Pkgs.libc;
           cc = stage01Pkgs.gcc;
-          libstdcxx = stage03Pkgs.libstdcxx;
+          libcxx = stage03Pkgs.libstdcxx;
           linux-headers = stage01Pkgs.linux-headers;
           binutils = stage01Pkgs.binutils;
           coreutils = bootstrapTools;

@@ -240,8 +240,6 @@ stdenv.mkDerivation (rec {
   # Ensure we don't depend on anything unexpected
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libstdcxx
     gmp
     isl
     libc
@@ -249,5 +247,5 @@ stdenv.mkDerivation (rec {
     linux-headers
     mpfr
     zlib
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 })

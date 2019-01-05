@@ -56,10 +56,8 @@ stdenv.mkDerivation rec {
   # Ensure we don't depend on anything unexpected
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-  ] ++ optionals cxx [
-    stdenv.cc.libstdcxx
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs
+    ++ optionals cxx stdenv.cc.runtimeLibcxxLibs;
 
   meta = with stdenv.lib; {
     homepage = "http://gmplib.org/";

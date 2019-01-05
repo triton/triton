@@ -63,9 +63,7 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.cc
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   meta = with stdenv.lib; {
     description = "high-quality data compression program";

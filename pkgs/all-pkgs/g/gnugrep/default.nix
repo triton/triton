@@ -45,10 +45,8 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.cc
     pcre
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     srcVerification = fetchurl rec {

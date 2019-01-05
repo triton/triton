@@ -29,11 +29,7 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libidn2
-    stdenv.cc.libstdcxx
-    stdenv.cc.cc
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   meta = with lib; {
     description = "Fast real-time lossless compression algorithm";

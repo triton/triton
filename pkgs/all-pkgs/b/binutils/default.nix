@@ -124,8 +124,6 @@ stdenv.mkDerivation (rec {
   # Ensure we don't depend on anything unexpected
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libgcc
     zlib
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 })

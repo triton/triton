@@ -21,10 +21,7 @@ stdenv.mkDerivation {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libgcc
-    stdenv.cc.libidn2
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     inherit version;

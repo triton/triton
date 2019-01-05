@@ -56,9 +56,8 @@ stdenv.mkDerivation rec {
   # Ensure we don't depend on anything unexpected
   allowedReferences = [
     "out"
-    stdenv.cc.libc
     gmp
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     srcVerification = fetchurl rec {

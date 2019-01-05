@@ -78,9 +78,6 @@ stdenv.mkDerivation (rec {
 } // optionalAttrs (type != "bootstrap") {
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libidn2
-    stdenv.cc.cc
     gnum4
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 })

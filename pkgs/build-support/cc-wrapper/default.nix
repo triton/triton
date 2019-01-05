@@ -6,7 +6,7 @@
 # compiler and the linker just "work".
 
 { name ? "", stdenv, nativeTools, nativeLibc, nativePrefix ? ""
-, cc ? null, libc ? null, linux-headers ? null, libstdcxx ? null
+, cc ? null, libc ? null, linux-headers ? null, libcxx ? null
 , libgcc ? null, libidn2 ? null, binutils ? null, coreutils ? null
 , shell ? stdenv.shell, gnugrep ? null
 , extraPackages ? [], extraBuildCommands ? ""
@@ -60,16 +60,24 @@ stdenv.mkDerivation {
       [ ];
 
   libc = if nativeLibc then null else libc;
-  libgcc = if isGlibc then libgcc else null;
-  libidn2 = if isGlibc then libidn2 else null;
-  libstdcxx = if nativeLibc then null else if libstdcxx != null then libstdcxx else cc;
   binutils = if nativeTools then "" else binutils;
   # The wrapper scripts use 'cat' and 'grep', so we may need coreutils
   # and gnugrep.
   coreutils = if nativeTools then "" else coreutils;
   gnugrep = if nativeTools then "" else gnugrep;
 
-  passthru = { inherit nativeTools nativeLibc nativePrefix; inherit (cc) isGNU; };
+  passthru = rec {
+    inherit nativeTools nativeLibc nativePrefix;
+    runtimeLibcLibs = [
+      libc
+    ] ++ optionals isGlibc [
+      libgcc
+      libidn2
+    ];
+    runtimeLibcxxLibs = runtimeLibcLibs ++ [
+      libcxx
+    ];
+  };
 
   buildCommand =
     ''
@@ -196,9 +204,9 @@ stdenv.mkDerivation {
       export default_cxx_stdlib_link=""
     ''
 
-    + optionalString (libstdcxx != null) ''
-      default_cxx_stdlib_compile="-isystem $(echo "${libstdcxx}"/include/c++/*)"
-      default_cxx_stdlib_link="-L${libstdcxx}/lib"
+    + optionalString (libcxx != null) ''
+      default_cxx_stdlib_compile="-isystem $(echo "${libcxx}"/include/c++/*)"
+      default_cxx_stdlib_link="-L${libcxx}/lib"
     ''
 
     + ''

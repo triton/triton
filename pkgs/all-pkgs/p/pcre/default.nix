@@ -55,18 +55,19 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-    stdenv.cc.libc
-    stdenv.cc.libstdcxx
-    stdenv.cc.cc
-  ];
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "8.42";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
-      inherit (src) outputHash outputHashAlgo;
+      inherit (src)
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
+      };
     };
   };
 

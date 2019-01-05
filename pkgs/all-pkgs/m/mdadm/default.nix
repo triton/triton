@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, groff
 }:
 
 let
@@ -8,7 +7,7 @@ let
     "mirror://kernel/linux/utils/raid/mdadm/mdadm-${version}.tar"
   ];
 
-  version = "4.0";
+  version = "4.1";
 in
 stdenv.mkDerivation rec {
   name = "mdadm-${version}";
@@ -16,12 +15,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "1d6ae7f24ced3a0fa7b5613b32f4a589bb4881e3946a5a2c3724056254ada3a9";
+    sha256 = "ab7688842908d3583a704d491956f31324c3a5fc9f6a04653cb75d19f1934f4a";
   };
-
-  nativeBuildInputs = [
-    groff
-  ];
 
   patches = [
     ./no-self-references.patch
@@ -33,7 +28,7 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "INSTALL_BINDIR=$out/sbin"
+      "INSTALL_BINDIR=$out/bin"
       "MANDIR=$out/share/man"
     )
   '';
@@ -44,11 +39,6 @@ stdenv.mkDerivation rec {
     "INSTALL=install"
   ];
 
-  # Attempt removing if building with gcc5 when updating
-  #NIX_CFLAGS_COMPILE = [
-  #  "-std=gnu89"
-  #];
-
   # This is to avoid self-references, which causes the initrd to explode
   # in size and in turn prevents mdraid systems from booting.
   allowedReferences = [
@@ -58,10 +48,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}.sign") (tarballUrls version);
-      pgpKeyFingerprint = "6A86 B80E 1D22 F21D 0B26  BA75 397D 82E0 531A 9C91";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpDecompress = true;
+        pgpsigUrls = map (n: "${n}.sign") (tarballUrls version);
+        pgpKeyFingerprint = "6A86 B80E 1D22 F21D 0B26  BA75 397D 82E0 531A 9C91";
+      };
     };
   };
 

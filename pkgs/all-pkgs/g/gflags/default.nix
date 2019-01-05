@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.2.2";
 in
 stdenv.mkDerivation rec {
   name = "gflags-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";
-    sha256 = "78726a75af3148ac6b782e1ea797a71d8f9b51fc2ff65df5171da9e8288a736f";
+    sha256 = "374d1eae936f13ba380f64d5123e7d6ef5c69f9d06c48840182230c4abb7fcd8";
   };
 
   nativeBuildInputs = [

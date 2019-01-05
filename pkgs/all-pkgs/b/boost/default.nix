@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 , icu, expat, zlib, bzip2, python2, xz
-, toolset ? if stdenv.cc.isClang then "clang" else null
 , enableRelease ? true
 , enableDebug ? false
 , enableSingleThreaded ? false
@@ -52,8 +51,6 @@ let
            else
              "";
 
-  withToolset = stdenv.lib.optionalString (toolset != null) "--with-toolset=${toolset}";
-
   genericB2Flags = [
     "--includedir=$dev/include"
     "--libdir=$lib/lib"
@@ -69,8 +66,7 @@ let
   nativeB2Flags = [
     "-sEXPAT_INCLUDE=${expat}/include"
     "-sEXPAT_LIBPATH=${expat}/lib"
-  ] ++ optional (toolset != null) "toolset=${toolset}"
-    ++ optional (mpi != null) "--user-config=user-config.jam";
+  ] ++ optional (mpi != null) "--user-config=user-config.jam";
   nativeB2Args = concatStringsSep " " (genericB2Flags ++ nativeB2Flags);
 
   crossB2Flags = [
@@ -126,10 +122,6 @@ stdenv.mkDerivation {
 
   preConfigure = ''
     NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"
-    if test -f tools/build/src/tools/clang-darwin.jam ; then
-        substituteInPlace tools/build/src/tools/clang-darwin.jam \
-          --replace '@rpath/$(<[1]:D=)' "$lib/lib/\$(<[1]:D=)";
-    fi;
   '' + optionalString (mpi != null) ''
     cat << EOF > user-config.jam
     using mpi : ${mpi}/bin/mpiCC ;
@@ -142,7 +134,7 @@ stdenv.mkDerivation {
   configureFlags = commonConfigureFlags ++ [
     "--with-icu=${icu}"
     "--with-python=${python2.interpreter}"
-  ] ++ optional (toolset != null) "--with-toolset=${toolset}";
+  ];
 
   buildPhase = builder nativeB2Args;
 

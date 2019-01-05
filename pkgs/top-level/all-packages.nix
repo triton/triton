@@ -771,13 +771,10 @@ boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 boost_1-66 = callPackage ../all-pkgs/b/boost {
   channel = "1.66";
 };
-boost_1-67 = callPackage ../all-pkgs/b/boost {
-  channel = "1.67";
+boost_1-69 = callPackage ../all-pkgs/b/boost {
+  channel = "1.69";
 };
-boost_1-68 = callPackage ../all-pkgs/b/boost {
-  channel = "1.68";
-};
-boost = callPackageAlias "boost_1-68" { };
+boost = callPackageAlias "boost_1-69" { };
 
 borgbackup = pkgs.python3Packages.borgbackup;
 

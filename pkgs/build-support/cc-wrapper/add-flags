@@ -25,4 +25,8 @@ if [ -e @out@/nix-support/libc-ldflags-before ]; then
     export NIX_LDFLAGS_BEFORE="$(cat @out@/nix-support/libc-ldflags-before) $NIX_LDFLAGS_BEFORE"
 fi
 
+if [ -e @out@/nix-support/libc-ldflags-dynamic ]; then
+    export NIX_LDFLAGS_LIBC_DYNAMIC="$(cat @out@/nix-support/libc-ldflags-dynamic) $NIX_LDFLAGS_LIBC_DYNAMIC"
+fi
+
 export NIX_CC_WRAPPER_FLAGS_SET=1

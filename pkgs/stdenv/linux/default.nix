@@ -427,6 +427,7 @@ let
           libc = stage21Pkgs.libc;
           cc = stage22Pkgs.gcc;
           linux-headers = stage21Pkgs.linux-headers;
+          libgcc = stage22Pkgs.gcc;
           binutils = stage11Pkgs.binutils;
           coreutils = stage13Pkgs.coreutils_small;
           gnugrep = stage13Pkgs.gnugrep;
@@ -461,7 +462,7 @@ let
         inherit (pkgs) stdenv cc coreutils_small gnugrep binutils pcre
           bash_small patchelf pkgconfig pkgconf pkgconf-wrapper pkgconf_unwrapped
           brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-          gnupatch_small gnused_small gnutar_small gzip xz;
+          gnupatch_small gnused_small gnutar_small gzip xz libidn2;
 
         cc_gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -469,6 +470,8 @@ let
           libc = stage21Pkgs.libc;
           cc = stage22Pkgs.gcc;
           linux-headers = stage21Pkgs.linux-headers;
+          libgcc = stage22Pkgs.gcc;
+          libidn2 = stage23Pkgs.libidn2;
           binutils = stage23Pkgs.binutils;
           coreutils = stage23Pkgs.coreutils_small;
           gnugrep = stage23Pkgs.gnugrep;
@@ -531,7 +534,7 @@ let
       inherit (stage23Pkgs) cc_gcc coreutils_small gnugrep binutils pcre
         bash_small patchelf pkgconfig pkgconf pkgconf_unwrapped
         brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-        gnupatch_small gnused_small gnutar_small gzip xz;
+        gnupatch_small gnused_small gnutar_small gzip xz libidn2;
     };
   });
 

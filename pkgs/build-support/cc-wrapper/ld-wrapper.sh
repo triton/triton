@@ -73,6 +73,24 @@ fi
 extra+=($NIX_LDFLAGS_AFTER)
 
 
+# Determine if we are dynamically linking
+dynamicLibc=0
+skipStatic=0
+for param in "${params[@]}"; do
+  if [ "$param" = -static ]; then
+    skipStatic=1
+  elif [ "$param" = -Bdynamic ]; then
+    skipStatic=0
+  elif [ "$param" = -Bstatic ]; then
+    skipStatic=1
+  elif [ "$skipStatic" -eq "0" ] && [ "$param" = "-lc" ]; then
+    dynamicLibc=1
+  fi
+done
+if [ "$dynamicLibc" -eq "1" ]; then
+  extra+=($NIX_LDFLAGS_LIBC_DYNAMIC)
+fi
+
 # Add all used dynamic libraries to the rpath.
 if [ "$NIX_DONT_SET_RPATH" != 1 ]; then
 

@@ -7,8 +7,9 @@
 
 { name ? "", stdenv, nativeTools, nativeLibc, nativePrefix ? ""
 , cc ? null, libc ? null, linux-headers ? null, libstdcxx ? null
-, binutils ? null, coreutils ? null, shell ? stdenv.shell
-, zlib ? null, extraPackages ? [], extraBuildCommands ? "", gnugrep ? null
+, libgcc ? null, libidn2 ? null, binutils ? null, coreutils ? null
+, shell ? stdenv.shell, gnugrep ? null
+, extraPackages ? [], extraBuildCommands ? ""
 }:
 
 with stdenv.lib;
@@ -18,9 +19,6 @@ assert !nativeTools ->
   cc != null && binutils != null && coreutils != null && gnugrep != null;
 assert !nativeLibc -> libc != null;
 
-# For ghdl (the vhdl language provider to gcc) we need zlib in the wrapper.
-assert cc.langVhdl or false -> zlib != null;
-
 let
 
   ccVersion = (builtins.parseDrvName cc.name).version;
@@ -29,6 +27,8 @@ let
   inherit (stdenv.lib.platforms)
     i686-linux
     x86_64-linux;
+
+  isGlibc = (libc.impl or "") == "glibc";
 
 in
 
@@ -60,6 +60,8 @@ stdenv.mkDerivation {
       [ ];
 
   libc = if nativeLibc then null else libc;
+  libgcc = if isGlibc then libgcc else null;
+  libidn2 = if isGlibc then libidn2 else null;
   libstdcxx = if nativeLibc then null else if libstdcxx != null then libstdcxx else cc;
   binutils = if nativeTools then "" else binutils;
   # The wrapper scripts use 'cat' and 'grep', so we may need coreutils
@@ -67,7 +69,7 @@ stdenv.mkDerivation {
   coreutils = if nativeTools then "" else coreutils;
   gnugrep = if nativeTools then "" else gnugrep;
 
-  passthru = { inherit nativeTools nativeLibc nativePrefix isClang; inherit (cc) isGNU; };
+  passthru = { inherit nativeTools nativeLibc nativePrefix; inherit (cc) isGNU; };
 
   buildCommand =
     ''
@@ -82,7 +84,7 @@ stdenv.mkDerivation {
       }
     ''
 
-    + optionalString (!nativeLibc) (''
+    + optionalString (!nativeLibc) ''
       dynamicLinker="$libc/lib/$dynamicLinker"
       echo $dynamicLinker > $out/nix-support/dynamic-linker
 
@@ -94,7 +96,15 @@ stdenv.mkDerivation {
       # explicit overrides of the dynamic linker by callers to gcc/ld
       # (the *last* value counts, so ours should come first).
       echo "-dynamic-linker" $dynamicLinker > $out/nix-support/libc-ldflags-before
-    '')
+    ''
+
+    + optionalString (isGlibc && libgcc != null) ''
+      echo -n " -L${libgcc}/lib --no-as-needed -lgcc_s" >>"$out"/nix-support/libc-ldflags-dynamic
+    ''
+
+    + optionalString (isGlibc && libidn2 != null) ''
+      echo -n " -L${libidn2}/lib --no-as-needed -lidn2" >>"$out"/nix-support/libc-ldflags-dynamic
+    ''
 
     + optionalString (!nativeLibc) ''
       # The "-B$libc/lib/" flag is a quick hack to force gcc to link
@@ -126,10 +136,6 @@ stdenv.mkDerivation {
         ccCFlags+=" -B$cc/lib64"
       fi
       ccLDFlags+=" -L$cc/lib"
-
-      ${optionalString cc.langVhdl or false ''
-        ccLDFlags+=" -L${zlib}/lib"
-      ''}
 
       # Find the gcc libraries path (may work only without multilib).
       ${optionalString cc.langAda or false ''

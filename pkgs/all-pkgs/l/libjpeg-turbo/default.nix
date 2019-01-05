@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.0.0";
+  version = "2.0.1";
 in
 stdenv.mkDerivation rec {
   name = "libjpeg-turbo-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "778876105d0d316203c928fd2a0374c8c01f755d0a00b12a1c8934aeccff8868";
+    sha256 = "e5f86cec31df1d39596e0cca619ab1b01f99025a27dafdfc97a30f3a12f866ff";
   };
 
   nativeBuildInputs = [
@@ -32,9 +32,14 @@ stdenv.mkDerivation rec {
 
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "7D62 93CC 6378 786E 1B5C  4968 85C7 044E 033F DE16";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "7D62 93CC 6378 786E 1B5C  4968 85C7 044E 033F DE16";
+      };
     };
   };
 

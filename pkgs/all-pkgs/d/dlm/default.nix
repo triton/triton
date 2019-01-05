@@ -41,7 +41,9 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
-  postPatch = optionalString (type != "lib") ''
+  postPatch = ''
+    sed -i '1i#include <sys/sysmacros.h>' libdlm/libdlm.c
+  '' + optionalString (type != "lib") ''
     rm -r libdlm
   '';
 

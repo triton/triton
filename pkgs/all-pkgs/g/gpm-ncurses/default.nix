@@ -2,17 +2,28 @@
 , autoconf
 , automake
 , bison
+, fetchTritonPatch
 , fetchurl
 , flex
 , libtool
-, texinfo
 }:
 
 let
+  inherit (stdenv.lib)
+    concatMapStrings
+    flip;
+
   ncursesName = "ncurses-6.1";
   gpmName = "gpm-1.20.7";
-in
 
+  gpmPatches = [
+    (fetchTritonPatch {
+      rev = "834722e09bb61b011744a53860e8a0238b919aa7";
+      file = "g/gpm/glibc-2.26.patch";
+      sha256 = "420820b560bfdb22e0e5fdc05416b380f179091b00c42c407add245ff317d32d";
+    })
+  ];
+in
 stdenv.mkDerivation {
   name = "${gpmName}+${ncursesName}";
 
@@ -36,7 +47,6 @@ stdenv.mkDerivation {
     bison
     flex
     libtool
-    texinfo
   ];
 
   # Prevent build directory impurities from being injected
@@ -47,6 +57,12 @@ stdenv.mkDerivation {
     mkdir src
     mv gpm* ncurses* src
     cd src
+  '';
+
+  postPatch = flip concatMapStrings gpmPatches (p: ''
+    patch -p1 -d gpm-* <${p}
+  '') + ''
+    sed -i '/SUBDIRS = /s, doc,,' gpm-*/Makefile.in
   '';
 
   installPhase = ''

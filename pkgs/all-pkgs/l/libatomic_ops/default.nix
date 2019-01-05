@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "7.6.6";
+  version = "7.6.8";
 in
 stdenv.mkDerivation rec {
   name = "libatomic_ops-${version}";
 
   src = fetchurl {
     url = "https://github.com/ivmai/libatomic_ops/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "99feabc5f54877f314db4fadeb109f0b3e1d1a54afb6b4b3dfba1e707e38e074";
+    sha256 = "1d6a279edf81767e74d2ad2c9fce09459bc65f12c6525a40b0cb3e53c089f665";
   };
 
   meta = with stdenv.lib; {

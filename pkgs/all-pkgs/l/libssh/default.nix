@@ -11,16 +11,16 @@
 
 let
   major = "0.8";
-  version = "${major}.4";
+  version = "${major}.6";
 in
 stdenv.mkDerivation rec {
   name = "libssh-${version}";
 
   src = fetchurl {
     url = "https://www.libssh.org/files/${major}/${name}.tar.xz";
-    multihash = "QmPnMTY74CGD99YrjY72QygrZUv1fk7mNP4YnR6eFxrqo4";
+    multihash = "QmW9WjEbikcWh7fw3EwyVznU58g67oRgW8Sn7jNWLhjuLb";
     hashOutput = false;
-    sha256 = "6bb07713021a8586ba2120b2c36c468dc9ac8096d043f9b1726639aa4275b81b";
+    sha256 = "1046b95632a07fc00b1ea70ee683072d0c8a23f544f4535440b727812002fd01";
   };
 
   nativeBuildInputs = [

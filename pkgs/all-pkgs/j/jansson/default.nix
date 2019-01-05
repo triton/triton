@@ -4,21 +4,26 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "jansson-2.11";
+  name = "jansson-2.12";
 
   src = fetchurl {
     url = "http://www.digip.org/jansson/releases/${name}.tar.gz";
-    multihash = "QmZwCiWdAq19Lygg8Je7J8UX7R1zaB7nYFqM1zX5VaFMFd";
+    multihash = "QmNY8K99KqYA6UMPJc5RdrQyzRkFYUeVFuLmbiFhUiFXhw";
     hashOutput = false;
-    sha256 = "6e85f42dabe49a7831dbdd6d30dca8a966956b51a9a50ed534b82afc3fa5b2f4";
+    sha256 = "5f8dec765048efac5d919aded51b26a32a05397ea207aa769ff6b53c7027d2c9";
   };
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "B5D6 953E 6D50 59ED 7ADA  0F2F D365 7D24 D058 434C";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "B5D6 953E 6D50 59ED 7ADA  0F2F D365 7D24 D058 434C";
+      };
     };
   };
 

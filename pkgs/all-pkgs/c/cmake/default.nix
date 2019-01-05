@@ -24,17 +24,17 @@ let
     optionals
     optionalString;
 
-  channel = "3.12";
-  version = "${channel}.4";
+  channel = "3.13";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
-    multihash = "QmTMV75id2HUnm1QMwhBhmtgpTc9YtU4yqX2Dih2kdeWas";
+    multihash = "QmNfKrCdgUAaoUyzZnYgs2Dh7wEKMSfQvY7BpyJR4LfdJF";
     hashOutput = false;
-    sha256 = "5255584bfd043eb717562cff8942d472f1c0e4679c4941d84baadaa9b28e3194";
+    sha256 = "c925e7d2c5ba511a69f43543ed7b4182a7d446c274c7480d0e42cd933076ae25";
   };
 
   patches = [
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     substituteInPlace Modules/Platform/UnixPaths.cmake \
-      --subst-var-by libc ${stdenv.libc}
+      --subst-var-by libc ${stdenv.cc.libc}
   '' + optionalString bootstrap ''
     fixCmakeFiles .
 

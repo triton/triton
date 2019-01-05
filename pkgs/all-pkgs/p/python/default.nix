@@ -53,14 +53,14 @@ let
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };
     "3.6" = {
-      versionPatch = "7";
-      sha256 = "81fd1401a9d66533b0a3e9e3f4ea1c7c6702d57d5b90d659f971e6f1b745f77d";
+      versionPatch = "8";
+      sha256 = "35446241e995773b1bed7d196f4b624dadcadc8429f26282e756b2fb8a351193";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
     "3.7" = {
-      versionPatch = "1";
-      sha256 = "fa7e2b8e8c9402f192ad56dc4f814089d1c4466c97d780f5e5acc02c04243d6d";
+      versionPatch = "2";
+      sha256 = "d83fe8ce51b1bb48bbcf0550fd265b9a75cdfdfa93f916f9e700aef8444bf1bb";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
@@ -175,18 +175,10 @@ stdenv.mkDerivation rec {
     (ifPy3 "--enable-loadable-sqlite-extensions" null)
     "--enable-ipv6"
     (ifPy2 "--enable-unicode=ucs4" null)
-    #"--${boolWt (!stdenv.cc.isClang)}-gcc"
     #"--enable-big-digits" # py3
     "--${boolWt pydebug}-pydebug"
     #"--with-hash-algorithm" # py3
-    (if isPy3 then
-      # Flag is not a boolean
-      (if stdenv.cc.isClang then
-        "--with-address-sanitizer"
-       else
-         null)
-     else
-       null)
+    #"--with-address-sanitizer" # no
     "--with-system-expat"
     "--with-system-ffi"
     #"--with-system-libmpdec" # py3

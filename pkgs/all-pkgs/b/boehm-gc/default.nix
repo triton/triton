@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "8.0.0";
+  version = "8.0.2";
 in
 stdenv.mkDerivation rec {
   name = "boehm-gc-${version}";
 
   src = fetchurl {
     url = "https://github.com/ivmai/bdwgc/releases/download/v${version}/gc-${version}.tar.gz";
-    sha256 = "8f23f9a20883d00af2bff122249807e645bdf386de0de8cbd6cce3e0c6968f04";
+    sha256 = "4e8ca4b5b72a3a27971daefaa9b621f0a716695b23baa40b7eac78de2eeb51cb";
   };
 
   buildInputs = [

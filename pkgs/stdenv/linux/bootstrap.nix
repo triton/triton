@@ -1,15 +1,13 @@
 { lib
+, fetchurl
 , hostSystem
 }:
 
 let
-  mirrors = import ../../build-support/fetchurl/mirrors.nix;
-
   makeUrls = { multihash, nix-hash, file, sha256, executable ? false }:
-    import <nix/fetchurl.nix> {
+    fetchurl {
       name = file;
-      url = "${lib.head mirrors.ipfs-cached}/ipfs/${multihash}";
-      inherit sha256 executable;
+      inherit multihash sha256 executable;
     };
 in
 if [ hostSystem ] == lib.platforms.x86_64-linux then {

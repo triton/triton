@@ -16,7 +16,10 @@ assert targetSystem == hostSystem;
 
 let
 
-  bootstrapFiles = import ./bootstrap.nix { inherit lib hostSystem; };
+  bootstrapFiles = import ./bootstrap.nix {
+    inherit lib hostSystem;
+    inherit (stage0Pkgs) fetchurl;
+  };
 
   commonStdenvOptions = {
     inherit targetSystem hostSystem config;

@@ -89,9 +89,9 @@ stdenv.mkDerivation rec {
       sha256 = "69d9b8052afc52a0946197f2d85b98556bfba16bd77db521e1012bf17236b9c4";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "1634d604ddcd382737f7af75db225b0e3890225d";
       file = "n/nix/0009-builtin-fetchurl-Support-multiple-urls.patch";
-      sha256 = "d03182cbd8623cd70596d5f0d1b317110599395e951b131650221eac1d4f1bef";
+      sha256 = "cd1abbdd5820f392a1d9117391b32465b358e0adc4c10c09c9d44eb731613967";
     })
   ];
 

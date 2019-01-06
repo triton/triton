@@ -13,13 +13,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "openldap-2.4.46";
+  name = "openldap-2.4.47";
 
   src = fetchurl {
     urls = map (n: "${n}.tgz") (fileUrls name);
-    multihash = "Qmd89FnzzUsPf9xBwfxfHpnpcPjWPeJuuZ8oz5qR1mLsoV";
+    multihash = "Qmf5AeXRaN84o9Q4TMp2vi4qxuJAUUFp99CM5YZV7bauiu";
     hashOutput = false;
-    sha256 = "9a90dcb86b99ae790ccab93b7585a31fbcbeec8c94bf0f7ab0ca0a87ea0c4b2d";
+    sha256 = "f54c5877865233d9ada77c60c0f69b3e0bfd8b1b55889504c650047cc305520b";
   };
 
   nativeBuildInputs = [
@@ -57,9 +57,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      md5Urls = map (n: "${n}.md5") (fileUrls name);
-      sha1Urls = map (n: "${n}.sha1") (fileUrls name);
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Urls = map (n: "${n}.md5") (fileUrls name);
+        sha1Urls = map (n: "${n}.sha1") (fileUrls name);
+      };
     };
   };
 

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   name = "unifi-controller-${version}";
 
   src = fetchurl {
-    url = "https://www.ubnt.com/downloads/unifi/${version}/UniFi.unix.zip";
+    url = "https://dl.ubnt.com/unifi/${version}/UniFi.unix.zip";
     sha256 = "2770d090109d5beb2ced3e30bf16d704302428d2c716aa0e7743e6819acafff7";
   };
 

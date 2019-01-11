@@ -6,7 +6,7 @@
 let
   patchSha256s = import ./patches.nix;
 
-  version = "7.0";
+  version = "8.0";
 
   inherit (stdenv.lib)
     attrNames
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/readline/readline-${version}.tar.gz";
-    sha256 = "0d13sg9ksf982rrrmv5mb6a2p4ys9rvg9r71d6il0vr8hmql63bm";
+    sha256 = "e339f51971478d369f8a053a330a190781acb9864cf4c541060f12078948e461";
   };
 
   buildInputs = [

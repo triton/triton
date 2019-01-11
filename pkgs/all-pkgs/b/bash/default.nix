@@ -20,14 +20,14 @@ let
 
   patchSha256s = import ./patches.nix;
 
-  version = "4.4";
+  version = "5.0";
 in
 stdenv.mkDerivation rec {
   name = "bash-${type}-${version}-p${toString (length (attrNames patchSha256s))}";
 
   src = fetchurl {
     url = "mirror://gnu/bash/bash-${version}.tar.gz";
-    sha256 = "1jyz6snd63xjn6skk7za6psgidsd53k05cr3lksqybi0q6936syq";
+    sha256 = "b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d";
   };
 
   nativeBuildInputs = optionals (type == "full") [

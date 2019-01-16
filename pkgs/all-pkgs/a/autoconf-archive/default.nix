@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "autoconf-archive-2018.03.13";
+  name = "autoconf-archive-2019.01.06";
 
   src = fetchurl {
     url = "mirror://gnu/autoconf-archive/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "6175f90d9fa64c4d939bdbb3e8511ae0ee2134863a2c7bf8d9733819efa6e159";
+    sha256 = "17195c833098da79de5778ee90948f4c5d90ed1a0cf8391b4ab348e2ec511e3f";
   };
 
   passthru = {
@@ -19,9 +19,11 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      # Peter Simons
-      pgpKeyFingerprint = "1A4F 63A1 3A46 49B6 32F6  5EE1 41BC 28FE 9908 9D72";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        # Peter Simons
+        pgpKeyFingerprint = "1A4F 63A1 3A46 49B6 32F6  5EE1 41BC 28FE 9908 9D72";
+      };
     };
   };
 

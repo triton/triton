@@ -49,6 +49,9 @@ with stdenv.lib;
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
   CRYPTO_LZO y
+  ${optionalString (versionAtLeast version "5.0") ''
+    CRYPTO_STATS y
+  ''}
   LZ4_COMPRESS y
   LZ4_DECOMPRESS y
   LZ4HC_COMPRESS y
@@ -123,6 +126,7 @@ with stdenv.lib;
   GCC_PLUGINS y
   CPU_FREQ_STAT y
   PCIE_DPC y
+  PCIE_ECRC y
   SLAB_FREELIST_RANDOM y
   HARDENED_USERCOPY y
   ${optionalString (versionAtLeast version "4.14") ''
@@ -136,6 +140,7 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.20") ''
     PCI_P2PDMA y
   ''}
+  RAPIDIO_DMA_ENGINE y
 
   # Support drivers that need external firmware.
   STANDALONE n
@@ -149,11 +154,6 @@ with stdenv.lib;
 
   # Enable the kernel's built-in memory tester.
   MEMTEST y
-
-  # Include the CFQ I/O scheduler in the kernel, rather than as a
-  # module, so that the initrd gets a good I/O scheduler.
-  IOSCHED_CFQ y
-  BLK_CGROUP y # required by CFQ
 
   # Enable NUMA.
   NUMA y
@@ -257,8 +257,11 @@ with stdenv.lib;
   # Random Devices
   SYNC_FILE y
   INTEL_PMC_CORE y
-  ${optionalString (versionAtLeast version "4.10") ''
+  ${optionalString (versionOlder version "5.0") ''
     INTEL_RDT${optionalString (versionOlder version "4.14") "_A"} y
+  ''}
+  ${optionalString (versionAtLeast version "5.0") ''
+    X86_RESCTRL y
   ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y
@@ -299,6 +302,9 @@ with stdenv.lib;
   ASYNC_TX_DMA y
   VME_BUS y
   PWM y
+  ${optionalString (versionAtLeast version "5.0") ''
+    ENERGY_MODEL y
+  ''}
   POWERCAP y
   ISCSI_IBFT_FIND y
 
@@ -555,6 +561,9 @@ with stdenv.lib;
     MTD_ONENAND_OTP y
     MTD_ONENAND_2X_PROGRAM y
   ''}
+  ${optionalString (versionAtLeast version "5.0") ''
+    MTD_PHYSMAP_GPIO_ADDR y
+  ''}
   DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
@@ -633,6 +642,7 @@ with stdenv.lib;
   # Linux containers.
   NAMESPACES y #  Required by 'unshare' used by 'nixos-install'
   RT_GROUP_SCHED y
+  BLK_CGROUP y
   CGROUP_DEVICE y
   ${optionalString (versionAtLeast version "4.10") ''
     CGROUP_BPF y
@@ -646,16 +656,23 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.12") ''
     BFQ_GROUP_IOSCHED y
   ''}
+  ${optionalString (versionOlder version "5.0") ''
+    IOSCHED_DEADLINE y
+    IOSCHED_NOOP y
+    IOSCHED_CFQ y
+    IOSCHED_BFQ y
+    CFQ_GROUP_IOSCHED y
+  ''}
+  MQ_IOSCHED_DEADLINE y
+  MQ_IOSCHED_KYBER y
   BLK_DEV_THROTTLING y
   ${optionalString (versionAtLeast version "4.10") ''
     BLK_DEV_ZONED y
     BLK_WBT y
-    BLK_WBT_SQ y
   ''}
   ${optionalString (versionAtLeast version "4.11") ''
     BLK_SED_OPAL y
   ''}
-  CFQ_GROUP_IOSCHED y
   CFS_BANDWIDTH y
 
   ${optionalString (versionAtLeast version "4.20") ''

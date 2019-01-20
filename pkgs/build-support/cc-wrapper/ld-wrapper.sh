@@ -20,6 +20,10 @@ if [ "${dtRpath-$extraCCFlags}" = "1" ]; then
   params+=("--enable-new-dtags")
 fi
 
+if [ "${noexecstack-$extraCCFlags}" = "1" ]; then
+  params+=("-z" "noexecstack")
+fi
+
 if [ "${relro-$extraCCFlags}" = "1" ]; then
   params+=("-z" "relro")
 fi

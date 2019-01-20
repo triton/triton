@@ -15,12 +15,12 @@
 }:
  
 stdenv.mkDerivation rec {
-  name = "man-db-2.8.3";
+  name = "man-db-2.8.5";
   
   src = fetchurl {
     url = "mirror://savannah/man-db/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5932a1ca366e1ec61a3ece1a3afa0e92f2fdc125b61d236f20cc6ff9d80cc4ac";
+    sha256 = "b64d52747534f1fe873b2876eb7f01319985309d5d7da319d2bc52ba1e73f6c1";
   };
 
   nativeBuildInputs = [
@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     configureFlagsArray+=(
       "--with-systemdtmpfilesdir=$out/lib/tmpfiles.d"
+      "--with-systemdsystemunitdir=$out/lib/systemd/system"
     )
   '';
 

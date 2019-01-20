@@ -706,9 +706,7 @@ aubio = callPackage ../all-pkgs/a/aubio {
 audiofile = callPackage ../all-pkgs/a/audiofile { };
 
 audit_full = callPackage ../all-pkgs/a/audit { };
-audit_lib = callPackageAlias "audit_full" {
-  prefix = "lib";
-};
+audit_lib = callPackage ../all-pkgs/a/audit/lib.nix { };
 
 augeas = callPackage ../all-pkgs/a/augeas { };
 

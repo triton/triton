@@ -19,9 +19,11 @@ mesonConfigurePhase() {
       mesonBuildDir="$(pwd)"
     fi
 
-    # Build always Release, to ensure optimisation flags
     mesonFlagsArray+=(
+      # Build always Release, to ensure optimisation flags
       "--buildtype" "${mesonBuildType-release}"
+      # Prefer using Link-Time Optimization
+      "-Db_lto=true"
     )
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"

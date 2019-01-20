@@ -3307,7 +3307,9 @@ pciutils = callPackage ../all-pkgs/p/pciutils { };
 
 pcre = callPackage ../all-pkgs/p/pcre { };
 
-pcre2 = callPackage ../all-pkgs/p/pcre2 { };
+pcre2_full = callPackage ../all-pkgs/p/pcre2 { };
+
+pcre2_lib = callPackage ../all-pkgs/p/pcre2/lib.nix { };
 
 pcsc-lite_full = callPackage ../all-pkgs/p/pcsc-lite {
   libOnly = false;

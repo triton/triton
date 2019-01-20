@@ -11,6 +11,7 @@
 , brotli
 , bzip2
 , curl
+, editline
 , libseccomp
 , libsodium
 , openssl
@@ -21,16 +22,16 @@
 }:
 
 let
-  version = "2.1.3";
+  version = "2.2.1";
 in
 stdenv.mkDerivation rec {
   name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
-    multihash = "QmP8tLiMweiCRV1bPYU5MGbca3dJEn3P3x8GLHxYYgXizs";
+    multihash = "Qmc9q3Kiu1L9MQfpe5yboBDXjTov3Y6g91wUmVuFvDyYwC";
     hashOutput = false;
-    sha256 = "5d22dad058d5c800d65a115f919da22938c50dd6ba98c5e3a183172d149840a4";
+    sha256 = "85f8d3518060803e44e51b1a9ada1a39cea904b36a632ba1844043a0b63be515";
   };
 
   buildInputs = [
@@ -40,6 +41,7 @@ stdenv.mkDerivation rec {
     brotli
     bzip2
     curl
+    editline
     libseccomp
     libsodium
     openssl
@@ -49,49 +51,44 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0001-Configurable-fixed-output-paths.patch";
-      sha256 = "887c35d5b46b61c8368d8ae66d621759ac6ece368063640db30b8f503bca21a5";
+      sha256 = "e7b9455a8e8eff20780c253f0d126af83230c18b1afd54ef9daa28b0695ac803";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0002-Remove-hardcoded-nixos.org-references.patch";
-      sha256 = "ac2e60243c32f9a273b36319726172a5bf9284e4e25a70bcd0d7c9408014ab44";
+      sha256 = "a6848f3879d2f4d03e19c535929e56e2104fe151bc43c35663e1dd63315b4336";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0003-Remove-nixpkgs-references.patch";
-      sha256 = "a3e907634bdd727a7b425f84b05b8eee1d4557c6bb93fab44db5868cf50ec4bb";
+      sha256 = "34dc2c8f6abd4dbf4d649379b072a91a76f04ad828718be6abbde3c9caa9f1f2";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0004-Build-dir-should-be-unique.patch";
-      sha256 = "44ed78276bdc81a627c9b87462231c4638a59523f9ee7d8daf9fbf312e8de9f5";
+      sha256 = "a0ce713b8a9b9d6ae74164ff2433e9b968ea3aca6cadbdd4dffdc28369b450c2";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0005-Always-verify-TLS.patch";
-      sha256 = "7e4b5c383a3a441418c611e4d7d4a888f69265aafafc2a669a959f0333cb0f33";
+      sha256 = "ae097620b84909d4b23d4930e67aa977ed9def87b4d056f723ea98d485c75422";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0006-SSL_CERT_FILE-for-fixed-output.patch";
-      sha256 = "43daa4a29fb7c06de423e298a2803ffd890fb7edd8d16805c4bc5408770a0cfe";
+      sha256 = "e68e51d6a86db365545b3bd57327e80e19a6213f5b1077784e3db24a52876d18";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
       file = "n/nix/0007-Output-base16-by-default.patch";
-      sha256 = "ae2e6ce7c0ac99ec805e93114904df9978fb72fb51c1b87715327d02df8cbdb7";
+      sha256 = "a03c492a24dcf8e19896e2a841a3e18cc986dd80b8423f6ccb3fd504332e4d48";
     })
     (fetchTritonPatch {
-      rev = "5aa406cd6b01511e34fdca6682b8f9e9375b704e";
-      file = "n/nix/0008-Make-fixed-ouput-message-nicer.patch";
-      sha256 = "69d9b8052afc52a0946197f2d85b98556bfba16bd77db521e1012bf17236b9c4";
-    })
-    (fetchTritonPatch {
-      rev = "1634d604ddcd382737f7af75db225b0e3890225d";
-      file = "n/nix/0009-builtin-fetchurl-Support-multiple-urls.patch";
-      sha256 = "cd1abbdd5820f392a1d9117391b32465b358e0adc4c10c09c9d44eb731613967";
+      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      file = "n/nix/0008-builtin-fetchurl-Support-multiple-urls.patch";
+      sha256 = "57b82b2673d93c4ed4a1436e62b22b25d6f976848198834f357475317f76afee";
     })
   ];
 

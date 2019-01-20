@@ -172,6 +172,12 @@ stdenv.mkDerivation {
         prefixMapFlag="-ffile-prefix-map"
       fi
 
+      # Determine if we have stack clash protection
+      export canStackClashProtect=0
+      if echo "" | "$ccPath"/cc -fstack-clash-protection -E - >/dev/null; then
+        canStackClashProtect=1
+      fi
+
       # Propagate the wrapped cc so that if you install the wrapper,
       # you get tools like gcov, the manpages, etc. as well (including
       # for binutils and Glibc).

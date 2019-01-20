@@ -86,6 +86,10 @@ if [ "${stackProtector-$extraCCFlags}" = "1" ]; then
   new_params+=("-fstack-protector-strong")
 fi
 
+if [ "@canStackClashProtect@" = "1" ] && [ "${stackClashProtection-$extraCCFlags}" = "1" ]; then
+  new_params+=("-fstack-clash-protection")
+fi
+
 if [ "${optimize-$extraCCFlags}" = "1" ]; then
   new_params+=("-O2")
 fi

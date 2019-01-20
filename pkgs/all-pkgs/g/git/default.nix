@@ -9,15 +9,15 @@
 , perl
 , xmlto
 
-, coreutils
+, coreutils_small
 , cpio
 , curl
 , expat
-, gawk
+, gawk_small
 , gnugrep
-, gnused
+, gnused_small
 , openssl
-, pcre2
+, pcre2_lib
 , python
 , zlib
 }:
@@ -27,14 +27,14 @@ let
     concatStringsSep;
 
   path = [
-    coreutils
-    gawk
+    coreutils_small
+    gawk_small
     gettext
     gnugrep
-    gnused
+    gnused_small
   ];
 
-  version = "2.19.1";
+  version = "2.20.1";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "345056aa9b8084280b1b9fe1374d232dec05a34e8849028a20bfdb56e920dbb5";
+    sha256 = "9d2e91e2faa2ea61ba0a70201d023b36f54d846314591a002c610ea2ab81c3e9";
   };
 
   nativeBuildInputs = [
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     curl
     expat
     openssl
-    pcre2
+    pcre2_lib
     zlib
   ];
 
@@ -74,9 +74,6 @@ stdenv.mkDerivation rec {
     "--with-libpcre"
     "--without-tcltk"
   ];
-
-  # required to support pthread_cancel()
-  #NIX_LDFLAGS = "-lgcc_s";
 
   makeFlags = [
     "PERL_PATH=${perl}/bin/perl"

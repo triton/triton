@@ -100,7 +100,7 @@ for (( i = 0; i < "${#params[@]}"; i++ )); do
   if [ "${fortifySource-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-D_FORTIFY_SOURCE ]]; then
     continue
   fi
-  if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*strict-overflow ]]; then
+  if [ "${noStrictOverflow-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*strict-overflow ]]; then
     continue
   fi
   if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then

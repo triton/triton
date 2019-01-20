@@ -53,9 +53,6 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
-  NIX_CFLAGS_LINK = "-lgcc_s";
-
   inherit (common) patches;
 
   preConfigure = ''
@@ -87,6 +84,9 @@ stdenv.mkDerivation rec {
       "sysconfdir=$out/etc"
     )
   '';
+
+  # Needed for rpc headers
+  NIX_CFLAGS_COMPILE = "-I${libtirpc}/include/tirpc";
 
   postInstall = ''
     # Remove test code

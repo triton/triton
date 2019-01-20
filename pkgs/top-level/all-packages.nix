@@ -1138,6 +1138,8 @@ e2fsprogs = callPackage ../all-pkgs/e/e2fsprogs { };
 
 ed = callPackage ../all-pkgs/e/ed { };
 
+editline = callPackage ../all-pkgs/e/editline { };
+
 edac-utils = callPackage ../all-pkgs/e/edac-utils { };
 
 efibootmgr = callPackage ../all-pkgs/e/efibootmgr { };

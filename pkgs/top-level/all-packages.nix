@@ -3793,11 +3793,7 @@ sysstat = callPackage ../all-pkgs/s/sysstat { };
 
 # TODO: Rename back to systemd once depedencies are sorted
 systemd_full = callPackage ../all-pkgs/s/systemd { };
-systemd_lib = callPackageAlias "systemd_full" {
-  type = "lib";
-};
-
-systemd_dist = callPackage ../all-pkgs/s/systemd/dist.nix { };
+systemd_lib = callPackage ../all-pkgs/s/systemd/lib.nix { };
 
 systemd-dummy = callPackage ../all-pkgs/s/systemd-dummy { };
 

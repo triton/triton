@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.6.35";
+  version = "1.6.36";
 in
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng16/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "23912ec8c9584917ed9b09c5023465d71709dce089be503c7867fec68a93bcd7";
+    sha256 = "eceb924c1fa6b79172fdfd008d335f0e59172a86a66481e09d4089df872aa319";
   };
 
   buildInputs = [
@@ -23,16 +23,18 @@ stdenv.mkDerivation rec {
   patches = [
     (fetchurl {
       url = "mirror://sourceforge/libpng-apng/libpng16/${version}/${name}-apng.patch.gz";
-      sha256 = "18ceb239857bbd32ca706cdad29f1a5dcfb87a5c54258db3bb077cff78c12e04";
+      sha256 = "8c1f33da739b29a77e35e5a1ebcdffaab63bfe184be8b5a97677cc80156fdc0f";
     })
   ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "8048 643B A2C8 40F4 F92A  195F F549 84BF A16C 640F";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
     };
   };
 

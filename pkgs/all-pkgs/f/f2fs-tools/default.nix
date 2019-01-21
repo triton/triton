@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.11.0";
+  version = "1.12.0";
 in
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 6;
     url = "https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
-    multihash = "QmdNM9PrUT2dcmrd6vDfZteTayBArxXTXRDhAQMfyU6dfw";
-    sha256 = "a9a82b9b7a83974388a34116a5fb870b09219c1b4a60fa176aec363c54546e8e";
+    multihash = "QmfJhPE26EivkqFoEs25dPXXVdrfX1Xio4qFycBrHZKsSC";
+    sha256 = "f1477254e7bca199a81b3142741c7c10094cb77741ac5b8958a37abacc2caa32";
   };
 
   nativeBuildInputs = [

@@ -20,7 +20,7 @@ let
     optionals
     optionalString;
 
-  version = "2.0.2";
+  version = "2.3.0";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "f6de6c9dc89a56909227ac3e3dc9b18924a0837936ffd9633d13e981bcbd96e0";
+    sha256 = "3b314db655a41d19481e18312465fa25fca6f63382217f08062f126059f96764";
   };
 
   buildInputs = [
@@ -65,10 +65,21 @@ stdenv.mkDerivation rec {
     "--${boolWt (type == "full" && fontconfig != null)}-fontconfig"
   ];
 
+  preBuild = optionalString (type == "lib") ''
+    for file in $(find . -name Makefile); do
+      sed -i 's,^\(all\|install\)-am:,\1-oldam:,' "$file"
+      echo 'all-am: $(LTLIBRARIES) $(HEADERS) $(pkgconfig_DATA)' >>"$file"
+      echo 'install-am:' >>"$file"
+      if grep -q 'install-pkgconfigDATA' "$file"; then
+        echo 'install-am: install-pkgconfigDATA' >>"$file"
+      fi
+      sed -n 's,^\(install-.*\(LTLIBRARIES\|HEADERS\)\):.*$,\1,p' "$file" | \
+        xargs echo 'install-am:' >>"$file"
+    done
+  '';
+
   postInstall = ''
     rm -rvf $out/share/gtk-doc
-  '' + optionalString (type == "lib") ''
-    rm -r $out/bin
   '';
 
   passthru = {

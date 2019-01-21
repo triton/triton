@@ -34,6 +34,11 @@ stdenv.mkDerivation rec {
       file = "p/parted/fix-fat16-crash.patch";
       sha256 = "3cbf31765b1653609a4c95687b91e34dd57ad3498d5d02019c966bd46d25d100";
     })
+    (fetchTritonPatch {
+      rev = "223472dcdececc27633295ca3cb29e4a37f3640a";
+      file = "p/parted/glibc-2.27.patch";
+      sha256 = "789d6ef8fcff389f9f74bd9e377aff9949ab5b317a80bd38cec39510bd40cef6";
+    })
   ];
 
   configureFlags = [

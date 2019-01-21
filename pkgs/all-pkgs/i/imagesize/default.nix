@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.0.0";
+  version = "1.1.0";
 in
 buildPythonPackage {
   name = "imagesize-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "imagesize";
     inherit version;
-    sha256 = "5b326e4678b6925158ccc66a9fa3122b6106d7c876ee32d7de6ce59385b96315";
+    sha256 = "f3832918bc3c66617f92e35f5d70729187676313caa60c187eb0f28b8fe5e3b5";
   };
 
   meta = with stdenv.lib; {

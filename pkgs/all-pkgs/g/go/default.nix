@@ -5,7 +5,6 @@
 , which
 , patchelf
 
-, bash
 , iana-etc
 , mime-types
 , tzdata
@@ -14,6 +13,9 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    concatStringsSep;
+
   inherit ((import ./sources.nix)."${channel}")
     version
     sha256
@@ -124,6 +126,11 @@ stdenv.mkDerivation {
   CGO_ENABLED = 1;
   GOROOT_BOOTSTRAP = "${goBootstrap}/share/go";
 
+  # For some reason the go toolchain only adds an rpath to our libc and not
+  # all of our DT_NEEDED entries. This forces the toolchain to set all of
+  # the needed rpaths.
+  GO_LDFLAGS = "-r=" + concatStringsSep ":" (map (n: "${n}/lib") stdenv.cc.runtimeLibcLibs);
+
   # These optimizations / security hardenings break the `os` library
   optimize = false;
   fortifySource = false;
@@ -158,14 +165,24 @@ stdenv.mkDerivation {
       echo "Removing $TMPDIR from $file" >&2
       sed -i "s,$TMPDIR,$TMPREP,g" "$file"
     done < <(grep -r "$TMPDIR" $out | sed "s,.*\(''${out}[^ :]*\).*,\1,g" | sort | uniq)
+
+    # Remove perl stuff we don't need
+    find "$out" -name '*'.pl -delete
+    rm "$out"/share/go/test/errchk
+
+    # Remove unused coreutils references
+    grep -q '/bin/pwd' "$out"/share/go/src/os/os_test.go
+    sed -i 's,/[^ ]*/bin/pwd,pwd,' "$out"/share/go/src/os/os_test.go
   '';
 
   setupHook = ./setup-hook.sh;
 
-  disallowedReferences = [
-    bash
-    goBootstrap
-  ];
+  allowedReferences = [
+    "out"
+    iana-etc
+    mime-types
+    tzdata
+  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     inherit

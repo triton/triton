@@ -13,11 +13,11 @@ stdenv.mkDerivation rec {
   name = "minisign-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "jedisct1";
     repo = "minisign";
     rev = version;
-    sha256 = "467b7085df42284be24d66ccb605d69fa71b9f6cf518c2d7f6eea40eafca1536";
+    sha256 = "5bfa46c0e44805d5a2d887104d9fa88f26df2ed5e19d7ee727e7c5eafb718209";
   };
 
   nativeBuildInputs = [

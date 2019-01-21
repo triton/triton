@@ -87,6 +87,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,/usr/share/fonts/truetype,${dejavu-fonts}/share/fonts/truetype,g' configure
+    sed -i 's, -Werror,,' grub-core/Makefile.in
   '';
 
   configureFlags = [

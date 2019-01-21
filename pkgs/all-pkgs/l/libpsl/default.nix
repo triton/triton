@@ -3,7 +3,6 @@
 , lib
 , python2
 
-, icu
 , libidn2
 , libunistring
 }:
@@ -25,7 +24,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    icu
     libidn2
     libunistring
   ];
@@ -33,6 +31,10 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs src/psl-make-dafsa
   '';
+
+  configureFlags = [
+    "--disable-man"
+  ];
 
   meta = with lib; {
     maintainers = with maintainers; [

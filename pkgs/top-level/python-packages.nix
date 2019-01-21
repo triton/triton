@@ -405,6 +405,8 @@ ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
 
+libcap-ng = callPackage ../all-pkgs/l/libcap-ng/python.nix { };
+
 llfuse = callPackage ../all-pkgs/l/llfuse { };
 
 lockfile = callPackage ../all-pkgs/l/lockfile { };

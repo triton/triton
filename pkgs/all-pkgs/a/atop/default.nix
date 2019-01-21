@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "atop-2.3.0";
+  name = "atop-2.4.0";
 
   src = fetchurl {
     url = "http://www.atoptool.nl/download/${name}.tar.gz";
-    multihash = "Qmb8vArZAWV2LaDB6AuoQghi4h1W9CJXVeUiFUZnQo7Lyj";
-    sha256 = "73e4725de0bafac8c63b032e8479e2305e3962afbe977ec1abd45f9e104eb264";
+    multihash = "QmZHZaxpfoYgK2gshBCuwjW9fMDj132YyRaV91AGmNmqca";
+    sha256 = "be1c010a77086b7d98376fce96514afcd73c3f20a8d1fe01520899ff69a73d69";
   };
 
   buildInputs = [

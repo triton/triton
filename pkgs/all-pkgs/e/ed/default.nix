@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ed-1.14.2";
+  name = "ed-1.15";
 
   src = fetchurl {
     url = "mirror://gnu/ed/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "f57962ba930d70d02fc71d6be5c5f2346b16992a455ab9c43be7061dec9810db";
+    sha256 = "ad4489c0ad7a108c514262da28e6c2a426946fb408a3977ef1ed34308bdfd174";
   };
 
   nativeBuildInputs = [
@@ -21,9 +21,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
+      };
     };
   };
 

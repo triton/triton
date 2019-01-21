@@ -16,6 +16,7 @@ let
     boolWt
     optional
     optionals
+    optionalAttrs
     optionalString;
 
   host =
@@ -23,9 +24,11 @@ let
       "x86_64-tritonboot-linux-gnu"
     else
       "x86_64-pc-linux-gnu";
+
+  version = "2.29";
 in
-stdenv.mkDerivation rec {
-  name = "glibc-2.29";
+stdenv.mkDerivation (rec {
+  name = "glibc-${version}";
 
   src = fetchurl {
     url = "mirror://gnu/glibc/${name}.tar.xz";
@@ -65,6 +68,16 @@ stdenv.mkDerivation rec {
       rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
       file = "g/glibc/0004-nsswitch-Try-system-paths-for-modules.patch";
       sha256 = "9cd235f0699661cbfd0b77f74c538d97514ba450dfba9a3f436adc2915ae0acf";
+    })
+    (fetchTritonPatch {
+      rev = "b772989f030aef70b8b5fd39a3bb04738d50b383";
+      file = "g/glibc/0005-locale-archive-Support-multiple-locale-archive-locat.patch";
+      sha256 = "3ab23b441e573e51ee67a8e65a3c0c5a40d8d80805838a389b9abca08c45156c";
+    })
+    (fetchTritonPatch {
+      rev = "cf6beafafc0d218cf156e3713fe62c0e53629419";
+      file = "g/glibc/0006-Add-C.UTF-8-Support.patch";
+      sha256 = "07f61db686dc36bc009999cb8d686581a29b13a0d2dd3f7f0b74cdfe964a0540";
     })
   ];
 
@@ -110,6 +123,11 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
+    # Ensure we always have a fallback C.UTF-8 locale-archive
+    export LOCALE_ARCHIVE="$out"/lib/locale/locale-archive
+    mkdir -p "$(dirname "$LOCALE_ARCHIVE")"
+    "$out"/bin/localedef -i C -f UTF-8 C.UTF-8
+
     # Make sure the cc-wrapper doesn't pick this up automagically
     mkdir -p "$out"/nix-support
     touch "$out"/nix-support/cc-wrapper-ignored
@@ -123,6 +141,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     impl = "glibc";
+    inherit version;
   };
 
   meta = with stdenv.lib; {
@@ -132,4 +151,6 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-}
+} // optionalAttrs (type == "full") {
+  setupHook = ./setup-hook.sh;
+})

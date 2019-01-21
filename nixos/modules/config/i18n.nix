@@ -4,10 +4,13 @@ with lib;
 
 let
 
-  glibcLocales = pkgs.glibc; /*pkgs.glibcLocales.override {
-    allLocales = any (x: x == "all") config.i18n.supportedLocales;
-    locales = config.i18n.supportedLocales;
-  };*/
+  glibcLocales = pkgs.glibc_locales.override {
+    locales =
+      if any (x: x == "all") config.i18n.supportedLocales then
+        "glibc"
+      else
+        config.i18n.supportedLocales;
+  };
 
 in
 
@@ -30,8 +33,8 @@ in
 
       supportedLocales = mkOption {
         type = types.listOf types.str;
-        default = [ (config.i18n.defaultLocale + "/UTF-8") ];
-        example = ["en_US.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" "nl_NL/ISO-8859-1"];
+        default = [ (config.i18n.defaultLocale + "/UTF-8") "C.UTF-8/UTF-8" ];
+        example = [ "en_US.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" "nl_NL/ISO-8859-1" ];
         description = ''
           List of locales that the system should support.  The value
           <literal>"all"</literal> means that all locales supported by
@@ -99,8 +102,6 @@ in
   ###### implementation
 
   config = {
-
-    i18n.defaultLocale = "C";
 
     i18n.consoleKeyMap = with config.services.xserver;
       mkIf config.i18n.consoleUseXkbConfig

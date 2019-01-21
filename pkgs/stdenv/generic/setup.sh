@@ -769,7 +769,8 @@ PATH_DELIMITER=':'
 
 nestingLevel=0
 
-# Set a default locale that should be used by everything
+# Set a temporary locale that should be used by everything
+LOCALE_PREDEFINED=${LC_ALL:+1}
 export LC_ALL
 : ${LC_ALL:=C}
 

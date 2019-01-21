@@ -1532,6 +1532,8 @@ glib = callPackage ../all-pkgs/g/glib { };
 
 glibc = callPackage ../all-pkgs/g/glibc { };
 
+glibc_locales = callPackage ../all-pkgs/g/glibc/locales.nix { };
+
 glib-networking_2-54 = callPackage ../all-pkgs/g/glib-networking {
   channel = "2.54";
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;

@@ -35,7 +35,7 @@ let
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
   base = "2.33";
-  patch = null;
+  patch = "1";
 in
 stdenv.mkDerivation rec {
   name = "${type}util-linux-${version base patch}";
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "f261b9d73c35bfeeea04d26941ac47ee1df937bd3b0583e748217c1ea423658a";
+    sha256 = "c14bd9f3b6e1792b90db87696e87ec643f9d63efa0a424f092a5a6b2f2dbef21";
   };
 
   buildInputs = optionals (!libOnly) [
@@ -108,8 +108,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = map (n: "${n}.xz") (tarballUrls "2.33" null);
-      outputHash = "f261b9d73c35bfeeea04d26941ac47ee1df937bd3b0583e748217c1ea423658a";
+      urls = map (n: "${n}.xz") (tarballUrls "2.33" "1");
+      outputHash = "c14bd9f3b6e1792b90db87696e87ec643f9d63efa0a424f092a5a6b2f2dbef21";
       inherit (src) outputHashAlgo;
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sign") (tarballUrls base patch);

@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnu/mtools/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "6061d31aaf65274cf6de3264907028c90badd8b7f22dd1b385617fa353868aed";
+    sha256 = "f188db26751aeb5692a79b2380b440ecc05fd1848a52f869d7ca1193f2ef8ee3";
   };
 
   # Fails to install correctly in parallel

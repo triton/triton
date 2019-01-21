@@ -28,10 +28,6 @@ stdenv.mkDerivation rec {
     "--enable-timerfd"
   ];
 
-  NIX_LDFLAGS = [
-    "-lgcc_s"
-  ];
-
   meta = with stdenv.lib; {
     description = "Userspace access to USB devices";
     homepage = http://www.libusb.info;

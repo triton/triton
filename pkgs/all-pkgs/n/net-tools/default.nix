@@ -5,8 +5,8 @@
 }:
 
 let
-  date = "2016-07-10";
-  gitRev = "115f1af2494ded1fcd21c8419d5e289bc4df380f";
+  date = "2018-11-03";
+  gitRev = "0eebece8c964e3cfa8a018f42b2e7e751a7009a0";
 in
 
 stdenv.mkDerivation rec {
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "${name}.tar.xz";
-    multihash = "QmSDSsjomFu6VZ5szCWGh9hyYQDFRKzFbQRJ1Deafh1cm7";
-    sha256 = "fc8ebe223a7144b6cde07eceac3b7ed7e71b350107002a21162542680ddfee2d";
+    multihash = "QmPkw3Rdbu7ym6RHBt76wKexxfYmZhDh1JEJJ4Pb436aRH";
+    sha256 = "fdf1a2f2c2bdf3326d275fccd5cf2ca1bb0349d687fdb37e4efe134277ef1966";
   };
 
   nativeBuildInputs = [
@@ -29,11 +29,6 @@ stdenv.mkDerivation rec {
     grep -q 'read ans' configure.sh
     sed -i configure.sh \
       -e 's/read ans/true/'
-
-    # FIXME: remove hack when updating
-    grep -q '<netinet/ip.h>' iptunnel.c
-    sed -i iptunnel.c \
-      -e '/<netinet\/ip.h>/d'
   '';
 
   configurePhase = ''
@@ -94,10 +89,10 @@ stdenv.mkDerivation rec {
       name = "net-tools-tarball-${date}";
 
       src = fetchgit {
-        version = 1;
+        version = 6;
         url = "http://git.code.sf.net/p/net-tools/code";
         rev = gitRev;
-        sha256 = "1f7myyc490nq29dhs45sm2njxwdnck69pm9ixiwgj44mxdmj3rbm";
+        sha256 = "8b9ce2a56f7a457184993bb7dd2230c3b125a89dc11f28e8f18551feb8ee1d8a";
       };
 
       buildPhase = ''

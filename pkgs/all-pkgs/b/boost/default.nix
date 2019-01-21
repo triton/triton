@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, icu, expat, zlib, bzip2, python2, xz
+, icu, expat, zlib, bzip2, python2, zstd, xz
 , enableRelease ? true
 , enableDebug ? false
 , enableSingleThreaded ? false
@@ -128,7 +128,7 @@ stdenv.mkDerivation {
     EOF
   '';
 
-  buildInputs = [ icu expat zlib bzip2 xz python2 ];
+  buildInputs = [ icu expat zlib bzip2 zstd xz python2 ];
 
   configureScript = "./bootstrap.sh";
   configureFlags = commonConfigureFlags ++ [

@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.12.1";
+  version = "2.12.2";
 in
 stdenv.mkDerivation rec {
   name = "libimagequant-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "ImageOptim";
     repo = "libimagequant";
     rev = version;
-    sha256 = "437433a53e69b791ee1cdac5c6c58d63a53d0d7e8443df3606f28c093e0df22b";
+    sha256 = "e33e32d65831f747e2213a2be700374d334d8d552320e5f6f26d67b4acd24130";
   };
 
   postPatch = ''

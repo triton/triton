@@ -16,12 +16,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gdb-8.2";
+  name = "gdb-8.2.1";
 
   src = fetchurl {
     url = "mirror://gnu/gdb/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "c3a441a29c7c89720b734e5a9c6289c0a06be7e0c76ef538f7bbcef389347c39";
+    sha256 = "0a6a432907a03c5c8eaad3c3cffd50c00a40c3a5e3c4039440624bae703f2202";
   };
 
   nativeBuildInputs = [

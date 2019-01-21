@@ -2,11 +2,13 @@
 , fetchurl
 , lib
 
+, dbus-dummy
 , readline
+, systemd-dummy
 }:
 
 let
-  version = "0.10";
+  version = "0.14";
 
   tarballUrls = [
     "mirror://kernel/linux/network/wireless/iwd-${version}.tar"
@@ -18,20 +20,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "d1bac9305561760e31ef16e3aa23f13a2a5b5cd5e6d878a42426d256346f1091";
+    sha256 = "c4258b5789a8074a2dfdc33ed5f02415b62ff1ce0b7cba636402883933d6a643";
   };
 
   buildInputs = [
+    dbus-dummy
     readline
+    systemd-dummy
   ];
-
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-systemd-unitdir=$out/lib/systemd/system"
-      "--with-dbus-busdir=$out/share/dbus-1"
-      "--with-dbus-datadir=$out/share"
-    )
-  '';
 
   configureFlags = [
     "--sysconfdir=/etc"

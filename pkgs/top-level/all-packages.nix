@@ -3545,6 +3545,8 @@ rocksdb = callPackage ../all-pkgs/r/rocksdb { };
 
 root-nameservers = callPackage ../all-pkgs/r/root-nameservers { };
 
+rpcsvc-proto = callPackage ../all-pkgs/r/rpcsvc-proto { };
+
 rpm = callPackage ../all-pkgs/r/rpm { };
 
 rrdtool = callPackage ../all-pkgs/r/rrdtool { };

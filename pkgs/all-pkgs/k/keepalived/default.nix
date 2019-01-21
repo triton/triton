@@ -9,19 +9,20 @@
 , libnl
 , net-snmp
 , openssl
+, pcre2_lib
 }:
 
 let
-  version = "2.0.7";
+  version = "2.0.11";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmdV1FHJswwYJpgmvpiRxJa5JBHzqgsAeekSgkx8xmATA6";
+    multihash = "Qmdhm3KTyBnwPd3SKEYi56sQcZUYgzvzs7e9kH958Lw9yV";
     hashOutput = false;
-    sha256 = "bce45d6d5cf3620bfd88472ec839a75b5a14a54fda12d09e890670244873b8ab";
+    sha256 = "a298b0c02a20959cfc365b62c14f45abd50d5e0595b2869f5bce10ec2392fa48";
   };
 
   buildInputs = [
@@ -31,8 +32,9 @@ stdenv.mkDerivation rec {
     json-c
     libnfnetlink
     libnl
-    #net-snmp
+    net-snmp
     openssl
+    pcre2_lib
   ];
 
   configureFlags = [
@@ -40,16 +42,25 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--disable-silent-rules"
     "--enable-bfd"
-    #"--enable-snmp"
-    #"--enable-snmp-vrrp"
-    #"--enable-snmp-checker"
-    #"--enable-snmp-rfc"
-    #"--enable-snmp-rfcv2"
-    #"--enable-snmp-rfcv3"
+    "--enable-snmp"
+    "--enable-snmp-vrrp"
+    "--enable-snmp-checker"
+    "--enable-snmp-rfc"
+    "--enable-snmp-rfcv2"
+    "--enable-snmp-rfcv3"
     "--enable-dbus"
+    "--enable-regex"
+    "--enable-regex-timers"
     "--enable-json"
     "--enable-sha1"
+    "--enable-dynamic-linking"
+    "--enable-netlink-timers"
+    "--with-init=systemd"
   ];
+
+  preConfigure = ''
+    configureFlagsArray+=("--with-systemdsystemunitdir=$out/lib/systemd/system")
+  '';
 
   preInstall = ''
     installFlagsArray+=(
@@ -66,7 +77,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        md5Confirm = "5204f541c75f4f68339809f0761693c5";
+        md5Confirm = "2a6e1a159922afd78333cd683f9f2732";
       };
     };
   };

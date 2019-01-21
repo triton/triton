@@ -5,6 +5,7 @@
 , flex
 , makeWrapper
 , python2
+, rpcsvc-proto
 
 , acl
 , attr
@@ -39,7 +40,7 @@ let
     which
   ];
 
-  versionMajor = "4.1";
+  versionMajor = "5";
   versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 in
@@ -49,7 +50,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "6f0b01c082fec65134eea43b2e4df8d4b55269f43b7d330e81eaad920d7c63e5";
+    sha256 = "842eaff5e7abb1bb56b00127ceb1ffb9dc62ffc6ce3fa851fb434f4989b76d2f";
   };
 
   nativeBuildInputs = [
@@ -57,6 +58,7 @@ stdenv.mkDerivation rec {
     flex
     makeWrapper
     python2
+    rpcsvc-proto
   ];
 
   buildInputs = [
@@ -103,8 +105,7 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-crypt-xlator"
-    "--disable-xmltest"
-    "--enable-ipv6-default"
+    "--with-ipv6-default"
     "--with-mountutildir=/run/current-system/sw/bin"
   ];
 

@@ -6,11 +6,9 @@
 
 , db
 , fstrm
-, idnkit
 , json-c
 , kerberos
 , libcap
-, libseccomp
 , libxml2
 , lmdb
 , mariadb-connector-c
@@ -19,7 +17,7 @@
 , openssl
 , postgresql
 , protobuf-c
-, pythonPackages
+, python3Packages
 , readline
 , zlib
 
@@ -33,109 +31,70 @@ let
     optionals
     optionalString;
 
-  version = "9.13.3";
+  version = "9.13.5";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmZFthTXYkKCpqGbtPwuhjod5vVM5b8Gwn8Q2K7rUbu9Mw";
+    multihash = "Qmb3zDYo6MB1fkhcDZhXTyC1zyNnnHM87ptLH42TYWgzDL";
     hashOutput = false;
-    sha256 = "76674cf2a3e61766aed5c7fd1ee6ed3da133a9e331b35b24f40efdf1bbac5b44";
+    sha256 = "bbde0b81c66a7c7f5b074c8f0e714ed8aa235e4b930e28953cab0ae3cae94e4b";
   };
 
   nativeBuildInputs = [
     docbook-xsl-ns
     libtool
-  ];
-
-  buildInputs = [
-    idnkit
-    json-c
-    kerberos
-    libcap
-    libseccomp
-    libxml2
-    lmdb
-    ncurses
-    openssl
-    pythonPackages.python
-    pythonPackages.ply
-    readline
-    zlib
   ] ++ optionals (!toolsOnly) [
-    db
-    fstrm
-    openldap
-    mariadb-connector-c
-    postgresql
     protobuf-c
   ];
 
-  # Fix broken zlib detection
-  postPatch = ''
-    sed -i 's,''${with_zlib}/zlib.h,''${with_zlib}/include/zlib.h,g' configure
-  '';
+  buildInputs = [
+    kerberos
+    ncurses
+    openssl
+    readline
+  ] ++ optionals (!toolsOnly) [
+    db
+    fstrm
+    json-c
+    libcap
+    libxml2
+    lmdb
+    mariadb-connector-c
+    openldap
+    postgresql
+    protobuf-c
+    python3Packages.python
+    python3Packages.ply
+    zlib
+  ];
 
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
-    "--enable-seccomp"
-    "--with-python=${pythonPackages.python.interpreter}"
-    "--enable-kqueue"
-    "--enable-epoll"
-    "--enable-devpoll"
-    "--enable-threads"
-    "--without-geoip"  # TODO(wkennington): GeoDNS support
-    "--with-gssapi=${kerberos}"
-    "--with-libtool"
-    "--disable-native-pkcs11"
-    "--with-openssl=${openssl}"
-    "--with-pkcs11=${openssl}"
-    "--with-ecdsa"
-    "--without-gost"  # Insecure cipher
-    "--with-aes"
-    "--with-cc-alg=sha256"
-    "--enable-openssl-hash"
-    "--with-lmdb=${lmdb}"
-    "--with-libxml2=${libxml2}"
-    "--with-libjson=${json-c}"
-    "--with-zlib=${zlib}"
     "--enable-largefile"
-    "--without-purify"
-    "--without-gperftools-profiler"
     "--disable-backtrace"
     "--disable-symtable"
-    "--enable-ipv6"
-    "--without-kame"
-    "--with-readline"
-    "--disable-isc-spnego"
-    "--enable-chroot"
-    "--enable-linux-caps"
-    "--enable-atomic"
-    "--disable-fixed-rrset"
-    "--enable-rpz-nsip"
-    "--enable-rpz-nsdname"
-    "--with-docbook-xsl=${docbook-xsl-ns}/share/xsl/docbook"
-    "--with-idn=${idnkit}"
-    "--without-atf"
-    "--with-tuning=large"
-    "--enable-querytrace"
-    "--with-dlopen"
-    "--without-make-clean"
     "--enable-full-report"
+    "--with-openssl=${openssl}"
+    "--with-gssapi=${kerberos}/bin/krb5-config"
+  ] ++ optionals (toolsOnly) [
+    "--disable-linux-caps"
+    "--without-python"
   ] ++ optionals (!toolsOnly) [
+    "--enable-dnstap"
+    "--enable-dnsrps-dl"
+    "--enable-dnsrps"
+    "--with-lmdb=${lmdb}"
+    "--with-libjson=${json-c}"
+    "--with-zlib=${zlib}"
     "--with-dlz-postgres=${postgresql}"
     "--with-dlz-mysql=${mariadb-connector-c}"
     "--with-dlz-bdb=${db}"
     "--with-dlz-filesystem"
     "--with-dlz-ldap=${openldap}"
-    "--without-dlz-odbc"
-    "--with-dlz-stub"
-    "--with-protobuf-c=${protobuf-c}"
-    "--with-libfstrm=${fstrm}"
-    "--enable-dnstap"
   ];
 
   installFlags = [
@@ -146,10 +105,9 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = optionalString toolsOnly ''
-    mkdir -p $out/{bin,etc,lib,share/man/man1}
+    mkdir -p $out/{bin,etc,share/man/man1}
     install -m 0755 $TMPDIR/$out/bin/{dig,host,nslookup,nsupdate} $out/bin
     install -m 0644 $TMPDIR/$out/etc/bind.keys $out/etc
-    install -m 0644 $TMPDIR/$out/lib/*.so.* $out/lib
     install -m 0644 $TMPDIR/$out/share/man/man1/{dig,host,nslookup,nsupdate}.1 $out/share/man/man1
   '';
 

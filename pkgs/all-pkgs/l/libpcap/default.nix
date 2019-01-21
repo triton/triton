@@ -3,7 +3,6 @@
 , fetchurl
 , flex
 
-, bluez
 , dbus
 , libnl
 , rdma-core
@@ -25,7 +24,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    bluez
     dbus
     libnl
     rdma-core

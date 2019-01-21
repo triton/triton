@@ -9,6 +9,7 @@
 , libnetfilter_cttimeout
 , libnetfilter_queue
 , libnfnetlink
+, libtirpc
 , systemd_lib
 }:
 
@@ -34,8 +35,11 @@ stdenv.mkDerivation rec {
     libnetfilter_cttimeout
     libnetfilter_queue
     libnfnetlink
+    libtirpc
     systemd_lib
   ];
+
+  NIX_CFLAGS_COMPILE = "-I${libtirpc}/include/tirpc";
 
   configureFlags = [
     "--sysconfdir=/etc"

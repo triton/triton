@@ -34,7 +34,7 @@ let
   '';
 
   channel = "2.58";
-  version = "${channel}.1";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "glib-${version}";
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6";
+    sha256 = "c7b24ed6536f1a10fc9bce7994e55c427b727602e78342821f1f07fb48753d4b";
   };
 
   nativeBuildInputs = [
@@ -64,6 +64,7 @@ stdenv.mkDerivation rec {
   selfApplySetupHook = true;
 
   postPatch = ''
+    grep -q '#!/usr/bin/env python' gio/tests/gengiotypefuncs.py
     sed -i gio/tests/gengiotypefuncs.py \
       -e 's,#!/usr/bin/env python.*,#!${python3.interpreter},'
   '';
@@ -77,14 +78,6 @@ stdenv.mkDerivation rec {
       ! find "$out" -name "$i"
       install -D -m 644 -v m4macros/"$i" "$out"/share/aclocal/"$i"
     done
-
-    # Remove unneeded dependencies from .pc file
-    grep -q ' \-lcharset' "$out"/lib/pkgconfig/glib-2.0.pc
-    sed -i 's, -lcharset,,' "$out"/lib/pkgconfig/glib-2.0.pc
-    grep -q ' \-lxdgmime' "$out"/lib/pkgconfig/gio-2.0.pc
-    grep -q ' \-linotify' "$out"/lib/pkgconfig/gio-2.0.pc
-    sed -i 's, -linotify,,' "$out"/lib/pkgconfig/gio-2.0.pc
-    sed -i 's, -lxdgmime,,' "$out"/lib/pkgconfig/gio-2.0.pc
   '';
 
   passthru = {

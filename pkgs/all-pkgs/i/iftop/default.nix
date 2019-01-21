@@ -21,10 +21,6 @@ stdenv.mkDerivation rec {
     ncurses
   ];
 
-  # Explicitly link against libgcc_s, to work around the infamous
-  # "libgcc_s.so.1 must be installed for pthread_cancel to work".
-  LDFLAGS = "-lgcc_s";
-
   preConfigure = ''
     cp -v ${automake}/share/automake*/config.{sub,guess} config
   '';

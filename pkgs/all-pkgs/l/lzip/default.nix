@@ -7,7 +7,7 @@ let
     "mirror://savannah/lzip/lzip-${version}.tar.gz"
   ];
 
-  version = "1.20";
+  version = "1.21";
 in
 stdenv.mkDerivation rec {
   name = "lzip-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "c93b81a5a7788ef5812423d311345ba5d3bd4f5ebf1f693911e3a13553c1290c";
+    sha256 = "e48b5039d3164d670791f9c5dbaa832bf2df080cb1fbb4f33aa7b3300b670d8b";
   };
 
   configureFlags = [
@@ -27,9 +27,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.20";
+      urls = tarballUrls "1.21";
       inherit (src) outputHashAlgo;
-      outputHash = "c93b81a5a7788ef5812423d311345ba5d3bd4f5ebf1f693911e3a13553c1290c";
+      outputHash = "e48b5039d3164d670791f9c5dbaa832bf2df080cb1fbb4f33aa7b3300b670d8b";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";

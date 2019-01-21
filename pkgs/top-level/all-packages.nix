@@ -2293,8 +2293,6 @@ libebur128 = callPackage ../all-pkgs/l/libebur128 { };
 
 libedit = callPackage ../all-pkgs/l/libedit { };
 
-libelf = callPackage ../all-pkgs/l/libelf { };
-
 libepoxy = callPackage ../all-pkgs/l/libepoxy { };
 
 liberation-fonts = callPackage ../all-pkgs/l/liberation-fonts { };

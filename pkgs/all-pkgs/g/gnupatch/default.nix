@@ -50,7 +50,10 @@ stdenv.mkDerivation rec {
 
   allowedReferences = [
     "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  ] ++ stdenv.cc.runtimeLibcLibs
+    ++ optionals (type == "full") [
+    attr
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

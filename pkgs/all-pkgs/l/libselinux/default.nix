@@ -1,11 +1,9 @@
 { stdenv
 , fetchurl
 , lib
-, python2
-, swig
 
 , libsepol
-, pcre
+, pcre2_lib
 }:
 
 let
@@ -21,14 +19,9 @@ stdenv.mkDerivation rec {
     sha256 = "31db96ec7643ce10912b3c3f98506a08a9116dcfe151855fd349c3fda96187e1";
   };
 
-  nativeBuildInputs = [
-    python2
-    swig
-  ];
-
   buildInputs = [
     libsepol
-    pcre
+    pcre2_lib
   ];
 
   postPatch = ''
@@ -46,13 +39,12 @@ stdenv.mkDerivation rec {
   '';
 
   buildFlags = [
+    "USE_PCRE2=y"
     "all"
-    "pywrap"
   ];
 
   installTargets = [
     "install"
-    "install-pywrap"
   ];
 
   meta = with lib; {

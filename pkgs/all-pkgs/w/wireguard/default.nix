@@ -1,6 +1,7 @@
 { stdenv
 , elfutils
 , fetchzip
+, perl
 
 , kernel
 , libmnl
@@ -11,8 +12,8 @@ let
     optionals
     optionalString;
 
-  rev = "765b5186c972c83083fc32a24f629ccc50529bd1";
-  date = "2018-11-15";
+  rev = "79b5151f24ef5c36ede11968e4a00b9d68468fba";
+  date = "2018-12-18";
 in
 stdenv.mkDerivation {
   name = "wireguard-${date}${optionalString (kernel != null) "-${kernel.version}"}";
@@ -20,12 +21,13 @@ stdenv.mkDerivation {
   src = fetchzip {
     version = 6;
     url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
-    multihash = "QmYLWtAL71T5K1Y8VuF6HaJJwG77Lo5PoXHM6J6G3gxbAG";
-    sha256 = "e104063c86d669871e8f6295c8db7429c98f1f39f585f17f22c799cc35713a4a";
+    multihash = "QmQtBx2jGBzrzJbwLXoNKHz7h9GXV59Uwmi9KVgiTNVVd4";
+    sha256 = "5b37b753beeb0e90ebf689469dc6881add4ee24ebfaa9d9ff604932615046ea0";
   };
 
   nativeBuildInputs = optionals (kernel != null) [
     elfutils
+    perl
   ];
 
   buildInputs = optionals (kernel == null) [

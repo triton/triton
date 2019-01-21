@@ -1,8 +1,8 @@
 { stdenv
 , fetchurl
-, python
 
 , openssl
+, python2
 }:
 
 let
@@ -21,12 +21,9 @@ stdenv.mkDerivation rec {
     sha256 = "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2";
   };
 
-  nativeBuildInputs = [
-    python
-  ];
-
   buildInputs = [
     openssl
+    python2
   ];
 
   patchPhase = ''
@@ -34,6 +31,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--enable-gcc-hardening"
     "--disable-samples"
   ];
 

@@ -72,7 +72,6 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--without-debug"
     "--without-profiling"
-    "--${boolWt (stdenv.cc.isGNU)}-gnu-ld"
     #"--with-pager=${less}"
     # TODO: dante socks proxy support
     "--without-socks"

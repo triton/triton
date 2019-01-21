@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "103";
+  version = "108";
 in
 buildPythonPackage rec {
   name = "diffoscope-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "diffoscope";
     inherit version;
-    sha256 = "aea22460e46bf4c57d7e908a309f4a7c4b88aed9470603bcc109c05a5b6f411b";
+    sha256 = "247408365671cd19c1d16ece214677b5a52c53e278f4cce1117b4a5567ab4b6d";
   };
 
   postPatch = /* Fix invalid encoding in README */ ''

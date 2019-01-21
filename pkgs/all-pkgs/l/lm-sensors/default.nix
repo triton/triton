@@ -8,18 +8,18 @@
 }:
 
 let
-  rev = "dcf23676cc264927ad58ae7960f518689372741a";
-  date = "2018-06-29";
+  rev = "84f773b3ec8b75f377a68fd1436ea3ac6d11b170";
+  date = "2018-11-23";
 in
 stdenv.mkDerivation rec {
   name = "lm_sensors-${date}";
   
   src = fetchFromGitHub {
     version = 6;
-    owner = "groeck";
+    owner = "lm-sensors";
     repo = "lm-sensors";
     inherit rev;
-    sha256 = "b16e65e97568bfeeae19c050c3ea62931b21c4abb90c2384eebea267881b4f8a";
+    sha256 = "f656d1597d95fdfc65ffe242a69841e9838ac7569fb5a22f9a7f75ecdd8a3915";
   };
 
   nativeBuildInputs = [

@@ -2,6 +2,7 @@
 , cmake
 , fetchTritonPatch
 , fetchurl
+, gcc
 , ninja
 , perl
 , python
@@ -24,8 +25,6 @@ let
     version
     patches
     srcs;
-
-  gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
 
   inherit (stdenv.lib)
     flip

@@ -5,9 +5,7 @@
 , ninja
 
 , audit_lib
-, dbus
 , expat
-, glib
 , libcap-ng
 , linux-headers_triton
 , libselinux
@@ -16,7 +14,7 @@
 }:
 
 let
-  version = "16";
+  version = "17";
 in
 stdenv.mkDerivation rec {
   name = "dbus-broker-${version}";
@@ -24,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/bus1/dbus-broker/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5c0c5d01e521852c08fda6de156e2e56a38ba999ca214ec8064c2d067a8a5d03";
+    sha256 = "4ec7491745a88ec5112644b0e2b9a0abe9107c85d7650be8988d88efb52da84b";
   };
 
   nativeBuildInputs = [
@@ -35,8 +33,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     audit_lib
     expat
-    dbus
-    glib
     libcap-ng
     linux-headers_triton
     libselinux
@@ -48,13 +44,6 @@ stdenv.mkDerivation rec {
     # Don't build any tests
     grep -q -r "subdir('test" --include meson.build .
     find . -name meson.build -exec sed -i -e "/subdir('test/d" -e '/^[ ]*test/d' {} \;
-
-    # Fix systemd unit dirs
-    grep -q "conf.set('systemunitdir'" meson.build
-    sed \
-      -e "s#conf.set('systemunitdir',.*#conf.set('systemunitdir', '$out/lib/systemd/system')#" \
-      -e "s#conf.set('userunitdir',.*#conf.set('userunitdir', '$out/lib/systemd/user')#" \
-      -i meson.build
   '';
   
   mesonFlags = [

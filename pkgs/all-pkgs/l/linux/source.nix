@@ -16,18 +16,28 @@ let
   inherit (source)
     version;
 
+  lastMinors = {
+    "4" = 20;
+  };
+
   unpatchedVersion =
     let
       rclist = splitString "-" version;
       isRC = [ ] != tail rclist;
       vlist = splitString "." (head rclist);
+      majorInt = toInt (elemAt vlist 0);
       minorInt = toInt (elemAt vlist 1);
-      correctMinor = if isRC then minorInt - 1 else minorInt;
-    in "${elemAt vlist 0}.${toString correctMinor}";
+      correctMajor =
+        if isRC && minorInt == 0 then majorInt - 1 else majorInt;
+      correctMinor =
+        if isRC then
+          if minorInt == 0 then lastMinors."${toString correctMajor}" else minorInt - 1
+        else
+          minorInt;
+    in "${toString correctMajor}.${toString correctMinor}";
 
-  directoryUrls = [
-    "mirror://kernel/linux/kernel/v4.x"
-    "mirror://kernel/linux/kernel/v4.x/testing"
+  directoryUrls = version: [
+    "mirror://kernel/linux/kernel/v${head (splitString "." version)}.x"
   ];
 
   src = if source ? rev then
@@ -43,14 +53,14 @@ let
       urls =
         let
           version' = if source ? baseSha256 then unpatchedVersion else version;
-        in source.baseUrls or (source.urls or (map (n: "${n}/linux-${version'}.tar.xz") directoryUrls));
+        in source.baseUrls or (source.urls or (map (n: "${n}/linux-${version'}.tar.xz") (directoryUrls version')));
       hashOutput = false;
       sha256 = source.baseSha256 or source.sha256;
     };
 
   patch = if source ? patchSha256 && source.patchSha256 != null then
     fetchurl {
-      urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") directoryUrls);
+      urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") (directoryUrls version));
       hashOutput = false;
       sha256 = source.patchSha256;
     }
@@ -65,9 +75,9 @@ let
   srcsVerification = [
     (fetchurl {
       failEarly = true;
-      fullOpts = {
+      fullOpts = let v = if source ? baseSha256 then unpatchedVersion else version; in {
         pgpDecompress = true;
-        pgpsigUrls = map (n: "${n}/linux-${if source ? baseSha256 then unpatchedVersion else version}.tar.sign") directoryUrls;
+        pgpsigUrls = map (n: "${n}/linux-${v}.tar.sign") (directoryUrls v);
         inherit pgpKeyFingerprints;
       };
       inherit (src) urls outputHash outputHashAlgo;

@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, which
 
 , lvm2
 }:
@@ -14,10 +13,6 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "93421bd169d71ff5e7d2db95b62b030bfa205a12010b6468dcdef80337d6fbd8";
   };
-
-  nativeBuildInputs = [
-    which
-  ];
 
   buildInputs = [
     lvm2

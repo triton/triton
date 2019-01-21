@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "0.9.22";
+  version = "0.9.23";
 in
 stdenv.mkDerivation rec {
   name = "lmdb-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "LMDB";
     repo = "lmdb";
     rev = "LMDB_${version}";
-    sha256 = "35e22ee52ebf99059c7743f1700c91f0317e4c11bab05f5e124743bf5587dded";
+    sha256 = "d9cce319c64f020beaf88bb9f0f5d7c447de387b0b6e978b3f836d2eacf0dc83";
   };
 
   prePatch = ''

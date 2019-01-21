@@ -3,8 +3,6 @@
 , fetchPyPi
 , isPy3
 , lib
-
-, glibcLocales
 }:
 
 let
@@ -18,10 +16,6 @@ buildPythonPackage {
     inherit version;
     sha256 = "a0cd55372208730eca5cd7cdff7948e439a006d8587c50c4445be1a0e88b2521";
   };
-
-  propagatedBuildInputs = [
-    glibcLocales
-  ];
 
   postPatch = ''
     # Never mangle our RPATHS

@@ -28,12 +28,6 @@ mesonConfigurePhase() {
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"
 
-    # Meson expect the local to be a unicode variant but
-    # our default builder local is ANSI compatible. We need this
-    # to be set during every stage of the build process since meson
-    # is called from the generated build files.
-    export LC_ALL="en_US.UTF-8"
-
     meson setup $mesonFlags "${mesonFlagsArray[@]}" \
       "${mesonSrcDir}" "${mesonBuildDir}"
 

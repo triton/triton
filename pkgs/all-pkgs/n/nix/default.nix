@@ -90,6 +90,11 @@ stdenv.mkDerivation rec {
       file = "n/nix/0008-builtin-fetchurl-Support-multiple-urls.patch";
       sha256 = "57b82b2673d93c4ed4a1436e62b22b25d6f976848198834f357475317f76afee";
     })
+    (fetchTritonPatch {
+      rev = "1d634638656d4da132a505a8f9d3a402c2cc1092";
+      file = "n/nix/0009-hash-Default-to-base16-for-better-tool-support.patch";
+      sha256 = "74a6e9652136083581a4a23ce6fd41c1c2f3996ee34e7b4d61853d594431e5ef";
+    })
   ];
 
   postPatch = ''

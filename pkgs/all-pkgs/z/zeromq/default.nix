@@ -4,11 +4,10 @@
 , krb5_lib
 , libsodium
 , libunwind
-, util-linux_lib
 }:
 
 let
-  version = "4.2.5";
+  version = "4.3.1";
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";
@@ -17,14 +16,13 @@ stdenv.mkDerivation rec {
     url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "cc9090ba35713d59bb2f7d7965f877036c49c5558ea0c290b0dcc6f2a17e489f";
+    sha256 = "bcbabe1e2c7d0eec4ed612e10b94b112dd5f06fcefa994a0c79a45d835cd21eb";
   };
 
   buildInputs = [
     krb5_lib
     libsodium
     libunwind
-    util-linux_lib
   ];
 
   configureFlags = [
@@ -38,11 +36,13 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      md5Url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
-        + "MD5SUMS";
-      sha1Url = "https://github.com/zeromq/libzmq/releases/download/"
-        + "v${version}/SHA1SUMS";
       failEarly = true;
+      fullOpts = {
+        md5Url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
+          + "MD5SUMS";
+        sha1Url = "https://github.com/zeromq/libzmq/releases/download/"
+          + "v${version}/SHA1SUMS";
+      };
     };
   };
 

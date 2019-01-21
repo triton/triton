@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "0.4.1";
+  version = "0.4.2";
 in
 stdenv.mkDerivation rec {
   name = "dnscrypt-wrapper-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "cofyc";
     repo = "dnscrypt-wrapper";
     rev = "v${version}";
-    sha256 = "db85e635ba8a96502ada7e9611bd8935226e07842c315d2f87144598fc4b6b79";
+    sha256 = "b3e5470eb2db64ef98e875ed933de7ebf29014ad05c21a9c2862a20710558ad8";
   };
 
   buildInputs = [

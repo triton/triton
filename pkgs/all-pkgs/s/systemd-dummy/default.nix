@@ -2,7 +2,7 @@
 }:
 
 stdenv.mkDerivation {
-  name = "systemd-dummy";
+  name = "systemd-dummy-233";
 
   buildCommand = ''
     mkdir -p "$out"/lib/pkgconfig

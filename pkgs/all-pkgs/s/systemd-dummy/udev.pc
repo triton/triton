@@ -3,4 +3,4 @@ udevdir=${install_sys_dir}/lib/udev
 
 Name: udev
 Description: udev dummy
-Version: 0
+Version: 233

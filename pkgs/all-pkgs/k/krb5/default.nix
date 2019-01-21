@@ -3,6 +3,7 @@
 , fetchurl
 , perl
 
+, cyrus-sasl
 , libedit
 , libverto
 , openldap
@@ -25,16 +26,16 @@ let
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
   major = "1.16";
-  patch = "1";
+  patch = "2";
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "QmZmFCaMRTJyDyCXMbfL2Y89RyV31kDmj8pv3cXrnpsG9q";
+    multihash = "QmYQrS9aVefswbVErXsaqzFp7siYaiA2FLvNhFRCapBc41";
     hashOutput = false;
-    sha256 = "214ffe394e3ad0c730564074ec44f1da119159d94281bbec541dc29168d21117";
+    sha256 = "9f721e1fe593c219174740c71de514c7228a97d23eb7be7597b2ae14e487f027";
   };
 
   nativeBuildInputs = [
@@ -47,6 +48,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     openssl
   ] ++ optionals (!libOnly) [
+    cyrus-sasl
     libedit
     libverto
     openldap
@@ -112,13 +114,15 @@ stdenv.mkDerivation rec {
   passthru = rec {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.16" "1";
-      pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprints = [
-        "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305"
-        "C449 3CB7 39F4 A89F 9852  CBC2 0CBA 0857 5F83 72DF"
-      ];
-      sha256 = "214ffe394e3ad0c730564074ec44f1da119159d94281bbec541dc29168d21117";
+      urls = tarballUrls "1.16" "2";
+      sha256 = "9f721e1fe593c219174740c71de514c7228a97d23eb7be7597b2ae14e487f027";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        pgpKeyFingerprints = [
+          "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305"
+          "C449 3CB7 39F4 A89F 9852  CBC2 0CBA 0857 5F83 72DF"
+        ];
+      };
     };
   };
 

@@ -65,7 +65,6 @@ stdenv.mkDerivation rec {
   '';
 
   NIX_CFLAGS_COMPILE = "-DALLOW_NON_TSS_CONFIG_FILE";
-  NIX_LDFLAGS = "-lgcc_s";
 
   meta = with stdenv.lib; {
     description = "Trusted computing software stack";

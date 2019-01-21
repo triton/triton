@@ -11,13 +11,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iptables-1.8.0";
+  name = "iptables-1.8.2";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/iptables/files/${name}.tar.bz2";
-    multihash = "QmevSzREm6thrEqLFEfeVdk1yi6VET5Lp8jt2W3TcNrnyJ";
+    multihash = "QmZHJpWCopLMJ1pQKUt5tAipg7bmhPpJhw4YtZfomo6uMm";
     hashOutput = false;
-    sha256 = "c4cbfa187c4296e4bc2e347ebbc21e309def7274773f20f0df0b8feaf7e8de50";
+    sha256 = "a3778b50ed1a3256f9ca975de82c2204e508001fc2471238c8c97f3d1c4c12af";
   };
 
   nativeBuildInputs = [
@@ -44,9 +44,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      };
     };
   };
 

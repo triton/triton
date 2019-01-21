@@ -9,10 +9,10 @@
 
 , acl
 , attr
-, coreutils
-, gawk
+, coreutils_small
+, gawk_small
 , gnugrep
-, gnused
+, gnused_small
 , libaio
 , libtirpc
 , liburcu
@@ -33,15 +33,15 @@ let
 
   mountPath = [
     attr
-    coreutils
-    gawk
+    coreutils_small
+    gawk_small
     gnugrep
-    gnused
+    gnused_small
     which
   ];
 
   versionMajor = "5";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "842eaff5e7abb1bb56b00127ceb1ffb9dc62ffc6ce3fa851fb434f4989b76d2f";
+    sha256 = "293542b1f43e681741282d1ba2aefe9b501321c782e896f518cca36072414448";
   };
 
   nativeBuildInputs = [

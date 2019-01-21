@@ -12,13 +12,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.12.10";
+  name = "dbus-1.12.12";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmefpXB5sQLwBsECpugje7MvmLkeQRhKLPBHmrxVp63Ucm";
+    multihash = "QmcECxv85n72bk2uW5tA3Jp66wdcrzQgCqDNSjn5Dnertt";
     hashOutput = false;
-    sha256 = "4b693d24976258c3f2fa9cc33ad9288c5fbfa7a16481dbd9a8a429f7aa8cdcf7";
+    sha256 = "9546f226011a1e5d9d77245fe5549ef25af4694053189d624d0d6ac127ecf5f8";
   };
 
   nativeBuildInputs = [
@@ -64,13 +64,18 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        # Simon McVittie
-        "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90"
-        "3C86 72A0 F496 37FE 064A  C30F 52A4 3A1E 4B77 B059"
-      ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # Simon McVittie
+          "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90"
+          "3C86 72A0 F496 37FE 064A  C30F 52A4 3A1E 4B77 B059"
+        ];
+      };
     };
   };
 

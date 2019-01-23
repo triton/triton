@@ -80,6 +80,12 @@ stdenv.mkDerivation {
     cd $out/share
   '';
 
+  srcRoot = ".";
+
+  postUnpack = ''
+    cd go
+  '';
+
   prePatch = ''
     # Ensure that the source directory is named go
     cd ..

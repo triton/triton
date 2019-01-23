@@ -1,7 +1,7 @@
 {
   "1.10" = {
-    version = "1.10.7";
-    sha256 = "b84a0d7c90789f3a2ec5349dbe7419efb81f1fac9289b6f60df86bd919bd4447";
+    version = "1.10.8";
+    sha256 = "6faf74046b5e24c2c0b46e78571cca4d65e1b89819da1089e53ea57539c63491";
     sha256Bootstrap = {
       "x86_64-linux" = "b5a64335f1490277b585832d1f6c7f8c6c11206cba5cd3f771dcb87b98ad1a33";
     };
@@ -14,8 +14,8 @@
     ];
   };
   "1.11" = {
-    version = "1.11.4";
-    sha256 = "4cfd42720a6b1e79a8024895fa6607b69972e8e32446df76d6ce79801bbadb15";
+    version = "1.11.5";
+    sha256 = "bc1ef02bb1668835db1390a2e478dcbccb5dd16911691af9d75184bbe5aa943e";
     sha256Bootstrap = {
       "x86_64-linux" = "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499";
     };

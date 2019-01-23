@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.14";
+  version = "2.14.02";
 in
 stdenv.mkDerivation rec {
   name = "nasm-${version}";
@@ -12,8 +12,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.nasm.us/pub/nasm/releasebuilds/${version}/"
       + "${name}.tar.xz";
-    multihash = "QmaZG2ZVmqxcUY38z2RYGRBzfyKi88VdpFMAYDHZb5weHy";
-    sha256 = "97c615dbf02ef80e4e2b6c385f7e28368d51efc214daa98e600ca4572500eec0";
+    multihash = "QmSKbe3syZ1UE3q4GsY1iJfqUQbY4igxDTJ5RPfz8uAumS";
+    sha256 = "e24ade3e928f7253aa8c14aa44726d1edf3f98643f87c9d72ec1df44b26be8f5";
   };
 
   configureFlags = [

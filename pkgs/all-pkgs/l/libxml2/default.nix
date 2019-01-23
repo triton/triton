@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "2.9.8";
+  version = "2.9.9";
 
   tarballUrls = version: [
     "http://xmlsoft.org/sources/libxml2-${version}.tar.gz"
@@ -21,9 +21,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmNzhnPYCnLukCSrycQNEkxJsghY9KP45cKeLqiKxxf6Ca";
+    multihash = "QmZW6enUX5jA8JNCK72oQnCiaG4FEPuCHoC84yg12WyDqA";
     hashOutput = false;
-    sha256 = "0b74e51595654f958148759cfef0993114ddccccbb6f31aee018f3558e8e2732";
+    sha256 = "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871";
   };
 
   buildInputs = [
@@ -47,11 +47,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.9.8";
-      pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";
+      urls = tarballUrls "2.9.9";
       inherit (src) outputHashAlgo;
-      outputHash = "0b74e51595654f958148759cfef0993114ddccccbb6f31aee018f3558e8e2732";
+      outputHash = "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";
+      };
     };
   };
 

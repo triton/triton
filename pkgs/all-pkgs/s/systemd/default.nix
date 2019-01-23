@@ -10,7 +10,7 @@
 , acl
 , audit_lib
 , bzip2
-, coreutils
+, coreutils_small
 , cryptsetup
 , curl
 , docbook_xml_dtd_42
@@ -117,6 +117,18 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,\(-DABS_\(SRC\|BUILD\)_DIR=\\"\).*\\",\1/no-such-path\\",g' Makefile.in
+
+    # Fix memfd_create detection
+    sed -i '/#include <sched.h>/a#include <sys/mman.h>' configure
+    sed -i '1i#include <sys/mman.h>' src/basic/fileio.c
+    # Fix getrandom detection
+    sed -i '/#include <sched.h>/a#include <sys/random.h>' configure
+    sed -i '1i#include <sys/random.h>' src/basic/random-util.c
+    # Fix renameat2 detection
+    sed -i '/#include <sched.h>/a#include <stdio.h>' configure
+
+    # Xlocale.h not needed
+    sed -i '/xlocale.h/d' src/basic/parse-util.c
   '' + optionalString (type != "lib") ''
     # Fix an issue with missing definitions conflicting with real ones
     sed -i '\,#include <sys/socket.h>,i#include <sys/mount.h>' src/basic/missing.h
@@ -240,7 +252,7 @@ stdenv.mkDerivation rec {
     "--with-kbd-setfont=${kbd}/bin/setfont"
   ]);
 
-  PYTHON_BINARY = "${coreutils}/bin/env python"; # don't want a build time dependency on Python
+  PYTHON_BINARY = "${coreutils_small}/bin/env python"; # don't want a build time dependency on Python
 
   NIX_CFLAGS_COMPILE = [
     # Can't say ${polkit}/bin/pkttyagent here because that would

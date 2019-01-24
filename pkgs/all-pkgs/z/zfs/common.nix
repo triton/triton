@@ -38,18 +38,18 @@ in
     ];
   };
   "dev" = {
-    date = "2019-01-03";
+    date = "2019-01-18";
     maxLinuxVersion = "4.20";
     src = fetcher {
       fetchzipVersion = 6;
-      rev = "0b8e4418b615eb6e46d409b3de61bfffe1000c68";
-      sha256 = "4beeaab8e2ff51fc0467367f2741a7f465af20a58ac97579d7373eab5ac0a4f9";
+      rev = "0a10863194b0e7c1c64f702f868c10d5dac45ea5";
+      sha256 = "696cfb8fe081d08f7a1a0157dd780785feae83150a99dbef26f5be6a13d2cfa5";
     };
     patches = [
       (fetchTritonPatch {
-        rev = "3294dce1acb29f03f81d4326e91c0e72613578ca";
+        rev = "8c2686354b8307407391b0434ce48aef322ab3b3";
         file = "z/zfs/0001-Fix-binary-paths.patch";
-        sha256 = "8e2b8380c0570c7ea44a8d7c93b2045341f77b94b6c8745c59576eec331c51cc";
+        sha256 = "bc4ad5b4da1ba0f1ae72f78195f958229d8e4dd617db812babf10ae1902e5720";
       })
     ];
   };

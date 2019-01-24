@@ -9,6 +9,7 @@
 , perl
 
 , elfutils
+, python3
 , kernel ? null
 , spl ? null
 
@@ -47,6 +48,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     elfutils
+    python3
   ] ++ optionals (channel != "dev") [
     spl
   ];
@@ -75,6 +77,7 @@ stdenv.mkDerivation rec {
     "--with-config=kernel"
     "--with-linux=${kernel.dev}/lib/modules/${kernel.modDirVersion}/source"
     "--with-linux-obj=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "--with-python=3"
   ] ++ optionals (channel != "dev") [
     "--with-spl=${spl}/libexec/spl"
   ];

@@ -11,7 +11,6 @@
 , libaio
 , libtirpc
 , openssl
-, python2
 , python3
 , perl
 , systemd_lib
@@ -45,7 +44,6 @@ stdenv.mkDerivation rec {
     libaio
     libtirpc
     openssl
-    python2
     python3
     perl
     systemd_lib
@@ -77,6 +75,7 @@ stdenv.mkDerivation rec {
     "--with-config=user"
     #"--with-qat"
     "--with-tirpc"
+    "--with-python=3"
   ];
 
   preInstall = ''

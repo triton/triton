@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "valgrind-3.13.0";
+  name = "valgrind-3.14.0";
 
   src = fetchurl {
-    url = "ftp://sourceware.org/pub/valgrind/valgrind-3.13.0.tar.bz2";
-    multihash = "QmY9mtAA83mLKUeiEnhz2G4rV8QGE56t7E8TEgZQ816Swa";
+    url = "http://www.valgrind.org/downloads/${name}.tar.bz2";
+    multihash = "QmX6SRssywahzQFYNiQaTxz8D32o6M5WpXJqHNrgDVZMU1";
     hashOutput = false;
-    sha256 = "d76680ef03f00cd5e970bbdcd4e57fb1f6df7d2e2c071635ef2be74790190c3b";
+    sha256 = "037c11bfefd477cc6e9ebe8f193bb237fe397f7ce791b4a4ce3fa1c6a520baa5";
   };
 
   nativeBuildInputs = [
@@ -23,21 +23,31 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    #"--enable-ubsan"
+    "--enable-lto"
     "--enable-tls"
   ];
+
+  # We don't need any of the static libraries
+  postInstall = ''
+    find "$out"/lib -name '*'.a -delete
+    rm -r "$out"/lib/pkgconfig
+  '';
+
+  stackProtector = false;
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      md5Url = "ftp://sourceware.org/pub/valgrind/md5.sum";
-      sha512Url = "ftp://sourceware.org/pub/valgrind/sha512.sum";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        md5Confirm = "74175426afa280184b62591b58c671b3";
+      };
     };
   };
   
-  stackProtector = false;
-
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

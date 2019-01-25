@@ -4,10 +4,10 @@ with lib;
 
 let
 
-  glibcLocales = pkgs.glibcLocales.override {
+  glibcLocales = pkgs.glibc; /*pkgs.glibcLocales.override {
     allLocales = any (x: x == "all") config.i18n.supportedLocales;
     locales = config.i18n.supportedLocales;
-  };
+  };*/
 
 in
 
@@ -99,6 +99,8 @@ in
   ###### implementation
 
   config = {
+
+    i18n.defaultLocale = "C";
 
     i18n.consoleKeyMap = with config.services.xserver;
       mkIf config.i18n.consoleUseXkbConfig

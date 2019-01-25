@@ -3,7 +3,7 @@
 , docbook_xml_dtd_42
 , fetchurl
 , libxslt
-, python2
+, python3
 , samba_full
 
 , ncurses
@@ -12,8 +12,8 @@
 }:
 
 let
-  version = "0.9.37";
-  newVersion = "0.9.37";
+  version = "0.9.38";
+  newVersion = "0.9.38";
 
   tarballUrls = version: [
     "mirror://samba/tevent/tevent-${version}.tar"
@@ -25,14 +25,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "168345ed65eac03785cf77b95238e7dc66cbb473a42811693a6b0916e5dae7e0";
+    sha256 = "9e464550d995c6445045a2a8135db81b7d54e9e95163f337c745f7a89c7d0d62";
   };
 
   nativeBuildInputs = [
     docbook-xsl
     docbook_xml_dtd_42
     libxslt
-    python2
+    python3
   ];
 
   buildInputs = [
@@ -50,15 +50,25 @@ stdenv.mkDerivation rec {
     "--builtin-libraries=replace"
   ];
 
+  buildPhase = ''
+    buildtools/bin/waf build -j $NIX_BUILD_CORES
+  '';
+
+  installPhase = ''
+    buildtools/bin/waf install -j $NIX_BUILD_CORES
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
       urls = map (n: "${n}.gz") (tarballUrls newVersion);
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
-      pgpDecompress = true;
-      inherit (samba_full.pgp.library) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
-      outputHash = "168345ed65eac03785cf77b95238e7dc66cbb473a42811693a6b0916e5dae7e0";
+      outputHash = "9e464550d995c6445045a2a8135db81b7d54e9e95163f337c745f7a89c7d0d62";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
+        pgpDecompress = true;
+        inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      };
     };
   };
 

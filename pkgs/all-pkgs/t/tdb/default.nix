@@ -3,7 +3,7 @@
 , docbook-xsl
 , fetchurl
 , libxslt
-, python
+, python3
 , samba_full
 
 , ncurses
@@ -11,7 +11,7 @@
 }:
 
 let
-  name = "tdb-1.3.16";
+  name = "tdb-1.3.17";
 
   tarballUrls = [
     "mirror://samba/tdb/${name}.tar"
@@ -23,14 +23,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "6a3fc2616567f23993984ada3cea97d953a27669ffd1bfbbe961f26e0cf96cc5";
+    sha256 = "1cb4399394c60a773430ca54848359adcf54fb6f136afdcfcbbe62b5f4245614";
   };
 
   nativeBuildInputs = [
     docbook_xml_dtd_42
     docbook-xsl
     libxslt
-    python
+    python3
   ];
 
   buildInputs = [
@@ -47,13 +47,26 @@ stdenv.mkDerivation rec {
     "--builtin-libraries=replace"
   ];
 
+  buildPhase = ''
+    buildtools/bin/waf build -j $NIX_BUILD_CORES
+  '';
+
+  installPhase = ''
+    buildtools/bin/waf install -j $NIX_BUILD_CORES
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
-      pgpDecompress = true;
-      inherit (samba_full.pgp.library) pgpKeyFingerprint;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+        pgpDecompress = true;
+        inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      };
     };
   };
 

@@ -4,13 +4,13 @@
 , fetchurl
 , lib
 , libxslt
-, python2
+, python3
 , samba_full
 }:
 
 let
-  version = "2.1.14";
-  newVersion = "2.1.14";
+  version = "2.1.15";
+  newVersion = "2.1.15";
 
   tarballUrls = version: [
     "mirror://samba/talloc/talloc-${version}.tar"
@@ -22,17 +22,17 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "b185602756a628bac507fa8af8b9df92ace69d27c0add5dab93190ad7c3367ce";
+    sha256 = "9e7ada780e483ebbf27080a76a73413cfa6344df9ad280f812014c68b7c368dc";
   };
 
   nativeBuildInputs = [
     docbook-xsl
     docbook_xml_dtd_42
     libxslt
-    python2
+    python3
   ];
 
-  preConfigure = ''
+  postPatch = ''
     patchShebangs buildtools/bin/waf
   '';
 
@@ -42,15 +42,25 @@ stdenv.mkDerivation rec {
     "--builtin-libraries=replace"
   ];
 
+  buildPhase = ''
+    buildtools/bin/waf build -j $NIX_BUILD_CORES
+  '';
+
+  installPhase = ''
+    buildtools/bin/waf install -j $NIX_BUILD_CORES
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
       urls = map (n: "${n}.gz") (tarballUrls newVersion);
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
-      pgpDecompress = true;
-      inherit (samba_full.pgp.library) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
-      outputHash = "b185602756a628bac507fa8af8b9df92ace69d27c0add5dab93190ad7c3367ce";
+      outputHash = "9e7ada780e483ebbf27080a76a73413cfa6344df9ad280f812014c68b7c368dc";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
+        pgpDecompress = true;
+        inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      };
     };
   };
 

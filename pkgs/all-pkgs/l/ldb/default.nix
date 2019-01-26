@@ -3,7 +3,7 @@
 , docbook-xsl
 , fetchurl
 , libxslt
-, python
+, python3
 , samba_full
 
 , cmocka
@@ -15,7 +15,7 @@
 }:
 
 let
-  name = "ldb-1.5.1";
+  name = "ldb-1.5.2";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -27,14 +27,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "232e54b87c53210a6861424ad411b04dbfa0f2ca4bc463aefea188158e0cc963";
+    sha256 = "61afb5050a04e0361ee5869658b4e935dbe2a7d1c58018c720e0e68163520e9e";
   };
 
   nativeBuildInputs = [
     docbook_xml_dtd_42
     docbook-xsl
     libxslt
-    python
+    python3
   ];
 
   buildInputs = [
@@ -54,6 +54,14 @@ stdenv.mkDerivation rec {
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
+
+  buildPhase = ''
+    buildtools/bin/waf build -j $NIX_BUILD_CORES
+  '';
+
+  installPhase = ''
+    buildtools/bin/waf install -j $NIX_BUILD_CORES
+  '';
 
   passthru = {
     srcVerification = fetchurl {

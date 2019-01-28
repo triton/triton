@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.49.0";
+  version = "0.49.1";
 in
 buildPythonPackage {
   name = "meson-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "meson";
     inherit version;
-    sha256 = "a0cd55372208730eca5cd7cdff7948e439a006d8587c50c4445be1a0e88b2521";
+    sha256 = "1a944b01de151c2d19594c652e484b0c04628afca974fc1713182b84ec249917";
   };
 
   postPatch = ''

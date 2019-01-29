@@ -2,6 +2,8 @@
 , fetchurl
 , gettext
 
+, bc
+, coreutils
 , ncurses
 , pcre2_lib
 , python3
@@ -38,9 +40,14 @@ stdenv.mkDerivation rec {
     "--without-included-pcre2"
   ];
 
-  preFixup = ''
-    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python3}/bin/python3\2,' \
-      "$out/share/fish/functions/fish_update_completions.fish"
+  postInstall = ''
+    for file in $(find "$out"/share/fish/functions -type f); do
+      sed \
+        -e 's,\([ (]\|^\)python3\([^a-zA-Z0-9]\|$\),\1${python3.interpreter}\2,' \
+        -e 's,\([ (]\|^\)bc\([^a-zA-Z0-9]\|$\),\1${bc}/bin/bc\2,' \
+        -e 's,\([ (]\|^\)uname\([^a-zA-Z0-9]\|$\),\1${coreutils}/bin/uname\2,' \
+        -i "$file"
+    done
   '';
 
   passthru = {

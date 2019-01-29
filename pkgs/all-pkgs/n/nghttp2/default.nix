@@ -30,7 +30,7 @@ let
     "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz"
   ];
 
-  version = "1.35.1";
+  version = "1.36.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "9b7f5b09c3ca40a46118240bf476a5babf4bd93a1e4fde2337c308c4c5c3263a";
+    sha256 = "e9bb86157b88eda5a6844a232e039febbb52c1aa44b640acbbfabe729b8287fc";
   };
 
   buildInputs = optionals (!isLib) [
@@ -70,8 +70,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      url = tarballUrls "1.35.1";
-      outputHash = "9b7f5b09c3ca40a46118240bf476a5babf4bd93a1e4fde2337c308c4c5c3263a";
+      url = tarballUrls "1.36.0";
+      outputHash = "e9bb86157b88eda5a6844a232e039febbb52c1aa44b640acbbfabe729b8287fc";
       inherit (src)
         outputHashAlgo;
       fullOpts = { };

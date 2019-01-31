@@ -5,6 +5,7 @@
 , fetchTritonPatch
 , gcc
 , linux-headers
+, python_tiny
 
 , type ? "full"
 }:
@@ -24,18 +25,19 @@ let
       "x86_64-pc-linux-gnu";
 in
 stdenv.mkDerivation rec {
-  name = "glibc-2.28";
+  name = "glibc-2.29";
 
   src = fetchurl {
     url = "mirror://gnu/glibc/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "b1900051afad76f7a4f73e71413df4826dce085ef8ddb785a945b66d7d513082";
+    sha256 = "f3eeb8d57e25ca9fc13c2af3dae97754f9f643bc69229546828e3a240e2af04b";
   };
 
   nativeBuildInputs = [
     bison
     binutils
     gcc
+    python_tiny
   ];
 
   # Some of the tools depend on a shell. Set to impure /bin/sh to
@@ -45,24 +47,24 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
       file = "g/glibc/0001-Fix-common-header-paths.patch";
-      sha256 = "e783d2ee9c097779c83217f68c13eff2e08fa23597a860b759178918f78e3928";
+      sha256 = "df93cbd406a5dd2add2dd0d601ff9fc97fc42a1402010268ee1ee8331ec6ec72";
     })
     (fetchTritonPatch {
-      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
       file = "g/glibc/0002-sunrpc-Don-t-hardcode-cpp-path.patch";
-      sha256 = "889b177579a48e541be06667201202264bbb91c923c5513c054f3183132d35e7";
+      sha256 = "7a9ce7f69cd6d3426d19a8343611dc3e9c48e3374fa1cb8b93c5c98d7e79d69b";
     })
     (fetchTritonPatch {
-      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
       file = "g/glibc/0003-timezone-Fix-zoneinfo-path-for-triton.patch";
-      sha256 = "b8393292005f1df26eddeb64fd3ff18df62d861f91e926a75323214d0b4a7f32";
+      sha256 = "b4b47be63c3437882a160fc8d9b8ed7119ab383b1559599e2706ce8f211a0acd";
     })
     (fetchTritonPatch {
-      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
+      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
       file = "g/glibc/0004-nsswitch-Try-system-paths-for-modules.patch";
-      sha256 = "3fd11d14cdf54704c5c7bf20ba3548bec5803d8cffc01c21e7410ed85b91cb8d";
+      sha256 = "9cd235f0699661cbfd0b77f74c538d97514ba450dfba9a3f436adc2915ae0acf";
     })
   ];
 

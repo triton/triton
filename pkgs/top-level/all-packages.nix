@@ -3438,6 +3438,10 @@ python2 = callPackageAlias "python27" { };
 python3 = callPackageAlias "python37" { };
 python = callPackageAlias "python2" { };
 
+# Intended only for very early stage builds
+# Don't use this package without a good reason
+python_tiny = callPackage ../all-pkgs/p/python/tiny.nix { };
+
 python27Packages = hiPrioSet (
   recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
     python = callPackageAlias "python27" { };

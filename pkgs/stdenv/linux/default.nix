@@ -102,7 +102,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage01Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv linux-headers linux-headers_4-9;
+        inherit (pkgs) stdenv linux-headers linux-headers_4-9 python_tiny;
 
         binutils = pkgs.binutils.override {
           type = "bootstrap";
@@ -145,6 +145,7 @@ let
         glibc = pkgs.glibc.override {
           type = "bootstrap";
           bison = stage01Pkgs.bison;
+          python_tiny = stage01Pkgs.python_tiny;
         };
 
         cc_gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
@@ -251,6 +252,7 @@ let
         glibc = pkgs.glibc.override {
           type = "small";
           bison = stage01Pkgs.bison;
+          python_tiny = stage01Pkgs.python_tiny;
           linux-headers = stage01Pkgs.linux-headers;
         };
 
@@ -285,7 +287,7 @@ let
         inherit lib;
         inherit (pkgs) stdenv cc bash_small coreutils_small
           gawk_small gnupatch_small gnused_small gnutar_small pcre
-          pkgconfig pkgconf pkgconf-wrapper;
+          pkgconfig pkgconf pkgconf-wrapper python_tiny;
 
         bison = pkgs.bison.override {
           type = "small";
@@ -375,6 +377,7 @@ let
 
         glibc = pkgs.glibc.override {
           bison = stage13Pkgs.bison;
+          python_tiny = stage13Pkgs.python_tiny;
           binutils = stage11Pkgs.binutils;
           gcc = stage11Pkgs.gcc;
         };

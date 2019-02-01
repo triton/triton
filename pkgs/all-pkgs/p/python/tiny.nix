@@ -23,10 +23,12 @@ stdenv.mkDerivation {
 
   postInstall = ''
     rm -r "$out"/lib/python*/test
+    rm -r "$out"/lib/python*/config-*
     rm -r "$out"/share
+    find "$out"/lib -name __pycache__ -prune -exec rm -r {} \;
+    find "$out"/lib -name '*'.exe -delete
+    rm -r "$out"/lib/python*/{idlelib,ensurepip}
   '';
-
-  buildDirCheck = false;
 
   meta = with lib; {
     maintainers = with maintainers; [

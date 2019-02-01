@@ -49,9 +49,11 @@ let
     initialPath = [ bootstrapTools ];
     extraBuildInputs = [ ];
 
-    # We cant patch shebangs or we will retain references to the bootstrap
     preHook = ''
+      # We cant patch shebangs or we will retain references to the bootstrap
       export dontPatchShebangs=1
+      # We can allow build dir impurities because we might have a weird compiler
+      export buildDirCheck=
     '';
 
   };

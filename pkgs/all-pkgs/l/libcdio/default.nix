@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-cxx"
-    "--enable-cpp-progs"
+    "--disable-cpp-progs"
     "--disable-example-progs"
     "--enable-largefile"
     "--enable-joliet"

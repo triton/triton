@@ -6,8 +6,8 @@
 }:
 
 let
-  rev = "2baad4923e6d9a7e09982cfa4b1c5fd0b67ebd87";
-  date = "2018-07-14";
+  rev = "0c1cc6e1a373dc58e2599ec7dd68b2e6b863990a";
+  date = "2019-01-20";
 in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${date}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "open-source-parsers";
     repo = "jsoncpp";
     inherit rev;
-    sha256 = "1efe942bcba43ef3814c8cb93fea25b467e822031e6cd86ae373dc648321e1cc";
+    sha256 = "ed7ff4134be5d8d326dbca3e61f42a5a3ce26d7af002a75adc53a0e467885134";
   };
 
   nativeBuildInputs = [

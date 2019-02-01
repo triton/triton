@@ -3,29 +3,29 @@
 
 , lua
 , openssl
-, pcre2
+, pcre2_lib
 , systemd_lib
 , zlib
 }:
 
 let
-  major = "1.8";
-  version = "${major}.14";
+  major = "1.9";
+  version = "${major}.3";
 in
 stdenv.mkDerivation rec {
   name = "haproxy-${version}";
   
   src = fetchurl {
     url = "https://www.haproxy.org/download/${major}/src/${name}.tar.gz";
-    multihash = "QmXcykWvsdxrAQK9qxXgt1PdPwsuDELaBHwtyMmYPRKXjG";
+    multihash = "QmYEgueTx2f5qL1mWj6WD34QtaA7K73HLb3Q9xNQc7b7yo";
     hashOutput = false;
-    sha256 = "b17e402578be85e58af7a3eac99b1f675953bea9f67af2e964cf8bdbd1bd3fdf";
+    sha256 = "d22cc11658b790e2da46cd19e7fbf45c456412059852ccebe208a491db070db4";
   };
 
   buildInputs = [
     lua
     openssl
-    pcre2
+    pcre2_lib
     systemd_lib
     zlib
   ];

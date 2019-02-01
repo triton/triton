@@ -3,7 +3,6 @@
 
 , keyutils
 , libaio
-, libnih
 , libscrypt
 , libsodium
 , liburcu
@@ -14,8 +13,8 @@
 }:
 
 let
-  date = "2019-01-14";
-  rev = "8630059e6ac363bea39e54df3f8115da5a5c2c5d";
+  date = "2019-01-23";
+  rev = "35fca2f044d375b1590f499cfd34bef38ca0f8f1";
 in
 stdenv.mkDerivation {
   name = "bcachefs-tools-${date}";
@@ -23,14 +22,13 @@ stdenv.mkDerivation {
   src = fetchzip {
     version = 6;
     url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-${rev}.tar.xz";
-    multihash = "QmZ55yYDPRW9ZhH8doR5LqDWrWFJmBBYrTZKdBWNPdj5Xh";
-    sha256 = "ad8f6433a18fa8525499ea4cb1a97fa008653ab3aeaf7b43022c03300f2e55a2";
+    multihash = "QmW94u4GrnLMKKvL6PLBFEDP8jQeDgvC42oxTJrZFy237V";
+    sha256 = "d62d6cc9d869a926e6f64b5fa09d0063cd78050ca0df1ab5b92244528f9b912a";
   };
 
   buildInputs = [
     keyutils
     libaio
-    libnih
     libscrypt
     libsodium
     liburcu

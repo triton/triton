@@ -28,7 +28,7 @@ mesonConfigurePhase() {
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"
 
-    meson setup $mesonFlags "${mesonFlagsArray[@]}" \
+    "$meson" setup $mesonFlags "${mesonFlagsArray[@]}" \
       "${mesonSrcDir}" "${mesonBuildDir}"
 
     eval "$postConfigure"
@@ -40,7 +40,7 @@ mesonCheckPhase() {
     local actualMakeFlags
     actualMakeFlags=($checkFlags "${checkFlagsArray[@]}")
     printMakeFlags 'check'
-    meson test "${actualMakeFlags[@]}"
+    "$meson" test "${actualMakeFlags[@]}"
 
     runHook 'postCheck'
 }
@@ -54,7 +54,7 @@ mesonInstallPhase() {
     actualMakeFlags=($installFlags "${installFlagsArray[@]}")
     actualMakeFlags+=('--no-rebuild')
     printMakeFlags 'install'
-    meson install "${actualMakeFlags[@]}"
+    "$meson" install "${actualMakeFlags[@]}"
 
     runHook 'postInstall'
 }
@@ -65,6 +65,7 @@ mesonFixup() {
   rmdir "$prefix"/share >/dev/null 2>&1 || true
 }
 
+meson="${meson-@out@/bin/meson}"
 if [ -n "${mesonConfigure-true}" -a -z "$configurePhase" ]; then
   configurePhase=mesonConfigurePhase
   if [ -n "${mesonCheck-true}" ]; then

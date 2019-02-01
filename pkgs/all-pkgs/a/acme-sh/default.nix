@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.7.9";
+  version = "2.8.0";
 
   programs = [
     coreutils
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     owner = "Neilpang";
     repo = "acme.sh";
     rev = version;
-    sha256 = "ecd7da752f40f51e0613c505a356bb5420d85a13f17faecdac401195cf363bd6";
+    sha256 = "8849eda79eaa7cf56d2cf4ba2b9bb8c6ecb282ae05687b1ace0e74385a021e48";
   };
 
   nativeBuildInputs = [
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     cp acme.sh "$out"/bin
 
     wrapProgram "$out"/bin/acme.sh \
-      --set PATH "${programsPath}"
+      --prefix PATH : "${programsPath}"
   '';
 
   meta = with lib; {

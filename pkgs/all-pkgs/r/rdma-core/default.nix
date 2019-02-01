@@ -3,34 +3,45 @@
 , fetchurl
 , lib
 , ninja
-, python
+, python3
 
 , libnl
 , systemd_lib
 }:
 
 let
-  # Can't use 17.x until samba_full fixes usage of kern-abi.h
-  version = "16.4";
+  version = "22";
 in
 stdenv.mkDerivation rec {
   name = "rdma-core-${version}";
 
   src = fetchurl {
     url = "https://github.com/linux-rdma/rdma-core/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "0550cc56e8d1f28e13ce3d9ef38c501e5f00117d97ee7cfd57b6aca581828e52";
+    hashOutput = false;
+    sha256 = "42ab5b34054a083e2efb7e8617a8f7cf1a6af40398d9ef195554544700a1783d";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
-    python
+    python3
   ];
 
   buildInputs = [
     libnl
     systemd_lib
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with lib; {
     maintainers = with maintainers; [

@@ -17,11 +17,11 @@ stdenv.mkDerivation rec {
   name = "libimobiledevice-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "libimobiledevice";
     repo = "libimobiledevice";
     inherit rev;
-    sha256 = "16be281669bf9e1ae62a8725fc839e50cb1c561733c50c209bb00a16493a7f93";
+    sha256 = "16ae5f473dacad9de1c123088cdc59d5e5908b5e4be8845ab5fcfbe8f8bbfcaa";
   };
 
   nativeBuildInputs = [

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.3.6";
+  version = "1.3.7";
 in
 stdenv.mkDerivation rec {
   name = "rhash-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/rhash/rhash/${version}/${name}-src.tar.gz";
     hashOutput = false;
-    sha256 = "964df972b60569b5cb35ec989ced195ab8ea514fc46a74eab98e86569ffbcf92";
+    sha256 = "a2441b7a04ae554ddd3eafcf50365c787b012e35ee6402eb6705d9cd4b8dfa65";
   };
 
   buildInputs = [
@@ -28,25 +28,26 @@ stdenv.mkDerivation rec {
 
   preInstall = ''
     installFlagsArray+=("SYSCONFDIR=$out/etc")
-
-    ! grep -q 'install-headers' Makefile
-    echo 'install-nix:' >>Makefile
-    echo $'\t' '+$(MAKE) -C librhash install-headers' >>Makefile
-    echo $'\t' '+$(MAKE) -C librhash install-so-link' >>Makefile
   '';
 
   installTargets = [
     "install"
     "install-pkg-config"
-    "install-nix"
+    "install-lib-headers"
+    "install-lib-so-link"
   ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "2875 F6B1 C2D2 7A4F 0C8A  F60B 2A71 4497 E373 63AE";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "2875 F6B1 C2D2 7A4F 0C8A  F60B 2A71 4497 E373 63AE";
+      };
     };
   };
 

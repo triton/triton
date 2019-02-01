@@ -13,11 +13,11 @@ stdenv.mkDerivation rec {
   name = "libconfig-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "hyperrealm";
     repo = "libconfig";
     rev = "v${version}";
-    sha256 = "678e74b44702adf3428de35befd3c5624d11d1f6c38fc6e54d61f59f32bc7387";
+    sha256 = "c7832f304eb3ab7d3423a9f18bc475e5700083e2a68e04970abc27896ecb9516";
   };
 
   nativeBuildInputs = [

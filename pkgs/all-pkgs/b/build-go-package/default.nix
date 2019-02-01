@@ -263,7 +263,7 @@ go.stdenv.mkDerivation (
         if [ -z "$doCheck" ] && echo "$file" | grep -q '_test.go''$'; then
           continue
         fi
-        if grep -q '// +build ignore' "$file"; then
+        if grep -q '// +build \(ignore\|tools\)' "$file"; then
           continue
         fi
         awk '

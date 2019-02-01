@@ -10,7 +10,7 @@ let
     "mirror://gnu/mpfr/mpfr-${version}.tar.xz"
   ];
 
-  version = "4.0.1";
+  version = "4.0.2";
 
   inherit (stdenv.lib)
     flip
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "67874a60826303ee2fb6affc6dc0ddd3e749e9bfcb4c8655e3953d0458a6e16e";
+    sha256 = "1d3be708604eae0e42d578ba93b390c2a145f17743a744d8f3f8c2ad5855a38a";
   };
 
   buildInputs = [
@@ -62,11 +62,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4.0.1";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "07F3 DBBE CC1A 3960 5078  094D 980C 1976 98C3 739D";
+      urls = tarballUrls "4.0.2";
       inherit (src) outputHashAlgo;
-      outputHash = "67874a60826303ee2fb6affc6dc0ddd3e749e9bfcb4c8655e3953d0458a6e16e";
+      outputHash = "1d3be708604eae0e42d578ba93b390c2a145f17743a744d8f3f8c2ad5855a38a";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "07F3 DBBE CC1A 3960 5078  094D 980C 1976 98C3 739D";
+      };
     };
   };
 

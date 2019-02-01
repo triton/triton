@@ -444,7 +444,6 @@ stdenv.mkDerivation rec {
     /**/"--disable-thumb"
     "--enable-shared --disable-static"
     "--enable-pic"
-    (if stdenv.cc.isClang then "--cc=clang" else null)
     "--${boolEn smallBuild}-small"
     "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
     "--${boolEn grayBuild}-gray"

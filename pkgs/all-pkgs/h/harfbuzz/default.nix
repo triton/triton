@@ -20,7 +20,7 @@ let
     optionals
     optionalString;
 
-  version = "2.3.0";
+  version = "2.3.1";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "3b314db655a41d19481e18312465fa25fca6f63382217f08062f126059f96764";
+    sha256 = "f205699d5b91374008d6f8e36c59e419ae2d9a7bb8c5d9f34041b9a5abcae468";
   };
 
   buildInputs = [

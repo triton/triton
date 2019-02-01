@@ -1,12 +1,11 @@
 { stdenv
-, asciidoc
 , fetchFromGitHub
-, python
+, python3
 , re2c
 }:
 
 let
-  version = "1.8.2";
+  version = "1.9.0";
 in
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
@@ -16,35 +15,24 @@ stdenv.mkDerivation rec {
     owner = "ninja-build";
     repo = "ninja";
     rev = "v${version}";
-    sha256 = "6ee074754ae63399e7093787327a10aeca36d793240cadbb8937547ce9c829dc";
+    sha256 = "c6bac3bb97b0cb6a2ea89eb6c0a16ec8f0a6d8b341e0097468441800a3aa0d6b";
   };
 
   nativeBuildInputs = [
-    asciidoc
-    python
+    python3
     re2c
   ];
 
-  postPatch = ''
-    patchShebangs ./configure.py
-  '';
-
   buildPhase = ''
-    runHook 'preBuild'
-    ./configure.py '--bootstrap' '--verbose'
-    asciidoc doc/manual.asciidoc
-    runHook 'postBuild'
+    python3 ./configure.py --bootstrap --verbose
   '';
 
   installPhase = ''
-    runHook 'preInstall'
     install -vD 'ninja' "$out/bin/ninja"
-    install -vD 'doc/manual.asciidoc' "$out/share/doc/ninja/manual.asciidoc"
-    install -vD 'doc/manual.html' "$out/share/doc/ninja/doc/manual.html"
-    runHook 'postInstall'
   '';
 
   setupHook = ./setup-hook.sh;
+  selfApplySetupHook = true;
 
   meta = with stdenv.lib; {
     description = "Small build system with a focus on speed";

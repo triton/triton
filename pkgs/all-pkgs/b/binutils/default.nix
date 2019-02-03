@@ -23,12 +23,12 @@ let
       "x86_64-pc-linux-gnu";
 in
 stdenv.mkDerivation (rec {
-  name = "binutils-2.31.1";
+  name = "binutils-2.32";
 
   src = fetchurl {
     url = "mirror://gnu/binutils/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86";
+    sha256 = "0ab6c55dd86a92ed561972ba15b9b70a8b9f75557f896446c82e8b36e473ee04";
   };
 
   buildInputs = optionals (type != "bootstrap") [

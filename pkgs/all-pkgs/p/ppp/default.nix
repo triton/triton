@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     linux-headers
     openssl_1-0-2
     pam
-    stdenv.libc
+    stdenv.cc.libc
   ];
 
   postUnpack = ''
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     (substituteAll {
       src = ./nix-purity.patch;
       inherit libpcap;
-      glibc = stdenv.libc;
+      glibc = stdenv.cc.libc;
     })
     # Gentoo patchset 2.4.7-2
     # https://dev.gentoo.org/~pinkbyte/distfiles/patches/
@@ -163,7 +163,7 @@ stdenv.mkDerivation rec {
   '';
 
   NIX_LDFLAGS = [
-    "-L${stdenv.libc}/lib -lcrypt"
+    "-L${stdenv.cc.libc}/lib -lcrypt"
   ];
 
   makeFlags = [

@@ -7,7 +7,7 @@
 , curl
 , libpcap
 , linux-headers
-, openssl_1-0-2
+, openssl
 , pam
 }:
 
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     curl
     libpcap
     linux-headers
-    openssl_1-0-2
+    openssl
     pam
     stdenv.cc.libc
   ];
@@ -49,100 +49,119 @@ stdenv.mkDerivation rec {
       inherit libpcap;
       glibc = stdenv.cc.libc;
     })
-    # Gentoo patchset 2.4.7-2
-    # https://dev.gentoo.org/~pinkbyte/distfiles/patches/
+    # Gentoo patchset 2.4.7-7
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/02_all_make-vars.patch";
-      sha256 = "0ec7e8c1f1f681057f376b5c789ef5a324a141ea1381205fbe9a64df65a7e217";
+      sha256 = "13536f8c3c608aa1e61909eb610c814e171b481c270a670b5292ce9f2c7d7a5a";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/03_all_use_internal_logwtmp.patch";
-      sha256 = "1bbe171fec0c98f07bf19437b534c8b253b373d4571727770398d86fc6d40d37";
+      sha256 = "5d93c77ab5b1eff5ba35e08b1513af3f16634948842e2934eb8d8fefa9abb907";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/04_all_mpls.patch";
-      sha256 = "0c6c0c10081e7748b8032f1fab44e8e31b93b7e4a4755656b3f1a31f20fc1bbf";
+      sha256 = "3c169b051fdcad6f9c2f79224700f996073b05070126863192c1a9a9419d7d17";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/06_all_killaddr-smarter.patch";
-      sha256 = "4c6c83d66c30ddcf0a9ce9166514309474c45c805b4ae44620fc43685b0a4cbc";
+      sha256 = "f1236902fe30e3b812fedd0e78be5432b638f03b85ff4d1619f9c204d7e480b0";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/08_all_wait-children.patch";
-      sha256 = "46ecaad1c0efa4ddb4878990dd8c9b61cd3e2807e2dbac85f881fffa96a350b7";
+      sha256 = "7b749571c71525971c344119dd419e741180180b7c61fd36a13d81f90c658a6c";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/10_all_defaultgateway.patch";
       sha256 = "44acdd7598237dfd73ee784e535871b7b6fcd9a21499d5469b8bd395e23cc26d";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/12_all_linkpidfile.patch";
-      sha256 = "4e929dcc631196c85cc8858f18c7e442de6b82abb15aa735f982911487210ff5";
+      sha256 = "0f3b3c2d11b68962c15450219f83e97d429b4871d2fd869a8ef3fc07966af3f4";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/16_all_auth-fail.patch";
-      sha256 = "a9d087b902de1c884ca97f048ab45bc41d4e0e3863ce4c6518a562d9a3ef2023";
+      sha256 = "5d888846404299287c5c09d3ca2392117f80fcf104fd2504ad6129dafb3290c6";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/18_all_defaultmetric.patch";
-      sha256 = "08d0908f3bdc615951a1e3c9ef7954c3c6a8c1c308e22dd610fbac1473ccb8c6";
+      sha256 = "3ec2883595d634fda8fc85229e840b0d876e1c18f573cb8acec91f9a3c357190";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/19_all_radius_pid_overflow.patch";
+      sha256 = "b3eb3023ba9971a16eb8edfd1e04b8a572bb7ac811389012a79c28c1d14412fb";
+    })
+    (fetchTritonPatch {
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/20_all_dev-ppp.patch";
       sha256 = "280b90f9cea3d308561423efa278329f74581a2e86c16ce88e1accff210ac7a3";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
-      file = "p/ppp/24_all_passwordfd-read-early.patch";
-      sha256 = "0e986caa84c5c10c99260b4a130b219860fc9f7d32f233fc57bc0e5c991f6d28";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/21_all_custom_iface_names.patch";
+      sha256 = "2bbee025694c8e1beec05fed484e0deb02fea68aca73e543699ce7b3cc5d0545";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/24_all_passwordfd-read-early.patch";
+      sha256 = "9f98c2b6cf43b1c9030ca21d908bec787608478861bd77a59ad44e915ef956f2";
+    })
+    (fetchTritonPatch {
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/26_all_pppd-usepeerwins.patch";
       sha256 = "764134da123fcdf7df7977119dad9aa67e5362720065bcba3527ae300c59fa40";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/28_all_connect-errors.patch";
-      sha256 = "8b1839e196f8b9f75a53d23c48d0e70523dbb4248ab7045660aa6370a5098a87";
+      sha256 = "08fc29b899771ebd9cfe230e9b527bbe8eed21823bdcdc30f048dd6aaed716f7";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/30_all_Makefile.patch";
-      sha256 = "f9f5a3a112373443098621ed82d5dfd49136113cacdfd4202fe9a767b316e7cb";
+      sha256 = "37d79477d9b0dcce5ae91c7dd39f9513c0070d1005e1ee175cd1f85b25e52d2d";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/32_all_pado-timeout.patch";
       sha256 = "703c32285f5fb0011a7157fbd8075016965de2d370b1def3db06da98ab1dbfdc";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/34_all_lcp-echo-adaptive.patch";
-      sha256 = "0c0ad5a3af1cbfe4dc3872d6c42dac89ae186970b9ee657cb543904b5fb1d0a1";
+      sha256 = "15bb5b7484a0adf4677d6c94fd00cf41e4e294713ff0697b33c15a439d5953fb";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
-      file = "p/ppp/80_all_eaptls-mppe-0.997.patch";
-      sha256 = "17a82a3d438660a35fe89569961a88ce7dba30236d227a882ddf0ff7cbd3a187";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/50_all_linux-headers.patch";
+      sha256 = "231766e8000bd5d3439fee1d680c00f6b2f411cf18d88c522ad25360ca7a9e3c";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/51_all_glibc-2.28.patch";
+      sha256 = "3f199d83d2632274dbbe7345e5369891469f64642f28e4afb471747a88888b62";
+    })
+    (fetchTritonPatch {
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
+      file = "p/ppp/80_all_eaptls-mppe-1.101a.patch";
+      sha256 = "4a5abce4bd97aede03e2afe945bd8d35939299044ae3c86bff4422a99516526b";
+    })
+    (fetchTritonPatch {
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/85_all_dhcp-make-vars.patch";
       sha256 = "3c1fb119ea7ab0d43d308c90cf2f5e0281d8258b4021c7f1b330c64d7e013a28";
     })
     (fetchTritonPatch {
-      rev = "c6c35cb66086fa42cd6b547f739f3b4da042a54e";
+      rev = "5a608b342d642004635c2272a8ad4f2aaebce530";
       file = "p/ppp/86_all_dhcp-sys_error_to_strerror.patch";
       sha256 = "e14b4853b28787b9e56ab5cd8fb26616075cca82396c6efe76e3a6b03afc285f";
     })
@@ -155,16 +174,19 @@ stdenv.mkDerivation rec {
     sed -i pppd/plugins/pppoatm/Makefile.linux \
       -i pppd/plugins/rp-pppoe/Makefile.linux \
       -e 's/-m 4550/-m 550/'
+  '' + /* Fix hardcoded plugin path */ ''
+    sed -i pppd/pathnames.h \
+      -e "s,/usr/lib,$out,"
+  '' + /* Fix hardcoded includes */ ''
+    sed -i pppd/Makefile.linux \
+      -e 's,/usr/include/openssl,${openssl}/include/openssl,' \
+      -e 's,/usr/local/ssl/lib,${openssl}/lib,'
   '';
 
   preBuild = ''
     # Prevent build from creating sbin/
     makeFlagsArray+=("BINDIR=$out/bin")
   '';
-
-  NIX_LDFLAGS = [
-    "-L${stdenv.cc.libc}/lib -lcrypt"
-  ];
 
   makeFlags = [
     /* Microsoft callback control protocol */

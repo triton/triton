@@ -19,9 +19,8 @@
 let
   sources = {
     "1.9" = {
-      version = "1.9.9";
-      sha1Confirm = "b8d410d5146e914bc2a72cd8957f6d3b68c4ac52";
-      sha256 = "8dfdbe573b582d8eb2c328cca2aacff3795b54bb39eb7fd831e3ce05991f81d2";
+      version = "1.9.10";
+      sha256 = "ae28c656535c8b817f469e6ee6951e9840ea2d64c7ff0e98c728638bb45c9cd7";
     };
   };
 
@@ -95,21 +94,24 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
-      failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74"
-        "056F 8016 D9B8 7B1B DE41  7467 99EC 741B 5792 1ACC"
-        "BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F"
-        "8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973"
-        "A844 790F B574 3606 EE95  9207 76D7 88E1 ED1A 599C"
-        "3D1D C66D 6D2E 0B90 3952  8138 C4A6 C625 CCC8 E1DF"
-        "7B8C A7F6 451A D89C 8ADC  077B 376A 3CFD 110B 1C95"
-        "6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493"
-        "E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444"
-      ];
+      fullOpts = {
+        failEarly = true;
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        sha512Urls = map (n: "${n}.sha512") src.urls;
+        pgpKeyFingerprints = [
+          "15AA 5ED3 0816 D38A 9D6D  2315 247B 1C26 5A7F 8760"
+          "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74"
+          "056F 8016 D9B8 7B1B DE41  7467 99EC 741B 5792 1ACC"
+          "BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F"
+          "8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973"
+          "A844 790F B574 3606 EE95  9207 76D7 88E1 ED1A 599C"
+          "3D1D C66D 6D2E 0B90 3952  8138 C4A6 C625 CCC8 E1DF"
+          "7B8C A7F6 451A D89C 8ADC  077B 376A 3CFD 110B 1C95"
+          "6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493"
+          "E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444"
+        ];
+      };
       inherit (src) urls outputHash outputHashAlgo;
-      inherit (source) sha1Confirm;
     };
   };
 

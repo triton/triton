@@ -8,12 +8,12 @@ let
   baseUrl = "mirror://kernel/software/network/iw";
 in
 stdenv.mkDerivation rec {
-  name = "iw-4.14";
+  name = "iw-5.0.1";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "f01671c0074bfdec082a884057edba1b9efd35c89eda554638496f03b769ad89";
+    sha256 = "1e38ea794a223525b2ea7fe78fd14f2a56121e62e21ba5f9dbe8c494b35b5c0d";
   };
 
   buildInputs = [
@@ -27,10 +27,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = "${baseUrl}/${name}.tar.sign";
-      pgpDecompress = true;
-      pgpKeyFingerprint = "C0EB C440 F6DA 091C 884D  8532 E0F3 73F3 7BF9 099A";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = "${baseUrl}/${name}.tar.sign";
+        pgpDecompress = true;
+        pgpKeyFingerprint = "C0EB C440 F6DA 091C 884D  8532 E0F3 73F3 7BF9 099A";
+      };
     };
   };
 

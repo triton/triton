@@ -7807,13 +7807,14 @@ let
     version = 6;
     owner = "bifurcation";
     repo = "mint";
-    rev = "83ba9bc2ead9cdf8b0c8bd94e8a41243e5f6ed88";
-    sha256 = "d98e2e2a7fe164de32f154901aafc8146cfaa4c22b573088a5541eead04194e3";
-    date = "2019-01-29";
+    rev = "824af65410658916142a7600349144e1289f2110";
+    sha256 = "6e6694e0b2a58d722f0e99063838894b2fdf6fe99f760f87c214819ef54f26b4";
+    date = "2018-11-04";
     propagatedBuildInputs = [
       crypto
       net
     ];
+    meta.autoUpdate = false;
   };
 
   mmap-go = buildFromGitHub {

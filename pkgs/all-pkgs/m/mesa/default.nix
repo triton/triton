@@ -15,7 +15,7 @@
 , libdrm
 , libffi
 , libglvnd
-, libomxil-bellagio
+#, libomxil-bellagio
 , libpthread-stubs
 , libva
 , libvdpau
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     libffi
     libglvnd
     libpthread-stubs
-    libomxil-bellagio
+    #libomxil-bellagio
     libva
     libvdpau
     llvm
@@ -189,7 +189,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
     "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
-    "--${boolEn (buildConfig != "opengl-dummy")}-omx-bellagio"
+    #"--${boolEn (buildConfig != "opengl-dummy")}-omx-bellagio"
     #"--${boolEn (buildConfig != "opengl-dummy")}-omx-tizonia"
     "--${boolEn (buildConfig != "opengl-dummy")}-va"
     # TODO: Figure out how to enable opencl without having a

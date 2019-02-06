@@ -7,10 +7,10 @@
 , xmlto
 , w3m
 
-, coreutils
+, coreutils_small
 , file
 , gnugrep
-, gnused
+, gnused_small
 }:
 
 stdenv.mkDerivation rec {
@@ -33,8 +33,8 @@ stdenv.mkDerivation rec {
   postInstall = ''
     for item in $out/bin/* ; do
       sed -i "$item" \
-        -e 's|cut |${coreutils}/bin/cut |' \
-        -e 's|sed |${gnused}/bin/sed |' \
+        -e 's|cut |${coreutils_small}/bin/cut |' \
+        -e 's|sed |${gnused_small}/bin/sed |' \
         -e 's|egrep |${gnugrep}/bin/egrep |' \
         -re "s#([^e])grep #\1${gnugrep}/bin/grep #g" \
         -e 's|which |type -P |' \

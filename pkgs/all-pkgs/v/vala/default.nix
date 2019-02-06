@@ -6,29 +6,22 @@
 
 , glib
 , graphviz
-
-, channel
 }:
 
 let
   inherit (lib)
     optionalString;
 
-  sources = {
-    "0.42" = {
-      version = "0.42.2";
-      sha256 = "9e89aa42152b1cef551568f827aa2deea2a9b5487d78c91474c8617b618e5f07";
-    };
-  };
-  source = sources."${channel}";
+  channel = "0.42";
+  version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
-  name = "vala-${source.version}";
+  name = "vala-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vala/${channel}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "8c33b4abc0573d364781bbfe54a1668ed34956902e471191a31cf05dc87c6e12";
   };
 
   nativeBuildInputs = [

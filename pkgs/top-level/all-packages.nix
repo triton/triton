@@ -3927,10 +3927,7 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-42 = callPackage ../all-pkgs/v/vala {
-  channel = "0.42";
-};
-vala = callPackageAlias "vala_0-42" { };
+vala = callPackage ../all-pkgs/v/vala { };
 
 valgrind = callPackage ../all-pkgs/v/valgrind { };
 

@@ -5,14 +5,14 @@
 }:
 
 let
-  version = "3.0.1";
+  version = "3.0.4";
 in
 buildPythonPackage rec {
   name = "scons-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/scons/scons/${version}/${name}.tar.gz";
-    sha256 = "24475e38d39c19683bc88054524df018fe6949d70fbd4c69e298d39a0269f173";
+    sha256 = "e2b8b36e25492720a05c0f0a92a219b42d11ce0c51e3397a1e8296dfea1d9b1a";
   };
 
   setupHook = ./setup-hook.sh;

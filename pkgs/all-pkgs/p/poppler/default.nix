@@ -38,16 +38,16 @@ let
     boolOn
     boolString;
 
-  version = "0.70.1";
+  version = "0.73.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    multihash = "QmNiNkatku7gmG2KL58d7TH4VGRvBwWQyumoEvYF2kSisa";
+    multihash = "QmXiJH3h2iStsRrsQF7FGVvBxj2fJwVn7oWboPLFBetSTM";
     hashOutput = false;
-    sha256 = "66972047d9ef8162cc8c389d7e7698291dfc9f2b3e4ea9a9f08ae604107451bd";
+    sha256 = "e44b5543903128884ba4538c2a97d3bcc8889e97ffacc4636112101f0238db03";
   };
 
   nativeBuildInputs = [

@@ -126,6 +126,9 @@ let
         echo 'echo "localhost"' >> $TMPDIR/bin/hostname
         chmod +x $TMPDIR/bin/hostname
         export PATH="$TMPDIR/bin:$PATH"
+      '' + stdenv.lib.optionalString (stdenv.lib.versionOlder version "4.18") ''
+        # All current kernels ship with a broken classmap.h
+        cp ${./classmap.h} security/selinux/include/classmap.h
       '';
 
       configurePhase = ''

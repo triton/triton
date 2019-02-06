@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/${name}.tar.gz";
-    sha256 = "8c744a54a2dbffa0d1f92e90b34186fb8ed44db93fbacb55abd751ac8808d922";
+    sha256 = "3d47b48c40ed6476e8047b2ddb81d93835e0ca1b8d3e8c679afbb3004dd564b1";
   };
 
   configureFlags = [

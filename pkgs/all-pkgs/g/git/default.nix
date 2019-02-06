@@ -6,7 +6,7 @@
 , gettext
 , libxslt
 , makeWrapper
-, perl
+, perlPackages
 , xmlto
 
 , coreutils_small
@@ -39,6 +39,17 @@ let
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
   ];
+
+  sendEmailLib = concatStringsSep ":" (map (n: "${n}/${perlPackages.perl.libPrefix}") [
+    # SSL
+    perlPackages.IOSocketSSL
+    perlPackages.NetSSLeay
+    perlPackages.URI
+
+    # Auth
+    perlPackages.AuthenSASL
+    perlPackages.DigestHMAC
+  ]);
 in
 stdenv.mkDerivation rec {
   name = "git-${version}";
@@ -56,7 +67,7 @@ stdenv.mkDerivation rec {
     gettext
     libxslt
     makeWrapper
-    perl
+    perlPackages.perl
     xmlto
   ];
 
@@ -76,7 +87,7 @@ stdenv.mkDerivation rec {
   ];
 
   makeFlags = [
-    "PERL_PATH=${perl}/bin/perl"
+    "PERL_PATH=${perlPackages.perl}/bin/perl"
     "PYTHON_PATH=${python}/bin/python"
     "GNU_ROFF=1"
     "INSTALL_SYMLINKS=1"
@@ -96,6 +107,12 @@ stdenv.mkDerivation rec {
     "install"
     "install-man"
   ];
+
+  preFixup = ''
+    wrapProgram "$out"/libexec/git-core/git-send-email \
+      --prefix PERL5LIB : '${sendEmailLib}' \
+      --set SSL_CERT_FILE /etc/ssl/certs/ca-certificates.crt
+  '';
 
   passthru = {
     srcVerification = fetchurl {

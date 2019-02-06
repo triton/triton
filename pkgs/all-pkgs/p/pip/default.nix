@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "18.1";
+  version = "19.0.1";
 in
 buildPythonPackage rec {
   name = "pip-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pip";
     inherit version;
-    sha256 = "c0a292bd977ef590379a3f05d7b7f65135487b67470f6281289a94e015650ea1";
+    sha256 = "e81ddd35e361b630e94abeda4a1eddd36d47a90e71eb00f38f46b57f787cd1a5";
   };
 
   passthru = {

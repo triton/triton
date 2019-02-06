@@ -261,7 +261,7 @@ with stdenv.lib;
     INTEL_RDT${optionalString (versionOlder version "4.14") "_A"} y
   ''}
   ${optionalString (versionAtLeast version "5.0") ''
-    X86_RESCTRL y
+    X86_CPU_RESCTRL y
   ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y

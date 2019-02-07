@@ -546,8 +546,6 @@ wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
   nativeLibc = pkgs.stdenv.cc.nativeLibc or false;
   nativePrefix = pkgs.stdenv.cc.nativePrefix or "";
   cc = baseCC;
-  isGNU = baseCC.isGNU or false;
-  isClang = baseCC.isClang or false;
   inherit libc extraBuildCommands;
 };
 

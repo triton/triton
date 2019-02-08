@@ -1,169 +1,90 @@
 { stdenv
 , fetchurl
-, icu, expat, zlib, bzip2, python2, zstd, xz
-, enableRelease ? true
-, enableDebug ? false
-, enableSingleThreaded ? false
-, enableMultiThreaded ? true
-, enableShared ? true
-, enableStatic ? false
-, enablePIC ? false
-, enableExceptions ? false
-, taggedLayout ? ((enableRelease && enableDebug) || (enableSingleThreaded && enableMultiThreaded) || (enableShared && enableStatic))
-, patches ? null
-, mpi ? null
+, lib
+
+, bzip2
+, icu
+, xz
+, zlib
+, zstd
 
 , channel
 }:
 
-# We must build at least one type of libraries
-assert !enableShared -> enableStatic;
-
-with stdenv.lib;
-
 let
+  sources = {
+    "1.66" = {
+      version = "1.66.0";
+      sha256 = "5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9";
+    };
+    "1.69" = {
+      version = "1.69.0";
+      sha256 = "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406";
+    };
+  };
+  
+  inherit (lib)
+    optionals
+    replaceStrings
+    versionAtLeast;
 
-  source = (import ./sources.nix { })."${channel}";
-
-  variant = concatStringsSep ","
-    (optional enableRelease "release" ++
-     optional enableDebug "debug");
-
-  threading = concatStringsSep ","
-    (optional enableSingleThreaded "single" ++
-     optional enableMultiThreaded "multi");
-
-  link = concatStringsSep ","
-    (optional enableShared "shared" ++
-     optional enableStatic "static");
-
-  runtime-link = if enableShared then "shared" else "static";
-
-  # To avoid library name collisions
-  layout = if taggedLayout then "tagged" else "system";
-
-  cflags = if enablePIC && enableExceptions then
-             "cflags=\"-fPIC -fexceptions\" cxxflags=-fPIC linkflags=-fPIC"
-           else if enablePIC then
-             "cflags=-fPIC cxxflags=-fPIC linkflags=-fPIC"
-           else if enableExceptions then
-             "cflags=-fexceptions"
-           else
-             "";
-
-  genericB2Flags = [
-    "--includedir=$dev/include"
-    "--libdir=$lib/lib"
-    "-j$NIX_BUILD_CORES"
-    "--layout=${layout}"
-    "variant=${variant}"
-    "threading=${threading}"
-    "runtime-link=${runtime-link}"
-    "link=${link}"
-    "${cflags}"
-  ] ++ optional (variant == "release") "debug-symbols=off";
-
-  nativeB2Flags = [
-    "-sEXPAT_INCLUDE=${expat}/include"
-    "-sEXPAT_LIBPATH=${expat}/lib"
-  ] ++ optional (mpi != null) "--user-config=user-config.jam";
-  nativeB2Args = concatStringsSep " " (genericB2Flags ++ nativeB2Flags);
-
-  crossB2Flags = [
-    "-sEXPAT_INCLUDE=${expat.crossDrv}/include"
-    "-sEXPAT_LIBPATH=${expat.crossDrv}/lib"
-    "--user-config=user-config.jam"
-    "toolset=gcc-cross"
-    "--without-python"
-  ];
-  crossB2Args = concatMapStringsSep " " (genericB2Flags ++ crossB2Flags);
-
-  builder = b2Args: ''
-    ./b2 ${b2Args}
-  '';
-
-  installer = b2Args: ''
-    # boostbook is needed by some applications
-    mkdir -p $dev/share/boostbook
-    cp -a tools/boostbook/{xsl,dtd} $dev/share/boostbook/
-
-    # Let boost install everything else
-    ./b2 ${b2Args} install
-
-    # Create a derivation which encompasses everything, making buildInputs nicer
-    mkdir -p $out/nix-support
-    echo "$dev $lib" > $out/nix-support/propagated-native-build-inputs
-  '';
-
-  commonConfigureFlags = [
-    "--includedir=$(dev)/include"
-    "--libdir=$(lib)/lib"
-  ];
-
-  fixup = ''
-    # Make boost header paths relative so that they are not runtime dependencies
-    (
-      cd "$dev"
-      find include \( -name '*.hpp' -or -name '*.h' -or -name '*.ipp' \) \
-        -exec sed '1i#line 1 "{}"' -i '{}' \;
-    )
-  '';
-
+  inherit (sources."${channel}")
+    version
+    sha256;
 in
-
 stdenv.mkDerivation {
-  name = "boost-${source.version}";
+  name = "boost-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/boost/boost/${source.version}/"
-      + "boost_${replaceStrings ["."] ["_"] source.version}.tar.bz2";
-    inherit (source) sha256;
+    url = "mirror://sourceforge/boost/boost/${version}/"
+      + "boost_${replaceStrings ["."] ["_"] version}.tar.bz2";
+    inherit sha256;
   };
 
-  preConfigure = ''
-    NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"
-  '' + optionalString (mpi != null) ''
-    cat << EOF > user-config.jam
-    using mpi : ${mpi}/bin/mpiCC ;
-    EOF
-  '';
-
-  buildInputs = [ icu expat zlib bzip2 zstd xz python2 ];
-
-  configureScript = "./bootstrap.sh";
-  configureFlags = commonConfigureFlags ++ [
-    "--with-icu=${icu}"
-    "--with-python=${python2.interpreter}"
+  buildInputs = [
+    bzip2
+    icu
+    xz
+    zlib
+  ] ++ optionals (versionAtLeast version "1.68.0") [
+    zstd
   ];
 
-  buildPhase = builder nativeB2Args;
+  configurePhase = ''
+    ./bootstrap.sh --prefix="$dev"
+  '';
 
-  installPhase = installer nativeB2Args;
+  b2Args = [
+    "variant=release"
+    "threading=multi"
+    "link=shared"
+    "runtime-link=shared"
+  ];
 
-  postFixup = fixup;
+  buildPhase = ''
+    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $lib"
+    b2Args="$b2Args -j$NIX_BUILD_CORES"
 
-  outputs = [ "out" "dev" "lib" ];
+    ./b2 $b2Args
+  '';
 
-  crossAttrs = rec {
-    buildInputs = [ expat.crossDrv zlib.crossDrv bzip2.crossDrv ];
-    # all buildInputs set previously fell into propagatedBuildInputs, as usual, so we have to
-    # override them.
-    propagatedBuildInputs = buildInputs;
-    # We want to substitute the contents of configureFlags, removing thus the
-    # usual --build and --host added on cross building.
-    preConfigure = ''
-      export configureFlags="--without-icu ${concatStringsSep " " commonConfigureFlags}"
-      set -x
-      cat << EOF > user-config.jam
-      using gcc : cross : $crossConfig-g++ ;
-      EOF
-    '';
-    buildPhase = builder crossB2Args;
-    installPhase = installer crossB2Args;
-    postFixup = fixup;
-  };
+  installPhase = ''
+    ./b2 $b2Args install
 
-  meta = with stdenv.lib; {
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib/*.so* "$lib"/lib
+    rm -r "$dev"/lib
+
+    mkdir -p "$dev"/nix-support
+    echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
+  meta = with lib; {
     homepage = "http://boost.org/";
     description = "Collection of C++ libraries";
     license = licenses.boost;

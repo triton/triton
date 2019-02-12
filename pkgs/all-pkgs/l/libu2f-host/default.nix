@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libu2f-host-1.1.6";
+  name = "libu2f-host-1.1.7";
 
   src = fetchurl {
     url = "https://developers.yubico.com/libu2f-host/Releases/${name}.tar.xz";
-    multihash = "QmRdCxnrCMhcxepKbTTCHhwyvhNYJNUka6wNAFqVGpY7Y5";
+    multihash = "QmTymz7GYZ9WDigzzNgshRCcckv7DUeG3b9PzxpDzLvoQW";
     hashOutput = false;
-    sha256 = "4da0bb9e32cab230e63bf65252076f9a4b5e40eb9ec2ddaf9376bcef30e7bda7";
+    sha256 = "917a259f2977538bc31e13560c830a11e49f54f27908372c774bbbb042d2dcff";
   };
 
   buildInputs = [
@@ -41,9 +41,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "0A3B 0262 BCA1 7053 07D5  FF06 BCA0 0FD4 B216 8C0A";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "0A3B 0262 BCA1 7053 07D5  FF06 BCA0 0FD4 B216 8C0A";
+      };
     };
   };
 

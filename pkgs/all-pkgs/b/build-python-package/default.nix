@@ -166,7 +166,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     runHook postCheck
   '';
 
-  postFixup = attrs.postFixup or ''
+  postFixup = ''
     wrapPythonPrograms
   '' + /* pip hardcodes references to the build directory in compiled files
           so we compile all files manually. */ ''
@@ -180,7 +180,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     "
   '' + /* Fail if two packages with the same name are found in the closure */ ''
     ${python.interpreter} ${./catch_conflicts.py}
-  '';
+  '' + (attrs.postFixup or "");
 
   shellHook = attrs.shellHook or ''
     ${preShellHook}

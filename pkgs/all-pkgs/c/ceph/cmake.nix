@@ -36,6 +36,8 @@
 
 let
   inherit (stdenv.lib)
+    concatMapStrings
+    head
     replaceChars;
 
   sources = (import ./sources.nix)."${channel}";
@@ -81,6 +83,22 @@ let
       sed -i "/locations = (/a\        '/run/current-system/sw/bin'," ceph_volume/util/system.py
     '';
   };
+
+  boosts = [
+    boost_1-66
+    python2Packages.boost_1-66
+  ];
+
+  boost' = stdenv.mkDerivation {
+    name = "ceph-combined-${(head boosts).name}";
+
+    buildCommand = ''
+      mkdir -p "$out"
+      cp -ans --no-preserve=mode ${concatMapStrings (n: "${n.lib}/lib ") boosts}"$out"
+      mkdir -p "$out"/nix-support
+      echo '${concatMapStrings (n: "${n.dev} ") boosts}' >"$out"/nix-support/propagated-native-build-inputs
+    '';
+  };
 in
 stdenv.mkDerivation rec {
   name = "ceph-${version}";
@@ -98,7 +116,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost_1-66
+    boost'
     curl
     expat
     fuse_2

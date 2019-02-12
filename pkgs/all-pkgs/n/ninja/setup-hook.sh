@@ -66,6 +66,7 @@ addNinjaParams() {
     cmakeFlagsArray+=("-DCMAKE_MAKE_PROGRAM=$ninja")
     cmakeFlagsArray+=("-GNinja")
   fi
+  gypFormat="ninja"
 }
 
 ninja="${ninja-@out@/bin/ninja}"

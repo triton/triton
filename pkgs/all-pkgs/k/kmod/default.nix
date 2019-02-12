@@ -2,12 +2,13 @@
 , fetchurl
 , libxslt
 
+, openssl
 , xz
 , zlib
 }:
 
 let
-  name = "kmod-25";
+  name = "kmod-26";
 
   tarballUrls = [
     "mirror://kernel/linux/utils/kernel/kmod/${name}.tar"
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "7165e6496656159dcb909a91ed708a0fe273a4b128b4b1dc997ccb5189eef1cd";
+    sha256 = "57bb22c8bb56435991f6b0810a042b0a65e2f1e217551efa58235b7034cdbb9d";
   };
 
   nativeBuildInputs = [
@@ -27,6 +28,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    openssl
     xz
     zlib
   ];
@@ -39,6 +41,7 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--with-xz"
     "--with-zlib"
+    "--with-openssl"
   ];
 
   # Use symlinks instead of hard-links or copies
@@ -53,10 +56,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sign") tarballUrls;
-      pgpDecompress = true;
-      pgpKeyFingerprint = "EAB3 3C96 9001 3C73 3916  AC83 9BA2 A5A6 30CB EA53";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sign") tarballUrls;
+        pgpDecompress = true;
+        pgpKeyFingerprint = "EAB3 3C96 9001 3C73 3916  AC83 9BA2 A5A6 30CB EA53";
+      };
     };
   };
 

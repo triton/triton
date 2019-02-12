@@ -1,8 +1,7 @@
 { stdenv
 , fetchurl
 , lib
-, meson
-, ninja
+, pkgs
 
 , cairo
 , glib
@@ -38,8 +37,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    meson
-    ninja
+    pkgs.meson
+    pkgs.ninja
   ];
 
   buildInputs = [

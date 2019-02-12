@@ -11,7 +11,7 @@ let
     "mirror://gnupg/libassuan/libassuan-${version}.tar.bz2"
   ];
 
-  version = "2.5.2";
+  version = "2.5.3";
 in
 stdenv.mkDerivation rec {
   name = "libassuan-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "986b1bf277e375f7a960450fbb8ffbd45294d06598916ad4ebf79aee0cb788e7";
+    sha256 = "91bcb0403866b4e7c4bc1cc52ed4c364a9b5414b3994f718c70303f7f765e702";
   };
 
   buildInputs = [
@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.5.2";
-      outputHash = "986b1bf277e375f7a960450fbb8ffbd45294d06598916ad4ebf79aee0cb788e7";
+      urls = tarballUrls "2.5.3";
+      outputHash = "91bcb0403866b4e7c4bc1cc52ed4c364a9b5414b3994f718c70303f7f765e702";
       inherit (src) outputHashAlgo;
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;

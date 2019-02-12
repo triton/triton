@@ -1979,6 +1979,8 @@ gvfs = callPackageAlias "gvfs_1-34" { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
+gyp = pkgs.python3Packages.gyp.dev;
+
 gzip = callPackage ../all-pkgs/g/gzip { };
 
 hadoop = callPackage ../all-pkgs/h/hadoop { };

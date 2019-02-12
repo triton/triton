@@ -364,6 +364,8 @@ gst-python = callPackageAlias "gst-python_1-14" { };
 
 guessit = callPackage ../all-pkgs/g/guessit { };
 
+gyp = callPackage ../all-pkgs/g/gyp { };
+
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
 hyperlink = callPackage ../all-pkgs/h/hyperlink { };
@@ -1151,18 +1153,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
        pytz
      ];
 
-   };
-
-   gyp = buildPythonPackage rec {
-     name = "gyp-${version}";
-     version = "2016-10-13";
-
-     src = pkgs.fetchgit {
-       version = 2;
-       url = "https://chromium.googlesource.com/external/gyp.git";
-       rev = "920ee58c3d3109dea3cd37d88054014891a93db7";
-       sha256 = "0la5hvwjy1dap9f7vx48d2x59f5809vvp8500ig988p830b27fv1";
-     };
    };
 
    jellyfish = buildPythonPackage rec {

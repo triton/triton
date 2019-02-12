@@ -1,23 +1,21 @@
 { stdenv
 , autoconf
 , automake
-, fetchFromGitHub
+, fetchurl
 , lib
 , libtool
 }:
 
 let
-  version = "1.25.0";
+  version = "1.26.0";
 in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "libuv";
-    repo = "libuv";
-    rev = "v${version}";
-    sha256 = "23007d82d10317dc5375e67d8ef616e8a78a35ef255ffccfc830a4468fcb3acc";
+  src = fetchurl {
+    url = "https://dist.libuv.org/dist/v${version}/libuv-v${version}.tar.gz";
+    hashOutput = false;
+    sha256 = "caf817a7fb7f3fd1a2fe1517c777327fa76f04b36afc46238ad609f0148014e7";
   };
 
   nativeBuildInputs = [
@@ -29,6 +27,20 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     ./autogen.sh
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sign") src.urls;
+        pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      };
+    };
+  };
 
   meta = with lib; {
     maintainers = with maintainers; [

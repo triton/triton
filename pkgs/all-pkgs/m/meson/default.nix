@@ -27,9 +27,19 @@ buildPythonPackage {
     sed -i "/def get_build_command(/a\        return ['$out/bin/meson']" mesonbuild/environment.py
   '';
 
-  setupHook = ./setup-hook.sh;
+  postInstall = ''
+    mkdir -p "$dev"
+  '';
+
+  postFixup = ''
+    mkdir -p "$dev"/{bin,nix-support}
+    ln -sv "$out"/bin/meson "$dev"/bin
+    substituteAll '${./setup-hook.sh}' "$dev/nix-support/setup-hook"
+  '';
 
   disabled = !isPy3;
+
+  outputs = [ "out" "dev" ];
 
   meta = with lib; {
     maintainers = with maintainers; [

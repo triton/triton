@@ -2860,7 +2860,7 @@ mesa_drivers = pkgs.mesa.drivers;
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 
-meson = pkgs.python3Packages.meson;
+meson = pkgs.python3Packages.meson.dev;
 
 #mesos = callPackage ../all-pkgs/m/mesos {
 #  inherit (pythonPackages) python boto setuptools wrapPython;

@@ -79,6 +79,13 @@ stdenv.mkDerivation {
     echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
   '';
 
+  preFixup = ''
+    # We don't ever want full directory references to boost
+    # TODO: Make this a common fixup
+    cd "$dev"/include
+    find . -type f -exec sed -i '1i#line 1 "{}"' {} \;
+  '';
+
   outputs = [
     "dev"
     "lib"

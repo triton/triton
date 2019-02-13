@@ -119,7 +119,7 @@ stdenv.mkDerivation rec {
     nss
     pango
     stdenv.cc.cc
-    stdenv.libc
+    stdenv.cc.libc
     systemd_lib
     util-linux_lib
     xdg-utils

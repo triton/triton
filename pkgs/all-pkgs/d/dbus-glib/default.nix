@@ -30,15 +30,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-tests"
-    "--disable-ansi"
-    "--disable-gcov"
     "--enable-bash-completition"
-    "--disable-asserts"
     "--disable-checks"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
   ];
 
   passthru = {

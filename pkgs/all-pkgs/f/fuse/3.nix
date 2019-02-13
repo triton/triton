@@ -7,18 +7,22 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-3.2.6";
+  name = "fuse-3.4.1";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.xz";
     hashOutput = false;
-    sha256 = "cea4dad559b3fbdbb8e4ad5f9df6083fdb7f2b904104bd507ef790d311d271cf";
+    sha256 = "88302a8fa56e7871066652495b05faf14b36dca9f1b740e9fb00da0785e60485";
   };
 
   nativeBuildInputs = [
     meson
     ninja
+  ];
+
+  buildInputs = [
+    systemd-dummy
   ];
 
   postPatch = ''
@@ -35,9 +39,11 @@ stdenv.mkDerivation rec {
     sed -i "s,/etc,$out/etc,g" util/install_helper.sh
   '';
 
-  buildInputs = [
-    systemd-dummy
+  mesonFlags = [
+    "-Dexamples=false"
   ];
+
+  buildLTO = false;
 
   passthru = {
     srcVerification = fetchurl {

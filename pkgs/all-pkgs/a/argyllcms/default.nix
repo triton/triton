@@ -45,7 +45,7 @@ let
       zlib
     ];
   };
-  version = "2.0.0";
+  version = "2.0.1";
 in
 stdenv.mkDerivation rec {
   name = "argyllcms-${version}";
@@ -53,13 +53,9 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 6;
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
-    multihash = "QmUuxRhYwfsaRrqXDfBoeYmPWfbo6XR5H5D41CNL27JFiN";
+    multihash = "QmdFLqmgW29xbkVh6zRGLjNMWQGcVb1A7cGAba4s7Xv3KD";
     purgeTimestamps = true;
-    sha256 = "fa171e7974e195477d1447dc59cd5eeb0c923170c1cbb057f6e926c26eb0fda6";
-    # The argyllcms web server doesn't like curl ...
-    fullOpts = {
-      curlOpts = "--user-agent 'Mozilla/5.0'";
-    };
+    sha256 = "718b4d3018e4d92dcae06a098f13378f55024e8622b12120a59dd67f17cc59d2";
   };
 
   nativeBuildInputs = [
@@ -106,7 +102,6 @@ stdenv.mkDerivation rec {
         urls
         outputHash
         outputHashAlgo
-        fullOpts
         purgeTimestamps;
       insecureHashOutput = true;
     };

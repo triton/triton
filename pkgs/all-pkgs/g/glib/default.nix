@@ -4,12 +4,12 @@
 , gettext
 , meson
 , ninja
-, python3
 
 , elfutils
 , libffi
 , libselinux
 , pcre
+, python3
 , util-linux_lib
 , zlib
 }:
@@ -67,6 +67,14 @@ stdenv.mkDerivation rec {
     grep -q '#!/usr/bin/env python' gio/tests/gengiotypefuncs.py
     sed -i gio/tests/gengiotypefuncs.py \
       -e 's,#!/usr/bin/env python.*,#!${python3.interpreter},'
+    # Fix shebangs not caught be fixup hook
+    for i in gio/gdbus-2.0/codegen/gdbus-codegen.in \
+        glib/gtester-report.in \
+        gobject/glib-genmarshal.in \
+        gobject/glib-mkenums.in; do
+      grep -qP '#!.*@PYTHON@' "$i"
+      sed -i 's,^#!.*@PYTHON@,#!${python3}/bin/python3,' "$i"
+    done
   '';
 
   postInstall = ''
@@ -75,7 +83,6 @@ stdenv.mkDerivation rec {
     # M4 macros are not installed by meson, but still needed by other
     # packages during the meson transition.
     for i in 'glib-2.0.m4' 'glib-gettext.m4' 'gsettings.m4'; do
-      ! find "$out" -name "$i"
       install -D -m 644 -v m4macros/"$i" "$out"/share/aclocal/"$i"
     done
   '';

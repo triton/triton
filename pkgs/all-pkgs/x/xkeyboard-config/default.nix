@@ -10,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xkeyboard-config-2.24";
+  name = "xkeyboard-config-2.26";
 
   src = fetchurl {
     url = "mirror://xorg/individual/data/xkeyboard-config/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "91b18580f46b4e4ea913707f6c8d68ab5286879c3a6591462f3b9e760d3ac4d7";
+    sha256 = "393718c7460cd06c4e8cb819d943ca54812ea476f32714c4d8975c77031a038e";
   };
 
   nativeBuildInputs = [
@@ -24,27 +24,29 @@ stdenv.mkDerivation rec {
     util-macros
   ];
 
-  buildInputs = [
-    libx11
-    xorgproto
+  configureFlags = [
+    "--disable-runtime-deps"
   ];
 
   postInstall = ''
-    ln -sv $out/share/ $out/etc
+    mkdir -p "$out"/etc
+    ln -sv $out/share/X11 $out/etc
   '';
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Sergey Udaltsov
-        "FFB4 CCD2 75AA A422 F5F9  808E 0661 D98F C933 A145"
-      ];
-      failEarly = true;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Sergey Udaltsov
+          "FFB4 CCD2 75AA A422 F5F9  808E 0661 D98F C933 A145"
+        ];
+      };
     };
   };
 

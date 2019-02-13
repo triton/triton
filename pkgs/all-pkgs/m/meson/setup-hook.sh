@@ -19,11 +19,16 @@ mesonConfigurePhase() {
       mesonBuildDir="$(pwd)"
     fi
 
+    local LTOFlag="false"
+    if [ -n "${buildLTO-1}" ]; then
+      LTOFlag="true"
+    fi
+
     mesonFlagsArray+=(
       # Build always Release, to ensure optimisation flags
       "--buildtype" "${mesonBuildType-release}"
       # Prefer using Link-Time Optimization
-      "-Db_lto=true"
+      "-Db_lto=$LTOFlag"
     )
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"

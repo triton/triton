@@ -834,10 +834,10 @@ let
   }) // {inherit libfontenc freetype xorgproto zlib ;};
 
   pixman = (mkDerivation "pixman" {
-    name = "pixman-0.36.0";
+    name = "pixman-0.38.0";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/pixman-0.36.0.tar.bz2;
-      sha256 = "fd92c0cc99183977e54a278d7c595ee094a8e75724c03faf3796d1e49f7780dc";
+      url = mirror://xorg/individual/lib/pixman-0.38.0.tar.bz2;
+      sha256 = "b768e3f7895ddebdc0f07478729d9cec4fe0a9d2201f828c900d67b0e5b436a8";
     };
     nativeBuildInputs = [ ];
     buildInputs = [ libpng ];

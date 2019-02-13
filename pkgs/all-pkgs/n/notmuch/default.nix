@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "notmuch-0.27";
+  name = "notmuch-0.28.1";
 
   src = fetchurl {
     url = "https://notmuchmail.org/releases/${name}.tar.gz";
-    multihash = "QmfEazSXLR8weU9Q5nEvNoogth4dn4yFjqFTdBoiYHpCDE";
+    multihash = "Qmf9XaXBKVGfBYnGamDmcLT3S5L7XCFNW9k8pz1VYYiqmf";
     hashOutput = false;
-    sha256 = "40d3192f8f130f227b511fc80be86310c7f60ccb6d043b563f201fa505de0876";
+    sha256 = "d111e938137d5a465afc2b133d14df1fa356537d9ce752c919fe5673f3749a55";
   };
 
   nativeBuildInputs = [
@@ -35,9 +35,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Urls = map (n: "${n}.sha256.asc") src.urls;
-      pgpKeyFingerprint = "815B 6398 2A79 F8E7 C727  86C4 762B 57BB 7842 06AD";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha256Urls = map (n: "${n}.sha256.asc") src.urls;
+        pgpKeyFingerprint = "815B 6398 2A79 F8E7 C727  86C4 762B 57BB 7842 06AD";
+      };
     };
   };
 

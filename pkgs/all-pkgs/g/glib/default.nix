@@ -52,10 +52,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    elfutils  # FIXME: only need libelf
+    elfutils
     libffi
     libselinux
     pcre
+    # Needed for bin tooling like `glib-mkenums` in the output
+    python3
     util-linux_lib
     zlib
   ];
@@ -63,18 +65,9 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
 
+  # Don't build a bunch of unused test / fuzzing code
   postPatch = ''
-    grep -q '#!/usr/bin/env python' gio/tests/gengiotypefuncs.py
-    sed -i gio/tests/gengiotypefuncs.py \
-      -e 's,#!/usr/bin/env python.*,#!${python3.interpreter},'
-    # Fix shebangs not caught be fixup hook
-    for i in gio/gdbus-2.0/codegen/gdbus-codegen.in \
-        glib/gtester-report.in \
-        gobject/glib-genmarshal.in \
-        gobject/glib-mkenums.in; do
-      grep -qP '#!.*@PYTHON@' "$i"
-      sed -i 's,^#!.*@PYTHON@,#!${python3}/bin/python3,' "$i"
-    done
+    find . -name meson.build -exec sed -i "/subdir('\(fuzzing\|tests\)')/d" {} \;
   '';
 
   postInstall = ''

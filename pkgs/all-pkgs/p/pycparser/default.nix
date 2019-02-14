@@ -2,12 +2,10 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-
-, isPy3
 }:
 
 let
-  version = "2.18";
+  version = "2.19";
 in
 buildPythonPackage {
   name = "pycparser-${version}";
@@ -15,11 +13,8 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pycparser";
     inherit version;
-    sha256 = "99a8ca03e29851d96616ad0404b4aad7d9ee16f25c9f9708a11faf2810f7b226";
+    sha256 = "a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3";
   };
-
-  # Fails currently for the python3 build
-  buildDirCheck = !isPy3;
 
   meta = with lib; {
     maintainers = with maintainers; [

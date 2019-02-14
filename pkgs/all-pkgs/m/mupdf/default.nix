@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://mupdf.com/downloads/archive/${name}-source.tar.xz";
     multihash = "Qmc427qqvKzzDi8bUKa4weMMyNCTNNcvYvSxsL8DqH3Fty";
+    hashOutput = false;
     sha256 = "746698e0d5cd113bdcb8f65d096772029edea8cf20704f0d15c96cb5449a4904";
   };
 

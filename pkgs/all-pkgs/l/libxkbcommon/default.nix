@@ -1,6 +1,6 @@
 { stdenv
 , bison
-, fetchurl
+, fetchFromGitHub
 , flex
 , lib
 , meson
@@ -12,14 +12,19 @@
 , xkeyboard-config
 }:
 
+let
+  version = "0.8.3";
+in
 stdenv.mkDerivation rec {
-  name = "libxkbcommon-0.8.0";
+  name = "libxkbcommon-${version}";
 
-  src = fetchurl {
-    url = "https://xkbcommon.org/download/${name}.tar.xz";
-    multihash = "QmekLKEnvMuurHJ1JbaiZ4LCJUg39CwTR6RkryLDPN12bU";
-    hashOutput = false;
-    sha256 = "e829265db04e0aebfb0591b6dc3377b64599558167846c3f5ee5c5e53641fe6d";
+  # Not using fetchurl because their dist tarballs are broken for 0.8.3
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "xkbcommon";
+    repo = "libxkbcommon";
+    rev = "xkbcommon-${version}";
+    sha256 = "421444cc3bbf9fb024f09f5748c19db167452ce6541b9af80f7b07b033072d31";
   };
 
   nativeBuildInputs = [
@@ -39,11 +44,6 @@ stdenv.mkDerivation rec {
   mesonFlags = [
     "-Denable-docs=false"
   ];
-
-  # PC files mistakenly mention internal only libraries
-  preFixup = ''
-    sed -i 's, -l[^ ]*-internal,,g' "$out"/lib/pkgconfig/*.pc
-  '';
 
   meta = with lib; {
     description = "A library to handle keyboard descriptions";

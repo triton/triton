@@ -12,6 +12,7 @@
 , cups
 , expat
 , fontconfig
+, fribidi
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -55,8 +56,8 @@ let
 
   sources = {
     "3.24" = {
-      version = "3.24.1";
-      sha256 = "68387be307b99aadcdc653561d7a2a7f0113b93561fb18ded7075ec9ced5b02f";
+      version = "3.24.5";
+      sha256 = "0be5fb0d302bc3de26ab58c32990d895831e2b7c7418d0ffea1206d6a3ddb02f";
     };
     "3.91" = {
       version = "3.91.1";
@@ -88,6 +89,7 @@ stdenv.mkDerivation rec {
     cups
     expat
     fontconfig
+    fribidi
     gdk-pixbuf
     glib
     gobject-introspection

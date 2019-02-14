@@ -10,7 +10,7 @@
 
 # TODO: support for java, mono, python, & ruby
 let
-  version = "3.7.1";
+  version = "3.7.2";
 in
 stdenv.mkDerivation rec {
   name = "ice-${version}";
@@ -20,14 +20,17 @@ stdenv.mkDerivation rec {
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "39c3fe53c6e5b1662a7b8286b11a7273e4a5253c1adaa3daba6f18d82cc51ff2";
+    sha256 = "955f53da7a939d78fa1f0821cf982ba6929495929a0c69f5e70904517a8543fb";
   };
+
+  nativeBuildInputs = [
+    mcpp
+  ];
 
   buildInputs = [
     bzip2
     expat
     lmdb
-    mcpp
     openssl
   ];
 

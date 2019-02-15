@@ -19,6 +19,7 @@
 , postprocVisualizerSupport ? false # macro block/block level visualizers
 , multiResEncodingSupport ? false # multiple-resolution encoding
 , temporalDenoisingSupport ? true # use temporal denoising instead of spatial denoising
+, consistentRecodeSupport ? false
 , coefficientRangeCheckingSupport ? false # decoder checks if intermediate transform coefficients are in valid range
 , experimentalSupport ? false # experimental features
 , betterHWCompatibility ? true
@@ -26,6 +27,8 @@
 , experimentalSpatialSvcSupport ? false # Spatial scalable video coding
 , experimentalFpMbStatsSupport ? false
 , experimentalEmulateHardwareSupport ? false
+, experimentalNonGreedyMvSupport ? false
+, experimentalMlVarPartitionSupport ? false
 , experimentalMiscFixes ? false
 
 , channel
@@ -68,10 +71,10 @@ let
     };
     # master
     "1.999" = {
-      fetchzipversion = 5;
-      version = "2018-01-12";
-      rev = "f915e6d4afafabed8281b172f93502acbe101f3a";
-      sha256 = "137725fe8510ca855da293bd1794a9500aeaf90d34c01e323f992af560dc6769";
+      fetchzipversion = 6;
+      version = "2019-02-14";
+      rev = "a90944ce794986d8c0daab1449903909ba1956a7";
+      sha256 = "6105b5dd27461da34d96fc0416530ee197140ac31f60f847f849e0f9eef065ac";
     };
   };
   source = sources."${channel}";
@@ -161,9 +164,9 @@ stdenv.mkDerivation rec {
     "--${boolEn multithreadSupport}-multithread"
     "--${boolEn internalStatsSupport}-internal-stats"
 
-    (deprFlag "1.999" "--enable-vp8")
-    (deprFlag "1.999" "--enable-vp8-encoder")
-    (deprFlag "1.999" "--enable-vp8-decoder")
+    (deprFlag "1.8" "--enable-vp8")
+    (deprFlag "1.8" "--enable-vp8-encoder")
+    (deprFlag "1.8" "--enable-vp8-decoder")
     "--enable-vp9"
     "--enable-vp9-encoder"
     "--enable-vp9-decoder"
@@ -187,6 +190,7 @@ stdenv.mkDerivation rec {
     "--${boolEn multiResEncodingSupport}-multi-res-encoding"
     "--${boolEn temporalDenoisingSupport}-temporal-denoising"
     "--${boolEn temporalDenoisingSupport}-vp9-temporal-denoising"
+    (newFlag "1.8" "--${boolEn consistentRecodeSupport}-consistent-recode")
     "--${boolEn coefficientRangeCheckingSupport}-coefficient-range-checking"
     "--${boolEn betterHWCompatibility}-better-hw-compatibility"
     "--${boolEn (elem targetSystem platforms.bit64)}-vp9-highbitdepth"
@@ -195,9 +199,11 @@ stdenv.mkDerivation rec {
       || experimentalFpMbStatsSupport
       || experimentalEmulateHardwareSupport)}-experimental"
   ] # Experimental features
-    ++ optional experimentalSpatialSvcSupport "--enable-spatial-svc"
+    ++ optional experimentalSpatialSvcSupport "--enable-spatial-svc"  # Removed in 1.8.x
     ++ optional experimentalFpMbStatsSupport "--enable-fp-mb-stats"
     ++ optional experimentalEmulateHardwareSupport "--enable-emulate-hardware"
+    ++ optional experimentalNonGreedyMvSupport "--enable-non-greedy-mv"
+    ++ optional experimentalMlVarPartitionSupport "--enable-ml-var-partition"  # Removed in 1.9.x
     ++ optional experimentalMiscFixes "--enable-misc-fixes";
 
   meta = with lib; {

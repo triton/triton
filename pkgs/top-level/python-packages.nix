@@ -197,6 +197,8 @@ asn1crypto = callPackage ../all-pkgs/a/asn1crypto { };
 
 astroid = callPackage ../all-pkgs/a/astroid { };
 
+attr = callPackage ../all-pkgs/p/python-attr { };
+
 attrs = callPackage ../all-pkgs/a/attrs { };
 
 automat = callPackage ../all-pkgs/a/automat { };

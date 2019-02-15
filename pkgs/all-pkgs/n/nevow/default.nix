@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.14.2";
+  version = "0.14.4";
 in
 buildPythonPackage {
   name = "Nevow-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Nevow";
     inherit version;
-    sha256 = "7ef8e6147a65a17ef85ef1c017b20126cfb58bdb2ddb730e73fb15a93d205073";
+    sha256 = "2299a0d2a0c1312040705599d5d571acfea74df82b968c0b9264f6f45266cf6e";
   };
 
   buildInputs = [

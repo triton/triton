@@ -376,6 +376,8 @@ guessit = callPackage ../all-pkgs/g/guessit { };
 
 gyp = callPackage ../all-pkgs/g/gyp { };
 
+h2 = callPackage ../all-pkgs/h/h2 { };
+
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
 hyperlink = callPackage ../all-pkgs/h/hyperlink { };

@@ -984,6 +984,8 @@ cryptodev_headers = callPackage ../all-pkgs/c/cryptodev {
   kernel = null;
 };
 
+cryptopp = callPackage ../all-pkgs/c/cryptopp { };
+
 cryptsetup = callPackage ../all-pkgs/c/cryptsetup { };
 
 cscope = callPackage ../all-pkgs/c/cscope { };

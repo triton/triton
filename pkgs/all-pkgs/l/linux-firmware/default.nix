@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2018-10-23";
+  version = "2019-02-14";
 in
 stdenv.mkDerivation rec {
   name = "linux-firmware-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   # so iwlwifi cards will fail to load on newly released kernels.
   src = fetchurl {
     url = "https://github.com/wkennington/linux-firmware/releases/download/${version}/${name}.tar.xz";
-    sha256 = "17ea86d52450fef8f3740a547443b9d09810710c0ae9d93f1c63809824472ea8";
+    sha256 = "ca772b1bb82ad9963a65e1b38c689d10764ceae8d4694b88393c8c126521d071";
   };
 
   preInstall = ''

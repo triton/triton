@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "0.6.0";
+  version = "0.7.0";
 in
 buildPythonPackage {
   name = "Automat-${version}";
@@ -19,7 +19,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Automat";
     inherit version;
-    sha256 = "3c1fd04ecf08ac87b4dd3feae409542e9bf7827257097b2b6ed5692f69d6f6a8";
+    sha256 = "cbd78b83fa2d81fe2a4d23d258e1661dd7493c9a50ee2f1a5b2cac61c1793b0e";
   };
 
   buildInputs = [

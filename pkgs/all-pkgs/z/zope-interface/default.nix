@@ -12,7 +12,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "4.5.0";
+  version = "4.6.0";
 in
 buildPythonPackage rec {
   name = "zope.interface-${version}";
@@ -20,7 +20,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "zope.interface";
     inherit version;
-    sha256 = "57c38470d9f57e37afb460c399eb254e7193ac7fb8042bd09bdc001981a9c74c";
+    sha256 = "1b3d0dcabc7c90b470e59e38a9acaa361be43b3a6ea644c0063951964717f0e5";
   };
 
   nativeBuildInputs = optionals doCheck [

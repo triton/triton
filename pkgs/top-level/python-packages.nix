@@ -378,6 +378,8 @@ gyp = callPackage ../all-pkgs/g/gyp { };
 
 h2 = callPackage ../all-pkgs/h/h2 { };
 
+hkdf = callPackage ../all-pkgs/h/hkdf { };
+
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
 hyperlink = callPackage ../all-pkgs/h/hyperlink { };

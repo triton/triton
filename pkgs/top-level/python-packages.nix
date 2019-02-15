@@ -437,6 +437,8 @@ m2crypto = callPackage ../all-pkgs/m/m2crypto { };
 
 m2r = callPackage ../all-pkgs/m/m2r { };
 
+magic-wormhole = callPackage ../all-pkgs/m/magic-wormhole { };
+
 mako = callPackage ../all-pkgs/m/mako { };
 Mako = callPackageAlias "mako" { };  # DEPRECATED
 

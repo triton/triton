@@ -16,10 +16,10 @@ let
 
   sources = {
     "stable" = rec {
-      fetchzipverion = 2;
-      version = "0.1.6";
+      fetchzipverion = 6;
+      version = "2.0.0";
       rev = "v${version}";
-      sha256 = "18c71799b1f8e8d48660b19f6a5cb67ced38811b31b9ae6588f23a2a4ee98a94";
+      sha256 = "2276ba124ff6101b38fd12339f05f5920a03c83bc6a124c8e2338c70964bf01e";
     };
     "head" = {
       fetchzipverion = 6;

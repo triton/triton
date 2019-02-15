@@ -2667,6 +2667,9 @@ libvpx_1-6 = callPackage ../all-pkgs/l/libvpx {
 libvpx_1-7 = callPackage ../all-pkgs/l/libvpx {
   channel = "1.7";
 };
+libvpx_1-8 = callPackage ../all-pkgs/l/libvpx {
+  channel = "1.8";
+};
 libvpx_head = callPackage ../all-pkgs/l/libvpx {
   channel = "1.999";
 };

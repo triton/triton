@@ -69,6 +69,12 @@ let
       rev = "v1.7.0";
       sha256 = "041f332578e3e9ad150ff2c782293b3f191b79932d569fbeb9a1bfe394958955";
     };
+    "1.8" = {
+      fetchzipversion = 6;
+      version = "1.8.0";
+      rev = "v1.8.0";
+      sha256 = "6440189b9fa807a3a6dfed13cd81a8b5890553407dd7b23b6643816d1874ace0";
+    };
     # master
     "1.999" = {
       fetchzipversion = 6;

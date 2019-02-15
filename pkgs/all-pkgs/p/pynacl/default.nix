@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.2.1";
+  version = "1.3.0";
 in
 buildPythonPackage {
   name = "pynacl-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "PyNaCl";
     inherit version;
-    sha256 = "e0d38fa0a75f65f556fb912f2c6790d1fa29b7dd27a1d9cc5591b281321eaaa9";
+    sha256 = "0c6100edd16fefd1557da078c7a31e7b7d7a52ce39fdca2bec29d4f7b6e7600c";
   };
 
   propagatedBuildInputs = [

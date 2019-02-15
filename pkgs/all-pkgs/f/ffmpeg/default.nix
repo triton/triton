@@ -201,9 +201,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 6;
-      version = "2018.08.21";
-      rev = "24b24e14d64730ed90ae00744f091c74f30cff7a";
-      sha256 = "99f022ee83dea7bee67d6e70e4cc8d905e0122056054e7c76e6eba17f044d80e";
+      version = "2019.02.14";
+      rev = "9e1e5213933dfed529f0cecac7304236a786177e";
+      sha256 = "daeb1af827a9a3331a99efb11bf57ee06dcc65eaa4fb0438469caba52d7f2620";
     };
   };
   source = sources."${channel}";
@@ -557,11 +557,12 @@ stdenv.mkDerivation rec {
     "--${boolEn (libgcrypt != null)}-gcrypt"
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
-    (fflag "--${boolEn (aomedia != null)}-libaom" "4.0")
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
     (deprfflag "--${boolEn (jack2_lib != null)}-jack" null "3.4")
     "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
+    (fflag "--${boolEn (aomedia != null)}-libaom" "4.0")
+    /**/(fflag "--disable-libaribb24" "4.1")
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libbs2b != null)}-libbs2b"
@@ -570,6 +571,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (libcdio != null)}-libcdio"
     /**/"--disable-libcdio"
     /**/(fflag "--disable-libcodec2" "4.0")
+    /**/(fflag "--disable-libdav1d" "4.1")
     /**/(fflag "--disable-libdavs2" "4.1")
     "--${boolEn (
       libdc1394 != null
@@ -589,6 +591,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn (ilbc != null)}-libilbc"
     "--disable-libilbc"
     (fflag "--${boolEn (jack2_lib != null)}-libjack" "4.0")
+    /**/(fflag "--disable-libklvanc" "4.1")
     "--${boolEn (kvazaar != null)}-libkvazaar"
     /**/(fflag "--disable-liblensfun" "4.1")
     "--${boolEn (libmodplug != null)}-libmodplug"
@@ -636,6 +639,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (x264 != null)}-libx264"
     "--${boolEn (x265 != null)}-libx265"
     "--${boolEn (xavs != null)}-libxavs"
+    /**/(fflag "--disable-libxavs2" "4.1")
     #"--${boolEn (libxcb != null)}-libxcb"
     "--${boolEn libxcbshmExtlib}-libxcb-shm"
     "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"

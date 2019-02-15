@@ -609,6 +609,8 @@ pysaml2 = callPackage ../all-pkgs/p/pysaml2 { };
 
 pyscard = callPackage ../all-pkgs/p/pyscard { };
 
+pyserial = callPackage ../all-pkgs/p/pyserial { };
+
 pytest = callPackage ../all-pkgs/p/pytest { };
 
 pytest-benchmark = callPackage ../all-pkgs/p/pytest-benchmark { };

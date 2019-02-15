@@ -1195,7 +1195,6 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   atk = pkgs.atk_2-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
-  gvfs = pkgs.gvfs_1-34;
   nautilus = pkgs.nautilus_unwrapped_3-26;
 };
 evince = callPackageAlias "evince_3-22" { };
@@ -1970,12 +1969,9 @@ gupnp-av = callPackageAlias "gupnp-av_0-12" { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
-gvfs_1-34 = callPackage ../all-pkgs/g/gvfs {
-  channel = "1.34";
-  libbluray = null;
+gvfs = callPackage ../all-pkgs/g/gvfs {
   libsoup = pkgs.libsoup_2-64;
 };
-gvfs = callPackageAlias "gvfs_1-34" { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
@@ -3014,14 +3010,12 @@ nautilus_unwrapped_3-26 = callPackage ../all-pkgs/n/nautilus/unwrapped.nix {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gnome-desktop = pkgs.gnome-desktop_3-31;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
-  gvfs = pkgs.gvfs_1-34;
   tracker = pkgs.tracker_2-0;
 };
 nautilus_3-26 = callPackage ../all-pkgs/n/nautilus {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
-  gvfs = pkgs.gvfs_1-34;
 };
 nautilus_unwrapped = callPackageAlias "nautilus_unwrapped_3-26" { };
 nautilus = callPackageAlias "nautilus_3-26" { };

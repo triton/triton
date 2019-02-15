@@ -1,11 +1,15 @@
 { stdenv
 , docbook-xsl
 , fetchurl
+, gettext
 , intltool
+, itstool
 , lib
-, libtool
 , libxslt
 , makeWrapper
+, meson
+, ninja
+, python3
 
 , avahi
 , dbus
@@ -15,7 +19,7 @@
 , glib
 #, gnome-online-accounts
 , libarchive
-, libbluray
+#, libbluray
 , libcap
 , libcdio
 , libgcrypt
@@ -30,40 +34,39 @@
 , libxml2
 , openssh
 , polkit
-, samba_client
+#, samba_client
+, systemd-dummy
 , systemd_lib
 , udisks
-
-, channel
 }:
 
 let
   inherit (lib)
     boolEn;
 
-  sources = {
-    "1.34" = {
-      version = "1.34.2";
-      sha256 = "60d3c7eaf3dc697653b330b55b806ab0a59424030954628eb5ed88e8ea3a9669";
-    };
-  };
-  source = sources."${channel}";
+  channel = "1.38";
+  version = "${channel}.1";
+  sha256 = "ed136a842c996d25c835da405c4775c77106b46470e75bdc242bdd59ec0d61a0";
 in
 stdenv.mkDerivation rec {
-  name = "gvfs-${source.version}";
+  name = "gvfs-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gvfs/${channel}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    inherit sha256;
   };
 
   nativeBuildInputs = [
     docbook-xsl
+    gettext
     intltool
-    libtool
+    itstool
     libxslt
     makeWrapper
+    meson
+    ninja
+    python3  # FIXME: remove for 1.40.x
   ];
 
   buildInputs = [
@@ -75,7 +78,7 @@ stdenv.mkDerivation rec {
     glib
     #gnome-online-accounts
     libarchive
-    libbluray
+    #libbluray
     libcap
     libcdio
     libgcrypt
@@ -93,53 +96,33 @@ stdenv.mkDerivation rec {
     libxml2
     openssh
     polkit
-    samba_client
+    #samba_client
+    systemd-dummy
     systemd_lib
     udisks
   ];
 
-  configureFlags = [
-    "--disable-documentation"
-    "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gcr != null)}-gcr"
-    "--enable-nls"
-    "--${boolEn (polkit != null)}-admin"
-    "--${boolEn (libsoup != null)}-http"
-    "--${boolEn (avahi != null)}-avahi"
-    "--${boolEn (systemd_lib != null)}-udev"
-    "--enable-gudev"
-    "--${boolEn (fuse_2 != null)}-fuse"
-    "--disable-gdu"
-    "--${boolEn (
-      udisks != null
-      && systemd_lib != null)}-udisks2"
-    "--${boolEn (
-      systemd_lib != null
-      && udisks != null)}-libsystemd-login"
-    "--${boolEn (
-      libcdio != null
-      && systemd_lib != null)}-cdda"
-    "--enable-afc"
-    # Remove dependency on webkit
-    "--disable-goa"
-    "--disable-google"
-    "--${boolEn (libgphoto2 != null)}-gphoto2"
-    "--${boolEn (libgnome-keyring != null)}-keyring"
-    "--${boolEn (libbluray != null)}-bluray"
-    "--enable-libusb"
-    "--${boolEn (
-      libmtp != null
-      && systemd_lib != null)}-libmtp"
-    "--${boolEn (samba_client != null)}-samba"
-    "--${boolEn (libarchive != null)}-archive"
-    "--${boolEn (libgcrypt != null)}-afp"
-    "--disable-nfs"
-    "--enable-more-warnings"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
+  postPatch = ''
+    # FIXME: remove for 1.40.x
+    patchShebangs codegen.py
+
+    # Already handled by setup-hooks
+    grep -q 'meson_post_install.py' meson.build
+    sed -i meson.build \
+      -e '/meson.add_install_script/,+4 d'
+  '';
+
+  mesonFlags = [
+    "-Dadmin=false"  # FIXME
+    "-Dafc=false"  # FIXME
+    "-Dcdda=false"  # FIXME
+    # Remove dependency on webkit2
+    "-Dgoa=false"
+    "-Dgoogle=false"
+    "-Dnfs=false"
+    "-Dsmb=false"  # FIXME
+    "-Dbluray=false"  # FIXME
+    "-Dman=true"
   ];
 
   preFixup = ''

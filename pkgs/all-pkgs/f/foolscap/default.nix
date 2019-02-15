@@ -3,12 +3,11 @@
 , fetchPyPi
 
 , pyopenssl
-, service-identity
 , twisted
 }:
 
 let
-  version = "0.12.6";
+  version = "0.13.1";
 in
 buildPythonPackage {
   name = "foolscap-${version}";
@@ -16,12 +15,11 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "foolscap";
     inherit version;
-    sha256 = "3f4b21a266b8dc73a3ce2db5a5b7762bd4444b610227f565c9b516440cc6f5ae";
+    sha256 = "e2773b4901430b8852da9d691e91984a5e2118da0448c192d9ec5aa81db91d6b";
   };
 
   buildInputs = [
     pyopenssl
-    service-identity
     twisted
   ];
 

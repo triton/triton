@@ -23,14 +23,14 @@ let
     boolEn;
 
   channel = "3.28";
-  version = "${channel}.0";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "gcr-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gcr/${channel}/${name}.tar.xz";
-    sha256 = "15e175d1da7ec486d59749ba34906241c442898118ce224a7b70bf2e849faf0b";
+    sha256 = "95204aa2111c301778ebfbe60975ce3ed698c958430ffcc2a785ac5e593d168b";
   };
 
   nativeBuildInputs = [
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--enable-introspection"
     "--${boolEn (vala != null)}-vala"
     "--disable-update-mime"

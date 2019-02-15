@@ -15,17 +15,17 @@ let
     optionalString
     platforms;
 
-  version = "2018-02-09";
+  version = "2018-11-22";
 in
 stdenv.mkDerivation rec {
   name = "zimg-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "sekrit-twc";
     repo = "zimg";
-    rev = "bad41c84e5fa2896fb2b155f81a4b98cfca2140f";
-    sha256 = "62dfb0b2855665d11b1373a01072ce9e3f9e7677e797a3b50938e301c1ecc82c";
+    rev = "721d221d1ff658c94bc27ac882fd0ffc16b21ab8";
+    sha256 = "5568eac165dfa2dd9793b9aa758d36f348e69f61a73570f337ead0118329be85";
   };
 
   nativeBuildInputs = [
@@ -40,6 +40,9 @@ stdenv.mkDerivation rec {
     sed -i Makefile.am \
       -e 's,-I.*test/extra/googletest/googletest,${googletest},g' \
       -e '/libgtest.la/d'
+  '' + /* Don't use -mtune */ ''
+    sed -i configure.ac \
+      -e '/-mtune/d'
   '';
 
   configureFlags = [

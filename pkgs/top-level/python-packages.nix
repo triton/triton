@@ -524,6 +524,8 @@ portend = callPackage ../all-pkgs/p/portend { };
 
 prettytable = callPackage ../all-pkgs/p/prettytable { };
 
+priority = callPackage ../all-pkgs/p/priority { };
+
 progressbar = callPackage ../all-pkgs/p/progressbar { };
 
 psutil = callPackage ../all-pkgs/p/psutil { };

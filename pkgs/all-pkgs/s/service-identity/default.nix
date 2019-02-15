@@ -4,6 +4,7 @@
 , lib
 
 , attrs
+, ipaddress
 , pyasn1
 , pyasn1-modules
 , pyopenssl
@@ -14,7 +15,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "17.0.0";
+  version = "18.1.0";
 in
 buildPythonPackage rec {
   name = "service_identity-${version}";
@@ -22,21 +23,16 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "service_identity";
     inherit version;
-    sha256 = "4001fbb3da19e0df22c47a06d29681a398473af4aa9d745eca525b3b2c2302ab";
+    sha256 = "0858a54aabc5b459d1aafa8a518ed2081a285087f349fe3e55197989232e2e2d";
   };
 
   propagatedBuildInputs = [
     attrs
+    ipaddress
     pyasn1
     pyasn1-modules
     pyopenssl
   ];
-
-  buildInputs = optionals doCheck [
-    pytest
-  ];
-
-  doCheck = true;
 
   meta = with lib; {
     description = "Service identity verification for pyOpenSSL";

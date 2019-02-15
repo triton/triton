@@ -728,6 +728,8 @@ slimit = callPackage ../all-pkgs/s/slimit { };
 
 snowballstemmer = callPackage ../all-pkgs/s/snowballstemmer { };
 
+spake2 = callPackage ../all-pkgs/s/spake2 { };
+
 speedtest-cli = callPackage ../all-pkgs/s/speedtest-cli { };
 
 sphinx = callPackage ../all-pkgs/s/sphinx { };

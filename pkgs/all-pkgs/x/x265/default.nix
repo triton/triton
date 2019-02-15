@@ -7,15 +7,10 @@
 , ninja
 
 , numactl
+, vmaf ? null  # TODO: VMAF support.
 
 # Optionals
 , cliSupport ? true # Build standalone CLI application
-
-, unittestsSupport ? false # Unit tests
-
-# Debugging options
-, debugSupport ? false # Run-time sanity checks (debugging)
-, werrorSupport ? false # Warnings as errors
 , custatsSupport ? false # Internal profiling of encoder work
 
 , channel
@@ -38,10 +33,10 @@ let
       sha256 = "d5e75fa62ffe6ed49e691f8eb8ab8c1634ffcc0725dd553c6fdb4d5443b494a2";
     };
     "head" = {
-      fetchzipversion = 5;
-      version = "2018-04-24";
-      rev = "fde57c2996659ae2dd5aeddbdedbdb6dc52178e1";
-      sha256 = "183d0f128d9273b7cc3e4984c9403ff338241760bbda47c030a52dda37bea6e9";
+      fetchzipversion = 6;
+      version = "2019-02-08";
+      rev = "dcbec33bfb0f1cabdb1ff9eaadba5305ba23e6fa";
+      sha256 = "cd7bfb8b68bf9a8b19ffe73ba8e70eedc3982c554318fd11e53fa943faccb8a6";
     };
   };
   source = sources."${channel}";
@@ -62,27 +57,12 @@ let
       };
 
   cmakeFlagsAll = [
-    "-DFPROFILE_GENERATE=OFF"
-    "-DFPROFILE_USE=OFF"
-    "-DNATIVE_BUILD=OFF"
-    "-DCHECKED_BUILD=${boolOn debugSupport}"
-    "-DENABLE_AGGRESSIVE_CHECKS=OFF"
     "-DENABLE_ASSEMBLY=ON"
     "-DENABLE_LIBNUMA=${boolOn (
       elem targetSystem platforms.linux
       && numactl != null)}"
-      #"NO_ATOMICS"
     "-DENABLE_PIC=ON"
-    "-DENABLE_AGGRESSIVE_CHECKS=OFF"
-    "-DENABLE_ASSEMBLY=ON"
-    "-DCHECKED_BUILD=OFF"
-    "-DWARNINGS_AS_ERRORS=OFF"
-    "-DENABLE_ALTIVEC=${boolOn (elem targetSystem platforms.powerpc-all)}"
-    "-DCPU_POWER8=${boolOn (elem targetSystem platforms.powerpc-all)}"
-    "-DENABLE_PPA=OFF"
-    "-DENABLE_VTUNE=OFF"
     "-DDETAILED_CU_STATS=${boolOn custatsSupport}"
-    "-DENABLE_TESTS=OFF"
   ];
 in
 
@@ -113,9 +93,6 @@ let
       "-DENABLE_HDR10_PLUS=ON"
       "-DEXPORT_C_API=OFF"
       "-DHIGH_BIT_DEPTH=ON"
-      "-DLINKED_8BIT=OFF"
-      "-DLINKED_10BIT=OFF"
-      "-DLINKED_12BIT=OFF"
       "-DMAIN12=OFF"
     ] ++ cmakeFlagsAll;
 
@@ -158,9 +135,6 @@ let
       "-DENABLE_HDR10_PLUS=ON"
       "-DEXPORT_C_API=OFF"
       "-DHIGH_BIT_DEPTH=ON"
-      "-DLINKED_8BIT=OFF"
-      "-DLINKED_10BIT=OFF"
-      "-DLINKED_12BIT=OFF"
       "-DMAIN12=ON"
     ] ++ cmakeFlagsAll;
 
@@ -232,13 +206,11 @@ stdenv.mkDerivation rec {
     "-DENABLE_SHARED=ON"
     "-DHIGH_BIT_DEPTH=OFF"
     "-DENABLE_HDR10_PLUS=OFF"
-    "-DLINKED_8BIT=OFF"
-    "-DLINKED_10BIT=ON"
-    "-DLINKED_12BIT=ON"
-    #"NO_ATOMICS"
     "-DSTATIC_LINK_CRT=OFF"
     "-DEXPORT_C_API=ON"
     "-DEXTRA_LIB=${x265Libs}"
+    "-DLINKED_10BIT=ON"
+    "-DLINKED_12BIT=ON"
   ] ++ cmakeFlagsAll;
 
   postInstall = /* Remove static library */ ''

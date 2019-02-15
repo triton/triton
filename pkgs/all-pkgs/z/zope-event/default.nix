@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "4.3.0";
+  version = "4.4";
 in
 buildPythonPackage rec {
   name = "zope.event-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "zope.event";
     inherit version;
-    sha256 = "e0ecea24247a837c71c106b0341a7a997e3653da820d21ef6c08b32548f733e7";
+    sha256 = "69c27debad9bdacd9ce9b735dad382142281ac770c4a432b533d6d65c4614bcf";
   };
 
   meta = with lib; {

@@ -240,7 +240,6 @@ stdenv.mkDerivation rec {
         $out/lib/libXvMC* \
         $out/lib/d3d \
         $out/lib/vdpau \
-        $out/lib/bellagio \
         $out/lib/libxatracker* \
         $out/lib/libvulkan_*
 

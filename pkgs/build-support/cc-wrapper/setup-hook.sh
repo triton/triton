@@ -34,10 +34,6 @@ if [ -n "@libc@" ]; then
     addToSearchPath _PATH @libc@/bin
 fi
 
-if [ -n "@coreutils@" ]; then
-    addToSearchPath _PATH @coreutils@/bin
-fi
-
 if [ -z "$crossConfig" ]; then
     export CC=@real_cc@
     export CXX=@real_cxx@

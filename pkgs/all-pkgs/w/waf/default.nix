@@ -46,13 +46,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "waf-2.0.10";
+  name = "waf-2.0.14";
 
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
-    multihash = "QmZPsPnS4zXKU7yZjQeJdJewYjjAiKhLDUnMq6HtHFSyT2";
+    multihash = "Qmazf5F7byK6qQA8HDoEcfyNEEKwP7PJzzkNiJUdtnSb6C";
     hashOutput = false;
-    sha256 = "6550f9b7b7ad5c5f55c7e3472bdae041f3e2f47c1f905fa3c79c172aa91403ed";
+    sha256 = "c74055d7452540ad66c12d955c09f62a9fde0e23b0ab3c43984dc879b4bb51f4";
   };
 
   buildInputs = [
@@ -85,9 +85,11 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Thomas Nagy
-      pgpKeyFingerprint = "8AF2 2DE5 A068 22E3 474F  3C70 49B4 C67C 0527 7AAA";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        # Thomas Nagy
+        pgpKeyFingerprint = "8AF2 2DE5 A068 22E3 474F  3C70 49B4 C67C 0527 7AAA";
+      };
     };
   };
 

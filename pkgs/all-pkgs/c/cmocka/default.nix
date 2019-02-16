@@ -6,20 +6,16 @@
 
 let
   major = "1.1";
-  version = "${major}.1";
-  
-  tarballUrls = [
-    "https://cmocka.org/files/${major}/cmocka-${version}.tar"
-  ];
+  version = "${major}.3";
 in
 stdenv.mkDerivation rec {
   name = "cmocka-${version}";
 
   src = fetchurl {
-    urls = map (n: "${n}.xz") tarballUrls;
-    multihash = "QmZfvR3fkiLGFs52pp6RgohzsfAnguC1yRNtNS8KntAcVF";
+    url = "https://cmocka.org/files/${major}/cmocka-${version}.tar.xz";
+    multihash = "QmZrFGJ6FnpnKYBnG7fZJH8hAVK4C3nyWxjLd1cgRS77JH";
     hashOutput = false;
-    sha256 = "f02ef48a7039aa77191d525c5b1aee3f13286b77a13615d11bc1148753fc0389";
+    sha256 = "43eabcf72a9c80e3d03f7c8a1c04e408c18d2db5121eb058a3ef732a9dfabfaf";
   };
 
   nativeBuildInputs = [
@@ -30,9 +26,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpDecompress = true;
-      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
-      pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # Andreas Schneider
+          "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D"
+        ];
+      };
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -8,7 +8,7 @@ find_waf() {
 # source was extracted into and removes it after the build finishes.
 waf_unpack() {
   echo "$(find_waf)"
-  ln -svf "$(find_waf)" "waf"
+  ln -svf "$(find_waf)" "${wafExePath-waf}"
 }
 
 wafConfigurePhase() {
@@ -38,7 +38,7 @@ wafInstallPhase() {
 }
 
 remove_waf_link() {
-  rm -fv 'waf'
+  rm -fv "${wafExePath-waf}"
 }
 
 if [ -n "${wafSetupHook-true}" ] ; then

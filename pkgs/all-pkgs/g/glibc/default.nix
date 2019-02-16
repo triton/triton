@@ -109,6 +109,12 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  postInstall = ''
+    # Make sure the cc-wrapper doesn't pick this up automagically
+    mkdir -p "$out"/nix-support
+    touch "$out"/nix-support/cc-wrapper-ignored
+  '';
+
   # Don't retain shell referencs
   dontPatchShebangs = true;
 

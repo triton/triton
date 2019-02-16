@@ -183,7 +183,7 @@ stdenv.mkDerivation {
       # for binutils and Glibc).
       echo $cc $binutils $libc > $out/nix-support/propagated-user-env-packages
 
-      echo ${toString extraPackages} > $out/nix-support/propagated-native-build-inputs
+      echo $cc $binutils $libc ${toString extraPackages} > $out/nix-support/propagated-native-build-inputs
     '')
 
     + ''

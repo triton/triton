@@ -210,6 +210,10 @@ stdenv.mkDerivation (rec {
     # We don't need the install-tools for anything
     # They sometimes hold references to interpreters
     rm -rv "$out"/libexec/gcc/*/*/install-tools
+
+    # Make sure the cc-wrapper doesn't pick this up automagically
+    mkdir -p "$out"/nix-support
+    touch "$out"/nix-support/cc-wrapper-ignored
   '';
 
   preFixup = optionalString (type != "full") ''

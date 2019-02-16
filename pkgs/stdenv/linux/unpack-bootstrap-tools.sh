@@ -57,3 +57,7 @@ chmod +x $out/bin/egrep $out/bin/fgrep
 mkdir -p $glibc
 ln -s $out/lib $glibc/lib
 ln -s $out/include-glibc $glibc/include
+
+# Make sure the cc-wrapper doesn't pick this up automagically
+mkdir -p "$glibc"/nix-support
+touch "$glibc"/nix-support/cc-wrapper-ignored

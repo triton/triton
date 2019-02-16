@@ -108,6 +108,10 @@ stdenv.mkDerivation (rec {
 
     # We don't build against binutils libraries so we don't need their headers
     rm -r "$out"/include
+
+    # Make sure the cc-wrapper doesn't pick this up automagically
+    mkdir -p "$out"/nix-support
+    touch "$out"/nix-support/cc-wrapper-ignored
   '';
 
   meta = with stdenv.lib; {

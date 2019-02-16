@@ -1,6 +1,10 @@
 export NIX_CC=@out@
 
 addCVars () {
+  if [ -e $1/nix-support/cc-wrapper-ignored ]; then
+    return
+  fi
+
   if [ -d $1/include ]; then
     export NIX_CFLAGS_COMPILE+=" ${ccIncludeFlag:--isystem} $1/include"
   fi
@@ -15,20 +19,6 @@ addCVars () {
 }
 
 envHooks+=(addCVars)
-
-# Note: these come *after* $out in the PATH (see setup.sh).
-
-if [ -n "@binutils@" ]; then
-  addToSearchPath _PATH @binutils@/bin
-fi
-
-if [ -n "@cc@" ]; then
-  addToSearchPath _PATH @cc@/bin
-fi
-
-if [ -n "@libc@" ]; then
-  addToSearchPath _PATH @libc@/bin
-fi
 
 if [ -z "$crossConfig" ]; then
   export CC=@real_cc@

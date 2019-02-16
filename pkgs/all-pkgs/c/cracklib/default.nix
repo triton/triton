@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/cracklib/cracklib/releases/download/${name}/${name}.tar.gz";
+    multihash = "QmPNkPiCXBPy7SY9xwvvYa7WxmeMnCnyXteTuvHcntJGgr";
     sha256 = "0hrkb0prf7n92w6rxgq0ilzkk6rkhpys2cfqkrbzswp27na7dkqp";
   };
 

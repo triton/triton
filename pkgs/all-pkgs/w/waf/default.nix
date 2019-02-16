@@ -3,7 +3,7 @@
 , fetchurl
 , lib
 
-, python
+, python3
 }:
 
 let
@@ -56,22 +56,22 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    python
+    python3
   ];
 
-  PYTHON_EXE = "${python.interpreter}";
+  PYTHON_EXE = "${python3.interpreter}";
 
   setupHook = ./setup-hook.sh;
 
   configurePhase = ''
-    ${python.interpreter} waf-light configure
+    ${python3.interpreter} waf-light configure
   '';
 
   buildPhase = ''
     cp -v ${autooptions}/autooptions.py autooptions.py
     cp -v ${autowaf} autowaf.py
     cp -v ${lv2} lv2.py
-    ${python.interpreter} waf-light build --tools=$(pwd)/autooptions.py,$(pwd)/autowaf.py,$(pwd)/lv2.py
+    ${python3.interpreter} waf-light build --tools=$(pwd)/autooptions.py,$(pwd)/autowaf.py,$(pwd)/lv2.py
   '';
 
   installPhase = ''

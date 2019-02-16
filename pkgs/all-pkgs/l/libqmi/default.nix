@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libqmi-1.20.0";
+  name = "libqmi-1.22.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libqmi/${name}.tar.xz";
-    multihash = "QmZZs9nTRFqkwNHcjxU2XJuWJAF9okzF9PxBxEcnRSU93y";
-    sha256 = "21428cd3749c56246565123f707fee51238651a22c60bdc85ebce97388626eb4";
+    multihash = "QmaRus8rwk88FDfmGSotiG3Mh9utSa5da3A95xaD7XZ1LL";
+    sha256 = "IcGYtIHxYXu37bGWDYI1ad4+OLJp2/UTrxtWBIyvqhc=";
   };
 
   nativeBuildInputs = [

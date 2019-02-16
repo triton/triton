@@ -21,19 +21,19 @@ wafConfigurePhase() {
   wafFlagsArray+=('--jobs' "$NIX_BUILD_CORES")
 
   echo "configure flags: $wafFlags ${wafFlagsArray[@]}"
-  @PYTHON_EXE@ waf configure $wafFlags "${wafFlagsArray[@]}"
+  @PYTHON_EXE@ "${wafExePath-waf}" configure $wafFlags "${wafFlagsArray[@]}"
   eval "$postConfigure"
 }
 
 wafBuildPhase() {
   eval "$preBuild"
-  @PYTHON_EXE@ waf build --jobs $NIX_BUILD_CORES
+  @PYTHON_EXE@ "${wafExePath-waf}" build --jobs $NIX_BUILD_CORES
   eval "$postBuild"
 }
 
 wafInstallPhase() {
   eval "$preInstall"
-  @PYTHON_EXE@ waf install --jobs $NIX_BUILD_CORES
+  @PYTHON_EXE@ "${wafExePath-waf}" install --jobs $NIX_BUILD_CORES
   eval "$postInstall"
 }
 

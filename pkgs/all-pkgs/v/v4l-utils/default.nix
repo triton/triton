@@ -28,12 +28,12 @@ assert any (n: n == channel) [
 # See libv4l in all-packages.nix for the libs only (overrides alsa, libX11 & QT)
 
 stdenv.mkDerivation rec {
-  name = "v4l-utils-1.14.2";
+  name = "v4l-utils-1.16.3";
 
   src = fetchurl {
     url = "https://linuxtv.org/downloads/v4l-utils/${name}.tar.bz2";
-    multihash = "QmVQ8RiKqGPCmeP2SNm4KXvD3oSAx3zUSNU6MdLHGFi8Fv";
-    sha256 = "e6b962c4b1253cf852c31da13fd6b5bb7cbe5aa9e182881aec55123bae680692";
+    multihash = "QmS1DAu73SCCr7scyaGjmFdqkjzGgq9Xodw56RJxKHAq82";
+    sha256 = "7c5c0d49c130cf65d384f28e9f3a53c5f7d17bf18740c48c40810e0fbbed5b54";
   };
 
   nativeBuildInputs = [
@@ -60,6 +60,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-libv4l"
+    # Install to a separate directory so that it is easier to remove.
+    "--with-libv4l1subdir=libv4l1"
   ] ++ (
     if (channel == "utils") then [
     "--enable-v4l-utils"
@@ -72,14 +74,28 @@ stdenv.mkDerivation rec {
   ]);
 
   postInstall = ''
-    # Create symlink for V4l1 compatibility
-    ln -sv $out/include/libv4l1-videodev.h $out/include/videodev.h
-    mkdir -pv $out/include/linux
-    ln -sv $out/include/libv4l1-videodev.h $out/include/linux/videodev.h
+    rm -rv "$out"/{include,lib{,/pkgconfig}}/{,lib}v4l1*
   '';
 
   buildParallel = false;
   installParallel = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # Gregor Jasny
+          "05D0 169C 26E4 1593 4181  29DF 199A 64FA DFB5 00FF"
+        ];
+      };
+    };
+  };
 
   meta = with lib; {
     description = "V4L utils and libv4l, provide common image formats regardless of the v4l device";

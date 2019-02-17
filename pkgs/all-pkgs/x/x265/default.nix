@@ -16,6 +16,8 @@
 , channel
 }:
 
+# NOTE: Tarballs hosted on bitbucket are non-deterministic.
+
 let
   inherit (stdenv)
     targetSystem;
@@ -29,7 +31,8 @@ let
   sources = {
     "stable" = {
       version = "3.0";
-      multihash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH";
+      md5confirm = "8ff1780246bb7ac8506239f6129c04ec";
+      multihash = "QmTRoGtatifcPPHjL22njyYSn381wb6wJsrrDzZXtVMjm7";
       sha256 = "c5b9fc260cabbc4a81561a448f4ce9cad7218272b4011feabc3a6b751b2f0662";
     };
     "head" = {
@@ -51,8 +54,11 @@ let
       }
     else
       fetchurl {
-        url = "https://bitbucket.org/multicoreware/x265/downloads/"
-          + "x265_${source.version}.tar.gz";
+        urls = [
+          ("https://bitbucket.org/multicoreware/x265/downloads/"
+            + "x265_${source.version}.tar.gz")
+          ("mirror://videolan/x265/x265_${source.version}.tar.gz")
+        ];
         inherit (source) multihash sha256;
       };
 
@@ -216,6 +222,19 @@ stdenv.mkDerivation rec {
   postInstall = /* Remove static library */ ''
     rm -v $out/lib/libx265.a
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        md5Confirm = source.md5confirm;
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Library for encoding h.265/HEVC video streams";

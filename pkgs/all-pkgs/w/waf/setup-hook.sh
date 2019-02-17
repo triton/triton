@@ -1,18 +1,12 @@
-
-find_waf() {
-  type -P 'waf'
-}
-
 # The waf executable must be located in the directory you want to
 # extract it into.  This creates a symlink in the directory the
 # source was extracted into and removes it after the build finishes.
-waf_unpack() {
-  echo "$(find_waf)"
-  ln -svf "$(find_waf)" "${wafExePath-waf}"
+wafUnpack() {
+  ln -svf "$waf" "$wafForBuild"
 }
 
 wafConfigurePhase() {
-  eval "$preConfigure"
+  runHook 'preConfigure'
 
   if [ -n "${addPrefix-true}" ]; then
     wafFlagsArray+=("--prefix" "$prefix")
@@ -21,38 +15,35 @@ wafConfigurePhase() {
   wafFlagsArray+=('--jobs' "$NIX_BUILD_CORES")
 
   echo "configure flags: $wafFlags ${wafFlagsArray[@]}"
-  @PYTHON_EXE@ "${wafExePath-waf}" configure $wafFlags "${wafFlagsArray[@]}"
-  eval "$postConfigure"
+  "$wafPython" "$wafForBuild" configure $wafFlags "${wafFlagsArray[@]}"
+
+  runHook 'postConfigure'
 }
 
 wafBuildPhase() {
-  eval "$preBuild"
-  @PYTHON_EXE@ "${wafExePath-waf}" build --jobs $NIX_BUILD_CORES
-  eval "$postBuild"
+  runHook 'preBuild'
+
+  "$wafPython" "$wafForBuild" build --jobs $NIX_BUILD_CORES
+
+  runHook 'postBuild'
 }
 
 wafInstallPhase() {
-  eval "$preInstall"
-  @PYTHON_EXE@ "${wafExePath-waf}" install --jobs $NIX_BUILD_CORES
-  eval "$postInstall"
+  runHook 'preInstall'
+
+  "$wafPython" "$wafForBuild" install --jobs $NIX_BUILD_CORES
+
+  runHook 'postInstall'
 }
 
-remove_waf_link() {
-  rm -fv "${wafExePath-waf}"
-}
-
-if [ -n "${wafSetupHook-true}" ] ; then
-  if [ -z "${wafUseVendored-}" ]; then
-    preConfigurePhases+=('waf_unpack')
+waf="${waf-@out@/bin/waf}"
+wafPython="${wafPython-@PYTHON_EXE@}"
+wafForBuild="${wafForBuild-waf}"
+if [ -n "${wafConfigure-1}" ] ; then
+  if [ -z "${wafVendored-}" ]; then
+    preConfigurePhases+=('wafUnpack')
   fi
-
   configurePhase='wafConfigurePhase'
-
   buildPhase='wafBuildPhase'
-
   installPhase='wafInstallPhase'
-
-  if [ -z "${wafUseVendored-}" ]; then
-    postPhases+=('remove_waf_link')
-  fi
 fi

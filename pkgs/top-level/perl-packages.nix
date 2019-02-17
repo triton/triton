@@ -6291,10 +6291,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   JSON = buildPerlPackage rec {
-    name = "JSON-2.97001";
+    name = "JSON-4.01";
     src = fetchurl {
       url = "mirror://cpan/authors/id/I/IS/ISHIGAKI/${name}.tar.gz";
-      sha256 = "e277d9385633574923f48c297e1b8acad3170c69fa590e31fa466040fc6f8f5a";
+      sha256 = "631593a939d4510e6ed76402556f38a34b20007237828670282e975712e0b1ed";
     };
     meta = {
       description = "JSON (JavaScript Object Notation) encoder/decoder";

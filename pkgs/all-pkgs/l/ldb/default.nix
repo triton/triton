@@ -5,6 +5,7 @@
 , libxslt
 , python3
 , samba_full
+, waf
 
 , cmocka
 , lmdb
@@ -15,7 +16,7 @@
 }:
 
 let
-  name = "ldb-1.5.2";
+  name = "ldb-1.5.3";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -27,14 +28,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "61afb5050a04e0361ee5869658b4e935dbe2a7d1c58018c720e0e68163520e9e";
+    sha256 = "1a8acfa5bea27c4103151d169a1e47f0ce9e42e2a6e793e57d6df298aafabd00";
   };
 
   nativeBuildInputs = [
     docbook_xml_dtd_42
     docbook-xsl
     libxslt
-    python3
+    waf
   ];
 
   buildInputs = [
@@ -46,22 +47,15 @@ stdenv.mkDerivation rec {
     popt
   ];
 
-  postPatch = ''
-    patchShebangs buildtools/bin/waf
-  '';
+  wafForBuild = "buildtools/bin/waf";
+  wafVendored = true;
 
-  configureFlags = [
+  wafFlags = [
+    "--disable-python"
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
 
-  buildPhase = ''
-    buildtools/bin/waf build -j $NIX_BUILD_CORES
-  '';
-
-  installPhase = ''
-    buildtools/bin/waf install -j $NIX_BUILD_CORES
-  '';
 
   passthru = {
     srcVerification = fetchurl {

@@ -3,8 +3,8 @@
 , docbook_xml_dtd_42
 , fetchurl
 , libxslt
-, python3
 , samba_full
+, waf
 
 , ncurses
 , readline
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     docbook-xsl
     docbook_xml_dtd_42
     libxslt
-    python3
+    waf
   ];
 
   buildInputs = [
@@ -41,22 +41,14 @@ stdenv.mkDerivation rec {
     talloc
   ];
 
-  preConfigure = ''
-    patchShebangs buildtools/bin/waf
-  '';
+  wafForBuild = "buildtools/bin/waf";
+  wafVendored = true;
 
-  configureFlags = [
+  wafFlags = [
+    "--disable-python"
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
-
-  buildPhase = ''
-    buildtools/bin/waf build -j $NIX_BUILD_CORES
-  '';
-
-  installPhase = ''
-    buildtools/bin/waf install -j $NIX_BUILD_CORES
-  '';
 
   passthru = {
     srcVerification = fetchurl {

@@ -6,6 +6,7 @@
 , libxslt
 , python3
 , samba_full
+, waf
 }:
 
 let
@@ -29,26 +30,18 @@ stdenv.mkDerivation rec {
     docbook-xsl
     docbook_xml_dtd_42
     libxslt
-    python3
+    waf
   ];
 
-  postPatch = ''
-    patchShebangs buildtools/bin/waf
-  '';
+  wafForBuild = "buildtools/bin/waf";
+  wafVendored = true;
 
-  configureFlags = [
+  wafFlags = [
+    "--disable-python"
     "--enable-talloc-compat1"
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
-
-  buildPhase = ''
-    buildtools/bin/waf build -j $NIX_BUILD_CORES
-  '';
-
-  installPhase = ''
-    buildtools/bin/waf install -j $NIX_BUILD_CORES
-  '';
 
   passthru = {
     srcVerification = fetchurl {

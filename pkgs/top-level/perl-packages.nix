@@ -4939,11 +4939,11 @@ let self = _self // overrides; _self = with self; {
 
   FileTemp = null;
 
-  FileSlurp = buildPerlPackage {
-    name = "File-Slurp-9999.19";
+  FileSlurp = buildPerlPackage rec {
+    name = "File-Slurp-9999.26";
     src = fetchurl {
-      url = mirror://cpan/authors/id/U/UR/URI/File-Slurp-9999.19.tar.gz;
-      sha256 = "0hrn4nipwx40d6ji8ssgr5nw986z9iqq8cn0kdpbszh9jplynaff";
+      url = "mirror://cpan/authors/id/C/CA/CAPOEIRAB/${name}.tar.gz";
+      sha256 = "1e278d25df46310a8d2cd0aca9b8c2703f1eae838a99a8cb91e96950e88e0930";
     };
     meta = {
       description = "Simple and Efficient Reading/Writing/Modifying of Complete Files";

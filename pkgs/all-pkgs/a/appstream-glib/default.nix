@@ -25,13 +25,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.7.7";
+  name = "appstream-glib-0.7.14";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    multihash = "QmUtphjcxrbZvpkLMoowFB8EHsAD18hVk7cQwVqiUVCv8A";
-    sha256 = "bc979456c4ff6bc7434115ef20718d9f7c79cae5110f15d6fe5fae53a5fe800a";
+    multihash = "QmVsjsQmGfwUHMpzaQThUXLyG2ojiHcsWd3BVnhs4MCFa5 ";
+    sha256 = "6dccad15f9d9a59dec6d259170a2010ee4a4b87475335a122a5d8b5e654a1a58";
   };
 
   nativeBuildInputs = [
@@ -63,6 +63,19 @@ stdenv.mkDerivation rec {
     "-Drpm=false"
     "-Dstemmer=false"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        sha256Urls = map (n: "${n}.sha256sum") src.urls;
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Objects & helper methods to read & write AppStream metadata";

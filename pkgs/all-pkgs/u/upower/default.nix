@@ -75,10 +75,6 @@ stdenv.mkDerivation rec {
     "--${boolWt (libimobiledevice != null)}-idevice"
   ];
 
-  NIX_LDFLAGS = [
-    "-lgcc_s"
-  ];
-
   preInstall = ''
     installFlagsArray+=(
       "historydir=$TMPDIR"

@@ -61,8 +61,6 @@ stdenv.mkDerivation rec {
 
   PYTHON_EXE = "${python.interpreter}";
 
-  setupHook = ./setup-hook.sh;
-
   configurePhase = ''
     ${python.interpreter} waf-light configure
   '';
@@ -76,7 +74,16 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -D -m755 -v waf $out/bin/waf
+    mkdir -p "$dev"
   '';
+
+  postFixup = ''
+    mkdir -p "$dev"/{bin,nix-support}
+    ln -sv "$out"/bin/waf "$dev"/bin
+    substituteAll '${./setup-hook.sh}' "$dev/nix-support/setup-hook"
+  '';
+
+  outputs = [ "out" "dev" ];
 
   passthru = {
     srcVerification = fetchurl {

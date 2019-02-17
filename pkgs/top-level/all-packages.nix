@@ -3970,7 +3970,7 @@ vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
 
 w3m = callPackage ../all-pkgs/w/w3m { };
 
-waf = pkgs.python3Packages.waf;
+waf = pkgs.python3Packages.waf.dev;
 
 wavpack = callPackage ../all-pkgs/w/wavpack { };
 

@@ -6936,7 +6936,7 @@ let
     rev = "6134db91200ea474868bc6775e62cc294a74c6c6";
     owner  = "kubernetes";
     repo   = "client-go";
-    sha256 = "f2fddef217018bc7912e282789baf495d9ed5c5e0a462eb50a0607664d259c4e";
+    sha256 = "b032f87d4eaa2c9832d54f5c6f8c1e0b4f671834b7f91b5925b344a85641de22";
     goPackagePath = "k8s.io/client-go";
     excludedPackages = "\\(test\\|fake\\)";
     propagatedBuildInputs = [

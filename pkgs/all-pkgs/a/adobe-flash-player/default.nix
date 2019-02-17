@@ -7,8 +7,9 @@
 
 # https://helpx.adobe.com/flash-player/kb/archived-flash-player-versions.html
 
+# FIXME
 # Requires gcc's libstdc++.so.6
-assert stdenv.cc.isGNU;
+#assert stdenv.cc.isGNU;
 
 let
   inherit (lib)
@@ -16,8 +17,8 @@ let
 
   sources = {
     "stable" = {
-      version = "31.0.0.108";
-      sha256 = "iA+Z/cArsqmwIIt9gz7cqxw4xE2t0W7VJ0vpwD3LycA=";
+      version = "32.0.0.142";
+      sha256 = "6e422fb3b47b53595842f3788d7b3bddac0f200078f88b7e8eebcfcbb90f673f";
     };
     "beta" = {
       version = "24.0.0.154";
@@ -44,7 +45,7 @@ stdenv.mkDerivation rec {
 
   flashPlayerLibs = makeSearchPath "lib" [
     stdenv.cc.cc
-    stdenv.libc
+    stdenv.cc.libc
   ];
 
   preUnpack = ''

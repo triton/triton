@@ -171,8 +171,6 @@ in {
 ################################################################################
 ################################################################################
 
-acd-cli = callPackage ../all-pkgs/a/acd-cli { };
-
 affinity = callPackage ../all-pkgs/a/affinity { };
 
 alabaster = callPackage ../all-pkgs/a/alabaster { };

@@ -4,14 +4,14 @@
 , ninja
 
 , curl
-, krb5_lib
+, kerberos
 , openssl
 , zlib
 }:
 
 let
-  rev = "ecf5b85ade59eb942d873aa92adc956c1da89d06";
-  date = "2018-10-23";
+  rev = "3b3b492901956c1ba9283261fe395a64b426c174";
+  date = "2018-12-18";
 in
 stdenv.mkDerivation rec {
   name = "mariadb-connector-c-${date}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     owner = "MariaDB";
     repo = "mariadb-connector-c";
     inherit rev;
-    sha256 = "1203bf88c47c8a50b96bed6a2c7e00588f4c07f847a511998a1f48ca781333c3";
+    sha256 = "5ff9bcefeccade699c2edbb30876f056c9a88c82812d72abddcb4a1c8ba196cb";
   };
 
   nativeBuildInputs = [
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     curl
-    krb5_lib
+    kerberos
     openssl
     zlib
   ];

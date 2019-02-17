@@ -8,13 +8,12 @@ stdenv.mkDerivation rec{
   name = "amrnb-11.0.0.0";
 
   # http://www.3gpp.org/DynaReport/26104.htm
-  # NOTE: When updating amrnb-3gpp, update every instance of 26104-e00 to the
-  #       updated file name.
+  amrnb_3gpp_version = "26104-g00";  # Rel-16
   amrnb_3gpp = fetchurl {
-    # Rel-14
-    url = "http://www.3gpp.org/ftp/Specs/archive/26_series/26.104/26104-e00.zip";
-    multihash = "QmaQRi5VKMGgRTgxhjARAbNB5aTgKCLpskfCvg3QwEoGH9";
-    sha256 = "5d0c70576cea76bf200c6412306a6152758391b1aa40e7e14271169bbafa9125";
+    url = "http://www.3gpp.org/ftp/Specs/archive/26_series/26.104/"
+      + "${amrnb_3gpp_version}.zip";
+    multihash = "Qma62vUUSoNXrBUS2dz158Ybgo6XgmcVG8krUNQvnEkD3o";
+    sha256 = "97b164b9b9079e7979a4e14ae79ed9a0749b8cc3b778fa7ebacd6d5eadc5976f";
   };
 
   src = fetchurl {
@@ -31,7 +30,11 @@ stdenv.mkDerivation rec{
     sed -i Makefile.{in,am} \
       -i configure{,.ac} \
       -i prepare_sources.sh.in \
-      -e 's/26104-b00/26104-e00/g'
+      -e 's/26104-b00/${amrnb_3gpp_version}/g'
+  '' + /* Patch no longer necessary */ ''
+    grep -q 'amrnb-intsizes.patch' prepare_sources.sh.in
+    sed -i prepare_sources.sh.in \
+      -e '/amrnb-intsizes.patch/d'
   '';
 
   configureFlags = [
@@ -39,7 +42,7 @@ stdenv.mkDerivation rec{
   ];
 
   preConfigure = ''
-    cp -v $amrnb_3gpp 26104-e00.zip
+    cp -v "$amrnb_3gpp" '${amrnb_3gpp_version}.zip'
   '';
 
   meta = with lib; {

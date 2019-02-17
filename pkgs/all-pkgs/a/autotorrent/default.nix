@@ -1,6 +1,6 @@
 { stdenv
 , buildPythonPackage
-, fetchPyPi
+, fetchFromGitHub
 , lib
 
 , deluge-client
@@ -8,16 +8,15 @@
 , six
 }:
 
-let
-  version = "1.6.3";
-in
 buildPythonPackage rec {
-  name = "autotorrent-${version}";
+  name = "autotorrent-2019-02-12";
 
-  src = fetchPyPi {
-    package = "autotorrent";
-    inherit version;
-    sha256 = "5f13efd1d609f1532a69bca04f0338b5382a4b7fe468fcabd1e960f9c23ae5b5";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "JohnDoee";
+    repo = "autotorrent";
+    rev = "43d0150eb3509fc0df53a7228b77032b59cc371b";
+    sha256 = "9934a8106c17962e0bb8c1ea3cc5b8561d7e5dd547d3ef902bed0d2465b5fa09";
   };
 
   propagatedBuildInputs = [

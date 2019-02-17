@@ -1,19 +1,18 @@
 { stdenv
 , buildPythonPackage
-, fetchPyPi
+, fetchFromGitHub
 , lib
 }:
 
-let
-  version = "1.4.0";
-in
 buildPythonPackage {
-  name = "deluge-client-${version}";
+  name = "deluge-client-2019-01-07";
 
-  src = fetchPyPi {
-    package = "deluge-client";
-    inherit version;
-    sha256 = "86979ebcb9f1f991554308e88c7a57469cbf339958b44c71cbdcba128291b043";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "JohnDoee";
+    repo = "deluge-client";
+    rev = "44a32ce2f783ffa8812272bc73888d5acc207296";
+    sha256 = "655ae53a039490e53b1dea68367e183edb17e47485c1144c626dd0f1c25ea221";
   };
 
   meta = with lib; {

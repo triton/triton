@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "2017-09-06";
+  version = "2018-03-29";
 in
 stdenv.mkDerivation rec {
   name = "adwaita-qt-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
-    owner = "MartinBriza";
+    version = 6;
+    owner = "FedoraQt";
     repo = "adwaita-qt";
-    rev = "21835b9c8e3579f011d735643239423eaa2ef0c2";
-    sha256 = "517389e561f18bdcb028ec6abd840cd99a8b69741842016a0e72463b83a3fc9a";
+    rev = "30decc8a0be929bb0344e192140456552e32dd41";
+    sha256 = "62d1defa1502f5e9d16c687bb6cb6ddacaa03e1a970fe218075838f985a36590";
   };
 
   nativeBuildInputs = [

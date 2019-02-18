@@ -56,8 +56,8 @@ let
   sources = {
     "stable" = {
       suffix = "";
-      version = "1.32.2";
-      sha256 = "36WY04IWq53Bh+QNJ5y2mle2ydw9HKjQxBQLrpC9GDg=";
+      version = "1.34.0";
+      sha256 = "6bd2df54344c7e4a058f6571f63ba32c732e393b33b3eccefb711096ab97199a";
     };
     "beta" = {
       suffix = "-beta";

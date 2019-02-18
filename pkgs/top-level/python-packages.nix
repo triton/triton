@@ -1245,10 +1245,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
        sha256 = "28ef261a421dffde0a25281dab1ab214e1b407eec568cd05a53e73256f56adb5";
      };
 
-     buildInputs = [ pkgs.glibcLocales ];
-
-     LC_ALL="en_US.UTF-8";
-
      meta = {
        homepage = http://alastair/python-musicbrainz-ngs;
        description = "Python bindings for musicbrainz NGS webservice";

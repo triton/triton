@@ -12,18 +12,15 @@
 , xorgproto
 }:
 
-let
-  version = "1.2.2";
-in
 stdenv.mkDerivation rec {
-  name = "libao-${version}";
+  name = "libao-2018-12-29";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "xiph";
     repo = "libao";
-    rev = "${version}";
-    sha256 = "fa6ebe7d8c84db0ffbd375bfd856ec20e12461b29902f987fdd4910caad3e19a";
+    rev = "20dc8ed9fa4605f5c25e7496ede42e8ba6468225";
+    sha256 = "6a0506240ba8098206f7e4e522faf0eacbee2fa0a4dd6cf5b9da6e87e73be047";
   };
 
   nativeBuildInputs = [

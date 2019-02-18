@@ -13,7 +13,7 @@
 , libxml2
 , ncurses
 , pango
-, pcre2
+, pcre2_lib
 , vala
 , zlib
 
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     ncurses
     gobject-introspection
     pango
-    pcre2
+    pcre2_lib
     zlib
   ];
 

@@ -61,8 +61,8 @@ let
     };
     "beta" = {
       suffix = "-beta";
-      version = "1.33.0-beta3";
-      sha256 = "MhfRAFGVeNrPPncO08/IJGCCW/Xj/Y/5RTuFQCmGeM8=";
+      version = "1.35.0-beta0";
+      sha256 = "bcf692c5033e213b0a46efc32a0efa3a1b166671299cc1bd8530e0364e99a53e";
     };
   };
   source = sources."${channel}";

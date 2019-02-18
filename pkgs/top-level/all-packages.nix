@@ -347,7 +347,7 @@ let  # BEGIN let/in 1
         sha256
         version;
       fullOpts = {
-        curlOpts = "--header='Accept:application/vnd.github.v3.raw'";
+        curlOpts = "--header='Accept: application/vnd.github.v3.raw'";
       };
       url = "https://api.github.com/repos/${owner}/${repo}/tarball/${rev}";
     } // {

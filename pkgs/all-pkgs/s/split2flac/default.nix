@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${mp4v2}/bin" \
       --prefix 'PATH' : "${python2Packages.mutagen}/bin" \
       --prefix 'PATH' : "${shntool}/bin" \
-      --prefix 'PATH' : "${stdenv.libc}/bin" \
+      --prefix 'PATH' : "${stdenv.cc.libc}/bin" \
       --prefix 'PATH' : "${vorbis-tools}/bin" \
       --prefix 'PATH' : "${wavpack}/bin"
   '';

@@ -337,6 +337,7 @@ let  # BEGIN let/in 1
     { owner
     , repo
     , rev
+    , multihash ? ""
     , sha256
     , version ? null
     , name ? "${repo}-${rev}"
@@ -344,6 +345,7 @@ let  # BEGIN let/in 1
     pkgs.fetchzip {
       inherit
         name
+        multihash
         sha256
         version;
       url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
@@ -355,6 +357,7 @@ let  # BEGIN let/in 1
     { owner
     , repo
     , rev
+    , multihash ? ""
     , sha256
     , version ? null
     , name ? "${repo}-${rev}"
@@ -362,6 +365,7 @@ let  # BEGIN let/in 1
     pkgs.fetchzip {
       inherit
         name
+        multihash
         sha256
         version;
       url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
@@ -377,12 +381,13 @@ let  # BEGIN let/in 1
     , repo
     , id ? "${owner}/${repo}"
     , rev
+    , multihash ? ""
     , sha256
     , version ? null
     , name ? "${repo}-${rev}"
     }:
     pkgs.fetchzip {
-      inherit name sha256 version;
+      inherit name multihash sha256 version;
       url = "${host}/api/v4/projects/${lib.replaceStrings ["/"] ["%2F"] id}/"
         + "repository/archive.tar.bz2?sha=${rev}";
     };
@@ -408,11 +413,12 @@ let  # BEGIN let/in 1
   fetchFromSourceforge =
     { repo
     , rev
+    , multihash ? ""
     , sha256
     , name ? "${repo}-${rev}"
     }:
     pkgs.fetchzip {
-      inherit name sha256;
+      inherit name multihash sha256;
       url = "http://sourceforge.net/code-snapshots/git/"
         + "${lib.substring 0 1 repo}/"
         + "${lib.substring 0 2 repo}/"

@@ -13,7 +13,7 @@ let
     "mirror://gnu/texinfo/texinfo-${version}.tar.xz"
   ];
 
-  version = "6.5";
+  version = "6.6";
 in
 stdenv.mkDerivation rec {
   name = "texinfo-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "77774b3f4a06c20705cc2ef1c804864422e3cf95235e965b1f00a46df7da5f62";
+    sha256 = "9bb9ca00da53f26a7e5725eee49689cd4a1e18d25d5b061ac8b2053018d93d66";
   };
 
   nativeBuildInputs = [
@@ -50,11 +50,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "6.5";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "EAF6 69B3 1E31 E1DE CBD1  1513 DDBC 579D AB37 FBA9";
+      urls = tarballUrls "6.6";
       inherit (src) outputHashAlgo;
-      outputHash = "77774b3f4a06c20705cc2ef1c804864422e3cf95235e965b1f00a46df7da5f62";
+      outputHash = "9bb9ca00da53f26a7e5725eee49689cd4a1e18d25d5b061ac8b2053018d93d66";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "EAF6 69B3 1E31 E1DE CBD1  1513 DDBC 579D AB37 FBA9";
+      };
     };
   };
 

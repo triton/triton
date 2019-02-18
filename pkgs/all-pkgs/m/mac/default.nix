@@ -16,10 +16,6 @@ stdenv.mkDerivation rec {
     yasm
   ];
 
-  buildInputs = [
-    stdenv.libc
-  ];
-
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-assembly"

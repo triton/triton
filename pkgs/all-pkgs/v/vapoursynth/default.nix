@@ -34,9 +34,9 @@ let
 
   sources = {
     "stable" = {
-      fetchzipversion = 5;
-      version = "43";
-      sha256 = "0135e711f900044b990e4cd0b436bbc79c20d11e6a5eff89841cb78553ca4c46";
+      fetchzipversion = 6;
+      version = "45.1";
+      sha256 = "e797d09d553edf1cb753e07a505ba6dc3cf8cea6c249b1f844fe787a83e8a259";
     };
     "head" = {
       fetchzipversion = 6;

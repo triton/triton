@@ -73,6 +73,8 @@ stdenv.mkDerivation rec {
     mv $out/*.OBJ/bin/* $out/bin
     mv $out/*.OBJ/lib/* $out/lib
     rm -r $out/*.OBJ
+
+    rm -r "$out"/lib/*.a
   '';
 
   postFixup = ''

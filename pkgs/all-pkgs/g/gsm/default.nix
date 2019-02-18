@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   makeFlags = [
     "SHELL=${stdenv.shell}"
-  ] ++ optional stdenv.cc.isClang "CC=clang";
+  ];
 
   NIX_CFLAGS_COMPILE = optional (!staticSupport) "-fPIC";
 

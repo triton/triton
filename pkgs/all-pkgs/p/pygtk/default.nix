@@ -1,6 +1,6 @@
 { stdenv
 , autoreconfHook
-, fetchFromGitHub
+, fetchFromGitLab
 , isPy3
 , lib
 , pkgconfig
@@ -20,14 +20,15 @@
 assert !isPy3;
 
 stdenv.mkDerivation rec {
-  name = "pygtk-2.24-2011-10-02";
+  name = "pygtk-2.24-2013-05-05";
 
-  src = fetchFromGitHub {
+  src = fetchFromGitLab {
     version = 6;
-    owner = "GNOME";
+    host = "https://gitlab.gnome.org";
+    owner = "Archive";
     repo = "pygtk";
-    rev = "eaf1c1b881d2d20d202cf475b5ffed2206b110df";
-    sha256 = "3393309ec2cd452c598b86fdddfce1f9de5aa02a8044b74bdaab1e43dd6fa462";
+    rev = "c524124f37912f8261c7e3ee2ac875488ae7365e";
+    sha256 = "d32b6943973665d449daeed62d9e77cc4e96adbd11e677dbb1716920d3b595f3";
   };
 
   nativeBuildInputs = [

@@ -346,10 +346,7 @@ let  # BEGIN let/in 1
         name
         sha256
         version;
-      fullOpts = {
-        curlOpts = "--header='Accept:application/vnd.github.v3.raw'";
-      };
-      url = "https://api.github.com/repos/${owner}/${repo}/tarball/${rev}";
+      url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     } // {
       inherit rev;
     };

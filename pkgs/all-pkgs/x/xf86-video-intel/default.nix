@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchFromGitLab
 , lib
 , meson
 , ninja
@@ -33,12 +33,13 @@ in
 stdenv.mkDerivation {
   name = "xf86-video-intel-${date}";
 
-  src = fetchzip {
+  src = fetchFromGitLab {
     version = 6;
-    url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/"
-      + "${rev}.tar.gz";
-    multihash = "QmNbgqNGSCNjxKp9SAD12H1vrM9iqyoDngEQx5icsqkyjZ";
-    sha256 = "a2a1e92284ed1bc95b4ff92962a55049dd5a7f887908cddbb0018afbf1925395";
+    host = "https://gitlab.freedesktop.org";
+    owner = "xorg/driver";
+    repo = "xf86-video-intel";
+    inherit rev;
+    sha256 = "93a59062b74697e930934bc0af73bf6edac43b5ba6fa39bf7c2bcc5687f8bb35";
   };
 
   nativeBuildInputs = [

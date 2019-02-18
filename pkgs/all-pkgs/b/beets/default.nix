@@ -3,7 +3,6 @@
 , fetchFromGitHub
 , fetchPyPi
 , fetchTritonPatch
-, glibcLocales
 , isPy2
 , isPy3
 , lib

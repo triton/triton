@@ -46,7 +46,7 @@
 , opengl-dummy
 , openssl
 , pciutils
-, pcre2
+, pcre2_lib
 , postgresql
 , pulseaudio_lib
 , sqlite
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     mtdev
     opengl-dummy
     openssl
-    pcre2
+    pcre2_lib
     postgresql
     pulseaudio_lib
     sqlite

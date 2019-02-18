@@ -403,17 +403,18 @@ let  # BEGIN let/in 1
       url = "${host}/api/v4/projects/${id}/repository/archive.tar.bz2?sha=${rev}";
     };
 
-  fetchFromRepoOrCz =
-    { repo
+  fetchFromGitweb =
+    { host
+    , repo
     , rev
     , sha256
     , version ? null
     , name ? "${repo}-${rev}"
     }:
+    # Requres the gitweb instance to have snapshot support enabled.
     pkgs.fetchzip {
       inherit name sha256 version;
-      # gitweb, snapshot support is optional in gitweb
-      url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
+      url = "${host}/${repo}/snapshot/${rev}.tar.gz";
     };
 
   fetchFromSourceforge =

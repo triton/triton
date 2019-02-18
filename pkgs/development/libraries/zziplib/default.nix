@@ -16,11 +16,11 @@ stdenv.mkDerivation rec {
   name = "zziplib-${version}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "gdraheim";
     repo = "zziplib";
     rev = "v${version}";
-    sha256 = "ea26e0f197138a30318955a62c644503e48fe8ef4385325152434ef386fd1385";
+    sha256 = "ab38ed9a193d5991c745b4d350d0ad3fa277895ec724b31ed843f793a651412f";
   };
 
   buildInputs = [

@@ -392,7 +392,7 @@ let  # BEGIN let/in 1
     { host ? "https://gitlab.com"
     , owner
     , repo
-    , id ? "${owner}%2F${repo}"
+    , id ? "${owner}/${repo}"
     , rev
     , sha256
     , version ? null
@@ -400,7 +400,8 @@ let  # BEGIN let/in 1
     }:
     pkgs.fetchzip {
       inherit name sha256 version;
-      url = "${host}/api/v4/projects/${id}/repository/archive.tar.bz2?sha=${rev}";
+      url = "${host}/api/v4/projects/${lib.replaceStrings ["/"] ["%2F"] id}/"
+        + "repository/archive.tar.bz2?sha=${rev}";
     };
 
   fetchFromGitweb =

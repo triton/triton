@@ -371,23 +371,6 @@ let  # BEGIN let/in 1
       '';
     };
 
-  fetchFromSavannah =
-    { repo
-    , rev
-    , sha256
-    , version ? null
-    , name ? "${repo}-${rev}"
-    }:
-    pkgs.fetchzip {
-      inherit
-        name
-        sha256
-        version;
-      # cgit, snapshot support is optional in cgit
-      url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/"
-        + "${repo}-${rev}.tar.gz";
-    };
-
   fetchFromGitLab =
     { host ? "https://gitlab.com"
     , owner
@@ -404,19 +387,23 @@ let  # BEGIN let/in 1
         + "repository/archive.tar.bz2?sha=${rev}";
     };
 
-  fetchFromGitweb =
+  fetchFromCgit =
     { host
     , repo
-    , rev
+    , rev  # Can also be a tag.
+    , multihash ? ""
     , sha256
+    , archive ? "tar.gz"
     , version ? null
     , name ? "${repo}-${rev}"
     }:
-    # Requres the gitweb instance to have snapshot support enabled.
+    # Requires the instance to have snapshot support enabled.
     pkgs.fetchzip {
-      inherit name sha256 version;
-      url = "${host}/${repo}/snapshot/${rev}.tar.gz";
+      inherit name multihash sha256 version;
+      url = "${host}/${repo}/snapshot/${rev}.${archive}";
     };
+  # API is almost identical.
+  fetchFromGitweb = pkgs.fetchFromCgit;
 
   fetchFromSourceforge =
     { repo

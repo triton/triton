@@ -3,7 +3,6 @@
 , fetchPyPi
 , lib
 
-, glibcLocales
 , pytest
 , pytest-runner
 , setuptools-scm
@@ -22,13 +21,10 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    glibcLocales
     pytest
     pytest-runner
     setuptools-scm
   ];
-
-  LC_ALL = "en_US.UTF-8";
 
   checkPhase = ''
     py.test test_path.py

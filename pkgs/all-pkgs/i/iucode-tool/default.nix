@@ -1,6 +1,6 @@
 { stdenv
 , autoreconfHook
-, fetchzip
+, fetchFromGitLab
 , lib
 }:
 
@@ -10,10 +10,12 @@ in
 stdenv.mkDerivation {
   name = "iucode-tool-${version}";
 
-  src = fetchzip {
+  src = fetchFromGitLab {
     version = 6;
-    url = "https://gitlab.com/iucode-tool/iucode-tool/-/archive/v${version}/iucode-tool-v${version}.tar.bz2";
-    multihash = "QmS8RmVrhm2YLovDwr8GnnVNuHbp1pjyXjjP9sedJEaqJA";
+    owner = "iucode-tool";
+    repo = "iucode-tool";
+    rev = "v${version}";
+    multihash = "QmfB8xPsrTwBupiz7HCzrcbcaeqgDMHUt3Qc4yjopce3RX";
     sha256 = "52056cd3d3b92b1cd3eeac83683592f88dcbaa48fdf0852c039e208c867b13eb";
   };
 

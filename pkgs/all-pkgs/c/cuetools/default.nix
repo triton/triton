@@ -1,7 +1,7 @@
 { stdenv
 , autoreconfHook
 , bison
-, fetchzip
+, fetchFromGitHub
 , flex
 
 , flac
@@ -15,10 +15,12 @@ in
 stdenv.mkDerivation rec {
   name = "cuetools-${version}";
 
-  src = fetchzip {
+  src = fetchFromGitHub {
     version = 6;
-    url = "https://github.com/svend/cuetools/archive/${version}.tar.gz";
-    sha256 = "537b04dca0ce4b7a0c1bc4b331119625dd60f09c1b0d5a2eb525d8321af78561";
+    owner = "svend";
+    repo = "cuetools";
+    rev = "${version}";
+    sha256 = "e48cb9275a0ff8a6cd23f0f735c64aadcf812586e381c448f72101871868a8da";
   };
 
   nativeBuildInputs = [

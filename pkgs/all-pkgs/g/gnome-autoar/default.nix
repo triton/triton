@@ -1,5 +1,6 @@
 { stdenv
 , atk
+, cairo
 , gdk-pixbuf
 , fetchurl
 , lib
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     atk
+    cairo
     gdk-pixbuf
     gobject-introspection
     pango

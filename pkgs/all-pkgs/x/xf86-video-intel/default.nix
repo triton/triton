@@ -27,8 +27,8 @@
 }:
 
 let
-  rev = "359477215092ac1b602ad1e2f17a28963d9224c2";
-  date = "2018-05-12";
+  rev = "33ee0c3b21ea279e08d0863fcb2e874f0974b00e";
+  date = "2019-01-21";
 in
 stdenv.mkDerivation {
   name = "xf86-video-intel-${date}";
@@ -39,7 +39,8 @@ stdenv.mkDerivation {
     owner = "xorg/driver";
     repo = "xf86-video-intel";
     inherit rev;
-    sha256 = "93a59062b74697e930934bc0af73bf6edac43b5ba6fa39bf7c2bcc5687f8bb35";
+    multihash = "Qmesq65GyAJXX863hFzTTgte2jyFzGBhW5BDVZcav2GpQc";
+    sha256 = "0b6813e37b80977cc03490b11c076278261c68483b505ef17edc4f285a22964e";
   };
 
   nativeBuildInputs = [

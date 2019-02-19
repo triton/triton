@@ -1,12 +1,12 @@
 { stdenv
-, fetchzip
-, cmake
+, fetchFromGitHub
 , gettext
 , lib
-, perl
+, meson
+, ninja
+, vala
 
 , atk
-, cairo
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -14,31 +14,31 @@
 , hicolor-icon-theme
 , libgee
 , pango
-, vala
 }:
 
 let
-  version = "0.5";
+  version = "5.2.3";
 in
 stdenv.mkDerivation rec {
   name = "granite-${version}";
 
-  src = fetchzip {
-    version = 3;
-    url = "https://github.com/elementary/granite/archive/${version}.tar.gz";
-    sha256 = "8b44bf680e2d53f2fb00dea9be48a0706cd1d9017b636dc9c96e4bee77782f6b";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "elementary";
+    repo = "granite";
+    rev = "${version}";
+    sha256 = "a1dc84ade412754d7c3b293834bf652040a6f0531f381ebc2435a01c300465c2";
   };
 
   nativeBuildInputs = [
-    cmake
     gettext
-    perl
+    meson
+    ninja
     vala
   ];
 
   buildInputs = [
     atk
-    cairo
     gdk-pixbuf
     glib
     libgee
@@ -48,12 +48,14 @@ stdenv.mkDerivation rec {
     pango
   ];
 
-  preConfigure = ''
-    cmakeFlagsArray=(
-      "-DINTROSPECTION_GIRDIR=$out/share/gir-1.0/"
-      "-DINTROSPECTION_TYPELIBDIR=$out/lib/girepository-1.0"
-    )
+  postPatch = ''
+    grep -q 'post_install.py' meson.build
+    sed -i meson.build \
+      -e '/add_install_script/,+3 d'
   '';
+
+  buildDirCheck = false;
+  setVapidirInstallFlag = false;
 
   meta = with lib; {
     description = "An extension to GTK+ used by elementary OS";

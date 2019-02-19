@@ -11,17 +11,17 @@
 }:
 
 let
-  version = "1.3.0";
+  version = "1.5.0";
 in
 stdenv.mkDerivation {
   name = "irqbalance-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "irqbalance";
     repo = "irqbalance";
     rev = "v${version}";
-    sha256 = "d39fc52aa5ba498b6b280f0b6c4dbb18ac741de50cff2a238a2da207dd3c72d2";
+    sha256 = "88b02e4ee1fe157187bd6324623e023daf63e23a125674c2804ba7d2f1852c4f";
   };
 
   nativeBuildInputs = [

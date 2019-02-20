@@ -1,39 +1,48 @@
 gxConfigure() {
-  # Deal with gx dependencies
-  if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
-    if ! gx-go --help >/dev/null 2>&1; then
-      echo "You must add gx-go.bin as a native build input." >&2
-      exit 1
+  # Move all gx dependencies out of the vendor directories
+  local gxdir
+  for gxdir in $(find go/src -name gx -type d -depth); do
+    if [[ "$gxdir" != *vendor/gx ]]; then
+      continue
+    fi
+    cp -r "$gxdir" go/src
+    rm -r "$gxdir"
+  done
+
+  # Remove all non-gx vendoring
+  if [ -z "$allowVendoredSources" ]; then
+    find go/src -name vendor -exec rm -r {} \; -prune
+  fi
+
+  # Find each gx package
+  local pkg
+  for pkg in $(find go/src -name package.json -exec dirname {} \;); do
+    if [[ "$pkg" == *example* ]]; then
+      continue
     fi
 
-    mv go/src/$goPackagePath/vendor/gx go/src
-    pushd go/src >/dev/null
-    find gx -name vendor | xargs rm -rf
-    deps=($(find gx -name package.json -exec dirname {} \;))
-    for dep in "${deps[@]}"; do
-      if echo "$dep" | grep -q 'example'; then
-        continue
-      fi
+    local url
+    if ! url="$(jq -r '.gx.dvcsimport' "$pkg/package.json")"; then
+      continue
+    fi
+    if [ "$url" = "null" ]; then
+      continue
+    fi
 
-      local rdep
-      rdep="$(awk -F\" '{ if (/dvcsimport/) { print $4; exit 0; } }' "$dep/package.json")"
-      if [ -z "$rdep" ]; then
-        continue
-      fi
+    local name="${pkg#go/src/}"
+    echo "Rewriting $name"
 
-      # Patch go files for dependencies
-      ln -sv "$(pwd)" "$dep/vendor"
-      pushd "$dep" >/dev/null
-      gx-go rewrite
-      popd >/dev/null
-      rm "$dep/vendor"
-
-      # Patch go files for self
-      find "$dep" -type f -name \*.go -print0 \
-        | xargs -n 1 -0 -P $NIX_BUILD_CORES sed -i "s,\([^a-zA-Z/]\)$rdep\(\"\|/\),\1$dep\2,g"
-    done
+    # Patch go files for dependencies
+    ln -sr go/src "$pkg/vendor"
+    pushd "$pkg" >/dev/null
+    gx-go rewrite
     popd >/dev/null
-  fi
+    rm "$pkg/vendor"
+
+    # Rewrite imports for self
+    # We can't just symlink in case we need non-versioned imports to work
+    find "$pkg" -type f -name \*.go -exec sed -i "s#\"$url\\(/\\|\"\\)#\"$name\\1#" {} \;
+  done
 }
 
 buildFlagsArray+=(

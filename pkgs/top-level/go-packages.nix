@@ -2415,15 +2415,13 @@ let
     repo = "fs-repo-migrations";
     rev = "v1.4.0";
     sha256 = "1qmwgk5f401vbnmrby6yhmbj58a65dp544gc2capsfayhn4cz9lh";
+    gxSha256 = "6ad8c8f87122cf948a034cabbf3b025251c8066b8a49ea0bf1be3d672a015fe6";
     nativeBuildInputs = [
       gx-go.bin
     ];
     propagatedBuildInputs = [
-      goprocess
       go-homedir
-      go-os-rename
     ];
-    allowVendoredSources = true;
     postPatch = ''
       # Unvendor
       find . -name \*.go -exec sed -i 's,".*Godeps/_workspace/src/,",g' {} \;
@@ -6073,7 +6071,8 @@ let
     ];
     postInstall = ''
       mkdir -p "$bin"/nix-support
-      cp '${../all-pkgs/b/build-go-package/gx.sh}' "$bin/nix-support/setup-hook"
+      cp '${../all-pkgs/b/build-go-package/gx.sh}' "$bin"/nix-support/setup-hook
+      echo "${pkgs.jq}" >"$bin"/nix-support/propagated-native-build-inputs
     '';
   };
 
@@ -6553,7 +6552,6 @@ let
       mint
       quic-go-certificates
     ];
-    allowVendoredSources = true;
     excludedPackages = "test";
     meta.autoUpdate = false;
     postInstall = ''
@@ -6573,7 +6571,6 @@ let
       gx-go.bin
     ];
     meta.autoUpdate = false;
-    allowVendoredSources = true;
   };
 
   ipfs-ds-convert = buildFromGitHub {
@@ -6592,7 +6589,6 @@ let
       go-homedir
     ];
     meta.autoUpdate = false;
-    allowVendoredSources = true;
   };
 
   jaeger-client-go = buildFromGitHub {

@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "cabextract-1.6";
+  name = "cabextract-1.9";
 
   src = fetchurl {
     url = "https://www.cabextract.org.uk/${name}.tar.gz";
-    multihash = "QmQ474EmBoH88W1keK4j3AqtBz6YHZfwqBJ7ZVaKY73sBh";
-    sha256 = "cee661b56555350d26943c5e127fc75dd290b7f75689d5ebc1f04957c4af55fb";
+    multihash = "QmRAF8Pxh3t9zUXtvm6PZDfZCiLe9uGRrafXSRe3b7sYWH";
+    sha256 = "1bbc793d83c73288acd7e28ce33ec04955a76c73bf6471424ff835d725fcc4c1";
   };
 
   meta = with lib; {

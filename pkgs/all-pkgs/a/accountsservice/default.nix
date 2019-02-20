@@ -1,85 +1,70 @@
 { stdenv
 , fetchurl
 , gettext
-, intltool
 , lib
-, libtool
 , makeWrapper
+, meson
+, ninja
 
 , coreutils
+, dbus-dummy
 , glib
 , gobject-introspection
 , polkit
+, systemd-dummy
 , systemd_lib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "accountsservice-0.6.45";
+  name = "accountsservice-0.6.54";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
-    multihash = "QmQquttaZYGAEnVWzBpYUwj1WHrddAhDgMW8vt112er15v";
-    sha256 = "fb0fc293aa75d59f5ef5db719d37a21831c4dd74a97526ee7e51ce936311ef26";
+    multihash = "QmXANrKzCRRWo5WDjiWTGtbwArxEEraRqXvJafaFUihhAD";
+    sha256 = "26e9062c84797e9604182d0efdb2231cb01c98c3c9b0fea601ca79a2802d21ac";
   };
 
   nativeBuildInputs = [
     gettext
-    intltool
-    libtool
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
+    dbus-dummy
     glib
     gobject-introspection
     polkit
+    systemd-dummy
     systemd_lib
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
-        boolString (systemd_lib != null) "=$out/etc/systemd/system" ""}"
-    )
+  postPatch = ''
+    grep -q 'meson_post_install.py' meson.build
+    sed -i meson.build \
+      -e '/add_install_script/,+3 d'
+  '' + /* Need to create polkit-dummy instead of this HACK */ ''
+    sed -i meson.build \
+      -e "s,policy_dir.*$,policy_dir = '$out/share/polkit-1/actions/',"
   '';
 
-  configureFlags = [
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
-    "--enable-nls"
-    "--disable-maintainer-mode"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-admin-group=wheel"
-    # Heuristics for guessing system vs human users in the range 500-minimum-uid
-    #"--enable-user-heuristics"
-    # FIXME: Set minimum uid for human users
-    #"--with-minimum-uid=1000"
-    "--disable-coverage"
-    "--disable-more-warnings"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-docbook-docs"
-    "--${boolEn (systemd_lib != null)}-systemd"
+  mesonFlags = [
+    "-Dlocalstatedir=/var"
+    "-Dadmin_group=wheel"
+    "-Dsystemd=true"
   ];
-
-  preInstall = ''
-    installFlagsArray+=(
-      "localstatedir=$TMPDIR/var"
-      "sysconfdir=$out/etc"
-    )
-  '';
 
   preFixup = ''
     wrapProgram "$out/libexec/accounts-daemon" \
-      --run "${coreutils}/bin/mkdir -p /var/lib/AccountsService/users" \
-      --run "${coreutils}/bin/mkdir -p /var/lib/AccountsService/icons"
+      --run "${coreutils}/bin/mkdir -p /var/lib/AccountsService/icons" \
+      --run "${coreutils}/bin/mkdir -p /var/lib/AccountsService/users"
   '';
 
   meta = with lib; {

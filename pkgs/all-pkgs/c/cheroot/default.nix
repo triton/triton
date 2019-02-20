@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "6.3.3";
+  version = "6.5.4";
 in
 buildPythonPackage rec {
   name = "cheroot-${version}";
@@ -16,11 +16,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "cheroot";
     inherit version;
-    sha256 = "8e3ac15e1efffc81425a693e99b3c09d7ea4bf947255d8d4c38e2cf76f3a4d25";
+    sha256 = "beb8eb9eeff5746059607e81b72efd6f4ca099111dc13f8961ae9e4f63f7786b";
   };
 
   postPatch = ''
-    sed -i setup.py \
+    grep -q 'setuptools_scm_git_archive' setup.cfg
+    sed -i setup.cfg \
       -e '/setuptools_scm_git_archive/d'
   '';
 

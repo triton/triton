@@ -206,6 +206,9 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapPythonPrograms "$out"/bin
+
+    # Contain impure absolute paths
+    find "$lib" -name SOURCES.txt -delete
   '';
   
   outputs = [

@@ -12,7 +12,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "4.6.0";
+  version = "4.7.1";
 in
 buildPythonPackage rec {
   name = "beautifulsoup-${version}";
@@ -20,16 +20,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "beautifulsoup4";
     inherit version;
-    sha256 = "808b6ac932dccb0a4126558f7dfdcf41710dd44a4ef497a0bb59a77f9f078e89";
+    sha256 = "945065979fb8529dd2f37dbb58f00b661bdbcbebf954f93b32fdf5263ef35348";
   };
 
   propagatedBuildInputs = [
     html5lib
     lxml
   ];
-
-  # Not all tests have been converted to Python 3
-  doCheck = !isPy3;
 
   meta = with lib; {
     description = "HTML/XML parser";

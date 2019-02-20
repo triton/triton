@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.1.3";
+  version = "1.1.4";
 in
 buildPythonPackage {
   name = "canonicaljson-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "canonicaljson";
     inherit version;
-    sha256 = "06fe8676dbba4289d846f0699324297e1fd9bb7f2cb9964d69f364a0d2fca0e0";
+    sha256 = "45bce530ff5fd0ca93703f71bfb66de740a894a3b5dd6122398c6d8f18539725";
   };
 
   propagatedBuildInputs = [

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.2.14";
+  version = "1.2.16";
 in
 buildPythonPackage {
   name = "borgmatic-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "borgmatic";
     inherit version;
-    sha256 = "1a6ad21e2db8cce7a1191e6a911120c516eba4721e584389df751583974c1e65";
+    sha256 = "9972e8b9d48015d70fc185a8351b3bdff156154ddae8458d2cabc840535df5fa";
   };
 
   propagatedBuildInputs = [

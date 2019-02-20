@@ -53,8 +53,9 @@ stdenv.mkDerivation {
       "includedir=$out/include"
       "libdir=$out/lib"
       "localedir=$out/share/locale"
-      "docdir=$out/share/doc/cpupower"
+      "docdir=$TMPDIR"
       "confdir=$out/etc"
+      "bash_completion_dir=$out/share/bash-completion/completions"
     )
   '';
 

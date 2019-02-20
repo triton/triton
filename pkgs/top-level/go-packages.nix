@@ -6102,6 +6102,10 @@ let
       gx
       stump
     ];
+    postInstall = ''
+      mkdir -p "$bin"/nix-support
+      cp '${../all-pkgs/b/build-go-package/gx.sh}' "$bin/nix-support/setup-hook"
+    '';
   };
 
   gzip = buildFromGitHub {

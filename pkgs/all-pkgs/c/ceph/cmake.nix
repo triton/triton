@@ -97,6 +97,8 @@ let
       cp -ans --no-preserve=mode ${concatMapStrings (n: "${n.lib}/lib ") boosts}"$out"
       mkdir -p "$out"/nix-support
       echo '${concatMapStrings (n: "${n.dev} ") boosts}' >"$out"/nix-support/propagated-native-build-inputs
+      echo 'NIX_LDFLAGS="${concatMapStrings (n: "-rpath ${n.lib}/lib ") boosts} $NIX_LDFLAGS"' \
+        >"$out"/nix-support/setup-hook
     '';
   };
 in
@@ -213,6 +215,10 @@ stdenv.mkDerivation rec {
 
   # FIXME
   buildDirCheck = false;
+
+  disallowedReferences = [
+    boost'
+  ];
 
   passthru = {
     disk = cephDisk;

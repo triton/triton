@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.2.0";
+  version = "0.3.1";
 in
 stdenv.mkDerivation rec {
   name = "bubblewrap-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/projectatomic/bubblewrap/releases/download/"
       + "v${version}/${name}.tar.xz";
-    sha256 = "ccb61a3718b927765dafd3587c5b619d28c39a3f8b05a4b41e93b2fb2c181c2a";
+    sha256 = "deca6b608c54df4be0669b8bb6d254858924588e9f86e116eb04656a3b6d4bf8";
   };
 
   buildInputs = [

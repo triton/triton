@@ -1,37 +1,41 @@
 { stdenv
 , fetchurl
 
+, file
 , glib
 , ipset
 , iptables
 , json-c
 , libnfnetlink
 , libnl
+, linux-headers_triton
 , net-snmp
 , openssl
 , pcre2_lib
 }:
 
 let
-  version = "2.0.12";
+  version = "2.0.13";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmYb7Sw8F7ACiJdR2FtAEmfdtrigs7tyFhqGwDNyQXJz4A";
+    multihash = "QmTetdVYaM5Q7A2dCXQJ12qwbkXcY3J8Wqn6mJsasToA2q";
     hashOutput = false;
-    sha256 = "fd50e433d784cfd948de5726752cf89ab7001f587fe10a5110c6c7cbda4b7b5e";
+    sha256 = "c7fb38e8a322fb898fb9f6d5d566827a30aa5a4cd1774f474bb4041c85bcbc46";
   };
 
   buildInputs = [
+    file
     glib
     ipset
     iptables
     json-c
     libnfnetlink
     libnl
+    linux-headers_triton
     net-snmp
     openssl
     pcre2_lib
@@ -77,7 +81,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        md5Confirm = "96ab225fefab25a6cf0cbe4579a9bac7";
+        md5Confirm = "a1b839f6da4bcb9f7e07767a062709fc";
       };
     };
   };

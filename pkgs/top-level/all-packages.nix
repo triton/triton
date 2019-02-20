@@ -1185,15 +1185,15 @@ ethtool = callPackage ../all-pkgs/e/ethtool { };
 
 evieext = callPackage ../all-pkgs/e/evieext { };
 
-evince_3-22 = callPackage ../all-pkgs/e/evince {
-  channel = "3.22";
+evince_3-32 = callPackage ../all-pkgs/e/evince {
+  channel = "3.32";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-30;
   atk = pkgs.atk_2-30;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-28;
   nautilus = pkgs.nautilus_unwrapped_3-26;
 };
-evince = callPackageAlias "evince_3-22" { };
+evince = callPackageAlias "evince_3-32" { };
 
 #evolution = callPackage ../all-pkgs/e/evolution { };
 

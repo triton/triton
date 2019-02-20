@@ -213,9 +213,6 @@ stdenv.mkDerivation rec {
     "lib"
   ];
 
-  # FIXME
-  buildDirCheck = false;
-
   disallowedReferences = [
     boost'
   ];

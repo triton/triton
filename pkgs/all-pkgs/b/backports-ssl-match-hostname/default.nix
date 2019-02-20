@@ -6,7 +6,8 @@
 }:
 
 let
-  version = "3.5.0.1";
+  version = "3.7.0.1";
+  currentImpl = "3.7";
 in
 buildPythonPackage rec {
   name = "backports-ssl-match-hostname-${version}";
@@ -14,12 +15,16 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "backports.ssl_match_hostname";
     inherit version;
-    sha256 = "502ad98707319f4a51fa2ca1c677bd659008d27ded9f6380c79e8932e38dcdf2";
+    sha256 = "bb82e60f9fbf4c080eabd957c39f0641f0fc247d9a16e31e26d594d8f42b9fd2";
   };
 
-  # Backport of functionality from Python 3.5
-  disabled = pythonAtLeast "3.5";
+  # Backport of functionality from latest cpython changes.
+  disabled = pythonAtLeast currentImpl;
   doCheck = true;
+
+  passthru = {
+    inherit currentImpl;
+  };
 
   meta = with lib; {
     description = "The ssl.match_hostname() function from Python 3.5";

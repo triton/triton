@@ -28,7 +28,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     six
-  ] ++ optionals (pythonOlder "3.2") [
+  ] ++ optionals (pythonOlder backports-ssl-match-hostname.currentImpl) [
     backports-ssl-match-hostname
   ] ++ optionals (pythonOlder "3.4") [
     singledispatch

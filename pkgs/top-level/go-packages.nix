@@ -2415,6 +2415,9 @@ let
     repo = "fs-repo-migrations";
     rev = "v1.4.0";
     sha256 = "1qmwgk5f401vbnmrby6yhmbj58a65dp544gc2capsfayhn4cz9lh";
+    nativeBuildInputs = [
+      gx-go.bin
+    ];
     propagatedBuildInputs = [
       goprocess
       go-homedir
@@ -2428,9 +2431,6 @@ let
       # Remove old, unused migrations
       sed -i 's,&mg[01234].Migration{},nil,g' main.go
       sed -i '/mg[01234]/d' main.go
-    '';
-    preBuild = ''
-      find go/src/"$goPackagePath" -name gx -prune -exec mv {} "$TMPDIR"/go/src/ \;
     '';
     subPackages = [
       "."
@@ -6568,11 +6568,11 @@ let
     repo = "ipfs-cluster";
     sha256 = "ecbe3f6ac5a5429c88ad56af5ac37de9481312a36cde09ccfa2ef76b64a912f0";
     gxSha256 = "fa62adb139a3aac29d151a57224b2f89f269be24125c5a297de5fa6388938914";
-    meta.autoUpdate = false;
     excludedPackages = "test";
     nativeBuildInputs = [
       gx-go.bin
     ];
+    meta.autoUpdate = false;
     allowVendoredSources = true;
   };
 

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libxml2
 , readline
@@ -34,7 +35,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

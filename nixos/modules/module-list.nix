@@ -183,6 +183,7 @@
   ./services/networking/i2p.nix
   ./services/networking/iodined.nix
   ./services/networking/ipfs.nix
+  ./services/networking/ipfs-cluster.nix
   ./services/networking/ircd-hybrid/default.nix
   ./services/networking/minidlna.nix
   ./services/networking/miniupnpd.nix

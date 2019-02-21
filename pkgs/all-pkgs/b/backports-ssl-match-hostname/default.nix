@@ -20,7 +20,6 @@ buildPythonPackage rec {
 
   # Backport of functionality from latest cpython changes.
   disabled = pythonAtLeast currentImpl;
-  doCheck = true;
 
   passthru = {
     inherit currentImpl;

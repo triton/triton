@@ -47,7 +47,7 @@ let
   isBase = type == "base";
   isPlugins = type == "plugins";
 
-  version = "5.8.0";
+  version = "5.8.1";
 in
 assert isBase || isPlugins;
 stdenv.mkDerivation rec {
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
         + "/collectd-${version}/collectd-${version}.tar.bz2")
     ];
     hashOutput = false;  # Hashes at: https://collectd.org/download.shtml
-    sha256 = "b06ff476bbf05533cb97ae6749262cc3c76c9969f032bd8496690084ddeb15c9";
+    sha256 = "e796fda27ce06377f491ad91aa286962a68c2b54076aa77a29673d53204453da";
   };
 
   buildInputs = [

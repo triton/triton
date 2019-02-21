@@ -61,8 +61,6 @@
 
 , ... } @ attrs:
 
-assert disabled ->
-  throw "`${name}` is not supported for interpreter `${python.executable}`";
 
 let
   inherit (lib)
@@ -76,8 +74,14 @@ let
   doInstallCheck = doCheck;
 in
 
-python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] // {
+python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck" "failIfDisabled"] // {
   name = namePrefix + name;
+
+  failIfDisabled =
+    if disabled then
+      throw "`${name}` is not supported for interpreter `${python.executable}`"
+    else
+      null;
 
   nativeBuildInputs = [
     pip

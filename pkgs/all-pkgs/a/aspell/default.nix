@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 }:
 
@@ -35,7 +36,7 @@ stdenv.mkDerivation rec {
   buildParallel = false;
   installParallel = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Spell checker for many languages";
     homepage = http://aspell.net/;
     license = licenses.lgpl2Plus;

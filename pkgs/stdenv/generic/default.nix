@@ -128,7 +128,8 @@ let
   # Add a utility function to produce derivations that use this
   # stdenv and its shell.
   mkDerivation = {
-    buildInputs ? [ ]
+    builderAssert ? null
+    , buildInputs ? [ ]
     , nativeBuildInputs ? [ ]
     , propagatedBuildInputs ? [ ]
     , propagatedNativeBuildInputs ? [ ]
@@ -229,6 +230,7 @@ let
 
     lib.addPassthru (derivation (
       (removeAttrs attrs [
+        "builderAssert"
         "meta"
         "passthru"
         "crossAttrs"
@@ -253,6 +255,7 @@ let
         );
     in {
       builder = attrs.realBuilder or shell;
+      inherit builderAssert;
       args = attrs.args or ["-e" (attrs.builder or ./default-builder.sh)];
       stdenv = result;
       system = result.system;

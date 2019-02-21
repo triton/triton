@@ -74,10 +74,10 @@ let
   doInstallCheck = doCheck;
 in
 
-python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck" "failIfDisabled"] // {
+python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] // {
   name = namePrefix + name;
 
-  failIfDisabled =
+  builderAssert =
     if disabled then
       throw "`${name}` is not supported for interpreter `${python.executable}`"
     else

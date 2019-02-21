@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 , texinfo
 
 , ncurses
@@ -10,7 +11,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     attrNames
     flip
     length
@@ -98,7 +99,7 @@ stdenv.mkDerivation rec {
     systemBashlogoutName = "bash.bash_logout";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The standard GNU Bourne again shell";
     homepage = http://www.gnu.org/software/bash/;
     license = licenses.gpl3Plus;

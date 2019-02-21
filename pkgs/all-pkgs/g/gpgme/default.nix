@@ -1,8 +1,5 @@
 { stdenv
 , fetchurl
-, swig
-, python2
-, python3
 
 , glib
 , gnupg
@@ -18,12 +15,6 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8";
   };
-
-  nativeBuildInputs = [
-    python2
-    python3
-    swig
-  ];
 
   buildInputs = [
     glib

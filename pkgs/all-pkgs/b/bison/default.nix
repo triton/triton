@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionalAttrs
     optionalString;

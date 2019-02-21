@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 
 , apr
@@ -68,7 +69,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Apache HTTPD, the world's most popular web server";
     homepage = http://httpd.apache.org/;
     license = licenses.asl20;

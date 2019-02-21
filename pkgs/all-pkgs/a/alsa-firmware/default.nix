@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
 
   dontStrip = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Soundcard firmwares from the alsa project";
     homepage = http://www.alsa-project.org/main/index.php/Main_Page;
     license = licenses.gpl2Plus;

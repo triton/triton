@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , fetchTritonPatch
+, lib
 , makeWrapper
 
 , apr
@@ -80,7 +81,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A companion library to APR, the Apache Portable Runtime";
     homepage = http://apr.apache.org/;
     license = licenses.asl20;

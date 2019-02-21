@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libcap-ng
 }:
@@ -35,7 +36,7 @@ stdenv.mkDerivation rec {
     inherit version;
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Audit Library";
     homepage = "http://people.redhat.com/sgrubb/audit/";
     license = licenses.gpl2;

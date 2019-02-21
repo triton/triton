@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , c-ares
 , expat
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
     "--with-jemalloc"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A multi-protocol/source, command-line download utility";
     homepage = https://github.com/tatsuhiro-t/aria2;
     license = licenses.gpl2Plus;

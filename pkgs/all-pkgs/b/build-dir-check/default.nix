@@ -1,10 +1,11 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation {
   name = "build-dir-check";
-  
+
   setupHook = ./setup-hook.sh;
 
   unpackPhase = ''
@@ -14,7 +15,7 @@ stdenv.mkDerivation {
   buildPhase = ''
     g++ -std=c++17 -O3 -Wall -Wpedantic -Werror "${./main.cc}" -o build-dir-check
   '';
-  
+
   installPhase = ''
     mkdir -p "$out"/bin
     mv build-dir-check "$out"/bin
@@ -25,7 +26,7 @@ stdenv.mkDerivation {
     source "$setupHook"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

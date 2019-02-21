@@ -2,6 +2,7 @@
 , ed
 , fetchurl
 , flex
+, lib
 
 , ncurses
 , readline
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
     touch doc doc/*
   '';
 
-  doCheck =true;
+  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl {
@@ -48,7 +49,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNU software calculator";
     homepage = http://www.gnu.org/software/bc/;
     license = with licenses; [

@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     rm -rv waflib/
   '';
 
-  wafFlags = [
+  wafConfigureFlags = [
     "--disable-fftw3f"  # single
     "--enable-fftw3"  # double
     "--disable-intelipp"

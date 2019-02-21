@@ -123,11 +123,7 @@ stdenv.mkDerivation rec {
     patchShebangs ./tools/
   '';
 
-  preConfigure = ''
-    wafFlagsArray+=("--prefix=$out")
-  '';
-
-  wafFlags = [
+  wafConfigureFlags = [
     "--optimize"
     "--docs"
     "--with-backends=jack,alsa"

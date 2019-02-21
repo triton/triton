@@ -5,17 +5,50 @@ wafUnpack() {
   ln -svf "$waf" "$wafForBuild"
 }
 
+wafCommonFlags() {
+  local phaseName="$1"
+  actualWafFlags=()
+
+  local parallelVar="${phaseName}Parallel"
+  if [ -n "${!parallelVar-true}" ]; then
+    actualWafFlags+=('--jobs' "${NIX_BUILD_CORES}")
+  fi
+
+  actualWafFlags+=($wafFlags)
+  actualWafFlags+=("${wafFlagsArray[@]}")
+  local flagsVar="waf${phaseName^}Flags"
+  actualWafFlags+=(${!flagsVar})
+  local arrayVar="waf${phaseName^}FlagsArray[@]"
+  actualWafFlags+=("${!arrayVar}")
+}
+
+wafPrintFlags() {
+  local phaseName="$1"
+
+  echo "$phaseName waf flags:"
+
+  local flag
+  for flag in "${actualWafFlags[@]}"; do
+    echo "  $flag"
+  done
+}
+
+wafCall() {
+  local phaseName="$1"
+
+  wafCommonFlags "$phaseName"
+  wafPrintFlags "$phaseName"
+  "$wafPython" "$wafForBuild" "$phaseName" "${actualWafFlags[@]}"
+}
+
 wafConfigurePhase() {
   runHook 'preConfigure'
 
   if [ -n "${addPrefix-true}" ]; then
-    wafFlagsArray+=("--prefix" "$prefix")
+    wafConfigureFlagsArray+=("--prefix" "$prefix")
   fi
 
-  wafFlagsArray+=('--jobs' "$NIX_BUILD_CORES")
-
-  echo "configure flags: $wafFlags ${wafFlagsArray[@]}"
-  "$wafPython" "$wafForBuild" configure $wafFlags "${wafFlagsArray[@]}"
+  wafCall 'configure'
 
   runHook 'postConfigure'
 }
@@ -23,7 +56,7 @@ wafConfigurePhase() {
 wafBuildPhase() {
   runHook 'preBuild'
 
-  "$wafPython" "$wafForBuild" build --jobs $NIX_BUILD_CORES
+  wafCall 'build'
 
   runHook 'postBuild'
 }
@@ -31,7 +64,7 @@ wafBuildPhase() {
 wafInstallPhase() {
   runHook 'preInstall'
 
-  "$wafPython" "$wafForBuild" install --jobs $NIX_BUILD_CORES
+  wafCall 'install'
 
   runHook 'postInstall'
 }

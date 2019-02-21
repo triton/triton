@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   wafForBuild = "buildtools/bin/waf";
   wafVendored = true;
 
-  wafFlags = [
+  wafConfigureFlags = [
     "--disable-python"
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"

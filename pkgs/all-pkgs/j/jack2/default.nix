@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     sed -i wscript -e '/xcode/d'
   '';
 
-  wafFlags = [
+  wafConfigureFlags = [
     "--classic"
     "--dbus"
     "--autostart=dbus"
@@ -89,17 +89,13 @@ stdenv.mkDerivation rec {
     "--readline=yes"
   ];
 
-  installPhase = ''
-    python waf install
-  '' + (
-    if libOnly then ''
-      rm -rfv $out/{bin,share}
-      rm -rfv $out/lib/{jack,libjacknet*,libjackserver*}
-    '' else ''
-      wrapProgram $out/bin/jack_control \
-        --set 'PYTHONPATH' "$PYTHONPATH"
-    ''
-  );
+  postInstall = if libOnly then ''
+    rm -rfv $out/{bin,share}
+    rm -rfv $out/lib/{jack,libjacknet*,libjackserver*}
+  '' else ''
+    wrapProgram $out/bin/jack_control \
+      --set 'PYTHONPATH' "$PYTHONPATH"
+  '';
 
   meta = with lib; {
     description = "JACK audio connection kit, version 2 with jackdbus";

@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   wafForBuild = "buildtools/bin/waf";
   wafVendored = true;
 
-  wafFlags = [
+  wafConfigureFlags = [
     "--disable-python"
     "--enable-talloc-compat1"
     "--bundled-libraries=NONE"

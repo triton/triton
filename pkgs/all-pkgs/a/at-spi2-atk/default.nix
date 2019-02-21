@@ -17,10 +17,6 @@
 }:
 
 let
-  inherit (lib)
-    boolWt
-    optionals;
-
   sources = {
     "2.30" = {
       version = "2.30.0";

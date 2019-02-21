@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "17";
+  version = "18";
 in
 stdenv.mkDerivation rec {
   name = "dbus-broker-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/bus1/dbus-broker/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "4ec7491745a88ec5112644b0e2b9a0abe9107c85d7650be8988d88efb52da84b";
+    sha256 = "f29e77a4d7b386e835dbe6379f4308f0503d6077834ba734ea6782359b34cbb9";
   };
 
   nativeBuildInputs = [
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     grep -q -r "subdir('test" --include meson.build .
     find . -name meson.build -exec sed -i -e "/subdir('test/d" -e '/^[ ]*test/d' {} \;
   '';
-  
+
   mesonFlags = [
     "-Daudit=true"
     "-Dselinux=true"

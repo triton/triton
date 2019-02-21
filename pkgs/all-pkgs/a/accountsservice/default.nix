@@ -15,12 +15,6 @@
 , systemd_lib
 }:
 
-let
-  inherit (lib)
-    boolEn
-    boolString
-    boolWt;
-in
 stdenv.mkDerivation rec {
   name = "accountsservice-0.6.54";
 

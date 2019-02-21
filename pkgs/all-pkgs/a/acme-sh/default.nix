@@ -24,10 +24,7 @@ let
     openssl
   ];
 
-  inherit (lib)
-    concatStringsSep;
-
-  programsPath = concatStringsSep ":" (map (n: "${n}/bin") programs);
+  programsPath = lib.concatStringsSep ":" (map (n: "${n}/bin") programs);
 in
 stdenv.mkDerivation rec {
   name = "acme.sh-${version}";

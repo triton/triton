@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
@@ -13,7 +14,7 @@ stdenv.mkDerivation rec {
     sha256 = "01ahldvf0gc29dmbd5zi4rrnrw2i1ajnf30sx2vyaski3jv099fp";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Show battery status and other ACPI information";
     homepage = http://sourceforge.net/projects/acpiclient/;
     license = licenses.gpl2Plus;

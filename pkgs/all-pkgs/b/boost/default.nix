@@ -22,7 +22,6 @@ let
       sha256 = "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406";
     };
   };
-  
   inherit (lib)
     optionals
     replaceStrings

@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchzip
+, lib
 
 , libnih
 , util-linux_lib
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/lib/udev/rules.d"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -9,9 +9,6 @@
 }:
 
 let
-  inherit (lib)
-    optionals;
-
   version = "1.5.3";
 in
 buildPythonPackage rec {

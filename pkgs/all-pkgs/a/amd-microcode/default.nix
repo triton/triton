@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libarchive
 , linux-firmware
@@ -32,7 +33,7 @@ stdenv.mkDerivation rec {
     echo kernel/x86/microcode/AuthenticAMD.bin | bsdcpio -o -H newc -R 0:0 > $out/amd-ucode.img
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "AMD Processor microcode patch";
     homepage = http://www.amd64.org/support/microcode.html;
     license = licenses.unfreeRedistributableFirmware;

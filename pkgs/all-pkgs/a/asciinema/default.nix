@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
@@ -15,7 +16,7 @@ buildPythonPackage {
     sha256 = "32f2c1a046564e030708e596f67e0405425d1eca9d5ec83cd917ef8da06bc423";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -8,6 +8,7 @@
 , adwaita-icon-theme
 , alsa-lib
 , at-spi2-atk
+, at-spi2-core
 , atk
 , cairo
 , cups
@@ -91,6 +92,7 @@ stdenv.mkDerivation rec {
     adwaita-icon-theme
     alsa-lib
     at-spi2-atk
+    at-spi2-core
     atk
     cairo
     cups

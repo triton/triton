@@ -1,12 +1,13 @@
 { stdenv
 , cargo
+, lib
 , rustc
 }:
 
 args:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     elem
     filterAttrs;
 

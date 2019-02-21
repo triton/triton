@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   name = "tcp-wrappers-7.6-p${toString (stdenv.lib.length patches)}";
 
   src = fetchurl {
-    url = [
+    urls = [
       "ftp://ftp.porcupine.org/pub/security/tcp_wrappers_7.6.tar.gz"
       "http://files.ichilton.co.uk/nfs/tcp_wrappers_7.6.tar.gz"
     ];

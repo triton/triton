@@ -25,17 +25,17 @@ let
 
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
-  major = "1.16";
-  patch = "2";
+  major = "1.17";
+  patch = null;
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "QmYQrS9aVefswbVErXsaqzFp7siYaiA2FLvNhFRCapBc41";
+    multihash = "QmWC2q7VSM1FjPQ9K5fvKK2hHAdreHqfLuR8fLfPf7nAEk";
     hashOutput = false;
-    sha256 = "9f721e1fe593c219174740c71de514c7228a97d23eb7be7597b2ae14e487f027";
+    sha256 = "5a6e2284a53de5702d3dc2be3b9339c963f9b5397d3fbbc53beb249380a781f5";
   };
 
   nativeBuildInputs = [
@@ -114,8 +114,8 @@ stdenv.mkDerivation rec {
   passthru = rec {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.16" "2";
-      sha256 = "9f721e1fe593c219174740c71de514c7228a97d23eb7be7597b2ae14e487f027";
+      urls = tarballUrls "1.17" null;
+      sha256 = "5a6e2284a53de5702d3dc2be3b9339c963f9b5397d3fbbc53beb249380a781f5";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprints = [

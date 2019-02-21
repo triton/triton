@@ -20,14 +20,14 @@
 }:
 
 let
-  version = "2.19";
+  version = "2.21";
 in
 stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/${name}.tar.gz";
-    sha256 = "245dd1a93faced2e923c266e3ea3b79c4740f457ea21027a978957f9918758c0";
+    sha256 = "317225f0d6cbc99d90481b0f8a30be8c325f5b5aebe82f9adf409214081de10a";
   };
 
   nativeBuildInputs = [

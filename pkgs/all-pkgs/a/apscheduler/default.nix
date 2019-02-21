@@ -19,8 +19,6 @@
 , tornado
 , twisted
 , tzlocal
-
-, pytest
 }:
 
 let
@@ -58,12 +56,7 @@ buildPythonPackage rec {
     futures
   ] ++ optionals (pythonOlder "3.4") [
     enum34
-  ] ++ optionals doCheck [
-    pytest
   ];
-
-  # TODO: needs rethinkdb & QT4/5
-  doCheck = false;
 
   meta = with lib; {
     description = "In-process task scheduler with Cron-like capabilities";

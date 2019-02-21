@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.4.7";
+  version = "2.5.0";
 in
 buildPythonPackage {
   name = "daemonize-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "daemonize";
     inherit version;
-    sha256 = "c0194e861826be456c7c69985825ac7b79632d8ac7ad4cde8e12fee7971468c8";
+    sha256 = "dd026e4ff8d22cb016ed2130bc738b7d4b1da597ef93c074d2adb9e4dea08bc3";
   };
 
   meta = with stdenv.lib; {

@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "3.5.0";
+  version = "3.7.1";
 in
 buildPythonPackage rec {
   name = "configparser-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "configparser";
     inherit version;
-    sha256 = "5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a";
+    sha256 = "5bd5fa2a491dc3cfe920a3f2a107510d65eceae10e9c6e547b90261a4710df32";
   };
 
   disabled = isPy3;  # FIXME: < 3.5

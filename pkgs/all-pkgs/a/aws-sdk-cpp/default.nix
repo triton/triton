@@ -1,6 +1,7 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 
 , curl
@@ -38,7 +39,7 @@ stdenv.mkDerivation {
     "-DBUILD_ONLY=s3"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

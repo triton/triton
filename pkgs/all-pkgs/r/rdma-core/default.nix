@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "22";
+  version = "22.1";
 in
 stdenv.mkDerivation rec {
   name = "rdma-core-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/linux-rdma/rdma-core/releases/download/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "42ab5b34054a083e2efb7e8617a8f7cf1a6af40398d9ef195554544700a1783d";
+    sha256 = "d2ba34326c828ebeff26b300761d3c45ffceb76e0a804e9c612d1baf96ad673a";
   };
 
   nativeBuildInputs = [

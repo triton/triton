@@ -22,6 +22,12 @@ let
       sha256 = "99ccd944ffcccc88c0f404b4f3d8cb10747e1e3dfe9ec566f518725f986ca2fd";
       license = lib.licenses.agpl30;
     };
+    "18" = {
+      version = "18.2.5";
+      multihash = "QmVZPG75YQCKFfqBTHN3NTmbBDbnjPymJZkyLfGHWm6Bpm";
+      sha256 = "2ea8b8bc0611d9b4c2b9fee84a4a312dddfec007067af6e02ed46a26354181bb";
+      license = lib.licenses.agpl30;
+    };
   };
   source = sources."${channel}";
 in

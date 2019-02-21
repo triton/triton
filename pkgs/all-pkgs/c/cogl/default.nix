@@ -138,8 +138,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/cogl/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls = map (n: (lib.replaceStrings ["tar.xz"] ["sha256sum"] n)) src.urls;
+      };
       failEarly = true;
     };
   };

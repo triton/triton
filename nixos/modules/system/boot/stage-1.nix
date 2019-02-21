@@ -106,11 +106,23 @@ let
       # Run patchelf to make the programs refer to the copied libraries.
       for i in $out/bin/* $out/lib/*; do if ! test -L $i; then nuke-refs -e $out $i; fi; done
 
-      for i in $out/bin/*; do
-          if ! test -L $i; then
-              echo "patching $i..."
-              patchelf --set-interpreter $out/lib/ld*.so.? --set-rpath $out/lib $i || true
-          fi
+      for exe in "$out"/bin/* "$out"/lib/*; do
+        if [ ! -f "$exe" ]; then
+          continue
+        fi
+        echo "Maybe patching: $exe"
+        local patchelfArgs=()
+        local stdout
+        if stdout="$(patchelf --print-interpreter "$exe" 2>/dev/null)" && [ -n "$stdout" ]; then
+          patchelfArgs+=('--set-interpreter' "$out"/lib/ld*.so.?)
+        fi
+        if stdout="$(patchelf --print-rpath "$exe" 2>/dev/null)" && [ -n "$stdout" ]; then
+          patchelfArgs+=('--set-rpath' "$out"/lib)
+        fi
+        if [ "''${#patchelfArgs[@]}" -gt 0 ]; then
+          echo "Patching $exe..."
+          patchelf "''${patchelfArgs[@]}" "$exe"
+        fi
       done
 
       check_test_string() {
@@ -133,8 +145,6 @@ let
       )"
       check_test_string 'hello world' "$TEST_ASH"
 
-      export LD_LIBRARY_PATH=$out/lib
-
       echo 'TESTING: mount'
       TEST_MOUNT="$($out/bin/mount --help 2>&1 | grep -o "BusyBox" || :)"
       check_test_string 'BusyBox' "$TEST_MOUNT" "$out/bin/mount --help"
@@ -145,6 +155,9 @@ let
 
       echo 'TESTING: udevadm'
       $out/bin/udevadm --version
+
+      echo 'TESTING: modprobe'
+      $out/bin/modprobe --version
 
       echo 'TESTING: dmsetup'
       TEST_DMSETUP="$(

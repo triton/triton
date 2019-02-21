@@ -3,7 +3,6 @@
 targetRoot=/mnt-root
 console=tty1
 
-export LD_LIBRARY_PATH=@extraUtils@/lib
 export PATH=@extraUtils@/bin
 ln -s @extraUtils@/bin /bin
 

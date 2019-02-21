@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gnum4
+, lib
 , perl
 
 , channel ? "latest"
@@ -38,7 +39,7 @@ stdenv.mkDerivation rec {
     perl
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Part of the GNU Build System";
     homepage = http://www.gnu.org/software/autoconf/;
     license = licenses.gpl2Plus;

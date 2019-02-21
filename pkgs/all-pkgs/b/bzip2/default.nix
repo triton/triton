@@ -1,12 +1,13 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , type ? "full"
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
   version = "1.0.6.0.2";
@@ -65,7 +66,7 @@ stdenv.mkDerivation rec {
     "out"
   ] ++ stdenv.cc.runtimeLibcLibs;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "high-quality data compression program";
     # upstream http://www.bzip.org
     homepage = http://ftp.suse.com/pub/people/sbrabec/bzip2/;

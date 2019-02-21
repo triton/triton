@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , libtool
 , dhcp
 , docbook-xsl-ns
@@ -27,7 +28,7 @@
 let
   toolsOnly = suffix == "tools";
 
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 
@@ -130,7 +131,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "http://www.isc.org/software/bind";
     description = "Domain name server";
     license = licenses.isc;

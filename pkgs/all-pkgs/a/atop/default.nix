@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , ncurses
 , zlib
@@ -54,7 +55,7 @@ stdenv.mkDerivation rec {
     "systemdinstall"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Console system performance monitor";
     maintainers = with maintainers; [
       wkennington

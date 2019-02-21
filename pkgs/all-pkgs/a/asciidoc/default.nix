@@ -3,6 +3,7 @@
 , docbook_xml_dtd_45
 , docbook-xsl
 , fetchFromGitHub
+, lib
 , libxml2
 , libxslt
 
@@ -39,7 +40,7 @@ stdenv.mkDerivation rec {
     patchShebangs asciidoc.py
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A plain text human readable/writable document format";
     homepage = http://asciidoc.org/;
     license = licenses.gpl2;

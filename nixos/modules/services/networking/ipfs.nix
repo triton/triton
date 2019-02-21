@@ -9,12 +9,12 @@ let
     Addresses = {
       Swarm = [
         "/ip4/0.0.0.0/tcp/4001"
-      ] ++ optionals cfg.utp [
-        "/ip4/0.0.0.0/udp/4001/utp"
+      ] ++ optionals cfg.quic [
+        "/ip4/0.0.0.0/udp/4001/quic"
       ] ++ [
         "/ip6/::/tcp/4001"
-      ] ++ optionals cfg.utp [
-        "/ip6/::/udp/4001/utp"
+      ] ++ optionals cfg.quic [
+        "/ip6/::/udp/4001/quic"
       ];
       API = "/ip4/127.0.0.1/tcp/5001";
       Gateway = "/ip4/127.0.0.1/tcp/8001";
@@ -24,6 +24,8 @@ let
         Enabled = false;
       };
     };
+  } // optionalAttrs (cfg.quic) {
+    Experimental.QUIC = true;
   } // cfg.extraAttrs;
 
   extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON ipfsAttrs);
@@ -57,11 +59,11 @@ in
         '';
       };
 
-      utp = mkOption {
+      quic = mkOption {
         type = bool;
         default = true;
         description = ''
-          Enable the experimental utp protocol.
+          Enable the experimental QUIC protocol.
         '';
       };
 

@@ -13,7 +13,7 @@ in
 
     system.fsPackages = [ pkgs.btrfs-progs ];
 
-    boot.initrd.kernelModules = mkIf inInitrd [ "btrfs" "crc32c" ];
+    boot.initrd.kernelModules = mkIf inInitrd [ "btrfs" ];
 
     boot.initrd.extraUtilsCommands = mkIf inInitrd
       ''

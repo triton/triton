@@ -6,10 +6,6 @@
 , flac
 }:
 
-let
-  inherit (lib)
-    boolEn;
-in
 stdenv.mkDerivation rec {
   name = "audiofile-0.3.6";
 
@@ -39,7 +35,7 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-docs"
     "--disable-examples"
-    "--${boolEn (flac != null)}-flac"
+    "--enable-flac"
   ];
 
   CXXFLAGS = "-std=c++03";

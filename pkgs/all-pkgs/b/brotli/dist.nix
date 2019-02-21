@@ -3,6 +3,7 @@
 , automake
 , bc
 , fetchFromGitHub
+, lib
 , libtool
 }:
 
@@ -27,7 +28,7 @@ let
     "-e"
   ];
 
-  inherit (stdenv.lib)
+  inherit (lib)
     concatStringsSep;
 in
 stdenv.mkDerivation {
@@ -40,7 +41,7 @@ stdenv.mkDerivation {
     rev = "v${version}";
     sha256 = "685126f1d175d798bdeaaf2dcf6326b022751000f2ea100a353e5682d5ac42bd";
   };
-  
+
   nativeBuildInputs = [
     autoconf
     automake

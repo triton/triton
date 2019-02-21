@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , ncurses
 , pcre
@@ -23,7 +24,7 @@ stdenv.mkDerivation rec {
   # Expects old c but doesn't specify this
   NIX_CFLAGS_COMPILE = "-std=gnu89";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

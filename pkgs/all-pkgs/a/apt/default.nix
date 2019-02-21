@@ -4,6 +4,7 @@
 , docbook-xsl
 , fetchurl
 , gettext
+, lib
 , libxslt
 , ninja
 , perl
@@ -70,7 +71,7 @@ stdenv.mkDerivation {
       -i cmake_install.cmake
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

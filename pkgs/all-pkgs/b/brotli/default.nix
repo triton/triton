@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , version
 }:
@@ -27,7 +28,7 @@ stdenv.mkDerivation {
     inherit version;
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A generic-purpose lossless compression algorithm and tool";
     homepage = https://github.com/google/brotli;
     license = licenses.asl20;

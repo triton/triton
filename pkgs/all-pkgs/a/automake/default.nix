@@ -1,6 +1,7 @@
 { stdenv
-, fetchurl
 , autoconf
+, fetchurl
+, lib
 , perl
 }:
 
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNU standard-compliant makefile generator";
     homepage = "http://www.gnu.org/software/automake/";
     license = licenses.gpl2Plus;

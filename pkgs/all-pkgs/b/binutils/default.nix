@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , zlib
 
@@ -7,7 +8,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optional
@@ -114,7 +115,7 @@ stdenv.mkDerivation (rec {
     touch "$out"/nix-support/cc-wrapper-ignored
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";
     homepage = http://www.gnu.org/software/binutils/;
     license = licenses.gpl3Plus;

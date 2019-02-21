@@ -9,12 +9,13 @@
 }:
 
 buildPythonPackage rec {
-  name = "cvs2svn-2.4.0";
+  name = "cvs2svn-2.5.0";
 
   src = fetchurl {
-    url = "http://cvs2svn.tigris.org/files/documents/1462/49237/${name}.tar.gz";
-    multihash = "QmeaAWRW5WMx9nLx23biyYteSm87VQdTTzdTz3cp3cpbY6";
-    sha256 = "a6677fc3e7b4374020185c61c998209d691de0c1b01b53e59341057459f6f116";
+    url = "http://cvs2svn.tigris.org/files/documents/1462/49543/${name}.tar.gz";
+    multihash = "QmQeNRR2puhCXfvTCn8zQF3atvsW4ofi34zh3qeNkDs8KM";
+    hashOutput = false;
+    sha256 = "6409d118730722f439760d41c08a5bfd05e5d3ff4a666050741e4a5dc2076aea";
   };
 
   buildInputs = [
@@ -24,6 +25,23 @@ buildPythonPackage rec {
   ];
 
   disabled = isPy3;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        pgpsigUrl = "http://cvs2svn.tigris.org/files/documents/1462/49544/${name}.tar.gz.asc";
+        pgpKeyFingerprints = [
+          # Michael Haggerty
+          "5B31 41FB 0C48 B038 563E  1D93 C20F 66AD 1C1F 9809"
+        ];
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "CVS to Subversion/git/Bazaar/Mercurial repository converter";

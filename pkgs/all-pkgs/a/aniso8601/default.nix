@@ -22,8 +22,6 @@ buildPythonPackage rec {
     python-dateutil
   ];
 
-  doCheck = true;
-
   meta = with lib; {
     description = "A library for parsing ISO 8601 strings";
     homepage = https://bitbucket.org/nielsenb/aniso8601;

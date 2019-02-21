@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , alsa-lib
 , ffmpeg
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
     speexdsp
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Various plugins for ALSA";
     homepage = http://alsa-project.org/;
     license = licenses.lgpl21;

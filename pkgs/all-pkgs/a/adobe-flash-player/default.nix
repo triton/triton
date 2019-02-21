@@ -12,9 +12,6 @@
 #assert stdenv.cc.isGNU;
 
 let
-  inherit (lib)
-    makeSearchPath;
-
   sources = {
     "stable" = {
       version = "32.0.0.142";
@@ -43,7 +40,7 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
-  flashPlayerLibs = makeSearchPath "lib" [
+  flashPlayerLibs = lib.makeSearchPath "lib" [
     stdenv.cc.cc
     stdenv.cc.libc
   ];

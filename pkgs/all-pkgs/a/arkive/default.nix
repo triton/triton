@@ -2,6 +2,7 @@
 , cmake
 , fetchFromGitHub
 , makeWrapper
+, lib
 
 , bc
 , ffmpeg_head
@@ -40,7 +41,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${lib-bash}/bin"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Video encoding automation scripts";
     homepage = https://github.com/chlorm/arkive/;
     license = licenses.bsd3;

@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 , pythonOlder
 , setuptools-scm
 
@@ -59,7 +60,7 @@ buildPythonPackage rec {
 
   disabled = pythonOlder "3.5";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

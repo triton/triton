@@ -1,5 +1,6 @@
 { stdenv
 , fetchzip
+, lib
 
 , keyutils
 , libaio
@@ -46,7 +47,7 @@ stdenv.mkDerivation {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

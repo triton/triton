@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -15,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "5b1026f18b8274be869245ed63427bf8ddac0739c67be12c4a769ac948824eeb";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Asynchronous DNS Resolver Library";
     homepage = "http://www.chiark.greenend.org.uk/~ian/adns/";
     license = licenses.lgpl2;

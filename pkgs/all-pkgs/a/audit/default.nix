@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , swig
 
 , audit_lib
@@ -38,20 +39,20 @@ stdenv.mkDerivation rec {
     "--with-python"
     "--with-python3"
     "--without-golang"
-    "--${if libOnly then "disable" else "enable"}-listener"
-    "--${if libOnly then "disable" else "enable"}-zos-remote"
-    "--${if libOnly then "disable" else "enable"}-gssapi-krb5"
+    "--enable-listener"
+    "--enable-zos-remote"
+    "--enable-gssapi-krb5"
     "--disable-systemd"
     "--without-debug"
     "--without-warn"
     "--without-alpha"  # TODO: Support
     "--without-arm"  # TODO: Support
     "--without-aarch64"  # TODO: Support
-    "--${if libOnly then "without" else "with"}-apparmor"
+    "--enable-apparmor"
     "--without-prelude"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Audit Library";
     homepage = "http://people.redhat.com/sgrubb/audit/";
     license = licenses.gpl2;

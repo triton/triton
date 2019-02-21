@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
@@ -42,7 +43,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library and tools for manipulating extended attributes";
     homepage = http://savannah.nongnu.org/projects/attr/;
     license = licenses.lgpl21;

@@ -22,7 +22,7 @@ let
     optionals;
 
   channel = "3.0";
-  version = "${channel}.26";
+  version = "${channel}.27";
 in
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "d8618a6d9accec0f2a8574c5e1220051f8505fb82b20336c26bdbd482aa6cb3a";
+    sha256 = "fe69bd6c659d24ab30da3f091eb91cd1970026d431179b0724f13791e8ad9f9d";
   };
 
   buildInputs = [
@@ -69,8 +69,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/clutter-gst/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Url = map (n: (lib.replaceStrings ["tar.xz"] ["sha256sum"] n)) src.urls;
+      };
       failEarly = true;
     };
   };

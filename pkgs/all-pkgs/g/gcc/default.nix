@@ -42,7 +42,7 @@ let
     else
       "release";
 
-  version = "8.2.0";
+  version = "8.3.0";
 in
 stdenv.mkDerivation (rec {
   name = "gcc-${version}";
@@ -50,7 +50,7 @@ stdenv.mkDerivation (rec {
   src = fetchurl {
     url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080";
+    sha256 = "64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c";
   };
 
   buildInputs = optionals (type != "bootstrap") [
@@ -81,11 +81,6 @@ stdenv.mkDerivation (rec {
       rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
       file = "g/gcc/8.2.0/0004-cppdefault-Don-t-add-a-default-local_prefix-include.patch";
       sha256 = "ae6a5002b197f81b76a949dc808e450dd5ed3b5951979b6a5f9987f2a76ce71c";
-    })
-    (fetchTritonPatch {
-      rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
-      file = "g/gcc/8.2.0/0005-2018-08-01-Richard-Biener-rguenther-suse.de.patch";
-      sha256 = "549433094b3795f00ea5b40b915d963107eb337b2c7c5dd092354ea3c66f1b47";
     })
   ];
 

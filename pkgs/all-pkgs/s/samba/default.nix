@@ -6,40 +6,36 @@
 , gettext
 , libxslt
 , perl
-, pythonPackages
+, python2Packages
 
-, avahi
 , acl
+, avahi
 , ceph
 , cups
 , dbus
 , glusterfs
 , gnutls
-, iniparser
+, gpgme
+, jansson
 , krb5_full
 , ldb
-, libaio
 , libarchive
-, libbsd
 , libcap
 , libgcrypt
 , libgpg-error
+, libtirpc
 , libunwind
+, lmdb
 , ncurses
-, nss_wrapper
 , openldap
 , pam
 , popt
-, rdma-core
 , readline
-, resolv_wrapper
-, socket_wrapper
-, subunit
+, rpcsvc-proto
 , systemd_lib
 , talloc
 , tdb
 , tevent
-, uid_wrapper
 , zlib
 
 , type ? ""
@@ -50,7 +46,7 @@ let
     optionals
     optionalString;
 
-  version = "4.8.5";
+  version = "4.9.4";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -65,18 +61,18 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "e58ee6b1262d4128b8932ceee59d5f0b0a9bbe00547eb3cc4c41552de1a65155";
+    sha256 = "6d98a8d8bcccbe788e4bbb406362e6676311aca711a3f3cc9b3a404bb9ff0b4f";
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
-    perl
-    libxslt
     docbook-xsl
     docbook_xml_dtd_42
     docbook_xml_dtd_45
-    pythonPackages.wrapPython
-    gettext
+    libxslt
+    perl
+    python2Packages.python
+    python2Packages.waf.dev
+    python2Packages.wrapPython
   ];
 
   buildInputs = [
@@ -84,54 +80,74 @@ stdenv.mkDerivation rec {
     avahi
     cups
     gnutls
-    iniparser
-    krb5_full
-    ldb
+    gpgme
     libarchive
-    libbsd
     libcap
     libgcrypt
     libgpg-error
     libunwind
+    lmdb
     ncurses
-    nss_wrapper
     openldap
     pam
     popt
     readline
-    resolv_wrapper
-    socket_wrapper
-    subunit
     systemd_lib
     talloc
     tdb
     tevent
-    uid_wrapper
     zlib
   ] ++ optionals (!isClient) [
     ceph
     dbus
     glusterfs
-    libaio
-    pythonPackages.etcd
-    rdma-core
-  ];
-
-  pythonPath = [
-    talloc
-    ldb
-    tdb
+    krb5_full
+    jansson
+    libtirpc
+    rpcsvc-proto
+    python2Packages.etcd
   ];
 
   postPatch = ''
     # Removes absolute paths in scripts
+    grep -q '/sbin/' ctdb/config/functions
     sed -i 's,/sbin/,,g' ctdb/config/functions
 
     # Fix the XML Catalog Paths
     sed -i "s,\(XML_CATALOG_FILES=\"\),\1$XML_CATALOG_FILES ,g" buildtools/wafsamba/wafsamba.py
   '';
 
-  configureFlags = [
+  wafForBuild = "buildtools/bin/waf";
+  wafVendored = true;
+
+  wafConfigureFlags = [
+    # buildtools/wafsamba/wscript options
+    "--bundled-libraries=com_err"
+    "--private-libraries=NONE"
+    "--abi-check"
+    "--why-needed"
+    "--with-libiconv"
+
+    # ctdb/wscript
+    #(if isClient then null else "--enable-infiniband")  # TODO: Fixme
+    #(if isClient then null else "--enable-pmda")
+    (if isClient then null else "--enable-etcd-reclock")
+    (if isClient then null else "--enable-ceph-reclock")
+
+    # dynconfig/wscript options
+    "--enable-fhs"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+
+    # lib/audit_logging/wscript options
+    (if isClient then null else "--with-json-audit")
+
+    # lib/util/wscript
+    "--with-systemd"
+
+    # packaging/wscript
+    "--systemd-install-services"
+
     # source3/wscript options
     "--with-static-modules=NONE"
     "--with-shared-modules=ALL"
@@ -144,8 +160,6 @@ stdenv.mkDerivation rec {
     "--with-quotas"
     "--with-sendfile-support"
     "--with-utmp"
-    "--with-utmp"
-    "--enable-pthreadpool"
     "--enable-avahi"
     "--with-iconv"
     "--with-acl-support"
@@ -156,24 +170,7 @@ stdenv.mkDerivation rec {
     "--with-libarchive"
     "--with-cluster-support"
     "--with-regedit"
-    (if isClient then null else "--with-libcephfs=${ceph}")
-    (if isClient then null else "--enable-glusterfs")
-
-    # dynconfig/wscript options
-    "--enable-fhs"
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
-
-    # buildtools/wafsamba/wscript options
-    "--bundled-libraries=com_err"
-    "--private-libraries=NONE"
-    "--builtin-libraries=replace"
-    "--abi-check"
-    "--why-needed"
-    "--with-libiconv"
-
-    # lib/util/wscript
-    "--with-systemd"
+    (if isClient then null else "--with-libcephfs=${ceph.lib}")
 
     # source4/lib/tls/wscript options
     "--enable-gnutls"
@@ -181,29 +178,14 @@ stdenv.mkDerivation rec {
     # wscript options
     "--with-system-mitkrb5" "${krb5_full}"
     "--with-system-mitkdc" "${krb5_full}/bin/krb5kdc"
-    # "--without-ad-dc"
-
-    # ctdb/wscript
-    (if isClient then null else "--enable-infiniband")
-    #(if isClient then null else "--enable-pmda")
-    (if isClient then null else "--enable-etcd-reclock")
-    (if isClient then null else "--enable-ceph-reclock")
+    "--with-experimental-mit-ad-dc"
   ];
 
-  configurePhase = ''
-    patchShebangs buildtools/bin/waf
-    export PATH="$(pwd)/buildtools/bin:$PATH"
-    configureFlagsArray+=("--prefix=$out")
-    waf configure -j $NIX_BUILD_CORES $configureFlags "''${configureFlagsArray[@]}"
+  preInstall = ''
+    wafInstallFlagsArray+=('--destdir' "$out")
   '';
 
-  buildPhase = ''
-    waf build -j $NIX_BUILD_CORES
-  '';
-
-  installPhase = ''
-    waf install -j $NIX_BUILD_CORES --destdir "$out"
-
+  postInstall = ''
     dir="$out/$out"
     mv "$out/$out"/* "$out"
     while [ "$out" != "$dir" ]; do
@@ -214,10 +196,12 @@ stdenv.mkDerivation rec {
     # Remove unecessary components
     rm -r "$out"/var
     rm -r "$out"/libexec/ctdb/tests
+    rm -r "$out"/lib/pkgconfig
     rm -r "$out"/lib/python2.7/site-packages/samba/tests
     rm "$out"/bin/ctdb_run{_cluster,}_tests
-    rm -r "$out"/share/ctdb/tests
-    rmdir "$out"/share/ctdb
+    rm -r "$out"/share/ctdb
+    rm "$out"/bin/smbtorture
+    rm "$out"/bin/*test
   '';
 
   preFixup = optionalString isClient ''
@@ -272,9 +256,6 @@ stdenv.mkDerivation rec {
     # Correct python program paths
     wrapPythonPrograms $out/bin
   '';
-
-  # FIXME
-  buildDirCheck = false;
 
   passthru = rec {
     srcVerification = fetchurl {

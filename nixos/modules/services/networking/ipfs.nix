@@ -1,6 +1,18 @@
 { config, lib, pkgs, ... }:
 
 let
+  inherit (lib)
+    concatStringsSep
+    mkIf
+    mkOption
+    optionals
+    optionalAttrs;
+
+  inherit (lib.types)
+    attrs
+    bool
+    str;
+
   cfg = config.services.ipfs;
 
   ipfs_path = "/var/lib/ipfs";
@@ -34,17 +46,6 @@ let
   ] ++ optionals cfg.gc [
     "--enable-gc"
   ];
-
-  inherit (lib)
-    concatStringsSep
-    mkIf
-    mkOption
-    optionals;
-
-  inherit (lib.types)
-    attrs
-    bool
-    str;
 in
 {
   options = {

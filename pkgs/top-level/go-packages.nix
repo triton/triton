@@ -307,11 +307,11 @@ let
 
   sys = buildFromGitHub {
     version = 6;
-    rev = "90b0e4468f9980bf79a2290394adaf7f045c5d24";
-    date = "2019-02-19";
+    rev = "cd391775e71e684db52b63df9affd58269495083";
+    date = "2019-02-22";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "afde4f2e9af6d22ad5a89583f680bdf170c159d42c0ee1cb550f80d99e917c46";
+    sha256 = "6a01ec75573d1f3e5a81e6fba2a86b75c18c847f0732d06e749e03d1d38733d9";
     goPackagePath = "golang.org/x/sys";
   };
 
@@ -428,11 +428,22 @@ let
   };
 
   acme = buildFromGitHub {
-    version = 5;
+    version = 6;
+    owner = "google";
+    repo = "acme";
+    rev = "1.1.1";
+    sha256 = "8ef4ea08e86cd48cd2bc9a3567d66ca70c57a8d91bd2f89888f9e4aee9534fd3";
+    propagatedBuildInputs = [
+      crypto
+    ];
+  };
+
+  acmetool = buildFromGitHub {
+    version = 6;
     owner = "hlandau";
     repo = "acme";
     rev = "v0.0.67";
-    sha256 = "1l2a1y3mqv1mfri568j967n6jnmzbdb6cxm7l06m3lwidlzpjqvg";
+    sha256 = "907dfb75d22caada94a7dda7273a229db82b1b256e1a01ae14a7c8398a66dbf4";
     buildInputs = [
       pkgs.libcap
     ];
@@ -586,12 +597,12 @@ let
   };
 
   ansicolor = buildFromGitHub {
-    version = 5;
+    version = 6;
     owner = "shiena";
     repo = "ansicolor";
     rev = "a422bbe96644373c5753384a59d678f7d261ff10";
     date = "2015-11-19";
-    sha256 = "1683x3yhny5xbqf9kp3i9rpkj1gkc6a6w5r4p5kbbxpzidwmgb35";
+    sha256 = "65ac57798bfff6b566b924176e9461f305396f4e71dc991c5ebd780bfde80399";
   };
 
   ansiterm = buildFromGitHub {
@@ -1179,11 +1190,11 @@ let
   };
 
   jmhodges_clock = buildFromGitHub {
-    version = 5;
+    version = 6;
     owner = "jmhodges";
     repo = "clock";
     rev = "v1.1";
-    sha256 = "0qda1xvz0kq5q6jzfvf23j9anzjgs4dylp71bnnlcbq64s9ywwp6";
+    sha256 = "e672ee9326062f46ad5de15cea1bd14f7eab921cc26df7a5c1054ff0770faa61";
   };
 
   clockwork = buildFromGitHub {
@@ -1879,13 +1890,11 @@ let
     repo   = "dnscrypt-proxy";
     sha256 = "HRkv+ijdUyjK1aU3c2Ad3bBjCUAuI537SyYaWAvzt3Q=";
     propagatedBuildInputs = [
-      cachecontrol
       critbitgo
       crypto
       dlog
       dns
       ewma
-      godaemon
       go-clocksmith
       go-dnsstamps
       go-immutable-radix
@@ -1897,6 +1906,7 @@ let
       pidfile
       safefile
       service
+      sys
       toml
       xsecretbox
     ];
@@ -3122,12 +3132,12 @@ let
   };
 
   hlandau_goutils = buildFromGitHub {
-    version = 5;
+    version = 6;
     rev = "0cdb66aea5b843822af6fdffc21286b8fe8379c4";
     date = "2016-07-22";
     owner = "hlandau";
     repo = "goutils";
-    sha256 = "08nm9nxz21km6ivvvr7pg8758bdzrjp3i6hkkf1v051i1hvci7ws";
+    sha256 = "9a9fc8360c3114b0839b139a38aeccbf2d540e7af7e4bd77347506f1bb4dd522";
   };
 
   golang-lru = buildFromGitHub {
@@ -4172,14 +4182,13 @@ let
 
   go-isatty = buildFromGitHub {
     version = 6;
-    rev = "3fb116b820352b7f0c281308a4d6250c22d94e27";
+    rev = "v0.0.5";
     owner  = "mattn";
     repo   = "go-isatty";
-    sha256 = "5117691dae90c3c84672fa1a91d40555697ed7944f13719bc2efd3d2c989516e";
+    sha256 = "c46fe34e03abbc50e38238e07f02d4a47b2630364f439f2e930c6e23b28ba4bc";
     propagatedBuildInputs = [
       sys
     ];
-    date = "2018-08-30";
   };
 
   go-jmespath = buildFromGitHub {
@@ -6779,11 +6788,11 @@ let
   };
 
   kingpin_v2 = buildFromGitHub {
-    version = 5;
+    version = 6;
     rev = "v2.2.6";
     owner = "alecthomas";
     repo = "kingpin";
-    sha256 = "0hphhyvvp5dmqzkb80wfxdir7dqf645gmppfqqv2yiswyl7d0cqh";
+    sha256 = "8799e918c2e3e138f1fe8354bbb835b85e50e24fbef1ea699d920f7f0c4162c6";
     goPackagePath = "gopkg.in/alecthomas/kingpin.v2";
     propagatedBuildInputs = [
       template
@@ -6883,7 +6892,7 @@ let
     rev = "0c67a1f23ff9b6db00723652c1c45cdff65b5591";
     owner  = "kubernetes";
     repo   = "client-go";
-    sha256 = "2d8d46e296e88265efa38cede22e9e42caf6d5d1b9a09d54ae387fa13aa8e031";
+    sha256 = "33032ca10d4d4ddaf3899855ec07dce07424842fe0a5b7003d036a091d4df2ac";
     goPackagePath = "k8s.io/client-go";
     excludedPackages = "\\(test\\|fake\\)";
     propagatedBuildInputs = [
@@ -7013,31 +7022,31 @@ let
 
   lego = buildFromGitHub {
     version = 6;
-    rev = "v2.1.0";
+    rev = "v2.2.0";
     owner = "xenolf";
     repo = "lego";
-    sha256 = "16c09a6ac809fbe8a90442ff8e15a1a24df2e9b7b2d410ec7326bd43d3b2b92c";
+    sha256 = "2363e213fc0e25927a47a4539fc5ef3dcb150cfd0fbeb5904e5aed99cc0e92fc";
     buildInputs = [
       #akamaiopen-edgegrid-golang
       #auroradnsclient
       aws-sdk-go
       #azure-sdk-for-go
+      backoff
       urfave_cli
       crypto
       dns
-      dnspod-go
-      dnsimple-go
+      #dnspod-go
+      #dnsimple-go
       #go-autorest
-      go-jose_v2
-      go-ovh
+      #go-jose_v2
+      #go-ovh
       google-api-go-client
-      linode
+      #linode
       #memcache
       #namedotcom_go
       ns1-go_v2
       oauth2
       net
-      #testify
       vultr
     ];
     postPatch = ''
@@ -8616,6 +8625,9 @@ let
     repo   = "poly1305";
     sha256 = "1vpvwd7jba946rcymb30r2cbzxbgrmfglglrw2vhvn1jmdwb8w71";
     date = "2018-07-17";
+    propagatedBuildInputs = [
+      sys
+    ];
   };
 
   pongo2 = buildFromGitHub {
@@ -9402,12 +9414,12 @@ let
   };
 
   safefile = buildFromGitHub {
-    version = 5;
+    version = 6;
     owner = "dchest";
     repo = "safefile";
     rev = "855e8d98f1852d48dde521e0522408d1fe7e836a";
     date = "2015-10-22";
-    sha256 = "0kpirwpndc7jy4plibbvz1yjbh10aa41a91jmsr7qixpif5m91zk";
+    sha256 = "f387548b8bb7477cb2ae322415885220c0257df87bad482ff1f2b0662fcff14e";
   };
 
   sanitized-anchor-name = buildFromGitHub {
@@ -9951,14 +9963,14 @@ let
 
   syncthing = buildFromGitHub rec {
     version = 6;
-    rev = "v1.0.0";
+    rev = "v1.0.1";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "ea9412f1b50322dffa08745f0c2a848c59012de3868ba659e589de77293c7251";
+    sha256 = "8655c3bb78e14293c7a263a7eaa1a8e1b2f719d864e72c53766b216ad9d34a58";
     buildFlags = [ "-tags noupgrade" ];
     nativeBuildInputs = [
-      gogo_protobuf.bin
       pkgs.protobuf-cpp
+      gogo_protobuf.bin
     ];
     buildInputs = [
       AudriusButkevicius_cli
@@ -9996,18 +10008,14 @@ let
     preBuild = ''
       pushd go/src/$goPackagePath >/dev/null
 
-      mkdir -p vendor/${gogo_protobuf.goPackagePath}
+      mkdir repos
       unpackFile ${gogo_protobuf.src}
-      mv protobuf-*/* vendor/${gogo_protobuf.goPackagePath}
-      rm -r protobuf-*
-
-      mkdir -p vendor/${xdr.goPackagePath}
+      mv protobuf-* repos/protobuf
       unpackFile ${xdr.src}
-      mv xdr-*/* vendor/${xdr.goPackagePath}
-      rm -r xdr-*
+      mv xdr-* repos/xdr
 
       go list ./... | xargs go generate
-      rm -r vendor
+      rm -r repos
       popd >/dev/null
     '';
   };
@@ -10988,11 +10996,11 @@ let
   };
 
   xlog = buildFromGitHub {
-    version = 5;
+    version = 6;
     rev = "v1.0.0";
     owner  = "hlandau";
     repo   = "xlog";
-    sha256 = "106gc5cpxavpxndkb516fvy4zn81h0jp9wvzxss4f9pvdi3zxvwd";
+    sha256 = "8deffe476cfb2647b4ee7ff374258001d94ffc762694359bed77ab7e5961cf80";
     propagatedBuildInputs = [
       go-isatty
       ansicolor

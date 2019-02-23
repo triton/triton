@@ -31,7 +31,7 @@ in
 
   config = mkIf cfg.enable {
 
-    systemd.services.ipfs = {
+    systemd.services.ipfs-cluster = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       path = with pkgs; [

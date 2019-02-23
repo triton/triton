@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://cairographics.org/releases/${name}.tar.gz";
-    multihash = "QmPB3QBVf5eMws5BEdB3msh9J1DkcnWDSEkjJEfa4SKpc6";
+    multihash = "QmepkCaNwhxPLzEctmoiNg8oU1pA2F2TPQe7NA1LRWxdem ";
     hashOutput = false;
     sha256 = "8db629f44378cac62b4931f725520334024e62c1951c4396682f1add63c1e3d1";
   };

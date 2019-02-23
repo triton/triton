@@ -4,7 +4,6 @@ let
   inherit (lib)
     concatStringsSep
     mkIf
-    mkMerge
     mkOption
     optionals
     optionalAttrs;
@@ -42,28 +41,7 @@ let
 
   filterAddrs = if cfg.privateAddresses then [ ] else privateAddrs;
 
-  ipfsAttrs = mkMerge [
-    {
-      Addresses = {
-        Swarm = [
-          "/ip4/0.0.0.0/tcp/4001"
-          "/ip6/::/tcp/4001"
-        ] ++ optionals cfg.quic [
-          "/ip4/0.0.0.0/udp/4001/quic"
-          "/ip6/::/udp/4001/quic"
-        ];
-        API = "/ip4/127.0.0.1/tcp/5001";
-        Gateway = "/ip4/127.0.0.1/tcp/8001";
-        NoAnnounce = filterAddrs;
-      };
-      Discovery.MDNS.Enabled = false;
-      Swarm.AddrFilters = filterAddrs;
-      Experimental.QUIC = cfg.quic;
-    }
-    cfg.extraAttrs
-  ];
-
-  extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON ipfsAttrs);
+  extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON cfg.extraAttrs);
 
   extraFlags = [
   ] ++ optionals cfg.gc [
@@ -126,6 +104,24 @@ in
     };
 
     networking.proxy.envVars.IPFS_API = "127.0.0.1:8001";
+
+    services.ipfs.extraAttrs = {
+      Addresses = {
+        Swarm = [
+          "/ip4/0.0.0.0/tcp/4001"
+          "/ip6/::/tcp/4001"
+        ] ++ optionals cfg.quic [
+          "/ip4/0.0.0.0/udp/4001/quic"
+          "/ip6/::/udp/4001/quic"
+        ];
+        API = "/ip4/127.0.0.1/tcp/5001";
+        Gateway = "/ip4/127.0.0.1/tcp/8001";
+        NoAnnounce = filterAddrs;
+      };
+      Discovery.MDNS.Enabled = false;
+      Swarm.AddrFilters = filterAddrs;
+      Experimental.QUIC = cfg.quic;
+    };
 
     systemd.services.ipfs = {
       wantedBy = [ "multi-user.target" ];

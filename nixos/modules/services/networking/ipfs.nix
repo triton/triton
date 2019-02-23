@@ -100,7 +100,7 @@ in
   config = mkIf cfg.enable {
 
     environment.variables = {
-      IPFS_PATH = "/var/lib/ipfs";
+      IPFS_PATH = ipfs_path;
     };
 
     networking.proxy.envVars.IPFS_API = "127.0.0.1:8001";

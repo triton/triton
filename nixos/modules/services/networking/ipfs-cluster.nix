@@ -31,6 +31,10 @@ in
 
   config = mkIf cfg.enable {
 
+    environment.variables = {
+      IPFS_CLUSTER_PATH = data_path;
+    };
+
     systemd.services.ipfs-cluster = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -41,7 +45,7 @@ in
 
       preStart = ''
         umask 0077
-        if [ -e '${data_path}' ]; then
+        if [ ! -e '${data_path}' ]; then
           mkdir -p '${data_path}'
 
           # Initialize the repo
@@ -51,6 +55,8 @@ in
           chown -R ipfs-cluster '${data_path}'
         fi
       '';
+
+      environment.IPFS_CLUSTER_PATH = data_path;
 
       serviceConfig = {
         Type = "simple";

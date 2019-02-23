@@ -4,6 +4,7 @@ let
   inherit (lib)
     concatStringsSep
     mkIf
+    mkMerge
     mkOption
     optionals
     optionalAttrs;
@@ -17,28 +18,50 @@ let
 
   ipfs_path = "/var/lib/ipfs";
 
-  ipfsAttrs = {
-    Addresses = {
-      Swarm = [
-        "/ip4/0.0.0.0/tcp/4001"
-      ] ++ optionals cfg.quic [
-        "/ip4/0.0.0.0/udp/4001/quic"
-      ] ++ [
-        "/ip6/::/tcp/4001"
-      ] ++ optionals cfg.quic [
-        "/ip6/::/udp/4001/quic"
-      ];
-      API = "/ip4/127.0.0.1/tcp/5001";
-      Gateway = "/ip4/127.0.0.1/tcp/8001";
-    };
-    Discovery = {
-      MDNS = {
-        Enabled = false;
+  privateAddrs = [
+    "/ip4/10.0.0.0/ipcidr/8"
+    "/ip4/100.64.0.0/ipcidr/10"
+    "/ip4/127.0.0.0/ipcidr/8"
+    "/ip4/169.254.0.0/ipcidr/16"
+    "/ip4/172.16.0.0/ipcidr/12"
+    "/ip4/192.0.0.0/ipcidr/24"
+    "/ip4/192.0.0.0/ipcidr/29"
+    "/ip4/192.0.0.8/ipcidr/32"
+    "/ip4/192.0.0.170/ipcidr/32"
+    "/ip4/192.0.0.171/ipcidr/32"
+    "/ip4/192.0.2.0/ipcidr/24"
+    "/ip4/192.168.0.0/ipcidr/16"
+    "/ip4/198.18.0.0/ipcidr/15"
+    "/ip4/198.51.100.0/ipcidr/24"
+    "/ip4/203.0.113.0/ipcidr/24"
+    "/ip4/240.0.0.0/ipcidr/4"
+    "/ip6/::1/ipcidr/128"
+    "/ip6/fc00::/ipcidr/7"
+    "/ip6/fe00::/ipcidr/10"
+  ];
+
+  filterAddrs = if cfg.privateAddresses then [ ] else privateAddrs;
+
+  ipfsAttrs = mkMerge [
+    {
+      Addresses = {
+        Swarm = [
+          "/ip4/0.0.0.0/tcp/4001"
+          "/ip6/::/tcp/4001"
+        ] ++ optionals cfg.quic [
+          "/ip4/0.0.0.0/udp/4001/quic"
+          "/ip6/::/udp/4001/quic"
+        ];
+        API = "/ip4/127.0.0.1/tcp/5001";
+        Gateway = "/ip4/127.0.0.1/tcp/8001";
+        NoAnnounce = filterAddrs;
       };
-    };
-  } // optionalAttrs (cfg.quic) {
-    Experimental.QUIC = true;
-  } // cfg.extraAttrs;
+      Discovery.MDNS.Enabled = false;
+      Swarm.AddrFilters = filterAddrs;
+      Experimental.QUIC = cfg.quic;
+    }
+    cfg.extraAttrs
+  ];
 
   extraJson = pkgs.writeText "ipfs-extra.json" (builtins.toJSON ipfsAttrs);
 
@@ -68,6 +91,14 @@ in
         '';
       };
 
+      privateAddresses = mkOption {
+        type = bool;
+        default = false;
+        description = ''
+          Should we allow and advertise private addresses.
+        '';
+      };
+
       gc = mkOption {
         type = bool;
         default = true;
@@ -75,7 +106,6 @@ in
           Enable the periodic garbage collector.
         '';
       };
-
 
       extraAttrs = mkOption {
         type = attrs;

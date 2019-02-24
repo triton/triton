@@ -21,6 +21,7 @@ let
   sha256s = {
     "1.30" = "f1bf92dbb1e1ab27911a861ea8dde8208ee774866c46c0bb6ead41f4d1f4d2d3";
     "1.31" = "37f3ef1ceebd8b7e1ebf5b8cc6c65bb8ebf002c7d049032bf456860f25ec2dc1";
+    "1.32" = "d0d3ae07f103323be809bc3eac0dcc386d52c5262499fe05511ac4788af1fdd8";
   };
 in
 stdenv.mkDerivation rec {
@@ -50,9 +51,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.30";
-      inherit (src) outputHashAlgo;
-      outputHash = "37f3ef1ceebd8b7e1ebf5b8cc6c65bb8ebf002c7d049032bf456860f25ec2dc1";
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "325F 650C 4C2B 6AD5 8807  327A 3602 B07F 55D0 C732";

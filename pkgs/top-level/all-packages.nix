@@ -1703,7 +1703,10 @@ gnutar_1-30 = callPackage ../all-pkgs/g/gnutar {
 gnutar_1-31 = callPackage ../all-pkgs/g/gnutar {
   version = "1.31";
 };
-gnutar = callPackageAlias "gnutar_1-31" { };
+gnutar_1-32 = callPackage ../all-pkgs/g/gnutar {
+  version = "1.32";
+};
+gnutar = callPackage ../all-pkgs/g/gnutar { };
 
 gnutar_small = callPackage ../all-pkgs/g/gnutar {
   type = "small";

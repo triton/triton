@@ -4758,9 +4758,9 @@ telepathy_mission_control =
 
   cups_filters = callPackage ../misc/cups/filters.nix { };
 #
-  dblatex = callPackage ../tools/typesetting/tex/dblatex {
-    enableAllFeatures = false;
-  };
+  #dblatex = callPackage ../tools/typesetting/tex/dblatex {
+  #  enableAllFeatures = false;
+  #};
 #
 # All the new TeX Live is inside. See description in default.nix.
 texlive =

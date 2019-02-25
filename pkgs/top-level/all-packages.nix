@@ -2051,9 +2051,7 @@ influxdb = pkgs.goPackages.influxdb.bin // { outputs = [ "bin" ]; };
 
 iniparser = callPackage ../all-pkgs/i/iniparser { };
 
-inkscape = callPackage ../all-pkgs/i/inkscape {
-  gtkmm = pkgs.gtkmm_3;
-};
+inkscape = callPackage ../all-pkgs/i/inkscape { };
 
 inotify-tools = callPackage ../all-pkgs/i/inotify-tools { };
 

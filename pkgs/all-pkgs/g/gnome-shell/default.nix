@@ -50,7 +50,7 @@
 , libstartup_notification
 , libxkbcommon
 , libxml2
-, mesa_noglu
+, mesa
 , mutter
 , networkmanager
 , networkmanager-applet
@@ -59,7 +59,7 @@
 , pango
 , polkit
 , pulseaudio_lib
-, spidermonkey_24
+, spidermonkey
 , sqlite
 , systemd_lib
 , telepathy_glib
@@ -144,7 +144,7 @@ stdenv.mkDerivation rec {
     libstartup_notification
     #libxkbcommon
     libxml2
-    mesa_noglu
+    mesa
     mutter
     networkmanager
     networkmanager-applet
@@ -154,7 +154,7 @@ stdenv.mkDerivation rec {
     polkit
     pulseaudio_lib
     python3
-    #spidermonkey_24
+    #spidermonkey
     systemd_lib
     telepathy_glib
     telepathy_logger

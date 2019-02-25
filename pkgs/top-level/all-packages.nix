@@ -4763,9 +4763,9 @@ telepathy_mission_control =
   #};
 #
 # All the new TeX Live is inside. See description in default.nix.
-texlive =
-  recurseIntoAttrs (callPackage ../tools/typesetting/tex/texlive-new { });
-texLive = callPackageAlias "texlive" { };
+#texlive =
+#  recurseIntoAttrs (callPackage ../tools/typesetting/tex/texlive-new { });
+#texLive = callPackageAlias "texlive" { };
 #
   #wine = callPackage ../misc/emulators/wine {
   #  wineRelease = config.wine.release or "stable";

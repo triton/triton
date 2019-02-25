@@ -253,7 +253,7 @@ bzrtools = callPackage ../all-pkgs/b/bzrtools { };
 
 canonicaljson = callPackage ../all-pkgs/c/canonicaljson { };
 
-certbot = callPackage ../all-pkgs/c/certbot { };
+#certbot = callPackage ../all-pkgs/c/certbot { };
 
 certifi = callPackage ../all-pkgs/c/certifi { };
 

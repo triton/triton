@@ -2752,7 +2752,7 @@ libxv = callPackage ../all-pkgs/l/libxv { };
 
 libyaml = callPackage ../all-pkgs/l/libyaml { };
 
-libzapojit = callPackage ../all-pkgs/l/libzapojit { };
+#libzapojit = callPackage ../all-pkgs/l/libzapojit { };
 
 libzip = callPackage ../all-pkgs/l/libzip { };
 

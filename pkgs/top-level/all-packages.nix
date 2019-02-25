@@ -1044,10 +1044,6 @@ desktop_file_utils = callPackageAlias "desktop-file-utils" { };
 
 deterministic-zip = callPackage ../all-pkgs/d/deterministic-zip { };
 
-devil_nox = callPackageAlias "devil" {
-  xorg = null;
-  mesa = null;
-};
 devil = callPackage ../all-pkgs/d/devil { };
 
 dhcp = callPackage ../all-pkgs/d/dhcp { };

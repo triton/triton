@@ -76,8 +76,6 @@ let
       version = "2017.7.5";
       sha256 = "d41ff6d5962361e92e926db8f24c5f2284817f9f78128b2546527258a3a2d8c6";
     };
-      sha256 = "1d573095776ba052eec7d7cae1472f4b1d4c15f16e1d79c2dc48db3129dbae97";
-    };
     head = {
       fetchzipversion = 5;
       version = "2018-03-01";

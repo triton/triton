@@ -4341,7 +4341,7 @@ zstd = callPackageAlias "zstd_1-3-8" { };
 
   apacheAnt = callPackage ../development/tools/build-managers/apache-ant { };
 #
-  automoc4 = callPackage ../development/tools/misc/automoc4 { };
+  #automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #
   doxygen = callPackage ../development/tools/documentation/doxygen {
     qt4 = null;

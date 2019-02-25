@@ -3948,7 +3948,7 @@ vino = callPackageAlias "vino_3-22" { };
 
 virglrenderer = callPackage ../all-pkgs/v/virglrenderer { };
 
-vlc = callPackage ../all-pkgs/v/vlc { };
+#vlc = callPackage ../all-pkgs/v/vlc { };
 
 vobsub2srt = callPackage ../all-pkgs/v/vobsub2srt { };
 

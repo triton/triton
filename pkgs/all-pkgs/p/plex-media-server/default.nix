@@ -25,9 +25,6 @@
 , dataDir ? "/var/lib/plex"
 }:
 
-# Requires gcc/glibc
-assert stdenv.cc.isGNU;
-
 let
   inherit (lib)
     makeSearchPath;

@@ -108,7 +108,6 @@ let
     libXtst = libxtst;
     libXv = libxv;
     utilmacros = util-macros;
-    xcbproto = xcb-proto;
     xf86videoamdgpu = xf86-video-amdgpu;
     xf86videointel = xf86-video-intel;
     xkeyboardconfig = xkeyboard-config;
@@ -1192,9 +1191,9 @@ let
   #     sha256 = "0rkkk2n9g2n2cslvdnb732zwmiijlgn7i9il6w296f5q0mxqfk7x";
   #   };
   #   nativeBuildInputs = [ python ];
-  #   buildInputs = [ libxcb xcbproto ];
+  #   buildInputs = [ libxcb xorg-proto ];
   #
-  # }) // {inherit libxcb xcbproto ;};
+  # }) // {inherit libxcb xorg-proto ;};
 
   xrandr = (mkDerivation "xrandr" {
     name = "xrandr-1.5.0";

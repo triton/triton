@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     tcl
     libx11
     libxft
-    xproto
+    xorgproto
     zlib
   ];
 

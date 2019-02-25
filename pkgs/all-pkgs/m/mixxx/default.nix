@@ -17,7 +17,7 @@
 , libusb
 , libvorbis
 , libx11
-, mesa_noglu
+, mesa
 , mp4v2
 , opus
 , opusfile
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     libusb
     libvorbis
     libx11
-    mesa_noglu
+    mesa
     mp4v2
     opus
     opusfile
@@ -111,7 +111,7 @@ stdenv.mkDerivation rec {
     "mediafoundation=0"
     "ipod=0"
     "vinylcontrol=1"
-    "vamp=${bool01 (vamp.vampSDK != null)}"
+    "vamp=${bool01 (vamp-plugin-sdk != null)}"
     "modplug=${bool01 (libmodplug != null)}"
     "faad=${bool01 (faad2 != null)}"
     "wv=${bool01 (wavpack != null)}"

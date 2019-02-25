@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    libcap-ng
+    pkgs.libcap-ng
     python
   ];
 

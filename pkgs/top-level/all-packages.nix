@@ -4456,7 +4456,7 @@ libstartup_notification =
 #
   newt = callPackage ../development/libraries/newt { };
 #
-  phonon = callPackage ../development/libraries/phonon/qt4 {};
+  #phonon = callPackage ../development/libraries/phonon/qt4 {};
 #
   portmidi = callPackage ../development/libraries/portmidi { };
 #

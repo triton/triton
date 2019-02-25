@@ -621,7 +621,7 @@ pytest-runner = callPackage ../all-pkgs/p/pytest-runner { };
 
 python-dateutil = callPackage ../all-pkgs/p/python-dateutil { };
 
-python-etcd = callpackage ../all-pkgs/p/python-etcd { };
+python-etcd = callPackage ../all-pkgs/p/python-etcd { };
 
 python-ldap = callPackage ../all-pkgs/p/python-ldap { };
 

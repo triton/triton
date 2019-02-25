@@ -4725,8 +4725,8 @@ libstartup_notification =
 #
   djvulibre = callPackage ../applications/misc/djvulibre { };
 #
-  djview = callPackage ../applications/graphics/djview { };
-  djview4 = pkgs.djview;
+  #djview = callPackage ../applications/graphics/djview { };
+  #djview4 = pkgs.djview;
 #
   fluidsynth = callPackage ../applications/audio/fluidsynth { };
 #

@@ -2910,7 +2910,7 @@ moolticute = callPackage ../all-pkgs/m/moolticute { };
 
 mosh = callPackage ../all-pkgs/m/mosh { };
 
-motif = callPackage ../all-pkgs/m/motif { };
+#motif = callPackage ../all-pkgs/m/motif { };
 
 mp3val = callPackage ../all-pkgs/m/mp3val { };
 

@@ -827,24 +827,24 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 ################################################################################
 ################################################################################
 
-   acme = buildPythonPackage rec {
-     inherit (self.certbot) src version;
-     name = "acme-${version}";
-     srcRoot = "certbot-v${version}/acme";
-
-     propagatedBuildInputs = with self; [
-       cryptography
-       mock
-       ndg-httpsclient
-       pyasn1
-       pyopenssl
-       pytz
-       requests
-       pyRFC3339
-     ];
-
-     disabled = isPy3;
-   };
+  # acme = buildPythonPackage rec {
+  #   inherit (self.certbot) src version;
+  #   name = "acme-${version}";
+  #   srcRoot = "certbot-v${version}/acme";
+  #
+  #   propagatedBuildInputs = with self; [
+  #     cryptography
+  #     mock
+  #     ndg-httpsclient
+  #     pyasn1
+  #     pyopenssl
+  #     pytz
+  #     requests
+  #     pyRFC3339
+  #   ];
+  #
+  #   disabled = isPy3;
+  # };
 
    audioread = buildPythonPackage rec {
      name = "audioread-${version}";

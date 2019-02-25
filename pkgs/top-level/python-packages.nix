@@ -560,7 +560,7 @@ pycryptopp = callPackage ../all-pkgs/p/pycryptopp { };
 
 pydenticon = callPackage ../all-pkgs/p/pydenticon { };
 
-pygame = callPackage ../all-pkgs/p/pygame { };
+#pygame = callPackage ../all-pkgs/p/pygame { };
 
 pygments = callPackage ../all-pkgs/p/pygments { };
 

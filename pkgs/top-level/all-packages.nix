@@ -3975,7 +3975,7 @@ wayland = callPackage ../all-pkgs/w/wayland { };
 
 wayland-protocols = callPackage ../all-pkgs/w/wayland-protocols { };
 
-webkitgtk = callPackage ../all-pkgs/w/webkitgtk { };
+#webkitgtk = callPackage ../all-pkgs/w/webkitgtk { };
 
 webrtc-audio-processing = callPackage ../all-pkgs/w/webrtc-audio-processing { };
 

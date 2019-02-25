@@ -3721,13 +3721,13 @@ sudo = callPackage ../all-pkgs/s/sudo { };
 
 suil = callPackage ../all-pkgs/s/suil { };
 
-sushi_3-24 = callPackage ../all-pkgs/s/sushi {
-  channel = "3.24";
-  atk = pkgs.atk_2-30;
-  gjs = pkgs.gjs_1-46;
-  gtksourceview = pkgs.gtksourceview_3-24;
-};
-sushi = callPackageAlias "sushi_3-24" { };
+#sushi_3-24 = callPackage ../all-pkgs/s/sushi {
+#  channel = "3.24";
+#  atk = pkgs.atk_2-30;
+#  gjs = pkgs.gjs_1-46;
+#  gtksourceview = pkgs.gtksourceview_3-24;
+#};
+#sushi = callPackageAlias "sushi_3-24" { };
 
 svrcore = callPackage ../all-pkgs/s/svrcore { };
 

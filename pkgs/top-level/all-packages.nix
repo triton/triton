@@ -2325,7 +2325,7 @@ libgee_0-20 = callPackage ../all-pkgs/l/libgee {
 };
 libgee = callPackageAlias "libgee_0-20" { };
 
-libgfbgraph = callPackage ../all-pkgs/l/libgfbgraph { };
+#libgfbgraph = callPackage ../all-pkgs/l/libgfbgraph { };
 
 libgit2 = callPackage ../all-pkgs/l/libgit2 { };
 

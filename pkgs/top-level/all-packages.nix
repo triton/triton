@@ -1594,10 +1594,10 @@ gnome-desktop = callPackageAlias "gnome-desktop_3-31" { };
 
 gnome-doc-utils = callPackage ../all-pkgs/g/gnome-doc-utils { };
 
-gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
-  channel = "3.20";
-};
-gnome-documents = callPackageAlias "gnome-documents_3-20" { };
+#gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
+#  channel = "3.20";
+#};
+#gnome-documents = callPackageAlias "gnome-documents_3-20" { };
 
 gnome-keyring = callPackage ../all-pkgs/g/gnome-keyring { };
 

@@ -878,15 +878,15 @@ check = callPackage ../all-pkgs/c/check { };
 
 chromaprint = callPackage ../all-pkgs/c/chromaprint { };
 
-chromium_old = callPackage ../all-pkgs/c/chromium_old {
-  channel = "stable";
-};
-chromium_old_beta = callPackageAlias "chromium_old" {
-  channel = "beta";
-};
-chromium_old_dev = callPackageAlias "chromium_old" {
-  channel = "dev";
-};
+#chromium_old = callPackage ../all-pkgs/c/chromium_old {
+#  channel = "stable";
+#};
+#chromium_old_beta = callPackageAlias "chromium_old" {
+#  channel = "beta";
+#};
+#chromium_old_dev = callPackageAlias "chromium_old" {
+#  channel = "dev";
+#};
 
 chrony = callPackage ../all-pkgs/c/chrony { };
 

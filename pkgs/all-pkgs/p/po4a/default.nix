@@ -3,7 +3,6 @@
 , docbook-xsl
 , fetchurl
 , gettext
-, glibcLocales
 , libxslt
 , makeWrapper
 , perlPackages
@@ -19,9 +18,6 @@ stdenv.mkDerivation rec {
     url = "https://github.com/mquinson/po4a/releases/download/v${version}/${name}.tar.gz";
     sha256 = "596f7621697f9dd12709958c229e256b56683d25997ac73c9625a2cc0c603d51";
   };
-
-  # Perl needs en_US.UTF-8
-  LOCALE_ARCHIVE = "${glibcLocales}/lib/locale/locale-archive";
 
   nativeBuildInputs = [
     docbook_xml_dtd_412
@@ -43,7 +39,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    LC_ALL=en_US.UTF-8 perl Build
+    perl Build
   '';
 
   installPhase = ''

@@ -39,7 +39,6 @@
 , poppler
 , popt
 , pythonPackages
-, pyxml
 , xorg
 , zlib
 
@@ -86,9 +85,9 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     /* Python is used at run-time to execute scripts, e.g.
        those in the "Effects" menu. */
-    pyxml
     pythonPackages.lxml
     pythonPackages.python
+    pythonPackages.pyxml
   ];
 
   buildInputs = [
@@ -227,7 +226,7 @@ stdenv.mkDerivation rec {
   /* Make sure PyXML modules can be found at run-time. */ ''
     for i in "$out/bin/"* ; do
       wrapProgram "$i" \
-        --prefix PYTHONPATH : "$(toPythonPath ${pyxml})" \
+        --prefix PYTHONPATH : "$(toPythonPath ${pythonPackages.pyxml})" \
         --prefix PYTHONPATH : "$(toPythonPath ${pythonPackages.lxml})" \
         --prefix PATH : ${pythonPackages.python}/bin
     done

@@ -1613,7 +1613,7 @@ gnome-mpv = callPackage ../all-pkgs/g/gnome-mpv { };
 #};
 #gnome-online-accounts = callPackageAlias "gnome-online-accounts_3-22" { };
 
-gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
+#gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
 gnome-raw-thumbnailer = callPackage ../all-pkgs/g/gnome-raw-thumbnailer { };
 

@@ -1,8 +1,6 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
-, perl
-, which
 , patchelf
 
 , iana-etc
@@ -14,7 +12,8 @@
 
 let
   inherit (stdenv.lib)
-    concatStringsSep;
+    concatStringsSep
+    optionalString;
 
   inherit ((import ./sources.nix)."${channel}")
     version
@@ -67,12 +66,6 @@ stdenv.mkDerivation {
     inherit sha256;
   };
 
-  # perl is used for testing go vet
-  nativeBuildInputs = [
-    perl
-    which
-  ];
-
   # I'm not sure what go wants from its 'src', but the go installation manual
   # describes an installation keeping the src.
   preUnpack = ''
@@ -80,38 +73,20 @@ stdenv.mkDerivation {
     cd $out/share
   '';
 
-  srcRoot = ".";
-
-  postUnpack = ''
-    cd go
-  '';
-
-  prePatch = ''
-    # Ensure that the source directory is named go
-    cd ..
-    if [ ! -d go ]; then
-      mv * go
-    fi
-
-    cd go
-  '';
-
   patches = map (p: fetchTritonPatch p) patches;
 
   postPatch = ''
-    patchShebangs ./ # replace /bin/bash
-
-    # The os test wants to read files in an existing path. Just don't let it be /usr/bin.
-    sed -i 's,/usr/bin,'"`pwd`", src/os/os_test.go
-    sed -i 's,/bin/pwd,'"`type -P pwd`", src/os/os_test.go
-
     # Don't run tests by default
     sed -i '/run.bash/d' src/all.bash
 
+    grep -q '"/etc/mime.types"' src/mime/type_unix.go
     sed -i '\#"/etc/mime.types",#i"${mime-types}/etc/mime.types",' src/mime/type_unix.go
+    grep -q '"/etc/protocols"' src/net/lookup_unix.go
     sed -i 's,/etc/protocols,${iana-etc}/etc/protocols,g' src/net/lookup_unix.go
-    sed -i 's,/etc/services,${iana-etc}/etc/services,g' src/net/port_unix.go src/net/parse_test.go
+    grep -q '"/usr/share/zoneinfo/"' src/time/zoneinfo_unix.go
     sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata}/share/zoneinfo/",' src/time/zoneinfo_unix.go
+
+    patchShebangs src/all.bash
   '';
 
   # Incremental re-compilation requires a path relative to home to store
@@ -152,7 +127,7 @@ stdenv.mkDerivation {
 
     find "$out/bin" -mindepth 1 -exec mv {} "$out/share/go/bin" \;
     rmdir "$out/bin"
-    ln -sv share/go/bin "$out/bin"
+    ln -srv "$out"/share/go/bin "$out/bin"
   '';
 
   preFixup = ''
@@ -166,19 +141,10 @@ stdenv.mkDerivation {
       patchelf --shrink-rpath $exe || true
     done < <(find $out/share/ -executable -and -not -type d)
 
-    TMPREP="$(printf "/%*s" "$(( ''${#TMPDIR} - 1))" | tr ' ' 'x')"
-    while read file; do
-      echo "Removing $TMPDIR from $file" >&2
-      sed -i "s,$TMPDIR,$TMPREP,g" "$file"
-    done < <(grep -r "$TMPDIR" $out | sed "s,.*\(''${out}[^ :]*\).*,\1,g" | sort | uniq)
-
     # Remove perl stuff we don't need
-    find "$out" -name '*'.pl -delete
+    find "$out" -name '*'.pl -print -delete
+  '' + optionalString (channel == "1.11") ''
     rm "$out"/share/go/test/errchk
-
-    # Remove unused coreutils references
-    grep -q '/bin/pwd' "$out"/share/go/src/os/os_test.go
-    sed -i 's,/[^ ]*/bin/pwd,pwd,' "$out"/share/go/src/os/os_test.go
   '';
 
   setupHook = ./setup-hook.sh;

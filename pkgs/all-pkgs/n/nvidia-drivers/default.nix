@@ -63,11 +63,11 @@ let
       maxXorgVersion = "1.19";
     };
     long-lived = {
-      versionMajor = "390";
-      versionMinor = "77";
-      sha256i686   = "e51c5784520e73c179a57cf0dcd3a4c673d8142b28415a060066d83633637282";
-      sha256x86_64 = "6eb950dc4b59697d12d79a975b2c21a5e3cde49a12b61432d7e836110a06a6ea";
-      maxLinuxVersion = "4.18";
+      versionMajor = "418";
+      versionMinor = "43";
+      sha256i686   = "GL4sg97jMjvVf+d/3bu71ddgraZ0eB+5s5Mh5jhqMn8=";
+      sha256x86_64 = "VctBDFM39GpIY2wr1ey0K/H0NnBZOU43Sxao8GfeMYc=";
+      maxLinuxVersion = "4.20";
       maxXorgVersion = "1.20";
     };
     short-lived = {
@@ -294,7 +294,10 @@ stdenv.mkDerivation {
         nvidia_lib_install 361 389 'libGL' '1' '1.0.0'
         nvidia_lib_install 390 0 'libGL' '1' '1.7.0'
       ''
-    ) + /* OpenGL ES API entry point */ ''
+    ) + /* OpenGL X API entry point */ ''
+      nvidia_lib_install 418 0 'libGLX' '-' '0'
+      nvidia_lib_install 418 0 'libGLX_nvidia'
+    ''+ /* OpenGL ES API entry point */ ''
       nvidia_lib_install 361 389 'libGLESv1_CM' '-' '1'
       nvidia_lib_install 390 0 'libGLESv1_CM' '-' '1.2.0'
       nvidia_lib_install 361 389 'libGLESv2' '-' '2'
@@ -327,25 +330,31 @@ stdenv.mkDerivation {
         nvidia_lib_install 378 378 'libnvidia-egl-wayland' '1' '1.0.0'
       ''
     )+ ''
-      nvidia_lib_install 387 0 'libnvidia-egl-wayland' '1' '1.0.2'
+      nvidia_lib_install 387 417 'libnvidia-egl-wayland' '1' '1.0.2'
+      nvidia_lib_install 418 0 'libnvidia-egl-wayland' '1' '1.1.2'
+      nvidia_lib_install 0 0 'libnvidia-cfg'
+      nvidia_lib_install 0 0 'libnvidia-compiler'
       nvidia_lib_install 0 0 'libnvidia-eglcore'
       nvidia_lib_install 0 0 'libnvidia-glcore'
       nvidia_lib_install 0 0 'libnvidia-glsi'
+      nvidia_lib_install 0 0 'libnvidia-glvkspirv'
+      nvidia_lib_install 0 0 'libnvidia-rtcore'
+      nvidia_lib_install 0 0 'libnvidia-cbl'
     '' + /* NVIDIA OpenGL-based inband frame readback */ ''
       nvidia_lib_install 0 0 'libnvidia-ifr'
     '' + /* Thread local storage libraries for NVIDIA OpenGL libraries */ ''
-      nvidia_lib_install 0 0 'libnvidia-tls'
-      nvidia_lib_install 0 0 'tls/libnvidia-tls' '-' "${version}" 'tls'
+      nvidia_lib_install 0 0 'libnvidia-tls' '-' "${version}" 'tls'
+      nvidia_lib_install 0 417 'tls/libnvidia-tls' '-' "${version}" 'tls'
       ###nvidia_lib_install 0 0 'tls_test_dso' '-' '-'  # Not used
     '' + /* X.Org DDX driver */ optionalString (!libsOnly) ''
       nvidia_lib_install 0 0 'nvidia_drv' '-' '-' 'xorg/modules/drivers'
     '' + /* X.Org GLX extension module */ optionalString (!libsOnly) ''
-      nvidia_lib_install 0 0 'libglx' '-' "${version}" 'xorg/modules/extensions'
+      nvidia_lib_install 0 417 'libglx' '-' "${version}" 'xorg/modules/extensions'
+      nvidia_lib_install 418 0 'libglxserver_nvidia' '-' "${version}" 'xorg/modules/extensions'
     '' + /* Managment & Monitoring library */ ''
       nvidia_lib_install 0 0 'libnvidia-ml' '1'
     '' + /* CUDA libraries */ ''
       nvidia_lib_install 0 0 'libcuda' '1'
-      nvidia_lib_install 0 0 'libnvidia-compiler'
       # CUDA video decoder library
       nvidia_lib_install 0 0 'libnvcuvid' '1'
       # Fat (multiarchitecture) binary loader
@@ -357,10 +366,8 @@ stdenv.mkDerivation {
       nvidia_lib_install 0 0 'libOpenCL' '1' '1.0.0'
       # NVIDIA ICD
       nvidia_lib_install 0 0 'libnvidia-opencl'
-    '' + /* Linux kernel, userspace driver config library */ ''
-      nvidia_lib_install 0 0 'libnvidia-cfg'
     '' + /* Wrapped software rendering library */ optionalString (!libsOnly) ''
-      nvidia_lib_install 0 0 'libnvidia-wfb' '-' "${version}" 'xorg/modules'
+      nvidia_lib_install 0 417 'libnvidia-wfb' '-' "${version}" 'xorg/modules'
       # TODO: figure out symlink libwfb -> libnvidia-wfb
     '' + /* Framebuffer capture library */ ''
       nvidia_lib_install 0 0 'libnvidia-fbc'
@@ -375,10 +382,10 @@ stdenv.mkDerivation {
     ## Headers
     #
     /* OpenGL headers */ optionalString (!libsOnly) ''
-      nvidia_header_install 0 0 'gl' 'GL'
-      nvidia_header_install 0 0 'glext' 'GL'
-      nvidia_header_install 0 0 'glx' 'GL'
-      nvidia_header_install 0 0 'glxext' 'GL'
+      nvidia_header_install 0 417 'gl' 'GL'
+      nvidia_header_install 0 417 'glext' 'GL'
+      nvidia_header_install 0 417 'glx' 'GL'
+      nvidia_header_install 0 417 'glxext' 'GL'
     '' +
     #
     ## Executables
@@ -557,6 +564,7 @@ stdenv.mkDerivation {
       # we cannot enable recursion to use src.sha256 in the nvidia-drivers
       # build.
       sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+      fullOpts = { };
     };
   };
 

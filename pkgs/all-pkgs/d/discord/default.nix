@@ -5,6 +5,7 @@
 
 , adwaita-icon-theme
 , alsa-lib
+, at-spi2-atk
 , atk
 , cairo
 , cups
@@ -16,7 +17,7 @@
 , gdk-pixbuf
 , glib
 , gnome-themes-standard
-, gtk_2
+, gtk_3
 , libnotify
 , libx11
 , libxcb
@@ -37,6 +38,7 @@
 , pulseaudio_lib
 , shared-mime-info
 , systemd_lib
+, util-linux_lib
 
 , channel ? "stable"
 }:
@@ -62,8 +64,8 @@ let
 
   sources = {
     "stable" = {
-      version = "0.0.5";
-      sha256 = "2f4464bcea532673ca7b314dc2a1b7966f5d175e535a0254753f778dc559ef18";
+      version = "0.0.8";
+      sha256 = "d98418539bdd3fd908d7bd594697bcebfa33b24ed422be8096542d525435e8dc";
     };
     "ptb" = {
       version = "0.0.9";
@@ -96,6 +98,7 @@ stdenv.mkDerivation rec {
 
   libPath = makeSearchPath "lib" [
     alsa-lib
+    at-spi2-atk
     atk
     cairo
     cups
@@ -106,7 +109,7 @@ stdenv.mkDerivation rec {
     gconf
     gdk-pixbuf
     glib
-    gtk_2
+    gtk_3
     libnotify
     libx11
     libxcb
@@ -127,13 +130,14 @@ stdenv.mkDerivation rec {
     pulseaudio_lib
     stdenv.cc.cc
     systemd_lib
+    util-linux_lib
   ];
 
   installPhase = ''
     install -D -m 644 -v discord.png $out/share/pixmaps/discord.png
 
     install -D -m 644 -v discord${nameext}.desktop \
-     $out/share/applications/discord${nameext}.desktop
+      $out/share/applications/discord${nameext}.desktop
 
     mkdir -pv $out/{bin,share/{discord,pixmaps}}
     mv * $out/share/discord
@@ -143,6 +147,7 @@ stdenv.mkDerivation rec {
       --set-rpath "$out/share/discord:${libPath}"                                   \
       $out/share/discord/Discord${nameexe}
 
+    chmod 755 $out/share/discord/Discord${nameexe}
     wrapProgram $out/share/discord/Discord${nameexe} \
       --set 'GDK_PIXBUF_MODULE_FILE' '${gdk-pixbuf.loaders.cache}' \
       --prefix 'LD_LIBRARY_PATH' : "${libPath}" \

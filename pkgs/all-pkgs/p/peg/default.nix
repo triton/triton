@@ -15,6 +15,8 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("PREFIX=$out")
   '';
 
+  installParallel = false;
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

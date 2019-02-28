@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ddrescue-1.23";
+  name = "ddrescue-1.24";
 
   src = fetchurl {
     url = "mirror://gnu/ddrescue/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "a9ae2dd44592bf386c9c156a5dacaeeb901573c9867ada3608f887d401338d8d";
+    sha256 = "4b5d3feede70e3657ca6b3c7844f23131851cbb6af0cecc9721500f7d7021087";
   };
 
   nativeBuildInputs = [
@@ -20,9 +20,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
+      };
     };
   };
 

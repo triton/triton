@@ -2254,6 +2254,8 @@ libcddb = callPackage ../all-pkgs/l/libcddb { };
 
 libcdio = callPackage ../all-pkgs/l/libcdio { };
 
+libcdio-paranoia = callPackage ../all-pkgs/l/libcdio-paranoia { };
+
 libclc = callPackage ../all-pkgs/l/libclc { };
 
 libconfig = callPackage ../all-pkgs/l/libconfig { };

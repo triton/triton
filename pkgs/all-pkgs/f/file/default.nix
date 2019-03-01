@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "file-5.35";
+  name = "file-5.36";
 
   src = fetchurl {
     url = "ftp://ftp.astron.com/pub/file/${name}.tar.gz";
-    multihash = "QmbMKFj8GB1VC3rfTVE1jyZHogXAbfbtdWAo3hapAPdJeK";
+    multihash = "QmbY2C6f1GsUzRrPVMT4vwPC2qTzxi6MWuKJNRDbhEwS9m";
     hashOutput = false;
-    sha256 = "30c45e817440779be7aac523a905b123cba2a6ed0bf4f5439e1e99ba940b5546";
+    sha256 = "fb608290c0fd2405a8f63e5717abf6d03e22e183fb21884413d1edd918184379";
   };
 
   buildInputs = [

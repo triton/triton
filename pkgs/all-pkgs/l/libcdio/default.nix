@@ -7,10 +7,6 @@
 , ncurses
 }:
 
-let
-  inherit (lib)
-    boolEn;
-in
 stdenv.mkDerivation rec {
   name = "libcdio-2.0.0";
 
@@ -31,26 +27,17 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-cxx"
     "--disable-cpp-progs"
     "--disable-example-progs"
-    "--enable-largefile"
-    "--enable-joliet"
-    "--enable-rpath"
     "--enable-rock"
-    "--${boolEn (libcddb != null)}-cddb"
-    "--enable-vcd-info"
-    "--with-cd-drive"
-    "--with-cd-info"
-    "--with-cdda-player"
-    "--with-cd-read"
-    "--with-iso-info"
-    "--with-iso-read"
-    "--with-versioned-libs"
+    "--enable-cddb"
+    "--disable-vcd-info"
   ];
 
-  # FIXME
-  buildDirCheck = false;
+  postInstall = /* Fix hardcoded reference to the build directory */ ''
+    sed -i $out/include/cdio/cdio_config.h \
+      -e 's,CDIO_LIBCDIO_SOURCE_PATH.*$,CDIO_LIBCDIO_SOURCE_PATH "/no-such-path",'
+  '';
 
   passthru = {
     srcVerification = fetchurl {

@@ -173,21 +173,13 @@ stdenv.mkDerivation rec {
   ];
 
   wafConfigureFlags = [
-    ###"--enable-cplayer"
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
-    "--disable-libmpv-static"
     "--disable-build-date"  # Purity
-    ###"--enable-optimize"
     "--disable-debug-build"
     "--enable-manpage-build"
-    "--disable-html-build"
-    "--disable-pdf-build"
     "--enable-cplugins"
     "--enable-zsh-comp"
-    ###"--enable-asm"
-    "--disable-test"
-    "--disable-clang-database"
     "--disable-android"  # Android
     (strNew "--disable-egl-android" "0.30.0")  # Android
     (strNew "--disable-swift" "0.30.0")
@@ -218,7 +210,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-oss-audio"
     "--disable-rsound"
-    #"--${boolEn ( != null)}-sndio"
     "--${boolEn (pulseaudio_lib != null)}-pulse"
     "--${boolEn (jack2_lib != null)}-jack"
     "--${boolEn (openal != null)}-openal"
@@ -293,7 +284,6 @@ stdenv.mkDerivation rec {
     # "--${boolEn (v4l_lib != null)}-tv-v4l2"
     # "--${boolEn (v4l_lib != null)}-libv4l2"
     # "--${boolEn (v4l_lib != null)}-audio-input"
-    #"--${boolEn ( != null)}-dvbin"
     "--disable-apple-remote"
     "--disable-macos-touchbar"
     "--disable-macos-cocoa-cb"

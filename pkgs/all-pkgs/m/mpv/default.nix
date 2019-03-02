@@ -17,7 +17,7 @@
 , libbluray
 , libbs2b
 , libcaca
-#, libcdio
+, libcdio-paranoia
 , libdrm
 , libdvdnav
 , libdvdread
@@ -131,7 +131,7 @@ stdenv.mkDerivation rec {
     libbluray
     libbs2b
     libcaca
-    #libcdio
+    libcdio-paranoia
     libdrm
     libdvdnav
     libdvdread
@@ -205,8 +205,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (
       libdvdnav != null
       && libdvdread != null)}-dvdnav"
-    # FIXME
-    #"--${boolEn (libcdio != null)}-cdda"
+    "--${boolEn (libcdio-paranoia != null)}-cdda"
     #"--${boolEn ( != null)}-uchardet"
     "--${boolEn (rubberband != null)}-rubberband"
     "--${boolEn (lcms2 != null)}-lcms2"

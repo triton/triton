@@ -1,14 +1,11 @@
 { stdenv
-, autoconf
-, automake
 , fetchurl
-, gnome-common
-, gtk-doc
-, intltool
-, itstool
+, gettext
 , lib
-, libtool
+, libxml2
 , makeWrapper
+, meson
+, ninja
 
 , adwaita-icon-theme
 , atk
@@ -19,7 +16,6 @@
 , gtk
 , libcanberra
 , libnotify
-, libxml2
 , pango
 , shared-mime-info
 , systemd_lib
@@ -28,14 +24,10 @@
 }:
 
 let
-  inherit (lib)
-    boolEn
-    replaceStrings;
-
   sources = {
-    "3.20" = {
-      version = "3.20.1";
-      sha256 = "ea9050b5f3b94ef279febae4cb789c2500a25344c784f650fe7f932fcd6798fe";
+    "3.31" = {
+      version = "3.31.1";
+      sha256 = "9d9a16dc5ae50e141b294daba2f5b2cb34eaf9b98568f9fb7ecb72d8a18d80f7";
     };
   };
   source = sources."${channel}";
@@ -44,16 +36,17 @@ stdenv.mkDerivation rec {
   name = "gnome-bluetooth-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-bluetooth/${channel}/"
-      + "${name}.tar.xz";
+    url = "mirror://gnome/sources/gnome-bluetooth/${channel}/${name}.tar.xz";
     hashOutput = false;
     inherit (source) sha256;
   };
 
   nativeBuildInputs = [
-    intltool
-    itstool
+    gettext
+    libxml2
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -66,36 +59,19 @@ stdenv.mkDerivation rec {
     gtk
     libcanberra
     libnotify
-    libxml2
     pango
     systemd_lib
   ];
 
-  postPatch =
-    /* Regenerate gdbus-codegen files to allow using any glib version
-    	 https://bugzilla.gnome.org/show_bug.cgi?id=758096 */ ''
-    	rm -v lib/bluetooth-client-glue.{c,h}
-    '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-desktop-update"
-    "--disable-icon-update"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-debug"
-    "--enable-compile-warnings"
-    "--disable-iso-c"
-    "--disable-documentation"
-  ];
-
-  postConfigure = /* https://bugzilla.gnome.org/show_bug.cgi?id=655517 */ ''
-    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  postPatch = ''
+    grep -q 'meson_post_install.py' meson.build
+    sed -i meson.build \
+      -e '/add_install_script/,+4 d'
   '';
+
+  mesonFlags = [
+    "-Dicon_update=false"
+  ];
 
   preFixup = ''
     wrapProgram $out/bin/bluetooth-sendto \
@@ -114,8 +90,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gnome-bluetooth/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

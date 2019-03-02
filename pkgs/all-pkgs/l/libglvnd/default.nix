@@ -10,17 +10,17 @@
 }:
 
 let
-  version = "1.0.0";
+  date = "2019-02-13";
 in
 stdenv.mkDerivation rec {
-  name = "libglvnd-${version}";
+  name = "libglvnd-${date}";
 
   src = fetchFromGitHub {
-    version = 3;
+    version = 6;
     owner = "NVIDIA";
     repo = "libglvnd";
-    rev = "v${version}";
-    sha256 = "c0b07535b14c622f64f4ba05d4c31f9d7a19790b6ec18c2d7241c48536bd7870";
+    rev = "f92208be88dd06a70b6f79a1cb95571e2762a9ec";
+    sha256 = "5dbfd00dd84e527df8b1717a112da6f085b9845b11bdbc5cef131fa537db722c";
   };
 
   nativeBuildInputs = [
@@ -44,6 +44,10 @@ stdenv.mkDerivation rec {
     "--enable-gles"
     "--enable-asm"
     "--enable-tls"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-array-bounds"
   ];
 
   meta = with lib; {

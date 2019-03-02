@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.62";
+  name = "libmicrohttpd-0.9.63";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "bd3e097d703f5091a6a01b56c0464a90fdd17f5d50478cea50a346b25c88db49";
+    sha256 = "37c36f1be177f0e37ef181a645cd3baac1000bd322a01c2eff70f3cc8c91749c";
   };
 
   buildInputs = [
@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-doc"
     "--disable-examples"
     "--disable-curl"  # Testcases
     "--enable-https"

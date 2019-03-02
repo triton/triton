@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
   '';
 
   preFixup = ''
-    wrapProgram $out/bin/gnome-mpv  \
+    wrapProgram $out/bin/celluloid  \
       --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

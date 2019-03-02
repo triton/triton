@@ -2922,14 +2922,30 @@ mp3val = callPackage ../all-pkgs/m/mp3val { };
 mp4v2 = callPackage ../all-pkgs/m/mp4v2 { };
 
 mpd = callPackage ../all-pkgs/m/mpd {
+  audiofile = null;
   avahi = null;
+  bzip2 = null;
+  chromaprint = null;
+  expat = null;
   fluidsynth = null;
   game-music-emu = null;
   jack2_lib = null;
+  libao = null;
+  libgcrypt = null;
   libmikmod = null;
   libmms = null;
   libmodplug = null;
+  libnfs = null;
+  libshout = null;
+  libsndfile = null;
+  libupnp = null;
+  musepack = null;
+  openal = null;
+  pcre = null;
   samba_client = null;
+  udisks = null;
+  yajl = null;
+  zziplib = null;
 };
 
 mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };

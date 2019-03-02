@@ -1,56 +1,48 @@
 { stdenv
-, fetchurl
-, gettext
-, gperf
-, gnum4
-, intltool
-, libxslt
-, perl
-
-, acl
-, audit_lib
-, bzip2
-, coreutils_small
-, cryptsetup
-, curl
 , docbook_xml_dtd_42
 , docbook_xml_dtd_45
 , docbook-xsl
+, fetchFromGitHub
+, gnum4
+, gperf
+, libxslt
+, meson
+, ninja
+, python3
+
+, acl
+, audit_lib
+, bash-completion
+, bzip2
+, cryptsetup
+, curl
 , elfutils
 , gnu-efi
 , gnutls
 , iptables
-, kbd
 , kmod
 , libcap
 , libgcrypt
 , libgpg-error
-, libidn
+, libidn2
 , libmicrohttpd
 , libseccomp
+, libselinux
 , libxkbcommon
 , lz4
+, p11-kit
 , pam
-, python3Packages
+, pcre2_lib
+, polkit
 , qrencode
+, systemd_lib
 , util-linux_lib
-, util-linux_full
 , xz
 , zlib
-
-, type ? ""
 }:
 
 let
-  inherit (stdenv.lib)
-    optionals
-    optionalString;
-in
-
-let
-  libOnly = type == "lib";
-
-  elfutils-libs = stdenv.mkDerivation {
+  elfutils_libs = stdenv.mkDerivation {
     name = "elfutils-libs-${elfutils.version}";
 
     buildCommand = ''
@@ -59,293 +51,127 @@ let
     '';
   };
 
-  upstreamVersion = "233";
-  version = "${upstreamVersion}-9-g265d78708";
+  version = "245.4";
 in
-stdenv.mkDerivation rec {
-  name = "${type}systemd-${version}";
+stdenv.mkDerivation {
+  name = "systemd-${version}";
 
-  src = fetchurl {
-    url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
-    hashOutput = false;
-    sha256 = "b97b453c0b5783d7c90424ca0dd2fb5805f96505a06e0868a39d535abd2906f9";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "systemd";
+    repo = "systemd-stable";
+    rev = "v${version}";
+    sha256 = "c510536780f2d705c2503e2aa2db6024bac4b9d727087979759944e191953fba";
   };
 
   nativeBuildInputs = [
-    gperf
-    gnum4
-    intltool
-    perl
-  ] ++ optionals (!libOnly) [
-    docbook-xsl
     docbook_xml_dtd_42
     docbook_xml_dtd_45
-    gettext
+    docbook-xsl
+    gnum4
+    gperf
     libxslt
+    meson
+    ninja
+    python3
   ];
 
   buildInputs = [
+    acl
+    audit_lib
+    bash-completion
+    bzip2
+    cryptsetup
+    curl
+    elfutils_libs
+    gnu-efi
+    gnutls
+    iptables
+    kmod
     libcap
-    xz
-    lz4
     libgcrypt
     libgpg-error
-    audit_lib
-    libidn
-  ] ++ optionals (libOnly) [
-    util-linux_lib
-  ] ++ optionals (!libOnly) [
-    python3Packages.python
-    python3Packages.lxml
-    kmod
-    libxkbcommon
-    libseccomp
-    zlib
-    bzip2
-    pam
-    acl
-    elfutils-libs
-    cryptsetup
-    qrencode
-    gnutls
+    libidn2
     libmicrohttpd
-    curl
-    iptables
-    gnu-efi
-    util-linux_full
+    libseccomp
+    libselinux
+    libxkbcommon
+    lz4
+    p11-kit
+    pam
+    pcre2_lib
+    polkit
+    qrencode
+    util-linux_lib
+    xz
+    zlib
   ];
+
+  NIX_LDFLAGS = "-rpath ${systemd_lib}/lib";
 
   postPatch = ''
-    sed -i 's,\(-DABS_\(SRC\|BUILD\)_DIR=\\"\).*\\",\1/no-such-path\\",g' Makefile.in
-
-    # Fix memfd_create detection
-    sed -i '/#include <sched.h>/a#include <sys/mman.h>' configure
-    sed -i '1i#include <sys/mman.h>' src/basic/fileio.c
-    # Fix getrandom detection
-    sed -i '/#include <sched.h>/a#include <sys/random.h>' configure
-    sed -i '1i#include <sys/random.h>' src/basic/random-util.c
-    # Fix renameat2 detection
-    sed -i '/#include <sched.h>/a#include <stdio.h>' configure
-
-    # Xlocale.h not needed
-    sed -i '/xlocale.h/d' src/basic/parse-util.c
-  '' + optionalString (type != "lib") ''
-    # Fix an issue with missing definitions conflicting with real ones
-    sed -i '\,#include <sys/socket.h>,i#include <sys/mount.h>' src/basic/missing.h
-
-    # Fix another issue where sys/mount conflicts with linux/fs definitions
-    find . \( -name \*.c -or -name \*.h \) -exec sed -i '\,#include <linux/fs.h>,i#include <sys/mount.h>' {} \;
+    patchShebangs src/resolve/generate-dns_type-gperf.py
+    patchShebangs tools/generate-gperfs.py
+    patchShebangs tools/make-autosuspend-rules.py
+    patchShebangs tools/xml_helper.py
   '';
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-rootprefix=$out"
-      "--with-dbuspolicydir=$out/etc/dbus-1/system.d"
-      "--with-dbussessionservicedir=$out/share/dbus-1/services"
-      "--with-dbussystemservicedir=$out/share/dbus-1/system-services"
-    )
-  '';
-
-  configureFlags = [
-    "--localstatedir=/var"
-    "--sysconfdir=/etc"
-
-    "--disable-address-sanitizer"  # TODO: Fix, breaks lvm2 invocation
-    "--disable-undefined-sanitizer"  # TODO: Fix, breaks lvm2 invocation
-    "--enable-utmp"
-    "--disable-dbus"  # Only needed in tests which we dont run
-    "--disable-coverage"
-    "--disable-selinux"
-    "--disable-apparmor"
-    # "--disable-adm-group"
-    # "--disable-wheel-group"
-    "--disable-smack"
-
-    "--enable-binfmt"
-    "--enable-vconsole"
-    "--enable-quotacheck"
-    "--enable-tmpfiles"
-    "--enable-sysusers"
-    "--enable-firstboot"
-    "--enable-randomseed"
-    "--enable-backlight"
-    "--enable-rfkill"
-    "--enable-logind"
-    # "--without-kill-user-processes"
-    "--enable-machined"
-    "--enable-importd"
-    "--enable-hostnamed"
-    "--enable-timedated"
-    "--enable-timesyncd"
-    "--with-ntp-servers="
-    "--enable-localed"
-    "--enable-coredump"
-    "--enable-polkit"
-    "--enable-resolved"
-    "--enable-networkd"
-    "--enable-efi"
-    # "--enable-tpm"
-    "--enable-myhostname"
-    "--enable-hwdb"
-    "--enable-hibernate"
-    "--enable-ldconfig"
-    "--with-tty-gid=3" # tty in NixOS has gid 3
-    "--with-default-hierarchy=unified"
-    "--with-fallback-hostname=triton"
-    "--disable-split-usr"
-    "--disable-tests"
-  ] ++ (if libOnly then [
-    "--without-python"
-    "--disable-kmod"
-    "--disable-xkbcommon"
-    "--disable-blkid"
-    "--disable-seccomp"
-    "--disable-ima"
-    "--enable-xz"
-    "--disable-zlib"
-    "--disable-bzip2"
-    "--enable-lz4"
-    "--disable-pam"
-    "--disable-acl"
-    "--enable-gcrypt"
-    "--enable-audit"
-    "--disable-elfutils"
-    "--disable-libcryptsetup"
-    "--disable-qrencode"
-    "--disable-gnutls"
-    "--disable-microhttpd"
-    "--disable-libcurl"
-    "--enable-libidn"
-    "--disable-libiptc"
-    "--disable-gnuefi"
-    "--disable-tpm"
-    "--disable-manpages"
-  ] else [
-    "--with-python"
-    "--enable-kmod"
-    "--enable-xkbcommon"
-    "--enable-blkid"
-    "--enable-seccomp"
-    "--enable-ima"
-    "--enable-xz"
-    "--enable-zlib"
-    "--enable-bzip2"
-    "--enable-lz4"
-    "--enable-pam"
-    "--enable-acl"
-    "--enable-gcrypt"
-    "--enable-audit"
-    "--enable-elfutils"
-    "--enable-libcryptsetup"
-    "--enable-gnutls"
-    "--enable-microhttpd"
-    "--enable-libcurl"
-    "--enable-libidn"
-    "--enable-libiptc"
-    "--enable-gnuefi"
-    "--enable-tpm"
-    "--enable-manpages"
-    "--with-efi-libdir=${gnu-efi}/lib"
-    "--with-efi-ldsdir=${gnu-efi}/lib"
-    "--with-efi-includedir=${gnu-efi}/include"
-    "--with-kbd-loadkeys=${kbd}/bin/loadkeys"
-    "--with-kbd-setfont=${kbd}/bin/setfont"
-  ]);
-
-  PYTHON_BINARY = "${coreutils_small}/bin/env python"; # don't want a build time dependency on Python
-
-  NIX_CFLAGS_COMPILE = [
-    # Can't say ${polkit}/bin/pkttyagent here because that would
-    # lead to a cyclic dependency.
-    "-UPOLKIT_AGENT_BINARY_PATH"
-    "-DPOLKIT_AGENT_BINARY_PATH=\"/run/current-system/sw/bin/pkttyagent\""
-
-    # Set the release_agent on /sys/fs/cgroup/systemd to the
-    # currently running systemd (/run/current-system/systemd) so
-    # that we don't use an obsolete/garbage-collected release agent.
-    "-USYSTEMD_CGROUP_AGENT_PATH"
-    "-DSYSTEMD_CGROUP_AGENT_PATH=\"/run/current-system/systemd/lib/systemd/systemd-cgroups-agent\""
-    "-USYSTEMD_BINARY_PATH"
-    "-DSYSTEMD_BINARY_PATH=\"/run/current-system/systemd/lib/systemd/systemd\""
-  ];
-
-  preBuild = optionalString libOnly ''
-    echo 'myBuildLibs: $(rootlib_LTLIBRARIES) udevadm' >> Makefile
-    echo 'myBuiltSources: $(BUILT_SOURCES)' >> Makefile
-    make myBuiltSources
-  '';
-
-  buildFlags = optionals libOnly [
-    "myBuildLibs"
+  mesonFlags = [
+    "-Dversion-tag=${version}"
+    "-Drootprefix=/run/current-system/sw"
+    "-Dquotaon-path=/run/current-system/sw/bin/quotaon"
+    "-Dquotacheck-path=/run/current-system/sw/bin/quotacheck"
+    "-Dkmod-path=/run/current-system/sw/bin/kmod"
+    "-Dkexec-path=/run/current-system/sw/bin/kexec"
+    "-Dsulogin-path=/run/current-system/sw/bin/sulogin"
+    "-Dmount-path=/run/current-system/sw/bin/mount"
+    "-Dumount-path=/run/current-system/sw/bin/umount"
+    "-Dloadkeys-path=/run/current-system/sw/bin/loadkeys"
+    "-Dsetfont-path=/run/current-system/sw/bin/setfont"
+    "-Dnologin-path=/run/current-system/sw/bin/nologin"
+    "-Dldconfig=false"
+    "-Dcreate-log-dirs=false"
+    "-Dman=true"
+    "-Dfallback-hostname=triton"
+    "-Dsystem-uid-max=1000"
+    "-Dsystem-gid-max=1000"
+    "-Dtty-gid=3"
+    "-Dusers-gid=100"
+    "-Ddefault-locale=C.UTF-8"
+    "-Ddns-over-tls=gnutls"
+    "-Dlibidn2=true"
+    "-Defi-includedir=${gnu-efi}/include/efi"
+    "-Defi-libdir=${gnu-efi}/lib"
+    "-Dtests=false"
   ];
 
   preInstall = ''
-    installFlagsArray+=(
-      "localstatedir=$TMPDIR/var"
-      "sysconfdir=$out/etc"
-      "sysvinitdir=$TMPDIR/etc/init.d"
-      "pamconfdir=$out/etc/pam.d"
-    )
+    export DESTDIR="$out"
   '';
 
-  installTargets = optionals libOnly [
-    "install-includeHEADERS"
-    "install-pkgincludeHEADERS"
-    "install-rootlibLTLIBRARIES"
-    "install-pkgconfiglibDATA"
-  ];
-
-  postInstall = optionalString libOnly ''
-    # This is unfortunately needed by lvm2 which is a dependency of systemd_full
-    mkdir -p $out/bin
-    cp udevadm $out/bin
-  '' + optionalString (!libOnly) ''
-    # sysinit.target: Don't depend on
-    # systemd-tmpfiles-setup.service. This interferes with NixOps's
-    # send-keys feature (since sshd.service depends indirectly on
-    # sysinit.target).
-    mv $out/lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup-dev.service $out/lib/systemd/system/multi-user.target.wants/
-
-    mkdir -p $out/example/systemd
-    mv $out/lib/{modules-load.d,binfmt.d,sysctl.d,tmpfiles.d} $out/example
-    mv $out/lib/systemd/{system,user} $out/example/systemd
-
-    rm -rf $out/etc/systemd/system
-
-    # Install SysV compatibility commands.
-    mkdir -p $out/sbin
-    ln -s $out/lib/systemd/systemd $out/sbin/telinit
-    for i in init halt poweroff runlevel reboot shutdown; do
-      ln -s $out/bin/systemctl $out/sbin/$i
+  # We need to work around install locations with the root
+  # prefix and dest dir
+  postInstall = ''
+    dir="$out$out"
+    cp -ar "$dir"/* "$out"
+    while [ "$dir" != "$out" ]; do
+      rm -r "$dir"
+      dir="$(dirname "$dir")"
     done
-
-    # Remove all of the rpm folders
-    find $out -name rpm -exec rm -r { } \;
-
-    # "kernel-install" shouldn't be used on NixOS.
-    find $out -name "*kernel-install*" -exec rm {} \;
+    cp -ar "$out"/run/current-system/sw/* "$out"
+    rm -r "$out"/{run,var}
   '';
 
-  # The interface version prevents NixOS from switching to an
-  # incompatible systemd at runtime.  (Switching across reboots is
-  # fine, of course.)  It should be increased whenever systemd changes
-  # in a backwards-incompatible way.  If the interface version of two
-  # systemd builds is the same, then we can switch between them at
-  # runtime; otherwise we can't and we need to reboot.
-  passthru = {
-    interfaceVersion = 3;
-    inherit upstreamVersion;
-  };
+  preFixup = ''
+    # Remove anything from systemd_lib
+    pushd '${systemd_lib}' >/dev/null
+    find . -not -type d -exec rm -v "$out"/{} \;
+    popd >/dev/null
+  '';
 
-  # We can't enable some of these security hardenings due to systemd-boot
-  # However, systemd already enables them where it can
-  optFlags = false;
-  pie = false;
-  fpic = false;
-  noStrictOverflow = false;
-  fortifySource = false;
-  stackProtector = false;
-  optimize = false;
+  passthru = {
+    interfaceVersion = 4;
+  };
 
   meta = with stdenv.lib; {
     homepage = "http://www.freedesktop.org/wiki/Software/systemd";

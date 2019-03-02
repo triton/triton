@@ -87,9 +87,9 @@ let
   sources = {
     "0.29" = rec {
       fetchzipversion = 6;
-      version = "0.29.0";
+      version = "0.29.1";
       rev = "v${version}";
-      sha256 = "1ab41515f8ab0f713062567885f591299c8d7f67e78477aa04a464edf10d4830";
+      sha256 = "ef14bf9e9b7d7410b6bdb44ad431f2a575d94fd08916f0119ca17f96a62ec7b9";
     };
     "999" = {
       fetchzipversion = 6;

@@ -22,6 +22,7 @@
 #, libbluray
 , libcap
 , libcdio
+, libcdio-paranoia
 , libgcrypt
 , libgdata
 , libgnome-keyring
@@ -81,6 +82,7 @@ stdenv.mkDerivation rec {
     #libbluray
     libcap
     libcdio
+    libcdio-paranoia
     libgcrypt
     #libgdata  # goa
     libgnome-keyring
@@ -115,7 +117,6 @@ stdenv.mkDerivation rec {
   mesonFlags = [
     "-Dadmin=false"  # FIXME
     "-Dafc=false"  # FIXME
-    "-Dcdda=false"  # FIXME
     # Remove dependency on webkit2
     "-Dgoa=false"
     "-Dgoogle=false"

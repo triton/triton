@@ -192,15 +192,13 @@ stdenv.mkDerivation rec {
     #"--${boolEn (lua != null)}-lua"
     /**/"--disable-lua"  # FIXME: need lua 5.2
     "--${boolEn (mujs != null)}-javascript"
-    "--${boolEn (libass != null)}-libass"
-    "--${boolEn (libass != null)}-libass-osd"
-    "--${boolEn (zlib != null)}-zlib"
+    "--enable-libass"
+    "--enable-libass-osd"
+    "--enable-zlib"
     "--${boolEn (libbluray != null)}-libbluray"
-    "--${boolEn (libdvdread != null)}-dvdread"
-    "--${boolEn (
-      libdvdnav != null
-      && libdvdread != null)}-dvdnav"
-    "--${boolEn (libcdio-paranoia != null)}-cdda"
+    "--enable-dvdread"
+    "--enable-dvdnav"
+    "--enable-cdda"
     #"--${boolEn ( != null)}-uchardet"
     "--${boolEn (rubberband != null)}-rubberband"
     "--${boolEn (lcms2 != null)}-lcms2"
@@ -208,15 +206,15 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth-lazy"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
     "--${boolEn (libarchive != null)}-libarchive"
-    "--${boolEn (ffmpeg != null)}-libavdevice"
+    "--enable-libavdevice"
     "--${boolEn (sdl != null)}-sdl2"
     "--disable-oss-audio"
     "--disable-rsound"
-    "--${boolEn (pulseaudio_lib != null)}-pulse"
+    "--enable-pulse"
     "--${boolEn (jack2_lib != null)}-jack"
     "--${boolEn (openal != null)}-openal"
     "--disable-opensles"  # android
-    "--${boolEn (alsa-lib != null)}-alsa"
+    "--enable-alsa"
     "--disable-coreaudio"  # macOS
     "--disable-audiounit"  # iOS
     "--disable-wasapi"  # Windows
@@ -224,33 +222,29 @@ stdenv.mkDerivation rec {
     "--${boolEn (libdrm != null)}-drm"
     "--enable-drmprime"
     "--${boolEn opengl-dummy.gbm}-gbm"
-    "--${boolEn (wayland != null)}-wayland-scanner"
-    "--${boolEn (wayland-protocols != null)}-wayland-protocols"
-    "--${boolEn (
-        wayland != null &&
-        wayland-protocols != null &&
-        libxkbcommon != null)}-wayland"
+    "--enable-wayland-scanner"
+    "--enable-wayland-protocols"
+    "--enable-wayland"
     "--${boolEn (
         libx11 != null
         && libxext != null
         && libxinerama != null
         && libxrandr != null
         && libxscrnsaver != null)}-x11"
-    "--${boolEn (libxv != null)}-xv"
+    "--enable-xv"
     "--disable-gl-cocoa"
     "--${boolEn opengl-dummy.glx}-gl-x11"
     "--${boolEn opengl-dummy.egl}-egl-x11"
-    "--${boolEn opengl-dummy.egl}-egl-drm"
+    "--${boolEn (opengl-dummy.egl && libdrm != null)}-egl-drm"
     "--${boolEn opengl-dummy.gbm}-gl-wayland"
     "--disable-gl-win32"  # Windows
     "--disable-gl-dxinterop"  # Windows
     "--disable-egl-angle"  # Windows
     "--disable-egl-angle-win32"  # Windows
-    "--${boolEn (libvdpau != null)}-vdpau"
+    "--enable-vdpau"
     # FIXME: add passthru booleans to libvdpau for feature detection
     # "--${boolEn opengl-dummy.glx}-vdpau-gl-x11"  # FIXME
-    #"--${boolEn (libva != null)}-vaapi"
-    "--${boolEn (libva != null)}-vaapi"
+    "--enable-vaapi"
     # FIXME: add passthru booleans to libva for feature detection
     #"--enable-vaapi-x11"
     #"--enable-vaapi-wayland"
@@ -258,7 +252,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn opengl-dummy.glx}-vaapi-glx"
     #"--${boolEn opengl-dummy.egl}-vaapi-x-egl"
     "--${boolEn (libcaca != null)}-caca"
-    "--${boolEn (libjpeg != null)}-jpeg"
+    "--enable-jpeg"
     "--disable-direct3d"  # Windows
     /**/"--disable-shaderc"
     /**/"--disable-crossc"

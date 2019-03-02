@@ -23,17 +23,17 @@
 }:
 
 let
-  version = "2018-08-19";
+  version = "2019-02-25";
 in
 stdenv.mkDerivation rec {
-  name = "gnome-mpv-${version}";
+  name = "celluloid-${version}";
 
   src = fetchFromGitHub {
     version = 6;
-    owner = "gnome-mpv";
-    repo = "gnome-mpv";
-    rev = "7aea4058a28529baf2a51931cfb9bf83d2d519e0";
-    sha256 = "203f399fb384c8ba9cf5c79283c9fd8ee901e5b47cd3d7f2afa0fb1fc24d0534";
+    owner = "celluloid-player";
+    repo = "celluloid";
+    rev = "51821c02019a3e1fa6e280001952840ca79f82d9";
+    sha256 = "128fd9f34db5a9e57e8396d031ddc6dc607e976684e42f64d3646decf78a36d3";
   };
 
   nativeBuildInputs = [
@@ -80,7 +80,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "A simple GTK+ frontend for mpv";
-    homepage = https://github.com/gnome-mpv/gnome-mpv;
+    homepage = https://github.com/celluloid-player/celluloid;
     license = licenses.gpl3;
     maintainers = with maintainers; [
       codyopel

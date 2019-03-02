@@ -842,6 +842,8 @@ cdparanoia = callPackage ../all-pkgs/c/cdparanoia { };
 
 cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 
+celluloid = callPackage ../all-pkgs/c/celluloid { };
+
 celt_0-5 = callPackage ../all-pkgs/c/celt {
   channel = "0.5";
 };
@@ -1608,8 +1610,6 @@ gnome-menus_3-13 = callPackage ../all-pkgs/g/gnome-menus {
   channel = "3.13";
 };
 gnome-menus = callPackageAlias "gnome-menus_3-13" { };
-
-gnome-mpv = callPackage ../all-pkgs/g/gnome-mpv { };
 
 #gnome-online-accounts_3-22 = callPackage ../all-pkgs/g/gnome-online-accounts {
 #  channel = "3.22";

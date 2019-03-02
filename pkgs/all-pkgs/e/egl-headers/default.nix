@@ -1,20 +1,20 @@
 { stdenv
 , fetchFromGitHub
+, fetchurl
 , lib
+, python3Packages
 }:
 
 let
-  version = "2017-08-31";
+  version = "2019-02-13";
 in
 stdenv.mkDerivation rec {
   name = "egl-headers-${version}";
 
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "KhronosGroup";
-    repo = "EGL-Registry";
-    rev = "b2701ceb25a4718c1a4c3b7e89a62f0976479756";
-    sha256 = "bdaae46c38b52554955ae1197c0b1e838382e4c6ea7c179cd9d91a2ff6fd5e52";
+  src = fetchurl {
+    url = "http://egl-registry.tar.xz";
+    multihash = "Qmf3CaunyCXXiyyd6fypvYZv6Q8cDU28ZnJkLqauH26Wxn";
+    sha256 = "263cd3090ab76adc3fba3e8e97ba54b44e1109c8e15dfca99851c255319b0f9b";
   };
 
   configurePhase = ":";
@@ -22,14 +22,62 @@ stdenv.mkDerivation rec {
   buildPhase = ":";
 
   installPhase = ''
-    for api in api/{EGL,KHR}; do
-      pushd $api
-        while read header; do
-          install -D -m644 -v $header $out/include/$(basename "$api")/$header
-        done < <(find . -name "*.h" -printf '%P\n')
-      popd
+    for api in include/{EGL,KHR}; do
+      for header in "$api"/*.h; do
+        install -D -m644 -v "$header" \
+          "$out"/include/"$(basename "$api")"/"$(basename "$header")"
+      done
+    done
+    for xml in xml/*.xml; do
+      install -D -m644 -v "$xml" "$out"/share/egl-registry/"$(basename "$xml")"
     done
   '';
+
+  passthru = {
+    generateDistTarball = stdenv.mkDerivation rec {
+      name = "egl-headers-dist-${version}";
+
+      src = fetchFromGitHub {
+        version = 6;
+        owner = "KhronosGroup";
+        repo = "EGL-Registry";
+        rev = "9b12ea69d15aa52f6b4b6dee0302aec14c2e0443";
+        sha256 = "f4c57371bf981e3626f7f858b423273b5391cdd160695711c88a70e45f71e9af";
+      };
+
+      nativeBuildInputs = [
+        python3Packages.lxml
+        python3Packages.python
+      ];
+
+      postPatch = ''
+        patchShebangs api/genheaders.py
+        patchShebangs api/reg.py
+
+        rm -v api/EGL/egl{,ext}.h
+      '';
+
+      configurePhase = ":";
+
+      preBuild = ''
+        cd api/
+      '';
+
+      installPhase = ''
+        for header in {EGL/egl{,ext,platform},KHR/khrplatform}.h; do
+          install -D -m644 -v "$header" ${name}/include/"$header"
+        done
+        for xml in *.xml; do
+          install -D -m644 -v "$xml" ${name}/xml/"$(basename "$xml")"
+        done
+
+        tar -Jcvf opengl-headers-${version}.tar.xz ${name}/
+
+        install -D -m644 -v 'opengl-headers-${version}.tar.xz' \
+          "$out/egl-headers-${version}.tar.xz"
+      '';
+    };
+  };
 
   meta = with lib; {
     description = "EGL API and Extension headers.";

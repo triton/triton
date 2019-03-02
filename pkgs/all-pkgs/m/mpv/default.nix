@@ -93,8 +93,8 @@ let
     };
     "999" = {
       fetchzipversion = 6;
-      version = "2018-08-20";
-      rev = "d4bbfb8453f2161fd21e6f3c00023edf43cc88fc";
+      version = "2019-03-01";
+      rev = "b9cde8d95c0a6cc19a93ed3a2971a12b012dd9b5";
       sha256 = "8e844876c37aefaaca6dc439cce24010eb48e58e33e0461378da79d8ac8b8a69";
     };
   };
@@ -190,6 +190,7 @@ stdenv.mkDerivation rec {
     "--disable-clang-database"
     "--disable-android"  # Android
     (strNew "--disable-egl-android" "0.30.0")  # Android
+    (strNew "--disable-swift" "0.30.0")
     "--disable-uwp"  # Windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"

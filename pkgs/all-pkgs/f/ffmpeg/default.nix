@@ -89,7 +89,8 @@
 , libbluray
 , libbs2b
 , libcaca
-#, libcdio-paranoia
+, libcdio
+, libcdio-paranoia
 , libdc1394
 , libdrm
 #, libiec61883, libavc1394
@@ -217,7 +218,7 @@ assert
   fdk-aac != null
   #|| avid != null
   #|| avisynth != null
-  #|| cdio != null
+  || libcdio != null
   || frei0r-plugins != null
   || openssl != null
   || rubberband != null
@@ -363,6 +364,8 @@ stdenv.mkDerivation rec {
     libbluray
     libbs2b
     libcaca
+    libcdio
+    libcdio-paranoia
     libdc1394
     libdrm
     libgcrypt
@@ -568,8 +571,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libbs2b != null)}-libbs2b"
     "--${boolEn (libcaca != null)}-libcaca"
     "--${boolEn (celt != null)}-libcelt"
-    #"--${boolEn (libcdio != null)}-libcdio"
-    /**/"--disable-libcdio"
+    "--${boolEn (libcdio != null && libcdio-paranoia != null)}-libcdio"
     /**/(fflag "--disable-libcodec2" "4.0")
     /**/(fflag "--disable-libdav1d" "4.1")
     /**/(fflag "--disable-libdavs2" "4.1")

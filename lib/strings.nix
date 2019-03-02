@@ -277,6 +277,8 @@ rec {
    */
   boolEn = boolean:
     boolString boolean "enable" "disable";
+  boolEnd = boolean:
+    boolString boolean "enabled" "disabled";
   boolWt = boolean:
     boolString boolean "with" "without";
   boolOn = boolean:

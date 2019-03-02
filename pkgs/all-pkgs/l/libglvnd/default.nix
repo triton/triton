@@ -1,7 +1,9 @@
 { stdenv
 , autoreconfHook
+, egl-headers
 , fetchFromGitHub
 , lib
+, opengl-headers
 , python2
 
 , libx11
@@ -35,7 +37,11 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs ./src/generate
+    patchShebangs src/generate/
+
+    rm -v src/generate/xml/{egl,gl,glx}.xml
+    cp -v ${opengl-headers}/share/opengl-registry/gl{,x}.xml src/generate/xml/
+    cp -v ${egl-headers}/share/egl-registry/egl.xml src/generate/xml/
   '';
 
   configureFlags = [

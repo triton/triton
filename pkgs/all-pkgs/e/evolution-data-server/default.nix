@@ -124,8 +124,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/evolution-data-server/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Urls = map (n: "${n}.sha256sum") src.urls;
+      };
       failEarly = true;
     };
   };

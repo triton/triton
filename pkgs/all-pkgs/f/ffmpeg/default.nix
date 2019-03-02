@@ -200,6 +200,11 @@ let
       multihash = "QmQKaKiL6i1vsUkkZMwgb8fWXmwK5DuRiqNvKs5ybUBwps";
       sha256 = "253c37e3f1d3626a2566e496554de9a4c29050753660835909a466d66b12e2ed";
     };
+    "4.1" = {
+      version = "4.1.1";
+      multihash = "Qmc7Y1T1wNZPZnWvqFxv9iwKU8W5Qttgy6dVoQR2avYzVe";
+      sha256 = "373749824dfd334d84e55dff406729edfd1606575ee44dd485d97d45ea4d2d86";
+    };
     "9.9" = {  # Git
       fetchzipversion = 6;
       version = "2019.02.14";
@@ -565,7 +570,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
     (fflag "--${boolEn (aomedia != null)}-libaom" "4.0")
-    /**/(fflag "--disable-libaribb24" "4.1")
+    /**/(fflag "--disable-libaribb24" "4.2")
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libbs2b != null)}-libbs2b"
@@ -573,7 +578,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (celt != null)}-libcelt"
     "--${boolEn (libcdio != null && libcdio-paranoia != null)}-libcdio"
     /**/(fflag "--disable-libcodec2" "4.0")
-    /**/(fflag "--disable-libdav1d" "4.1")
+    /**/(fflag "--disable-libdav1d" "4.2")
     /**/(fflag "--disable-libdavs2" "4.1")
     "--${boolEn (
       libdc1394 != null

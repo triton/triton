@@ -1334,7 +1334,10 @@ ffmpeg_3 = callPackageAlias "ffmpeg_3-4" { };
 ffmpeg_4-0 = pkgs.ffmpeg_generic {
   channel = "4.0";
 };
-ffmpeg_4 = callPackageAlias "ffmpeg_4-0" { };
+ffmpeg_4-1 = pkgs.ffmpeg_generic {
+  channel = "4.1";
+};
+ffmpeg_4 = callPackageAlias "ffmpeg_4-1" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies

@@ -207,9 +207,9 @@ let
     };
     "9.9" = {  # Git
       fetchzipversion = 6;
-      version = "2019.02.14";
-      rev = "9e1e5213933dfed529f0cecac7304236a786177e";
-      sha256 = "daeb1af827a9a3331a99efb11bf57ee06dcc65eaa4fb0438469caba52d7f2620";
+      version = "2019.03.01";
+      rev = "3b23eb283a32af5d8b19b7621e31cc40521a2a41";
+      sha256 = "528f996712302d7a65d26420232b12291f8ed4092f36d163b7d09f4236452202";
     };
   };
   source = sources."${channel}";
@@ -503,9 +503,12 @@ stdenv.mkDerivation rec {
     (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda" null "3.4")
-    "--${boolEn (
+    (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuda-sdk"
+      && nvidia-drivers != null)}-cuda-sdk" null "4.1")
+    (fflag "--${boolEn (
+      nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-cuda-nvcc" "4.2")
     (deprfflag "--${boolEn (
       nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuvid" null "3.4")

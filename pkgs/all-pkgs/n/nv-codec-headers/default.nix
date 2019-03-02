@@ -1,19 +1,18 @@
 { stdenv
-, fetchgit
+, fetchurl
 , lib
 }:
 
 let
-  version = "8.1.24.2";
+  version = "9.0.18.0";
 in
 stdenv.mkDerivation rec {
   name = "nv-codec-headers-${version}";
 
-  src = fetchgit {
-    version = 6;
-    url = https://git.videolan.org/git/ffmpeg/nv-codec-headers.git;
-    rev = "refs/tags/n${version}";
-    sha256 = "d48670280bf6fb7821c0721e6cb1726fcabdcfdfd1e9fef8ccc921778d32bbfa";
+  src = fetchurl {
+    url = "https://github.com/FFmpeg/nv-codec-headers/releases/download/"
+      + "n${version}/${name}.tar.gz";
+    sha256 = "6292aa41233d5c6e7cb917610de9aff8764f194116780c5b3aad753bf8868d4d";
   };
 
   preBuild = ''
@@ -21,7 +20,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "";
+    description = "Headers required to interface with Nvidias codec APIs";
     homepage = https://git.videolan.org/?p=ffmpeg/nv-codec-headers.git;
     license = licenses.mit;
     maintainers = with maintainers; [

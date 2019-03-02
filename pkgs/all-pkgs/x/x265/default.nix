@@ -37,9 +37,9 @@ let
     };
     "head" = {
       fetchzipversion = 6;
-      version = "2019-02-08";
-      rev = "dcbec33bfb0f1cabdb1ff9eaadba5305ba23e6fa";
-      sha256 = "cd7bfb8b68bf9a8b19ffe73ba8e70eedc3982c554318fd11e53fa943faccb8a6";
+      version = "2019-02-26";
+      rev = "31ab7e09a3b5b15ffcc532826d4dd5d37e611483";
+      sha256 = "f200d450923892811d5d17f1504b6469fd4acff8d118562f8ad5f2f3e5df5eac";
     };
   };
   source = sources."${channel}";

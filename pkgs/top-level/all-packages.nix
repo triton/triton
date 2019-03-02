@@ -1699,9 +1699,6 @@ gnused_small = callPackage ../all-pkgs/g/gnused {
 gnutar_1-30 = callPackage ../all-pkgs/g/gnutar {
   version = "1.30";
 };
-gnutar_1-31 = callPackage ../all-pkgs/g/gnutar {
-  version = "1.31";
-};
 gnutar_1-32 = callPackage ../all-pkgs/g/gnutar {
   version = "1.32";
 };

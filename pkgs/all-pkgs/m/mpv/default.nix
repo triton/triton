@@ -17,6 +17,7 @@
 , libbluray
 , libbs2b
 , libcaca
+, libcdio
 , libcdio-paranoia
 , libdrm
 , libdvdnav
@@ -131,6 +132,7 @@ stdenv.mkDerivation rec {
     libbluray
     libbs2b
     libcaca
+    libcdio
     libcdio-paranoia
     libdrm
     libdvdnav

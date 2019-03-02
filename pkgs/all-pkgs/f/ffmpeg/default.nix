@@ -191,9 +191,9 @@ let
 
   sources = {
     "3.4" = {
-      version = "3.4.4";
-      multihash = "QmYQDMYbV1CE8gfdBRoxZCnQgtd7KAP7GfHdx1ZwwJmUxT";
-      sha256 = "386f7601e865df6bddde05bb6927119b5a853f0b92e2e9834f59c125a17d3fc6";
+      version = "3.4.5";
+      multihash = "QmZAz1VmeMdWnG9UAzUcwQiEMB5DWZP9SMc6iZPGmEfY2a";
+      sha256 = "741cbd6394eaed370774ca4cc089eaafbc54d0824b9aa360d4b3b0cbcbc4a92c";
     };
     "4.0" = {
       version = "4.0.2";
@@ -714,9 +714,11 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "FCF9 86EA 15E6 E293 A564  4F10 B432 2F04 D676 58D8";
+        failEarly = true;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "FCF9 86EA 15E6 E293 A564  4F10 B432 2F04 D676 58D8";
+      };
     };
   };
 

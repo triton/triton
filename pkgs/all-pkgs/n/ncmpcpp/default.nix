@@ -17,8 +17,7 @@
 
 let
   inherit (lib)
-    boolEn
-    boolWt;
+    boolEn;
 in
 stdenv.mkDerivation rec {
   name = "ncmpcpp-0.8.2";
@@ -43,13 +42,13 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "BOOST_LIB_SUFFIX="
     "--${boolEn outputsSupport}-outputs"
-    "--${boolEn (fftw_double != null)}-visualizer"
+    "--enable-visualizer"
     "--${boolEn clockSupport}-clock"
     "--enable-unicode"
-    "--${boolWt (curl != null)}-curl"
-    "--${boolWt (fftw_double != null)}-fftw"
+    "--enable-curl"
+    "--enable-fftw"
     "--without-pdcurses"
-    "--${boolWt (taglib != null)}-taglib"
+    "--enable-taglib"
   ];
 
   meta = with lib; {

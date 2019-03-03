@@ -16,17 +16,20 @@
 }:
 
 let
-  inherit (lib)
-    boolEn
-    boolWt;
+  version = "0.99.10";
+  # Upstream only publishes tarballs on gitlab in the release notes and does
+  # not use the links api.
+  id = "c438511024b9bc5a904f8775cfc8e4c4";
 in
 stdenv.mkDerivation rec {
-  name = "upower-0.99.7";
+  name = "upower-${version}";
 
   src = fetchurl {
-    url = "https://upower.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmcPxNxvv94cTCpmgLpjMWH3wfBZduqaz6jWStUtXfwBYA";
-    sha256 = "24bcc2f6ab25a2533bac70b587bcb019e591293076920f5b5e04bdedc140a401";
+    url = "https://gitlab.freedesktop.org/upower/upower/uploads/${id}/"
+      + "${name}.tar.xz";
+    multihash = "QmV3e555Mjxf6ZanYgk6qZzWhurtessjBrXvHg9vePvHH6";
+    hashOutput = false;
+    sha256 = "642251b97080ede8be6dbfeaf8f30ff6eadd6eb27aa137bc50f5b9b2295ba29d";
   };
 
   nativeBuildInputs = [
@@ -63,16 +66,11 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
-    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--enable-introspection"
     "--enable-deprecated"
     "--enable-manpages"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-tests"
-    "--enable-nls"
     "--with-backend=linux"
-    "--${boolWt (libimobiledevice != null)}-idevice"
+    "--enable-idevice"
   ];
 
   preInstall = ''
@@ -81,6 +79,19 @@ stdenv.mkDerivation rec {
       "sysconfdir=$out/etc"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        sha1Confirm = "9b452bc3d85d749d63644c51cc2fa0465890f659";
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "A D-Bus service for power management";

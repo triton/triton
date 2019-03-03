@@ -113,8 +113,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       fullOpts = {
-        sha256Url = "https://download.gnome.org/sources/gdk-pixbuf/${channel}/"
-          + "${name}.sha256sum";
+        sha256Urls = map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;;
       };
       failEarly = true;
     };

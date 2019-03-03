@@ -9,7 +9,7 @@ let
   inherit (lib)
     replaceChars;
 
-  version = "2018-06-29";
+  version = "2019-02-15";
   version' = replaceChars ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
@@ -17,8 +17,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://acpica.org/sites/acpica/files/acpica-unix-${version'}.tar.gz";
-    multihash = "QmYVtbFWVmZxFXTM3ZgQy7xH6fKtUDPx8ht6KJ7uyLYY63";
-    sha256 = "70d11f3f2adbdc64a5b33753e1889918af811ec8050722fbee0fdfc3bfd29a4f";
+    multihash = "QmaqR3MStuGyiYihahMBLA3Nsz3sBNQUwQvRhGAg4qHPTt";
+    sha256 = "71133ab2b1b2e2f176a9b5081060571977a3d2c91b36722e198bffa7ce9b0d37";
   };
 
   nativeBuildInputs = [
@@ -36,6 +36,17 @@ stdenv.mkDerivation rec {
     install -d $out/bin
     install generate/unix/bin*/iasl $out/bin
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with lib; {
     description = "Intel ACPI Compiler";

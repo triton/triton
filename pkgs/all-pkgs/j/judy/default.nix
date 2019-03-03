@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   # gcc 4.8 optimisations break judy.
   # http://sourceforge.net/p/judy/mailman/message/31995144/
-  preConfigure = stdenv.lib.optionalString stdenv.cc.isGNU ''
+  preConfigure = ''
     configureFlagsArray+=("CFLAGS=-fno-strict-aliasing -fno-aggressive-loop-optimizations")
   '';
 

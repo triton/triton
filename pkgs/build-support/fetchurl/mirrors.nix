@@ -85,6 +85,7 @@ rec {
   ];
 
   gnome = [
+    https://download.gnome.org  # sha256sum files can be fetched directly
     http://download.gnome.org
     https://mirrorservice.org/sites/ftp.gnome.org/pub/GNOME
     https://mirror.umd.edu/gnome

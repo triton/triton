@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , functionPrefix ? null
 }:
@@ -7,7 +8,7 @@
 let
   version = "5.1.0";
 
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 in
 stdenv.mkDerivation rec {
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
 
   disableStatic = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.canonware.com/jemalloc/index.html;
     description = "General purpose malloc(3) implementation";
     license = licenses.bsd2;

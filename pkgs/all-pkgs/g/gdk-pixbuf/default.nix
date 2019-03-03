@@ -113,7 +113,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       fullOpts = {
-        sha256Urls = map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;;
+        sha256Urls = map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
       };
       failEarly = true;
     };

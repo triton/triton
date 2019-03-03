@@ -4,6 +4,8 @@
 , intltool
 , lib
 , libxslt
+#, meson
+#, ninja
 
 , glib
 , gobject-introspection
@@ -16,20 +18,22 @@ let
     boolEn;
 
   channel = "0.18";
-  version = "${channel}.6";
+  version = "${channel}.8";
 in
 stdenv.mkDerivation rec {
   name = "libsecret-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libsecret/${channel}/${name}.tar.xz";
-    sha256 = "5efbc890ba41a323ffe0599cd260fd12bd8eb62a04aa1bd1b2762575d253d66f";
+    sha256 = "3bfa889d260e0dbabcf5b9967f2aae12edcd2ddc9adc365de7a5cc840c311d15";
   };
 
   nativeBuildInputs = [
     intltool
     libxslt
     docbook-xsl
+    #meson
+    #ninja
     vala
   ];
 
@@ -39,13 +43,16 @@ stdenv.mkDerivation rec {
     libgcrypt
   ];
 
+  #mesonFlags = [
+  #  "-Dvapi=${boolTf (vala != null)}"
+  #  "-Dgtk_doc=false"
+  #];
+
   configureFlags = [
     "--enable-introspection"
     "--enable-manpages"
     "--${boolEn (vala != null)}-vala"
     "--enable-gcrypt"
-    "--disable-debug"
-    "--disable-coverage"
     "--with-libgcrypt-prefix=${libgcrypt}"
   ];
 
@@ -55,8 +62,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libsecret/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Urls = map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

@@ -31,7 +31,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "1.5.18";
+  version = "1.5.20";
 in
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/ibus/ibus/releases/download/${version}/"
       + "${name}.tar.gz";
-    sha256 = "8551f7d027fb65d48225642fc8f3b232412ea75a4eb375244dd72a4d73c2639e";
+    sha256 = "4cf1e5ca4b067a3bed3cdfa658d49ac597d817b2de627a1095214565f862d034";
   };
 
   nativeBuildInputs = [
@@ -75,11 +75,11 @@ stdenv.mkDerivation rec {
     "--enable-glibtest"
     "--disable-tests"
     "--${boolEn (gtk_2 != null)}-gtk2"
-    "--${boolEn (gtk_3 != null)}-gtk3"
+    "--enable-gtk3"
     "--enable-xim"
-    "--${boolEn (wayland != null)}-wayland"
+    "--enable-wayland"
     "--enable-appindicator"
-    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--enable-introspection"
     "--${boolEn (vala != null)}-vala"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -87,11 +87,11 @@ stdenv.mkDerivation rec {
     "--disable-gconf"
     "--enable-schemas-install"
     "--disable-memconf"
-    "--${boolEn (dconf != null)}-dconf"
+    "--enable-dconf"
     "--disable-schemas-compile"
-    "--${boolEn (python3Packages.python != null)}-python-library"
+    "--enable-python-library"
     "--enable-setup"
-    "--${boolEn (python3Packages.python != null)}-dbus-python-check"
+    "--enable-dbus-python-check"
     "--enable-key-snooper"
     "--enable-surrounding-text"
     "--enable-ui"

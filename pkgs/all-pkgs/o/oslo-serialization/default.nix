@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "2.25.0";
+  version = "2.28.2";
 in
 buildPythonPackage {
   name = "oslo.serialization-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "oslo.serialization";
     inherit version;
-    sha256 = "9563fa6ff64bc0a94f8ad8d2b36c5dda452dfe3ea8bb8a5291ba0355687445c4";
+    sha256 = "c3c73eb1fa45aaf4cdf3b82a0cf85497a245c7e88e803fdafa29e4315d991eb3";
   };
 
   propagatedBuildInputs = [

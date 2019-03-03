@@ -63,15 +63,10 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i build-aux/gen-installed-test.py \
-      -i build-aux/gen-resources.py \
-      -i build-aux/gen-thumbnailer.py \
-      -e 's,^#!.*,#!${python3}/bin/python3,g'
-  '' + /* Fix should be included in 2.40 */ ''
-    grep -q '@filename@' gdk-pixbuf/gdk-pixbuf-enum-types.h.template
-    sed -i gdk-pixbuf/gdk-pixbuf-enum-types.h.template \
-      -i gdk-pixbuf/gdk-pixbuf-enum-types.c.template \
-      -e 's/@filename@/@basename@/g'
+    chmod +x build-aux/gen-resources.py
+    patchShebangs build-aux/gen-resources.py
+    chmod +x build-aux/gen-thumbnailer.py
+    patchShebangs build-aux/gen-thumbnailer.py
   '' + /* Don't generate loaders, we do this separately */ ''
     grep -q 'build-aux/post-install.sh' meson.build
     sed -i meson.build \

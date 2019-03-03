@@ -9,12 +9,12 @@
 assert type == "qemu";
 
 stdenv.mkDerivation rec {
-  name = "seabios-1.11.0";
+  name = "seabios-1.12.0";
 
   src = fetchurl {
-    url = "https://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
-    multihash = "QmYBzjZ94JDD3jjxtFx2zMEsbpDYMkQkruDVpShScjmF51";
-    sha256 = "622b432ebb8a3b0b13b8accd6d4a196a7eb3af11f243815e5f7d75d9ceb99bf7";
+    url = "https://www.seabios.org/downloads/${name}.tar.gz";
+    multihash = "QmeqJnikiz38Do71oMiMVqg77kpSHNwer3sYTD3e1utEnZ";
+    sha256 = "df17b8e565e75c27897ceb82af853b7c568eba7911f3bd173f8a68c1b4bda74b";
   };
 
   nativeBuildInputs = [
@@ -46,6 +46,17 @@ stdenv.mkDerivation rec {
   fortifySource = false;
   stackProtector = false;
   optimize = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = { };
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Open source implementation of a 16bit X86 BIOS";

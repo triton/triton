@@ -3,6 +3,7 @@
 , lib
 
 , file
+, libpciaccess
 , libx11
 , libxext
 , libxi
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     ncurses
     systemd_lib
+    libpciaccess
     libx11
     libxext
     libxi

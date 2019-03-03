@@ -21,17 +21,17 @@
 }:
 
 let
-  version = "0.1.9";
+  version = "0.2.5";
 in
 stdenv.mkDerivation rec {
   name = "pipewire-${version}";
 
   src = fetchFromGitHub {
-    version = 5;
+    version = 6;
     owner = "PipeWire";
     repo = "pipewire";
     rev = "${version}";
-    sha256 = "db970f2b8e5bf72fcb7691e01646300b5a613f20f27697c95ca39340687a8b11";
+    sha256 = "62f9ac1ef71b05885f3b4d25df96be5f2281e0e40438f8ea59d84462e190c463";
   };
 
   nativeBuildInputs = [
@@ -55,10 +55,9 @@ stdenv.mkDerivation rec {
     v4l_lib
   ];
 
-  postPatch = /* Fix hardcoded systemd unit directory */ ''
-    sed -i src/daemon/systemd/user/meson.build \
-      -e "s,systemd_user_services_dir\s=.*,systemd_user_services_dir = '$out/lib/systemd/user/',"
-  '';
+  mesonFlags = [
+    "-Dgstreamer=enabled"
+  ];
 
   meta = with lib; {
     description = "Multimedia processing graphs";

@@ -2,32 +2,33 @@
 , fetchurl
 
 , openssl
-, python2
+, python3
 }:
 
 let
-  version = "2.1.8";
+  version = "2.1.9";
+  channel = "beta";
 
   tarballUrls = version: [
-    "https://github.com/libevent/libevent/releases/download/release-${version}-stable/libevent-${version}-stable.tar.gz"
+    "https://github.com/libevent/libevent/releases/download/release-${version}/libevent-${version}.tar.gz"
   ];
 in
 stdenv.mkDerivation rec {
   name = "libevent-${version}";
 
   src = fetchurl {
-    urls = tarballUrls version;
+    urls = tarballUrls "${version}-${channel}";
     hashOutput = false;
-    sha256 = "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2";
+    sha256 = "eeb4c6eb2c4021e22d6278cdcd02815470243ed81077be0cbd0f233fa6fc07e8";
   };
 
   buildInputs = [
     openssl
-    python2
   ];
 
   patchPhase = ''
-    patchShebangs event_rpcgen.py
+    grep -q '^#!/usr/bin/env python$' event_rpcgen.py
+    sed -i 's,^#!/usr/bin/env python$,#!${python3.interpreter},g' event_rpcgen.py
   '';
 
   configureFlags = [
@@ -38,13 +39,16 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.1.8";
-      pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprints = [
-        "9E3A C83A 2797 4B84 D1B3  401D B860 8684 8EF8 686D"
-      ];
-      inherit (src) outputHashAlgo;
-      outputHash = "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2";
+      urls = tarballUrls "2.1.9-beta";
+      inherit (src)
+        outputHashAlgo;
+      outputHash = "eeb4c6eb2c4021e22d6278cdcd02815470243ed81077be0cbd0f233fa6fc07e8";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") urls;
+        pgpKeyFingerprints = [
+          "9E3A C83A 2797 4B84 D1B3  401D B860 8684 8EF8 686D"
+        ];
+      };
     };
   };
 

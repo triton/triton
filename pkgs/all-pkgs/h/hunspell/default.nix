@@ -1,26 +1,24 @@
 { stdenv
-, autoreconfHook
-, fetchFromGitHub
+, fetchurl
+, lib
 
 , ncurses
 , readline
 }:
-
+let
+  version = "1.7.0";
+in
 stdenv.mkDerivation rec {
   name = "hunspell-${version}";
-  version = "1.4.1";
 
-  src = fetchFromGitHub {
-    version = 1;
-    owner = "hunspell";
-    repo = "hunspell";
-    rev = "v${version}";
-    sha256 = "87a69146d75c74a54f6705828b40d4d627139501d7f58ea862c2d4431f2857ad";
+  src = fetchurl {
+    # Upstream attached the file in the release notes so urls are non-deterministic.
+    # This is the URL if they figure out how to do it correctly.
+    url = "https://github.com/hunspell/hunspell/releases/download/v${version}/"
+      + "${name}.tar.gz";
+    multihash = "QmfXgRXxbkEcWF3mfV3QHNLDA34UWNwDAxBtC9eCeRRPym";
+    sha256 = "57be4e03ae9dd62c3471f667a0d81a14513e314d4d92081292b90435944ff951";
   };
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
 
   buildInputs = [
     ncurses
@@ -32,9 +30,10 @@ stdenv.mkDerivation rec {
     "--with-readline"
   ];
 
-  meta = with stdenv.lib; {
-    homepage = http://hunspell.sourceforge.net;
+  meta = with lib; {
     description = "Spell checker";
+    homepage = http://hunspell.sourceforge.net;
+    license = licenses.free;
     maintainers = with maintainers; [
       wkennington
     ];

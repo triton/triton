@@ -1,6 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , gettext
+, lib
 
 , acl
 , gpm
@@ -16,10 +17,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
-  version = "8.1.0788";
+  version = "8.1.0944";
 in
 stdenv.mkDerivation rec {
   name = "vim-${version}";
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "4ceba27a7153bb3496427187bdc7110e70710009fa671009dbdab548aceb7ca2";
+    sha256 = "9fabac5ebc943d2a8f98f1c31a59b2365c52b90ca40669d6e24e29a18720d49b";
   };
 
   nativeBuildInputs = [
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
     CONFIGURATION
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The most popular clone of the VI editor";
     homepage = http://www.vim.org;
     license = licenses.vim;

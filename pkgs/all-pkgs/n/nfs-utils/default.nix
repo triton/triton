@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "2.3.1";
+  version = "2.3.3";
   name = "nfs-utils-${version}";
 
   baseTarballs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") baseTarballs;
     hashOutput = false;
-    sha256 = "245ec2f9abb51bcc233b64f6f3e9ac8e5cd16ffd35dba9450f83ce2803844cda";
+    sha256 = "3c8c63611c7e78b7a3b2f8a28b9928a5b5e66d5e9ad09a1e54681508884320a4";
   };
 
   buildInputs = [
@@ -78,10 +78,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sign") baseTarballs;
-      pgpDecompress = true;
-      pgpKeyFingerprint = "E1B7 1E33 9E20 A10A 676F  7CB6 9AFB 1D68 1A12 5177";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sign") baseTarballs;
+        pgpDecompress = true;
+        pgpKeyFingerprint = "E1B7 1E33 9E20 A10A 676F  7CB6 9AFB 1D68 1A12 5177";
+      };
     };
   };
 

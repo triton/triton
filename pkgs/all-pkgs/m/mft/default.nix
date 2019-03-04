@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "4.10.0-104";
+  version = "4.11.0-103";
 
   urls' = arch: [
     "http://www.mellanox.com/downloads/MFT/mft-${version}-${arch}.tgz"
@@ -15,8 +15,8 @@ let
   sources = {
     "x86_64-linux" = {
       urls = urls' "x86_64-deb";
-      md5Confirm = "39a4f6ef72c1ce94fec5ce112fd52d40";
-      sha256 = "f20ce197b448cfad0275e1f7e18fa09b418804b0172d7698f843cb5382ac8dd5";
+      md5Confirm = "5b8663ea0048add032cdb3ebc01b5ccc";
+      sha256 = "f7f0cf1b333753ccc82f369f5dc5852b5d5e2d31a467d44f227efebdb35a3f3e";
     };
   };
 
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
 
   preBuild = optionalString (kernel != null) ''
     ar vx SDEBS/*
-    tar xf data.tar.gz
+    tar xf data.tar.*
 
     cd usr/src/*
 
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = optionalString (kernel == null) ''
     ar vx DEBS/${name}*
-    tar xf data.tar.gz
+    tar xf data.tar.*
 
     rm usr/bin/mst
     mv etc/init.d/mst usr/bin

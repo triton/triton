@@ -2,7 +2,6 @@
 , autoreconfHook
 , fetchurl
 
-, check
 , pam
 }:
 
@@ -27,7 +26,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    check
     pam
   ];
 

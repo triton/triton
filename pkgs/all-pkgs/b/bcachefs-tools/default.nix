@@ -14,8 +14,8 @@
 }:
 
 let
-  date = "2019-01-23";
-  rev = "35fca2f044d375b1590f499cfd34bef38ca0f8f1";
+  date = "2019-03-02";
+  rev = "70bb5ab7a863ccff57ceb2a195d7cfa0fdf39218";
 in
 stdenv.mkDerivation {
   name = "bcachefs-tools-${date}";
@@ -23,8 +23,8 @@ stdenv.mkDerivation {
   src = fetchzip {
     version = 6;
     url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-${rev}.tar.xz";
-    multihash = "QmW94u4GrnLMKKvL6PLBFEDP8jQeDgvC42oxTJrZFy237V";
-    sha256 = "d62d6cc9d869a926e6f64b5fa09d0063cd78050ca0df1ab5b92244528f9b912a";
+    multihash = "Qma5UV4wSw6t7T8mCUTD6ECRiVbrGAV2Wcf4v6F1xgWazu";
+    sha256 = "6f9014ccd9cacb2f7e9d4922073ada867b924a59507c2449c253c1f0c6fcb7cb";
   };
 
   buildInputs = [

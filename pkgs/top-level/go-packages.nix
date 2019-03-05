@@ -6583,12 +6583,12 @@ let
 
   ipfs-ds-convert = buildFromGitHub {
     version = 6;
-    rev = "775510ea634911edb8567785c2c7bd31cd1c910f";
-    date = "2018-06-30";
+    rev = "98857fe248ee1f8fcff71ba8f35e17b2297039b9";
+    date = "2018-09-19";
     owner = "ipfs";
     repo = "ipfs-ds-convert";
-    sha256 = "962fe317131b37f9d6fee2d4c0258f41f6a1fc76d9c101d686f9e497e8ff3be0";
-    gxSha256 = "1bmiinm5n4h7ygp8m0z157smhwkbzfwf4hki8s8kmf7ilrxwz1wy";
+    sha256 = "d5209005c066a3a2d1610949ae0b422d5a94a9e53f2f937c7f0657df26a7da17";
+    gxSha256 = "8776f942e1f2982906001ec1215fe62a1fbf94c88eb9070a25f2c3847c628b01";
     nativeBuildInputs = [
       gx-go.bin
     ];

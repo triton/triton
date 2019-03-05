@@ -2,7 +2,7 @@
 , fetchurl
 , fetchFromGitHub
 , lib
-, python2Packages
+, python3Packages
 }:
 
 # TODO: build release tarballs, repo vendors pdfs
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   name = "opengl-headers-${version}";
 
   src = fetchurl {
-    url = "http://opengl-headers.tar.xz";  # dummy url
+    name = "opengl-headers-${version}.tar.xz";
     multihash = "QmZdRTzsSxGWTSzmChywUgo6drKFoho8qDh4FagumAM3eS";
     sha256 = "7cfa0ed4091b4d04c33b1be3c30361f9613b7301744f0b4b6397b923d82295d0";
   };
@@ -51,8 +51,8 @@ stdenv.mkDerivation rec {
       };
 
       nativeBuildInputs = [
-        python2Packages.lxml
-        python2Packages.python
+        python3Packages.lxml
+        python3Packages.python
       ];
 
       postPatch = ''

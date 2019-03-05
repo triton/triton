@@ -228,6 +228,13 @@ stdenv.mkDerivation rec {
         $out/include/python${channel}m \
         $out/include/python${channel}
     fi
+  '' + optionalString isPy3
+    /* Symlink unversioned */ ''
+    ln -sv python${channel} "$out"/bin/python
+    ln -sv python${channel}-config "$out"/bin/python-config
+    ln -sv idle${channel} "$out"/bin/idle
+    ln -sv pydoc${channel} "$out"/bin/pydoc
+    ln -sv python${channel}.1 "$out"/share/man/man1/python.1
   '' + optionalString isPy2 ''
     # TODO: reference reason for pdb symlink
     ln -sv $out/lib/python${channel}/pdb.py $out/bin/pdb
@@ -361,5 +368,7 @@ stdenv.mkDerivation rec {
     ];
     platforms = with platforms;
       x86_64-linux;
+    # python3 should override python2
+    priority = if isPy3 then -1 else 0;
   };
 }

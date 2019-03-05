@@ -1,43 +1,38 @@
 { stdenv
 , fetchurl
-, fetchTritonPatch
 
 , dbus
 , libcap
+, systemd_lib
+, systemd-dummy
 }:
 
+let
+  version = "0.12";
+in
 stdenv.mkDerivation rec {
-  name = "rtkit-0.11";
+  name = "rtkit-${version}";
   
   src = fetchurl {
-    url = "http://0pointer.de/public/${name}.tar.xz";
-    multihash = "QmXaoewTKsfRK6N3PPGdcMKHrDY6eFruUfHwZseD1wkmLQ";
-    sha256 = "1l5cb1gp6wgpc9vq6sx021qs6zb0nxg3cn1ba00hjhgnrw4931b8";
+    url = "https://github.com/heftig/rtkit/releases/download/v${version}/${name}.tar.xz";
+    sha256 = "d2e724b41b51ea9003ef18ccfe47e6f18e5f6d96d80c9e6b6d2026d7e2c78f10";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "8b421ec0c7ae98deb1f1cf79fe6e100ee92e047a";
-      file = "r/rtkit/SECURITY-pass-uid-of-caller-to-polkit.patch";
-      sha256 = "50dd1740add5896cad7fbcfc7d825599c9c66054e46449d6a81041988eb707e7";
-    })
-  ];
 
   buildInputs = [
     dbus
     libcap
+    systemd_lib
+    systemd-dummy
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-systemdsystemunitdir=$out/etc/systemd/system"
-    )
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+  ];
+
+  preFixup = ''
+    rm -r "$out"/libexec/installed-tests
   '';
-
-  # FIXME
-  NIX_LDFLAGS = [
-    "-lrt"
-  ];
 
   meta = with stdenv.lib; {
     homepage = http://0pointer.de/blog/projects/rtkit;

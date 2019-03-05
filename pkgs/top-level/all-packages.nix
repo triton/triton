@@ -650,6 +650,8 @@ arkive = callPackage ../all-pkgs/a/arkive { };
 
 asciidoc = callPackage ../all-pkgs/a/asciidoc { };
 
+asciidoctor = callPackage ../all-pkgs/a/asciidoctor { };
+
 asciinema = pkgs.python3Packages.asciinema;
 
 asio = callPackage ../all-pkgs/a/asio { };

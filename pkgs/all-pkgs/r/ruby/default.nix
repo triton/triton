@@ -36,6 +36,10 @@ stdenv.mkDerivation rec {
     "--enable-shared"
   ];
 
+  passthru = {
+    gemDir = "lib/ruby/gems/${major}.0";
+  };
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

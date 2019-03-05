@@ -2,7 +2,7 @@
 args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, opengl-dummy, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
-, autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, cairo, glib
+, autoconf, automake, libtool, xmlto, flex, bison, python, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
 
 , bdftopcf

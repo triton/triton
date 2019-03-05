@@ -648,8 +648,6 @@ aria = callPackageAlias "aria2" { };
 
 arkive = callPackage ../all-pkgs/a/arkive { };
 
-asciidoc = callPackage ../all-pkgs/a/asciidoc { };
-
 asciidoctor = callPackage ../all-pkgs/a/asciidoctor { };
 
 asciinema = pkgs.python3Packages.asciinema;
@@ -4084,7 +4082,6 @@ xmltoman = callPackage ../all-pkgs/x/xmltoman { };
 xorg = recurseIntoAttrs (
   lib.callPackagesWith pkgs ../all-pkgs/x/xorg/default.nix {
     inherit (pkgs)
-      asciidoc
       autoconf
       automake
       autoreconfHook

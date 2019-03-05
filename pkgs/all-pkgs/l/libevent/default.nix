@@ -24,12 +24,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     openssl
+    python3  # For event_rpcgen.py
   ];
-
-  patchPhase = ''
-    grep -q '^#!/usr/bin/env python$' event_rpcgen.py
-    sed -i 's,^#!/usr/bin/env python$,#!${python3.interpreter},g' event_rpcgen.py
-  '';
 
   configureFlags = [
     "--enable-gcc-hardening"

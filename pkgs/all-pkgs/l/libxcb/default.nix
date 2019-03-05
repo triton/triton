@@ -6,7 +6,7 @@
 , libpthread-stubs
 , libxau
 , libxdmcp
-, pythonPackages
+, python3Packages
 }:
 
 stdenv.mkDerivation rec {
@@ -19,15 +19,15 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
     util-macros
+    python3Packages.python
+    python3Packages.xcb-proto
   ];
 
   buildInputs = [
     libpthread-stubs
     libxau
     libxdmcp
-    pythonPackages.xcb-proto
   ];
 
   configureFlags = [

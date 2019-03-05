@@ -3,15 +3,12 @@
 , gettext
 , intltool
 , lib
-, perl
 
 , bzip2
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, imagemagick
 , libxml2
-, python
 , zlib
 
 , channel
@@ -25,8 +22,8 @@ let
 
   sources = {
     "1.14" = {
-      version = "1.14.43";
-      sha256 = "12944e3d6d9a6e4071e89dbf58348e1e93544f5f9266dd1a107a28d8001cee16";
+      version = "1.14.45";
+      sha256 = "5cbc2c0f1dc44d202fa0c6e3a51e9f17b0c2deb8711ba650432bfde3180b69fa";
     };
   };
   source = sources."${channel}";
@@ -43,8 +40,6 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
-  ] ++ optionals doCheck [
-    perl
   ];
 
   buildInputs = [
@@ -53,10 +48,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     libxml2
-    python
     zlib
-  ] ++ optionals (gdk-pixbuf == null) [
-    imagemagick
   ];
 
   preConfigure = ''
@@ -68,29 +60,20 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-nls"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolWt (zlib != null)}-zlib"
-    "--${boolWt (bzip2 != null)}-bz2"
-    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
   ];
-
-  preCheck = "patchShebangs ./tests/";
-
-  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libgsf/${channel}/"
-        + "${name}.sha256sum";
-      failEarly = true;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/libgsf/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

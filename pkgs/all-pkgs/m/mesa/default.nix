@@ -86,13 +86,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-    python2Packages.python
   ] ++ optionals (buildConfig != "opengl-dummy") [
     bison
     flex
     gettext
     intltool
     python2Packages.Mako
+    python2Packages.python
     xorg.makedepend
   ];
 

@@ -5,7 +5,6 @@
 , fetchurl
 , flex
 , makeWrapper
-, python
 
 , dejavu-fonts
 , efibootmgr
@@ -63,7 +62,6 @@ stdenv.mkDerivation rec {
     bison
     flex
     makeWrapper
-    python
   ];
 
   buildInputs = [

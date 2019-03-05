@@ -1,5 +1,5 @@
 { stdenv
-, asciidoc
+, asciidoctor
 , docbook_xml_dtd_45
 , docbook-xsl
 , fetchurl
@@ -18,7 +18,7 @@
 , gnused_small
 , openssl
 , pcre2_lib
-, python
+, python3
 , zlib
 }:
 
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    asciidoc
+    asciidoctor
     docbook_xml_dtd_45
     docbook-xsl
     gettext
@@ -88,8 +88,9 @@ stdenv.mkDerivation rec {
 
   makeFlags = [
     "PERL_PATH=${perlPackages.perl}/bin/perl"
-    "PYTHON_PATH=${python}/bin/python"
+    "PYTHON_PATH=${python3.interpreter}"
     "GNU_ROFF=1"
+    "USE_ASCIIDOCTOR=1"
     "INSTALL_SYMLINKS=1"
   ];
 

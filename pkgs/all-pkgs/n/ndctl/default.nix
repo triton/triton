@@ -1,5 +1,5 @@
 { stdenv
-, asciidoc
+, asciidoctor
 , autoconf
 , automake
 , docbook_xml_dtd_45
@@ -11,14 +11,17 @@
 , which
 , xmlto
 
+, bash-completion
+, keyutils
 , kmod
 , json-c
 , systemd_lib
+, systemd-dummy
 , util-linux_lib
 }:
 
 let
-  version = "61.2";
+  version = "64.1";
 in
 stdenv.mkDerivation rec {
   name = "ndctl-${version}";
@@ -28,25 +31,28 @@ stdenv.mkDerivation rec {
     owner = "pmem";
     repo = "ndctl";
     rev = "v${version}";
-    sha256 = "1b39188a6ddf5310f27ff1e89c70693508c1fc2b710b66eaaf8b546d2b22bb0a";
+    sha256 = "3ecb47251b48a529dc82fd7ea13322f30aa51962bf73ddcf9cb1bd9a1da09ba6";
   };
 
   nativeBuildInputs = [
-    asciidoc
+    asciidoctor
     autoconf
     automake
     docbook_xml_dtd_45
     docbook-xsl
     libtool
-    libxslt
+    #libxslt
     which
-    xmlto
+    #xmlto
   ];
 
   buildInputs = [
+    bash-completion
+    keyutils
     kmod
     json-c
     systemd_lib
+    systemd-dummy
     util-linux_lib
   ];
 
@@ -64,6 +70,16 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];
+
+  preInstall = ''
+    cat Makefile
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "ndctl_keysdir=$out/etc/ndctl/keys"
+      "ndctl_monitorconfdir=$out/etc/ndctl"
+      "localstatedir=$TMPDIR"
+    )
+  '';
 
   meta = with lib; {
     maintainers = with maintainers; [

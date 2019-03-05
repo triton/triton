@@ -10,7 +10,6 @@
 , libpaper
 , libusb
 , pam
-, python2
 #, openjdk
 , systemd_lib
 , xdg-utils
@@ -45,7 +44,6 @@ stdenv.mkDerivation rec {
     libpaper
     libusb
     pam
-    python2
     #openjdk
     systemd_lib
     xdg-utils
@@ -118,7 +116,6 @@ stdenv.mkDerivation rec {
     "--without-java"
     "--without-perl"
     "--without-php"
-    "--${boolWt (python2 != null)}-python"
   ];
 
   preInstall = ''

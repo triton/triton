@@ -2,14 +2,14 @@
 , fetchurl
 
 , gdbm
-, libffi
+, gmp
 , openssl
 , readline
 , zlib
 }:
 
 let
-  major = "2.5";
+  major = "2.6";
   patch = "1";
   version = "${major}.${patch}";
 in
@@ -19,12 +19,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cache.ruby-lang.org/pub/ruby/${major}/${name}.tar.xz";
-    sha256 = "886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d";
+    sha256 = "47b629808e9fd44ce1f760cdf3ed14875fc9b19d4f334e82e2cf25cb2898f2f2";
   };
 
   buildInputs = [
     gdbm
-    libffi
+    gmp
     openssl
     readline
     zlib
@@ -35,10 +35,6 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--enable-shared"
   ];
-
-  preFixup = ''
-    rm "$out/share/ri/2.5.0/system/created.rid"
-  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

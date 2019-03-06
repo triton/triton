@@ -6,9 +6,7 @@
 , makeWrapper
 , meson
 , ninja
-, util-macros
 
-, audit_lib
 , dbus
 , egl-wayland
 #, fontutil
@@ -39,10 +37,8 @@
 , libxtst
 , nettle
 , opengl-dummy
-, openssl
 #, pixman
 , systemd_lib
-, tslib
 , wayland
 , wayland-protocols
 #, xcb-util
@@ -62,21 +58,10 @@
 assert opengl-dummy.glx;
 
 let
-  inherit (stdenv)
-    targetSystem;
-
-  inherit (lib)
-    boolTf
-    elem
-    optionals
-    optionalString
-    platforms
-    versionAtLeast;
-
   sources = {
-    "1.19" = {
-      version = "1.19.6";
-      sha256 = "a732502f1db000cf36a376cd0c010ffdbf32ecdd7f1fa08ba7f5bdf9601cc197";
+    "1.20" = {
+      version = "1.20.2";
+      sha256 = "0ed5f7bc48f22f54e1ae0229ad6f35a521da4232d9d5529d7cebb5e79b3ccee2";
     };
   };
   source = sources."${channel}";
@@ -94,15 +79,11 @@ stdenv.mkDerivation rec {
     bison
     flex
     makeWrapper
-    util-macros
-  ] ++ optionals (versionAtLeast channel "1.20") [
     meson
     ninja
   ];
 
-  # xkbcomp
   buildInputs = [
-    audit_lib
     dbus
     egl-wayland
     xorg.fontutil
@@ -133,10 +114,8 @@ stdenv.mkDerivation rec {
     libxtst
     nettle
     opengl-dummy
-    openssl
     xorg.pixman
     systemd_lib
-    tslib
     wayland
     wayland-protocols
     xorg.xcbutil
@@ -153,98 +132,6 @@ stdenv.mkDerivation rec {
     ../xorg/xorgserver-xkbcomp-path.patch  # FIXME: use fetchTritonPatch
   ];
 
-  configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
-    "--disable-docs"
-    "--disable-devel-docs"
-    "--disable-unit-tests"
-    "--enable-largefile"
-    "--disable-debug"
-    "--disable-listen-tcp"  # ???
-    "--enable-listen-unix"
-    "--enable-listen-local"
-    "--disable-sparkle"  # macOS
-    "--disable-visibility"
-    "--enable-composite"
-    "--enable-mitshm"
-    "--enable-xres"
-    "--enable-record"
-    "--enable-xv"
-    "--enable-xvmc"
-    "--enable-dga"
-    "--enable-screensaver"
-    "--enable-xdmcp"
-    "--enable-xdm-auth-1"
-    "--enable-glx"
-    "--enable-dri"
-    "--enable-dri2"
-    "--enable-dri3"
-    "--enable-present"
-    "--enable-xinerama"
-    "--enable-xf86vidmode"
-    "--enable-xace"
-    "--enable-xselinux"
-    "--enable-xcsecurity"
-    "--enable-tslib"
-    "--enable-dbe"
-    "--enable-xf86bigfont"
-    "--enable-dpms"
-    "--enable-config-udev"
-    "--enable-config-udev-kms"
-    "--disable-config-hal"
-    #"--enable-config-wscons"
-    "--enable-xfree86-utils"
-    "--enable-vgahw"
-    "--enable-vbe"
-    "--enable-int10-module"
-    "--enable-windowswm"
-    #"--enable-windowsdri"
-    "--enable-libdrm"
-    "--enable-clientids"
-    "--enable-pciaccess"
-    "--enable-linux-acpi"
-    "--enable-linux-apm"
-    "--enable-systemd-logind"
-    "--enable-suid-wrapper"
-    "--enable-xorg"
-    "--enable-dmx"
-    "--enable-xvfb"
-    "--enable-xnest"
-    "--disable-xquartz"  # macOS
-    "--enable-xwayland"
-    "--disable-standalone-xpbproxy"  # macOS
-    "--disable-xwin"  # Windows
-    "--enable-glamor"
-    "--enable-kdrive"
-    "--enable-xephyr"
-    "--enable-xfake"
-    "--enable-xfbdev"
-    "--enable-kdrive-kbd"
-    "--enable-kdrive-mouse"
-    "--enable-kdrive-evdev"
-    "--enable-libunwind"
-    "--enable-xshmfence"
-    "--disable-install-setuid"  # Can't setuid in a nix-builder
-    "--enable-unix-transport"
-    "--disable-tcp-transport"  # ???
-    "--enable-ipv6"
-    "--enable-local-transport"
-    "--enable-secure-rpc"
-    "--enable-input-thread"
-    "--enable-xtrans-send-fds"
-
-    "--without-doxygen"
-    "--without-xmlto"
-    "--without-fop"
-    "--without-xsltproc"
-    "--without-dtrace"
-    # There are only paths containing "${prefix}" and no fonts.
-    "--with-default-font-path="
-    "--with-systemd-daemon"
-    "--with-sha1=libcrypto"
-  ];
-
   mesonFlags = [
     "-Dxorg=true"
     "-Dxephyr=true"
@@ -252,65 +139,39 @@ stdenv.mkDerivation rec {
     "-Dglamor=true"
     "-Dxwayland_eglstream=true"
     "-Dxnest=true"
-    "-Ddmx=true"
     "-Dxvfb=true"
     "-Dxwin=false"  # Windows
-    "-Dglx=true"
-    "-Dxdmcp=true"
-    "-Dxdm-auth-1=true"
-    "-Dsecure-rpc=true"
     "-Dipv6=true"
-    "-Dint10=auto"
-    "-Dpciaccess=true"
-    "-Dudev=true"
+    "-Dinput_thread=true"
     "-Dhal=false"
     "-Dsystemd_logind=true"
     "-Dvbe=true"
     "-Dvgahw=true"
-    "-Ddpms=true"
-    "-Dxf86bigfont=true"
-    "-Dscreensaver=true"
-    "-Dxres=true"
-    "-Dxace=true"
-    "-Dxinerama=true"
+    "-Dxselinux=true"
     "-Dxcsecurity=true"
-    "-Dxv=true"
-    "-Dxvmc=true"
     "-Ddga=true"
-    "-Dlinux_apm=${boolTf (elem targetSystem platforms.linux)}"
-    "-Dlinux_acpi=${boolTf (elem targetSystem platforms.linux)}"
     "-Dmitshm=true"
+    "-Dagp=true"
     "-Ddri1=true"
     "-Ddri2=true"
     "-Ddri3=true"
   ];
 
-  postPatch = optionalString (versionAtLeast channel "1.20") ''
-    # Fix file missing in release
-    cat > include/xwayland-config.h.meson.in <<'EOF'
-    /* xwayland-config.h.meson.in: not at all generated */
-
-    #pragma once
-
-    #include <dix-config.h>
-
-    /* Build glamor support for Xwayland */
-    #mesondefine XWL_HAS_GLAMOR
-
-    /* Build eglstream support for Xwayland */
-    #mesondefine XWL_HAS_EGLSTREAM
-
-    EOF
-
+  postPatch = ''
     # Xwin is an unconditional dependency.
     sed -i include/meson.build \
       -e '/xwin-config.h/,+2 d'
 
-    # Remove tests that are broken in the release tarball.
-    sed -i test/meson.build \
-      -e '/bigreq/d' \
-      -e '/sync/d'
+    # Don't build tests
+    grep -q "subdir('test')" meson.build
+    sed -i "/subdir('test')/d" meson.build
+
+    # Fix missing file
+    ! test -e include/xwayland-config.h.meson.in
+    grep -q 'xwayland-config.h.meson.in' include/meson.build
+    cat ${./xwayland-config.h.meson.in} >include/xwayland-config.h.meson.in
   '';
+
 
   postInstall = ''
     rm -fr $out/share/X11/xkb/compiled
@@ -349,8 +210,10 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;
   };
 }
+

@@ -23,17 +23,17 @@ let
 in
 {
   "stable" = rec {
-    version = "0.7.12";
-    maxLinuxVersion = "4.19";
+    version = "0.7.13";
+    maxLinuxVersion = "5.0";
     src = fetcher {
       inherit version;
-      sha256 = "720e3b221c1ba5d4c18c990e48b86a2eb613575a0c3cc84c0aa784b17b7c2848";
+      sha256 = "d23f0d292049b1bc636d2300277292b60248c0bde6a0f4ba707c0cb5df3f8c8d";
     };
     patches = [
       (fetchTritonPatch {
-        rev = "a061e816f5a9fa5565f53a4213edb75b42ee5607";
-        file = "z/zfs/0002-Fix-binary-paths.patch";
-        sha256 = "a114332256ed06c51c2e9c019f0b810947f65393d5b82bcf1e72b13c351c7fe6";
+        rev = "fd575a18a97ed612beeb15076ef26d3e69faed01";
+        file = "z/zfs/0.7/0001-Fix-binary-paths.patch";
+        sha256 = "fa0ce1249b3c234254172ae2947d4243c2b3bed128465a38617b382da6fb8640";
       })
     ];
   };

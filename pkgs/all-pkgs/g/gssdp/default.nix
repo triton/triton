@@ -1,5 +1,8 @@
 { stdenv
 , fetchurl
+, lib
+, meson
+, ninja
 
 , glib
 , gobject-introspection
@@ -8,20 +11,24 @@
 , vala
 }:
 
+# FIXME: add makeWrapper for graphical utility.
+
 let
-  major = "1.0";
-  version = "${major}.2";
+  channel = "1.0";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "gssdp-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gssdp/${major}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gssdp/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "a1e17c09c7e1a185b0bd84fd6ff3794045a3cd729b707c23e422ff66471535dc";
+    sha256 = "211387a62bc1d99821dd0333d873a781320287f5436f91e58b2ca145b378be41";
   };
 
   nativeBuildInputs = [
+    meson
+    ninja
     vala
   ];
 
@@ -32,9 +39,11 @@ stdenv.mkDerivation rec {
     libsoup
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
+  mesonFlags = [
+    "-Dexamples=false"
   ];
+
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {
@@ -42,13 +51,15 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gssdp/${major}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GObject-based API for resource discovery over SSDP";
     homepage = https://wiki.gnome.org/Projects/GUPnP;
     license = licenses.lgpl2;

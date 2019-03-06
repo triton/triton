@@ -1053,13 +1053,13 @@ let
   # }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
-    name = "xf86-video-ati-7.9.0";
+    name = "xf86-video-ati-19.0.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-ati-7.9.0.tar.bz2;
-      sha256 = "3cad872e6330afb1707da11e4e959e6887ebe5bcd81854b4d2e496c52c059875";
+      url = mirror://xorg/individual/driver/xf86-video-ati-19.0.0.tar.bz2;
+      sha256 = "dd907d318884bb6e81e7e62da7bb34af26aeeed3a81c21e0b46a4f3cae3ff457";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ];
+    buildInputs = [ opengl-dummy xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ];
 
   }) // {inherit xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ;};
 

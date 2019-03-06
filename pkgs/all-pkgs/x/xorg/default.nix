@@ -1020,13 +1020,13 @@ let
   }) // {inherit libinput xorgserver ;};
 
   xf86inputmouse = (mkDerivation "xf86inputmouse" {
-    name = "xf86-input-mouse-1.9.2";
+    name = "xf86-input-mouse-1.9.3";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-mouse-1.9.2.tar.bz2;
-      sha256 = "f425d5b05c6ab412a27e0a1106bb83f9e2662b307210abbe48270892387f4b2f";
+      url = mirror://xorg/individual/driver/xf86-input-mouse-1.9.3.tar.bz2;
+      sha256 = "93ecb350604d05be98b7d4e5db3b8155a44890069a7d8d6b800c0bea79c85cc5";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgserver ];
+    buildInputs = [ libpciaccess xorgproto xorgserver ];
 
   }) // {inherit xorgserver ;};
 

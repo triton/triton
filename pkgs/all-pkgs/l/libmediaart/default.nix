@@ -12,15 +12,14 @@
 }:
 
 let
-  versionMajor = "1.9";
-  versionMinor = "4";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "1.9";
+  version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "libmediaart-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libmediaart/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libmediaart/${channel}/${name}.tar.xz";
     hashOutput = false;
     sha256 = "a57be017257e4815389afe4f58fdacb6a50e74fd185452b23a652ee56b04813d";
   };
@@ -28,7 +27,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     meson
     ninja
-    #vala
+    vala
   ];
 
   buildInputs = [
@@ -38,16 +37,12 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  postPatch = ''
-    # Remove broken meson vala binding generator
-    sed -i libmediaart/meson.build \
-      -e '/libmediaart_vapi/,+3d'
-  '';
-
   mesonFlags = [
     "-Dimage_library=gdk-pixbuf"
     "-Dwith-docs=no"
   ];
+
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {
@@ -55,8 +50,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libmediaart/${versionMajor}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

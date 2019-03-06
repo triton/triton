@@ -1,29 +1,27 @@
 { stdenv
-, asciidoc
-, cmake
-, docbook-xsl
 , fetchFromGitHub
-, libxslt
+, meson
 , ninja
+, scdoc
 
 , cairo
-, dbus
 , gdk-pixbuf
 , json-c
-, libcap
+, libevdev
 , libinput
+, libxcb
 , libxkbcommon
-, opengl-dummy
-, pam
 , pango
 , pcre
 , systemd_lib
 , wayland
-, wlc
+, wayland-protocols
+, wlroots
+, xorg
 }:
 
 let
-  version = "0.15.2";
+  version = "1.0-rc5";
 in
 stdenv.mkDerivation rec {
   name = "sway-${version}";
@@ -33,33 +31,37 @@ stdenv.mkDerivation rec {
     owner = "swaywm";
     repo = "sway";
     rev = version;
-    sha256 = "0e800e99f425f51eefff08997c29cc95b7c6907b5e3c9fcdeea472cfbfa27fae";
+    sha256 = "e0b79f3022a37e83a2b323f64a804ffb206e942ed9433f5a08c92ef4a1f2cc4c";
   };
 
   nativeBuildInputs = [
-    asciidoc
-    cmake
-    docbook-xsl
-    libxslt
+    meson
     ninja
+    scdoc
   ];
 
   buildInputs = [
     cairo
-    dbus
     gdk-pixbuf
     json-c
-    libcap
+    libevdev
     libinput
+    libxcb
     libxkbcommon
-    opengl-dummy
-    pam
     pango
     pcre
     systemd_lib
     wayland
-    wlc
+    wayland-protocols
+    wlroots
+    xorg.pixman
   ];
+
+  # We need to set the SRC_DIR otherwise we have impurities
+  NIX_CFLAGS_COMPILE = "-USWAY_SRC_DIR -DSWAY_SRC_DIR=\"/no-such-path\"";
+  postPatch = ''
+    grep -q 'SWAY_SRC_DIR' meson.build
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

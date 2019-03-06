@@ -1119,10 +1119,10 @@ let
   # }) // {inherit fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ;};
 
   xhost = (mkDerivation "xhost" {
-    name = "xhost-1.0.7";
+    name = "xhost-1.0.8";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xhost-1.0.7.tar.bz2;
-      sha256 = "16n26xw6l01zq31d4qvsaz50misvizhn7iihzdn5f7s72pp1krlk";
+      url = mirror://xorg/individual/app/xhost-1.0.8.tar.bz2;
+      sha256 = "a2dc3c579e13674947395ef8ccc1b3763f89012a216c2cc6277096489aadc396";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libX11 libXau libxmu xorgproto ];

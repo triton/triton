@@ -35,15 +35,15 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
-      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
       fullOpts = {
-        sha256Url = "https://download.gnome.org/sources/json-glib/${channel}/"
-          + "${name}.sha256sum";
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
       };
+      failEarly = true;
     };
   };
 

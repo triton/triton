@@ -1,11 +1,9 @@
 { stdenv
 , fetchurl
-, file
 , gettext
-, intltool
 , lib
-#, meson
-#, ninja
+, meson
+, ninja
 
 , glib
 , gobject-introspection
@@ -17,11 +15,8 @@
 }:
 
 let
-  inherit (lib)
-    boolEn;
-
   channel = "0.3";
-  version = "${channel}.4";
+  version = "${channel}.7";
 in
 stdenv.mkDerivation rec {
   name = "grilo-${version}";
@@ -29,15 +24,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/grilo/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "7c6964053b42574c2f14715d2392a02ea5cbace955eb73e067c77aa3e43b066e";
+    sha256 = "ea3baf71692df177649a968635ed2bc39855c34c327274245c240f726831e9b7";
   };
 
   nativeBuildInputs = [
-    file
     gettext
-    intltool
-    #meson
-    #ninja
+    meson
+    ninja
     vala
   ];
 
@@ -52,32 +45,12 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  configureFlags = [
-    "--enable-compile-warnings"
-    "--disable-iso-c"
-    "--disable-maintainer-mode"
-    "--disable-test-ui"
-    "--enable-grl-net"
-    "--${boolEn (totem-pl-parser != null)}-grl-pls"
-    "--disable-debug"
-    # Flag is not a boolean
-    #"--disable-tests"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala"
-    "--enable-nls"
+  mesonFlags = [
+    "-Denable-test-ui=false"
+    "-Denable-vala=${lib.boolTf (vala != null)}"
   ];
 
-  # mesonFlags = [
-  #   "-Denable-grl-net=true"
-  #   "-Denable-grl-pls=${boolTf (totem-pl-parser != null)}"
-  #   "-Denable-gtk-doc=false"
-  #   "-Denable-introspection=${boolTf (gobject-introspection != null)}"
-  #   "-Denable-test-ui=false"
-  #   "-Denable-vala=${boolTf (vala != null)}"
-  # ];
+  setVapidirInstallFlag = false;
 
   passthru = {
     srcVerification = fetchurl {
@@ -85,8 +58,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/grilo/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

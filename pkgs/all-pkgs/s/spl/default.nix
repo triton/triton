@@ -46,14 +46,14 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "97be348abfd5d881ce8206e2cb5005b52b6fe9a5";
+      rev = "933b930a0663740427562d95e4edcf1f3ca328c1";
       file = "s/spl/0001-Fix-install-paths.patch";
-      sha256 = "f962c22a1d18d45688dda97d7177ed50adccf47037c9df61bae65becaae02592";
+      sha256 = "ac46656b3f4fcbd7fe93f71567dc53bca431ac2e84aff85a56a377b232e39580";
     })
     (fetchTritonPatch {
-      rev = "97be348abfd5d881ce8206e2cb5005b52b6fe9a5";
+      rev = "933b930a0663740427562d95e4edcf1f3ca328c1";
       file = "s/spl/0002-Fix-paths.patch";
-      sha256 = "77ee1b103a6144b31d5a8af9ec30e923ff8cef1e98584a3375a1e55d0ba93d41";
+      sha256 = "7bf4b140e944664648832bb48d69a56200abfe03bad3d65fc3d1a371d32dad0d";
     })
   ];
 

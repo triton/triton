@@ -1,7 +1,7 @@
 {
   "stable" = {
-    version = "0.7.12";
-    maxLinuxVersion = "4.19";
-    sha256 = "4709a06e913bbbeb634161a8b68c3f879e5b6040c6c0c09b1f51042b3178c274";
+    version = "0.7.13";
+    maxLinuxVersion = "5.0";
+    sha256 = "6fd4445850ac67b228fdd82fff7997013426a1c2a8fa9017ced70cc9ad2a4338";
   };
 }

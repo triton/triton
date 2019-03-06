@@ -9,11 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libXScrnSaver-1.2.2";
+  name = "libXScrnSaver-1.2.3";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
-    sha256 = "8ff1efa7341c7f34bcf9b17c89648d6325ddaae22e3904e091794e0b4426ce1d";
+    hashOutput = false;
+    sha256 = "f917075a1b7b5a38d67a8b0238eaab14acd2557679835b154cf2bca576e89bf8";
   };
 
   nativeBuildInputs = [
@@ -33,6 +34,23 @@ stdenv.mkDerivation rec {
     "--disable-lint-library"
     "--without-lint"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        pgpsigUrls = map (u: "${u}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Adam Jackson
+          "995E D5C8 A613 8EB0 961F  1847 4C09 DD83 CAAA 50B2"
+        ];
+      };
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "MIT-SCREEN-SAVER extension";

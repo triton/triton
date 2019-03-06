@@ -7,7 +7,6 @@
 
 , glib
 , gobject-introspection
-, liboauth
 , libsoup
 , libxml2
 , totem-pl-parser
@@ -37,7 +36,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    liboauth
     libsoup
     libxml2
     totem-pl-parser

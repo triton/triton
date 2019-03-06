@@ -38,12 +38,12 @@ in
     ];
   };
   "dev" = {
-    date = "2019-02-19";
+    date = "2019-03-02";
     maxLinuxVersion = "5.0";
     src = fetcher {
       fetchzipVersion = 6;
-      rev = "790c880e8c175424144f8d21c2355f8be1654be4";
-      sha256 = "ac5ed3a7b1df42d74ea465efcd3f6b67a2ee53b5838a729869b04745f32682f6";
+      rev = "762f9ef3d9d897b5baf7c91d6e8a7bf371a9b02f";
+      sha256 = "0c5840e43e5775738971a38016a1efdbc0f4790b2522489cc1d8c7a88cdf7a6c";
     };
     patches = [
       (fetchTritonPatch {

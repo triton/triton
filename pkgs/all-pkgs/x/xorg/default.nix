@@ -1009,13 +1009,13 @@ let
   }) // {inherit xorgserver ;};
 
   xf86inputlibinput = (mkDerivation "xf86inputlibinput" {
-    name = "xf86-input-libinput-0.26.0";
+    name = "xf86-input-libinput-0.28.2";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-libinput-0.26.0.tar.bz2;
-      sha256 = "abca558fc2226f295691f1cf3412d4c0edeaa439f677ca25b5c9fab310d2387b";
+      url = mirror://xorg/individual/driver/xf86-input-libinput-0.28.2.tar.bz2;
+      sha256 = "b8b346962c6b62b8069928c29c0db83b6f544863bf2fc6830f324de841de2820";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libinput xorgserver ];
+    buildInputs = [ libinput libpciaccess systemd_lib xorgproto xorgserver ];
 
   }) // {inherit libinput xorgserver ;};
 

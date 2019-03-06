@@ -158,10 +158,6 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    # Xwin is an unconditional dependency.
-    sed -i include/meson.build \
-      -e '/xwin-config.h/,+2 d'
-
     # Don't build tests
     grep -q "subdir('test')" meson.build
     sed -i "/subdir('test')/d" meson.build
@@ -169,9 +165,8 @@ stdenv.mkDerivation rec {
     # Fix missing file
     ! test -e include/xwayland-config.h.meson.in
     grep -q 'xwayland-config.h.meson.in' include/meson.build
-    cat ${./xwayland-config.h.meson.in} >include/xwayland-config.h.meson.in
+    cat ${./xwayland-config.h.meson.in} > include/xwayland-config.h.meson.in
   '';
-
 
   postInstall = ''
     rm -fr $out/share/X11/xkb/compiled

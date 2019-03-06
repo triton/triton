@@ -1218,10 +1218,10 @@ let
   }) // {inherit libX11 xorgproto libXrandr libXrender ;};
 
   xset = (mkDerivation "xset" {
-    name = "xset-1.2.3";
+    name = "xset-1.2.4";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xset-1.2.3.tar.bz2;
-      sha256 = "0qw0iic27bz3yz2wynf1gxs70hhkcf9c4jrv7zhlg1mq57xz90j3";
+      url = mirror://xorg/individual/app/xset-1.2.4.tar.bz2;
+      sha256 = "e4fd95280df52a88e9b0abc1fee11dcf0f34fc24041b9f45a247e52df941c957";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libX11 libXext libXfontcache libxmu xorgproto libXxf86misc ];

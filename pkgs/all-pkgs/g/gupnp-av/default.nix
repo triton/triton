@@ -1,50 +1,42 @@
 { stdenv
 , fetchurl
 , lib
+#, meson
+#, ninja
+, vala
 
 , glib
 , gobject-introspection
-, gssdp
-, gupnp
-, libsoup
 , libxml2
-, vala
-
-, channel
 }:
 
 let
-  inherit (lib)
-    boolEn;
-
-  source = (import ./sources.nix { })."${channel}";
+  channel = "0.12";
+  version = "${channel}.11";
 in
 stdenv.mkDerivation rec {
-  name = "gupnp-av-${source.version}";
+  name = "gupnp-av-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp-av/${channel}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "689dcf1492ab8991daea291365a32548a77d1a2294d85b33622b55cca9ce6fdc";
   };
+
+  nativeBuildInputs = [
+    #meson
+    #ninja
+    vala
+  ];
 
   buildInputs = [
     glib
     gobject-introspection
-    gssdp
-    gupnp
-    libsoup
     libxml2
-    vala
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-debug"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
+    "--enable-introspection"
   ];
 
   passthru = {
@@ -53,8 +45,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gupnp-av/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

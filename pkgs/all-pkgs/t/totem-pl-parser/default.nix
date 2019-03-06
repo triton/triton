@@ -1,18 +1,14 @@
 { stdenv
 , fetchurl
 , gettext
-, intltool
 , lib
 , meson
 , ninja
 
-, file
 , glib
-, gmime
 , gobject-introspection
 , libarchive
 , libgcrypt
-, libsoup
 , libxml2
 
 , channel
@@ -21,8 +17,8 @@
 let
   sources = {
     "3.26" = {
-      version = "3.26.0";
-      sha256 = "f153a53391e9b42fed5cb6ce62322a58e323fde6ec4a54d8ba4d376cf4c1fbcb";
+      version = "3.26.3";
+      sha256 = "0efd01b8a0a9770d52fe7354d298874ed845449b88f3f78f49290729fc2d448d";
     };
   };
 
@@ -44,22 +40,17 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    file
     glib
-    gmime
     gobject-introspection
     libarchive
     libgcrypt
-    libsoup
     libxml2
   ];
 
   mesonFlags = [
-    "-Ddisable-gmime-i-know-what-im-doing=false"
-    "-Denable-quvi=no"
+    "-Denable-quvi=no"  # FIXME
     "-Denable-libarchive=yes"
     "-Denable-libgcrypt=yes"
-    "-Denable-gtk-doc=false"
   ];
 
   passthru = {
@@ -68,8 +59,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/totem-pl-parser/"
-        + "${channel}/${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

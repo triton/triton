@@ -151,7 +151,7 @@ stdenv.mkDerivation rec {
     "-Dxcsecurity=true"
     "-Ddga=true"
     "-Dmitshm=true"
-    "-Dagp=true"
+    "-Dagp=false"
     "-Ddri1=true"
     "-Ddri2=true"
     "-Ddri3=true"

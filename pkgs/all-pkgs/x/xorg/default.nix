@@ -1152,10 +1152,10 @@ let
   # }) // {inherit libXaw xproto libXt ;};
 
   xmessage = (mkDerivation "xmessage" {
-    name = "xmessage-1.0.4";
+    name = "xmessage-1.0.5";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xmessage-1.0.4.tar.bz2;
-      sha256 = "0s5bjlpxnmh8sxx6nfg9m0nr32r1sr3irr71wsnv76s33i34ppxw";
+      url = mirror://xorg/individual/app/xmessage-1.0.5.tar.bz2;
+      sha256 = "373dfb81e7a6f06d3d22485a12fcde6e255d58c6dee1bbaeb00c7d0caa9b2029";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libXaw libXt ];

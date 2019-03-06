@@ -4111,6 +4111,7 @@ xorg = recurseIntoAttrs (
       perl
       pkgconfig
       python
+      python3Packages
       spice-protocol
       stdenv
       systemd_lib

@@ -4,6 +4,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , dbus, util-linux_lib, openssl, gperf, gnum4, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, flex, bison, python, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
+, python3Packages
 
 , bdftopcf
 , fontcacheproto
@@ -876,16 +877,6 @@ let
 
   }) // {inherit libxcb xcbutil ;};
 
-  xcbproto = (mkDerivation "xcbutil" {
-    name = "xcb-proto-1.13";
-    src = fetchurl {
-      url = mirror://xorg/individual/xcb/xcb-proto-1.13.tar.bz2;
-      sha256 = "7b98721e669be80284e9bbfeab02d2d0d54cd11172b72271e47a2fe875e2bde1";
-    };
-    nativeBuildInputs = [ python3 ];
-    buildInputs = [ ];
-  }) // {inherit libxcb ;};
-
   xcbutil = (mkDerivation "xcbutil" {
     name = "xcb-util-0.4.0";
     src = fetchurl {
@@ -904,7 +895,7 @@ let
       sha256 = "682681769e818ba085870d1ccd65f1f282ca16ca7d6f0f73ee70bc3642aa1995";
     };
     nativeBuildInputs = [ gnum4 utilmacros ];
-    buildInputs = [ libxcb xcbproto ];
+    buildInputs = [ libxcb python3Packages.xcb-proto ];
   }) // {inherit libxcb ;};
 
   xcbutilimage = (mkDerivation "xcbutilimage" {

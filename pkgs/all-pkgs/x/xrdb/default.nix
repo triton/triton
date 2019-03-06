@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xrdb-1.1.1";
+  name = "xrdb-1.2.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/app/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "2d23ade7cdbb487996bf77cbb32cbe9bdb34d004748a53de7a4a97660d2217b7";
+    sha256 = "f23a65cfa1f7126040d68b6cf1e4567523edac10f8dc06f23d840d330c7c6946";
   };
 
   nativeBuildInputs = [
@@ -33,11 +33,13 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Alan Coopersmith
-        "4A19 3C06 D35E 7C67 0FA4  EF0B A2FB 9E08 1F2D 130E"
-      ];
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Alan Coopersmith
+          "4A19 3C06 D35E 7C67 0FA4  EF0B A2FB 9E08 1F2D 130E"
+        ];
+      };
       failEarly = true;
     };
   };

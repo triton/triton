@@ -40,13 +40,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.12.1";
+  name = "libinput-1.12.5";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    multihash = "QmcAXggwyQLAVr3MLXkU8nF7uwasZ8qddMQjMvHX2Vhzqo";
+    multihash = "QmZAPMNrBE21NfujdoUHQzbRfYRq1Aotg8ddwAK1Eq8nEp";
     hashOutput = false;
-    sha256 = "570c48cc7b744b9b4da711ed0c5e8c3de132484684b0c4f0309a9a83df5e8692";
+    sha256 = "7d4b6831010ef3bf69df4b41170047fa4325edef8ff5d2d28e78281af0687123";
   };
 
   nativeBuildInputs = [
@@ -72,16 +72,11 @@ stdenv.mkDerivation rec {
   ];
 
   mesonFlags = [
-    #"-Dudev-dir"
     "-Dlibwacom=${boolTf (libwacom != null)}"
     "-Ddebug-gui=${boolTf debugGUISupport}"
     "-Dtests=${boolTf testsSupport}"
     "-Ddocumentation=${boolTf documentationSupport}"
   ];
-
-  preFixup = ''
-    sed -i '/Libs.private/s, -llibinput-util,,g' "$out"/lib/pkgconfig/*
-  '';
 
   passthru = {
     srcVerification = fetchurl {

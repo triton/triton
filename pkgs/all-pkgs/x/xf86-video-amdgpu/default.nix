@@ -5,6 +5,7 @@
 
 #, glamoregl
 , libdrm
+, libpciaccess
 , opengl-dummy
 , systemd_lib
 , xorg-server
@@ -13,12 +14,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xf86-video-amdgpu-18.0.0";
+  name = "xf86-video-amdgpu-19.0.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/driver/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "e909b9707d2562dfc36d8075a8cbddbc93901aaa8f2522d9a429c3fc5ad66d94";
+    sha256 = "8836147d4755908ec9e192b7cc485fbc2ce7706de33f7bea515294d3ba4c4f51";
   };
 
   nativeBuildInputs = [
@@ -28,6 +29,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     xorg.glamoregl
     libdrm
+    libpciaccess
     opengl-dummy
     systemd_lib
     xorg-server
@@ -45,11 +47,13 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Michel Daenzer
-        "B09F AF35 BE91 4521 9809  5114 5A81 AF8E 6ADB B200"
-      ];
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Michel Daenzer
+          "B09F AF35 BE91 4521 9809  5114 5A81 AF8E 6ADB B200"
+        ];
+      };
       failEarly = true;
     };
   };

@@ -10,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxcb-1.13";
+  name = "libxcb-1.13.1";
 
   src = fetchurl {
     url = "mirror://xorg/individual/xcb/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "188c8752193c50ff2dbe89db4554c63df2e26a2e47b0fa415a70918b5b851daa";
+    sha256 = "a89fb7af7a11f43d2ce84a844a4b38df688c092bf4b67683aef179cdf2a647c4";
   };
 
   nativeBuildInputs = [
@@ -34,35 +34,12 @@ stdenv.mkDerivation rec {
     "--enable-selective-werror"
     "--disable-strict-compilation"
     "--disable-devel-docs"
-    "--enable-composite"
-    "--enable-damage"
-    "--enable-dpms"
-    "--enable-dri2"
     "--enable-dri3"
-    "--enable-glx"
-    "--enable-present"
-    "--enable-randr"
-    "--enable-record"
-    "--enable-render"
-    "--enable-resource"
-    "--enable-screensaver"
-    "--enable-shape"
-    "--enable-shm"
-    "--enable-sync"
     "--enable-xevie"
-    "--enable-xfixes"
-    "--enable-xfree86-dri"
-    "--enable-xinerama"
-    "--enable-xinput"
-    "--enable-xkb"
     "--enable-xprint"
     "--enable-selinux"
-    "--enable-xtest"
-    "--enable-xv"
-    "--enable-xvmc"
     "--without-doxygen"
     "--without-launchd"
-    "--without-serverside-support"
   ];
 
   passthru = {
@@ -71,11 +48,13 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprints = [
-        # Daniel Stone
-        "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
-      ];
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprints = [
+          # Daniel Stone
+          "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
+        ];
+      };
       failEarly = true;
     };
   };

@@ -1,16 +1,18 @@
 { stdenv
 , bison
 , cmake
-, fetchTritonPatch
 , fetchurl
 , gettext
 , gperf
+, lib
+, ninja
 , perl
-, python
+, python2
 , ruby
 
 , at-spi2-core
 , atk
+, bubblewrap
 , cairo
 , enchant
 , fontconfig
@@ -19,65 +21,67 @@
 , geoclue
 , glib
 , gobject-introspection
-, gnutls
+, gst-plugins-bad
 , gst-plugins-base
 , gstreamer
 , gtk3
-, harfbuzz
+, harfbuzz_lib
 , icu
+, libgcrypt
 , libjpeg
 , libnotify
 , libpng
+, libseccomp
 , libsecret
 , libsoup
+, libtasn1
 , libwebp
+, libx11
+, libxcomposite
+, libxdamage
+, libxfixes
 , libxml2
+, libxrender
+, libxt
 , libxslt
-, mesa_noglu
+, opengl-dummy
+, openjpeg
 , pango
 , sqlite
 , wayland
-, xorg
+, xorgproto
 , zlib
-
-# gtkunixprint
-# gudev
-# openwebrtc
-# libseccomp
-# libhyphen
 }:
 
-with {
-  inherit (stdenv.lib)
-    boolOn
-    optionals;
-};
-
-assert xorg != null ->
-  xorg.libX11 != null;
-
+let
+  inherit (lib)
+    boolOn;
+in
 stdenv.mkDerivation rec {
-  name = "webkitgtk-2.14.2";
+  name = "webkitgtk-2.22.7";
 
-  src = fetchurl rec {
+  src = fetchurl {
     url = "https://webkitgtk.org/releases/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "2edbcbd5105046aea55af9671c4de8deedb5b0e3567c618034d440a760675556";
+    sha256 = "4be6f7d605cd0a690fd26e8aa83b089a33ad9d419148eafcfb60580dd2af30ff";
   };
 
+  # Source/cmake/WebKitCommon.cmake
   nativeBuildInputs = [
     bison
     cmake
     gettext
     gperf
+    ninja
     perl
-    python
+    python2
     ruby
   ];
 
   buildInputs = [
     at-spi2-core
     atk
+    bubblewrap
     cairo
     enchant
     fontconfig
@@ -86,102 +90,70 @@ stdenv.mkDerivation rec {
     geoclue
     glib
     gobject-introspection
-    gnutls
+    gst-plugins-bad
     gst-plugins-base
     gstreamer
     gtk3
-    harfbuzz
+    harfbuzz_lib
     icu
+    libgcrypt
     libjpeg
     libnotify
     libpng
+    libseccomp
     libsecret
     libsoup
+    libtasn1
     libwebp
+    libx11
+    libxcomposite
+    libxdamage
+    libxfixes  # FIXME: libxcomposite dep not discovered via pkgconfig
     libxml2
+    libxrender
+    libxt
     libxslt
-    mesa_noglu
+    opengl-dummy
+    openjpeg
     pango
     sqlite
     wayland
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
-    xorg.libXau
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXt
+    #xdg-dbus-proxy  # FIXME
+    xorgproto
     zlib
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "7a86b94c61553bfa090488c0b73c477bdc062b7c";
-      file = "webkitgtk/webkit-gtk-2.10.x-finding-harfbuzz-icu.patch";
-      sha256 = "8eb3f4844b06c3c060233396045248a883177e9a09c491ddfaf9897d8e8ca2c4";
-    })
-  ];
-
   postPatch = ''
-    patchShebangs ./Tools
+    patchShebangs Tools/
+    patchShebangs Source/WebInspectorUI/Scripts/copy-user-interface-resources.pl
   '';
 
   cmakeFlags = [
     "-DPORT=GTK"
-    "-DENABLE_PLUGIN_PROCESS_GTK2=OFF"
-
-    "-DENABLE_WEBKIT=OFF"
-    "-DENABLE_WEBKIT2=ON"
-    "-DENABLE_TOOLS=ON"
-    # Shared library causes linker failures
-    "-DSHARED_CORE=OFF"
-    "-DENABLE_API_TESTS=OFF"
-
-    "-DENABLE_GRAPHICS_CONTEXT_3D=ON"
-    "-DENABLE_GTKDOC=OFF"
-    "-DENABLE_INTROSPECTION=${boolOn (gobject-introspection != null)}"
-    "-DUSE_REDIRECTED_XCOMPOSITE_WINDOW=ON"
-
+    "-DDEVELOPER_MODE=OFF"
     "-DENABLE_DEVELOPER_MODE=OFF"
-
-    # Optional libraries
-    "-DENABLE_CREDENTIAL_STORAGE=${boolOn (libsecret != null)}"
-    "-DENABLE_JIT=ON"
-    "-DENABLE_FTL_JIT=OFF" # llvm
-    # TODO: add gudev support
-    "-DENABLE_GAMEPAD_DEPRECATED=OFF"
-    "-DENABLE_GEOLOCATION=${boolOn (geoclue != null)}"
-    # TODO: add openwebrtc support
-    "-DENABLE_MEDIA_STREAM=OFF"
-    "-DENABLE_OPENGL=${boolOn (mesa_noglu != null)}"
-    "-DENABLE_GLES2=${boolOn (mesa_noglu != null)}"
+    # Source/cmake/OptionsCommon.cmake
+    "-DUSE_LD_GOLD=ON"
+    # Source/cmake/WebKitFeatures.cmake
+    "-DENABLE_ACCESSIBILITY=ON"
+    "-DENABLE_GAMEPAD=ON"
+    "-DENABLE_SPELLCHECK=OFF"  # FIXME: Update enchant
+    "-DENABLE_MEDIA_STREAM=OFF"  # FIXME
+    "-DENABLE_WEB_RTC=OFF"  # FIXME
+    "-DENABLE_EXPERIMENTAL_FEATURES=ON"
+    # Source/cmake/OptionsGTK.cmake
+    "-DENABLE_OPENGL=${boolOn (opengl-dummy != null)}"  # FIXME: add opengl-dummy any interface
+    "-DENABLE_GLES2=${boolOn opengl-dummy.glesv2}"
     "-DENABLE_PLUGIN_PROCESS_GTK2=OFF"
-    "-DENABLE_SECCOMP_FILTERS=OFF"
-    "-DENABLE_SPELLCHECK=${boolOn (enchant != null)}"
-    "-DENABLE_SUBTLE_CRYPTO=${boolOn (gnutls != null)}"
-    "-DENABLE_VIDEO=${boolOn (gstreamer != null && gst-plugins-base != null)}"
-    "-DENABLE_WEB_AUDIO=${boolOn (gstreamer != null && gst-plugins-base != null)}"
-    # TODO: add gstreamer mpeg-ts support
-    "-DUSE_GSTREAMER_MPEGTS=OFF"
-    # TODO: add gstreamer GL support
-    "-DUSE_GSTREAMER_GL=OFF"
-    "-DENABLE_X11_TARGET=${boolOn (xorg != null)}"
-    # TODO: add wayland support (linker errors)
-    "-DENABLE_WAYLAND_TARGET=${boolOn (wayland != null)}"
-    "-DUSE_LIBNOTIFY=${boolOn (libnotify != null)}"
-    # TODO: add libhyphen support
-    "-DUSE_LIBHYPHEN=OFF"
-  ];
-
-  # WebKit2 missing include path for gst-plugins-base.
-  # https://bugs.webkit.org/show_bug.cgi?id=148894
-  NIX_CFLAGS_COMPILE = [
-    "-I${gst-plugins-base}/include/gstreamer-1.0"
+    "-DENABLE_X11_TARGET=ON"
+    "-DENABLE_WAYLAND_TARGET=ON"  # FIXME: require egl
+    "-DUSE_LIBHYPHEN=OFF"  # FIXME
+    "-DUSE_WOFF2=OFF"  # FIXME
+    "-DUSE_OPENVR=OFF"  # FIXME
+    #"ENABLE_NETSCAPE_PLUGIN_API"
+    # Source/cmake/GStreamerDefinitions.cmake
+    "-DUSE_GSTREAMER_GL=OFF"  # FIXME
+    "-DUSE_GSTREAMER_MPEGTS=ON"
   ];
 
   passthru = {
@@ -190,12 +162,18 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha1Url = map (n: "${n}.sha1") src.urls;
+      fullOpts = {
+        #sha256Urls = map (u: "${u}.sums") src.urls;
+        pgpsigUrls = map (u: "${u}.asc") src.urls;
+        pgpKeyFingerprints = [
+          "5AA3 BC33 4FD7 E336 9E7C  77B2 91C5 59DB E4C9 123B"
+        ];
+      };
       failEarly = true;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Web content rendering engine, GTK+ port";
     homepage = "http://webkitgtk.org/";
     license = licenses.bsd2;

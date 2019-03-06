@@ -823,10 +823,10 @@ let
   }) // {inherit ;};
 
   mkfontscale = (mkDerivation "mkfontscale" {
-    name = "mkfontscale-1.1.2";
+    name = "mkfontscale-1.2.0";
     src = fetchurl {
-      url = mirror://xorg/individual/app/mkfontscale-1.1.2.tar.bz2;
-      sha256 = "081z8lwh9c1gyrx3ad12whnpv3jpfbqsc366mswpfm48mwl54vcc";
+      url = mirror://xorg/individual/app/mkfontscale-1.2.0.tar.bz2;
+      sha256 = "282b77be9f130d43d308287f87ed551ace2c64fee4447b5c4389870dea10c4be";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libfontenc freetype xorgproto zlib ];

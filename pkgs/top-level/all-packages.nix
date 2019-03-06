@@ -4013,6 +4013,8 @@ wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
 
 wlc = callPackage ../all-pkgs/w/wlc { };
 
+wlroots = callPackage ../all-pkgs/w/wlroots { };
+
 woeusb = callPackage ../all-pkgs/w/woeusb { };
 
 wpa_supplicant = callPackage ../all-pkgs/w/wpa_supplicant { };

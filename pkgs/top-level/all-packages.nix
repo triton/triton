@@ -1961,10 +1961,7 @@ guitarix = callPackage ../all-pkgs/g/guitarix {
 
 gupnp = callPackage ../all-pkgs/g/gupnp { };
 
-gupnp-av_0-12 = callPackage ../all-pkgs/g/gupnp-av {
-  channel = "0.12";
-};
-gupnp-av = callPackageAlias "gupnp-av_0-12" { };
+gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 

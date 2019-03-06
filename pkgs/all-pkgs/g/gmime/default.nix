@@ -5,8 +5,8 @@
 
 , glib
 , gobject-introspection
-, libgpg-error
-, libidn
+, gpgme
+, libidn2
 , zlib
 }:
 
@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    libgpg-error
-    libidn
+    gpgme
+    libidn2
     zlib
   ];
 

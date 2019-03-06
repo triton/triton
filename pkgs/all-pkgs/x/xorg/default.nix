@@ -1075,10 +1075,10 @@ let
   }) // {inherit xorgproto libdrm systemd_lib libpciaccess libX11 xorgserver ;};
 
   xf86videonouveau = (mkDerivation "xf86videonouveau" {
-    name = "xf86-video-nouveau-1.0.15";
+    name = "xf86-video-nouveau-1.0.16";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-nouveau-1.0.15.tar.bz2;
-      sha256 = "aede10fd395610a328697adca3434fb14e9afbd79911d6c8545cfa2c0e541d4c";
+      url = mirror://xorg/individual/driver/xf86-video-nouveau-1.0.16.tar.bz2;
+      sha256 = "304060806415579cdb5c1f71f1c54d11cacb431b5552b170decbc883ed43bf06";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ xorgproto libdrm systemd_lib libpciaccess xorgserver ];

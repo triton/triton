@@ -3607,6 +3607,8 @@ sassc = callPackage ../all-pkgs/s/sassc { };
 
 sbc = callPackage ../all-pkgs/s/sbc { };
 
+scdoc = callPackage ../all-pkgs/s/scdoc { };
+
 schroedinger = callPackage ../all-pkgs/s/schroedinger { };
 
 scons = pkgs.python2Packages.scons;

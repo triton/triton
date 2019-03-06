@@ -11,8 +11,6 @@
 , gobject-introspection
 , liboauth
 , libsoup
-, openssl
-, p11-kit
 , vala
 }:
 
@@ -20,15 +18,14 @@ let
   inherit (lib)
     boolEn;
 
-  versionMajor = "0.17";
-  versionMinor = "9";
-  version = "${versionMajor}.${versionMinor}";
+  channel = "0.17";
+  version = "${channel}.9";
 in
 stdenv.mkDerivation rec {
   name = "libgdata-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libgdata/${channel}/${name}.tar.xz";
     hashOutput = false;
     sha256 = "85c4f7674c0098ffaf060ae01b6b832cb277b3673d54ace3bdedaad6b127453a";
   };
@@ -47,26 +44,15 @@ stdenv.mkDerivation rec {
     liboauth
     libsoup
     libxml2
-    openssl
-    p11-kit
   ];
 
   configureFlags = [
+    "--disable-gtk"
     "--enable-gnome"
-    # Remove dependency on webkit
-    #"--${boolEn (gnome-online-accounts != null)}-goa"
-    "--disable-goa"
+    "--disable-goa"  # FIXME
     "--disable-always-build-tests"
-    "--disable-installed-tests"
-    "--enable-nls"
-    "--disable-code-coverage"
-    "--enable-compile-warnings"
-    "--disable-Werror"
-    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--enable-introspection"
     "--${boolEn (vala != null)}-vala"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
   ];
 
   passthru = {
@@ -75,8 +61,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/libgdata/${versionMajor}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Urls =
+          map (u: lib.replaceStrings ["tar.xz"] ["sha256sum"] u) src.urls;
+      };
       failEarly = true;
     };
   };

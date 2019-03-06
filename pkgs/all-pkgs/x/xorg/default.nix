@@ -598,7 +598,7 @@ let
       sha256 = "1jg5clihklb9drh1jd7nhhdsszla6nv7xmbvm8yvakh5wrb1nlv6";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto opengl-dummy libdrm xorgserver ];
+    buildInputs = [ xorgproto opengl-dummy libdrm libpciaccess xorgserver ];
 
   }) // {inherit xorgproto opengl-dummy libdrm xorgserver ;};
 

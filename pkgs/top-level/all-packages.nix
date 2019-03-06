@@ -1205,8 +1205,6 @@ evolution-data-server_3-28 = callPackage ../all-pkgs/e/evolution-data-server {
 };
 evolution-data-server = callPackageAlias "evolution-data-server_3-28" { };
 
-ewlc = callPackage ../all-pkgs/e/ewlc { };
-
 exempi = callPackage ../all-pkgs/e/exempi { };
 
 exfat-utils = callPackage ../all-pkgs/e/exfat-utils { };
@@ -4010,8 +4008,6 @@ wireguard = callPackage ../all-pkgs/w/wireguard {
 };
 
 wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
-
-wlc = callPackage ../all-pkgs/w/wlc { };
 
 wlroots = callPackage ../all-pkgs/w/wlroots { };
 

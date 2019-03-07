@@ -2177,6 +2177,8 @@ lcms = callPackage ../all-pkgs/l/lcms { };
 # Deprecated alias
 lcms2 = callPackageAlias "lcms" { };
 
+lcov = callPackage ../all-pkgs/l/lcov { };
+
 ldb = callPackage ../all-pkgs/l/ldb { };
 
 ldns = callPackage ../all-pkgs/l/ldns { };

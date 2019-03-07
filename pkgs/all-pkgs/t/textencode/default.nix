@@ -24,6 +24,8 @@ stdenv.mkDerivation rec {
 
   doCheck = false;
 
+  setupHook = ./setup-hook.sh;
+
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

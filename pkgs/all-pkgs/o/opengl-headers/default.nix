@@ -8,15 +8,15 @@
 # TODO: build release tarballs, repo vendors pdfs
 
 let
-  version = "2019-03-01";
+  date = "2019-03-01";
 in
 stdenv.mkDerivation rec {
-  name = "opengl-headers-${version}";
+  name = "opengl-headers-${date}";
 
   src = fetchurl {
-    name = "opengl-headers-${version}.tar.xz";
-    multihash = "QmZdRTzsSxGWTSzmChywUgo6drKFoho8qDh4FagumAM3eS";
-    sha256 = "7cfa0ed4091b4d04c33b1be3c30361f9613b7301744f0b4b6397b923d82295d0";
+    name = "opengl-headers-${date}.tar.xz";
+    multihash = "QmdguDdKPiByjdNGu5bCpsoPcHyrTXq5UoycS3hrpZMtNX";
+    sha256 = "64a86c8157ebb9fcdc3adaf563d28e65ad6b0b85b9a609fad0890b5c61ccb423";
   };
 
   configurePhase = ":";
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     generateDistTarball = stdenv.mkDerivation rec {
-      name = "opengl-headers-${version}";
+      name = "opengl-headers-${date}";
 
       src = fetchFromGitHub {
         version = 6;
@@ -58,6 +58,11 @@ stdenv.mkDerivation rec {
       postPatch = ''
         sed -i xml/genglvnd.py \
           -e 's,drafts/,,'
+
+        # Fix impure date in headers
+        grep -q "time.strftime('%Y%m%d')" xml/genheaders.py
+        sed -i xml/genheaders.py \
+          -e "s,time.strftime('%Y%m%d'),'${lib.replaceStrings ["-"] [""] date}',"
       '';
 
       configurePhase = ":";
@@ -78,12 +83,12 @@ stdenv.mkDerivation rec {
             api/xml/"$(basename "$xml")"
         done
 
-        tar -Jcvf opengl-headers-${version}.tar.xz api/
+        tar -Jcvf opengl-headers-${date}.tar.xz api/
       '';
 
       installPhase = ''
-        install -D -m644 -v 'opengl-headers-${version}.tar.xz' \
-          "$out/opengl-headers-${version}.tar.xz"
+        install -D -m644 -v 'opengl-headers-${date}.tar.xz' \
+          "$out/opengl-headers-${date}.tar.xz"
       '';
     };
   };

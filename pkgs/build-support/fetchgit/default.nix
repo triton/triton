@@ -3,6 +3,7 @@
 , curl
 , git
 , openssl
+, textencode
 }: let
   urlToName = url: rev: let
     base = baseNameOf (stdenv.lib.removeSuffix "/" url);
@@ -66,6 +67,7 @@ stdenv.mkDerivation {
     curl
     git
     openssl
+    textencode
   ];
 
   outputHashAlgo = "sha256";

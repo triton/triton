@@ -2857,6 +2857,8 @@ mesa_drivers = pkgs.mesa.drivers;
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 
+mesa-headers = callPackage ../all-pkgs/m/mesa-headers { };
+
 meson = pkgs.python3Packages.meson.dev;
 
 #mesos = callPackage ../all-pkgs/m/mesos {

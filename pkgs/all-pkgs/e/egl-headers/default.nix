@@ -6,15 +6,15 @@
 }:
 
 let
-  version = "2019-02-13";
+  date = "2019-02-13";
 in
 stdenv.mkDerivation rec {
-  name = "egl-headers-${version}";
+  name = "egl-headers-${date}";
 
   src = fetchurl {
     url = "http://egl-registry.tar.xz";
-    multihash = "Qmf3CaunyCXXiyyd6fypvYZv6Q8cDU28ZnJkLqauH26Wxn";
-    sha256 = "263cd3090ab76adc3fba3e8e97ba54b44e1109c8e15dfca99851c255319b0f9b";
+    multihash = "Qma9rtynxUNEy8AxSsuEE7kCNqYvMU8bTeJQL8CiYo27TU";
+    sha256 = "de926279c49b99d2d702217a073cf25b60d58cb81a30a91150cc0892b2b32532";
   };
 
   configurePhase = ":";
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     generateDistTarball = stdenv.mkDerivation rec {
-      name = "egl-headers-dist-${version}";
+      name = "egl-headers-dist-${date}";
 
       src = fetchFromGitHub {
         version = 6;
@@ -54,7 +54,13 @@ stdenv.mkDerivation rec {
         patchShebangs api/genheaders.py
         patchShebangs api/reg.py
 
+        # Remove generated headers stored in the repo
         rm -v api/EGL/egl{,ext}.h
+
+        # Fix impure date in headers
+        grep -q "time.strftime('%Y%m%d')" api/genheaders.py
+        sed -i api/genheaders.py \
+          -e "s,time.strftime('%Y%m%d'),'${lib.replaceStrings ["-"] [""] date}',"
       '';
 
       configurePhase = ":";
@@ -71,10 +77,10 @@ stdenv.mkDerivation rec {
           install -D -m644 -v "$xml" ${name}/xml/"$(basename "$xml")"
         done
 
-        tar -Jcvf opengl-headers-${version}.tar.xz ${name}/
+        tar -Jcvf opengl-headers-${date}.tar.xz ${name}/
 
-        install -D -m644 -v 'opengl-headers-${version}.tar.xz' \
-          "$out/egl-headers-${version}.tar.xz"
+        install -D -m644 -v 'opengl-headers-${date}.tar.xz' \
+          "$out/egl-headers-${date}.tar.xz"
       '';
     };
   };

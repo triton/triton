@@ -17,7 +17,7 @@ str+="  IPFS_API: $IPFS_API\n"
 echo -e "$str" 2>&1
 
 # We need to normalize the hash for openssl
-HEX_HASH="$(transcodeHash base16 "$outputHash" "$outputHashAlgo")"
+export HEX_HASH="$(transcodeHash base16 "$outputHash" "$outputHashAlgo")"
 
 tryDownload() {
   local url
@@ -58,7 +58,7 @@ tryDownload() {
       if [ "$outputHashMode" = "flat" ]; then
         local lhash
         lhash="$(openssl "$outputHashAlgo" -r -hex "$out" 2>/dev/null | awk '{print $1;}')"
-        if [ "$lhash" = "$HEX_HASH" ]; then
+        if [ "${lhash,,}" = "${HEX_HASH,,}" ]; then
           success=1
         else
           rm -f $out

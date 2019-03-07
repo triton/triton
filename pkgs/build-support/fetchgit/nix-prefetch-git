@@ -83,26 +83,6 @@ if test -z "$url"; then
     usage
 fi
 
-
-init_remote(){
-    local url=$1
-    git init
-    git remote add origin $url
-    ( [ -n "$http_proxy" ] && git config http.proxy $http_proxy ) || true
-}
-
-# Return the reference of an hash if it exists on the remote repository.
-ref_from_hash(){
-    local hash=$1
-    git ls-remote origin | sed -n "\,$hash\t, { s,\(.*\)\t\(.*\),\2,; p; q}"
-}
-
-# Return the hash of a reference if it exists on the remote repository.
-hash_from_ref(){
-    local ref=$1
-    git ls-remote origin | sed -n "\,\t$ref, { s,\(.*\)\t\(.*\),\1,; p; q}"
-}
-
 # Returns a name based on the url and reference
 #
 # This function needs to be in sync with nix's fetchgit implementation
@@ -120,101 +100,30 @@ url_to_name(){
     fi
 }
 
-# Fetch everything and checkout the right sha1
-checkout_hash(){
-    local hash="$1"
-    local ref="$2"
-
-    if test -z "$hash"; then
-        hash=$(hash_from_ref $ref)
-    fi
-
-    git fetch -t ${builder:+--progress} origin || return 1
-    git checkout -b $branchName $hash || return 1
-}
-
-# Fetch only a branch/tag and checkout it.
-checkout_ref(){
-    local hash="$1"
-    local ref="$2"
-
-    if "$deepClone"; then
-        # The caller explicitly asked for a deep clone.  Deep clones
-        # allow "git describe" and similar tools to work.  See
-        # http://thread.gmane.org/gmane.linux.distributions.nixos/3569
-        # for a discussion.
-        return 1
-    fi
-
-    if test -z "$ref"; then
-        ref=$(ref_from_hash $hash)
-    fi
-
-    if test -n "$ref"; then
-        # --depth option is ignored on http repository.
-        git fetch ${builder:+--progress} --depth 1 origin +"$ref" || return 1
-        git checkout -b $branchName FETCH_HEAD || return 1
-    else
-        return 1
-    fi
-}
-
-# Update submodules
-init_submodules(){
-    # Add urls into .git/config file
-    git submodule init
-
-    # list submodule directories and their hashes
-    git submodule status |
-    while read l; do
-        # checkout each submodule
-        local hash=$(echo $l | awk '{print substr($1,2)}')
-        local dir=$(echo $l | awk '{print $2}')
-        local name=$(
-            git config -f .gitmodules --get-regexp submodule\..*\.path |
-            sed -n "s,^\(.*\)\.path $dir\$,\\1,p")
-        local url=$(git config --get ${name}.url)
-
-        clone "$dir" "$url" "$hash" ""
-    done
-}
-
 clone(){
-    local top=$(pwd)
     local dir="$1"
     local url="$2"
-    local hash="$3"
-    local ref="$4"
+    local ref="$3"
 
-    cd $dir
-
-    # Initialize the repository.
-    init_remote "$url"
+    # Ensure we have a repo
+    git init "$dir"
+    git -C "$dir" remote add origin "$url" || git -C "$dir" remote set-url origin "$url"
 
     # Download data from the repository.
-    checkout_ref "$hash" "$ref" ||
-    checkout_hash "$hash" "$ref" || (
-        echo 1>&2 "Unable to checkout $hash$ref from $url."
-        exit 1
-    )
-
-    # Checkout linked sources.
+    local args=()
+    local submoduleArgs=()
+    if "$deepClone"; then
+      submoduleArgs+=('--no-recommend-shallow')
+      (set -x; git -C "$dir" fetch "${args[@]}" origin)
+      (set -x; git -C "$dir" checkout "$ref")
+    else
+      args+=('--depth' '1')
+      (set -x; git -C "$dir" fetch "${args[@]}" origin "$ref")
+      (set -x; git -C "$dir" checkout FETCH_HEAD)
+    fi
     if test -n "$fetchSubmodules"; then
-        init_submodules
+      (set -x; git -C "$dir" submodule update --init --recursive "${args[@]}" "${submoduleArgs[@]}")
     fi
-
-    if [ -z "$builder" -a -f .topdeps ]; then
-        if tg help 2>&1 > /dev/null
-        then
-            echo "populating TopGit branches..."
-            tg remote --populate origin
-        else
-            echo "WARNING: would populate TopGit branches but TopGit is not available" >&2
-            echo "WARNING: install TopGit to fix the problem" >&2
-        fi
-    fi
-
-    cd $top
 }
 
 # Remove all remote branches, remove tags not reachable from HEAD, do a full
@@ -267,25 +176,9 @@ clone_user_rev() {
     fi
 
     local dir="$tmpdir/$name"
-    mkdir "$dir"
 
     # Perform the checkout.
-    case "$rev" in
-        HEAD|refs/*)
-            clone "$dir" "$url" "" "$rev" 1>&2;;
-        *)
-            if test -z "$(echo $rev | tr -d 0123456789abcdef)"; then
-                clone "$dir" "$url" "$rev" "" 1>&2
-            else
-                echo 1>&2 "Bad commit hash or bad reference."
-                exit 1
-            fi;;
-    esac
-
-    local full_revision=$(cd $dir && (git rev-parse $rev 2> /dev/null || git rev-parse refs/heads/$branchName) | tail -n1)
-    echo "git revision is $full_revision"
-    echo "git human-readable version is $(cd $dir && (git describe $full_revision 2> /dev/null || git describe --tags $full_revision 2> /dev/null || echo -- none --))" >&2
-    echo "Commit date is $(cd $dir && git show --no-patch --pretty=%ci $full_revision)"
+    clone "$dir" "$url" "$rev" 1>&2
 
     # Allow doing additional processing before .git removal
     eval "$NIX_PREFETCH_GIT_CHECKOUT_HOOK"
@@ -311,7 +204,7 @@ if test -n "$builder"; then
     test -n "$out" -a -n "$url" -a -n "$rev" || usage
     clone_user_rev "${innerName}" "$out" "$url" "$rev"
     lhash="$(openssl "$outputHashAlgo" -r -hex "$out" 2>/dev/null | awk '{print $1;}')"
-    if [ "$lhash" != "$HEX_HASH" ]; then
+    if [ "${lhash,,}" != "${HEX_HASH,,}" ]; then
       str="Got a bad hash:\n"
       str+="  URL: $url\n"
       str+="  File: $out\n"

@@ -1,6 +1,6 @@
 { stdenv
 , deterministic-zip
-, curl
+, curl_minimal
 , git
 , openssl
 , textencode
@@ -21,7 +21,7 @@ in
 , rev ? "HEAD"
 , multihash ? ""
 , sha256 ? ""
-, leaveDotGit ? deepClone
+, leaveDotGit ? false
 , fetchSubmodules ? true
 , deepClone ? false
 , branchName ? null
@@ -52,10 +52,13 @@ in
 */
 
 assert sha256 != "";
-assert deepClone -> leaveDotGit;
 
 let
   mirrors = import ../fetchurl/mirrors.nix;
+
+  deterministic-zip' = deterministic-zip.override {
+    inherit version;
+  };
 in
 stdenv.mkDerivation {
   innerName = name;
@@ -63,8 +66,8 @@ stdenv.mkDerivation {
   builder = ./builder.sh;
   fetcher = ./nix-prefetch-git;
   nativeBuildInputs = [
-    (deterministic-zip.override { inherit version; })
-    curl
+    curl_minimal
+    deterministic-zip'
     git
     openssl
     textencode
@@ -119,6 +122,10 @@ stdenv.mkDerivation {
       '')
     );
     preferLocalBuild = true;
+  };
+
+  passthru = {
+    deterministic-zip = deterministic-zip';
   };
 
   preferLocalBuild = true;

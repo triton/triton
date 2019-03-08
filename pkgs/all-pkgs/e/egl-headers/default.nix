@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , fetchurl
 , lib
+, mesa-headers
 , python3Packages
 }:
 
@@ -12,9 +13,9 @@ stdenv.mkDerivation rec {
   name = "egl-headers-${date}";
 
   src = fetchurl {
-    url = "http://egl-registry.tar.xz";
-    multihash = "Qma9rtynxUNEy8AxSsuEE7kCNqYvMU8bTeJQL8CiYo27TU";
-    sha256 = "de926279c49b99d2d702217a073cf25b60d58cb81a30a91150cc0892b2b32532";
+    name = "egl-registry-${date}.tar.xz";
+    multihash = "QmcuqWrcyfZnyoEebWeBLyWtkptN29K8UQKdkxxEbZkDEG ";
+    sha256 = "829d3a5fb6de4016310cbeeb5b1594b132a4477f41ca4bd74b5b6ea68b9acb8f";
   };
 
   configurePhase = ":";
@@ -67,6 +68,19 @@ stdenv.mkDerivation rec {
 
       preBuild = ''
         cd api/
+      '';
+
+      postBuild = ''
+        # Make sure Mesa extensions are included in the header.
+        grep -qP '^}$' EGL/eglext.h
+        local -a eglext_mesaheaders
+        mapfile -t eglext_mesaheaders < <(
+          find '${mesa-headers}/include/EGL/' -type f -regex '.*ext.*\.h'
+        )
+        local eglext_mesaheader
+        for eglext_mesaheader in "''${eglext_mesaheaders[@]}"; do
+          sed -zE "s,(\n[^\n]*){6}$,\n#include <EGL/$(basename "$eglext_mesaheader")>&," -i EGL/eglext.h
+        done
       '';
 
       installPhase = ''

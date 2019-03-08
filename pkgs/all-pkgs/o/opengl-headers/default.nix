@@ -5,7 +5,7 @@
 , python3Packages
 }:
 
-# TODO: build release tarballs, repo vendors pdfs
+# We build our own dist tarballs, upstream repo vendors pdfs.
 
 let
   date = "2019-03-01";
@@ -15,8 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "opengl-headers-${date}.tar.xz";
-    multihash = "QmdguDdKPiByjdNGu5bCpsoPcHyrTXq5UoycS3hrpZMtNX";
-    sha256 = "64a86c8157ebb9fcdc3adaf563d28e65ad6b0b85b9a609fad0890b5c61ccb423";
+    multihash = "QmRMy2iGHh535k8mjVKhZ4CMypWbK5hE21bZg1MB7eDyS3";
+    sha256 = "7b6ba3e1c12dc8d4150c853ad8b6338e52f2f93a1cff609da55cd381bb47d3dd";
   };
 
   configurePhase = ":";
@@ -24,17 +24,22 @@ stdenv.mkDerivation rec {
   buildPhase = ":";
 
   installPhase = ''
-    for api in GL{,ES{,2,3},SC{,2}}; do
-      pushd $api/
-        while read header; do
-          install -D -m644 -v $header $out/include/$(basename "$api")/$header
-        done < <(find . -name "*.h" -printf '%P\n')
+    local opengl_api
+    for opengl_api in GL{,ES{,2,3},SC{,2}}; do
+      pushd $opengl_api/
+        local -a opengl_headers
+        mapfile -t opengl_headers < <(find . -name '*.h' -printf '%P\n')
+        for opengl_header in "''${opengl_headers[@]}"; do
+          install -D -m644 -v "$opengl_header" \
+            "$out"/include/"$(basename "$opengl_api")"/"$opengl_header"
+        done
       popd
     done
 
-    for xml in xml/*.xml; do
-      install -D -m644 -v "$xml" \
-        "$out"/share/opengl-registry/"$(basename "$xml")"
+    local opengl_xml
+    for opengl_xml in xml/*.xml; do
+      install -D -m644 -v "$opengl_xml" \
+        "$out"/share/opengl-registry/"$(basename "$opengl_xml")"
     done
   '';
 
@@ -56,8 +61,7 @@ stdenv.mkDerivation rec {
       ];
 
       postPatch = ''
-        sed -i xml/genglvnd.py \
-          -e 's,drafts/,,'
+        patchShebangs xml/genheaders.py
 
         # Fix impure date in headers
         grep -q "time.strftime('%Y%m%d')" xml/genheaders.py
@@ -67,26 +71,31 @@ stdenv.mkDerivation rec {
 
       configurePhase = ":";
 
-      buildPhase = ''
-        # Some headers such as glx.h are not pre-generated, regenerate all
-        # to be sure none are missing.
-        pushd xml/
-          python genheaders.py
-        popd
-        pushd api/
-          for header in glcorearb.h glext.h gl.h; do
-            python ../xml/genglvnd.py -registry ../xml/gl.xml GL/$header.h
-          done
-        popd
-        for xml in xml/*.xml; do
-          install -D -m644 -v "$xml" \
-            api/xml/"$(basename "$xml")"
+      preBuild = ''
+        cd xml/
+      '';
+
+      # If Mesa finally aligns their glx.h with the upstream header from
+      # Khronos this should be enabled.
+      #postBuild = ''
+      #  # Fix missing includes in generated glx.h.
+      #  # https://www.khronos.org/registry/OpenGL/ABI/#4
+      #  grep -q '#define __glx_glx_h_ 1' ../api/GL/glx.h
+      #  sed -i ../api/GL/glx.h \
+      #    -e '/^#define __glx_glx_h_ 1/a #include <X11/Xlib.h>\n#include <X11/Xutil.h>'
+      #'';
+
+      installPhase = ''
+        cd ../
+        # Install xml registry files.
+        local opengl_xml
+        for opengl_xml in xml/*.xml; do
+          install -D -m644 -v "$opengl_xml" \
+            api/xml/"$(basename "$opengl_xml")"
         done
 
         tar -Jcvf opengl-headers-${date}.tar.xz api/
-      '';
 
-      installPhase = ''
         install -D -m644 -v 'opengl-headers-${date}.tar.xz' \
           "$out/opengl-headers-${date}.tar.xz"
       '';

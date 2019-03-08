@@ -18,6 +18,12 @@ stdenv.mkDerivation rec {
     opengl-dummy
   ];
 
+  postPatch = ''
+    # Fix missing header, was propagated by glext.h previously.
+    sed -i src/libutil/error.c \
+      -e '/<GL\/glu.h>/a #include <stddef.h>'
+  '';
+
   configureFlags = [
     "--disable-debug"
     "--disable-osmesa"

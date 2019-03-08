@@ -15,6 +15,8 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
      local -a mesa_headers=(
+       'GL/gl.h'
+       'GL/glx.h'
        'EGL/eglextchromium.h'
        'EGL/eglmesaext.h'
        'GLES3/gl3ext.h'

@@ -4,7 +4,6 @@
 , meson
 , ninja
 
-#, egl-headers
 , eglexternalplatform
 , libx11
 , opengl-dummy
@@ -13,7 +12,7 @@
 }:
 
 let
-  version = "2018-06-25";
+  version = "2019-01-23";
 in
 stdenv.mkDerivation rec {
   name = "egl-wayland-${version}";
@@ -22,8 +21,8 @@ stdenv.mkDerivation rec {
     version = 6;
     owner = "NVIDIA";
     repo = "egl-wayland";
-    rev = "395ce9f609fbf66f6cab622aec3ded663e089f84";
-    sha256 = "8fdd323190a8a0cdc786c6414874a3eff0736cabba281b610e08b81dcca16c6b";
+    rev = "c81f849fc08e36fc5b94031b6edc361ab5027fce";
+    sha256 = "ed32293d614a3b1b4065122837e61dcf838c2ddbe61c59cf335ce5a668730c2b";
   };
 
   nativeBuildInputs = [
@@ -32,7 +31,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    #egl-headers  # Vendored by Mesa ATM
     eglexternalplatform
     libx11
     opengl-dummy

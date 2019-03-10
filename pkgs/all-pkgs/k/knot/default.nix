@@ -15,13 +15,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.7.6";
+  name = "knot-2.8.0";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmThtYXtvA3simDLG8N3eGAQGyr2SA8CWH3H8JDoYxX2zS";
+    multihash = "QmUCPymEPbaGqN62yod9tn6dM3YVtXvfmBThRudG83WU9j";
     hashOutput = false;
-    sha256 = "a1cb1877f04f7c2549c977c2658cfafd07c7e0e924f8e8aa8d4ae4b707f697a2";
+    sha256 = "494ad926705018bd754d96711dc2129f3173f326a0b57d33978090ba4eef87ef";
   };
 
   buildInputs = [
@@ -48,7 +48,6 @@ stdenv.mkDerivation rec {
     "--with-urcu=${liburcu}"
     "--with-lmdb=${lmdb}"
     "--with-module-dnstap=yes"
-    "--with-module-rosedb=yes"
   ];
 
   preInstall = ''

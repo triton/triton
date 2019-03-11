@@ -1,10 +1,11 @@
 { stdenv
 , fetchFromGitHub
 , lib
+, python3
 }:
 
 let
-  version = "1.1.82";
+  version = "1.1.103";
 in
 stdenv.mkDerivation rec {
   name = "vulkan-headers-${version}";
@@ -14,17 +15,37 @@ stdenv.mkDerivation rec {
     owner = "KhronosGroup";
     repo = "Vulkan-Docs";
     rev = "v${version}";
-    sha256 = "ee26d4277fa3001284633e8657d28c07281c0d974d4bb5471f1d839e89fa9d4f";
+    sha256 = "e1207bd30078c431e31cc0622b99995936ebb9439a307c36b2ff276203316b8a";
   };
 
-  configurePhase = "true";
+  nativeBuildInputs = [
+    python3
+  ];
 
-  buildPhase = "true";
+  postPatch = ''
+    #patchShebangs xml/genheaders.py
+    rm -v include/vulkan/*.h
+  '';
+
+  configurePhase = ":";
+
+  preBuild = ''
+    cd xml/
+  '';
 
   installPhase = ''
-    for i in include/vulkan/*; do
-      install -D -m 644 -v "$i" \
-        "$out"/include/vulkan/"$(basename "$i")"
+    cd ../
+
+    local vulkan_header
+    for vulkan_header in include/vulkan/*.h; do
+      install -D -m 644 -v "$vulkan_header" \
+        "$out"/include/vulkan/"$(basename "$vulkan_header")"
+    done
+
+    local vulkan_xml
+    for vulkan_xml in xml/*.xml; do
+      install -D -m644 -v "$vulkan_xml" \
+        "$out"/share/vulkan-registry/"$(basename "$vulkan_xml")"
     done
   '';
 

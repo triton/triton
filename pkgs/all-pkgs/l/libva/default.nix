@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 , lib
+#, meson
+#, ninja
 
 , libdrm
 , libx11
@@ -11,12 +13,9 @@
 }:
 
 let
-  inherit (lib)
-    boolEn;
-
   driverDir = "${opengl-dummy.driverSearchPath}/lib/dri";
 
-  version = "2.2.0";
+  version = "2.4.0";
 in
 stdenv.mkDerivation rec {
   name = "libva-${version}";
@@ -29,8 +28,13 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "6f6ca04c785544d30d315ef130a6aeb9435b75f934d7fbe0e4e9ba6084ce4ef2";
+    sha256 = "99263056c21593a26f2ece812aee6fe60142b49e6cd46cb33c8dddf18fc19391";
   };
+
+  #nativeBuildInputs = [
+  #  meson
+  #  ninja
+  #];
 
   buildInputs = [
     libdrm
@@ -43,11 +47,18 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-x11"
-    "--${boolEn opengl-dummy.glx}-glx"
+    "--enable-glx"
     "--enable-wayland"
     "--enable-va-messaging"
     "--with-drivers-path=${driverDir}"
   ];
+
+  #mesonFlags = [
+  #  "-Ddriverdir=${driverDir}"
+  #  "-Dwith_x11=yes"
+  #  "-Dwith_glx=yes"
+  #  "-Dwith_wayland=yes"
+  #];
 
   preInstall = ''
     installFlagsArray+=("LIBVA_DRIVERS_PATH=$out/lib/dri")
@@ -57,9 +68,14 @@ stdenv.mkDerivation rec {
     inherit driverDir;
 
     srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        sha1Urls = map (n: "${n}.sha1sum") src.urls;
+      };
       failEarly = true;
-      sha1Url = map (n: "${n}.sha1sum") src.urls;
-      inherit (src) urls outputHash outputHashAlgo;
     };
   };
 

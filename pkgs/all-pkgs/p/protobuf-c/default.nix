@@ -23,6 +23,12 @@ stdenv.mkDerivation rec {
     protobuf-cpp
   ];
 
+  postPatch = ''
+    # Fix namespace for 3.7.0+
+    grep -q 'google::protobuf::Message::Reflection' t/generated-code2/cxx-generate-packed-data.cc
+    sed -i 's,google::protobuf::Message::Reflection,google::protobuf::Reflection,' t/generated-code2/cxx-generate-packed-data.cc
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

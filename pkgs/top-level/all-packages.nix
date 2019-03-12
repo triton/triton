@@ -1484,6 +1484,8 @@ geoclue = callPackage ../all-pkgs/g/geoclue { };
 
 gegl = callPackage ../all-pkgs/g/gegl { };
 
+gengetopt = callPackage ../all-pkgs/g/gengetopt { };
+
 geocode-glib = callPackage ../all-pkgs/g/geocode-glib { };
 
 geoip = callPackage ../all-pkgs/g/geoip { };

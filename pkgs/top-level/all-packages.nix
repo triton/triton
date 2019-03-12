@@ -3249,6 +3249,8 @@ openpace = callPackage ../all-pkgs/o/openpace { };
 
 openresolv = callPackage ../all-pkgs/o/openresolv { };
 
+opensc = callPackage ../all-pkgs/o/opensc { };
+
 opensmtpd = callPackage ../all-pkgs/o/opensmtpd { };
 
 opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };

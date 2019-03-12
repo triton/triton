@@ -2,6 +2,8 @@
 , fetchTritonPatch
 , fetchurl
 , lib
+#, meson
+#, ninja
 
 , libx11
 , libxext
@@ -10,14 +12,19 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libvdpau-1.1.1";
+  name = "libvdpau-1.2";
 
   src = fetchurl {
-    url = "https://people.freedesktop.org/~aplattner/vdpau/${name}.tar.bz2";
-    multihash = "Qmant8W2qcuE8iyP8gAXPzkRxn9gFaKXgjKxNPqFbtQPPj";
+    name = "${name}.tar.bz2";
+    multihash = "QmVxoiFuySsaZUzYCyYtE1jSxgvxKWypqXVX5EiwMze7uK";
     hashOutput = false;
-    sha256 = "857a01932609225b9a3a5bf222b85e39b55c08787d0ad427dbd9ec033d58d736";
+    sha256 = "6a499b186f524e1c16b4f5b57a6a2de70dfceb25c4ee546515f26073cd33fa06";
   };
+
+  #nativeBuildInputs = [
+  #  meson
+  #  ninja
+  #];
 
   buildInputs = [
     libx11
@@ -25,19 +32,17 @@ stdenv.mkDerivation rec {
     xorgproto
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "091e0ea204a9808a92583eec3e60e7a5eeb554a2";
-      file = "l/libvdpau/libvdpau-1.1.1-mesa_dri2-Add-missing-include-of-config.h-to-define.patch";
-      sha256 = "f9ee2809d65b3384fce2293d500169225f4ea613d673d277798d5d601f9d5eaf";
-    })
-  ];
-
   configureFlags = [
     "--enable-dri2"
     "--disable-documentation"
     "--with-module-dir=${opengl-dummy.driverSearchPath}/lib/vdpau"
   ];
+
+  #mesonFlags = [
+  #  "-Ddocumentation=false"
+  #  "-Ddri2=true"
+  #  "-Dmoduledir=${opengl-dummy.driverSearchPath}/lib/vdpau"
+  #];
 
   preInstall = ''
     installFlagsArray+=("moduledir=$out/lib/vdpau")
@@ -47,11 +52,14 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       inherit (src)
         outputHash
-        outputHashAlgo
-        urls;
+        outputHashAlgo;
+      # Upstream doesn't understand how to use gitlab.
+      url = "https://gitlab.freedesktop.org/vdpau/libvdpau/uploads/14b620084c027d546fa0b3f083b800c6/libvdpau-1.2.tar.bz2";
+      fullOpts = {
+        pgpsigUrl = "https://gitlab.freedesktop.org/vdpau/libvdpau/uploads/0abd351387dbb4aa21a43caf847074f3/libvdpau-1.2.tar.bz2.sig";
+        pgpKeyFingerprint = "BD68 A042 C603 DDAD 9AA3  54B0 F56A CC8F 09BA 9635";
+      };
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "BD68 A042 C603 DDAD 9AA3  54B0 F56A CC8F 09BA 9635";
     };
   };
 

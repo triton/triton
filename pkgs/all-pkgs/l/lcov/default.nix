@@ -28,9 +28,6 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "The most popular clone of the VI editor";
-    homepage = http://www.vim.org;
-    license = licenses.vim;
     maintainers = with maintainers; [
       wkennington
     ];

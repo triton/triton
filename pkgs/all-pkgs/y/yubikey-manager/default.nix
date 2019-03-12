@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.0.0";
+  version = "2.1.0";
 in
 buildPythonPackage {
   name = "yubikey-manager-${version}";
@@ -20,7 +20,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "yubikey-manager";
     inherit version;
-    sha256 = "e95b4c4e956e105780e59ca2e4f159b4e974da38cdc810d4157e8d979ebf66f4";
+    sha256 = "d59d5cd9b5b040077ef7741250476d8583bf961519b6576af163022315ab3a87";
   };
 
   propagatedBuildInputs = [

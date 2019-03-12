@@ -3245,6 +3245,8 @@ openntpd = callPackage ../all-pkgs/o/openntpd { };
 
 openobex = callPackage ../all-pkgs/o/openobex { };
 
+openpace = callPackage ../all-pkgs/o/openpace { };
+
 openresolv = callPackage ../all-pkgs/o/openresolv { };
 
 opensmtpd = callPackage ../all-pkgs/o/opensmtpd { };

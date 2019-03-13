@@ -5,13 +5,16 @@
 , zlib
 }:
 
+let
+  version = "2.9.7";
+in
 stdenv.mkDerivation rec {
-  name = "cracklib-2.9.6";
+  name = "cracklib-${version}";
 
   src = fetchurl {
-    url = "https://github.com/cracklib/cracklib/releases/download/${name}/${name}.tar.gz";
-    multihash = "QmPNkPiCXBPy7SY9xwvvYa7WxmeMnCnyXteTuvHcntJGgr";
-    sha256 = "0hrkb0prf7n92w6rxgq0ilzkk6rkhpys2cfqkrbzswp27na7dkqp";
+    url = "https://github.com/cracklib/cracklib/releases/download/v${version}/${name}.tar.bz2";
+    multihash = "QmRDAr75raDE5hm79292dnmnUMsFrLTFj68qfVYDuWr3Di";
+    sha256 = "fe82098509e4d60377b998662facf058dc405864a8947956718857dbb4bc35e6";
   };
 
   nativeBuildInputs = [

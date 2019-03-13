@@ -60,9 +60,16 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     # Don't build docs.
+    grep -q 'copy_html_docs(ddir)$' setup.py
     mkdir -pv docs/_build/html/
     sed -i setup.py \
       -e '/copy_html_docs(ddir)$/d'
+
+    # Reproducable builds.
+    grep -q 'max(1, cpu_count())' setup.py
+    sed -i setup.py \
+      -e '/multiprocessing/d' \
+      -e "s/max(1, cpu_count())/$NIX_BUILD_CORES/"
   '';
 
   buildPhase = ":";

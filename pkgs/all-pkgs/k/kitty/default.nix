@@ -62,7 +62,6 @@ stdenv.mkDerivation rec {
     # Don't build docs.
     mkdir -pv docs/_build/html/
     sed -i setup.py \
-      -e '/copy_man_pages(ddir)$/d' \
       -e '/copy_html_docs(ddir)$/d'
   '';
 

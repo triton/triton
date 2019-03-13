@@ -26,8 +26,8 @@ let
       ];
     };
     intel = {
-      modules = with pkgs.xorg; [
-        xf86videointel
+      modules = [
+        pkgs.xf86-video-intel
       ];
       driverName = "intel";
       extraConfig = ''
@@ -463,8 +463,8 @@ in
             attrByPath [name] (
               if xorg ? ${"xf86video" + name} then {
                 modules = [ xorg.${"xf86video" + name} ];
-              } else if ${"xf86-video-" + name} then {
-                modules = [ ${"xf86-video-" + name} ];
+              } else if pkgs ? ${"xf86-video-" + name} then {
+                modules = [ pkgs.${"xf86-video-" + name} ];
               } else null)
               knownVideoDrivers;
           in
@@ -500,7 +500,7 @@ in
     );
 
     environment.systemPackages = [
-      xorg.xorgserver
+      pkgs.xorg-server
       xorg.xrandr
       pkgs.xrdb
       xorg.setxkbmap
@@ -542,13 +542,13 @@ in
       restartIfChanged = false;
 
       environment = {
-        XKB_BINDIR = "${xorg.xkbcomp}/bin"; # Needed for the Xkb extension.
+        XKB_BINDIR = "${pkgs.xkbcomp}/bin"; # Needed for the Xkb extension.
         XORG_DRI_DRIVER_PATH = "${pkgs.opengl-dummy.driverSearchPath}/lib/dri"; # !!! Depends on the driver selected at runtime.
         LD_LIBRARY_PATH =
           concatStringsSep ":" (
             [
-              "${xorg.libX11}/lib"
-              "${xorg.libXext}/lib"
+              "${pkgs.libx11}/lib"
+              "${pkgs.libxext}/lib"
               "${pkgs.opengl-dummy.driverSearchPath}/lib"
             ] ++ concatLists (catAttrs "libPath" cfg.drivers)
           );
@@ -581,7 +581,7 @@ in
 
     services.xserver.modules =
       concatLists (catAttrs "modules" cfg.drivers) ++ [
-        xorg.xorgserver
+        pkgs.xorg-server
         pkgs.xf86-input-evdev
       ];
 

@@ -1063,17 +1063,6 @@ let
 
   }) // {inherit xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ;};
 
-  xf86videomodesetting = (mkDerivation "xf86videomodesetting" {
-    name = "xf86-video-modesetting-0.9.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-modesetting-0.9.0.tar.bz2;
-      sha256 = "0p6pjn5bnd2wr3lmas4b12zcq12d9ilvssga93fzlg90fdahikwh";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto libdrm systemd_lib libpciaccess libX11 xorgserver ];
-
-  }) // {inherit xorgproto libdrm systemd_lib libpciaccess libX11 xorgserver ;};
-
   xf86videonouveau = (mkDerivation "xf86videonouveau" {
     name = "xf86-video-nouveau-1.0.16";
     src = fetchurl {

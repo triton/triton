@@ -2425,9 +2425,9 @@ let
     version = 6;
     owner = "ipfs";
     repo = "fs-repo-migrations";
-    rev = "v1.4.0";
-    sha256 = "1qmwgk5f401vbnmrby6yhmbj58a65dp544gc2capsfayhn4cz9lh";
-    gxSha256 = "6ad8c8f87122cf948a034cabbf3b025251c8066b8a49ea0bf1be3d672a015fe6";
+    rev = "gx/v1.4.0";
+    sha256 = "258cc06bb250123710a051c9ac8ba67d4367ee114c64b8c9285ea2015d5c3e0f";
+    gxSha256 = "8a847e5e76195f6af60e0f7363be464f2b35bb1f7e6ca808cd26c82e79486a24";
     nativeBuildInputs = [
       gx-go.bin
     ];
@@ -4342,8 +4342,8 @@ let
     version = 6;
     owner = "libp2p";
     repo = "go-libp2p-crypto";
-    rev = "v2.0.5";
-    sha256 = "51f5170fbe998217f2e8d5da9981d1a945d09ba62112aa6be7ecd9e0e6119ed5";
+    rev = "gx/v2.0.5";
+    sha256 = "9e4eebf53fb9d3335c5d843e38a3f46bdfb92bc6eaf64689b989ca69afd35b43";
     propagatedBuildInputs = [
       btcd
       crypto
@@ -4476,8 +4476,8 @@ let
     version = 6;
     owner = "libp2p";
     repo = "go-libp2p-metrics";
-    rev = "v2.1.7";
-    sha256 = "06d7653a8ad3923b22ce6690a137c23a5834a948e536307522d6ce91e20ae1d4";
+    rev = "gx/v2.1.7";
+    sha256 = "b3d9d9e3fa716e4dab9b82cf2f61f2d78a6e5e927a6c898662cc1e65779e0730";
     propagatedBuildInputs = [
       go-flow-metrics
       go-libp2p-peer
@@ -4522,8 +4522,8 @@ let
     version = 6;
     owner = "libp2p";
     repo = "go-libp2p-peer";
-    rev = "v2.4.0";
-    sha256 = "863df3f2313a2c35436acec428476c5c6170b37bdcb8b933b372b65e1e57f73e";
+    rev = "gx/v2.4.0";
+    sha256 = "773a61afcc732442785282f266e088002b1b13212642fa2e0b50d7e8a2dfc327";
     propagatedBuildInputs = [
       base58
       go-libp2p-crypto
@@ -4922,10 +4922,10 @@ let
 
   go-multiaddr = buildFromGitHub {
     version = 6;
-    rev = "v1.4.0";
+    rev = "gx/v1.4.0";
     owner  = "multiformats";
     repo   = "go-multiaddr";
-    sha256 = "0c80272f4653f94b4ecc6fad9488000c875f92f850826f2a8bc3d35c9e93a9b2";
+    sha256 = "324bcf2ae8fd1577ec7afb86d22c9a8113e0420b2d7768e75fa2bde4a9624d1b";
     goPackageAliases = [ "github.com/jbenet/go-multiaddr" ];
     propagatedBuildInputs = [
       go-multihash
@@ -4934,10 +4934,10 @@ let
 
   go-multiaddr-dns = buildFromGitHub {
     version = 6;
-    rev = "v0.2.5";
+    rev = "gx/v0.2.5";
     owner  = "multiformats";
     repo   = "go-multiaddr-dns";
-    sha256 = "xlXm0ublMxHRiS7RsiNjvzjquwFE8MvpPSCQrKxwlrk=";
+    sha256 = "817d0960da4d19583e9053c2bbb2456ec95394d0a31f98cc576a710afae7d25e";
     propagatedBuildInputs = [
       go-multiaddr
     ];
@@ -4945,10 +4945,10 @@ let
 
   go-multiaddr-net = buildFromGitHub {
     version = 6;
-    rev = "v1.7.1";
+    rev = "gx/v1.7.1";
     owner  = "multiformats";
     repo   = "go-multiaddr-net";
-    sha256 = "1c419dea7e1a8a06d633407c9d30a1884d5420b8aae76816bfa113d8c8762179";
+    sha256 = "51886fabedf0bc1594450cdff493df5c136fde76b84b6bb9d736d387b3e97485";
     goPackageAliases = [ "github.com/jbenet/go-multiaddr-net" ];
     propagatedBuildInputs = [
       go-multiaddr

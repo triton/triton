@@ -87,14 +87,16 @@ let
         if name == null then
           baseNameOf goPackagePath
         else
-          name;
+        name;
+      # We allow git tags in rev that may contain illegal characters.
+      rev' = lib.replaceStrings ["/"] ["_"] rev;
       version =
         if date != null then
           date
-        else if builtins.stringLength rev != 40 then
-          rev
+        else if builtins.stringLength rev' != 40 then
+          rev'
         else
-          stdenv.lib.strings.substring 0 7 rev;
+          stdenv.lib.strings.substring 0 7 rev';
     in
       "${name'}-${version}";
 

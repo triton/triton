@@ -458,14 +458,17 @@ in
     # FIXME: somehow check for unknown driver names.
     services.xserver.drivers =
       flip concatMap cfg.videoDrivers (name:
-        let driver =
-          attrByPath [name] (
-            if xorg ? ${"xf86video" + name} then {
-              modules = [xorg.${"xf86video" + name}];
-            } else null)
-            knownVideoDrivers;
-        in
-        optional (driver != null) ({ inherit name; driverName = name; } // driver)
+        let
+          driver =
+            attrByPath [name] (
+              if xorg ? ${"xf86video" + name} then {
+                modules = [ xorg.${"xf86video" + name} ];
+              } else if ${"xf86-video-" + name} then {
+                modules = [ ${"xf86-video-" + name} ];
+              } else null)
+              knownVideoDrivers;
+          in
+          optional (driver != null) ({ inherit name; driverName = name; } // driver)
       );
 
     assertions = [

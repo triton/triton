@@ -2150,6 +2150,8 @@ keyutils = callPackage ../all-pkgs/k/keyutils { };
 
 kid3 = callPackage ../all-pkgs/k/kid3 { };
 
+kitty = callPackage ../all-pkgs/k/kitty { };
+
 kmod = callPackage ../all-pkgs/k/kmod { };
 
 kmscon = callPackage ../all-pkgs/k/kmscon { };

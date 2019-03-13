@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/kovidgoyal/kitty/releases/download/v${version}/"
       + "${name}.tar.xz";
-    sha256 = "f25224c0a5b0c6f32662d31452fd6fed1665e37f2a1acd193e1a8a838e86185f";
+    sha256 = "37b90f3467c31ee9f0338c066563ab2ec2eac56267286bc4ef6d9850f97f1507";
   };
 
   nativeBuildInputs = [

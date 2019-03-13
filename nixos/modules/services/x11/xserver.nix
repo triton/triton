@@ -13,10 +13,22 @@ let
 
   # Map video driver names to driver packages. FIXME: move into card-specific modules.
   knownVideoDrivers = {
-    virtualbox   = { modules = [ kernelPackages.virtualboxGuestAdditions ]; driverName = "vboxvideo"; };
-    ati = { modules = [ pkgs.xorg.xf86videoati pkgs.xorg.glamoregl ]; };
+    virtualbox = {
+      modules = [
+        kernelPackages.virtualboxGuestAdditions
+      ];
+      driverName = "vboxvideo";
+    };
+    ati = {
+      modules = [
+        pkgs.xorg.xf86videoati
+        pkgs.xorg.glamoregl
+      ];
+    };
     intel = {
-      modules = with pkgs.xorg; [ xf86videointel ];
+      modules = with pkgs.xorg; [
+        xf86videointel
+      ];
       driverName = "intel";
       extraConfig = ''
         Option "DRI" "3"
@@ -24,7 +36,13 @@ let
         Option "TearFree" "true"
       '';
     };
-    intel-testing = { modules = with pkgs.xorg; [ xf86videointel-testing glamoregl ]; driverName = "intel"; };
+    intel-testing = {
+      modules = with pkgs.xorg; [
+        xf86videointel-testing
+        glamoregl
+      ];
+      driverName = "intel";
+    };
     modesetting = { };
   };
 
@@ -36,49 +54,58 @@ let
     # Sans) than that horror.  But we do need the Adobe fonts for some
     # old non-fontconfig applications.  (Possibly this could be done
     # better using a fontconfig rule.)
-    [ pkgs.xorg.fontadobe100dpi
+    [
+      pkgs.xorg.fontadobe100dpi
       pkgs.xorg.fontadobe75dpi
     ];
 
 
   # Just enumerate all heads without discarding XRandR output information.
-  xrandrHeads = let
-    mkHead = num: output: {
-      name = "multihead${toString num}";
-      inherit output;
-    };
-  in imap mkHead cfg.xrandrHeads;
+  xrandrHeads =
+    let
+      mkHead = num: output: {
+        name = "multihead${toString num}";
+        inherit output;
+      };
+    in
+    imap mkHead cfg.xrandrHeads;
 
-  xrandrDeviceSection = let
-    monitors = flip map xrandrHeads (h: ''
-      Option "monitor-${h.output}" "${h.name}"
-    '');
-    # First option is indented through the space in the config but any
-    # subsequent options aren't so we need to apply indentation to
-    # them here
-    monitorsIndented = if length monitors > 1
-      then singleton (head monitors) ++ map (m: "  " + m) (tail monitors)
-      else monitors;
-  in concatStrings monitorsIndented;
+  xrandrDeviceSection =
+    let
+      monitors = flip map xrandrHeads (h: ''
+        Option "monitor-${h.output}" "${h.name}"
+      '');
+      # First option is indented through the space in the config but any
+      # subsequent options aren't so we need to apply indentation to
+      # them here
+      monitorsIndented =
+        if length monitors > 1 then
+          singleton (head monitors) ++ map (m: "  " + m) (tail monitors)
+        else
+          monitors;
+    in
+    concatStrings monitorsIndented;
 
   # Here we chain every monitor from the left to right, so we have:
   # m4 right of m3 right of m2 right of m1   .----.----.----.----.
   # Which will end up in reverse ----------> | m1 | m2 | m3 | m4 |
   #                                          `----^----^----^----'
-  xrandrMonitorSections = let
-    mkMonitor = previous: current: singleton {
-      inherit (current) name;
-      value = ''
-        Section "Monitor"
-          Identifier "${current.name}"
-          ${optionalString (previous != []) ''
-          Option "RightOf" "${(head previous).name}"
-          ''}
-        EndSection
-      '';
-    } ++ previous;
-    monitors = reverseList (foldl mkMonitor [] xrandrHeads);
-  in concatMapStrings (getAttr "value") monitors;
+  xrandrMonitorSections =
+    let
+      mkMonitor = previous: current: singleton {
+        inherit (current) name;
+        value = ''
+          Section "Monitor"
+            Identifier "${current.name}"
+            ${optionalString (previous != []) ''
+            Option "RightOf" "${(head previous).name}"
+            ''}
+          EndSection
+        '';
+      } ++ previous;
+      monitors = reverseList (foldl mkMonitor [] xrandrHeads);
+    in
+    concatMapStrings (getAttr "value") monitors;
 
   configFile = pkgs.stdenv.mkDerivation {
     name = "xserver.conf";
@@ -88,44 +115,41 @@ let
 
     inherit (cfg) config;
 
-    buildCommand =
-      ''
-        echo 'Section "Files"' >> $out
-        echo $xfs >> $out
+    buildCommand = ''
+      echo 'Section "Files"' >> $out
+      echo $xfs >> $out
 
-        for i in ${toString fontsForXServer}; do
-          if test "''${i:0:''${#NIX_STORE}}" == "$NIX_STORE"; then
-            for j in $(find $i -name fonts.dir); do
-              echo "  FontPath \"$(dirname $j)\"" >> $out
-            done
-          fi
-        done
+      for i in ${toString fontsForXServer}; do
+        if test "''${i:0:''${#NIX_STORE}}" == "$NIX_STORE"; then
+          for j in $(find $i -name fonts.dir); do
+            echo "  FontPath \"$(dirname $j)\"" >> $out
+          done
+        fi
+      done
 
-        for i in $(find ${toString cfg.modules} -type d); do
-          if test $(echo $i/*.so* | wc -w) -ne 0; then
-            echo "  ModulePath \"$i\"" >> $out
-          fi
-        done
+      for i in $(find ${toString cfg.modules} -type d); do
+        if test $(echo $i/*.so* | wc -w) -ne 0; then
+          echo "  ModulePath \"$i\"" >> $out
+        fi
+      done
 
-        echo 'EndSection' >> $out
+      echo 'EndSection' >> $out
 
-        echo "$config" >> $out
+      echo "$config" >> $out
 
-        for i in ${toString cfg.modules}; do
-          find $i/share/X11/xorg.conf.d -type f || true
-        done | awk -F/ '{print $NF" "$0}' | sort -V | awk '{print $2}' | xargs cat >> $out
-      ''; # */
+      for i in ${toString cfg.modules}; do
+        find $i/share/X11/xorg.conf.d -type f || true
+      done | awk -F/ '{print $NF" "$0}' | sort -V | awk '{print $2}' | xargs cat >> $out
+    ''; # */
   };
-
 in
-
 {
 
-  imports =
-    [ ./display-managers/default.nix
-      ./window-managers/default.nix
-      ./desktop-managers/default.nix
-    ];
+  imports = [
+    ./display-managers/default.nix
+    ./window-managers/default.nix
+    ./desktop-managers/default.nix
+  ];
 
 
   ###### interface
@@ -169,20 +193,21 @@ in
 
       inputClassSections = mkOption {
         type = types.listOf types.lines;
-        default = [];
-        example = [ ''
-           Identifier      "Trackpoint Wheel Emulation"
-           MatchProduct    "ThinkPad USB Keyboard with TrackPoint"
-           Option          "EmulateWheel"          "true
-           Option          "EmulateWheelButton"    "2"
-           Option          "Emulate3Buttons"       "false"
+        default = [ ];
+        example = [
+          ''
+            Identifier      "Trackpoint Wheel Emulation"
+            MatchProduct    "ThinkPad USB Keyboard with TrackPoint"
+            Option          "EmulateWheel"          "true
+            Option          "EmulateWheelButton"    "2"
+            Option          "Emulate3Buttons"       "false"
           '' ];
         description = "Content of additional InputClass sections of the X server configuration file.";
       };
 
       modules = mkOption {
         type = types.listOf types.path;
-        default = [];
+        default = [ ];
         example = literalExample "[ pkgs.xf86_input_wacom ]";
         description = "Packages to be added to the module search path of the X server.";
       };
@@ -190,7 +215,10 @@ in
       resolutions = mkOption {
         type = types.listOf types.attrs;
         default = [];
-        example = [ { x = 1600; y = 1200; } { x = 1024; y = 786; } ];
+        example = [
+          { x = 1600; y = 1200; }
+          { x = 1024; y = 786; }
+        ];
         description = ''
           The screen resolutions for the X server.  The first element
           is the default resolution.  If this list is empty, the X
@@ -311,7 +339,7 @@ in
       };
 
       xrandrHeads = mkOption {
-        default = [];
+        default = [ ];
         example = [ "HDMI-0" "DVI-0" ];
         type = with types; listOf string;
         description = ''
@@ -327,34 +355,31 @@ in
 
       serverFlagsSection = mkOption {
         default = "";
-        example =
-          ''
+        example = ''
           Option "BlankTime" "0"
           Option "StandbyTime" "0"
           Option "SuspendTime" "0"
           Option "OffTime" "0"
-          '';
+        '';
         description = "Contents of the ServerFlags section of the X server configuration file.";
       };
 
       moduleSection = mkOption {
         type = types.lines;
         default = "";
-        example =
-          ''
-            SubSection "extmod"
-            EndSubsection
-          '';
+        example = ''
+          SubSection "extmod"
+          EndSubsection
+        '';
         description = "Contents of the Module section of the X server configuration file.";
       };
 
       serverLayoutSection = mkOption {
         type = types.lines;
         default = "";
-        example =
-          ''
-            Option "AIGLX" "true"
-          '';
+        example = ''
+          Option "AIGLX" "true"
+        '';
         description = "Contents of the ServerLayout section of the X server configuration file.";
       };
 
@@ -431,57 +456,68 @@ in
     hardware.opengl.enable = mkDefault true;
 
     # FIXME: somehow check for unknown driver names.
-    services.xserver.drivers = flip concatMap cfg.videoDrivers (name:
-      let driver =
-        attrByPath [name]
-          (if xorg ? ${"xf86video" + name}
-           then { modules = [xorg.${"xf86video" + name}]; }
-           else null)
-          knownVideoDrivers;
-      in optional (driver != null) ({ inherit name; driverName = name; } // driver));
+    services.xserver.drivers =
+      flip concatMap cfg.videoDrivers (name:
+        let driver =
+          attrByPath [name] (
+            if xorg ? ${"xf86video" + name} then {
+              modules = [xorg.${"xf86video" + name}];
+            } else null)
+            knownVideoDrivers;
+        in
+        optional (driver != null) ({ inherit name; driverName = name; } // driver)
+      );
 
-    assertions =
-      [ { assertion = !(config.programs.ssh.startAgent && cfg.startGnuPGAgent);
-          message =
-            ''
-              The OpenSSH agent and GnuPG agent cannot be started both. Please
-              choose between ‘programs.ssh.startAgent’ and ‘services.xserver.startGnuPGAgent’.
-            '';
+    assertions = [
+      {
+        assertion = !(config.programs.ssh.startAgent && cfg.startGnuPGAgent);
+        message = ''
+          The OpenSSH agent and GnuPG agent cannot be started both. Please
+          choose between ‘programs.ssh.startAgent’ and ‘services.xserver.startGnuPGAgent’.
+        '';
+      }
+      {
+        assertion = config.security.polkit.enable;
+        message = "X11 requires Polkit to be enabled (‘security.polkit.enable = true’).";
+      }
+    ];
+
+    environment.etc = (
+      optionals cfg.exportConfiguration [
+        {
+          source = "${configFile}";
+          target = "X11/xorg.conf";
         }
-        { assertion = config.security.polkit.enable;
-          message = "X11 requires Polkit to be enabled (‘security.polkit.enable = true’).";
+        # -xkbdir command line option does not seems to be passed to xkbcomp.
+        {
+          source = "${cfg.xkbDir}";
+          target = "X11/xkb";
         }
-      ];
-
-    environment.etc =
-      (optionals cfg.exportConfiguration
-        [ { source = "${configFile}";
-            target = "X11/xorg.conf";
-          }
-          # -xkbdir command line option does not seems to be passed to xkbcomp.
-          { source = "${cfg.xkbDir}";
-            target = "X11/xkb";
-          }
-        ]);
-
-    environment.systemPackages =
-      [ xorg.xorgserver
-        xorg.xrandr
-        pkgs.xrdb
-        xorg.setxkbmap
-        pkgs.iceauth # required for KDE applications (it's called by dcopserver)
-        pkgs.xlsclients
-        xorg.xset
-        pkgs.xsetroot
-        xorg.xinput
-        pkgs.xprop
-        xorg.xauth
-        pkgs.xdg-utils
       ]
-      ++ optional (elem "virtualbox" cfg.videoDrivers) xorg.xrefresh;
+    );
 
-    environment.pathsToLink =
-      [ "/etc/xdg" "/share/xdg" "/share/applications" "/share/icons" "/share/pixmaps" ];
+    environment.systemPackages = [
+      xorg.xorgserver
+      xorg.xrandr
+      pkgs.xrdb
+      xorg.setxkbmap
+      pkgs.iceauth # required for KDE applications (it's called by dcopserver)
+      pkgs.xlsclients
+      xorg.xset
+      pkgs.xsetroot
+      xorg.xinput
+      pkgs.xprop
+      xorg.xauth
+      pkgs.xdg-utils
+    ] ++ optional (elem "virtualbox" cfg.videoDrivers) xorg.xrefresh;
+
+    environment.pathsToLink = [
+      "/etc/xdg"
+      "/share/xdg"
+      "/share/applications"
+      "/share/icons"
+      "/share/pixmaps"
+    ];
 
     # The default max inotify watches is 8192.
     # Nowadays most apps require a good number of inotify watches,
@@ -490,157 +526,169 @@ in
 
     systemd.defaultUnit = mkIf cfg.autorun "graphical.target";
 
-    systemd.services.display-manager =
-      { description = "X11 Server";
+    systemd.services.display-manager = {
+      description = "X11 Server";
 
-        after = [ "systemd-udev-settle.service" "local-fs.target" "acpid.service" "systemd-logind.service" ];
+      after = [
+        "systemd-udev-settle.service"
+        "local-fs.target"
+        "acpid.service"
+        "systemd-logind.service"
+      ];
 
-        restartIfChanged = false;
+      restartIfChanged = false;
 
-        environment =
-          {
-            XKB_BINDIR = "${xorg.xkbcomp}/bin"; # Needed for the Xkb extension.
-            XORG_DRI_DRIVER_PATH = "${pkgs.opengl-dummy.driverSearchPath}/lib/dri"; # !!! Depends on the driver selected at runtime.
-            LD_LIBRARY_PATH = concatStringsSep ":" (
-              [ "${xorg.libX11}/lib" "${xorg.libXext}/lib" "${pkgs.opengl-dummy.driverSearchPath}/lib" ]
-              ++ concatLists (catAttrs "libPath" cfg.drivers));
-          } // cfg.displayManager.job.environment;
+      environment = {
+        XKB_BINDIR = "${xorg.xkbcomp}/bin"; # Needed for the Xkb extension.
+        XORG_DRI_DRIVER_PATH = "${pkgs.opengl-dummy.driverSearchPath}/lib/dri"; # !!! Depends on the driver selected at runtime.
+        LD_LIBRARY_PATH =
+          concatStringsSep ":" (
+            [
+              "${xorg.libX11}/lib"
+              "${xorg.libXext}/lib"
+              "${pkgs.opengl-dummy.driverSearchPath}/lib"
+            ] ++ concatLists (catAttrs "libPath" cfg.drivers)
+          );
+      } // cfg.displayManager.job.environment;
 
-        preStart =
-          ''
-            ${cfg.displayManager.job.preStart}
+      preStart = ''
+        ${cfg.displayManager.job.preStart}
 
-            rm -f /tmp/.X0-lock
-          '';
+        rm -f /tmp/.X0-lock
+      '';
 
-        script = "${cfg.displayManager.job.execCmd}";
+      script = "${cfg.displayManager.job.execCmd}";
 
-        serviceConfig = {
-          Restart = "always";
-          RestartSec = "200ms";
-        };
+      serviceConfig = {
+        Restart = "always";
+        RestartSec = "200ms";
       };
+    };
 
-    services.xserver.displayManager.xserverArgs =
-      [ "-terminate"
-        "-config ${configFile}"
-        "-xkbdir" "${cfg.xkbDir}"
-      ] ++ optional (cfg.display != null) ":${toString cfg.display}"
-        ++ optional (cfg.tty     != null) "vt${toString cfg.tty}"
-        ++ optionals (cfg.display != null) [ "-logfile" "/var/log/X.${toString cfg.display}.log" ]
-        ++ optional (!cfg.enableTCP) "-nolisten tcp";
+    services.xserver.displayManager.xserverArgs = [
+      "-terminate"
+      "-config ${configFile}"
+      "-xkbdir" "${cfg.xkbDir}"
+    ] ++ optional (cfg.display != null) ":${toString cfg.display}"
+      ++ optional (cfg.tty != null) "vt${toString cfg.tty}"
+      ++ optionals (cfg.display != null) [
+        "-logfile"
+        "/var/log/X.${toString cfg.display}.log"
+    ] ++ optional (!cfg.enableTCP) "-nolisten tcp";
 
     services.xserver.modules =
-      concatLists (catAttrs "modules" cfg.drivers) ++
-      [ xorg.xorgserver
+      concatLists (catAttrs "modules" cfg.drivers) ++ [
+        xorg.xorgserver
         pkgs.xf86-input-evdev
       ];
 
     services.xserver.xkbDir = mkDefault "${pkgs.xkeyboard-config}/etc/X11/xkb";
 
-    services.xserver.config =
-      ''
-        Section "ServerFlags"
-          Option "AllowMouseOpenFail" "on"
-          Option "DontZap" "${if cfg.enableCtrlAltBackspace then "off" else "on"}"
-          ${cfg.serverFlagsSection}
-        EndSection
+    services.xserver.config = ''
+      Section "ServerFlags"
+        Option "AllowMouseOpenFail" "on"
+        Option "DontZap" "${if cfg.enableCtrlAltBackspace then "off" else "on"}"
+        ${cfg.serverFlagsSection}
+      EndSection
 
+      Section "Module"
+        ${cfg.moduleSection}
+      EndSection
+
+      Section "Monitor"
+        Identifier "Monitor[0]"
+        ${cfg.monitorSection}
+      EndSection
+
+      Section "InputClass"
+        Identifier "Keyboard catchall"
+        MatchIsKeyboard "on"
+        Option "XkbRules" "base"
+        Option "XkbModel" "${cfg.xkbModel}"
+        Option "XkbLayout" "${cfg.layout}"
+        Option "XkbOptions" "${cfg.xkbOptions}"
+        Option "XkbVariant" "${cfg.xkbVariant}"
+      EndSection
+
+      # Additional "InputClass" sections
+      ${flip concatMapStrings cfg.inputClassSections (inputClassSection: ''
+      Section "InputClass"
+        ${inputClassSection}
+      EndSection
+      '')}
+
+      Section "ServerLayout"
+        Identifier "Layout[all]"
+        ${cfg.serverLayoutSection}
+        # Reference the Screen sections for each driver.  This will
+        # cause the X server to try each in turn.
+        ${flip concatMapStrings cfg.drivers (d: ''
+          Screen "Screen-${d.name}[0]"
+        '')}
+      EndSection
+
+      ${if cfg.useGlamor then ''
         Section "Module"
-          ${cfg.moduleSection}
+          Load "dri2"
+          Load "glamoregl"
+        EndSection
+      '' else ""}
+
+      # For each supported driver, add a "Device" and "Screen"
+      # section.
+      ${flip concatMapStrings cfg.drivers (driver: ''
+
+        Section "Device"
+          Identifier "Device-${driver.name}[0]"
+          Driver "${driver.driverName or driver.name}"
+          ${if cfg.useGlamor then ''Option "AccelMethod" "glamor"'' else ""}
+          ${driver.extraConfig or ""}
+          ${cfg.deviceSection}
+          ${xrandrDeviceSection}
         EndSection
 
-        Section "Monitor"
-          Identifier "Monitor[0]"
-          ${cfg.monitorSection}
+        Section "Screen"
+          Identifier "Screen-${driver.name}[0]"
+          Device "Device-${driver.name}[0]"
+          ${optionalString (cfg.monitorSection != "") ''
+            Monitor "Monitor[0]"
+          ''}
+
+          ${cfg.screenSection}
+
+          ${optionalString (cfg.defaultDepth != 0) ''
+            DefaultDepth ${toString cfg.defaultDepth}
+          ''}
+
+          ${optionalString
+            (
+              driver.name != "virtualbox"
+              && (
+                cfg.resolutions != [ ]
+                || cfg.extraDisplaySettings != ""
+                || cfg.virtualScreen != null
+              )
+            ) (
+              let
+                f = depth: ''
+                  SubSection "Display"
+                    Depth ${toString depth}
+                    ${optionalString (cfg.resolutions != [])
+                      "Modes ${concatMapStrings (res: ''"${toString res.x}x${toString res.y}"'') cfg.resolutions}"}
+                    ${cfg.extraDisplaySettings}
+                    ${optionalString (cfg.virtualScreen != null)
+                      "Virtual ${toString cfg.virtualScreen.x} ${toString cfg.virtualScreen.y}"}
+                  EndSubSection
+                '';
+                in
+                concatMapStrings f [8 16 24]
+            )
+          }
         EndSection
 
-        Section "InputClass"
-          Identifier "Keyboard catchall"
-          MatchIsKeyboard "on"
-          Option "XkbRules" "base"
-          Option "XkbModel" "${cfg.xkbModel}"
-          Option "XkbLayout" "${cfg.layout}"
-          Option "XkbOptions" "${cfg.xkbOptions}"
-          Option "XkbVariant" "${cfg.xkbVariant}"
-        EndSection
+      '')}
 
-        # Additional "InputClass" sections
-        ${flip concatMapStrings cfg.inputClassSections (inputClassSection: ''
-        Section "InputClass"
-          ${inputClassSection}
-        EndSection
-        '')}
-
-        Section "ServerLayout"
-          Identifier "Layout[all]"
-          ${cfg.serverLayoutSection}
-          # Reference the Screen sections for each driver.  This will
-          # cause the X server to try each in turn.
-          ${flip concatMapStrings cfg.drivers (d: ''
-            Screen "Screen-${d.name}[0]"
-          '')}
-        EndSection
-
-        ${if cfg.useGlamor then ''
-          Section "Module"
-            Load "dri2"
-            Load "glamoregl"
-          EndSection
-        '' else ""}
-
-        # For each supported driver, add a "Device" and "Screen"
-        # section.
-        ${flip concatMapStrings cfg.drivers (driver: ''
-
-          Section "Device"
-            Identifier "Device-${driver.name}[0]"
-            Driver "${driver.driverName or driver.name}"
-            ${if cfg.useGlamor then ''Option "AccelMethod" "glamor"'' else ""}
-            ${driver.extraConfig or ""}
-            ${cfg.deviceSection}
-            ${xrandrDeviceSection}
-          EndSection
-
-          Section "Screen"
-            Identifier "Screen-${driver.name}[0]"
-            Device "Device-${driver.name}[0]"
-            ${optionalString (cfg.monitorSection != "") ''
-              Monitor "Monitor[0]"
-            ''}
-
-            ${cfg.screenSection}
-
-            ${optionalString (cfg.defaultDepth != 0) ''
-              DefaultDepth ${toString cfg.defaultDepth}
-            ''}
-
-            ${optionalString
-                (driver.name != "virtualbox" &&
-                 (cfg.resolutions != [] ||
-                  cfg.extraDisplaySettings != "" ||
-                  cfg.virtualScreen != null))
-              (let
-                f = depth:
-                  ''
-                    SubSection "Display"
-                      Depth ${toString depth}
-                      ${optionalString (cfg.resolutions != [])
-                        "Modes ${concatMapStrings (res: ''"${toString res.x}x${toString res.y}"'') cfg.resolutions}"}
-                      ${cfg.extraDisplaySettings}
-                      ${optionalString (cfg.virtualScreen != null)
-                        "Virtual ${toString cfg.virtualScreen.x} ${toString cfg.virtualScreen.y}"}
-                    EndSubSection
-                  '';
-              in concatMapStrings f [8 16 24]
-            )}
-
-          EndSection
-        '')}
-
-        ${xrandrMonitorSections}
-      '';
-
+      ${xrandrMonitorSections}
+    '';
   };
-
 }

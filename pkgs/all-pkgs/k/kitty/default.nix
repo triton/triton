@@ -1,11 +1,12 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 , lib
 , ncurses
 , python3
 
 , dbus
 , fontconfig
+, freetype
 , harfbuzz_lib
 , libpng
 , libx11
@@ -25,11 +26,9 @@ in
 stdenv.mkDerivation rec {
   name = "kitty-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "kovidgoyal";
-    repo = "kitty";
-    rev = "v${version}";
+  src = fetchurl {
+    url = "https://github.com/kovidgoyal/kitty/releases/download/v${version}/"
+      + "${name}.tar.xz";
     sha256 = "f25224c0a5b0c6f32662d31452fd6fed1665e37f2a1acd193e1a8a838e86185f";
   };
 
@@ -41,6 +40,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus
     fontconfig
+    freetype
     harfbuzz_lib
     libpng
     libx11

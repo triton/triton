@@ -3,7 +3,6 @@
 , lib
 , util-macros
 
-#, glamoregl
 , libdrm
 , libpciaccess
 , opengl-dummy
@@ -27,7 +26,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    xorg.glamoregl
     libdrm
     libpciaccess
     opengl-dummy

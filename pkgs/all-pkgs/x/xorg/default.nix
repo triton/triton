@@ -591,17 +591,6 @@ let
   #
   # }) // {inherit ;};
 
-  glamoregl = (mkDerivation "glamoregl" {
-    name = "glamor-egl-0.6.0";
-    src = fetchurl {
-      url = mirror://xorg/individual/driver/glamor-egl-0.6.0.tar.bz2;
-      sha256 = "1jg5clihklb9drh1jd7nhhdsszla6nv7xmbvm8yvakh5wrb1nlv6";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xorgproto opengl-dummy libdrm libpciaccess xorgserver ];
-
-  }) // {inherit xorgproto opengl-dummy libdrm xorgserver ;};
-
   # ico = (mkDerivation "ico" {
   #   name = "ico-1.0.4";
   #   src = fetchurl {
@@ -1059,9 +1048,9 @@ let
       sha256 = "dd907d318884bb6e81e7e62da7bb34af26aeeed3a81c21e0b46a4f3cae3ff457";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ opengl-dummy xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ];
+    buildInputs = [ opengl-dummy xorgproto libdrm systemd_lib libpciaccess xorgserver ];
 
-  }) // {inherit xorgproto glamoregl libdrm systemd_lib libpciaccess xorgserver ;};
+  }) // {inherit xorgproto libdrm systemd_lib libpciaccess xorgserver ;};
 
   xf86videonouveau = (mkDerivation "xf86videonouveau" {
     name = "xf86-video-nouveau-1.0.16";

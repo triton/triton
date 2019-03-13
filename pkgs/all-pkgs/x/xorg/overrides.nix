@@ -14,13 +14,6 @@ in
     '';
   };
 
-  glamoregl = attrs: attrs // {
-    installFlags = [
-      "sdkdir=\${out}/include/xorg"
-      "configdir=\${out}/share/X11/xorg.conf.d"
-    ];
-  };
-
   imake = attrs: attrs // {
     inherit (xorg) xorgcffiles;
     x11BuildHook = ./imake.sh;
@@ -88,10 +81,6 @@ in
     installFlags = [
       "configdir=$(out)/share/X11/xorg.conf.d"
     ];
-  };
-
-  xf86videoati = attrs: attrs // {
-    NIX_CFLAGS_COMPILE = "-I${xorg.glamoregl}/include/xorg";
   };
 
   xf86videonv = attrs: attrs // {

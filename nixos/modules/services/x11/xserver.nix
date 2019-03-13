@@ -22,7 +22,6 @@ let
     ati = {
       modules = [
         pkgs.xorg.xf86videoati
-        pkgs.xorg.glamoregl
       ];
     };
     intel = {

@@ -10,6 +10,7 @@
 , harfbuzz_lib
 , libpng
 , libx11
+, libxcb
 , libxcursor
 , libxi
 , libxinerama
@@ -18,6 +19,7 @@
 , opengl-dummy
 , wayland
 , wayland-protocols
+, zlib
 }:
 
 let
@@ -44,6 +46,7 @@ stdenv.mkDerivation rec {
     harfbuzz_lib
     libpng
     libx11
+    libxcb
     libxcursor
     libxi
     libxinerama
@@ -52,11 +55,12 @@ stdenv.mkDerivation rec {
     opengl-dummy
     wayland
     wayland-protocols
+    zlib
   ];
 
   postPatch = ''
     # Don't build docs.
-    mkdir -pv docs/_build/html
+    mkdir -pv docs/_build/html/
     sed -i setup.py \
       -e '/copy_man_pages(ddir)$/d' \
       -e '/copy_html_docs(ddir)$/d'

@@ -16,16 +16,16 @@ let
     "https://unbound.net/downloads/unbound-${version}.tar.gz"
   ];
 
-  version = "1.9.0";
+  version = "1.9.1";
 in
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmQNGyrEvDbv7GymGN7w7WU1YSSJU4kgZoC74ii7hHJLRy";
+    multihash = "QmTviFB36iBRWXAr9QL7vVVk83wyr9y788uR2ZzyN8YY3y";
     hashOutput = false;
-    sha256 = "415af94b8392bc6b2c52e44ac8f17935cc6ddf2cc81edfb47c5be4ad205ab917";
+    sha256 = "c3c0bf9b86ccba4ca64f93dd4fe7351308ab54293f297a67de5a8914c1dc59c5";
   };
 
   buildInputs = [
@@ -71,8 +71,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.9.0";
-      outputHash = "415af94b8392bc6b2c52e44ac8f17935cc6ddf2cc81edfb47c5be4ad205ab917";
+      urls = tarballUrls "1.9.1";
+      outputHash = "c3c0bf9b86ccba4ca64f93dd4fe7351308ab54293f297a67de5a8914c1dc59c5";
       inherit (src)
         outputHashAlgo;
       fullOpts = {

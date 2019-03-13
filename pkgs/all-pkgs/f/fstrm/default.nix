@@ -5,13 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fstrm-0.4.0";
+  name = "fstrm-0.5.0";
 
   src = fetchurl {
     url = "https://dl.farsightsecurity.com/dist/fstrm/${name}.tar.gz";
-    multihash = "QmRTZU9G1t6qZG76BLypf2s7jYTVvVqYCpdKjD288BEV2a";
+    multihash = "QmUmuKHTzsLKHNmUmhnBAGLk7ASBxw8oNugopD8jz6etx8";
     hashOutput = false;
-    sha256 = "b20564cb2ebc7783a8383fbef5bcef5726f94baf48b83843553c9e1030b738ef";
+    sha256 = "10ee7792a86face1d2271dc591652ab8c7af6976883887c69fdb11f10da135fc";
   };
 
   buildInputs = [

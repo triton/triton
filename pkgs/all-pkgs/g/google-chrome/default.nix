@@ -41,6 +41,8 @@
 , util-linux_lib
 , xdg-utils
 
+, flash ? false
+
 , channel
 }:
 
@@ -52,6 +54,7 @@ let
     boolString
     elem
     makeSearchPath
+    optionals
     platforms;
 
   chromiumChannel =
@@ -88,7 +91,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adobe-flash-player
     adwaita-icon-theme
     alsa-lib
     at-spi2-atk
@@ -125,6 +127,8 @@ stdenv.mkDerivation rec {
     systemd_lib
     util-linux_lib
     xdg-utils
+  ] ++ optionals flash [
+    adobe-flash-player
   ];
 
   chromeBinPath = makeSearchPath "bin" buildInputs;

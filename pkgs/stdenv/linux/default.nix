@@ -289,7 +289,7 @@ let
         inherit lib;
         inherit (pkgs) stdenv cc bash_small coreutils_small
           gawk_small gnupatch_small gnused_small gnutar_small pcre
-          pkgconfig pkgconf pkgconf-wrapper python_tiny;
+          pkgconfig pkgconf pkgconf-wrapper python_tiny xz;
 
         bison = pkgs.bison.override {
           type = "small";
@@ -331,7 +331,7 @@ let
           type = "small";
         };
 
-        xz = pkgs.xz.override {
+        xz_5-2-4 = pkgs.xz_5-2-4.override {
           type = "small";
         };
 
@@ -472,7 +472,7 @@ let
         inherit (pkgs) stdenv cc coreutils_small gnugrep binutils pcre
           bash_small patchelf pkgconfig pkgconf pkgconf-wrapper pkgconf_unwrapped
           brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-          gnupatch_small gnused_small gnutar_small gzip xz libidn2;
+          gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-4 libidn2;
 
         cc_gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -544,7 +544,7 @@ let
       inherit (stage23Pkgs) cc_gcc coreutils_small gnugrep binutils pcre
         bash_small patchelf pkgconfig pkgconf pkgconf_unwrapped
         brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-        gnupatch_small gnused_small gnutar_small gzip xz libidn2;
+        gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-4 libidn2;
     };
   });
 

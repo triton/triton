@@ -4197,7 +4197,10 @@ xvidcore = callPackage ../all-pkgs/x/xvidcore { };
 
 xwininfo = callPackage ../all-pkgs/x/xwininfo { };
 
-xz = callPackage ../all-pkgs/x/xz { };
+xz_5-2-4 = callPackage ../all-pkgs/x/xz {
+  version = "5.2.4";
+};
+xz = callPackageAlias "xz_5-2-4" { };
 
 yajl = callPackage ../all-pkgs/y/yajl { };
 

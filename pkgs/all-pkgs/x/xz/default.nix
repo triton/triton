@@ -2,6 +2,7 @@
 , fetchurl
 
 , type ? "full"
+, version
 }:
 
 let
@@ -12,16 +13,22 @@ let
     "https://tukaani.org/xz/xz-${version}.tar.xz"
   ];
 
-  version = "5.2.4";
+  sources = {
+    "5.2.4" = {
+      multihash = "QmTvwVoGSrcoHNt7LKZDhnQUarCqFiJbY2ZwN4ctkVhCn1";
+      sha256 = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
+    };
+  };
 in
 stdenv.mkDerivation rec {
   name = "xz-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmTvwVoGSrcoHNt7LKZDhnQUarCqFiJbY2ZwN4ctkVhCn1";
     hashOutput = false;
-    sha256 = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
+    inherit (sources."${version}")
+      multihash
+      sha256;
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.

@@ -6,8 +6,6 @@ let
   inherit (lib)
     elem
     mkIf
-    optionals
-    optionalString
     singleton;
 
   drivers = config.services.xserver.videoDrivers;
@@ -70,15 +68,21 @@ in
       nvidia-drivers_kernelspace
     ];
 
-    boot.kernelModules = optionals nvidia-drivers_kernelspace.drm [
-      "nvidia-drm"
-    ] ++ optionals nvidia-drivers_kernelspace.kms [
-      "nvidia-modeset"
-    ] ++ optionals nvidia-drivers_kernelspace.uvm [
-      "nvidia-uvm"
+    boot.kernelModules = [
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+      "nvidia_uvm"
     ];
 
-    boot.kernelParams = optionals nvidia-drivers_kernelspace.kms [
+    boot.initrd.availableKernelModules = [
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+      "nvidia_uvm"
+    ];
+
+    boot.kernelParams = [
       "nvidia-drm.modeset=1"
     ];
 
@@ -100,7 +104,10 @@ in
     services.acpid.enable = true;
 
     # Create /dev/nvidia-uvm when the nvidia-uvm module is loaded.
-    services.udev.extraRules = optionalString nvidia-drivers_kernelspace.uvm ''
+    services.udev.extraRules = ''
+      KERNEL=="nvidia", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidiactl c $(grep nvidia-frontend /proc/devices | cut -d \  -f 1) 255'"
+      KERNEL=="nvidia_modeset", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-modeset c $(grep nvidia-frontend /proc/devices | cut -d \  -f 1) 254'"
+      KERNEL=="card*", SUBSYSTEM=="drm", DRIVERS=="nvidia", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia%n c $(grep nvidia-frontend /proc/devices | cut -d \  -f 1) %n'"
       KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
     '';
 
@@ -123,6 +130,10 @@ in
     services.xserver.screenSection = ''
       Option "RandRRotation" "on"
     '';
+    #  Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline=On, ForceFullCompositionPipeline = On }"
+    #  Option "AllowIndirectGLXProtocol" "off"
+    #  Option "TripleBuffer" "on"
+    #'';
 
   };
 

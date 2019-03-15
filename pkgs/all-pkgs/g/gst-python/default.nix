@@ -3,8 +3,7 @@
 , fetchurl
 , isPy2
 , lib
-, meson
-, ninja
+, pkgs
 
 , glib
 , gst-plugins-base
@@ -40,8 +39,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    meson
-    ninja
+    pkgs.meson
+    pkgs.ninja
   ];
 
   buildInputs = [

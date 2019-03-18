@@ -24,24 +24,24 @@ let
     optionals
     optionalString;
 
-  channel = "3.13";
-  version = "${channel}.4";
+  channel = "3.14";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
-    multihash = "Qmb11hTKRM54PYYPcTPjyUfL7ngDkSyWRVK8U39pzdbjsg";
+    multihash = "QmWLFCN8nSqWoJ7CG5wqrBSA8256EB4Kcssq9vBd1fLxyb";
     hashOutput = false;
-    sha256 = "fdd928fee35f472920071d1c7f1a6a2b72c9b25e04f7a37b409349aef3f20e9b";
+    sha256 = "aa76ba67b3c2af1946701f847073f4652af5cbd9f141f221c97af99127e75502";
   };
 
   patches = [
     (fetchTritonPatch {
-      rev = "e6b0d2af7e353e719ea3bb38f550111dab30cd91";
-      file = "c/cmake/0001-Fix-search-paths.patch";
-      sha256 = "e7c0b304f3c7340d22a44ecff64bd6d9f3997f12f437594f7ec59e5864a5e23a";
+      rev = "0b0552421abc55ceff6615bc3fcc3782eb132cd0";
+      file = "c/cmake/0001-Remove-hardcoded-paths.patch";
+      sha256 = "d6ffd2a315374821684fa7b76391ee665fa140a8eee8cf9f013595283f80158b";
     })
   ];
 
@@ -70,10 +70,7 @@ stdenv.mkDerivation rec {
     sed -i '/CMAKE_USE_SYSTEM_/s,OFF,ON,g' CMakeLists.txt
   '';
 
-  preConfigure = ''
-    substituteInPlace Modules/Platform/UnixPaths.cmake \
-      --subst-var-by libc ${stdenv.cc.libc}
-  '' + optionalString bootstrap ''
+  preConfigure = optionalString bootstrap ''
     fixCmakeFiles .
 
     configureFlagsArray+=("--parallel=$NIX_BUILD_CORES")

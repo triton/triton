@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.3.3";
+  version = "2.4.0";
 in
 stdenv.mkDerivation rec {
   name = "libseccomp-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/seccomp/libseccomp/releases/download/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "7fc28f4294cc72e61c529bedf97e705c3acf9c479a8f1a3028d4cd2ca9f3b155";
+    sha256 = "2e74c7e8b54b340ad5d472e59286c6758e1e1e96c6b43c3dbdc8ddafbf0e525d";
   };
 
   buildInputs = [
@@ -27,9 +27,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      sha256Urls = map (n: "${n}.SHA256SUM.asc") src.urls;
-      pgpKeyFingerprint = "7100 AADF AE6E 6E94 0D2E  0AD6 55E4 5A5A E8CA 7C8A";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha256Urls = map (n: "${n}.SHA256SUM.asc") src.urls;
+        pgpKeyFingerprint = "7100 AADF AE6E 6E94 0D2E  0AD6 55E4 5A5A E8CA 7C8A";
+      };
     };
   };
 

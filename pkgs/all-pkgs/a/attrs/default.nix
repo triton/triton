@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "18.2.0";
+  version = "19.1.0";
 in
 buildPythonPackage rec {
   name = "attrs-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "attrs";
     inherit version;
-    sha256 = "10cbf6e27dbce8c30807caf056c8eb50917e0eaafe86347671b57254006c3e69";
+    sha256 = "f0b870f674851ecbfbbbd364d6b5cbdff9dcedbc7f3f5e18a6891057f21fe399";
   };
 
   meta = with lib; {

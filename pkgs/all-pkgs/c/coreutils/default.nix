@@ -20,7 +20,7 @@ let
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
   ];
 
-  version = "8.30";
+  version = "8.31";
 in
 stdenv.mkDerivation rec {
   name = "coreutils-${type}-${version}";
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "e831b3a86091496cdba720411f9748de81507798f6130adeaef872d206e1b057";
+    sha256 = "ff7a9c918edce6b4f4b2725e3f9b37b0c4d193531cac49a48b56c4d0d3a9e9fd";
   };
 
   buildInputs = optionals (type == "full") [
@@ -65,11 +65,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "8.30";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "6C37 DC12 121A 5006 BC1D  B804 DF6F D971 3060 37D9";
+      urls = tarballUrls "8.31";
       inherit (src) outputHashAlgo;
-      outputHash = "e831b3a86091496cdba720411f9748de81507798f6130adeaef872d206e1b057";
+      outputHash = "ff7a9c918edce6b4f4b2725e3f9b37b0c4d193531cac49a48b56c4d0d3a9e9fd";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "6C37 DC12 121A 5006 BC1D  B804 DF6F D971 3060 37D9";
+      };
     };
   };
 

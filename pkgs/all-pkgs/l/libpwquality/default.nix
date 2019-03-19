@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     description = "Password quality checking library";
     homepage = https://github.com/libpwquality/libpwquality;
     license = with licenses; [
-      bsd
+      bsd3
       gpl2
     ];
     maintainers = with maintainers; [ ];

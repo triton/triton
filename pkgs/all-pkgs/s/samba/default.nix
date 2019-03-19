@@ -6,7 +6,7 @@
 , gettext
 , libxslt
 , perl
-, python2Packages
+, python3Packages
 
 , acl
 , avahi
@@ -18,7 +18,6 @@
 , gpgme
 , jansson
 , krb5_full
-, ldb
 , libarchive
 , libcap
 , libgcrypt
@@ -46,7 +45,7 @@ let
     optionals
     optionalString;
 
-  version = "4.9.5";
+  version = "4.10.0";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -61,7 +60,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "078956d2d98e22011265afd4b7221efe4861067dcba4a031583b01f34d423700";
+    sha256 = "9f1f400a5a84d197087a3724d7509e179e19148622226afa9dcd6be4cf693458";
   };
 
   nativeBuildInputs = [
@@ -70,9 +69,9 @@ stdenv.mkDerivation rec {
     docbook_xml_dtd_45
     libxslt
     perl
-    python2Packages.python
-    python2Packages.waf.dev
-    python2Packages.wrapPython
+    python3Packages.python
+    python3Packages.waf.dev
+    python3Packages.wrapPython
   ];
 
   buildInputs = [
@@ -105,7 +104,7 @@ stdenv.mkDerivation rec {
     jansson
     libtirpc
     rpcsvc-proto
-    python2Packages.etcd
+    python3Packages.etcd
   ];
 
   postPatch = ''
@@ -124,7 +123,8 @@ stdenv.mkDerivation rec {
     # buildtools/wafsamba/wscript options
     "--bundled-libraries=com_err"
     "--private-libraries=NONE"
-    "--abi-check"
+    #"--abi-check"
+    "--abi-check-disable"  # Needed for 4.10.0
     "--why-needed"
     "--with-libiconv"
 
@@ -140,7 +140,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
 
     # lib/audit_logging/wscript options
-    (if isClient then null else "--with-json-audit")
+    (if isClient then null else "--with-json")
 
     # lib/util/wscript
     "--with-systemd"
@@ -181,6 +181,11 @@ stdenv.mkDerivation rec {
     "--with-experimental-mit-ad-dc"
   ];
 
+  # We rebuild everything during install for some reason so don't build twice
+  buildPhase = ''
+    true
+  '';
+
   preInstall = ''
     wafInstallFlagsArray+=('--destdir' "$out")
   '';
@@ -197,7 +202,7 @@ stdenv.mkDerivation rec {
     rm -r "$out"/var
     rm -r "$out"/libexec/ctdb/tests
     rm -r "$out"/lib/pkgconfig
-    rm -r "$out"/lib/python2.7/site-packages/samba/tests
+    rm -r "$out"/lib/python*/site-packages/samba/tests
     rm "$out"/bin/ctdb_run{_cluster,}_tests
     rm -r "$out"/share/ctdb
     rm "$out"/bin/smbtorture

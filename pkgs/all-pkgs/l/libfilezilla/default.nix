@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = "https://lib.filezilla-project.org/index.php";
-    license = licenses.lpgl21;
+    license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington
     ];

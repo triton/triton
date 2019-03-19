@@ -32,7 +32,7 @@ let
     "mirror://gnupg/gnupg/gnupg-${version}.tar.bz2"
   ];
 
-  version = "2.2.13";
+  version = "2.2.14";
 in
 stdenv.mkDerivation rec {
   name = "gnupg-${version}";
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "76c787a955f9e6e0ead47c9be700bfb9d454f955a7b7c7e697aa719bac7b11d8";
+    sha256 = "1bf9ed46dc1ec5d8cfa13ba1ad47f94981f3b6a7ec16ad9123cc2549c4cbf87b";
   };
 
   nativeBuildInputs = [
@@ -97,8 +97,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.13";
-      sha256 = "76c787a955f9e6e0ead47c9be700bfb9d454f955a7b7c7e697aa719bac7b11d8";
+      urls = tarballUrls "2.2.14";
+      sha256 = "1bf9ed46dc1ec5d8cfa13ba1ad47f94981f3b6a7ec16ad9123cc2549c4cbf87b";
       fullOpts = {
         pgpsigUrl = map (n: "${n}.sig") urls;
         pgpKeyFingerprints = [

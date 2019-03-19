@@ -1,5 +1,6 @@
 { stdenv
 , autoconf
+, fetchTritonPatch
 , fetchurl
 }:
 
@@ -11,6 +12,19 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "17195c833098da79de5778ee90948f4c5d90ed1a0cf8391b4ab348e2ec511e3f";
   };
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "3cbdd46894eb4c959f2203be1c1fb83d35df1718";
+      file = "a/autoconf-archive/0001-ax_code_coverage-fix-self-referencing-variable-error.patch";
+      sha256 = "30789d81622fa0ebef1481d9f2118d40b2accf4d1367dc2d5a951431371152ec";
+    })
+    (fetchTritonPatch {
+      rev = "3cbdd46894eb4c959f2203be1c1fb83d35df1718";
+      file = "a/autoconf-archive/0002-ax_am_macros_static-Fix-impurity.patch";
+      sha256 = "307f6878d02549d0139d84c35717592e02a5e697fa4734a694a4830b39be04bf";
+    })
+  ];
 
   passthru = {
     srcVerification = fetchurl {

@@ -21,7 +21,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "freetype-2.9.1";
+  name = "freetype-2.10.0";
 
   src = fetchurl {
     urls = [
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "db8d87ea720ea9d5edc5388fc7a0497bb11ba9fe972245e0f7f4c7e8b1e1e84d";
+    sha256 = "fccc62928c65192fff6c98847233b28eb7ce05f12d2fea3f6cc90e8b4e5fbe06";
   };
 
   buildInputs = [
@@ -84,8 +84,10 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "58E0 C111 E39F 5408 C5D3  EC76 C1A6 0EAC E707 FDA5";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "58E0 C111 E39F 5408 C5D3  EC76 C1A6 0EAC E707 FDA5";
+      };
     };
   };
 

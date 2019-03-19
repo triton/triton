@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "SDK for making video editors and more";
     homepage = http://gstreamer.freedesktop.org;
-    license = licenses.lgpl2plus;
+    license = licenses.lgpl2Plus;
     maintainers = with maintainers; [
       codyopel
     ];

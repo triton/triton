@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    license = licenses.mpl2;
+    license = licenses.mpl20;
     maintainers = with maintainers; [
       wkennington
     ];

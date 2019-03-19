@@ -134,11 +134,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "A file manager for the GNOME desktop";
     homepage = https://wiki.gnome.org/Apps/Nautilus;
-    license = with licenses; [
-      fdl11
-      gpl2Plus
-      lgpl2Plus
-    ];
+    license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       codyopel
     ];

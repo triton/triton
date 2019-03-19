@@ -19,7 +19,6 @@ let
         url = "https://github.com/zfsonlinux/zfs/releases/download/zfs-${version}/zfs-${version}.tar.gz";
         inherit sha256;
       };
-
 in
 {
   "stable" = rec {
@@ -38,12 +37,12 @@ in
     ];
   };
   "dev" = {
-    date = "2019-03-02";
-    maxLinuxVersion = "5.0";
+    date = "2019-03-19";
+    maxLinuxVersion = "5.1";
     src = fetcher {
       fetchzipVersion = 6;
-      rev = "762f9ef3d9d897b5baf7c91d6e8a7bf371a9b02f";
-      sha256 = "0c5840e43e5775738971a38016a1efdbc0f4790b2522489cc1d8c7a88cdf7a6c";
+      rev = "73c25a78e6b420ff37d703d2e1911c17cf449caa";
+      sha256 = "4fe9854e47dd0fa0fdb04e34e24319629846d8b0130b9817719b13cce0ad81c8";
     };
     patches = [
       (fetchTritonPatch {

@@ -69,13 +69,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "A file manager for the GNOME desktop";
-    homepage = https://wiki.gnome.org/Apps/Nautilus;
-    license = with licenses; [
-      fdl11
-      gpl2Plus
-      lgpl2Plus
-    ];
+    description = "Compressed file management for GNOME application";
+    homepage = https://gitlab.gnome.org/GNOME/gnome-autoar;
+    license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       codyopel
     ];

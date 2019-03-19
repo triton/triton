@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     description = "Fast JSON parser/generator for C++";
     homepage = https://github.com/miloyip/rapidjson;
     license = with licenses; [
-      bsdOrginal
+      bsd3
       #json
       mit
     ];

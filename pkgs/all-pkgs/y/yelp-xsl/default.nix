@@ -47,7 +47,6 @@ stdenv.mkDerivation rec {
     description = "XSL stylesheets for yelp";
     homepage = https://git.gnome.org/browse/yelp-xsl;
     license = with licenses; [
-      fdl11
       gpl2Plus
       lgpl21Plus
       mit

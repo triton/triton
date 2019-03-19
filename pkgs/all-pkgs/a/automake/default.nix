@@ -28,6 +28,9 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
+  # We don't want NIX_STORE paths in our dist scripts like config.guess
+  dontPatchShebangs = true;
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

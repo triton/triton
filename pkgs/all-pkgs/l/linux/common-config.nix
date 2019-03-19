@@ -115,6 +115,9 @@ with stdenv.lib;
   ACPI_BGRT y
   ACPI_APEI y
   CPU_IDLE_GOV_LADDER y
+  ${optionalString (versionAtLeast version "5.1") ''
+    CPU_IDLE_GOV_TEO y
+  ''}
 
   HOTPLUG_PCI_ACPI y
   HOTPLUG_PCI_CPCI y
@@ -243,6 +246,7 @@ with stdenv.lib;
     NET_DSA_MV88E6XXX_PTP y
   ''}
   AF_RXRPC_IPV6 y
+  NET_DEVLINK y
 
   MLX5_CORE_EN y
   ${optionalString (versionAtLeast version "4.12") ''
@@ -395,7 +399,9 @@ with stdenv.lib;
   EXT3_FS n
   EXT4_FS_POSIX_ACL y
   EXT4_FS_SECURITY y
-  EXT4_ENCRYPTION y
+  ${optionalString (versionOlder version "5.1") ''
+    EXT4_ENCRYPTION y
+  ''}
   REISERFS_FS n
   JFS_FS n
   XFS_QUOTA y
@@ -407,8 +413,13 @@ with stdenv.lib;
   OCFS2_DEBUG_MASKLOG n
   BTRFS_FS_POSIX_ACL y
   F2FS_FS_SECURITY y
-  F2FS_FS_ENCRYPTION y
+  ${optionalString (versionOlder version "5.1") ''
+    F2FS_FS_ENCRYPTION y
+  ''}
   FS_DAX y
+  ${optionalString (versionAtLeast version "5.1") ''
+    FS_ENCRYPTION y
+  ''}
   FANOTIFY_ACCESS_PERMISSIONS y
   FSCACHE_STATS y
   FSCACHE_HISTOGRAM y
@@ -424,7 +435,7 @@ with stdenv.lib;
   ''}
   UBIFS_FS_ADVANCED_COMPR y
   UBIFS_ATIME_SUPPORT y
-  ${optionalString (versionAtLeast version "4.10") ''
+  ${optionalString (versionAtLeast version "4.10" && versionOlder version "5.1") ''
     UBIFS_FS_ENCRYPTION y
   ''}
   ${optionalString (versionAtLeast version "4.15") ''
@@ -490,13 +501,20 @@ with stdenv.lib;
   RANDOMIZE_BASE y
   STRICT_DEVMEM y # Filter access to /dev/mem
   IO_STRICT_DEVMEM y
-  SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
+  ${optionalString (versionOlder version "5.1") ''
+    SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
+  ''}
   DEVKMEM n # Disable /dev/kmem
   ${optionalString (versionOlder version "4.18") "CC_"}STACKPROTECTOR_STRONG y
   USER_NS y # Support for user namespaces
   INTEL_TXT y
+  ${optionalString (versionAtLeast version "5.1" ''
+    SECURITY_SAFESETID y
+  ''}
   SECURITY_YAMA y
-  DEFAULT_SECURITY_DAC y
+  ${optionalString (versionOlder version "5.1") ''
+    DEFAULT_SECURITY_DAC y
+  ''}
   SECURITY_DMESG_RESTRICT y
   ${optionalString (versionAtLeast version "4.15") ''
     SIGNED_PE_FILE_VERIFICATION y
@@ -509,7 +527,9 @@ with stdenv.lib;
 
   # Misc. options.
   EARLY_PRINTK_DBGP n
-  EARLY_PRINTK_EFI y
+  ${optionalString (versionOlder version "5.1") ''
+    EARLY_PRINTK_EFI y
+  ''}
   EXPERT y
   STRIP_ASM_SYMS y
   UNUSED_SYMBOLS y
@@ -777,6 +797,9 @@ with stdenv.lib;
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y
+  ${optionalString (versionAtLeast version "5.1") ''
+    CONFIG_SUNRPC_DISABLE_INSECURE_ENCTYPES y
+  ''}
 
   # Virtualisation.
   PARAVIRT y

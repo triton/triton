@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Remote client for the Transmission torrent daemon";
     homepage = https://github.com/TingPing/transmission-remote-gnome;
-    license = licenses.gplv3;
+    license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       codyopel
     ];

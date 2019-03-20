@@ -4650,7 +4650,7 @@ libstartup_notification =
   in kPkgs;
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4-14;
+  linuxPackages = pkgs.linuxPackages_4-19;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!

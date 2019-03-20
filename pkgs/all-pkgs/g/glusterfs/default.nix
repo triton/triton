@@ -40,8 +40,8 @@ let
     which
   ];
 
-  versionMajor = "5";
-  versionMinor = "5";
+  versionMajor = "6";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "781da2e9e955eec6b411abd8df5851353936e5cc6f6aef9b8e6c8b970610cdf4";
+    sha256 = "9892746c44e4ab85412f6f4948ef9731232238e4628454a1a74a55482ceaf0d5";
   };
 
   nativeBuildInputs = [
@@ -104,7 +104,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-crypt-xlator"
     "--with-ipv6-default"
     "--with-mountutildir=/run/current-system/sw/bin"
   ];
@@ -120,11 +119,6 @@ stdenv.mkDerivation rec {
   '';
 
   preFixup = ''
-    # For some reason this pkgconfig file depends on an unknown library
-    # that doesn't exist
-    grep -q '\-lgfchangedb' $out/lib/pkgconfig/libgfdb.pc
-    sed -i 's, -lgfchangedb,,g' $out/lib/pkgconfig/libgfdb.pc
-
     # Fix mount.glusterfs
     sed -i '/export PATH/d' "$out"/bin/mount.glusterfs
     wrapProgram "$out"/bin/mount.glusterfs \

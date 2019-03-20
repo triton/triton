@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
-  cmakeConfigure = !bootstrap;
+  cmakeHook = !bootstrap;
 
   passthru = {
     srcVerification = fetchurl {

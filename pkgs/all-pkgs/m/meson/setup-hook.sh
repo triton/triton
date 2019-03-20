@@ -71,13 +71,15 @@ mesonFixup() {
 }
 
 meson="${meson-@out@/bin/meson}"
-if [ -n "${mesonConfigure-true}" -a -z "$configurePhase" ]; then
-  configurePhase=mesonConfigurePhase
-  if [ -n "${mesonCheck-true}" ]; then
-    checkPhase=mesonCheckPhase
+if [ -n "${mesonHook-1}" ]; then
+  if [ -z "$configurePhase" ]; then
+    configurePhase='mesonConfigurePhase'
   fi
-  if [ -n "${mesonInstall-true}" ]; then
-    installPhase=mesonInstallPhase
+  if [ "$checkPhase" = "ninjaCheckPhase" -o -z "$checkPhase" ]; then
+    checkPhase='mesonCheckPhase'
+  fi
+  if [ "$installPhase" = "ninjaInstallPhase" -o -z "$installPhase" ]; then
+    installPhase='mesonInstallPhase'
   fi
   fixupOutputHooks+=(mesonFixup)
 fi

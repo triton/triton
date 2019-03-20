@@ -123,11 +123,11 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  cmakeConfigure = false;
+  cmakeHook = false;
   disableStatic = false; # https://bugzilla.novell.com/show_bug.cgi?id=644723
   dontStrip = true;
   buildDirCheck = false;
-  dontUseNinja = true;
+  ninjaHook = false;
 
   meta = with lib; {
     description = "Mono runtime and class libraries, a C# compiler/interpreter";

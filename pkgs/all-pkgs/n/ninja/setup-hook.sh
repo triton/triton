@@ -70,15 +70,15 @@ addNinjaParams() {
 }
 
 ninja="${ninja-@out@/bin/ninja}"
-if [ -z "$dontUseNinja" -a -z "$buildPhase" ]; then
-  buildPhase=ninjaBuildPhase
-fi
-if [ -z "$dontUseNinja" -a -z "$checkPhase" ]; then
-  checkPhase=ninjaCheckPhase
-fi
-if [ -z "$dontUseNinja" -a -z "$installPhase" ]; then
-  installPhase=ninjaInstallPhase
-fi
-if [ -z "$dontUseNinja" ]; then
+if [ -n "${ninjaHook-1}" ]; then
+  if [ -z "$buildPhase" ]; then
+    buildPhase=ninjaBuildPhase
+  fi
+  if [ -z "$checkPhase" ]; then
+    checkPhase=ninjaCheckPhase
+  fi
+  if [ -z "$installPhase" ]; then
+    installPhase=ninjaInstallPhase
+  fi
   envHooks+=(addNinjaParams)
 fi

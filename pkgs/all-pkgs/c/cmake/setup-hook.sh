@@ -70,7 +70,7 @@ cmakeAddHookOnce() {
   eval "${hookVar}"'+=("$targetHook")'
 }
 
-if [ -n "${cmakeConfigure-true}" -a -z "$configurePhase" ]; then
+if [ -n "${cmakeHook-1}" -a -z "$configurePhase" ]; then
   configurePhase=cmakeConfigurePhase
 fi
 

@@ -72,11 +72,17 @@ wafInstallPhase() {
 waf="${waf-@out@/bin/waf}"
 wafPython="${wafPython-@PYTHON_EXE@}"
 wafForBuild="${wafForBuild-waf}"
-if [ -n "${wafConfigure-1}" ] ; then
+if [ -n "${wafHook-1}" ] ; then
   if [ -z "${wafVendored-}" ]; then
     preConfigurePhases+=('wafUnpack')
   fi
-  configurePhase='wafConfigurePhase'
-  buildPhase='wafBuildPhase'
-  installPhase='wafInstallPhase'
+  if [ -z "$configurePhase" ]; then
+    configurePhase='wafConfigurePhase'
+  fi
+  if [ -z "$buildPhase" ]; then
+    buildPhase='wafBuildPhase'
+  fi
+  if [ -z "$installPhase" ]; then
+    installPhase='wafInstallPhase'
+  fi
 fi

@@ -508,7 +508,7 @@ with stdenv.lib;
   ${optionalString (versionOlder version "4.18") "CC_"}STACKPROTECTOR_STRONG y
   USER_NS y # Support for user namespaces
   INTEL_TXT y
-  ${optionalString (versionAtLeast version "5.1" ''
+  ${optionalString (versionAtLeast version "5.1") ''
     SECURITY_SAFESETID y
   ''}
   SECURITY_YAMA y

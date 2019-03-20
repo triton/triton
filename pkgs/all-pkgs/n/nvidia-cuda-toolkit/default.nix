@@ -33,7 +33,7 @@ let
 
   source = (import ./sources.nix { })."${channel}";
 
-  version = channel + "." + source."rev_${targetSystem}";
+  version = channel + "." + (source."rev_${targetSystem}" or "unsupported");
 in
 stdenv.mkDerivation rec {
   name = "nvidia-cuda-toolkit-${version}";

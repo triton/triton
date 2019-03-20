@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , patchelf
 , perl
 
@@ -26,14 +27,29 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     elem
-    makeSearchPath
-    platforms;
+    makeSearchPath;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    # https://developer.nvidia.com/cuda-toolkit-archive
+    "8.0" = {
+      rev_x86_64-linux = "44";
+      sha256_x86_64-linux = "64dc4ab867261a0d690735c46d7cc9fc60d989da0d69dc04d1714e409cacbdf0";
+    };
+  };
+  source = sources."${channel}";
 
-  version = channel + "." + source."rev_${targetSystem}";
+  platforms = with lib.platforms;
+    x86_64-linux;
+
+  target =
+    if elem targetSystem platforms then
+      targetSystem
+    else
+      throw "NVIDIA Cuda Toolkit is not supported on the `${targetSystem}` platform";
+
+  version = channel + "." + source."rev_${target}";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-cuda-toolkit-${version}";
@@ -43,7 +59,7 @@ stdenv.mkDerivation rec {
       + "local_installers/cuda_${version}_linux-run";
     insecureProtocolDowngrade = true;
     hashOutput = false;
-    sha256 = source."sha256_${targetSystem}";
+    sha256 = source."sha256_${target}";
   };
 
   nativeBuildInputs = [
@@ -160,14 +176,13 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Compiler, libraries, and tools for CUDA gpus";
     homepage = https://developer.nvidia.com/cuda-toolkit;
     license = licenses.unfreeRedistributable;
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = with platforms;
-      x86_64-linux;
+    inherit platforms;
   };
 }

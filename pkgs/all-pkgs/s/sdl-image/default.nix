@@ -32,13 +32,15 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    srcVerification = fetchurl rec {
+    srcVerification = fetchurl {
       inherit (src)
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1528 635D 8053 A57F 77D1  E086 30A5 9377 A776 3BE6";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1528 635D 8053 A57F 77D1  E086 30A5 9377 A776 3BE6";
+      };
       failEarly = true;
     };
   };

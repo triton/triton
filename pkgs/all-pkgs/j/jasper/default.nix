@@ -1,6 +1,6 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchFromGitHub
 , lib
 , ninja
 
@@ -10,15 +10,17 @@
 }:
 
 let
-  version = "2.0.14";
+  version = "2.0.16";
 in
 stdenv.mkDerivation rec {
   name = "jasper-${version}";
 
-  src = fetchurl {
-    url = "http://www.ece.uvic.ca/~frodo/jasper/software/${name}.tar.gz";
-    multihash = "Qme5shSvnKXsNvoACmeqFUUh9UiNCsVy9oGd1JQiHdswFr";
-    sha256 = "2a1f61e55afe8b4ce8115e1508c5d7cb314d56dfcc2dd323f90c072f88ccf57b";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "mdadams";
+    repo = "jasper";
+    rev = "version-${version}";
+    sha256 = "e76cac931c114d495c0ee737a75e0f0055757ea5d71550ad97136b557d62e76d";
   };
 
   nativeBuildInputs = [

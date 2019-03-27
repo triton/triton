@@ -10,8 +10,8 @@
 }:
 
 let
-  channel = "3";
-  version = "${channel}.2";
+  channel = "4";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "nano-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
       "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "d12773af3589994b2e4982c5792b07c6240da5b86c5aef2103ab13b401fe6349";
+    sha256 = "1e2fcfea35784624a7d86785768b772d58bb3995d1aec9176a27a113b1e9bac3";
   };
 
   nativeBuildInputs = [

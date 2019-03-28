@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , acl
 , avahi
@@ -18,11 +19,11 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt;
 
-  version = "2.2.10";
+  version = "2.2.11";
 in
 stdenv.mkDerivation rec {
   name = "cups-${version}";
@@ -31,7 +32,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/apple/cups/releases/download/v${version}/"
       + "cups-${version}-source.tar.gz";
     hashOutput = false;
-    sha256 = "77c8b2b3bb7fe8b5fbfffc307f2c817b2d7ec67b657f261a1dd1c61ab81205bb";
+    sha256 = "f58010813fd6903f690cdb0c0b91e4d1bc9e5b9570c28734229ba3ed2908b76c";
   };
 
   buildInputs = [
@@ -67,8 +68,8 @@ stdenv.mkDerivation rec {
     "--${boolEn (libpaper != null)}-libpaper"
     "--${boolEn (libusb != null)}-libusb"
     #--enable-tcp-wrappers
-    "--${boolEn (acl != null)}-acl"
-    "--${boolEn (dbus != null)}-dbus"
+    "--enable-acl"
+    "--enable-dbus"
     "--enable-shared"
     "--disable-libtool-unsupported"
     "--disable-debug"
@@ -79,18 +80,14 @@ stdenv.mkDerivation rec {
     # FIXME: kerberos support causes chromium to fail to build
     #"--${boolEn (kerberos != null)}-gssapi"
     "--enable-threads"
-    "--${boolEn (
-      gnutls != null
-      && libgcrypt != null)}-ssl"
+    "--enable-ssl"
     #"--enable-cdsassl"
-    "--${boolEn (pam != null)}-pam"
-    "--${boolEn (
-      gnutls != null
-      && libgcrypt != null)}-gnutls"
+    "--enable-pam"
+    "--enable-gnutls"
     "--${boolEn (avahi != null)}-avahi"
     "--disable-dnssd"
     "--disable-launchd"
-    "--${boolEn (systemd_lib != null)}-systemd"
+    "--enable-systemd"
     #"--disable-upstart"
     #"--enable-page-logging"
     #"--enable-browsing"
@@ -107,7 +104,7 @@ stdenv.mkDerivation rec {
     # --with-rundir=/run/cups
     # XXX: flag is not a proper boolean, build fails with optim enabled
     #"--without-optim"
-    "--${boolWt (systemd_lib != null)}-systemd"
+    "--with-systemd"
     "--with-languages=all"
     # --with-cups-user=lp
     # --with-cups-group=lp
@@ -182,7 +179,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://cups.org/;
     description = "A standards-based printing system for UNIX";
     license = with licenses; [

@@ -35,7 +35,7 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt
     concatStringsSep
     head
@@ -59,8 +59,8 @@ let
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
     "3.7" = {
-      versionPatch = "2";
-      sha256 = "d83fe8ce51b1bb48bbcf0550fd265b9a75cdfdfa93f916f9e700aef8444bf1bb";
+      versionPatch = "3";
+      sha256 = "da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
@@ -349,8 +349,8 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "1";
-      outputHash = "fa7e2b8e8c9402f192ad56dc4f814089d1c4466c97d780f5e5acc02c04243d6d";
+      urls = tarballUrls "3";
+      outputHash = "da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318";
       fullOpts = {
         inherit (source) pgpKeyFingerprint;
         pgpsigUrls = map (n: "${n}.asc") urls;

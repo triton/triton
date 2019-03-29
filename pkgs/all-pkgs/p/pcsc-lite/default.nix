@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "1.8.24";
+  version = "1.8.25";
 
   tarballUrls = version: [
     "https://pcsclite.apdu.fr/files/pcsc-lite-${version}.tar.bz2"
@@ -27,9 +27,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmaUHWFuu8kxP9wNNCdW1xrDD4zifu6qFSeb8cXbYWMUGE";
+    multihash = "QmPyySgQcAjdbQtNFq6JLjmh1iUPwmp6gWoPvNhaUJdQ3c";
     hashOutput = false;
-    sha256 = "b81864fa6a5ec776639c02ae89998955f7702a8d10e8b8f70023c5a599d97568";
+    sha256 = "d76d79edc31cf76e782b9f697420d3defbcc91778c3c650658086a1b748e8792";
   };
 
   nativeBuildInputs = optionals (!libOnly) [
@@ -89,10 +89,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.8.24";
+      urls = tarballUrls "1.8.25";
       inherit (src)
         outputHashAlgo;
-      outputHash = "b81864fa6a5ec776639c02ae89998955f7702a8d10e8b8f70023c5a599d97568";
+      outputHash = "d76d79edc31cf76e782b9f697420d3defbcc91778c3c650658086a1b748e8792";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";

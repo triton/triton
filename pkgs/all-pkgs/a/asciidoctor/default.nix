@@ -3,10 +3,25 @@
 , lib
 , makeWrapper
 , ruby
+
+, channel
 }:
 
 let
-  version = "2.0.1";
+  channels = {
+    "2" = {
+      version = "2.0.3";
+      sha256 = "ba5c7ba7b9cc8d9fd16d67b6f9872250369b1d01732b430cc43a887789c7f93f";
+    };
+    "1" = {
+      version = "1.5.8";
+      sha256 = "2955e10d487e2b5a7b7ede9660fa77597806dbd79daff606c57158f1ee4d3966";
+    };
+  };
+
+  inherit (channels."${channel}")
+    version
+    sha256;
 in
 stdenv.mkDerivation rec {
   name = "asciidoctor-${version}";
@@ -16,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "asciidoctor";
     repo = "asciidoctor";
     rev = "v${version}";
-    sha256 = "54a516c3fa7f54b81572e324c54afc47456cea49c34e06e532c10652a8f68ea2";
+    inherit sha256;
   };
 
   nativeBuildInputs = [

@@ -648,7 +648,13 @@ aria = callPackageAlias "aria2" { };
 
 arkive = callPackage ../all-pkgs/a/arkive { };
 
-asciidoctor = callPackage ../all-pkgs/a/asciidoctor { };
+asciidoctor_1 = callPackage ../all-pkgs/a/asciidoctor {
+  channel = "1";
+};
+asciidoctor_2 = callPackage ../all-pkgs/a/asciidoctor {
+  channel = "2";
+};
+asciidoctor = callPackageAlias "asciidoctor_2" { };
 
 asciinema = pkgs.python3Packages.asciinema;
 

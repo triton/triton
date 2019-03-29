@@ -1,5 +1,5 @@
 { stdenv
-, asciidoctor
+, asciidoctor_1
 , docbook_xml_dtd_45
 , docbook-xsl
 , fetchurl
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    asciidoctor
+    asciidoctor_1
     docbook_xml_dtd_45
     docbook-xsl
     gettext

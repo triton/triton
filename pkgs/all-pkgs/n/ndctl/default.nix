@@ -1,5 +1,5 @@
 { stdenv
-, asciidoctor
+, asciidoctor_1
 , autoconf
 , automake
 , docbook_xml_dtd_45
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    asciidoctor
+    asciidoctor_1
     autoconf
     automake
     docbook_xml_dtd_45

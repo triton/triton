@@ -32,6 +32,10 @@ stdenv.mkDerivation rec {
     install -D -m755 -v initrd "$out"/'${initrdPath}'
   '';
 
+  passthru = {
+    inherit initrdPath;
+  };
+
   meta = with stdenv.lib; {
     description = "Microcode for Intel processors";
     homepage = http://www.intel.com/;

@@ -932,10 +932,10 @@ let
   }) // {inherit libxcb ;};
 
   xcompmgr = (mkDerivation "xcompmgr" {
-    name = "xcompmgr-1.1.7";
+    name = "xcompmgr-1.1.8";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xcompmgr-1.1.7.tar.bz2;
-      sha256 = "14k89mz13jxgp4h2pz0yq0fbkw1lsfcb3acv8vkknc9i4ld9n168";
+      url = mirror://xorg/individual/app/xcompmgr-1.1.8.tar.bz2;
+      sha256 = "0b89daf4f060fa3fa83cca862c45d531fef7121b5d06552c1d73d396ad9a7243";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libXcomposite libXdamage libXext libXfixes libXrender ];

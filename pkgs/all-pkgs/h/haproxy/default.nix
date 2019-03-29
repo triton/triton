@@ -10,16 +10,16 @@
 
 let
   major = "1.9";
-  version = "${major}.4";
+  version = "${major}.5";
 in
 stdenv.mkDerivation rec {
   name = "haproxy-${version}";
   
   src = fetchurl {
     url = "https://www.haproxy.org/download/${major}/src/${name}.tar.gz";
-    multihash = "QmNbeJK3RG7oCjWopjASW3dUaBbjqTboyqBvtSy6eTjkBF";
+    multihash = "QmTZwvP7LAWZmn1rgzNYCe7g8nwerTah5wqAUB4Qs75YXf";
     hashOutput = false;
-    sha256 = "8483fe12b30256f83d542b3f699e165d8f71bf2dfac8b16bb53716abce4ba74f";
+    sha256 = "407260ce65d7a16d93a037976712a8742985ce29360b6d5c187a849b6c0fbf8c";
   };
 
   buildInputs = [

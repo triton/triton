@@ -4,12 +4,16 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "giflib-5.1.8";
+  name = "giflib-5.1.9";
 
   src = fetchurl {
     url = "mirror://sourceforge/giflib/${name}.tar.gz";
-    sha256 = "d105a905df34a7822172d13657cdae3d4b0c8e8c7067ccf05e39a40044f8ca53";
+    sha256 = "36ccab06aa43e5d608cdd74902f89c47fd55c348009798434ba5798967454057";
   };
+
+  preBuild = ''
+    makeFlagsArray+=(PREFIX="$out")
+  '';
 
   meta = with lib; {
     description = "A library for reading and writing gif images";

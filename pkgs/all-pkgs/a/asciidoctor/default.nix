@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.5.8";
+  version = "2.0.1";
 in
 stdenv.mkDerivation rec {
   name = "asciidoctor-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "asciidoctor";
     repo = "asciidoctor";
     rev = "v${version}";
-    sha256 = "2955e10d487e2b5a7b7ede9660fa77597806dbd79daff606c57158f1ee4d3966";
+    sha256 = "54a516c3fa7f54b81572e324c54afc47456cea49c34e06e532c10652a8f68ea2";
   };
 
   nativeBuildInputs = [

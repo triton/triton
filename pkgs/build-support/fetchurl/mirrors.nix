@@ -227,8 +227,10 @@ rec {
 
   sourceforge = [
     # These urls don't allow any redirects and don't fail as often as the redirect ones
-    https://cytranet.dl.sourceforge.net/project
+    https://svwh.dl.sourceforge.net/project
     https://newcontinuum.dl.sourceforge.net/project
+    https://versaweb.dl.sourceforge.net/project
+    https://managedway.dl.sourceforge.net/project
 
     # Fall back to the indexed mirrors when the direct references don't work
     http://downloads.sourceforge.net

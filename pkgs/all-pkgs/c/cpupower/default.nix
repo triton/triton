@@ -3,7 +3,6 @@
 , fetchurl
 , gettext
 
-, coreutils
 , kernel
 , pciutils
 }:
@@ -31,19 +30,13 @@ stdenv.mkDerivation {
   postPatch = ''
     cd tools/power/cpupower
 
-    # Patch the build to use the correct tooling
-    grep -q '/bin/true' Makefile
-  '' + optionalString (versionOlder kernel.version "4.15") ''
-    grep -q '/bin/pwd' Makefile
-  '' + ''
     grep -q '/usr/bin/install' Makefile
-    sed \
-      -e 's,/bin/true,${coreutils}/bin/true,g' \
-      -e 's,/bin/pwd,${coreutils}/bin/pwd,g' \
-      -e 's,/usr/bin/install,${coreutils}/bin/install,g' \
-      -i Makefile
+    sed -i "s,/usr/bin/install,install,g" Makefile
   '';
 
+  makeFlags = [
+    "DEBUG=false"
+  ];
 
   preInstall = ''
     installFlagsArray+=(

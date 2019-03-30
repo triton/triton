@@ -21,6 +21,7 @@
 
 let
   inherit (lib)
+    concatMap
     concatStringsSep
     filterAttrs
     hasPrefix
@@ -36,16 +37,17 @@ let
 
   urls_ = optionals (multihash != "")
     (map (n: "${n}/ipfs/${multihash}") mirrors.ipfs-cached)
-    ++ (map (n:
+    ++ (concatMap (n:
       if hasPrefix "mirror://" n then
         let
           split = splitString "/" (removePrefix "mirror://" n);
         in
-          "${head mirrors."${head split}"}/${concatStringsSep "/" (tail split)}"
+          map (n: "${n}/${concatStringsSep "/" (tail split)}") mirrors."${head split}"
       else
-        n
+        [ n ]
       ) urls) ++ optionals (multihash != "")
     (map (n: "${n}/ipfs/${multihash}") mirrors.ipfs-nocache);
+
 in
 (filterAttrs (n: _: n != "url") (derivation {
   inherit

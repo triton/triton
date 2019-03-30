@@ -4604,7 +4604,7 @@ libstartup_notification =
         inherit kernel;  # We shouldn't need this
       };
 
-      cpupower = kCallPackage ../os-specific/linux/cpupower { };
+      cpupower = kCallPackage ../all-pkgs/c/cpupower { };
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
 

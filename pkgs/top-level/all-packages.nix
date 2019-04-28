@@ -2779,16 +2779,16 @@ linenoise-ng = callPackage ../all-pkgs/l/linenoise-ng { };
 
 linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 
-linux-headers_4-9 = callPackage ../all-pkgs/l/linux-headers {
-  channel = "4.9";
-};
 linux-headers_4-14 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.14";
 };
+linux-headers_4-19 = callPackage ../all-pkgs/l/linux-headers {
+  channel = "4.19";
+};
 # Minimum version for external distros
-linux-headers = callPackageAlias "linux-headers_4-9" { };
+linux-headers = callPackageAlias "linux-headers_4-14" { };
 # Minimum version for triton
-linux-headers_triton = callPackageAlias "linux-headers_4-14" { };
+linux-headers_triton = callPackageAlias "linux-headers_4-19" { };
 
 lirc = callPackage ../all-pkgs/l/lirc { };
 

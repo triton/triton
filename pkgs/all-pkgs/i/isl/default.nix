@@ -8,10 +8,10 @@
 
 let
   sources = {
-    "0.20" = {
-      version = "0.20";
-      multihash = "QmX4H1gPmNoYiZQ4WYyJspr3PyUmw2W2vsaytzDocoGgyr";
-      sha256 = "a5596a9fb8a5b365cb612e4b9628735d6e67e9178fae134a816ae195017e77aa";
+    "0.21" = {
+      version = "0.21";
+      multihash = "QmYhgCGiiUuUKahh3uugJyrsMSQ1wVXs16WvD5mDjxL9ui";
+      sha256 = "777058852a3db9500954361e294881214f6ecd4b594c00da5eee974cd6a54960";
     };
   };
 

@@ -2096,10 +2096,10 @@ iputils = callPackage ../all-pkgs/i/iputils { };
 
 irqbalance = callPackage ../all-pkgs/i/irqbalance { };
 
-isl_0-20 = callPackage ../all-pkgs/i/isl {
-  channel = "0.20";
+isl_0-21 = callPackage ../all-pkgs/i/isl {
+  channel = "0.21";
 };
-isl = callPackageAlias "isl_0-20" { };
+isl = callPackageAlias "isl_0-21" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 

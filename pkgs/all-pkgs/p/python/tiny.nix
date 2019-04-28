@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "3.7.2";
+  version = "3.7.3";
 in
 stdenv.mkDerivation {
   name = "python-tiny-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "d83fe8ce51b1bb48bbcf0550fd265b9a75cdfdfa93f916f9e700aef8444bf1bb";
+    sha256 = "da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318";
   };
 
   configureFlags = [

@@ -41,9 +41,9 @@ let
       patchSha256 = "517d79fc64b4c95ee5845ce21e4c60efb8f9479ce7c4ca2ac3496cf670e906ff";
     };
     "5.0" = {
-      version = "5.0.5";
+      version = "5.0.10";
       baseSha256 = "437b141a6499159f5a7282d5eb4b2be055f8e862ccce44d7464e8759c31a2e43";
-      patchSha256 = "70051be96455f84e13af8a3e487a6da2ed3274843bbd26049004d4e7578365ea";
+      patchSha256 = "b291c978cee9a9018d29d31e8e838de93ad727da6932220388d4c3aaf3253b56";
     };
     "testing" = {
       version = "5.1-rc2";

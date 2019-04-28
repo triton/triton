@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , gnupg
@@ -19,6 +20,14 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "babd98437208c163175c29453f8681094bcaf92968a15cafb1a276076b33c97c";
   };
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "56da90ce73ac420442e01707c863a5a7b2472de2";
+      file = "l/libgpg-error/fix-gawk5.patch";
+      sha256 = "7b56221595b8a9343a91171c05f1e195130605e4853fc3ddbb9e90fad20b9507";
+    })
+  ];
 
   postPatch = ''
     sed '/BUILD_TIMESTAMP=/s/=.*/=1970-01-01T00:01+0000/' -i ./configure

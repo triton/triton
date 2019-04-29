@@ -9,7 +9,7 @@ let
     "mirror://sourceforge/pcre/pcre/${version}/pcre2-${version}.tar.bz2"
   ];
 
-  version = "10.32";
+  version = "10.33";
 in
 stdenv.mkDerivation rec {
   name = "libpcre2-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "f29e89cc5de813f45786580101aaee3984a65818631d4ddbda7b32f699b87c2e";
+    sha256 = "35514dff0ccdf02b55bd2e9fa586a1b9d01f62332c3356e379eabb75f789d8aa";
   };
 
   preBuild = ''
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "10.32";
+      urls = tarballUrls "10.33";
       inherit (src)
         outputHash
         outputHashAlgo;

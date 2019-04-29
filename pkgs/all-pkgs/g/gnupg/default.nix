@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , lib
@@ -61,6 +62,14 @@ stdenv.mkDerivation rec {
     readline
     sqlite
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "e0bde1edfefd3bf539fec631fa8e2bfb2b2b7940";
+      file = "g/gnupg/fix-gawk5.patch";
+      sha256 = "bc6f52095ca53d6362c0e638d054ebd9c2349a6f54fab0dcf657c0ef25590b46";
+    })
   ];
 
   postPatch = ''

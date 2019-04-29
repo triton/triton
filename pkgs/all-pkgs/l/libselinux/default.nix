@@ -7,8 +7,8 @@
 }:
 
 let
-  release = "20180524";
-  version = "2.8";
+  release = "20190315";
+  version = "2.9";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/SELinuxProject/selinux/releases/download/"
       + "${release}/${name}.tar.gz";
-    sha256 = "31db96ec7643ce10912b3c3f98506a08a9116dcfe151855fd349c3fda96187e1";
+    sha256 = "1bccc8873e449587d9a2b2cf253de9b89a8291b9fbc7c59393ca9e5f5f4d2693";
   };
 
   buildInputs = [

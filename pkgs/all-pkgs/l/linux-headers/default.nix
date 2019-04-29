@@ -1,5 +1,7 @@
 { stdenv
+, bison
 , fetchurl
+, flex
 , lib
 
 , channel
@@ -33,12 +35,21 @@ let
     "x86_64-linux" = "x86_64";
     "i686-linux" = "i386";
   };
+
+  inherit (lib)
+    optionals
+    versionAtLeast;
 in
 stdenv.mkDerivation rec {
   name = "linux-headers-${source.version}";
 
   inherit (sourceFetch)
     src;
+
+  nativeBuildInputs = optionals (versionAtLeast source.version "4.16") [
+    bison
+    flex
+  ];
 
   patches = [
     sourceFetch.patch

@@ -13,12 +13,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.9p1";
+  name = "openssh-8.0p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "6b4b3ba2253d84ed3771c8050728d597c91cfce898713beb7b64a305b6f11aad";
+    sha256 = "bd943879e69498e8031eb6b7f44d08cdc37d59a7ab689aa0b437320c3481fd68";
   };
 
   buildInputs = [

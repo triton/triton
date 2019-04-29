@@ -5,8 +5,8 @@
 }:
 
 let
-  release = "20180524";
-  version = "2.8";
+  release = "20190315";
+  version = "2.9";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/SELinuxProject/selinux/releases/download/"
       + "${release}/${name}.tar.gz";
-    sha256 = "3ad6916a8352bef0bad49acc8037a5f5b48c56f94e4cb4e1959ca475fa9d24d6";
+    sha256 = "a34b12b038d121e3e459b1cbaca3c9202e983137819c16baf63658390e3f1d5d";
   };
 
   nativeBuildInputs = [

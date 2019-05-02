@@ -12,8 +12,7 @@
 
 let
   inherit (stdenv.lib)
-    concatStringsSep
-    optionalString;
+    concatStringsSep;
 
   inherit ((import ./sources.nix)."${channel}")
     version
@@ -131,10 +130,11 @@ stdenv.mkDerivation {
   '';
 
   preFixup = ''
-    rm -r $out/share/go/pkg/bootstrap
-    rm -r $out/share/go/{doc,misc}
-    find "$out" -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
-    find "$out" -name testdata -prune -exec rm -r {} \;
+    #find "$out"/share/go/pkg -maxdepth 1 -mindepth 1 \( -not -name tool -and -not -name include \) -exec rm -rv {} \;
+    rm -rv "$out"/share/go/pkg/obj
+    rm -rv "$out"/share/go/{doc,misc,test}
+    find "$out" -type f \( -name run -or -name \*.bash -or -name \*.sh -or -name \*.rc \) -print -delete
+    find "$out" -name testdata -prune -exec rm -rv {} \;
 
     while read exe; do
       strip $exe || true
@@ -143,8 +143,6 @@ stdenv.mkDerivation {
 
     # Remove perl stuff we don't need
     find "$out" -name '*'.pl -print -delete
-  '' + optionalString (channel == "1.11") ''
-    rm "$out"/share/go/test/errchk
   '';
 
   setupHook = ./setup-hook.sh;

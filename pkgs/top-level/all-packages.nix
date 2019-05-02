@@ -1162,7 +1162,7 @@ elfutils = callPackage ../all-pkgs/e/elfutils { };
 
 ell = callPackage ../all-pkgs/e/ell { };
 
-elvish = pkgs.goPackages.elvish.bin // { outputs = [ "bin" ]; };
+elvish = pkgs.goPackages.elvish;
 
 emacs = callPackage ../all-pkgs/e/emacs { };
 

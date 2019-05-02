@@ -2081,22 +2081,7 @@ let
     ];
   };
 
-  elvish = buildFromGitHub {
-    version = 6;
-    owner = "elves";
-    repo = "elvish";
-    rev = "a78f675a47f083b671da2ef1b81967b41c2e71c8";
-    sha256 = "a72e198e8052ef57aba7347dad21d7be6ce9f7c516b650ca74a685b93be42837";
-    excludedPackages = "website";
-    propagatedBuildInputs = [
-      bolt
-      go-isatty
-      persistent
-      sys
-    ];
-    meta.useUnstable = true;
-    date = "2019-01-30";
-  };
+  elvish = callPackage ../all-pkgs/e/elvish { };
 
   eme = buildFromGitHub {
     version = 6;

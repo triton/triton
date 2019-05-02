@@ -1,0 +1,5 @@
+{
+  "path": "github.com/gohugoio/hugo",
+  "version": "latest",
+  "updateDeps": false
+}

@@ -6260,61 +6260,7 @@ let
     date = "2015-04-27";
   };
 
-  hugo = buildFromGitHub {
-    version = 6;
-    owner = "gohugoio";
-    repo = "hugo";
-    rev = "v0.54.0";
-    sha256 = "24f0731eaab34fe2c736441824303ea40202b1a07383b88f881bed5fb2e47ea6";
-    buildInputs = [
-      ace
-      afero
-      amber
-      blackfriday
-      cast
-      chroma
-      cobra
-      debounce
-      emoji
-      errors
-      fsnotify
-      fsync
-      gitmap
-      glob
-      go-i18n
-      go-immutable-radix
-      go-isatty
-      go-tocss
-      goorgeous
-      hashstructure
-      image
-      imaging
-      inflect
-      jwalterweatherman
-      locker
-      mage
-      mapstructure
-      minify
-      mmark
-      net
-      nitro
-      pflag
-      prose
-      purell
-      smartcrop
-      sync
-      tablewriter
-      text
-      toml
-      viper
-      websocket
-      yaml_v2
-    ];
-    postPatch = ''
-      grep -q 'ebouncer, _, _ = debounce.New' commands/commandeer.go
-      sed -i 's#ebouncer, _, _ = debounce.New#ebouncer = debounce.New#' commands/commandeer.go
-    '';
-  };
+  hugo = callPackage ../all-pkgs/h/hugo { };
 
   idmclient = buildFromGitHub {
     version = 6;

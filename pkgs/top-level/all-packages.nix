@@ -2006,7 +2006,7 @@ http-parser = callPackage ../all-pkgs/h/http-parser { };
 
 httping = callPackage ../all-pkgs/h/httping { };
 
-hugo = pkgs.goPackages.hugo.bin // { outputs = [ "bin" ]; };
+hugo = pkgs.goPackages.hugo;
 
 hunspell = callPackage ../all-pkgs/h/hunspell { };
 

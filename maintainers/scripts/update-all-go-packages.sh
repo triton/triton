@@ -7,4 +7,4 @@ while ! [ -d "pkgs/top-level" ]; do
   cd ..
 done
 
-exec "$updater" $(cat pkgs/top-level/all-packages.nix | grep pkgs.goPackages | awk -F. '{print $3}' | tr '\n' ' ')
+exec "$updater" $(cat pkgs/top-level/all-packages.nix | grep 'pkgs\.goPackages\..*\.bin' | awk -F. '{print $3}' | tr '\n' ' ')

@@ -1,0 +1,5 @@
+{
+  "path": "github.com/ncw/rclone",
+  "version": "latest",
+  "updateDeps": false
+}

@@ -9003,68 +9003,7 @@ let
     ];
   };
 
-  rclone = buildFromGitHub {
-    version = 6;
-    owner = "ncw";
-    repo = "rclone";
-    date = "2019-02-18";
-    rev = "8f4ea77c07a1703b93d76439cfa32349501522cd";
-    sha256 = "0bd2f086e080fe416813793cb7c8903181addaafb0910459b6b748fe49e49664";
-    propagatedBuildInputs = [
-      aws-sdk-go
-      bbolt
-      cgofuse
-      cobra
-      crypto
-      dms
-      eme
-      errors
-      ftp
-      fuse
-      go-ansiterm
-      go-acd
-      go-cache
-      go-daemon
-      go-http-auth
-      go-mega
-      goconfig
-      google-api-go-client
-      net
-      oauth2
-      open-golang
-      pflag
-      qingstor-sdk-go
-      sdnotify
-      semver
-      server
-      sftp
-      ssh-agent
-      swift
-      sync
-      sys
-      termbox-go
-      testify
-      text
-      time
-      times
-      tree
-    ];
-    postPatch = ''
-      # Azure-sdk-for-go does not provide a stable api
-      rm -r backend/azureblob/
-      sed -i backend/all/all.go \
-        -e '/azureblob/d'
-
-      # Dropbox doesn't build easily
-      rm -r backend/dropbox/
-      sed -i backend/all/all.go \
-        -e '/dropbox/d'
-      sed -i fs/hash/hash.go \
-        -e '/dbhash/d'
-    '';
-    excludedPackages = "test";
-    meta.useUnstable = true;
-  };
+  rclone = callPackage ../all-pkgs/r/rclone { };
 
   cupcake_rdb = buildFromGitHub {
     version = 6;

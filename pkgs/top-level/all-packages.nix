@@ -3535,7 +3535,7 @@ rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
 raptor2 = callPackage ../all-pkgs/r/raptor2 { };
 
-rclone = pkgs.goPackages.rclone.bin // { outputs = [ "bin" ]; };
+rclone = pkgs.goPackages.rclone;
 
 rdma-core = callPackage ../all-pkgs/r/rdma-core { };
 

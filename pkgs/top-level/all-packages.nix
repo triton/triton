@@ -1717,21 +1717,11 @@ gnutar_small = callPackage ../all-pkgs/g/gnutar {
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go_1-11 = callPackage ../all-pkgs/g/go {
-  channel = "1.11";
-};
 go_1-12 = callPackage ../all-pkgs/g/go {
   channel = "1.12";
 };
 go = callPackageAlias "go_1-12" { };
 
-goPackages_1-11 = callPackage ./go-packages.nix {
-  go = callPackageAlias "go_1-11" { };
-  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
-    go = callPackageAlias "go_1-11" { };
-  };
-  overrides = (config.goPackageOverrides or (p: { })) pkgs;
-};
 goPackages_1-12 = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1-12" { };
   buildGoPackage = callPackage ../all-pkgs/b/build-go-package {

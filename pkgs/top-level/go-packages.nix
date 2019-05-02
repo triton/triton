@@ -6555,19 +6555,7 @@ let
 
   ipfs = callPackage ../all-pkgs/i/ipfs { };
 
-  ipfs-cluster = buildFromGitHub {
-    version = 6;
-    rev = "v0.9.0";
-    owner = "ipfs";
-    repo = "ipfs-cluster";
-    sha256 = "ecbe3f6ac5a5429c88ad56af5ac37de9481312a36cde09ccfa2ef76b64a912f0";
-    gxSha256 = "fa62adb139a3aac29d151a57224b2f89f269be24125c5a297de5fa6388938914";
-    excludedPackages = "test";
-    nativeBuildInputs = [
-      gx-go.bin
-    ];
-    meta.autoUpdate = false;
-  };
+  ipfs-cluster = callPackage ../all-pkgs/i/ipfs-cluster { };
 
   ipfs-ds-convert = buildFromGitHub {
     version = 6;

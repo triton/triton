@@ -1,0 +1,5 @@
+{
+  "path": "github.com/ipfs/ipfs-cluster",
+  "version": "latest",
+  "updateDeps": false
+}

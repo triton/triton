@@ -102,6 +102,9 @@ do_update() {
   cp -r --no-preserve all "$HOME"/go/pkg/mod/"$path@$version" "$srcDir"
   pushd "$srcDir" >/dev/null
 
+  # Get rid of any replacements the developers think work
+  sed -i '/replace/d' go.mod
+
   # Update the deps if we need to
   if [ "$updateDeps" != "false" ]; then
     echo "Updating dependencies" >&3

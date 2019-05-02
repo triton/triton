@@ -14,7 +14,17 @@
 let
   self = _self // overrides; _self = with self; {
 
+  callPackage = pkgs.newScope (self // {
+    inherit pkgs;
+    goPackages = self;
+  });
+
+  callPackageAlias = package: newAttrs: self."${package}".override newAttrs;
+
   inherit go buildGoPackage;
+
+  buildGoModule = callPackage ../all-pkgs/b/build-go-package/mod.nix { };
+  fetchGoModule = callPackage ../all-pkgs/b/build-go-package/mod-fetch.nix { };
 
   fetchGxPackage = { src, sha256 }: stdenv.mkDerivation {
     name = "gx-src-${src.name}";

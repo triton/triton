@@ -1,0 +1,5 @@
+{
+  "path": "github.com/ipfs/go-ipfs",
+  "version": "latest",
+  "updateDeps": false
+}

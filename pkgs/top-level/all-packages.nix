@@ -2066,7 +2066,7 @@ iperf_3 = callPackage ../all-pkgs/i/iperf {
 };
 iperf = callPackageAlias "iperf_3" { };
 
-ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
+ipfs = pkgs.goPackages.ipfs;
 
 ipfs-cluster = pkgs.goPackages.ipfs-cluster.bin // { outputs = [ "bin" ]; };
 

@@ -6553,31 +6553,7 @@ let
     sha256 = "e91e0a9a73c341c486ee5025e04344f55f9f3cba505a971997fa1bb205322004";
   };
 
-  ipfs = buildFromGitHub {
-    version = 6;
-    rev = "v0.4.19";
-    owner = "ipfs";
-    repo = "go-ipfs";
-    sha256 = "551bd4dcc29984e7525a81c299b0c9ea60f6ffcfb554eec65ffd52dc390f3ae4";
-    gxSha256 = "e202c5d1153ad883589491126024ec8e160df53153087efe1ecb2016a974d3da";
-    nativeBuildInputs = [
-      gx-go.bin
-    ];
-    # HACK: needed for quic-go
-    propagatedBuildInputs = [
-      aes12
-      crypto
-      genny
-      golang-lru
-      mint
-      quic-go-certificates
-    ];
-    excludedPackages = "test";
-    meta.autoUpdate = false;
-    postInstall = ''
-      find "$bin"/bin -not -name ipfs\* -mindepth 1 -maxdepth 1 -delete
-    '';
-  };
+  ipfs = callPackage ../all-pkgs/i/ipfs { };
 
   ipfs-cluster = buildFromGitHub {
     version = 6;

@@ -3773,7 +3773,7 @@ sydent = pkgs.python2Packages.sydent;
 
 synapse = pkgs.python2Packages.synapse;
 
-syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+syncthing = pkgs.goPackages.syncthing;
 
 synergy = callPackage ../all-pkgs/s/synergy { };
 

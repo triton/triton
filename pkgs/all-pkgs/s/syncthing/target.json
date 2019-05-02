@@ -1,0 +1,5 @@
+{
+  "path": "github.com/syncthing/syncthing",
+  "version": "latest",
+  "updateDeps": false
+}

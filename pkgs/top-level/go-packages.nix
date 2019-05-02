@@ -9972,64 +9972,7 @@ let
     sha256 = "f87f1d2b8e48a5f7065e7dfa9e7d4811f9c5b87975a75f4488ce793b3cc8095b";
   };
 
-  syncthing = buildFromGitHub rec {
-    version = 6;
-    rev = "v1.0.1";
-    owner = "syncthing";
-    repo = "syncthing";
-    sha256 = "8655c3bb78e14293c7a263a7eaa1a8e1b2f719d864e72c53766b216ad9d34a58";
-    buildFlags = [ "-tags noupgrade" ];
-    nativeBuildInputs = [
-      pkgs.protobuf-cpp
-      gogo_protobuf.bin
-    ];
-    buildInputs = [
-      AudriusButkevicius_cli
-      crypto
-      du
-      errors
-      gateway
-      geoip2-golang
-      glob
-      go-deadlock
-      go-lz4
-      AudriusButkevicius_go-nat-pmp
-      go-shellquote
-      gogo_protobuf
-      goleveldb
-      groupcache
-      ldap_v2
-      net
-      notify
-      pq
-      prometheus_client_golang
-      qart
-      rcrowley_go-metrics
-      rollinghash
-      sha256-simd
-      suture
-      text
-      time
-      xdr
-    ];
-    postPatch = ''
-      # Mostly a cosmetic change
-      sed -i 's,unknown-dev,${rev},g' cmd/syncthing/main.go
-    '';
-    preBuild = ''
-      pushd go/src/$goPackagePath >/dev/null
-
-      mkdir repos
-      unpackFile ${gogo_protobuf.src}
-      mv protobuf-* repos/protobuf
-      unpackFile ${xdr.src}
-      mv xdr-* repos/xdr
-
-      go list ./... | xargs go generate
-      rm -r repos
-      popd >/dev/null
-    '';
-  };
+  syncthing = callPackage ../all-pkgs/s/syncthing { };
 
   tablewriter = buildFromGitHub {
     version = 6;

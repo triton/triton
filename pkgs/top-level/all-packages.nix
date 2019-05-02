@@ -2070,7 +2070,7 @@ ipfs = pkgs.goPackages.ipfs;
 
 ipfs-cluster = pkgs.goPackages.ipfs-cluster;
 
-ipfs-ds-convert = pkgs.goPackages.ipfs-ds-convert.bin // { outputs = [ "bin" ]; };
+ipfs-ds-convert = pkgs.goPackages.ipfs-ds-convert;
 
 ipfs-hasher = callPackage ../all-pkgs/i/ipfs-hasher { };
 

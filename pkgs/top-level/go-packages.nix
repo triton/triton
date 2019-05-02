@@ -6542,23 +6542,7 @@ let
 
   ipfs-cluster = callPackage ../all-pkgs/i/ipfs-cluster { };
 
-  ipfs-ds-convert = buildFromGitHub {
-    version = 6;
-    rev = "98857fe248ee1f8fcff71ba8f35e17b2297039b9";
-    date = "2018-09-19";
-    owner = "ipfs";
-    repo = "ipfs-ds-convert";
-    sha256 = "d5209005c066a3a2d1610949ae0b422d5a94a9e53f2f937c7f0657df26a7da17";
-    gxSha256 = "8776f942e1f2982906001ec1215fe62a1fbf94c88eb9070a25f2c3847c628b01";
-    nativeBuildInputs = [
-      gx-go.bin
-    ];
-    propagatedBuildInputs = [
-      # Workaround missing vendored dependency
-      go-homedir
-    ];
-    meta.autoUpdate = false;
-  };
+  ipfs-ds-convert = callPackage ../all-pkgs/i/ipfs-ds-convert { };
 
   jaeger-client-go = buildFromGitHub {
     version = 5;

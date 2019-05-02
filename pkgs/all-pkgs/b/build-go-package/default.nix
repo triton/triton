@@ -178,8 +178,6 @@ go.stdenv.mkDerivation (
     '');
 
 
-  GOFLAGS = "-ldflags=${go.GO_LDFLAGS}";
-
   buildPhase = args.buildPhase or ''
     runHook renameImports
 

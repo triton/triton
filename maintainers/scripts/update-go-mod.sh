@@ -148,11 +148,19 @@ do_update() {
   mkdir -p "$TMPDIR/log"
   nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
   sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
-  sed -i "/sha256/s,: \".*\",: \"$sha256\"," "$drv_dir"/source.json
+  test -n "$sha256"
+  jq ".sha256 = \"$sha256\"" "$drv_dir"/source.json >"$TMPDIR"/"$pkg".json
+  mv "$TMPDIR"/"$pkg".json "$drv_dir"/source.json
 }
 
 ARGS=()
 for pkg in "$@"; do
-  ARGS+=('-' "Update $pkg" do_update "$pkg")
+  if [ "$pkg" = "*" ]; then
+    for pkg in $(grep '= callPackage ../all-pkgs' "$TOP_LEVEL"/pkgs/top-level/go-packages.nix | grep -v 'GoMod' | awk '{print $1}'); do
+      ARGS+=('-' "Update $pkg" do_update "$pkg")
+    done
+  else
+    ARGS+=('-' "Update $pkg" do_update "$pkg")
+  fi
 done
 concurrent "${ARGS[@]}"

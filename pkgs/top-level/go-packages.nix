@@ -1451,68 +1451,15 @@ let
     ];
   };
 
-  consul = buildFromGitHub rec {
+  consul = callPackage ../all-pkgs/c/consul { };
+
+  consul_api = buildFromGitHub rec {
     version = 6;
     rev = "v1.4.2";
     owner = "hashicorp";
     repo = "consul";
     sha256 = "b075bccf5bc0bea182ac9b1d87cf45efc97a9bbb785f43176d6418afe181cb81";
     excludedPackages = "test";
-
-    propagatedBuildInputs = [
-      armon_go-metrics
-      circbuf
-      columnize
-      copystructure
-      coredns
-      crypto
-      dns
-      errors
-      go-bindata-assetfs
-      go-checkpoint
-      go-cleanhttp
-      go-connections
-      go-control-plane
-      go-discover
-      go-memdb
-      go-multierror
-      go-plugin
-      go-radix
-      go-rootcerts
-      hashicorp_go-sockaddr
-      go-syslog
-      go-testing-interface
-      go-version
-      golang-lru
-      gogo_googleapis
-      gopsutil
-      hashicorp_go-uuid
-      grpc
-      gziphandler
-      hashstructure
-      hcl
-      hil
-      logutils
-      mapstructure
-      memberlist
-      mitchellh_cli
-      net
-      net-rpc-msgpackrpc
-      prometheus_client_golang
-      protobuf
-      gogo_protobuf
-      raft-boltdb
-      raft
-      reflectwalk
-      serf
-      sys
-      testify
-      kr_text
-      time
-      ugorji_go
-      vault_api
-      hashicorp_yamux
-    ];
 
     postPatch = let
       v = stdenv.lib.substring 1 (stdenv.lib.stringLength rev - 1) rev;
@@ -1525,9 +1472,7 @@ let
       grep -q 'dns.ErrTruncated' agent/dns.go
       sed -i 's,err == nil || err == dns.ErrTruncated,err == nil,' agent/dns.go
     '';
-  };
 
-  consul_api = consul.override {
     propagatedBuildInputs = [
       go-cleanhttp
       armon_go-metrics

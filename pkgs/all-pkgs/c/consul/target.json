@@ -1,0 +1,5 @@
+{
+  "path": "github.com/hashicorp/consul",
+  "version": "master",
+  "updateDeps": false
+}

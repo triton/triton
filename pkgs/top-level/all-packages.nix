@@ -953,7 +953,7 @@ combine-xml-catalogs = callPackage ../all-pkgs/c/combine-xml-catalogs { };
 
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
-consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
+consul = pkgs.goPackages.consul;
 
 consulfs = pkgs.goPackages.consulfs.bin // { outputs = [ "bin" ]; };
 

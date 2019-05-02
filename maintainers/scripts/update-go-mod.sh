@@ -93,7 +93,7 @@ do_update() {
   # This will be fine, since we check the output files
   go get -d "$path@$target" || true
   local version
-  version="$(grep "^require $path" go.mod | awk '{print $3}')"
+  version="$(go list -m "$path" | awk '{print $2}')"
   echo "Using version: $version" >&3
   popd >/dev/null
   rm -r "$srcDir"

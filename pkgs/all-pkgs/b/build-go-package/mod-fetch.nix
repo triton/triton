@@ -53,6 +53,9 @@ stdenv.mkDerivation {
     # Move the source to the expected location
     cp -r --no-preserve all go/pkg/mod/"$gopath" src
 
+    # Remove stale data from the cache
+    mv go go.old
+
     # Fetch the dependencies
     pushd src >/dev/null
     echo "Fetching dependencies" >&2

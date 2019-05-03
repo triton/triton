@@ -68,13 +68,7 @@ unset GOPATH
 unset GOROOT
 export GO11MODULE=on
 
-do_update() {
-  local pkg="$1"
-
-  local drv_dir
-  drv_dir="$TOP_LEVEL/pkgs/all-pkgs/${pkg:0:1}/$pkg"
-  test -d "$drv_dir"
-
+do_mod_update() {
   # Get the target information
   local updateDeps
   updateDeps="$(jq -r '.updateDeps' "$drv_dir"/target.json)"
@@ -133,7 +127,6 @@ do_update() {
   fi
 
   # Generate the source definition
-  echo "Updating source hash" >&3
   cp go.{mod,sum} "$drv_dir"
   exec 10>"$drv_dir"/source.json
   echo '{' >&10
@@ -143,14 +136,39 @@ do_update() {
   echo "  \"version\": \"$version\"">&10
   echo '}' >&10
   exec 3>&-
+}
+
+update_sha256() {
+  local sha256="$1"
+
+  jq ".sha256 = \"$sha256\"" "$drv_dir"/source.json >"$TMPDIR"/"$pkg".json
+  mv "$TMPDIR"/"$pkg".json "$drv_dir"/source.json
+}
+
+do_mod_rehash() {
+  update_sha256 "$BAD_SHA256"
+}
+
+do_update() {
+  local pkg="$1"
+
+  local drv_dir
+  drv_dir="$TOP_LEVEL/pkgs/all-pkgs/${pkg:0:1}/$pkg"
+  test -d "$drv_dir"
+
+  if [ -n "$DO_REHASH" ]; then
+    do_mod_rehash
+  else
+    do_mod_update
+  fi
 
   # Leverage the source fetcher to determine our new hash
+  echo "Updating source hash" >&3
   mkdir -p "$TMPDIR/log"
   nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
   sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
   test -n "$sha256"
-  jq ".sha256 = \"$sha256\"" "$drv_dir"/source.json >"$TMPDIR"/"$pkg".json
-  mv "$TMPDIR"/"$pkg".json "$drv_dir"/source.json
+  update_sha256 "$sha256"
 }
 
 ARGS=()

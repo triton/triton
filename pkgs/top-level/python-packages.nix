@@ -322,7 +322,7 @@ duplicity = callPackage ../all-pkgs/d/duplicity { };
 
 enum34 = callPackage ../all-pkgs/e/enum34 { };
 
-etcd = callPackage ../all-pkgs/e/etcd { };
+etcd = callPackage ../all-pkgs/e/etcd-py { };
 
 fasteners = callPackage ../all-pkgs/f/fasteners { };
 

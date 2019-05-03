@@ -12,11 +12,27 @@ BAD_SHA256="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 # Parameters to conform to fetchzip versioning
 FETCHZIP_VERSION=6
 
+declare -a -r generated=(
+  'go.mod'
+  'go.sum'
+  'source.json'
+)
+
 # Setup the temporary storage area
 TMPDIR=""
 cleanup() {
   CODE="$?"
-  echo "Cleaning up..." >&2
+  mkdir -p "$TMPDIR"/safe
+  for pkg in $(ls "$TMPDIR"/safe); do
+    drv_dir="$(get_drv_dir "$pkg")"
+    for file in "${generated[@]}"; do
+      if [ "$(readlink -f "$TMPDIR"/safe/"$pkg"/"$file")" = "/dev/null" ]; then
+        rm "$drv_dir"/"$file"
+      elif [ -f "$TMPDIR"/safe/"$pkg"/"$file" ]; then
+        mv "$TMPDIR"/safe/"$pkg"/"$file" "$drv_dir"/"$file"
+      fi
+    done
+  done
   if [ -n "$TMPDIR" ]; then
     rm -rf "$TMPDIR"
   fi
@@ -36,6 +52,10 @@ while ! [ -d "pkgs/top-level" ]; do
   cd ..
 done
 TOP_LEVEL="$(pwd)"
+
+get_drv_dir() {
+  echo "$TOP_LEVEL/pkgs/all-pkgs/${1:0:1}/$1"
+}
 
 # Build all of the packages needed to run this script
 echo "Building script dependencies..." >&2
@@ -155,9 +175,20 @@ do_update() {
   local pkg="$1"
 
   local drv_dir
-  drv_dir="$TOP_LEVEL/pkgs/all-pkgs/${pkg:0:1}/$pkg"
+  drv_dir="$(get_drv_dir "$pkg")"
   test -d "$drv_dir"
 
+  # Save the old generated files in case we error out
+  mkdir -p "$TMPDIR"/safe/"$pkg"
+  for file in "${generated[@]}"; do
+    if test -f "$drv_dir"/"$file"; then
+      cp "$drv_dir"/"$file" "$TMPDIR"/safe/"$pkg"/"$file"
+    else
+      ln -s /dev/null "$TMPDIR"/safe/"$pkg"/"$file"
+    fi
+  done
+
+  # Do source file regeneration and update
   local fetch_source=""
   if [ -n "$DO_REHASH" ]; then
     fetch_source="$(do_mod_rehash)"
@@ -166,17 +197,25 @@ do_update() {
   else
     fetch_source="$(do_mod_update)"
   fi
-
-  # Leverage the source fetcher to determine our new hash
   if [ -z "$fetch_source" ]; then
     return 0
   fi
+
+  # Leverage the source fetcher to determine our new hash
   echo "Updating source hash" >&3
   mkdir -p "$TMPDIR/log"
   nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
   sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
   test -n "$sha256"
   update_sha256 "$sha256"
+
+  echo "Building package" >&3
+  nix-build -A pkgs.$pkg "$TOP_LEVEL"
+
+  # Ensure we don't restore old files now
+  for file in "${generated[@]}"; do
+    rm -f "$TMPDIR"/safe/"$pkg"/"$file"
+  done
 }
 
 ARGS=()

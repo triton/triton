@@ -2134,7 +2134,9 @@ let
     date = "2016-08-02";
   };
 
-  etcd = buildFromGitHub {
+  etcd = callPackage ../all-pkgs/e/etcd { };
+
+  etcd_client = buildFromGitHub {
     version = 6;
     owner = "coreos";
     repo = "etcd";
@@ -2144,50 +2146,11 @@ let
     goPackageAliases = [
       "github.com/coreos/etcd"
     ];
-    propagatedBuildInputs = [
-      bbolt
-      btree
-      urfave_cli
-      clockwork
-      cobra
-      cmux
-      crypto
-      go-grpc-middleware
-      go-grpc-prometheus
-      go-humanize
-      go-semver
-      go-systemd
-      groupcache
-      grpc
-      grpc-gateway
-      grpc-websocket-proxy
-      jwt-go
-      net
-      pb_v1
-      pflag
-      pkg
-      probing
-      prometheus_client_golang
-      protobuf
-      gogo_protobuf
-      pty
-      speakeasy
-      tablewriter
-      time
-      ugorji_go
-      google_uuid
-      yaml
-      zap
-
-      pkgs.libpcap
-    ];
 
     excludedPackages = "\\(test\\|benchmark\\|example\\|bridge\\)";
     meta.useUnstable = true;
     date = "2019-02-19";
-  };
 
-  etcd_client = etcd.override {
     subPackages = [
       "auth/authpb"
       "client"
@@ -2207,6 +2170,7 @@ let
       "raft/raftpb"
       "version"
     ];
+
     propagatedBuildInputs = [
       go-grpc-middleware
       go-semver
@@ -2222,11 +2186,9 @@ let
     ];
   };
 
-  etcd_for_swarmkit = etcd.override {
+  etcd_for_swarmkit = etcd_client.override {
     subPackages = [
       "raft/raftpb"
-    ];
-    buildInputs = [
     ];
     propagatedBuildInputs = [
       protobuf

@@ -1185,7 +1185,7 @@ erlang_graphical = callPackageAlias "erlang" {
   graphical = true;
 };
 
-etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
+etcd = pkgs.goPackages.etcd;
 
 ethtool = callPackage ../all-pkgs/e/ethtool { };
 

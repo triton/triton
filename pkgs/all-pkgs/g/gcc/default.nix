@@ -42,7 +42,7 @@ let
     else
       "release";
 
-  version = "8.3.0";
+  version = "9.1.0";
 in
 stdenv.mkDerivation (rec {
   name = "gcc-${version}";
@@ -50,7 +50,7 @@ stdenv.mkDerivation (rec {
   src = fetchurl {
     url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c";
+    sha256 = "79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0";
   };
 
   buildInputs = optionals (type != "bootstrap") [
@@ -63,24 +63,24 @@ stdenv.mkDerivation (rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
-      file = "g/gcc/8.2.0/0001-libcpp-Enforce-purity-BT_TIMESTAMP.patch";
-      sha256 = "fa813790569c7e1c1404924a2bb9913575fe4a1775945ed45ba717c7345a0e25";
+      rev = "07997b8b1232810806ea323cc44d460ee78c1174";
+      file = "g/gcc/9.1.0/0001-libcpp-Enforce-purity-BT_TIMESTAMP.patch";
+      sha256 = "0d5754d2262fcc349edd8eabe20ddd04494593965859b9e37ee983a6bdc4c47f";
     })
     (fetchTritonPatch {
-      rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
-      file = "g/gcc/8.2.0/0002-c-ada-spec-Workaround-for-impurity-detection.patch";
-      sha256 = "396ec3139791032833b5cf7c65d4fa8a897199bbca98a67073d2e667d24a9634";
+      rev = "07997b8b1232810806ea323cc44d460ee78c1174";
+      file = "g/gcc/9.1.0/0002-c-ada-spec-Workaround-for-impurity-detection.patch";
+      sha256 = "156d4a1c885c28b4b4196ceed3ba7b2da0c1fdcc0261e4222c2cfc06296c53ec";
     })
     (fetchTritonPatch {
-      rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
-      file = "g/gcc/8.2.0/0003-gcc-Don-t-hardcode-startfile-locations.patch";
-      sha256 = "82b818f5d8ceec63437a7d9614a54c6895d94778c5904efedffeee00052a2995";
+      rev = "07997b8b1232810806ea323cc44d460ee78c1174";
+      file = "g/gcc/9.1.0/0003-gcc-Don-t-hardcode-startfile-locations.patch";
+      sha256 = "b5e0f27cf755b066df82d668a3728b28a1a13359272ffe37e106e1164eb3a81f";
     })
     (fetchTritonPatch {
-      rev = "4d2c1a5a183beed4144231b286099ec6c8e4691b";
-      file = "g/gcc/8.2.0/0004-cppdefault-Don-t-add-a-default-local_prefix-include.patch";
-      sha256 = "ae6a5002b197f81b76a949dc808e450dd5ed3b5951979b6a5f9987f2a76ce71c";
+      rev = "07997b8b1232810806ea323cc44d460ee78c1174";
+      file = "g/gcc/9.1.0/0004-cppdefault-Don-t-add-a-default-local_prefix-include.patch";
+      sha256 = "410f5251b08493d0917018a28fcabe468762e1edc5050fa23fdcc02c30a9c79f";
     })
   ];
 

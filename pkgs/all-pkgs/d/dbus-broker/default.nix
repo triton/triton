@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "20";
+  version = "21";
 in
 stdenv.mkDerivation rec {
   name = "dbus-broker-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/bus1/dbus-broker/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "17388f13ed94e215d53b850d34bec7426c0dd3e26261c6eb6be1922bd1486485";
+    sha256 = "6fff9a831a514659e2c7d704e76867ce31ebcf43e8d7a62e080c6656f64cd39e";
   };
 
   nativeBuildInputs = [

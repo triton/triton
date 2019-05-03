@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchgit
 , lib
 
 , keyutils
@@ -14,17 +14,18 @@
 }:
 
 let
-  date = "2019-03-02";
-  rev = "70bb5ab7a863ccff57ceb2a195d7cfa0fdf39218";
+  date = "2019-04-17";
+  rev = "b485aae1bac95e3b5be235116e2bc43da85906c5";
 in
 stdenv.mkDerivation {
   name = "bcachefs-tools-${date}";
 
-  src = fetchzip {
+  src = fetchgit {
     version = 6;
-    url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-${rev}.tar.xz";
-    multihash = "Qma5UV4wSw6t7T8mCUTD6ECRiVbrGAV2Wcf4v6F1xgWazu";
-    sha256 = "6f9014ccd9cacb2f7e9d4922073ada867b924a59507c2449c253c1f0c6fcb7cb";
+    url = "https://evilpiepirate.org/git/bcachefs-tools.git";
+    inherit rev;
+    multihash = "QmZRyPV5mvLRRtrmq2LjVvfCvzjZVipyYbBUzr4CPB4d5a";
+    sha256 = "f79ae1a6d4186b3157fb593cbb9b4c72efd0b412b5c2bbc07d4d31240b63f328";
   };
 
   buildInputs = [

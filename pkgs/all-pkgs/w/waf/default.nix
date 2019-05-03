@@ -46,13 +46,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "waf-2.0.14";
+  name = "waf-2.0.15";
 
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
-    multihash = "Qmazf5F7byK6qQA8HDoEcfyNEEKwP7PJzzkNiJUdtnSb6C";
+    multihash = "QmV1Dmic3Tt93LNUSY3yvvp3ms4BsJpDXY5svcJx4E7uhA";
     hashOutput = false;
-    sha256 = "c74055d7452540ad66c12d955c09f62a9fde0e23b0ab3c43984dc879b4bb51f4";
+    sha256 = "1e29fe37f8c589edc6929f9d8fcc1cc97523a1eb09d98776ab39e18def4dc723";
   };
 
   buildInputs = [

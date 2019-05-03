@@ -1,19 +1,17 @@
 { stdenv
-, autogen
 , bison
 , fetchTritonPatch
 , fetchurl
 , flex
 , makeWrapper
+, python2
 
 , dejavu-fonts
 , efibootmgr
 , freetype
 , fuse_2
 , gettext
-, libusb_1
 , lvm2
-, ncurses
 , xz
 , zfs
 
@@ -25,7 +23,8 @@ let
     any
     mapAttrsToList
     optionals
-    optionalString;
+    optionalString
+    replaceStrings;
 
   typeMap = {
     "bios-i386" = {
@@ -46,31 +45,31 @@ let
     platform
     target;
 
-  version = "2.02";
+  version = "2.04~rc1";
+  version' = replaceStrings ["~"] ["-"] version;
 in
 stdenv.mkDerivation rec {
-  name = "grub-${version}-${type}";
+  name = "grub-${version'}-${type}";
 
   src = fetchurl {
-    url = "mirror://gnu/grub/grub-${version}.tar.xz";
+    name = "grub-${version'}.tar.xz";
+    url = "https://alpha.gnu.org/gnu/grub/grub-${version}.tar.xz";
+    multihash = "QmeTicFn54TQYjWKBNM2e8X7DvbJxsFef6xQCxwyhmuiHS";
     hashOutput = false;
-    sha256 = "810b3798d316394f94096ec2797909dbf23c858e48f7b3830826b8daa06b7b0f";
+    sha256 = "62ab4435aff769233d09618d5ec36651ef4e4f6ae3939bbcb2f9b98c2a42adc8";
   };
 
   nativeBuildInputs = [
-    autogen
     bison
     flex
     makeWrapper
+    python2
   ];
 
   buildInputs = [
     freetype
     fuse_2
-    gettext
-    libusb_1
     lvm2
-    ncurses
     xz
     zfs
   ];
@@ -84,21 +83,27 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
+    grep -q '/usr/share/fonts/truetype' configure
     sed -i 's,/usr/share/fonts/truetype,${dejavu-fonts}/share/fonts/truetype,g' configure
-    sed -i 's, -Werror,,' grub-core/Makefile.in
   '';
 
   configureFlags = [
-    "--target=${target}"
-    "--with-platform=${platform}"
     "--program-prefix="
     "--program-suffix="
-    "--disable-werror"
+    "--target=${target}"
+  ] ++ optionals (platform != "efi") [
+    "--enable-efiemu"
+  ] ++ [
+    "--enable-cache-stats"
+    "--enable-boot-time"
     "--enable-grub-mkfont"
     "--enable-grub-themes"
     "--enable-grub-mount"
+    "--enable-device-mapper"
     "--enable-liblzma"
     "--enable-libzfs"
+    "--disable-werror"
+    "--with-platform=${platform}"
   ];
 
   postFixup = optionalString ("efi" == platform) ''
@@ -126,8 +131,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       inherit (src) name urls outputHash outputHashAlgo;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "E53D 497F 3FA4 2AD8 C9B4  D1E8 35A9 3B74 E82E 4209";
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "E53D 497F 3FA4 2AD8 C9B4  D1E8 35A9 3B74 E82E 4209";
+      };
     };
   };
 

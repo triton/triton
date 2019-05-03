@@ -136,6 +136,7 @@ do_mod_update() {
   echo "  \"version\": \"$version\"">&10
   echo '}' >&10
   exec 10>&-
+  echo 'fetch_source'
 }
 
 update_sha256() {
@@ -147,6 +148,7 @@ update_sha256() {
 
 do_mod_rehash() {
   update_sha256 "$BAD_SHA256"
+  echo 'fetch_source'
 }
 
 do_update() {
@@ -156,13 +158,19 @@ do_update() {
   drv_dir="$TOP_LEVEL/pkgs/all-pkgs/${pkg:0:1}/$pkg"
   test -d "$drv_dir"
 
+  local fetch_source=""
   if [ -n "$DO_REHASH" ]; then
-    do_mod_rehash
+    fetch_source="$(do_mod_rehash)"
+  elif [ "$(jq -r '.skipUpdate' "$drv_dir"/target.json)" = "true" ]; then
+    echo "Automatic Update Skipped" >&3
   else
-    do_mod_update
+    fetch_source="$(do_mod_update)"
   fi
 
   # Leverage the source fetcher to determine our new hash
+  if [ -z "$fetch_source" ]; then
+    return 0
+  fi
   echo "Updating source hash" >&3
   mkdir -p "$TMPDIR/log"
   nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true

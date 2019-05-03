@@ -194,23 +194,25 @@ do_update() {
     fetch_source="$(do_mod_rehash)"
   elif [ "$(jq -r '.skipUpdate' "$drv_dir"/target.json)" = "true" ]; then
     echo "Automatic Update Skipped" >&3
-  else
+  elif [ -z "$SKIP_UPDATE" ]; then
     fetch_source="$(do_mod_update)"
-  fi
-  if [ -z "$fetch_source" ]; then
-    return 0
   fi
 
   # Leverage the source fetcher to determine our new hash
-  echo "Updating source hash" >&3
-  mkdir -p "$TMPDIR/log"
-  nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
-  sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
-  test -n "$sha256"
-  update_sha256 "$sha256"
+  if [ -n "$fetch_source" ]; then
+    echo "Updating source hash" >&3
+    mkdir -p "$TMPDIR/log"
+    nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
+    sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
+    test -n "$sha256"
+    update_sha256 "$sha256"
+    DO_BUILD=1
+  fi
 
-  echo "Building package" >&3
-  nix-build -A pkgs.$pkg "$TOP_LEVEL"
+  if [ -n "$DO_BUILD" ]; then
+    echo "Building package" >&3
+    nix-build -A pkgs.$pkg "$TOP_LEVEL"
+  fi
 
   # Ensure we don't restore old files now
   for file in "${generated[@]}"; do

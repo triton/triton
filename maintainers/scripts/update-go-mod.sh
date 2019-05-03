@@ -135,7 +135,7 @@ do_mod_update() {
   echo "  \"sha256\": \"$BAD_SHA256\"," >&10
   echo "  \"version\": \"$version\"">&10
   echo '}' >&10
-  exec 3>&-
+  exec 10>&-
 }
 
 update_sha256() {

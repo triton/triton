@@ -6,13 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "valgrind-3.14.0";
+  name = "valgrind-3.15.0";
 
   src = fetchurl {
-    url = "http://www.valgrind.org/downloads/${name}.tar.bz2";
-    multihash = "QmX6SRssywahzQFYNiQaTxz8D32o6M5WpXJqHNrgDVZMU1";
+    url = "mirror://sourceware/valgrind/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "037c11bfefd477cc6e9ebe8f193bb237fe397f7ce791b4a4ce3fa1c6a520baa5";
+    sha256 = "417c7a9da8f60dd05698b3a7bc6002e4ef996f14c13f0ff96679a16873e78ab1";
   };
 
   nativeBuildInputs = [
@@ -43,7 +42,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        md5Confirm = "74175426afa280184b62591b58c671b3";
+        md5Confirm = "46e5fbdcbc3502a5976a317a0860a975";
       };
     };
   };

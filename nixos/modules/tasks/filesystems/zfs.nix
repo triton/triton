@@ -9,7 +9,6 @@ with lib;
 
 let
 
-  cfgSpl = config.boot.spl;
   cfgZfs = config.boot.zfs;
   cfgSnapshots = config.services.zfs.autoSnapshot;
 
@@ -21,7 +20,6 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  splKernelPkg = if cfgZfs.useDev then kernelPackages.spl_dev else kernelPackages.spl;
   zfsKernelPkg = if cfgZfs.useDev then kernelPackages.zfs_dev else kernelPackages.zfs;
   zfsUserPkg = if cfgZfs.useDev then pkgs.zfs_dev else pkgs.zfs;
 
@@ -211,8 +209,7 @@ in
 
       boot = {
         kernelModules = [ "zfs" ] ;
-        extraModulePackages = [ zfsKernelPkg ]
-          ++ optionals (!cfgZfs.useDev) [ splKernelPkg ];
+        extraModulePackages = [ zfsKernelPkg ];
       };
 
       boot.initrd = mkIf inInitrd {

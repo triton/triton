@@ -3696,11 +3696,6 @@ spidermonkey_52 = callPackage ../all-pkgs/s/spidermonkey {
 };
 spidermonkey = callPackageAlias "spidermonkey_52" { };
 
-spl = callPackage ../all-pkgs/s/spl {
-  channel = "stable";
-  type = "user";
-};
-
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 
 sqlite = callPackage ../all-pkgs/s/sqlite { };
@@ -4627,19 +4622,12 @@ libstartup_notification =
         buildConfig = "kernelspace";
       };
 
-      spl = kCallPackage ../all-pkgs/s/spl {
-        channel = "stable";
-        type = "kernel";
-        inherit (kPkgs) kernel;  # We shouldn't need this
-      };
-
       wireguard = kCallPackage ../all-pkgs/w/wireguard {
         inherit (kPkgs) kernel;
       };
 
       zfs = kCallPackage ../all-pkgs/z/zfs/kernel.nix {
         channel = "stable";
-        inherit (kPkgs) kernel spl;  # We shouldn't need this
       };
 
       zfs_dev = kCallPackage ../all-pkgs/z/zfs/kernel.nix {

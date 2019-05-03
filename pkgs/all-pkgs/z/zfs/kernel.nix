@@ -49,8 +49,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     elfutils
     python3
-  ] ++ optionals (channel != "dev") [
-    spl
   ];
 
   inherit (common) patches;
@@ -59,10 +57,6 @@ stdenv.mkDerivation rec {
     # Strip kernel modules
     grep -q 'INSTALL_MOD_DIR=.*\\' module/Makefile.in
     sed -i '/INSTALL_MOD_DIR=/a\		INSTALL_MOD_STRIP=1 \\' module/Makefile.in
-  '' + optionalString (channel == "stable") ''
-    # Make the Module.syms copied from the spl writable
-    grep -q '@SPL_SYMBOLS@' module/Makefile.in
-    sed -i '/cp.*@SPL_SYMBOLS@/a\\t\tchmod +w @SPL_SYMBOLS@; \\' module/Makefile.in
   '';
 
   preConfigure = ''
@@ -78,8 +72,6 @@ stdenv.mkDerivation rec {
     "--with-linux=${kernel.dev}/lib/modules/${kernel.modDirVersion}/source"
     "--with-linux-obj=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
     "--with-python=3"
-  ] ++ optionals (channel != "dev") [
-    "--with-spl=${spl}/libexec/spl"
   ];
 
   preInstall = ''

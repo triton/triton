@@ -202,7 +202,7 @@ do_update() {
   if [ -n "$fetch_source" ]; then
     echo "Updating source hash" >&3
     mkdir -p "$TMPDIR/log"
-    nix-build -A pkgs.$pkg.src "$TOP_LEVEL" 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
+    nix-build -A pkgs.$pkg.src "$TOP_LEVEL" --no-out-link 2>&1 | tee "$TMPDIR"/log/"$pkg" || true
     sha256=$(grep 'got:[ ]*sha256:' "$TMPDIR"/log/"$pkg" | awk -F: '{print $3}')
     test -n "$sha256"
     update_sha256 "$sha256"
@@ -211,7 +211,7 @@ do_update() {
 
   if [ -n "$DO_BUILD" ]; then
     echo "Building package" >&3
-    nix-build -A pkgs.$pkg "$TOP_LEVEL"
+    nix-build -A pkgs.$pkg "$TOP_LEVEL" --no-out-link
   fi
 
   # Ensure we don't restore old files now

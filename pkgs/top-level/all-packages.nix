@@ -3738,7 +3738,10 @@ swig_2 = callPackage ../all-pkgs/s/swig {
 swig_3 = callPackage ../all-pkgs/s/swig {
   channel = "3";
 };
-swig = callPackageAlias "swig_3" { };
+swig_4 = callPackage ../all-pkgs/s/swig {
+  channel = "4";
+};
+swig = callPackageAlias "swig_4" { };
 
 sxiv = callPackage ../all-pkgs/s/sxiv { };
 

@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo;
       failEarly = true;
       insecureHashOutput = true;
+      fullOpts = { };
     };
   };
 

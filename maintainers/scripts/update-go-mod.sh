@@ -116,6 +116,11 @@ do_mod_update() {
   cp -r --no-preserve all "$HOME"/go/pkg/mod/"$path@$version" "$srcDir"
   pushd "$srcDir" >/dev/null
 
+  # Create a new module if our project doesn't support yet
+  if [ ! -f go.mod ]; then
+    go mod init
+  fi
+
   # Get rid of any replacements the developers think work
   sed -i '/replace/d' go.mod
 
@@ -127,7 +132,8 @@ do_mod_update() {
     echo "Skipping dependency update" >&3
   fi
 
-  # Clean up any stale modules
+  # Clean up any stale modules or populate empty modfile
+  echo "Tidying the module" >&3
   go mod tidy
 
   # Determine if our old info was up to date
@@ -147,6 +153,7 @@ do_mod_update() {
   fi
 
   # Generate the source definition
+  echo "Update Needed" >&3
   cp go.{mod,sum} "$drv_dir"
   exec 10>"$drv_dir"/source.json
   echo '{' >&10

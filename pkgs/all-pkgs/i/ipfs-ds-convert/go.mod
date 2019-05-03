@@ -11,6 +11,7 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20190430165422-3e4dfb77656c // indirect
+	github.com/ipfs/go-bitswap v0.0.5 // indirect
 	github.com/ipfs/go-datastore v0.0.5
 	github.com/ipfs/go-ds-badger v0.0.3
 	github.com/ipfs/go-ds-flatfs v0.0.2
@@ -22,7 +23,7 @@ require (
 	github.com/ipfs/go-ipfs-files v0.0.3 // indirect
 	github.com/ipfs/interface-go-ipfs-core v0.0.7 // indirect
 	github.com/jbenet/goprocess v0.1.0 // indirect
-	github.com/libp2p/go-libp2p v0.0.21 // indirect
+	github.com/libp2p/go-libp2p v0.0.22 // indirect
 	github.com/libp2p/go-libp2p-host v0.0.2 // indirect
 	github.com/libp2p/go-libp2p-interface-connmgr v0.0.3 // indirect
 	github.com/libp2p/go-libp2p-peer v0.1.0 // indirect
@@ -41,8 +42,8 @@ require (
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/warpfork/go-wish v0.0.0-20190328234359-8b3e70f8e830 // indirect
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
-	golang.org/x/net v0.0.0-20190501004415-9ce7a6920f09 // indirect
-	golang.org/x/sys v0.0.0-20190429190828-d89cdac9e872 // indirect
+	golang.org/x/net v0.0.0-20190502183928-7f726cade0ab // indirect
+	golang.org/x/sys v0.0.0-20190502175342-a43fa875dd82 // indirect
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/yaml.v2 v2.2.2 // indirect
 )

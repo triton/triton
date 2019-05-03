@@ -5,5 +5,5 @@ require (
 	github.com/kr/pty v1.1.4
 	github.com/mattn/go-isatty v0.0.7
 	github.com/xiaq/persistent v0.0.0-20190312105637-a1d9ac4077fc
-	golang.org/x/sys v0.0.0-20190429190828-d89cdac9e872
+	golang.org/x/sys v0.0.0-20190502175342-a43fa875dd82
 )

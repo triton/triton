@@ -1,0 +1,6 @@
+{
+  "path": "github.com/minio/minio",
+  "version": "master",
+  "updateDeps": false,
+  "skipUpdate": true
+}

@@ -2866,7 +2866,7 @@ minicom = callPackage ../all-pkgs/m/minicom { };
 
 minidlna = callPackage ../all-pkgs/m/minidlna { };
 
-minio = pkgs.goPackages.minio.bin // { outputs = [ "bin" ]; };
+minio = pkgs.goPackages.minio;
 
 minipro = callPackage ../all-pkgs/m/minipro { };
 

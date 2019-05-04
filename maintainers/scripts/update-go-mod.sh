@@ -23,16 +23,18 @@ TMPDIR=""
 cleanup() {
   CODE="$?"
   mkdir -p "$TMPDIR"/safe
-  for pkg in $(ls "$TMPDIR"/safe); do
-    drv_dir="$(get_drv_dir "$pkg")"
-    for file in "${generated[@]}"; do
-      if [ "$(readlink -f "$TMPDIR"/safe/"$pkg"/"$file")" = "/dev/null" ]; then
-        rm "$drv_dir"/"$file"
-      elif [ -f "$TMPDIR"/safe/"$pkg"/"$file" ]; then
-        mv "$TMPDIR"/safe/"$pkg"/"$file" "$drv_dir"/"$file"
-      fi
+  if [ -z "$DONT_RESTORE" ]; then
+    for pkg in $(ls "$TMPDIR"/safe); do
+      drv_dir="$(get_drv_dir "$pkg")"
+      for file in "${generated[@]}"; do
+        if [ "$(readlink -f "$TMPDIR"/safe/"$pkg"/"$file")" = "/dev/null" ]; then
+          rm "$drv_dir"/"$file"
+        elif [ -f "$TMPDIR"/safe/"$pkg"/"$file" ]; then
+          mv "$TMPDIR"/safe/"$pkg"/"$file" "$drv_dir"/"$file"
+        fi
+      done
     done
-  done
+  fi
   if [ -n "$TMPDIR" ]; then
     rm -rf "$TMPDIR"
   fi

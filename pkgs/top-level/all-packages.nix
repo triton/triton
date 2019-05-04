@@ -610,8 +610,6 @@ adwaita-qt = callPackage ../all-pkgs/a/adwaita-qt { };
 
 afflib = callPackage ../all-pkgs/a/afflib { };
 
-alertmanager = pkgs.goPackages.alertmanager.bin // { outputs = [ "bin" ]; };
-
 alsa-firmware = callPackage ../all-pkgs/a/alsa-firmware { };
 
 alsa-lib = callPackage ../all-pkgs/a/alsa-lib { };
@@ -954,10 +952,6 @@ combine-xml-catalogs = callPackage ../all-pkgs/c/combine-xml-catalogs { };
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul;
-
-consulfs = pkgs.goPackages.consulfs.bin // { outputs = [ "bin" ]; };
-
-consul-replicate = pkgs.goPackages.consul-replicate.bin // { outputs = [ "bin" ]; };
 
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
@@ -1764,8 +1758,6 @@ gpsd = callPackage ../all-pkgs/g/gpsd { };
 
 gptfdisk = callPackage ../all-pkgs/g/gptfdisk { };
 
-grafana = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
-
 granite = callPackage ../all-pkgs/g/granite { };
 
 graphite2 = callPackage ../all-pkgs/g/graphite2 { };
@@ -2039,8 +2031,6 @@ ilmbase = callPackage ../all-pkgs/i/ilmbase { };
 imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
 imlib2 = callPackage ../all-pkgs/i/imlib2 { };
-
-influxdb = pkgs.goPackages.influxdb.bin // { outputs = [ "bin" ]; };
 
 iniparser = callPackage ../all-pkgs/i/iniparser { };
 
@@ -2815,8 +2805,6 @@ lvm2 = callPackage ../all-pkgs/l/lvm2 { };
 
 lxc = callPackage ../all-pkgs/l/lxc { };
 
-lxd = pkgs.goPackages.lxd.bin // { outputs = [ "bin" ]; };
-
 lz4 = callPackage ../all-pkgs/l/lz4 { };
 
 lzip = callPackage ../all-pkgs/l/lzip { };
@@ -2824,8 +2812,6 @@ lzip = callPackage ../all-pkgs/l/lzip { };
 lzo = callPackage ../all-pkgs/l/lzo { };
 
 mac = callPackage ../all-pkgs/m/mac { };
-
-madns = pkgs.goPackages.go-multiaddr-dns.bin // { outputs = [ "bin" ]; };
 
 man = callPackage ../all-pkgs/m/man { };
 
@@ -2902,8 +2888,6 @@ modemmanager = callPackage ../all-pkgs/m/modemmanager { };
 mongo-c-driver = callPackage ../all-pkgs/m/mongo-c-driver { };
 
 mongodb = callPackage ../all-pkgs/m/mongodb { };
-
-mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
 mono = callPackage ../all-pkgs/m/mono { };
 
@@ -3419,8 +3403,6 @@ procps = callPackageAlias "procps-ng" { };
 procps-ng = callPackage ../all-pkgs/p/procps-ng { };
 
 progress = callPackage ../all-pkgs/p/progress { };
-
-prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
 protobuf-c = callPackage ../all-pkgs/p/protobuf-c { };
 

@@ -33,8 +33,8 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  channel = "2.58";
-  version = "${channel}.3";
+  channel = "2.60";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "glib-${version}";
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "8f43c31767e88a25da72b52a40f3301fefc49a665b56dc10ee7cc9565cbe7481";
+    sha256 = "2ef15475060addfda0443a7e8a52b28a10d5e981e82c083034061daf9a8f80d9";
   };
 
   nativeBuildInputs = [
@@ -76,6 +76,7 @@ stdenv.mkDerivation rec {
     # M4 macros are not installed by meson, but still needed by other
     # packages during the meson transition.
     for i in 'glib-2.0.m4' 'glib-gettext.m4' 'gsettings.m4'; do
+      ! test -e "$out"/share/aclocal/"$i"
       install -D -m 644 -v m4macros/"$i" "$out"/share/aclocal/"$i"
     done
   '';

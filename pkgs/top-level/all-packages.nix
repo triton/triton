@@ -4294,12 +4294,6 @@ zstd = callPackageAlias "zstd_1-4-0" { };
   systemd-cryptsetup-generator =
     callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #
-  haskell = callPackage ./haskell-packages.nix { };
-#
-  haskellPackages = pkgs.haskell.packages.ghc7103.override {
-    overrides = config.haskellPackageOverrides or (self: super: {});
-  };
-#
 #  icedtea7_web = callPackage ../development/compilers/icedtea-web {
 #    jdk = jdk7;
 #    xulrunner = firefox-unwrapped;

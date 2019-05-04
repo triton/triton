@@ -4,6 +4,7 @@
 , lib
 
 , acl
+, attr
 , gpm
 , ncurses
 
@@ -20,7 +21,7 @@ let
   inherit (lib)
     optionalString;
 
-  version = "8.1.0944";
+  version = "8.1.1259";
 in
 stdenv.mkDerivation rec {
   name = "vim-${version}";
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "9fabac5ebc943d2a8f98f1c31a59b2365c52b90ca40669d6e24e29a18720d49b";
+    sha256 = "a7697f05ebe974debe74dd1e032520d79720c46d80a0e38c6bbe9bc3f13ac05b";
   };
 
   nativeBuildInputs = [
@@ -39,6 +40,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     acl
+    attr
     gpm
     ncurses
   ];

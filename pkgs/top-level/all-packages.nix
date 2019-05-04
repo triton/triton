@@ -3936,7 +3936,7 @@ valgrind = callPackage ../all-pkgs/v/valgrind { };
 
 vamp-plugin-sdk = callPackage ../all-pkgs/v/vamp-plugin-sdk { };
 
-vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
+vault = pkgs.goPackages.vault;
 
 vcdimager = callPackage ../all-pkgs/v/vcdimager { };
 

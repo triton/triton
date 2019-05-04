@@ -3665,6 +3665,8 @@ smartmontools = callPackage ../all-pkgs/s/smartmontools { };
 
 snappy = callPackage ../all-pkgs/s/snappy { };
 
+socat = callPackage ../all-pkgs/s/socat { };
+
 socket_wrapper = callPackage ../all-pkgs/s/socket_wrapper { };
 
 sord = callPackage ../all-pkgs/s/sord { };

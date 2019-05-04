@@ -3128,7 +3128,7 @@ nodejs = callPackageAlias "nodejs_11" { };
 
 noise = callPackage ../all-pkgs/n/noise { };
 
-nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
+nomad = pkgs.goPackages.nomad;
 
 notmuch = callPackage ../all-pkgs/n/notmuch { };
 

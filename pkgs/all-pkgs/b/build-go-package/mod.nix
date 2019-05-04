@@ -49,7 +49,7 @@ stdenv.mkDerivation ({
     runHook 'preBuild'
 
     # Do the actual build
-    go install -trimpath -v ${installArg}
+    go install -trimpath -v $goFlags ${installArg}
 
     runHook 'postBuild'
   '';

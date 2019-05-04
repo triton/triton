@@ -27,6 +27,10 @@ buildGoModule {
     done
   '';
 
+  installedSubmodules = [
+    "cmd/..."
+  ];
+
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

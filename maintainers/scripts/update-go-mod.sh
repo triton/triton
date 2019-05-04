@@ -185,6 +185,11 @@ do_update() {
   drv_dir="$(get_drv_dir "$pkg")"
   test -d "$drv_dir"
 
+  if ! [ -f "$drv_dir"/target.json ]; then
+    echo "Missing target.json" >&3
+    return 0
+  fi
+
   # Save the old generated files in case we error out
   mkdir -p "$TMPDIR"/safe/"$pkg"
   for file in "${generated[@]}"; do

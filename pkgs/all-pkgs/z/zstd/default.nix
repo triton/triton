@@ -8,7 +8,7 @@
 
 let
   sha256s = {
-    "1.3.8" = "293fa004dfacfbe90b42660c474920ff27093e3fb6c99f7b76e6083b21d6d48e";
+    "1.4.0" = "7f323f0e0c18488748f3d9b2d4353f00e904ea2ccd0372ea04d7f77aa1156557";
   };
 in
 stdenv.mkDerivation rec {

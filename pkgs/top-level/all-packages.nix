@@ -4252,10 +4252,10 @@ zookeeper = callPackage ../all-pkgs/z/zookeeper { };
 
 zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd_1-3-8 = callPackage ../all-pkgs/z/zstd {
-  version = "1.3.8";
+zstd_1-4-0 = callPackage ../all-pkgs/z/zstd {
+  version = "1.4.0";
 };
-zstd = callPackageAlias "zstd_1-3-8" { };
+zstd = callPackageAlias "zstd_1-4-0" { };
 
 ################################################################################
 ################################################################################

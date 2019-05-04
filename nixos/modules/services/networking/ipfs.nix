@@ -130,7 +130,7 @@ in
         gawk
         gnused
         findutils
-        fs-repo-migrations
+        #fs-repo-migrations
         ipfs
         jq
         util-linux_full
@@ -165,7 +165,8 @@ in
           exit 6
         fi
 
-        su ipfs -s /bin/sh -c "fs-repo-migrations -y -to $(ipfs repo version -q | sed 's,fs-repo@\([0-9]\+\),\1,g')"
+        # TODO: Re-enable once needed again
+        #su ipfs -s /bin/sh -c "fs-repo-migrations -y -to $(ipfs repo version -q | sed 's,fs-repo@\([0-9]\+\),\1,g')"
 
         touch "${ipfs_path}/new_config"
         chmod 0660 "${ipfs_path}/new_config"

@@ -1427,8 +1427,6 @@ frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
 fribidi = callPackage ../all-pkgs/f/fribidi { };
 
-fs-repo-migrations = pkgs.goPackages.fs-repo-migrations.bin // { outputs = [ "bin" ]; };
-
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
 fuse_2 = callPackage ../all-pkgs/f/fuse/2.nix { };
@@ -1956,10 +1954,6 @@ gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 gvfs = callPackage ../all-pkgs/g/gvfs {
   libsoup = pkgs.libsoup_2-64;
 };
-
-gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
-
-gx-go = pkgs.goPackages.gx-go.bin // { outputs = [ "bin" ]; };
 
 gyp = pkgs.python3Packages.gyp.dev;
 

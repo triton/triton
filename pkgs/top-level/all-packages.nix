@@ -1090,7 +1090,7 @@ dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
 dmraid = callPackage ../all-pkgs/d/dmraid { };
 
-dnscrypt-proxy = pkgs.goPackages.dnscrypt-proxy.bin // { outputs = [ "bin" ]; };
+dnscrypt-proxy = pkgs.goPackages.dnscrypt-proxy;
 
 dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
 

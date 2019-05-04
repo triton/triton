@@ -1840,34 +1840,7 @@ let
     ];
   };
 
-  dnscrypt-proxy = buildFromGitHub {
-    version = 6;
-    rev = "2.0.19";
-    owner  = "jedisct1";
-    repo   = "dnscrypt-proxy";
-    sha256 = "HRkv+ijdUyjK1aU3c2Ad3bBjCUAuI537SyYaWAvzt3Q=";
-    propagatedBuildInputs = [
-      critbitgo
-      crypto
-      dlog
-      dns
-      ewma
-      go-clocksmith
-      go-dnsstamps
-      go-immutable-radix
-      go-minisign
-      go-systemd
-      golang-lru
-      lumberjack_v2
-      net
-      pidfile
-      safefile
-      service
-      sys
-      toml
-      xsecretbox
-    ];
-  };
+  dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };
 
   dnsimple-go = buildFromGitHub {
     version = 6;

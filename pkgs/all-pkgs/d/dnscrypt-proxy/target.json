@@ -1,0 +1,5 @@
+{
+  "path": "github.com/jedisct1/dnscrypt-proxy",
+  "version": "latest",
+  "updateDeps": true
+}

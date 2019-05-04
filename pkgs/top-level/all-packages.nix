@@ -2183,7 +2183,7 @@ ldb = callPackage ../all-pkgs/l/ldb { };
 
 ldns = callPackage ../all-pkgs/l/ldns { };
 
-lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
+lego = pkgs.goPackages.lego;
 
 lensfun = callPackage ../all-pkgs/l/lensfun { };
 

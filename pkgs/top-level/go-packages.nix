@@ -6817,46 +6817,7 @@ let
     date = "2018-10-29";
   };
 
-  lego = buildFromGitHub {
-    version = 6;
-    rev = "v2.2.0";
-    owner = "xenolf";
-    repo = "lego";
-    sha256 = "2363e213fc0e25927a47a4539fc5ef3dcb150cfd0fbeb5904e5aed99cc0e92fc";
-    buildInputs = [
-      #akamaiopen-edgegrid-golang
-      #auroradnsclient
-      aws-sdk-go
-      #azure-sdk-for-go
-      backoff
-      urfave_cli
-      crypto
-      dns
-      #dnspod-go
-      #dnsimple-go
-      #go-autorest
-      #go-jose_v2
-      #go-ovh
-      google-api-go-client
-      #linode
-      #memcache
-      #namedotcom_go
-      ns1-go_v2
-      oauth2
-      net
-      vultr
-    ];
-    postPatch = ''
-      rm -r providers/dns/azure
-      sed -i '/azure/d' providers/dns/dns_providers.go
-
-      rm -r providers/dns/exoscale
-      sed -i '/exoscale/d' providers/dns/dns_providers.go
-
-      grep -q 'FormatInt(whoamiResponse.Data.Account.ID,' providers/dns/dnsimple/dnsimple.go
-      sed -i 's#FormatInt(whoamiResponse.Data.Account.ID,#FormatInt(int64(whoamiResponse.Data.Account.ID),#' providers/dns/dnsimple/dnsimple.go
-    '';
-  };
+  lego = callPackage ../all-pkgs/l/lego { };
 
   lemma = buildFromGitHub {
     version = 6;

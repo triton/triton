@@ -7206,35 +7206,17 @@ let
     date = "2018-12-20";
   };
 
-  mc = buildFromGitHub {
+  mc = callPackage ../all-pkgs/m/mc { };
+
+  mc_pkg = buildFromGitHub {
     version = 6;
     owner = "minio";
     repo = "mc";
     rev = "57faed27254e54783a3724c450515027ea755ab5";
     sha256 = "968649b21b0dbd7703e78400f149195f7b3322bfcebfccf57a09b38ffac07b20";
-    propagatedBuildInputs = [
-      cli_minio
-      color
-      crypto
-      go-colorable
-      go-homedir
-      go-humanize
-      go-isatty
-      go-version
-      minio_pkg
-      minio-go
-      net
-      notify
-      pb
-      profile
-      text
-      xattr
-    ];
     meta.useUnstable = true;
     date = "2019-02-01";
-  };
 
-  mc_pkg = mc.override {
     subPackages = [
       "pkg/console"
     ];

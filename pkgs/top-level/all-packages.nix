@@ -2822,7 +2822,7 @@ mysql_lib = callPackageAlias "mysql" { };
 
 mariadb-connector-c = callPackage ../all-pkgs/m/mariadb-connector-c { };
 
-mc = pkgs.goPackages.mc.bin // { outputs = [ "bin" ]; };
+mc = pkgs.goPackages.mc;
 
 mcelog = callPackage ../all-pkgs/m/mcelog { };
 

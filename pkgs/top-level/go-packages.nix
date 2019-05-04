@@ -1527,30 +1527,7 @@ let
     date = "2017-08-10";
   };
 
-  consul-template = buildFromGitHub {
-    version = 6;
-    rev = "v0.19.5";
-    owner = "hashicorp";
-    repo = "consul-template";
-    sha256 = "0rrd2vz1vfgw4f3c4afhgw73hy56xm4f2gs89w57zn19f5vlfgn3";
-
-    propagatedBuildInputs = [
-      consul_api
-      errors
-      go-homedir
-      go-multierror
-      go-rootcerts
-      go-shellwords
-      go-syslog
-      hashstructure
-      hcl
-      logutils
-      mapstructure
-      toml
-      yaml_v2
-      vault_api
-    ];
-  };
+  consul-template = callPackage ../all-pkgs/c/consul-template { };
 
   context = buildFromGitHub {
     version = 6;

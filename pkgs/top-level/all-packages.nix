@@ -953,7 +953,7 @@ conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul;
 
-consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
+consul-template = pkgs.goPackages.consul-template;
 
 coreutils = callPackage ../all-pkgs/c/coreutils { };
 

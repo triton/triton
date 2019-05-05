@@ -1,12 +1,12 @@
 { lib
-, buildGoModule
+, buildGo
 , fetchFromGitHub
 }:
 
 let
   version = "2.5.0";
 in
-buildGoModule {
+buildGo {
   name = "lego-${version}";
 
   src = fetchFromGitHub {

@@ -1,5 +1,5 @@
 { lib
-, buildGoModule
+, buildGo
 , fetchFromGitHub
 , fetchTritonPatch
 }:
@@ -7,7 +7,7 @@
 let
   version = "0.9.1";
 in
-buildGoModule {
+buildGo {
   name = "nomad-${version}";
 
   src = fetchFromGitHub {

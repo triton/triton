@@ -1,12 +1,12 @@
 { lib
-, buildGoModule
+, buildGo
 , fetchFromGitHub
 }:
 
 let
   version = "0.20.0";
 in
-buildGoModule {
+buildGo {
   name = "consul-template-${version}";
 
   src = fetchFromGitHub {

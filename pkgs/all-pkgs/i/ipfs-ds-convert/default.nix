@@ -1,6 +1,6 @@
 { lib
-, buildGoModule
-, fetchGoModule
+, buildGo
+, fetchGo
 , fetchTritonPatch
 }:
 
@@ -10,10 +10,10 @@ let
 
   name = "ipfs-ds-convert-${version}";
 in
-buildGoModule {
+buildGo {
   inherit name;
 
-  src = fetchGoModule {
+  src = fetchGo {
     inherit name;
     gomod = ./go.mod;
     gosum = ./go.sum;

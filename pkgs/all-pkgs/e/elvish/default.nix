@@ -1,6 +1,6 @@
 { lib
-, buildGoModule
-, fetchGoModule
+, buildGo
+, fetchGo
 }:
 
 let
@@ -9,10 +9,10 @@ let
 
   name = "elvish-${version}";
 in
-buildGoModule {
+buildGo {
   inherit name;
 
-  src = fetchGoModule {
+  src = fetchGo {
     inherit name;
     gomod = ./go.mod;
     gosum = ./go.sum;

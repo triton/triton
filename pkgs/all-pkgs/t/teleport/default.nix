@@ -1,5 +1,5 @@
 { lib
-, buildGoModule
+, buildGo
 , fetchFromGitHub
 , zip
 }:
@@ -7,7 +7,7 @@
 let
   version = "3.2.5";
 in
-buildGoModule {
+buildGo {
   name = "teleport-${version}";
 
   src = fetchFromGitHub {

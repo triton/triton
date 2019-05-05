@@ -1,12 +1,12 @@
 { lib
-, buildGoModule
+, buildGo
 , fetchFromGitHub
 }:
 
 let
   version = "1.1.2";
 in
-buildGoModule {
+buildGo {
   name = "vault-${version}";
 
   src = fetchFromGitHub {

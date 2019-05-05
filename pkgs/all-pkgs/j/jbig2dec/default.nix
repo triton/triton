@@ -1,10 +1,11 @@
 { stdenv
+, autoconf
 , fetchurl
 }:
 
 let
-  gsver = "gs924";
-  version = "0.15";
+  gsver = "gs927";
+  version = "0.16";
 
   baseUrl = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/"
     + "download/${gsver}";
@@ -15,8 +16,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "6bfa1af72de37c7929315933a1ba696540d860936ad98f9de02fc725d7e53854";
+    sha256 = "a4f6bf15d217e7816aa61b92971597c801e81f0a63f9fe1daee60fb88e0f0602";
   };
+
+  nativeBuildInputs = [
+    # Shouldn't be needed but 0.16 must be broken
+    autoconf
+  ];
 
   # Fix the lack of memento.h
   postInstall = ''

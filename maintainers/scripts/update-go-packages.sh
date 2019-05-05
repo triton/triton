@@ -42,7 +42,7 @@ cleanup() {
   exit "$CODE"
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM
-TMPDIR="$(mktemp -d /tmp/update-go-mod.XXXXXXXXXX)"
+TMPDIR="$(mktemp -d /tmp/update-go.XXXXXXXXXX)"
 
 # Include the concurrent library
 cd "$(readlink -f "$0" | xargs dirname)"
@@ -63,7 +63,7 @@ get_drv_dir() {
 echo "Building script dependencies..." >&2
 exp="let pkgs = import ./. { };
 in pkgs.buildEnv {
-  name = \"update-go-module-env\";
+  name = \"update-go-env\";
   paths = with pkgs; [
     coreutils_small
     diffutils
@@ -71,7 +71,7 @@ in pkgs.buildEnv {
     git
     gnugrep
     gnused_small
-    go
+    goPackages.go
     jq
     ncurses
   ];
@@ -237,7 +237,7 @@ do_update() {
 ARGS=()
 for pkg in "$@"; do
   if [ "$pkg" = "*" ]; then
-    for pkg in $(grep '= callPackage ../all-pkgs' "$TOP_LEVEL"/pkgs/top-level/go-packages.nix | grep -v 'GoMod' | awk '{print $1}'); do
+    for pkg in $(grep '= callPackage ../all-pkgs' "$TOP_LEVEL"/pkgs/top-level/go-packages.nix | grep -v 'Go' | awk '{print $1}'); do
       ARGS+=('-' "Update $pkg" do_update "$pkg")
     done
   else

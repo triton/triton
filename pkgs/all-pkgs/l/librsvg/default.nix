@@ -2,9 +2,9 @@
 , fetchurl
 , lib
 
-, bzip2
 , cairo
 , fontconfig
+, freetype
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -12,15 +12,15 @@
 , libgsf
 , libxml2
 , pango
-, vala
+, rustPackages
 }:
 
 let
   inherit (lib)
     boolEn;
 
-  channel = "2.40";
-  version = "${channel}.20";
+  channel = "2.44";
+  version = "${channel}.13";
 in
 stdenv.mkDerivation rec {
   name = "librsvg-${version}";
@@ -28,13 +28,18 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/librsvg/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b";
+    sha256 = "d2d660bf0c6441d019ae7a7ba96b789facbfb14dc97818908ee03e15ba6bcb8f";
   };
 
+  nativeBuildInputs = [
+    rustPackages.cargo
+    rustPackages.rustc
+  ];
+
   buildInputs = [
-    bzip2
     cairo
     fontconfig
+    freetype
     gdk-pixbuf
     glib
     gobject-introspection
@@ -42,12 +47,15 @@ stdenv.mkDerivation rec {
     libgsf
     libxml2
     pango
+    rustPackages.rust-std
   ];
 
+  CARGO_IGNORE_INDEX = true;
+
   configureFlags = [
+    "--disable-maintainer-mode"
     "--disable-tools"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-vala"
   ];
 
   # Librsvg updates gdk-pixbuf's loader cache by default, this forces the
@@ -67,9 +75,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Url = "https://download.gnome.org/sources/librsvg/${channel}/"
-        + "${name}.sha256sum";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/librsvg/${channel}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

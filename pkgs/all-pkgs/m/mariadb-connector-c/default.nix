@@ -10,8 +10,8 @@
 }:
 
 let
-  rev = "3b3b492901956c1ba9283261fe395a64b426c174";
-  date = "2018-12-18";
+  rev = "2fdaf1d4474edcdbd6724851be3f8d7573f07ce1";
+  date = "2019-04-19";
 in
 stdenv.mkDerivation rec {
   name = "mariadb-connector-c-${date}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     owner = "MariaDB";
     repo = "mariadb-connector-c";
     inherit rev;
-    sha256 = "5ff9bcefeccade699c2edbb30876f056c9a88c82812d72abddcb4a1c8ba196cb";
+    sha256 = "41bc7cd55f9a73bba7accf6e1e60f32452f7141808b4aa1a831ba128cb3bb76d";
   };
 
   nativeBuildInputs = [

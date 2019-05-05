@@ -12,8 +12,8 @@ let
   inherit (lib)
     optionalString;
 
-  channel = "0.42";
-  version = "${channel}.5";
+  channel = "0.44";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "vala-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/vala/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "8c33b4abc0573d364781bbfe54a1668ed34956902e471191a31cf05dc87c6e12";
+    sha256 = "8553b422484af88be1685d8b47f7b0df36ae4477c3e77e89ab22276ffed1eae9";
   };
 
   nativeBuildInputs = [

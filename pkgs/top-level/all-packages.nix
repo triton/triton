@@ -580,11 +580,7 @@ accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };
 
-acme = pkgs.goPackages.acme.bin // { outputs = [ "bin" ]; };
-
 acme-sh = callPackage ../all-pkgs/a/acme-sh { };
-
-acmetool = pkgs.goPackages.acmetool.bin // { outputs = [ "bin" ]; };
 
 acpi = callPackage ../all-pkgs/a/acpi { };
 

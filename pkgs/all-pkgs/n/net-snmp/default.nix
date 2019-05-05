@@ -49,6 +49,8 @@ stdenv.mkDerivation rec {
     "--with-mnttab=/proc/mounts"
   ];
 
+  installParallel = false;
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

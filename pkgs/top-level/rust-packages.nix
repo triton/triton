@@ -53,4 +53,6 @@ let
   rustc = rustc_bootstrap;
   rust-std = rust-std_bootstrap;
 
+  ripgrep = callPackage ../all-pkgs/r/ripgrep { };
+
   }; in self

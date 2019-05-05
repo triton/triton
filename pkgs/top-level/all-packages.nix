@@ -3529,6 +3529,8 @@ rhash = callPackage ../all-pkgs/r/rhash { };
 
 rnnoise = callPackage ../all-pkgs/r/rnnoise { };
 
+ripgrep = pkgs.rustPackages.ripgrep;
+
 riot = callPackage ../all-pkgs/r/riot { };
 
 rocksdb = callPackage ../all-pkgs/r/rocksdb { };

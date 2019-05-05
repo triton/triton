@@ -4,13 +4,13 @@
 }:
 
 let
-  version = "0.20.0";
+  version = "0.35.0";
 in
 buildRustPackage {
   name = "cargo-${version}";
 
   src = fetchCargo {
-    version = 3;
+    version = 6;
     package = "cargo";
     packageVersion = version;
     sha256 = "1ak55xb89v8liar7aqa8f7074ic9h4bklfbx16qhhcbl9bjs8p2s";

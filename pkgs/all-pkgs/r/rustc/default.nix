@@ -86,7 +86,8 @@ stdenv.mkDerivation {
     inherit
       cargo
       rustc
-      srcVerification;
+      srcVerification
+      version;
   };
 
   meta = with stdenv.lib; {

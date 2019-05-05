@@ -3551,18 +3551,15 @@ rtorrent = callPackage ../all-pkgs/r/rtorrent { };
 
 ruby = callPackage ../all-pkgs/r/ruby { };
 
-rustPackages = recurseIntoAttrs (callPackage ./rust-packages.nix {
-  self = callPackageAlias "rustPackages" { };
+rustPackages = callPackage ./rust-packages.nix {
   channel = "stable";
-});
+};
 
 rustPackages_beta = callPackageAlias "rustPackages" {
-  self = callPackageAlias "rustPackages_beta" { };
   channel = "beta";
 };
 
 rustPackages_dev = callPackageAlias "rustPackages" {
-  self = callPackageAlias "rustPackages_dev" { };
   channel = "dev";
 };
 

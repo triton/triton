@@ -8,7 +8,7 @@
 
 let
   versionMajor = "0.6";
-  versionMinor = "12";
+  versionMinor = "13";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/libcroco/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "ddc4b5546c9fb4280a5017e2707fbd4839034ed1aba5b7d4372212f34f84f860";
+    sha256 = "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4";
   };
 
   buildInputs = [
@@ -37,9 +37,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Url = "https://download.gnome.org/sources/libcroco/${versionMajor}/"
-        + "${name}.sha256sum";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/libcroco/${versionMajor}/"
+          + "${name}.sha256sum";
+      };
     };
   };
 

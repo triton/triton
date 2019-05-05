@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.0.1";
+  version = "2.0.2";
 in
 stdenv.mkDerivation rec {
   name = "libjpeg-turbo-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "e5f86cec31df1d39596e0cca619ab1b01f99025a27dafdfc97a30f3a12f866ff";
+    sha256 = "acb8599fe5399af114287ee5907aea4456f8f2c1cc96d26c28aebfdf5ee82fed";
   };
 
   nativeBuildInputs = [

@@ -7,7 +7,7 @@
 , apr
 , expat
 , db
-, gnused
+, gnused_small
 , mariadb-connector-c
 , openldap
 , openssl
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
       -i $out/bin/apu-1-config
 
     # Give apr1 access to sed for runtime invocations
-    wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
+    wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused_small}/bin"
   '';
 
   passthru = {

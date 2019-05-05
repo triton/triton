@@ -1,105 +1,67 @@
 { stdenv
 , fetchurl
-, perl
-, python
 
 , apr
 , apr-util
 , cyrus-sasl
+, db
 , expat
 , file
+, lz4
 , serf
 , sqlite
-, swig
+, utf8proc
 , zlib
-
-, channel
 }:
 
 let
-  sources = {
-    "1.9" = {
-      version = "1.9.10";
-      sha256 = "ae28c656535c8b817f469e6ee6951e9840ea2d64c7ff0e98c728638bb45c9cd7";
-    };
-  };
-
-  source = sources."${channel}";
+  version = "1.12.0";
 in
 stdenv.mkDerivation rec {
-  name = "subversion-${source.version}";
+  name = "subversion-${version}";
 
   src = fetchurl {
     url = "mirror://apache/subversion/${name}.tar.bz2";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "7fae7c73d8a007c107c0ae5eb372bc0bb013dbfe966fcd5c59cd5a195a5e2edf";
   };
-
-  nativeBuildInputs = [
-    perl
-    python
-  ];
 
   buildInputs = [
     apr
     apr-util
     cyrus-sasl
+    db
     expat
     file
+    lz4
     serf
     sqlite
+    utf8proc
     zlib
   ];
 
   configureFlags = [
-    "--with-berkeley-db"
-    "--with-swig=${swig}"
-    "--disable-keychain"
-    "--with-sasl=${cyrus-sasl}"
-    "--with-serf=${serf}"
-    "--with-zlib=${zlib}"
-    "--with-sqlite=${sqlite}"
+    "--enable-optimize"
+    "--enable-svnxx"
   ];
 
-  preBuild = ''
-    makeFlagsArray+=(APACHE_LIBEXECDIR=$out/modules)
-  '';
-
-  postInstall = ''
-    make swig-py swig_pydir=$(toPythonPath $out)/libsvn swig_pydir_extra=$(toPythonPath $out)/svn
-    make install-swig-py swig_pydir=$(toPythonPath $out)/libsvn swig_pydir_extra=$(toPythonPath $out)/svn
-
-    make swig-pl-lib
-    make install-swig-pl-lib
-    pushd subversion/bindings/swig/perl/native
-    perl Makefile.PL PREFIX=$out
-    make install
-    popd
-
-    mkdir -p $out/share/bash-completion/completions
-    cp tools/client-side/bash_completion $out/share/bash-completion/completions/subversion
-  '';
-
-  # Fix broken package config files
-  preFixup = ''
-    pcs=($(find "$out"/share/pkgconfig -type f))
-    for pc in "''${pcs[@]}"; do
-      sed -i 's,[ ]\(-l\|lib\)svn[^ ]*,\0-1,g' "$pc"
-      mv "$pc" "''${pc%.pc}-1.pc"
-    done
-  '';
-
-  # Parallel Building works fine but Parallel Install fails
   installParallel = false;
+
+  preFixup = ''
+    rm -r "$out"/lib/*.la
+    rm -r "$out"/share/pkgconfig
+  '';
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
       fullOpts = {
-        failEarly = true;
         pgpsigUrls = map (n: "${n}.asc") src.urls;
-        sha512Urls = map (n: "${n}.sha512") src.urls;
         pgpKeyFingerprints = [
-          "15AA 5ED3 0816 D38A 9D6D  2315 247B 1C26 5A7F 8760"
           "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74"
           "056F 8016 D9B8 7B1B DE41  7467 99EC 741B 5792 1ACC"
           "BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F"
@@ -111,7 +73,6 @@ stdenv.mkDerivation rec {
           "E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444"
         ];
       };
-      inherit (src) urls outputHash outputHashAlgo;
     };
   };
 

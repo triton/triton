@@ -338,7 +338,8 @@ let  # BEGIN let/in 1
     , repo
     , rev
     , multihash ? ""
-    , sha256
+    , sha256 ? ""
+    , hash ? ""
     , version ? null
     , name ? "${repo}-${rev}"
     }:
@@ -346,6 +347,7 @@ let  # BEGIN let/in 1
       inherit
         name
         multihash
+        hash
         sha256
         version;
       url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";

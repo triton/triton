@@ -32,6 +32,12 @@ echo -e "$str" 2>&1
 downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi
 
+# Figure out the output hash
+if [ -z "$outputHashAlgo" ]; then
+  outputHashAlgo="${outputHash%:*}"
+  outputHash="${outputHash#*:}"
+fi
+
 # We need to normalize the hash for openssl
 HEX_HASH="$(transcodeHash base16 "$outputHash" "$outputHashAlgo")"
 
@@ -212,7 +218,7 @@ tryDownload() {
             for verification in "${verifications[@]}"; do
               str+=" $verification"
             done
-            str+="\n  Hash: $lhash"
+            str+="\n  Hash: $outputHashAlgo:$lhash"
           fi
           echo -e "$str" >&2
           if [ "$failEarly" = "1" ]; then

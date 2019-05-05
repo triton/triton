@@ -19,6 +19,7 @@
   # Different ways of specifying the hash.
 , sha256 ? ""
 , sha512 ? ""
+, hash ? ""
 , outputHash ? ""
 , outputHashAlgo ? ""
 
@@ -61,6 +62,7 @@ let
     "sha256"
     "sha512"
     "url"
+    "hash"
   ];
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
@@ -69,7 +71,9 @@ let
     urls = urls_;
 
     outputHashAlgo =
-      if outputHashAlgo != "" then
+      if hash != "" then
+        null
+      else if outputHashAlgo != "" then
         outputHashAlgo
       else if sha512 != "" then
         "sha512"
@@ -79,7 +83,9 @@ let
         throw "Unsupported hash";
 
     outputHash =
-      if outputHash != "" then
+      if hash != "" then
+        hash
+      else if outputHash != "" then
         outputHash
       else if sha512 != "" then
         sha512
@@ -98,7 +104,7 @@ in
 
 assert urls_ != [ ] || multihash != "";
 
-assert any (n: n == args_.outputHashAlgo) [ "sha256" "sha512" ];
+assert hash != "" || any (n: n == args_.outputHashAlgo) [ "sha256" "sha512" ];
 
 (if fullOpts != null then
   callPackage ./full.nix pkgArgs (fullOpts // args_)

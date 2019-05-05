@@ -20,7 +20,7 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  version = "9.26";
+  version = "9.27";
   versionNoP = replaceChars ["."] [""] version;
 
   fonts = stdenv.mkDerivation {
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "90ed475f37584f646e9ef829932b2525d5c6fc2e0147e8d611bc50aa0e718598";
+    sha256 = "fc0f1fbacd3610c67a9f080487a0e021f14390c38a4b4df9723e2bdf2b90b619";
   };
 
   buildInputs = [

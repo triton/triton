@@ -9,13 +9,17 @@
 , libxml2
 }:
 
+let
+  id = "80c7f1afbcad2769f38aeb9ba6317a51";
+  version = "1.12";
+in
 stdenv.mkDerivation rec {
-  name = "shared-mime-info-1.10";
+  name = "shared-mime-info-${version}";
 
   src = fetchurl {
-    url = "https://freedesktop.org/~hadess/${name}.tar.xz";
-    multihash = "QmcuVe36fVrVZQvMcqaj2X1ipL2Qrt56DTYDD1b1PCUWBK";
-    sha256 = "c625a83b4838befc8cafcd54e3619946515d9e44d63d61c4adf7f5513ddfbebf";
+    url = "https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/${id}/${name}.tar.xz";
+    multihash = "QmZsZqvXincx9CpbtP8AhagCL78dDYGEkJLJdcXhTDNht2";
+    sha256 = "18b2f0fe07ed0d6f81951a5fd5ece44de9c8aeb4dc5bb20d4f595f6cc6bd403e";
   };
 
   nativeBuildInputs = [

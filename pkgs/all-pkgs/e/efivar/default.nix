@@ -20,10 +20,13 @@ stdenv.mkDerivation rec {
     popt
   ];
 
-  # FIXME: ld.so is not properly linked in with ld --no-allow-shlib-undefined
-  #   https://sourceware.org/bugzilla/show_bug.cgi?id=19249
   postPatch = ''
+    # FIXME: ld.so is not properly linked in with ld --no-allow-shlib-undefined
+    #   https://sourceware.org/bugzilla/show_bug.cgi?id=19249
     sed -i 's/--no-allow-shlib-undefined//' gcc.specs
+
+    # GCC 9 reports errors in this code
+    sed -i 's/-Werror//' gcc.specs
   '';
 
   makeFlags = [

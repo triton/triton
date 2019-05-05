@@ -4,12 +4,12 @@
 , fetchurl
 , flex
 , lib
+, meson
+, ninja
 
 , glib
 , libffi
 , python3
-
-, cairo
 }:
 
 let
@@ -18,8 +18,8 @@ let
     optionals
     optionalString;
 
-  channel = "1.58";
-  version = "${channel}.3";
+  channel = "1.60";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "gobject-introspection-${version}";
@@ -27,23 +27,21 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "025b632bbd944dcf11fc50d19a0ca086b83baf92b3e34936d008180d28cdc3c8";
+    sha256 = "d844d1499ecd36f3ec8a3573616186d36626ec0c9a7981939e99aa02e9c824b3";
   };
 
   nativeBuildInputs = [
     bison
     flex
+    meson
+    ninja
   ];
 
   buildInputs = [
     glib
     libffi
     python3
-  ] ++ optionals doCheck [
-    cairo
   ];
-
-  setupHook = ./setup-hook.sh;
 
   patches = [
     (fetchTritonPatch {
@@ -53,19 +51,12 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  # Don't build a bunch of unused test / example code
   postPatch = ''
-    # Fix python patching
-    grep -q 's,@PYTHON_CMD\\@,.*$(PYTHON),' Makefile.in
-    sed -i 's#s,@PYTHON_CMD\\@,.*$(PYTHON),#s,@PYTHON_CMD\\@,$(PYTHON),#' Makefile.in
+    find . -name meson.build -exec sed -i "/subdir('\(examples|tests\)')/d" {} \;
   '';
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-gtk-doc"
-    "--disable-doctool"
-  ];
-
-  doCheck = false;
+  setupHook = ./setup-hook.sh;
 
   passthru = {
     srcVerification = fetchurl {

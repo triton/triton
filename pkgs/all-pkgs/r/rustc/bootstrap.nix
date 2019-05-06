@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , rustc
+, rust-std
 }:
 
 let
@@ -40,7 +41,19 @@ stdenv.mkDerivation rec {
       patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$file" || true
       patchelf --set-rpath "$out/lib:${stdenv.cc.cc}/lib:${stdenv.cc.libc}/lib" "$file" || true
     done
+
+    touch "$out"/lib/.nix-ignore
+
+    mkdir -p "$std"
+    ln -sv '${rust-std}/lib' "$std/lib"
   '';
+
+  outputs = [
+    "out"
+    "std"
+  ];
+
+  setupHook = ./setup-hook.sh;
   
   passthru = {
     srcVerification = fetchurl {
@@ -51,7 +64,9 @@ stdenv.mkDerivation rec {
         pgpKeyFingerprints = rustc.srcVerification.pgpKeyFingerprints;
       };
     };
-    inherit version;
+    inherit
+      version
+      platform;
   };
 
   meta = with stdenv.lib; {

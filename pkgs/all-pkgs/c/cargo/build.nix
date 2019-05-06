@@ -1,6 +1,5 @@
 { stdenv
 , cargo
-, git
 , lib
 , rustc
 
@@ -10,26 +9,23 @@
 { name
 , buildInputs ? [ ]
 , nativeBuildInputs ? [ ]
+, passthru ? { }
 
-, CARGO_DEPS
 , ...
 } @ args:
 
 let
   inherit (lib)
-    concatStringsSep;
+    concatStringsSep
+    optionalString;
+
+  target = rustc.targets."${stdenv.targetSystem}";
 in
 stdenv.mkDerivation ({
   name = "rust-${rustc.version}-${name}";
 
-  # Assume this was built from the cargo fetcher
-  srcRoot = "src";
-
-  CARGO_INDEX = CARGO_DEPS.index;
-
   nativeBuildInputs = nativeBuildInputs ++ [
     cargo
-    git
     rustc
   ];
 
@@ -39,11 +35,6 @@ stdenv.mkDerivation ({
 
   configurePhase = ''
     runHook 'preConfigure'
-
-    export CARGO_HOME="$NIX_BUILD_TOP/cargo"
-    export CARGO_TARGET_DIR="$NIX_BUILD_TOP/build"
-    mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR"
-
     runHook 'postConfigure'
   '';
 
@@ -51,12 +42,24 @@ stdenv.mkDerivation ({
     runHook 'preBuild'
 
     cargoFlagsArray+=(
-      '-j' "$NIX_BUILD_CORES"
       '--frozen'
       '--release'
+  '' + optionalString cargo.supportsHostFlags ''
+      '--target' '${target}'
+  '' + ''
     )
+    if [ -n "$features" ]; then
+      cargoFlagsArray+=('--features' "$features")
+    fi
+    if [ -n "''${buildParallel-1}" ]; then
+      cargoFlagsArray+=('-j' "$NIX_BUILD_CORES")
+    fi
+    if [ -n "''${preferDynamic-1}" ]; then
+      export RUSTFLAGS="$RUSTFLAGS -C prefer-dynamic"
+    fi
 
-    touch Cargo.lock
+    export CARGO_TARGET_DIR="$NIX_BUILD_TOP/build"
+    mkdir -p "$CARGO_TARGET_DIR"
     cargo build $cargoFlags "''${cargoFlagsArray[@]}"
 
     runHook 'postBuild'
@@ -66,16 +69,18 @@ stdenv.mkDerivation ({
     runHook 'preInstall'
 
     mkdir -p "$out"/bin
+  '' + (if cargo.supportsHostFlags then ''
+    find "$CARGO_TARGET_DIR"/${target}/release -mindepth 1 -maxdepth 1 -type f -executable -exec mv {} "$out"/bin \;
+  '' else ''
     find "$CARGO_TARGET_DIR"/release -mindepth 1 -maxdepth 1 -type f -executable -exec mv {} "$out"/bin \;
+  '') + ''
 
     runHook 'postInstall'
   '';
 
-  disallowedReferences = [
-    cargo
-    git
-    rustc
-  ];
+  passthru = passthru // {
+    inherit rustc cargo target;
+  };
 } // removeAttrs args [
   "name"
   "buildInputs"

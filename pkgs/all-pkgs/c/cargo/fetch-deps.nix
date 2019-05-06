@@ -1,7 +1,9 @@
 { stdenv
 , cargo
+, cargo-vendor
 , deterministic-zip
 , fetchFromGitHub
+, git
 , rustc
 }:
 
@@ -30,29 +32,50 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     cargo
+    cargo-vendor
     deterministic-zip'
+    git
     rustc
   ];
-
-  CARGO_INDEX = index;
 
   buildCommand = ''
     cargoUnpack
 
+    # Pull in the registry
+    CARGO_INDEX_DIR="$CARGO_HOME"/registry/index/github.com-1ecc6299db9ec823
+    REGISTRY="$NIX_BUILD_TOP/registry"
+    mkdir -p "$CARGO_INDEX_DIR" "$REGISTRY"
+    pushd "$REGISTRY" >/dev/null
+    unpackFile "${index}"
+    mv * registry
+    pushd registry >/dev/null
+    git config --global user.name Triton
+    git config --global user.email triton
+    git init --separate-git-dir="$CARGO_INDEX_DIR/.git"
+    git add .
+    git commit -m "Initial Commit" >/dev/null
+    mkdir -p "$CARGO_INDEX_DIR"/.git/refs/remotes/origin
+    git rev-parse HEAD >"$CARGO_INDEX_DIR"/.git/refs/remotes/origin/master
+    popd >/dev/null
+    popd >/dev/null
+    touch "$CARGO_INDEX_DIR"/.cargo-index-lock
+
     # Unpack the source with Cargo.toml
+    mkdir -p src
+    pushd src >/dev/null
     unpackFile '${src}'
 
     # Fetch all of the dependencies
-    pushd src >/dev/null
-    cargo fetch --locked -Z no-index-update
+    pushd * >/dev/null
+    cargo fetch -Z no-index-update
+    cargo vendor --frozen
+
+    mkdir -p deps
+    mv Cargo.lock vendor deps
+    SOURCE_DATE_EPOCH=946713600 deterministic-zip deps >"$out"
+
     popd >/dev/null
-
-    # Remove any unused data from the cargo home
-    mv cargo cargo-old
-    mkdir -p cargo/registry
-    mv cargo-old/registry/{cache,src} cargo/registry
-
-    SOURCE_DATE_EPOCH=946713600 deterministic-zip cargo >"$out"
+    popd >/dev/null
   '';
 
   preferLocalBuild = true;

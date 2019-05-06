@@ -6,12 +6,33 @@
 }:
 
 let
-  cargo_bootstrap = callPackage ../all-pkgs/c/cargo/bootstrap.nix {
-    rustc = rustc_bootstrap;
+  cargo_bootstrap = callPackage ../all-pkgs/c/cargo/bootstrap.nix { };
+
+  cargo_bootstrap_patched = callPackage ../all-pkgs/c/cargo {
+    buildCargo = self.buildCargo.override {
+      cargo = cargo_bootstrap;
+      rustc = rustc_bootstrap;
+      rust-std = rust-std_bootstrap;
+    };
+    fetchCargoDeps = self.fetchCargoDeps.override {
+      cargo = cargo_bootstrap;
+      cargo-vendor = cargo-vendor_bootstrap;
+      rustc = rustc_bootstrap;
+    };
+    inherit channel;
+  };
+
+  cargo-vendor_bootstrap = callPackage ../all-pkgs/c/cargo-vendor/bootstrap.nix {
+    buildCargo = self.buildCargo.override {
+      cargo = cargo_bootstrap;
+      rustc = rustc_bootstrap;
+      rust-std = rust-std_bootstrap;
+    };
   };
 
   rustc_bootstrap = callPackage ../all-pkgs/r/rustc/bootstrap.nix {
-    rustc = self.rustc';
+    rustc = self.rustc;
+    rust-std = rust-std_bootstrap;
   };
 
   rust-std_bootstrap = callPackage ../all-pkgs/r/rust-std/bootstrap.nix {
@@ -27,31 +48,41 @@ let
 
   buildCargo = callPackage ../all-pkgs/c/cargo/build.nix { };
 
-  fetchCargo = callPackage ../all-pkgs/c/cargo/fetch.nix { };
+  fetchCrate = callPackage ../all-pkgs/c/cargo/fetch-crate.nix { };
 
   fetchCargoDeps = callPackage ../all-pkgs/c/cargo/fetch-deps.nix { };
 
-  cargo' = callPackage ../all-pkgs/c/cargo {
+  cargo = callPackage ../all-pkgs/c/cargo {
     buildCargo = self.buildCargo.override {
-      cargo = cargo_bootstrap;
+      cargo = cargo_bootstrap_patched;
     };
-    fetchCargo = self.fetchCargo.override {
-      cargo = cargo_bootstrap;
+    fetchCargoDeps = self.fetchCargoDeps.override {
+      cargo = cargo_bootstrap_patched;
+      cargo-vendor = cargo-vendor_bootstrap;
+    };
+    inherit channel;
+  };
+  inherit cargo_bootstrap_patched;
+
+  cargo-vendor = callPackage ../all-pkgs/c/cargo-vendor {
+    fetchCargoDeps = self.fetchCargoDeps.override {
+      cargo-vendor = cargo-vendor_bootstrap;
     };
   };
-  # Temporary until we can rebuild it
-  cargo = cargo_bootstrap;
 
   # These packages are special in that they use the top-level callPackage since they aren't cargo packages
-  rustc' = callPackage ../all-pkgs/r/rustc {
-    cargo = cargo_bootstrap;
+  rustc = callPackage ../all-pkgs/r/rustc {
+    cargo = cargo_bootstrap_patched;
     rustc = rustc_bootstrap;
-    inherit
-      channel;
+    inherit channel;
   };
-  # Temporary until we can rebuild it
-  rustc = rustc_bootstrap;
-  rust-std = rust-std_bootstrap;
+
+  rust-std = callPackage ../all-pkgs/r/rust-std {
+    buildCargo = self.buildCargo.override {
+      cargo = cargo_bootstrap_patched;
+      rust-std = null;
+    };
+  };
 
   ripgrep = callPackage ../all-pkgs/r/ripgrep { };
 

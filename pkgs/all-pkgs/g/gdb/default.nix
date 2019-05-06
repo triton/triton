@@ -16,7 +16,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gdb-8.2.1";
+  name = "gdb-8.3";
 
   src = fetchurl {
     url = "mirror://gnu/gdb/${name}.tar.xz";

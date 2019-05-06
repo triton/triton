@@ -2,7 +2,8 @@
 , buildCargo
 , fetchCrate
 , fetchCargoDeps
-, rustc
+
+, openssl
 }:
 
 let
@@ -25,8 +26,8 @@ buildCargo {
 
   CARGO_DEPS = deps;
 
-  features = [
-    "pcre2"
+  buildInputs = [
+    openssl
   ];
 
   meta = with stdenv.lib; {

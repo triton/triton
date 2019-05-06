@@ -3565,8 +3565,8 @@ rustPackages_beta = callPackageAlias "rustPackages" {
   channel = "beta";
 };
 
-rustPackages_dev = callPackageAlias "rustPackages" {
-  channel = "dev";
+rustPackages_nightly = callPackageAlias "rustPackages" {
+  channel = "nightly";
 };
 
 sakura = callPackage ../all-pkgs/s/sakura { };

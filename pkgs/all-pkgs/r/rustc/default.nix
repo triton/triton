@@ -1,41 +1,39 @@
 { stdenv
 , cargo
-, cmake
 , fetchurl
-, file
-, python2
+, lib
+, python3
 , rustc
-, strace
-, which
 
-, jemalloc
-, libffi
 , llvm
-, ncurses
-, zlib
 
-, channel ? "stable"
+, channel
 }:
 
 let
-  sources = import ./sources.nix {
-    inherit fetchurl;
+  channels = {
+    stable = rec {
+      version = "1.34.2";
+      src = fetchurl {
+        url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
+        hashOutput = false;
+        sha256 = "c69a4a85a1c464368597df8878cb9e1121aae93e215616d45ad7d23af3052f56";
+      };
+    };
   };
 
-  inherit (sources."${channel}")
+  inherit (lib)
+    head
+    platforms;
+
+  targets = {
+    "${head platforms.x86_64-linux}" = "x86_64-unknown-linux-gnu";
+  };
+
+  inherit (channels."${channel}")
+    version
     src
-    srcVerification
-    version;
-
-  local-rustc = stdenv.mkDerivation {
-    name = "local-rustc-for-${version}";
-    buildCommand = ''
-      mkdir -p "$out"/bin
-      ln -s "${cargo}"/bin/cargo "$out"/bin
-      ln -s "${rustc}"/bin/rustc "$out"/bin
-      ln -s "${rustc}"/lib "$out"
-    '';
-  };
+    deps;
 in
 stdenv.mkDerivation {
   name = "rustc-${version}";
@@ -43,54 +41,82 @@ stdenv.mkDerivation {
   inherit src;
 
   nativeBuildInputs = [
-    file
-    local-rustc
-    python2
-    strace
-    which
+    cargo
+    python3
+    rustc
   ];
 
-  buildInputs = [
-    #ncurses
-    #zlib
-  ];
+  # This breaks compilation
+  fixLibtool = false;
 
-  configureFlags = [
-    "--disable-docs"
-    "--release-channel=${channel}"
-    "--enable-local-rust"
-    "--enable-local-rebuild"
-    "--local-rust-root=${local-rustc}"
-    "--llvm-root=${llvm}"
-    "--jemalloc-root=${jemalloc}/lib"
-  ];
-
-  preBuild = ''
-    sed -i 's,$(CFG_PYTHON),strace $(CFG_PYTHON),g' Makefile
-    cat src/bootstrap/bootstrap.py
+  # Don't install anything we don't need as part of the compiler toolchain
+  # These should be generated separately as needed
+  postPatch = ''
+    sed -i '/install::\(Docs\|Src\),/d' src/bootstrap/builder.rs
   '';
 
-  buildFlags = [
-    "VERBOSE=1"
+  configureFlags = [
+    "--enable-parallel-compiler"
+    "--enable-local-rust"
+    "--enable-llvm-link-shared"
+    "--enable-vendor"
+    "--enable-optimize"
+    "--llvm-root=${llvm}"
+    "--release-channel=${channel}"
   ];
 
-  # Fix an issues with gcc6
-  #NIX_CFLAGS_COMPILE = "-Wno-error";
+  buildPhase = ''
+    # Build the initial bootstrapper and tools
+    NIX_RUSTFLAGS_OLD="$NIX_RUSTFLAGS"
+    export NIX_RUSTFLAGS="$NIX_RUSTFLAGS -L${rustc.std}/lib"
+    python3 x.py build -j $NIX_BUILD_CORES --stage 0 src/none || true
+    python3 x.py build -j $NIX_BUILD_CORES --stage 0 src/tools/rust-installer
 
-  #NIX_LDFLAGS = "-L${libffi}/lib -lffi";
+    # Buid system expects directories to exist
+    mkdir -p "$out"
 
-  # FIXME
-  buildDirCheck = false;
+    # Begin building the bootstrap
+    export NIX_RUSTFLAGS="$NIX_RUSTFLAGS_OLD"
+    python3 x.py build -j $NIX_BUILD_CORES --stage 0
+    python3 x.py install -j $NIX_BUILD_CORES --keep-stage 0
+  '';
+
+  installPhase = ''
+    # Remove logs and manifests generated during install
+    find "$out"/lib/rustlib -mindepth 1 -maxdepth 1 -type f -delete
+
+    # Ensure we ignore linking against compiler libs
+    touch "$out"/lib/.nix-ignore
+
+    mkdir -p "$std"
+    mv "$(find "$out"/lib/rustlib -name lib -type d)" "$std"/lib
+  '';
+
+  outputs = [
+    "out"
+    "std"
+  ];
+
+  setupHook = ./setup-hook.sh;
 
   passthru = {
     inherit
       cargo
       rustc
-      srcVerification
-      version;
+      version
+      targets;
+
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "108F 6620 5EAE B0AA A8DD  5E1C 85AB 96E6 FA1B E5FE";
+      };
+    };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

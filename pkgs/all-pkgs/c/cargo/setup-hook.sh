@@ -1,51 +1,62 @@
+cargoEnv() {
+  if [ -d "$1"/lib ] && ! [ -e "$1"/lib/.nix-ignore ]; then
+    export RUSTFLAGS="$RUSTFLAGS -L$1/lib"
+  fi
+}
+
 cargoUnpack() {
   # Initial global config
   export HOME="$NIX_BUILD_TOP"
-  git config --global user.email 'triton@triton.triton'
-  git config --global user.name 'triton'
 
   # Create the home directory for cargo
   export CARGO_HOME="$NIX_BUILD_TOP/cargo"
   mkdir -p "$CARGO_HOME"
 
-  # Setup flags for compilation
-  export RUSTFLAGS="$RUSTFLAGS --remap-path-prefix $NIX_BUILD_TOP=/no-such-path"
+  # Make a wrapper to consume our NIX_RUSTFLAGS
+  export RUSTC_WRAPPER="$NIX_BUILD_TOP"/rustc-wrapper
+  exec 10>"$RUSTC_WRAPPER"
+  echo "#!$(type -tP bash)">&10
+  echo 'rustc="$1"' >&10
+  echo 'shift' >&10
+  echo 'exec "$rustc" $NIX_RUSTFLAGS "$@"' >&10
+  exec 10>&-
+  chmod +x "$RUSTC_WRAPPER"
 
-  if [ -n "$CARGO_IGNORE_INDEX" ]; then
-    return 0
-  fi
-
-  if [ -z "$CARGO_INDEX" ]; then
-    echo 'ERROR: Trying to use cargo without an index' >&2
-    return 1
-  fi
-
-  # Pull in the registry
-  CARGO_INDEX_DIR="$CARGO_HOME"/registry/index/github.com-1ecc6299db9ec823
-  REGISTRY="$NIX_BUILD_TOP/registry"
-  mkdir -p "$CARGO_INDEX_DIR" "$REGISTRY"
-  pushd "$REGISTRY" >/dev/null
-  unpackFile "$CARGO_INDEX"
-  mv * registry
-  pushd registry >/dev/null
-  git init --separate-git-dir="$CARGO_INDEX_DIR/.git"
-  git add .
-  git commit -m "Initial Commit" >/dev/null
-  mkdir -p "$CARGO_INDEX_DIR"/.git/refs/remotes/origin
-  git rev-parse HEAD >"$CARGO_INDEX_DIR"/.git/refs/remotes/origin/master
-  popd >/dev/null
-  popd >/dev/null
-  touch "$CARGO_INDEX_DIR"/.cargo-index-lock
+  # Remove prefix path from compiled binaries
+  # We can't use the normal rustflags because cargo hashes them
+  export NIX_RUSTFLAGS="$NIX_RUSTFLAGS --remap-path-prefix $NIX_BUILD_TOP=/no-such-path"
 
   # Unpack the deps if they are present
   if [ -n "$CARGO_DEPS" ]; then
     pushd "$NIX_BUILD_TOP" >/dev/null
     unpackFile "$CARGO_DEPS"
     popd >/dev/null
+    mv "$NIX_BUILD_TOP"/deps/vendor "$srcRoot"
+    if [ -f "$NIX_BUILD_TOP"/deps/Cargo.lock ]; then
+      mv "$NIX_BUILD_TOP"/deps/Cargo.lock "$srcRoot"
+    fi
   fi
 }
 
+cargoConfigure() {
+  # Establish vendoring config if needed
+  local current=$(pwd)
+  while [ "$(readlink -f "$current")" != "$NIX_BUILD_TOP" ]; do
+    if [ -d "$current"/vendor ]; then
+      mkdir -p .cargo
+      echo "[source.crates-io]" >.cargo/config
+      echo "replace-with = 'vendored-sources'" >>.cargo/config
+      echo "[source.vendored-sources]" >>.cargo/config
+      echo "directory = '$current/vendor'" >>.cargo/config
+      break;
+    fi
+    current="$(dirname "$current")"
+  done
+}
+
 if [ -z "$cargoHookAdded" ]; then
+  envHooks+=(cargoEnv)
   postUnpackHooks+=(cargoUnpack)
+  preConfigureHooks+=(cargoConfigure)
   cargoHookAdded=1
 fi

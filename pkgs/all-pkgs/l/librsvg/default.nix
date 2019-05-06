@@ -50,8 +50,6 @@ stdenv.mkDerivation rec {
     rustPackages.rust-std
   ];
 
-  CARGO_IGNORE_INDEX = true;
-
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-tools"

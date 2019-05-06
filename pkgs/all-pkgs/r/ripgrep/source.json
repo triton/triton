@@ -1,8 +1,5 @@
 {
-  "zipVersion": 6,
   "package": "ripgrep",
   "version": "11.0.1",
-  "hash": "sha256:e1b7fb33e3c13b0de824505dbca0cefcf30449996b5a572587374c419e279b2b",
-  "crates-rev": "759070689729519b07c213feef8461397112bc3f",
-  "crates-hash": "sha256:2fb232ce81d20feeaf126d41624df5422b250a580d83f62e9d48331afe06eb34"
+  "hash": "sha256:bafda49e418a8cd7df1fddddab809beb131117c698dc120ca614019b3e05c42e"
 }

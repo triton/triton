@@ -1,8 +1,5 @@
 { stdenv
 , fetchurl
-, git
-, makeWrapper
-
 , rustc
 }:
 
@@ -45,10 +42,6 @@ stdenv.mkDerivation rec {
     $out/bin/cargo --help
   '';
 
-  propagatedBuildInputs = [
-    git  # Used by the setup-hook
-  ];
-
   setupHook = ./setup-hook.sh;
 
   passthru = {
@@ -60,6 +53,10 @@ stdenv.mkDerivation rec {
         pgpKeyFingerprints = rustc.srcVerification.pgpKeyFingerprints;
       };
     };
+    inherit
+      version
+      platform;
+    supportsHostFlags = false;
   };
 
   meta = with stdenv.lib; {

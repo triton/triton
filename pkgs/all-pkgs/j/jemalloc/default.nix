@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "5.1.0";
+  version = "5.2.0";
 
   inherit (lib)
     optionals;
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/jemalloc/jemalloc/releases/download/${version}/"
       + "${name}.tar.bz2";
-    sha256 = "5396e61cc6103ac393136c309fae09e44d74743c86f90e266948c50f3dbb7268";
+    sha256 = "74be9f44a60d2a99398e706baa921e4efde82bf8fd16e5c0643c375c5851e3b4";
   };
 
   configureFlags = optionals (functionPrefix != null) [

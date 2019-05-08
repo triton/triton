@@ -4723,9 +4723,6 @@ google_talk_plugin =
 #
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #
-  mujs = callPackage ../all-pkgs/m/mujs { };
-#
-#
   #spotify = callPackage ../applications/audio/spotify { };
 #
 telepathy_logger =

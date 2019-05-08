@@ -3,7 +3,6 @@
 , fetchurl
 , lib
 
-, curl
 , freeglut
 , freetype
 , glu
@@ -12,7 +11,6 @@
 , libjpeg
 , libx11
 , libxext
-, mujs
 , opengl-dummy
 , openjpeg
 , openssl
@@ -21,20 +19,19 @@
 }:
 
 let
-  version = "1.13.0";
+  version = "1.15.0";
 in
 stdenv.mkDerivation rec {
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "https://mupdf.com/downloads/archive/${name}-source.tar.xz";
-    multihash = "Qmc427qqvKzzDi8bUKa4weMMyNCTNNcvYvSxsL8DqH3Fty";
+    multihash = "QmP661iM4eksoWU2sasD8u5mNktHhFKRdq4RQwTgBFMa6U";
     hashOutput = false;
-    sha256 = "746698e0d5cd113bdcb8f65d096772029edea8cf20704f0d15c96cb5449a4904";
+    sha256 = "565036cf7f140139c3033f0934b72e1885ac7e881994b7919e15d7bee3f8ac4e";
   };
 
   buildInputs = [
-    curl
     freeglut
     freetype
     glu
@@ -43,7 +40,6 @@ stdenv.mkDerivation rec {
     libjpeg
     libx11
     libxext
-    mujs
     opengl-dummy
     openjpeg
     openssl
@@ -51,23 +47,35 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # WTF tar is broken without the `v` verbose option
-  # No clue on this one
-  preUnpack = ''
-    _defaultUnpack() {
-      xz -d <"$1" | tar x || true
-    }
+  patches = [
+    (fetchTritonPatch {
+      rev = "0d671ea5f3321a13a8c23e5961c86ab115505fdd";
+      file = "m/mupdf/0001-jmemecust-Fix-for-new-libjpeg.patch";
+      sha256 = "d734114c714ed04e51ca87e42bd42a2b8002c251a67bde5a9827a1eaa4504c1d";
+    })
+  ];
+
+  postPatch = /* Keep lcms2art since it's special for mupdf */ ''
+    mkdir -p thirdparty-keep
+    mv thirdparty/lcms2 thirdparty-keep
+    mv thirdparty/mujs thirdparty-keep
+  '' + /* Remove any unused third party utils*/ ''
+    rm -r thirdparty
+    mv thirdparty-keep thirdparty
   '';
 
-  postPatch = /* Remove any unused third party utils*/ ''
-    rm -r thirdparty
-  '';
+  NIX_CFLAGS_COMPILE = "-I${harfbuzz_lib}/include/harfbuzz " +
+    "-I${openjpeg}/include/openjpeg-${openjpeg.channel}";
 
   preBuild = ''
     makeFlagsArray+=(
-      "MUJS_CFLAGS= -I${mujs}/include"
-      "MUJS_LIBS= -lmujs"
-      "HAVE_MUJS=yes"
+      "USE_SYSTEM_FREETYPE=yes"
+      "USE_SYSTEM_HARFBUZZ=yes"
+      "USE_SYSTEM_JBIG2DEC=yes"
+      "USE_SYSTEM_LIBJPEG=yes"
+      "USE_SYSTEM_OPENJPEG=yes"
+      "USE_SYSTEM_ZLIB=yes"
+      "USE_SYSTEM_GLUT=yes"
       "build=release"
       "verbose=yes"
       "prefix=$out"
@@ -102,6 +110,19 @@ stdenv.mkDerivation rec {
     Terminal=false
     EOF
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        sha1Confirm = "dc5b40405b9a497e37370e26b2a8b115c944fe8a";
+      };
+    };
+  };
 
   meta = with lib; {
     homepage = http://mupdf.com/;

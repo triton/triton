@@ -27,6 +27,11 @@ stdenv.mkDerivation rec {
     "-DENABLE_STATIC=OFF"
   ];
 
+  # Needed by mupdf
+  postInstall = ''
+    cp "$cmakeDir"/jmemsys.h "$out"/include
+  '';
+
   passthru = {
     type = "turbo";
 

@@ -24,10 +24,10 @@ require (
 	github.com/kardianos/service v1.0.0
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/miekg/dns v1.1.9
-	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
+	golang.org/x/crypto v0.0.0-20190506204251-e1dfcc566284
 	golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
-	golang.org/x/sys v0.0.0-20190502175342-a43fa875dd82
+	golang.org/x/sys v0.0.0-20190508220229-2d0786266e9c
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

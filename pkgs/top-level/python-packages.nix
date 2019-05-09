@@ -234,10 +234,10 @@ blist = callPackage ../all-pkgs/b/blist { };
 boost_1-66 = callPackage ../all-pkgs/b/boost/python.nix {
   channel = "1.66";
 };
-boost_1-69 = callPackage ../all-pkgs/b/boost/python.nix {
-  channel = "1.69";
+boost_1-70 = callPackage ../all-pkgs/b/boost/python.nix {
+  channel = "1.70";
 };
-boost = callPackageAlias "boost_1-69" { };
+boost = callPackageAlias "boost_1-70" { };
 
 borgbackup = callPackage ../all-pkgs/b/borgbackup { };
 

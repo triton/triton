@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "8.0.0";
+  version = "8.2.0";
 
   version' = lib.replaceStrings ["."] [""] version;
 in
@@ -15,9 +15,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.cryptopp.com/cryptopp${version'}.zip";
-    multihash = "QmXtYRDantean7qF4nCyw96ym9mCQX1DX3Ms7DxuV38CDM";
+    multihash = "QmY71T3t7NseaVDXAoqNojnvp7BXAz2mQPueDJEKGLD4AT";
     hashOutput = false;
-    sha256 = "bbfd89b348846b920d97a1d32b88c85caf0d7bb423d4fcfab7c44349aaceb82c";
+    sha256 = "03f0e2242e11b9d19b28d0ec5a3fa8ed5cc7b27640e6bed365744f593e858058";
   };
 
   nativeBuildInputs = [

@@ -7,7 +7,7 @@ let
     "mirror://gnu/gettext/gettext-${version}.tar.xz"
   ];
 
-  version = "0.19.8.1";
+  version = "0.20";
 in
 stdenv.mkDerivation rec {
   name = "gettext-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "105556dbc5c3fbbc2aa0edb46d22d055748b6f5c7cd7a8d99f8e7eb84e938be4";
+    sha256 = "a248207fd726ca35c57fe9f01e748c36c60b864bb624b58f9983a0f98b633924";
   };
 
   postPatch = ''
@@ -24,6 +24,13 @@ stdenv.mkDerivation rec {
       -i gettext-tools/projects/GNOME/trigger \
       -i gettext-tools/src/project-id \
       -e 's,/bin/pwd,pwd,g'
+  '';
+
+  # Broken in 0.20 for some invocations
+  buildParallel = false;
+
+  postInstall = ''
+    rm -r "$out"/share/doc
   '';
 
   preFixup = ''
@@ -35,11 +42,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.19.8.1";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "4622 25C3 B46F 3487 9FC8  496C D605 848E D7E6 9871";
+      urls = tarballUrls "0.20";
       inherit (src) outputHashAlgo;
-      outputHash = "105556dbc5c3fbbc2aa0edb46d22d055748b6f5c7cd7a8d99f8e7eb84e938be4";
+      outputHash = "a248207fd726ca35c57fe9f01e748c36c60b864bb624b58f9983a0f98b633924";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprint = "68D9 4D8A AEEA D48A E7DC  5B90 4F49 4A94 2E46 16C2";
+      };
     };
   };
 

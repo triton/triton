@@ -23,12 +23,12 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "wget-1.20.1";
+  name = "wget-1.20.3";
 
   src = fetchurl {
     url = "mirror://gnu/wget/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "0f63e84dd23dc53ab3ab6f483c3afff8301e54c165783f772101cdd9b1c64928";
+    sha256 = "69607ce8216c2d1126b7a872db594b3f21e511e660e07ca1f81be96650932abb";
   };
 
   nativeBuildInputs = [

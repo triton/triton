@@ -7,7 +7,7 @@ let
     "mirror://gnu/gettext/gettext-${version}.tar.xz"
   ];
 
-  version = "0.20";
+  version = "0.20.1";
 in
 stdenv.mkDerivation rec {
   name = "gettext-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "a248207fd726ca35c57fe9f01e748c36c60b864bb624b58f9983a0f98b633924";
+    sha256 = "53f02fbbec9e798b0faaf7c73272f83608e835c6288dd58be6c9bb54624a3800";
   };
 
   postPatch = ''
@@ -42,9 +42,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.20";
+      urls = tarballUrls "0.20.1";
       inherit (src) outputHashAlgo;
-      outputHash = "a248207fd726ca35c57fe9f01e748c36c60b864bb624b58f9983a0f98b633924";
+      outputHash = "53f02fbbec9e798b0faaf7c73272f83608e835c6288dd58be6c9bb54624a3800";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "68D9 4D8A AEEA D48A E7DC  5B90 4F49 4A94 2E46 16C2";

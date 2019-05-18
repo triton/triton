@@ -1,6 +1,5 @@
 {
   "path": "github.com/ipfs/ipfs-ds-convert",
   "version": "latest",
-  "updateDeps": true,
-  "skipUpdate": true
+  "updateDeps": false
 }

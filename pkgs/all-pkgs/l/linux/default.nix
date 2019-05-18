@@ -61,7 +61,7 @@ let
         patchUrls = [
           "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/patch-bcachefs-${version}-${date}.xz"
         ];
-        baseSha256 = "ad0823183522e743972382df0aa08fb5ae3077f662b125f1e599b0b2aaa12438";
+        baseSha256 = "437b141a6499159f5a7282d5eb4b2be055f8e862ccce44d7464e8759c31a2e43";
         patchSha256 = "ae6337db8772f56d08a936db0f9ca5ffaf37776047d0fa5626994cbbbad8c0d3";
         features.bcachefs = true;
       };

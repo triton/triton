@@ -47,8 +47,8 @@ require (
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
 	github.com/gotestyourself/gotestyourself v2.2.0+incompatible // indirect
-	github.com/hashicorp/consul/api v1.0.2-0.20190501233931-0cfb6051ea90
-	github.com/hashicorp/consul/sdk v0.1.1-0.20190501233931-0cfb6051ea90
+	github.com/hashicorp/consul/api v1.1.0
+	github.com/hashicorp/consul/sdk v0.1.1
 	github.com/hashicorp/go-bexpr v0.1.0
 	github.com/hashicorp/go-checkpoint v0.0.0-20171009173528-1545e56e46de
 	github.com/hashicorp/go-cleanhttp v0.5.1
@@ -76,7 +76,7 @@ require (
 	github.com/hashicorp/serf v0.8.2
 	github.com/hashicorp/vault v0.10.3
 	github.com/hashicorp/vault-plugin-secrets-kv v0.0.0-20190318174639-195e0e9d07f1 // indirect
-	github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb
+	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d
 	github.com/imdario/mergo v0.3.6
 	github.com/jefferai/jsonx v0.0.0-20160721235117-9cc31c3135ee // indirect
 	github.com/keybase/go-crypto v0.0.0-20180614160407-5114a9a81e1b // indirect
@@ -91,7 +91,7 @@ require (
 	github.com/mitchellh/go-testing-interface v1.0.0
 	github.com/mitchellh/hashstructure v0.0.0-20170609045927-2bca23e0e452
 	github.com/mitchellh/mapstructure v1.1.2
-	github.com/mitchellh/reflectwalk v0.0.0-20170726202117-63d60e9d0dbc
+	github.com/mitchellh/reflectwalk v1.0.1
 	github.com/oklog/run v0.0.0-20180308005104-6934b124db28 // indirect
 	github.com/onsi/gomega v1.4.2 // indirect
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect

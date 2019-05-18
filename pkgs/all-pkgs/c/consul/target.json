@@ -1,6 +1,5 @@
 {
   "path": "github.com/hashicorp/consul",
-  "version": "master",
-  "updateDeps": false,
-  "skipUpdate": true
+  "version": "latest",
+  "updateDeps": false
 }

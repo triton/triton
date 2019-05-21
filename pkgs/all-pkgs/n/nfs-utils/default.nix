@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "2.3.3";
+  version = "2.3.4";
   name = "nfs-utils-${version}";
 
   baseTarballs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") baseTarballs;
     hashOutput = false;
-    sha256 = "3c8c63611c7e78b7a3b2f8a28b9928a5b5e66d5e9ad09a1e54681508884320a4";
+    sha256 = "8a6bafd5a33c4259e6e5093d126384cbe33acb10135578b5faa60c40f2f5e995";
   };
 
   buildInputs = [

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.14";
+  version = "0.18";
 
   tarballUrls = [
     "mirror://kernel/linux/network/wireless/iwd-${version}.tar"
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "c4258b5789a8074a2dfdc33ed5f02415b62ff1ce0b7cba636402883933d6a643";
+    sha256 = "2d70cc4889692ec1fb5e2cdbe7469d7d2b35cbecca0d293a78438fbb58e63d3a";
   };
 
   buildInputs = [

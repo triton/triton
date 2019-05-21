@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.5.0";
+  version = "0.6.0";
 in
 buildPythonPackage {
   name = "fido2-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "fido2";
     inherit version;
-    sha256 = "e356c4e2ff136a29ea7f0bf82e679c2251fb246c4d459c3c91f84b93af6888de";
+    sha256 = "7541edad31967d23f5006ffeccc54536ab9934dd981d65d29620d9dfb54566bf";
   };
 
   meta = with lib; {

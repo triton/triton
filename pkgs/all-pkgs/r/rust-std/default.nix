@@ -41,6 +41,10 @@ buildCargo {
     "lib"
   ];
 
+  passthru = {
+    inherit target;
+  };
+
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

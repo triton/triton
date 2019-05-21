@@ -47,6 +47,7 @@ stdenv.mkDerivation rec {
     libgsf
     libxml2
     pango
+    rustPackages.rust-proc-macro
     rustPackages.rust-std
   ];
 

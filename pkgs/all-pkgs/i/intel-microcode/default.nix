@@ -4,8 +4,8 @@
 }:
 
 let
-  date = "2019-03-12";
-  rev = "7febfb94da92a71ca52628b940a8ebbe15bf4e09";
+  date = "2019-05-16";
+  rev = "1dd14da6d1ea5cfbd95923653f31c04aac3aa655";
 
   initrdPath = "share/intel-microcode/intel-microcode-initrd.img";
 in
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "intel";
     repo = "Intel-Linux-Processor-Microcode-Data-Files";
     inherit rev;
-    sha256 = "0986d562df13e701deda00ffb0e3d8de9b0a3502620c65ea785634774bbc7158";
+    sha256 = "bbfe5497ead058a77a50389b3ccdb1e0e44fd733721ee102d92f966eb7ca2086";
   };
 
   nativeBuildInputs = [

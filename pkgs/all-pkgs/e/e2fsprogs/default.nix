@@ -2,11 +2,12 @@
 , fetchurl
 
 , fuse_2
+, systemd-dummy
 , util-linux_lib
 }:
 
 let
-  version = "1.44.5";
+  version = "1.45.1";
 in
 stdenv.mkDerivation rec {
   name = "e2fsprogs-${version}";
@@ -14,11 +15,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/e2fsprogs/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "2e211fae27ef74d5af4a4e40b10b8df7f87c655933bd171aab4889bfc4e6d1cc";
+    sha256 = "ee69a57e8499814b07b7f72ff6bc4a41c51d729db5bbbc25dcc66888c497287e";
   };
 
   buildInputs = [
     fuse_2
+    systemd-dummy
     util-linux_lib
   ];
 
@@ -48,12 +50,17 @@ stdenv.mkDerivation rec {
     "--enable-bmap-stats"
     "--enable-bmap-stats-ops"
     "--enable-fuse2fs"
+    "--enable-lto"
   ];
 
   installTargets = [
     "install"
     "install-libs"
   ];
+
+  postInstall = ''
+    find "$out"/lib -name '*'.a -delete
+  '';
 
   # Parallel install is broken
   installParallel = false;

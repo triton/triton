@@ -77,6 +77,8 @@ let
     inherit channel;
   };
 
+  rust-proc-macro = callPackage ../all-pkgs/r/rust-proc-macro { };
+
   rust-std = callPackage ../all-pkgs/r/rust-std {
     buildCargo = self.buildCargo.override {
       cargo = cargo_bootstrap_patched;

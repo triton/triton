@@ -3,16 +3,16 @@
 }:
 
 let
-  version = "0.10.2";
+  version = "0.11.0";
 in
 stdenv.mkDerivation rec {
   name = "liburcu-${version}";
 
   src = fetchurl {
     url = "https://lttng.org/files/urcu/userspace-rcu-${version}.tar.bz2";
-    multihash = "QmYqRUfnbKPNZ2V3hmVqvy58vKzAD3iQatkKqWAwKXX8FK";
+    multihash = "Qmc1R98UF5EN1wcBpUFjSgLrq2j1cekerAxBPupk8SQ7mn";
     hashOutput = false;
-    sha256 = "b3f6888daf6fe02c1f8097f4a0898e41b5fe9975e121dc792b9ddef4b17261cc";
+    sha256 = "1af5694c4f6266f4eba5eb4b832daee600d1e7055fce6da5d514d735d72eb3e7";
   };
 
   passthru = {

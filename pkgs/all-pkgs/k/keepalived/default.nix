@@ -15,16 +15,16 @@
 }:
 
 let
-  version = "2.0.15";
+  version = "2.0.16";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmTte83YWG43SHjtz5DupHH4pV9tjW7g1UJauHJzkmaCZ3";
+    multihash = "QmQzkdBLujk2WDYs1STD9Uy9CHfZZtWk3DtbpZxmL88YVw";
     hashOutput = false;
-    sha256 = "933ee01bc6346aa573453b998f87510d3cce4aba4537c9642b24e6dbfba5c6f4";
+    sha256 = "f0c7dc86147a286913c1c2c918f557735016285d25779d4d2fce5732fcb888df";
   };
 
   buildInputs = [
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        md5Confirm = "68413d76fc23191ddd66246d498e19b5";
+        md5Confirm = "03f202eace2ad392c61ced15bb710e24";
       };
     };
   };

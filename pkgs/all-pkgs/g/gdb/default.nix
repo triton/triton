@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnu/gdb/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "0a6a432907a03c5c8eaad3c3cffd50c00a40c3a5e3c4039440624bae703f2202";
+    sha256 = "802f7ee309dcc547d65a68d61ebd6526762d26c3051f52caebe2189ac1ffd72e";
   };
 
   nativeBuildInputs = [

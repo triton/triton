@@ -3,7 +3,6 @@
 , fetchFromGitHub
 , ninja
 
-, curl
 , http-parser
 , kerberos
 , libssh2
@@ -12,7 +11,7 @@
 }:
 
 let
-  version = "0.27.5";
+  version = "0.28.2";
 in
 stdenv.mkDerivation {
   name = "libgit2-${version}";
@@ -22,7 +21,7 @@ stdenv.mkDerivation {
     owner = "libgit2";
     repo = "libgit2";
     rev = "v${version}";
-    sha256 = "69929abb57a7db1ca11332b51382c15bbf138a00900aa7509eea51e7d15737a6";
+    sha256 = "13f929324aaa843f7e759f0101e3a497797b032153401ca2cc602f70020d06b6";
   };
 
   nativeBuildInputs = [
@@ -31,7 +30,6 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    curl
     http-parser
     kerberos
     libssh2
@@ -41,9 +39,8 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     "-DBUILD_CLAR=OFF"
-    "-DUSE_ICONV=ON"
-    "-DENABLE_REPRODUCIBLE_BUILDS=ON"
     "-DUSE_GSSAPI=ON"
+    "-DENABLE_REPRODUCIBLE_BUILDS=ON"
   ];
 
   meta = with stdenv.lib; {

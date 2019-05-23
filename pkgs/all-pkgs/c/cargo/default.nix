@@ -1,6 +1,5 @@
 { lib
 , buildCargo
-, fetchCrate
 , fetchFromGitHub
 , fetchCargoDeps
 , fetchTritonPatch
@@ -15,18 +14,20 @@
 let
   channels = {
     stable = rec {
-      version = "0.35.0";
-      src = fetchCrate {
-        package = "cargo";
-        inherit version;
-        sha256 = "801ebbedec420595b232cdf6395b2a1f7fb2360c7e59d5022766f64bc64ea387";
+      version = "0.36.0";
+      src = fetchFromGitHub {
+        version = 6;
+        owner = "rust-lang";
+        repo = "cargo";
+        rev = version;
+        sha256 = "a3c1cfb9d01367bc928f559596e9e8e8fc4e94cf57451d45ad392854416cae72";
       };
       deps = fetchCargoDeps {
         zipVersion = 6;
         inherit src;
-        crates-rev = "56071d1171fcf58219345225423dfa5bb90fc30c";
-        crates-hash = "sha256:591574f7b761d12103727bfe03c1cfcfd800ac25498141603cd0bf54f74a76c0";
-        hash = "sha256:0f38e26c74b39aec2553c9e44386255b94cae4461fad55039949a4ccd23cc902";
+        crates-rev = "7258c5460102c687b5fcb5e867c57870befa1e4d";
+        crates-hash = "sha256:25d9e52d3b86281f83e0ac854fdd7288b654ac0ae4d0223506b185d79d785e00";
+        hash = "sha256:77db96c3156dee63e00304f87536e3224f44f09d1bc3a18d10a076cbdee4fcf5";
       };
       patches = [
         (fetchTritonPatch {

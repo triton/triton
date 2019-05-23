@@ -608,6 +608,8 @@ adwaita-qt = callPackage ../all-pkgs/a/adwaita-qt { };
 
 afflib = callPackage ../all-pkgs/a/afflib { };
 
+alacritty = pkgs.rustPackages.alacritty;
+
 alsa-firmware = callPackage ../all-pkgs/a/alsa-firmware { };
 
 alsa-lib = callPackage ../all-pkgs/a/alsa-lib { };

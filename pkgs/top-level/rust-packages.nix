@@ -86,6 +86,8 @@ let
     };
   };
 
+  alacritty = callPackage ../all-pkgs/a/alacritty { };
+
   ripgrep = callPackage ../all-pkgs/r/ripgrep { };
 
   }; in self

@@ -6,6 +6,7 @@
 , rustc
 
 , llvm
+, xz
 
 , channel
 }:
@@ -44,6 +45,10 @@ stdenv.mkDerivation {
     cargo
     python3
     rustc
+  ];
+
+  buildInputs = [
+    xz
   ];
 
   # This breaks compilation

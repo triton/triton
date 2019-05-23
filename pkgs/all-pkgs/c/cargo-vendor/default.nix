@@ -3,6 +3,8 @@
 , fetchCrate
 , fetchCargoDeps
 
+, curl
+, libgit2
 , openssl
 }:
 
@@ -27,8 +29,12 @@ buildCargo {
   CARGO_DEPS = deps;
 
   buildInputs = [
+    curl
+    libgit2
     openssl
   ];
+
+  LIBGIT2_SYS_USE_PKG_CONFIG = true;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

@@ -3,6 +3,8 @@
 , fetchCrate
 , fetchCargoDeps
 , rustc
+
+, pcre2_lib
 }:
 
 let
@@ -27,6 +29,10 @@ buildCargo {
 
   features = [
     "pcre2"
+  ];
+
+  buildInputs = [
+    pcre2_lib
   ];
 
   meta = with stdenv.lib; {

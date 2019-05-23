@@ -2,6 +2,8 @@
 , buildCargo
 , fetchurl
 
+, curl
+, libgit2
 , openssl
 }:
 
@@ -17,8 +19,12 @@ buildCargo {
   };
 
   buildInputs = [
+    curl
+    libgit2
     openssl
   ];
+
+  LIBGIT2_SYS_USE_PKG_CONFIG = true;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

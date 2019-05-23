@@ -5,6 +5,8 @@
 , fetchCargoDeps
 , fetchTritonPatch
 
+, curl
+, libgit2
 , openssl
 
 , channel
@@ -68,8 +70,12 @@ buildCargo {
   CARGO_DEPS = deps;
 
   buildInputs = [
+    curl
+    libgit2
     openssl
   ];
+
+  LIBGIT2_SYS_USE_PKG_CONFIG = true;
 
   setupHook = ./setup-hook.sh;
 

@@ -63,27 +63,27 @@ let
       maxXorgVersion = "1.19";
     };
     long-lived = {
-      versionMajor = "418";
-      versionMinor = "43";
-      sha256i686   = "GL4sg97jMjvVf+d/3bu71ddgraZ0eB+5s5Mh5jhqMn8=";
-      sha256x86_64 = "VctBDFM39GpIY2wr1ey0K/H0NnBZOU43Sxao8GfeMYc=";
-      maxLinuxVersion = "4.20";
+      versionMajor = "430";
+      versionMinor = "14";
+      sha256i686   = "00d46ffaf3e1e430081ddbd68b74cc361cd1328e8944224dfe69630dd8540f17";
+      sha256x86_64 = "0f583a277b1731cb8327510b75dba9cf7adf5c781247e4f48bcc9f358253278f";
+      maxLinuxVersion = "5.0";
       maxXorgVersion = "1.20";
     };
     short-lived = {
-      versionMajor = "396";
-      versionMinor = "24";
+      versionMajor = "415";
+      versionMinor = "27";
       sha256i686   = "2c01f57abd78e9c52d3e76e3cdf688835be54f419a1093bbaa7ab21f375d4399";
       sha256x86_64 = "41b80d2a4519ac78ac17c02fec976256d2ba5c9618640d2a9be9cb70685b2a9c";
-      maxLinuxVersion = "4.17";
+      maxLinuxVersion = "5.0";
       maxXorgVersion = "1.20";
     };
     beta = {
-      versionMajor = "396";
-      versionMinor = "18";
+      versionMajor = "430";
+      versionMinor = "09";
       sha256i686   = "63223406a552fd50808dca0b6864dccbc265dfc614dde89492f1e53afa7cce0b";
       sha256x86_64 = "0d39bd3e1727e5849401db7fa04d667662b6b9a80b2a11a897bb4ba0e7273208";
-      maxLinuxVersion = "4.17";
+      maxLinuxVersion = "5.0";
       maxXorgVersion = "1.20";
     };
     # Update to which ever channel has the latest release at the time.
@@ -221,6 +221,7 @@ stdenv.mkDerivation {
 
   allLibPath = makeSearchPath "lib" [
     stdenv.cc.cc
+    stdenv.cc.libc
     libx11
     #libxau  # nvidia-settings
     #libxcb  # nvidia-settings

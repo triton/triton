@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 
 , glib
@@ -13,14 +14,14 @@
 }:
 
 let
-  version = "1.6.2";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
   name = "libstoragemgmt-${version}";
 
   src = fetchurl {
     url = "https://github.com/libstorage/libstoragemgmt/releases/download/${version}/${name}.tar.gz";
-    sha256 = "2b5e6156caeb96567ce0c165303959e328c5aaca77fbb9616c80c81751fb08eb";
+    sha256 = "ad917d94c39d822235c75d87685ec1e23b669b758330fb92b59c74b4d3b8549a";
   };
 
   nativeBuildInputs = [
@@ -62,7 +63,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

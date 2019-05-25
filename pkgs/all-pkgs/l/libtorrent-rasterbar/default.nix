@@ -8,7 +8,7 @@
 
 , boost
 , openssl
-, pythonPackages
+, python3Packages
 , zlib
 
 , channel
@@ -31,9 +31,9 @@ let
     };
     "1.1-head" = {
       fetchzipversion = 6;
-      version = "2018-10-26";
-      rev = "e1eb12e60fd7c8d05f9122e43a513bc05f38ce27";
-      sha256 = "c170af1618ec1eaa131386b9e0a4928619d5f3e489e6b3c4d750c07ff7ae36f9";
+      version = "2019-05-22";
+      rev = "3eac1700a1b5a8403b9353477d47b1d1535440d8";
+      sha256 = "65f9112f9b66d4ebb6ee66b39b1e15e2af383e9226c0bba5c34279a8dd899041";
     };
     "head" = {
       fetchzipversion = 2;
@@ -91,9 +91,11 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boost
-    pythonPackages.python
-    pythonPackages.wrapPython
+    boost.dev
+    boost.lib
+    python3Packages.boost.lib
+    python3Packages.python
+    python3Packages.wrapPython
     zlib
   ];
 
@@ -123,7 +125,7 @@ stdenv.mkDerivation rec {
     (libtorrentOlder "1.1" "--disable-geoip")
     "--disable-examples"
     "--disable-tests"
-    "--${boolEn (pythonPackages.python != null)}-python-binding"
+    "--enable-python-binding"
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
     (libtorrentOlder "1.1" "--without-libgeoip")

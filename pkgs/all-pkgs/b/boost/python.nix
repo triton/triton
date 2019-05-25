@@ -49,6 +49,10 @@ stdenv.mkDerivation {
     mv -v "$dev"/lib/*.so* "$lib"/lib
     rm -r "$dev"/lib
 
+    # Autoconf archive does not detect python minor versions correctly.
+    ln -sv "$lib"/lib/libboost_python${if python.isPy3 then "3" else "2"}*.so \
+      "$lib"/lib/libboost_python${if python.isPy3 then "3" else "2"}.so
+
     mkdir -p "$dev"/nix-support
     echo "$lib ${boost.dev}" >"$dev"/nix-support/propagated-native-build-inputs
   '';

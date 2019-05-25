@@ -10,6 +10,7 @@
 
 let
   boost = pkgs.boost.override { inherit channel; };
+  pythonMajor = lib.head (lib.splitStrings "." python.version);
 in
 stdenv.mkDerivation {
   name = python.libPrefix + "-" + boost.name;
@@ -50,8 +51,8 @@ stdenv.mkDerivation {
     rm -r "$dev"/lib
 
     # Autoconf archive does not detect python minor versions correctly.
-    ln -sv "$lib"/lib/libboost_python${if python.isPy3 then "3" else "2"}*.so \
-      "$lib"/lib/libboost_python${if python.isPy3 then "3" else "2"}.so
+    ln -sv "$lib"/lib/libboost_python${if python.isPy2 then "" else pythonMajor}*.so \
+      "$lib"/lib/libboost_python${if python.isPy2 then "" else pythonMajor}.so
 
     mkdir -p "$dev"/nix-support
     echo "$lib ${boost.dev}" >"$dev"/nix-support/propagated-native-build-inputs

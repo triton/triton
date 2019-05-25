@@ -10,7 +10,7 @@
 
 let
   boost = pkgs.boost.override { inherit channel; };
-  pythonMajor = lib.head (lib.splitStrings "." python.version);
+  pythonMajor = lib.head (lib.splitString "." python.version);
 in
 stdenv.mkDerivation {
   name = python.libPrefix + "-" + boost.name;

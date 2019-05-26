@@ -705,6 +705,8 @@ secretstorage = callPackage ../all-pkgs/s/secretstorage { };
 
 service-identity = callPackage ../all-pkgs/s/service-identity { };
 
+setproctitle = callPackage ../all-pkgs/s/setproctitle { };
+
 setuptools = callPackage ../all-pkgs/s/setuptools {
   buildPythonPackage = self.buildBootstrapPythonPackage;
   inherit (self)

@@ -46,8 +46,8 @@ let
       patchSha256 = "def1a382c555454daf28fb768ed2c3e6f339c4bfcd36faa99982e4d31c04efa6";
     };
     "testing" = {
-      version = "5.1-rc7";
-      baseSha256 = "437b141a6499159f5a7282d5eb4b2be055f8e862ccce44d7464e8759c31a2e43";
+      version = "5.2-rc1";
+      baseSha256 = "d06a7be6e73f97d1350677ad3bae0ce7daecb79c2c2902aaabe806f7fa94f041";
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];

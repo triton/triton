@@ -11,39 +11,41 @@
 , python
 
 , adwaita-icon-theme
+, atk
 , chardet
 , gdk-pixbuf
 , geoip
+, glib
+, gobject-introspection
 , gnome-themes-standard
+, gtk
 , librsvg
 , libtorrent-rasterbar_1-1_head
 , Mako
+, pango
 , pillow
-#, pygame
-, pygobject_2
-, pygtk
+, pycairo
+, pygobject
 , pyopenssl
 #, python-appindicator
-, notify-python
 , pyxdg
-, service-identity
+, rencode
+, setproctitle
 , simplejson
+, six
 , shared-mime-info
 , slimit
 , twisted
-
-, atk
-, cairo
-, pango
+, zope-interface
 
 , pytest
-, zope-interface
 
 , channel
 }:
 
 let
   inherit (lib)
+    makeSearchPath
     optionals
     optionalString;
 
@@ -54,9 +56,9 @@ let
     };
     "head" = {
       fetchzipversion = 6;
-      version = "2018-11-17";
-      rev = "b2e19561e6cc988f280ad896b3680e81d9a23b28";
-      sha256 = "e5169e765c52c07f6ad1829769a545046665606941ee905f95732c80f5057998";
+      version = "2019-05-23";
+      rev = "bd4a3cba38d15f784f2805d4f4eff7d58b901927";
+      sha256 = "e772b900faf066f737ee37b88fb478e0c46d5dcbb85e48db0fa9e9482bee87af";
     };
   };
   source = sources."${channel}";
@@ -86,31 +88,36 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     adwaita-icon-theme
+    atk
     chardet
+    gdk-pixbuf
     geoip
+    glib
     gnome-themes-standard
-    librsvg
+    gobject-introspection
+    gtk
+    ###librsvg
     libtorrent-rasterbar_1-1_head
     Mako
+    pango
     pillow
-    #pygame
-    pygobject_2
-    pygtk
+    pycairo
+    pygobject
     pyopenssl
     #python-appindicator
-    notify-python
     pyxdg
-    service-identity
-    #setproctitle
+    rencode
+    setproctitle
     simplejson
+    six
     twisted
+    zope-interface
   ] ++ [
     slimit
   ];
 
   buildInputs = optionals doCheck [
     pytest
-    zope-interface
   ];
 
   patches = optionals (channel == "stable") [
@@ -148,14 +155,19 @@ buildPythonPackage rec {
   '';
 
   preFixup = ''
-    wrapProgram $out/bin/deluge \
-      --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
-      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
-      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
-      --run "$DEFAULT_GTK2_RC_FILES"
+    for i in deluge deluge-console deluged deluge-gtk deluge-web; do
+      wrapProgram "$out"/bin/"$i" \
+        --set 'GDK_PIXBUF_MODULE_FILE' "${gdk-pixbuf.loaders.cache}" \
+        --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+        --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+        --prefix 'LD_LIBRARY_PATH' : \
+          "${makeSearchPath "lib" propagatedBuildInputs}" \
+        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+        --prefix 'XDG_DATA_DIRS' : "$out/share" \
+        --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+        --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+    done
   '';
-
-  disabled = isPy3;
 
   doCheck = false;
 

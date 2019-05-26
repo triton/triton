@@ -85,7 +85,9 @@ with stdenv.lib;
   ''}
   DEBUG_DEVRES n
   DEBUG_STACK_USAGE n
-  DEBUG_STACKOVERFLOW n
+  ${optionalString (versionOlder version "5.2") ''
+    DEBUG_STACKOVERFLOW n
+  ''}
   RCU_TORTURE_TEST n
   SCHEDSTATS n
   DETECT_HUNG_TASK y
@@ -112,6 +114,9 @@ with stdenv.lib;
   CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
   ACPI_PCI_SLOT y
   ACPI_HOTPLUG_MEMORY y
+  ${optionalString (versionAtLeast version "5.2") ''
+    ACPI_HMAT y
+  ''}
   ACPI_BGRT y
   ACPI_APEI y
   CPU_IDLE_GOV_LADDER y
@@ -334,6 +339,10 @@ with stdenv.lib;
   ATH9K_AHB y # Ditto, AHB bus
   B43_PHY_HT y
   BCMA_HOST_PCI y
+  ${optionalString (versionAtLeast version "5.2") ''
+    RTW88_8822BE y
+    RTW88_8822CE y
+  ''}
 
   # Enable various FB devices.
   FB y
@@ -371,6 +380,10 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.16") ''
     SOUNDWIRE y
   ''}
+  ${optionalString (versionAtLeast version "5.2") ''
+    SND_SOC_SOF_TOPLEVEL y
+    SND_SOC_SOF_INTEL_TOPLEVEL y
+  ''}
 
   # USB serial devices.
   USB_SERIAL_GENERIC y # USB Generic Serial Driver
@@ -391,6 +404,7 @@ with stdenv.lib;
 
   # Filesystem options - in particular, enable extended attributes and
   # ACLs for all filesystems that support them.
+  PARTITION_ADVANCED y
   ${optionalString (versionOlder version "4.18") ''
     NCP_FS n
   ''}
@@ -537,6 +551,9 @@ with stdenv.lib;
   SECURITY_NETWORK_XFRM y
   DDR y
   FONTS y
+  ${optionalString (versionAtLeast version "5.2") ''
+    UNICODE y
+  ''}
   MOUSE_PS2_VMMOUSE y
   GPIO_SYSFS y
   CHARGER_MANAGER y
@@ -575,8 +592,12 @@ with stdenv.lib;
   NFC_SHDLC y
   CRASH_DUMP n
   NFTL_RW y
-  MTD_NAND_ECC_SMC y
-  MTD_NAND_ECC_BCH y
+  ${optionalString (versionOlder version "5.2") ''
+    MTD_NAND_ECC_BCH y
+  ''}
+  ${optionalString (versionAtLeast version "5.2") ''
+    MTD_NAND_ECC_SW_BCH y
+  ''}
   ${optionalString (versionAtLeast version "4.17") ''
     MTD_ONENAND_OTP y
     MTD_ONENAND_2X_PROGRAM y
@@ -594,7 +615,6 @@ with stdenv.lib;
   JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
   JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
   JOYSTICK_XPAD_LEDS y # LED Support for Xbox360 controller 'BigX' LED
-  LDM_PARTITION y # Windows Logical Disk Manager (Dynamic Disk) support
   LOGIRUMBLEPAD2_FF y # Logitech Rumblepad 2 force feedback
   LOGO n # not needed
   MEDIA_ATTACH y
@@ -746,12 +766,6 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.14") ''
     AMD_MEM_ENCRYPT y
-  ''}
-  ${optionalString (versionAtLeast version "4.15") ''
-    #DRM_AMD_DC_PRE_VEGA y
-    #DRM_AMD_DC_FBC y
-    #DRM_AMD_DC_DCN1_0 y
-    CHASH_STATS y
   ''}
 
   PREEMPT y

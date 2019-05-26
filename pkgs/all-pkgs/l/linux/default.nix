@@ -51,18 +51,18 @@ let
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];
-      patchSha256 = "ea7ab6bf0e73713824b28d4edc61bd05ba200fcd487aa84077b7b89c1bb2cd69";
+      patchSha256 = "6bc3e8a759cc9da8b66edcf10a376158fd789e76495efc321a3d0a72981b1d34";
     };
     "bcachefs" =
       let
-        date = "2019-05-01";
+        date = "2019-05-24";
       in {
-        version = "5.0.11";
+        version = "5.0.18";
         patchUrls = [
           "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/patch-bcachefs-${version}-${date}.xz"
         ];
         baseSha256 = "437b141a6499159f5a7282d5eb4b2be055f8e862ccce44d7464e8759c31a2e43";
-        patchSha256 = "ae6337db8772f56d08a936db0f9ca5ffaf37776047d0fa5626994cbbbad8c0d3";
+        patchSha256 = "ee3ad5e443d9d15365f4df8996911be4b43f99a5b091fc4f5b2b6cd0839c1304";
         features.bcachefs = true;
       };
   };

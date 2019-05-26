@@ -16,6 +16,7 @@
 , incremental
 , priority
 , pyasn1
+, pyhamcrest
 , pyopenssl
 , pyserial
 , service-identity
@@ -48,6 +49,7 @@ buildPythonPackage rec {
     incremental
     priority
     pyasn1
+    pyhamcrest
     pyopenssl
     pyserial
     service-identity

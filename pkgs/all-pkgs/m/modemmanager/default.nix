@@ -15,12 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ModemManager-1.7.990";
+  name = "ModemManager-1.10.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/ModemManager/${name}.tar.xz";
-    multihash = "Qmb1Pe4WwFgyqAxZDo7Xe5cvJHqnDGbgQXEimmCaianW26";
-    sha256 = "d465094fc6fc173354f5a00d212049056829cc245d60a9083f3c53f86a8f90ec";
+    multihash = "QmejsUhg1vkJT48SSAwzAGR2wnmYTzoFCgdspNSBqjdnnR";
+    sha256 = "fd0f39996025dac96995daea8a58ec7dd571582f7563a8ae0d5f65b571b76ee2";
   };
 
   nativeBuildInputs = [
@@ -40,6 +40,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--with-polkit"
+    "--without-mbim"  # TODO
     "--with-udev-base-dir=$(out)/lib/udev"
     "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
     "--sysconfdir=/etc"

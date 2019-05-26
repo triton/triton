@@ -577,6 +577,8 @@ pygobject_nocairo = callPackageAlias "pygobject_3-30" {
 
 pygtk = callPackage ../all-pkgs/p/pygtk { };
 
+pyhamcrest = callPackage ../all-pkgs/p/pyhamcrest { };
+
 pykka = callPackage ../all-pkgs/p/pykka { };
 
 pykwalify = callPackage ../all-pkgs/p/pykwalify { };

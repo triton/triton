@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "6.9.1";
+  version = "6.9.2";
 in
 stdenv.mkDerivation rec {
   name = "oniguruma-${version}";
 
   src = fetchurl {
     url = "https://github.com/kkos/oniguruma/releases/download/v${version}/onig-${version}.tar.gz";
-    sha256 = "c7c3feb7be45a5cc9f2dec239b4a317a422e6ffea299cf91ffab1b926633ea12";
+    sha256 = "db7addb196ecb34e9f38d8f9c97b29a3e962c0e17ea9636127b3e3c42f24976a";
   };
 
   meta = with stdenv.lib; {

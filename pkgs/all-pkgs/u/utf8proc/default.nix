@@ -3,8 +3,8 @@
 }:
 
 let
-  date = "2019-04-17";
-  rev = "416749803be5f9d8903c9d95c92153370f890db6";
+  date = "2019-05-14";
+  rev = "0dc0fcf8db4ae2ff1971d4f0f86a2d83b14d863d";
 in
 stdenv.mkDerivation rec {
   name = "utf8proc-${date}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "JuliaLang";
     repo = "utf8proc";
     inherit rev;
-    sha256 = "f17a06dc086ec08d6a9723de4b5e938fdac8f68aa83407a5e69ae55d6171b58e";
+    sha256 = "d43a3402cbb0ac95ef4129f20bd85290ce315ac06af9cf351522bd006a7f2206";
   };
 
   preBuild = ''

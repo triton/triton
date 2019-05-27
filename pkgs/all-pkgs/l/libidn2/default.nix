@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2.1.1";
+  version = "2.2.0";
 
   tarballUrls = version: [
     "mirror://gnu/libidn/libidn2-${version}.tar.gz"
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "95416080329298a13269e13175041b530cec3d98b54cafae9424b8dfd22078b1";
+    sha256 = "fc734732b506d878753ec6606982bf7b936e868c25c30ddb0d83f7d7056381fe";
   };
 
   configureFlags = [
@@ -25,9 +25,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.1.1";
+      urls = tarballUrls "2.2.0";
       inherit (src) outputHashAlgo;
-      outputHash = "95416080329298a13269e13175041b530cec3d98b54cafae9424b8dfd22078b1";
+      outputHash = "fc734732b506d878753ec6606982bf7b936e868c25c30ddb0d83f7d7056381fe";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "1CB2 7DBC 9861 4B2D 5841  646D 0830 2DB6 A267 0428";

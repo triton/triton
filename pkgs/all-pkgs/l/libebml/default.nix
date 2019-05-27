@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libebml-1.3.6";
+  name = "libebml-1.3.8";
 
   src = fetchurl {
     url = "https://dl.matroska.org/downloads/libebml/${name}.tar.xz";
-    multihash = "Qma3fGKxMKiPRqFzTM7Z1TPnmTur6KfEN4tf9q2NpHFLHE";
-    sha256 = "1e5a7a7820c493aa62b0f35e15b4233c792cc03458c55ebdfa7a6521e4b43e9e";
+    multihash = "QmVENAkgir7WTUyeqkhH1LjXy5ks6pisQwxMxNA5gQmg6z";
+    sha256 = "8b33246580249a9f33fac283ed474d68aada1433ff254808cab0571959555b78";
   };
 
   nativeBuildInputs = [

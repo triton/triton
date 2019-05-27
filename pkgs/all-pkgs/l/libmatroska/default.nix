@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmatroska-1.4.9";
+  name = "libmatroska-1.5.1";
 
   src = fetchurl {
     url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.xz";
-    multihash = "QmPYuyMxdLtLryvTsSygmZBgtqi8YFyuz7jR8n6kLoAT9j";
-    sha256 = "38a61dd5d87c070928b5deb3922b63b2b83c09e2e4a10f9393eecb6afa9795c8";
+    multihash = "QmP8db6s85wdAdZJbRw6ogxxs1K3cCXqaqAQBjzuwRLwJd";
+    sha256 = "bb8dd99e49e156bff29fac15b81aad65e99c7641b502426adb50cdee8a21dbfb";
   };
 
   nativeBuildInputs = [

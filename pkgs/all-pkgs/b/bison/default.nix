@@ -16,7 +16,7 @@ let
     "mirror://gnu/bison/bison-${version}.tar.xz"
   ];
 
-  version = "3.3.2";
+  version = "3.4.1";
 in
 stdenv.mkDerivation (rec {
   name = "bison-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation (rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "039ee45b61d95e5003e7e8376f9080001b4066ff357bde271b7faace53b9d804";
+    sha256 = "27159ac5ebf736dffd5636fd2cd625767c9e437de65baa63cb0de83570bd820d";
   };
 
   nativeBuildInputs = [
@@ -54,9 +54,9 @@ stdenv.mkDerivation (rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.3.2";
+      urls = tarballUrls "3.4.1";
       inherit (src) outputHashAlgo;
-      outputHash = "039ee45b61d95e5003e7e8376f9080001b4066ff357bde271b7faace53b9d804";
+      outputHash = "27159ac5ebf736dffd5636fd2cd625767c9e437de65baa63cb0de83570bd820d";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "7DF8 4374 B1EE 1F97 64BB  E25D 0DDC AA32 78D5 264E";

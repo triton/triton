@@ -8,7 +8,7 @@
     sha256 = "b198c2aadf1d68308127a0f5b51dbe798958ffe60dd999134f6495c489afcd5d";
   };
   "11" = {
-    version = "11.2";
-    sha256 = "2676b9ce09c21978032070b6794696e0aa5a476e3d21d60afc036dc0a9c09405";
+    version = "11.3";
+    sha256 = "2a85e082fc225944821dfd23990e32dfcd2284c19060864b0ad4ca537d30522d";
   };
 }

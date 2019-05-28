@@ -3,7 +3,6 @@
 , fetchTritonPatch
 , fetchurl
 , lib
-, ninja
 
 , bzip2
 , curl
@@ -15,20 +14,14 @@
 , rhash
 , xz
 , zlib
-
-, bootstrap ? false
 }:
 
 let
-  inherit (lib)
-    optionals
-    optionalString;
-
   channel = "3.14";
   version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
-  name = "cmake${optionalString bootstrap "-bootstrap"}-${version}";
+  name = "cmake-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
@@ -45,12 +38,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  nativeBuildInputs = optionals (!bootstrap) [
+  nativeBuildInputs = [
     cmake
-    ninja
   ];
 
-  buildInputs = optionals (!bootstrap) [
+  buildInputs = [
     bzip2
     curl
     expat
@@ -66,32 +58,20 @@ stdenv.mkDerivation rec {
   postPatch = /* LibUV 1.21.0+ compat */ ''
     ! grep -q 'uv/version.h' Source/Modules/FindLibUV.cmake
     sed -i 's,uv-version.h,uv/version.h,' Source/Modules/FindLibUV.cmake
-  '' + optionalString (!bootstrap) ''
+
     sed -i '/CMAKE_USE_SYSTEM_/s,OFF,ON,g' CMakeLists.txt
   '';
 
-  preConfigure = optionalString bootstrap ''
-    fixCmakeFiles .
-
-    configureFlagsArray+=("--parallel=$NIX_BUILD_CORES")
-  '';
-
-  configureFlags = optionals bootstrap [
-    "--no-system-libs"
-    "--docdir=/share/doc/${name}"
-    "--mandir=/share/man"
-  ];
-
-  # Cmake flags are only used by the final build of cmake
-  cmakeFlags = optionals (!bootstrap) [
+  cmakeFlags = [
     "-DCMAKE_USE_SYSTEM_KWIML=OFF"
   ];
 
   setupHook = ./setup-hook.sh;
-  selfApplySetupHook = true;
-  cmakeHook = !bootstrap;
 
   passthru = {
+    inherit
+      channel
+      version;
     srcVerification = fetchurl {
       failEarly = true;
       inherit (src)

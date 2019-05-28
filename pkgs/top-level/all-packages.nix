@@ -922,9 +922,7 @@ clutter-gtk = callPackageAlias "clutter-gtk_1-8" { };
 cmake = callPackage ../all-pkgs/c/cmake {
   cmake = pkgs.cmake_bootstrap;
 };
-cmake_bootstrap = callPackageAlias "cmake" {
-  bootstrap = true;
-};
+cmake_bootstrap = callPackage ../all-pkgs/c/cmake/bootstrap.nix { };
 
 cmocka = callPackage ../all-pkgs/c/cmocka { };
 

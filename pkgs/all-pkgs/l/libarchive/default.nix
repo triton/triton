@@ -1,7 +1,6 @@
 { stdenv
 , cmake
 , fetchFromGitHub
-, ninja
 
 , acl
 , bzip2
@@ -34,7 +33,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    ninja
   ];
 
   buildInputs = [

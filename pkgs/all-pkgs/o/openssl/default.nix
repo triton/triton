@@ -24,9 +24,9 @@ let
       ];
     };
     "1.1.1" = {
-      version = "1.1.1b";
-      multihash = "Qma8xeEeCAkmC1wL6Mqg8q3k8cjoEEQoyP1GV1zmhpVwM3";
-      sha256 = "5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b";
+      version = "1.1.1c";
+      multihash = "QmWywnLuHNZ7oxJFq9PRZCZgKUYvy8rK2PaCnaXaCWhgyM";
+      sha256 = "f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90";
       patches = [
         (fetchTritonPatch {
           rev = "29569cdc2793ba0e4902c2134fa3f3bbe9eb6a9f";
@@ -132,6 +132,7 @@ stdenv.mkDerivation rec {
         pgpKeyFingerprints = [
           "EFC0 A467 D613 CB83 C7ED  6D30 D894 E2CE 8B3D 79F5"
           "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
+          "7953 AC1F BC3D C8B3 B292  393E D5E9 E43F 7DF9 EE8C"
         ];
       };
     };

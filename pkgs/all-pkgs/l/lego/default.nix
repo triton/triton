@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.5.0";
+  version = "2.6.0";
 in
 buildGo {
   name = "lego-${version}";
@@ -14,7 +14,7 @@ buildGo {
     owner = "go-acme";
     repo = "lego";
     rev = "v${version}";
-    sha256 = "00f5120fb2b08a5ec12a6fa9b59d16cf6373dec4e081d14e7a32fff57922cc88";
+    sha256 = "b2927bef2a00f24fd43bd85cd081a5ba7e2b551379e5efea4bf99f2daed83da5";
   };
 
   srcRoot = null;

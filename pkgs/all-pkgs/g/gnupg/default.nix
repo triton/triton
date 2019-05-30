@@ -33,7 +33,7 @@ let
     "mirror://gnupg/gnupg/gnupg-${version}.tar.bz2"
   ];
 
-  version = "2.2.15";
+  version = "2.2.16";
 in
 stdenv.mkDerivation rec {
   name = "gnupg-${version}";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "cb8ce298d7b36558ffc48aec961b14c830ff1783eef7a623411188b5e0f5d454";
+    sha256 = "6cbe8d454bf5dc204621eed3016d721b66298fa95363395bb8eeceb1d2fd14cb";
   };
 
   nativeBuildInputs = [
@@ -62,14 +62,6 @@ stdenv.mkDerivation rec {
     readline
     sqlite
     zlib
-  ];
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "e0bde1edfefd3bf539fec631fa8e2bfb2b2b7940";
-      file = "g/gnupg/fix-gawk5.patch";
-      sha256 = "bc6f52095ca53d6362c0e638d054ebd9c2349a6f54fab0dcf657c0ef25590b46";
-    })
   ];
 
   postPatch = ''
@@ -106,8 +98,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.15";
-      sha256 = "cb8ce298d7b36558ffc48aec961b14c830ff1783eef7a623411188b5e0f5d454";
+      urls = tarballUrls "2.2.16";
+      sha256 = "6cbe8d454bf5dc204621eed3016d721b66298fa95363395bb8eeceb1d2fd14cb";
       fullOpts = {
         pgpsigUrl = map (n: "${n}.sig") urls;
         pgpKeyFingerprints = [

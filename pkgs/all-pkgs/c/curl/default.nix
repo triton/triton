@@ -61,6 +61,8 @@ stdenv.mkDerivation rec {
     "--with-ca-fallback"
   ] ++ optionals (type == "minimal") [
     "--disable-manual"
+  ] ++ optionals (type != "minimal") [
+    "--with-libmetalink"
   ];
 
   passthru = {

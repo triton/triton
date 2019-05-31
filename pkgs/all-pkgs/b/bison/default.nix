@@ -37,6 +37,11 @@ stdenv.mkDerivation (rec {
     gnum4
   ];
 
+  # Don't generate examples
+  postPatch = ''
+    sed -i '/\$(nodist_examples.*_SOURCES)/d' Makefile.in
+  '';
+
   configureFlags = [
     "--${boolEn (type != "bootstrap")}-threads"
     "--${boolEn (type != "bootstrap")}-assert"

@@ -3,19 +3,15 @@
 }:
 
 let
-  version = "2019-02-14";
+  version = "2019-05-14";
+  version' = stdenv.lib.replaceStrings ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
   name = "linux-firmware-${version}";
 
-  # This repo is built from
-  # http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/
-  # for any given date. This gives us up to date iwlwifi firmware as well as
-  # the usual set of firmware. firmware/linux-firmware usually lags kernel releases
-  # so iwlwifi cards will fail to load on newly released kernels.
   src = fetchurl {
-    url = "https://github.com/wkennington/linux-firmware/releases/download/${version}/${name}.tar.xz";
-    sha256 = "ca772b1bb82ad9963a65e1b38c689d10764ceae8d4694b88393c8c126521d071";
+    url = "mirror://kernel/linux/kernel/firmware/linux-firmware-${version'}.tar.xz";
+    sha256 = "56d40b8f906fe430de9aecf1caee9a4b778783e04d35432a0f1eb21d08966247";
   };
 
   preInstall = ''
@@ -25,6 +21,10 @@ stdenv.mkDerivation rec {
   installFlags = [
     "DESTDIR=$(out)"
   ];
+
+  dontStrip = true;
+  dontPatchShebangs = true;
+  dontPatchELF = true;
 
   passthru = {
     inherit version;

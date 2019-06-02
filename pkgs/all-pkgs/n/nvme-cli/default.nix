@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.6";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
   name = "nvme-cli-${version}";
@@ -16,12 +16,16 @@ stdenv.mkDerivation rec {
     owner = "linux-nvme";
     repo = "nvme-cli";
     rev = "v${version}";
-    sha256 = "3f881dbbe1e5976f3b694bdcebbd23f6e7a1d218ebd63becc0b8ea86ecdfbdf7";
+    sha256 = "81f27d969d3c9de8682be11d8dfcaaeafde258c2a1a0e2881bc6bfded0fa3e6b";
   };
 
   buildInputs = [
     util-linux_lib
   ];
+
+  postPatch = ''
+    sed -i 's,-Werror,,' Makefile
+  '';
 
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")

@@ -10,7 +10,7 @@
 }:
 
 let
-  name = "chrony-3.4";
+  name = "chrony-3.5";
 
   baseUrls = [
     "https://download.tuxfamily.org/chrony/${name}"
@@ -21,9 +21,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.tar.gz") baseUrls;
-    multihash = "Qmev3vcNHk4yB4dy2YDhy3fngP8KsiCXDVbKVuubzuRwmX";
+    multihash = "QmXHSLpvexGJSGi9ZMFr1WjuRe5ohnbxxZ1G9PeDN46tc1";
     hashOutput = false;
-    sha256 = "af77e47c2610a7e55c8af5b89a8aeff52d9a867dd5983d848b52d374bc0e6b9f";
+    sha256 = "4e02795b1260a4ec51e6ace84149036305cc9fc340e65edb9f8452aa611339b5";
   };
   
   buildInputs = [

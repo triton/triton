@@ -31,9 +31,9 @@ let
 
   sources = {
     "4.19" = {
-      version = "4.19.46";
+      version = "4.19.47";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "3df7f072065b35abaa86e752a1ee2a6488a1d980a4e116b6a5750a9112203b20";
+      patchSha256 = "947fa0ff166406bc73d5ef511ecf01ffaa0503225657e103a7fad633edc2b83a";
     };
     "5.0" = {
       version = "5.0.19";

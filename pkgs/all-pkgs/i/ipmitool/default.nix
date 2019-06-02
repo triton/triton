@@ -1,30 +1,45 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, fetchFromGitHub
 
-, openssl_1-0-2
+, ncurses
+, openssl
+, readline
 }:
 
 let
-  version = "1.8.18";
+  rev = "e65a96b38d49a7b3a8bdfb28c91fc6a8ef035a3d";
+  date = "2019-05-29";
 in
 stdenv.mkDerivation rec {
-  name = "ipmitool-${version}";
+  name = "ipmitool-${date}";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/ipmitool/ipmitool/${version}/${name}.tar.bz2";
-    sha256 = "0c1ba3b1555edefb7c32ae8cd6a3e04322056bc087918f07189eeedfc8b81e01";
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "ipmitool";
+    repo = "ipmitool";
+    inherit rev;
+    sha256 = "c1584d1bf0f289e51ff013a4b85d79a6bef1d462578200f00ebb4a8c161fe833";
   };
 
-  buildInputs = [
-    openssl_1-0-2
+  nativeBuildInputs = [
+    autoreconfHook
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--infodir=$out/share/info"
-      "--mandir=$out/share/man"
-    )
+  buildInputs = [
+    ncurses
+    openssl
+    readline
+  ];
+
+  postPatch = ''
+    patchShebangs lib/create_pen_list
   '';
+
+  # Remove once fixed
+  configureFlags = [
+    "DEFAULT_INTF=open"
+  ];
 
   meta = with stdenv.lib; {
     description = "Command-line interface to IPMI-enabled devices";

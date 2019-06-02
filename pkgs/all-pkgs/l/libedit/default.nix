@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libedit-20180525-3.1";
+  name = "libedit-20190324-3.1";
 
   src = fetchurl {
     url = "https://thrysoee.dk/editline/${name}.tar.gz";
-    multihash = "QmawPtK1fBi59SVtABvSZEbjTtBxUpJECyvvc6o1hrnRxY";
-    sha256 = "c41bea8fd140fb57ba67a98ec1d8ae0b8ffa82f4aba9c35a87e5a9499e653116";
+    multihash = "QmZ5jhgAtHZYBTnwDgMXQ3FYbSa4iDXYwGrx29j81DoAu6";
+    sha256 = "ac8f0f51c1cf65492e4d1e3ed2be360bda41e54633444666422fbf393bba1bae";
   };
 
   buildInputs = [

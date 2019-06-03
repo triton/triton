@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchFromCgit
 , git
 
 , openssl
@@ -13,9 +13,12 @@ in
 stdenv.mkDerivation {
   name = "cgit-${date}";
 
-  src = fetchzip {
+  src = fetchFromCgit {
     version = 6;
-    url = "https://git.zx2c4.com/cgit/snapshot/cgit-${rev}.tar.xz";
+    host = "https://git.zx2c4.com";
+    repo = "cgit";
+    archive = "tar.xz";
+    inherit rev;
     multihash = "QmY3SdtFJEGigyVA4CiFBfG7D71qkiFn6D6DTdSWwtRL4y";
     sha256 = "033a53f4a5d2f2b72c4580e9fcab7803cb0b2db06f59689fa2da640fe7dceba0";
   };

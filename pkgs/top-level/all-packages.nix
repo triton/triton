@@ -2202,6 +2202,8 @@ libb2 = callPackage ../all-pkgs/l/libb2 { };
 
 libb64 = callPackage ../all-pkgs/l/libb64 { };
 
+libbdplus = callPackage ../all-pkgs/l/libbdplus { };
+
 libblockdev = callPackage ../all-pkgs/l/libblockdev { };
 
 libbluray = callPackage ../all-pkgs/l/libbluray { };
@@ -4390,7 +4392,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 
   libasyncns = callPackage ../development/libraries/libasyncns { };
 #
-  libbdplus = callPackage ../development/libraries/libbdplus { };
 
   libbs2b = callPackage ../development/libraries/audio/libbs2b { };
 #

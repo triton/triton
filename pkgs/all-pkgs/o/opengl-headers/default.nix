@@ -15,8 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "opengl-headers-${date}.tar.xz";
-    multihash = "QmRMy2iGHh535k8mjVKhZ4CMypWbK5hE21bZg1MB7eDyS3";
-    sha256 = "7b6ba3e1c12dc8d4150c853ad8b6338e52f2f93a1cff609da55cd381bb47d3dd";
+    multihash = "QmauGzZP6Sk8sef8HytfW9Xik83R6M9UNkAMQ9cmUuL8Ye";
+    sha256 = "1d2904278c9670cb1a7720a599761159c583057d2105dcae1408c6eea51ed228";
   };
 
   configurePhase = ":";
@@ -67,7 +67,13 @@ stdenv.mkDerivation rec {
         grep -q "time.strftime('%Y%m%d')" xml/genheaders.py
         sed -i xml/genheaders.py \
           -e "s,time.strftime('%Y%m%d'),'${lib.replaceStrings ["-"] [""] date}',"
+
+        # FIXME: remove once Mesa reflects this change
+        grep -a 'void <name>glXQueryGLXPbufferSGIX' xml/glx.xml
+        sed -i xml/glx.xml \
+          -e 's/void <name>glXQueryGLXPbufferSGIX/int <name>glXQueryGLXPbufferSGIX/'
       '';
+
 
       configurePhase = ":";
 

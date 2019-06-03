@@ -18,7 +18,7 @@ let
     boolEn
     boolWt;
 
-  version  = "1.0.2";
+  version  = "1.1.1";
 in
 stdenv.mkDerivation rec {
   name = "libbluray-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libbluray/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "6d9e7c4e416f664c330d9fa5a05ad79a3fb39b95adfc3fd6910cbed503b7aeff";
+    sha256 = "106478a17c8bcac8c7b4174e7432b2bad5a1e6dd2926c4224791fd4669472338";
   };
 
   nativeBuildInputs = [
@@ -45,12 +45,16 @@ stdenv.mkDerivation rec {
   postPatch = ''
     # Fix search path for BDJ jarfile
     # See triton-patches "libbluray/BDJ-JARFILE-path.patch"
+    grep -q '[JDK_HOME],' configure.ac
     sed -i configure.ac \
       -e "/\[JDK_HOME\], \[\"\$JDK_HOME\"\]/a CPPFLAGS=\"''${CPPFLAGS} -DJARDIR='\\\\\"\\\$(datadir)/java\\\\\"'\""
+    grep -q '"/usr/share/java/" BDJ_JARFILE' src/libbluray/bdj/bdj.c
+    grep -q '"/usr/share/libbluray/lib/"' src/libbluray/bdj/bdj.c
     sed -i src/libbluray/bdj/bdj.c \
       -e 's|"/usr/share/java/" BDJ_JARFILE|JARDIR "/" BDJ_JARFILE|' \
       -e '/"\/usr\/share\/libbluray\/lib\/"/d'
     # Remove impure paths
+    grep -q '/usr' src/libbluray/bdj/bdj.c
     sed -i src/libbluray/bdj/bdj.c \
       -e 's,/usr,/non-existent-path,' \
       -e 's,/etc,/non-existent-path,'
@@ -64,16 +68,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (jdk != null)}-bdjava"
     "--enable-udf"
     "--${boolEn (jdk != null)}-bdjava-jar"
-    "--disable-doxygen-doc"
-    "--disable-doxygen-dot"
-    "--disable-doxygen-man"
-    "--disable-doxygen-rtf"
-    "--disable-doxygen-xml"
-    "--disable-doxygen-chm"
-    "--disable-doxygen-chi"
-    "--disable-doxygen-html"
-    "--disable-doxygen-ps"
-    "--disable-doxygen-pdf"
     "--with-libxml2"
     "--with-freetype"
     "--with-fontconfig"
@@ -92,7 +86,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha512Urls = map (n: "${n}.sha512") src.urls;
+      fullOpts = {
+        sha512Urls = map (n: "${n}.sha512") src.urls;
+      };
       failEarly = true;
     };
   };

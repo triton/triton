@@ -1,6 +1,7 @@
 { stdenv
+, autoreconfHook
 , bison
-, fetchurl
+, fetchFromGitLab
 , flex
 , lib
 
@@ -8,23 +9,24 @@
 , libgpg-error
 }:
 
-# Info on how to use / obtain aacs keys:
-# http://vlc-bluray.whoknowsmy.name/
-# https://wiki.archlinux.org/index.php/BluRay
-
 let
-  version = "0.9.0";
+  date = "2018-12-06";
+  rev = "f154d7e7cc755f0ce1f817f54227815b69962380";
 in
 stdenv.mkDerivation rec {
-  name = "libaacs-${version}";
+  name = "libaacs-${date}";
 
-  src = fetchurl {
-    url = "mirror://videolan/libaacs/${version}/${name}.tar.bz2";
-    hashOutput = false;
-    sha256 = "47e0bdc9c9f0f6146ed7b4cc78ed1527a04a537012cf540cf5211e06a248bace";
+  src = fetchFromGitLab {
+    version = 6;
+    host = "https://code.videolan.org";
+    owner = "videolan";
+    repo = "libaacs";
+    inherit rev;
+    sha256 = "5cebae5981d8d0df310e67ae1df7e1bec1b49fdc0beddbebb892062d6961f69b";
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     bison
     flex
   ];
@@ -33,17 +35,6 @@ stdenv.mkDerivation rec {
     libgcrypt
     libgpg-error
   ];
-
-  passthru = {
-    srcVerification = fetchurl {
-      inherit (src)
-        outputHash
-        outputHashAlgo
-        urls;
-      sha512Url = map (n: "${n}.sha512") src.urls;
-      failEarly = true;
-    };
-  };
 
   meta = with lib; {
     description = "Library to access AACS protected Blu-Ray disks";

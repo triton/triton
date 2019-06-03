@@ -2250,6 +2250,8 @@ libdmx = callPackage ../all-pkgs/l/libdmx { };
 
 libdrm = callPackage ../all-pkgs/l/libdrm { };
 
+libdvbpsi = callPackage ../all-pkgs/l/libdvbpsi { };
+
 libdvdcss = callPackage ../all-pkgs/l/libdvdcss { };
 
 libdvdnav = callPackage ../all-pkgs/l/libdvdnav { };
@@ -4403,7 +4405,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #
-  libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
 #
   libgtop = callPackage ../development/libraries/libgtop {};
 #

@@ -6,10 +6,7 @@
 }:
 
 let
-  inherit (lib)
-    boolWt;
-
-  version = "6.0.0";
+  version = "6.0.1";
 in
 stdenv.mkDerivation rec {
   name = "libdvdread-${version}";
@@ -17,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libdvdread/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "b33b1953b4860545b75f6efc06e01d9849e2ea4f797652263b0b4af6dd10f935";
+    sha256 = "28ce4f0063883ca4d37dfd40a2f6685503d679bca7d88d58e04ee8112382d5bd";
   };
 
   buildInputs = [
@@ -26,13 +23,12 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-largefile"
     "--disable-apidoc"
-    "--${boolWt (libdvdcss != null)}-libdvdcss"
+    "--with-libdvdcss"
   ];
 
   postInstall = ''
-    ln -sv $out/include/dvdread $out/include/libdvdread
+    ln -sv "$out"/include/dvdread "$out"/include/libdvdread
   '';
 
   passthru = {
@@ -41,12 +37,14 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Urls = map (n: "${n}.sha256") src.urls;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprints = [
-        # VideoLAN Release Signing Key
-        "65F7 C6B4 206B D057 A7EB  7378 7180 713B E58D 1ADC"
-      ];
+      fullOpts = {
+        sha256Urls = map (n: "${n}.sha256") src.urls;
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprints = [
+          # VideoLAN Release Signing Key
+          "65F7 C6B4 206B D057 A7EB  7378 7180 713B E58D 1ADC"
+        ];
+      };
       failEarly = true;
     };
   };

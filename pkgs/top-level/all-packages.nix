@@ -402,7 +402,7 @@ let  # BEGIN let/in 1
     , sha256
     , archive ? "tar.gz"
     , version ? null
-    , name ? "${repo}-${rev}"
+    , name ? "${lib.replaceStrings [".git"] [""] repo}-${rev}"
     }:
     # Requires the instance to have snapshot support enabled.
     pkgs.fetchzip {

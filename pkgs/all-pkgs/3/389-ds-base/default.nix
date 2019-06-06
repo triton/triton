@@ -10,7 +10,6 @@
 , net-snmp
 , nspr
 , nss
-, nunc-stans
 , openldap
 , pam
 , pcre

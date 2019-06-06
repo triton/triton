@@ -3178,8 +3178,6 @@ nvidia-video-codec-sdk = callPackage ../all-pkgs/n/nvidia-video-codec-sdk { };
 
 nvme-cli = callPackage ../all-pkgs/n/nvme-cli { };
 
-nunc-stans = callPackage ../all-pkgs/n/nunc-stans { };
-
 oath-toolkit = callPackage ../all-pkgs/o/oath-toolkit { };
 
 obexftp = callPackage ../all-pkgs/o/obexftp { };

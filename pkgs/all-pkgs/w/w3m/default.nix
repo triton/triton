@@ -1,7 +1,7 @@
 { stdenv
+, fetchFromGitLab
 , fetchTritonPatch
 , fetchpatch
-, fetchzip
 , gettext
 , lib
 
@@ -22,19 +22,20 @@ let
     optionals
     optionalString;
 
-  date = "2018-03-23";
-  rev = "4ef1a5f3dfb310562bd9d3c7cc3f9a1b74b7c44d";
+  date = "2019-04-22";
+  rev = "350c41a86c65c778d0f62a7398ef84552f9f60b5";
 in
 stdenv.mkDerivation rec {
   name = "w3m-0.5.3-${date}";
 
-  src = fetchzip {
+  src = fetchFromGitLab {
     version = 6;
-    inherit name;
-    url = "https://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
-        + "${rev}.tar.xz";
-    multihash = "QmRi689Z81q9YLpTxDjL7fSbhMNqbfAc6gmEeCmfjw9zE6";
-    sha256 = "37acc2b198ba7e74811597796c35821d51d4d14c5cde71e4180dd337cbced635";
+    host = "https://salsa.debian.org";
+    owner = "debian";
+    repo = "w3m";
+    inherit rev;
+    multihash = "QmNrmaZjnbFHn6YyMjL1Se1yPtAfrcbXCv4DtxehvQTdQ4";
+    sha256 = "bd6426cbc9b7e70ccd185e2cc479ac9321c5475b4eeac1292797e99c26f25b53";
   };
 
   nativeBuildInputs = [
@@ -89,18 +90,9 @@ stdenv.mkDerivation rec {
     ln -s $out/libexec/w3m/w3mimgdisplay $out/bin
   '';
 
-  passthru = {
-    srcVerification = fetchzip {
-    version = 1;
-      inherit name;
-      inherit (src) urls outputHash outputHashAlgo;
-      insecureHashOutput = true;
-    };
-  };
-
   meta = with lib; {
-    homepage = http://w3m.sourceforge.net/;
     description = "A text-mode web browser";
+    homepage = http://w3m.sourceforge.net/;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchFromCgit
 , autoreconfHook
 
 , acl
@@ -13,9 +13,11 @@ in
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
 
-  src = fetchzip {
+  src = fetchFromCgit {
     version = 6;
-    url = "https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
+    host = "https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk";
+    repo = "f2fs-tools.git";
+    rev = "${version}";
     multihash = "QmfJhPE26EivkqFoEs25dPXXVdrfX1Xio4qFycBrHZKsSC";
     sha256 = "f1477254e7bca199a81b3142741c7c10094cb77741ac5b8958a37abacc2caa32";
   };

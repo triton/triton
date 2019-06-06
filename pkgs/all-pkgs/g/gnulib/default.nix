@@ -1,5 +1,5 @@
 { stdenv
-, fetchzip
+, fetchFromCgit
 }:
 
 let
@@ -9,9 +9,11 @@ in
 stdenv.mkDerivation {
   name = "gnulib-${date}";
 
-  src = fetchzip {
+  src = fetchFromCgit {
     version = 6;
-    url = "https://git.savannah.gnu.org/cgit/gnulib.git/snapshot/gnulib-${rev}.tar.xz";
+    host = "https://git.savannah.gnu.org/cgit";
+    repo = "gnulib.git";
+    inherit rev;
     multihash = "QmYbDvkAFtT51Ruj4BHZ4TDZLBZLirGu85AyHDMKyKYpaZ";
     sha256 = "11a715698ab425f0f6a9ab90f06d7a895f257da5a931e32624f2664269167fb3";
   };

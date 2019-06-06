@@ -1,25 +1,32 @@
 { stdenv
-, fetchurl
+, fetchFromGitLab
+, lib
 }:
 
+let
+  date = "2019-04-26";
+  rev = "7909e878851a569515e7b53e328d7d569eb75b50";
+in
 stdenv.mkDerivation {
-  name = "mime-types-2016-01-12";
+  name = "mime-types-${date}";
 
-  src = fetchurl {
-    url = "https://anonscm.debian.org/cgit/collab-maint/mime-support.git/plain/"
-        + "mime.types?id=fe8d90a379338a4a9dac4ca791ed7aca52fa0423";
-    multihash = "QmUZHmEDh8p21ZntKM3PaQNsZszW1XqrsWfYUwyqeDmQWw";
-    sha256 = "1z6q4w90id3g8kmfrxxbkgj3sxqqwfka5cnkvn556l0nbc7zr4wi";
+  src = fetchFromGitLab {
+    version = 6;
+    host = "https://salsa.debian.org";
+    owner = "debian";
+    repo = "mime-support";
+    inherit rev;
+    multihash = "QmQNUW6DjRvBwepdeAmYdFopkj9PaSoaqXVE3XXViheCmP";
+    sha256 = "64406875391b0d37a19b5f9bc25fb5f0112194bf8591b497dbbc01544d6b0abf";
   };
 
-  buildCommand = ''
-    mkdir -pv $out/etc
-    cp -v $src $out/etc/mime.types
+  installPhase = ''
+    install -D -m644 -v mime.types "$out"/etc/mime.types
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Provides /etc/mime.types file";
-    homepage = http://anonscm.debian.org/cgit/collab-maint/mime-support.git;
+    homepage = https://salsa.debian.org/debian/mime-support;
     license = licenses.free;
     maintainers = with maintainers; [
       wkennington

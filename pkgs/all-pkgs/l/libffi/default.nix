@@ -2,23 +2,19 @@
 , fetchurl
 }:
 
+let
+  version = "3.3-rc0";
+in
 stdenv.mkDerivation rec {
-  name = "libffi-3.2.1";
+  name = "libffi-${version}";
 
   src = fetchurl {
-    url = "ftp://sourceware.org/pub/libffi/${name}.tar.gz";
-    multihash = "QmYVaqFAiZJy8YHrRYLCtBZzhNGxLJRBxR2Pkk1hm4ZMkN";
-    sha256 = "0dya49bnhianl0r65m65xndz6ls2jn1xngyn72gd28ls3n7bnvnh";
+    urls = [
+      "https://github.com/libffi/libffi/releases/download/v${version}/${name}.tar.gz"
+      "mirror://sourceware/libffi/${name}.tar.gz"
+    ];
+    sha256 = "403d67aabf1c05157855ea2b1d9950263fb6316536c8c333f5b9ab1eb2f20ecf";
   };
-
-  configureFlags = [
-    "--enable-pax_emutramp"
-  ];
-
-  # Install headers in the right place.
-  postInstall = ''
-    ln -sv "$out/lib/"libffi*/include $out/include
-  '';
 
   disableStatic = false;
 

@@ -16,13 +16,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "less-530";
+  name = "less-533";
 
   src = fetchurl {
     urls = map (n: "${n}.tar.gz") (fileUrls name);
-    multihash = "QmUXLRe6hL1spWcAK7Kq5RsM3eyiDZEE61EFAPQ2Mo9X36";
+    multihash = "QmSzsMJrjjMwBvwbvgUcfrWycy5xKcLt2KHEtQhGyTLtCK";
     hashOutput = false;
-    sha256 = "503f91ab0af4846f34f0444ab71c4b286123f0044a4964f1ae781486c617f2e2";
+    sha256 = "fa6f951f770274cc0b3e7f751ce03e500b7ecf44b1c85817dd23deb7e184dbfb";
   };
 
   buildInputs = [
@@ -43,9 +43,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") (fileUrls name);
-      pgpKeyFingerprint = "AE27 252B D684 6E7D 6EAE  1DD6 F153 A7C8 3323 5259";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") (fileUrls name);
+        pgpKeyFingerprint = "AE27 252B D684 6E7D 6EAE  1DD6 F153 A7C8 3323 5259";
+      };
     };
   };
 

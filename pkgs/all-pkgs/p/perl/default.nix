@@ -14,7 +14,7 @@ let
     "mirror://cpan/src/5.0/perl-${version}.tar.xz"
   ];
 
-  version = "5.28.1";
+  version = "5.30.0";
 in
 stdenv.mkDerivation rec {
   name = "perl-${version}";
@@ -22,15 +22,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "fea7162d4cca940a387f0587b93f6737d884bf74d8a9d7cfd978bc12cd0b202d";
+    sha256 = "ac501cad4af904d33370a9ea39dbb7a8ad4cb19bc7bc8a9c17d8dc3e81ef6306";
   };
 
   patches = [
-    # Do not look in /usr etc. for dependencies.
     (fetchTritonPatch {
-      rev = "9493778a087a474b64c5a8d1c954d11cc3b74d56";
-      file = "p/perl/no-sys-dirs.patch";
-      sha256 = "1cf5868893c61b3b9e0dbddce8e76ccaa7c530299ce1d5240c06091b8a219b46";
+      rev = "984e5bf6bc386ce45d019e73ebe05ec44cb4389d";
+      file = "p/perl/0001-Remove-impure-sysdirs.patch";
+      sha256 = "8b4add4d20e290485174c83b03aec9b5e55990d97030c4a444d836922ca2783f";
     })
   ];
 
@@ -60,8 +59,8 @@ stdenv.mkDerivation rec {
     libPrefix = "lib/perl5/site_perl";
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "5.28.1";
-      outputHash = "fea7162d4cca940a387f0587b93f6737d884bf74d8a9d7cfd978bc12cd0b202d";
+      urls = tarballUrls "5.30.0";
+      outputHash = "ac501cad4af904d33370a9ea39dbb7a8ad4cb19bc7bc8a9c17d8dc3e81ef6306";
       inherit (src) outputHashAlgo;
       fullOpts = {
         sha256Urls = map (n: "${n}.sha256.txt") urls;

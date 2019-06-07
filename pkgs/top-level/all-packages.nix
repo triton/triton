@@ -2770,6 +2770,13 @@ llvm_8 = callPackage ../all-pkgs/l/llvm {
   channel = "8";
 };
 llvm = callPackageAlias "llvm_8" { };
+llvm_split_7 = callPackage ../all-pkgs/l/llvm/split.nix {
+  channel = "7";
+};
+llvm_split_8 = callPackage ../all-pkgs/l/llvm/split.nix {
+  channel = "8";
+};
+llvm_split = callPackageAlias "llvm_split_8" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 

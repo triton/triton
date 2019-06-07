@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libevdev-1.6.0";
+  name = "libevdev-1.7.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libevdev/${name}.tar.xz";
-    multihash = "QmWVBYNHH8J6JZXRu7NucPhBjKZfUDAv8LNePvjd2Fw4Bj";
+    multihash = "QmUSt7QTevh6VWiwiwnTHprCR3Rz2VCYkAqhmJBvD57Lpc";
     hashOutput = false;
-    sha256 = "f5005c865987d980cc1279b9ec6131b06a89fd9892f649f2a68262b8786ef814";
+    sha256 = "11dbe1f2b1d03a51f3e9a196757a75c3a999042ce34cf1fdc00a2363e5a2e369";
   };
 
   nativeBuildInputs = [

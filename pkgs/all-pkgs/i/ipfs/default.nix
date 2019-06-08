@@ -1,6 +1,8 @@
 { lib
 , buildGo
 , fetchGo
+
+, openssl
 }:
 
 let
@@ -19,8 +21,16 @@ buildGo {
     sourceJSON = ./source.json;
   };
 
+  buildInputs = [
+    openssl
+  ];
+
   installedSubmodules = [
     "cmd/ipfs"
+  ];
+
+  goFlags = [
+    "-tags=openssl"
   ];
 
   meta = with lib; {

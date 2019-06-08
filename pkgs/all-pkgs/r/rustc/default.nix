@@ -5,7 +5,7 @@
 , python3
 , rustc
 
-, llvm
+, llvm_split
 , xz
 
 , channel
@@ -48,16 +48,20 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    llvm_split
     xz
   ];
 
   # This breaks compilation
   fixLibtool = false;
 
-  # Don't install anything we don't need as part of the compiler toolchain
-  # These should be generated separately as needed
   postPatch = ''
+    # Don't install anything we don't need as part of the compiler toolchain
+    # These should be generated separately as needed
     sed -i '/install::\(Docs\|Src\),/d' src/bootstrap/builder.rs
+
+    # Don't hardcode references to llvm dev files
+    sed -i 's,let cfg_llvm_root =.*;,let cfg_llvm_root = "";,' src/librustc_codegen_llvm/context.rs
   '';
 
   configureFlags = [
@@ -66,11 +70,14 @@ stdenv.mkDerivation {
     "--enable-llvm-link-shared"
     "--enable-vendor"
     "--enable-optimize"
-    "--llvm-root=${llvm}"
+    "--llvm-root=${llvm_split}"
     "--release-channel=${channel}"
   ];
 
   buildPhase = ''
+    # Ensure we don't end up with any references to llvm headers
+    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -ffile-prefix-map=${llvm_split.dev}=/no-such-path"
+
     # Build the initial bootstrapper and tools
     NIX_RUSTFLAGS_OLD="$NIX_RUSTFLAGS"
     export NIX_RUSTFLAGS="$NIX_RUSTFLAGS -L${rustc.std}/lib"
@@ -100,6 +107,10 @@ stdenv.mkDerivation {
   outputs = [
     "out"
     "std"
+  ];
+
+  disallowedReferences = [
+    llvm_split.dev
   ];
 
   setupHook = ./setup-hook.sh;

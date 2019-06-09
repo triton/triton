@@ -7,15 +7,15 @@
 }:
 
 let
-  date = "2019-02-13";
+  date = "2019-05-22";
 in
 stdenv.mkDerivation rec {
   name = "egl-headers-${date}";
 
   src = fetchurl {
     name = "egl-registry-${date}.tar.xz";
-    multihash = "QmcuqWrcyfZnyoEebWeBLyWtkptN29K8UQKdkxxEbZkDEG ";
-    sha256 = "829d3a5fb6de4016310cbeeb5b1594b132a4477f41ca4bd74b5b6ea68b9acb8f";
+    multihash = "QmNm7rxGgmdkUR6MxHURgssuf2Z6B3WYNuUviqyyNgG6Nj";
+    sha256 = "5c29d717f234b97a55c7bea4bef6c677725b3bc621c23f10e4423691de5aab82";
   };
 
   configurePhase = ":";
@@ -42,8 +42,8 @@ stdenv.mkDerivation rec {
         version = 6;
         owner = "KhronosGroup";
         repo = "EGL-Registry";
-        rev = "9b12ea69d15aa52f6b4b6dee0302aec14c2e0443";
-        sha256 = "f4c57371bf981e3626f7f858b423273b5391cdd160695711c88a70e45f71e9af";
+        rev = "4744552d13f4475839d45c2eae7f745bac6ca204";
+        sha256 = "80301ee226ec950357a2c0c95229b9313fc5692804160a06f7690be422262231";
       };
 
       nativeBuildInputs = [
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
         tar -Jcvf opengl-headers-${date}.tar.xz ${name}/
 
         install -D -m644 -v 'opengl-headers-${date}.tar.xz' \
-          "$out/egl-headers-${date}.tar.xz"
+          "$out"/egl-headers-${date}.tar.xz
       '';
     };
   };

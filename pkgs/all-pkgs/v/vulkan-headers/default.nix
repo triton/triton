@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.1.103";
+  version = "1.1.108";
 in
 stdenv.mkDerivation rec {
   name = "vulkan-headers-${version}";
@@ -15,17 +15,12 @@ stdenv.mkDerivation rec {
     owner = "KhronosGroup";
     repo = "Vulkan-Docs";
     rev = "v${version}";
-    sha256 = "e1207bd30078c431e31cc0622b99995936ebb9439a307c36b2ff276203316b8a";
+    sha256 = "568c023a7888bc5888aaa04bb81c87c8945581ed26c74500025b52ab53aed9e7";
   };
 
   nativeBuildInputs = [
     python3
   ];
-
-  postPatch = ''
-    #patchShebangs xml/genheaders.py
-    rm -v include/vulkan/*.h
-  '';
 
   configurePhase = ":";
 

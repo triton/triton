@@ -3167,6 +3167,8 @@ nvidia-drivers_latest = callPackage ../all-pkgs/n/nvidia-drivers {
 };
 nvidia-drivers = callPackageAlias "nvidia-drivers_long-lived" { };
 
+nvidia-installer = callPackage ../all-pkgs/n/nvidia-installer { };
+
 nvidia-gpu-deployment-kit =
   callPackage ../all-pkgs/n/nvidia-gpu-deployment-kit { };
 

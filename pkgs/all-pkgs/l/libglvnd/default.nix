@@ -5,7 +5,7 @@
 , lib
 , mesa-headers
 , opengl-headers
-, python2
+, python3
 
 , libx11
 , libxext
@@ -13,7 +13,7 @@
 }:
 
 let
-  date = "2019-02-13";
+  date = "2019-04-26";
 in
 stdenv.mkDerivation rec {
   name = "libglvnd-${date}";
@@ -22,13 +22,13 @@ stdenv.mkDerivation rec {
     version = 6;
     owner = "NVIDIA";
     repo = "libglvnd";
-    rev = "f92208be88dd06a70b6f79a1cb95571e2762a9ec";
-    sha256 = "5dbfd00dd84e527df8b1717a112da6f085b9845b11bdbc5cef131fa537db722c";
+    rev = "58c8c4a40238fabdf425969580493e3001ec3443";
+    sha256 = "8534f8b3eb4e3ced770f413e51d8602aeb04a33d305118725bf2b7e8dc1807a3";
   };
 
   nativeBuildInputs = [
     autoreconfHook
-    python2
+    python3
   ];
 
   buildInputs = [
@@ -40,6 +40,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs src/generate/
 
+    # Use upstream Khronos's xml files for code generation.
     rm -v src/generate/xml/{egl,gl,glx}.xml
     cp -v ${opengl-headers}/share/opengl-registry/gl{,x}.xml src/generate/xml/
     cp -v ${egl-headers}/share/egl-registry/egl.xml src/generate/xml/

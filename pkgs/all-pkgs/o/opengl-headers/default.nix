@@ -5,18 +5,18 @@
 , python3Packages
 }:
 
-# We build our own dist tarballs, upstream repo vendors pdfs.
+# NOTE: We build our own dist tarballs, upstream repo vendors pdfs.
 
 let
-  date = "2019-03-01";
+  date = "2019-05-29";
 in
 stdenv.mkDerivation rec {
   name = "opengl-headers-${date}";
 
   src = fetchurl {
     name = "opengl-headers-${date}.tar.xz";
-    multihash = "QmauGzZP6Sk8sef8HytfW9Xik83R6M9UNkAMQ9cmUuL8Ye";
-    sha256 = "1d2904278c9670cb1a7720a599761159c583057d2105dcae1408c6eea51ed228";
+    multihash = "QmdG7GAVruk97ZbAaADvEGd1QS1BSzQS1tvmVVsEFPQLLJ";
+    sha256 = "d1b5979a28636014dcb7571c8fb3a375e65e9d187b0d6b038691dc345a53c705";
   };
 
   configurePhase = ":";
@@ -51,8 +51,8 @@ stdenv.mkDerivation rec {
         version = 6;
         owner = "KhronosGroup";
         repo = "OpenGL-Registry";
-        rev = "68dba34a93b67d626b1c8b7294e4562bdaf4c996";
-        sha256 = "6046f2eef181fe96379d23938de26e32621a59061d384b946db7e969bf16e99a";
+        rev = "696ac22968a6fc1c8ec11cbe8582505a38df0521";
+        sha256 = "97f8dee46b8318f63f45f8518551dc201bbdaf93c6d51d1a332be1193b5dd61b";
       };
 
       nativeBuildInputs = [
@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
         tar -Jcvf opengl-headers-${date}.tar.xz api/
 
         install -D -m644 -v 'opengl-headers-${date}.tar.xz' \
-          "$out/opengl-headers-${date}.tar.xz"
+          "$out"/opengl-headers-${date}.tar.xz
       '';
     };
   };

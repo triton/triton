@@ -6,8 +6,8 @@
 }:
 
 let
-  version = "2.1.9";
-  channel = "beta";
+  version = "2.1.10";
+  channel = "stable";
 
   tarballUrls = version: [
     "https://github.com/libevent/libevent/releases/download/release-${version}/libevent-${version}.tar.gz"
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls "${version}-${channel}";
     hashOutput = false;
-    sha256 = "eeb4c6eb2c4021e22d6278cdcd02815470243ed81077be0cbd0f233fa6fc07e8";
+    sha256 = "e864af41a336bb11dab1a23f32993afe963c1f69618bd9292b89ecf6904845b0";
   };
 
   buildInputs = [
@@ -27,18 +27,38 @@ stdenv.mkDerivation rec {
     python3  # For event_rpcgen.py
   ];
 
+  preConfigure = ''
+    prefix="$dev"
+    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $lib/lib"
+  '';
+
   configureFlags = [
     "--enable-gcc-hardening"
     "--disable-samples"
   ];
 
+  disableStatic = false;
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib/*.so* "$lib"/lib
+
+    mkdir -p "$dev"/nix-support
+    echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.1.9-beta";
+      urls = tarballUrls "2.1.10-stable";
       inherit (src)
         outputHashAlgo;
-      outputHash = "eeb4c6eb2c4021e22d6278cdcd02815470243ed81077be0cbd0f233fa6fc07e8";
+      outputHash = "e864af41a336bb11dab1a23f32993afe963c1f69618bd9292b89ecf6904845b0";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprints = [

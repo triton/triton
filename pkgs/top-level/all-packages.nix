@@ -545,6 +545,7 @@ wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
   nativePrefix = pkgs.stdenv.cc.nativePrefix or "";
   cc = baseCC;
   inherit libc extraBuildCommands;
+  coreutils = pkgs.coreutils_small;
 };
 
 wrapCC =
@@ -902,6 +903,14 @@ civetweb = callPackage ../all-pkgs/c/civetweb { };
 
 cjdns = callPackage ../all-pkgs/c/cjdns { };
 
+clang_unwrapped_7 = callPackage ../all-pkgs/c/clang {
+  llvm_split = pkgs.llvm_split_8;
+};
+clang_unwrapped_8 = callPackage ../all-pkgs/c/clang {
+  llvm_split = pkgs.llvm_split_8;
+};
+clang_unwrapped = callPackageAlias "clang_unwrapped_8" { };
+clang_split = wrapCC (callPackageAlias "clang_unwrapped" { });
 clang = wrapCC (callPackageAlias "llvm" { });
 
 clr-boot-manager = callPackage ../all-pkgs/c/clr-boot-manager { };
@@ -4197,6 +4206,8 @@ yelp-xsl = callPackageAlias "yelp-xsl_3-20" { };
 youtube-dl = pkgs.python3Packages.youtube-dl;
 
 yubikey-manager = pkgs.python3Packages.yubikey-manager;
+
+z3 = callPackage ../all-pkgs/z/z3 { };
 
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 

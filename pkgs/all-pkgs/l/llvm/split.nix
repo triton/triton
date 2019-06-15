@@ -7,6 +7,8 @@
 
 , libffi
 , libxml2
+, ncurses
+, zlib
 
 , channel
 }:
@@ -36,7 +38,6 @@ stdenv.mkDerivation {
       sha256;
   };
 
-
   nativeBuildInputs = [
     cmake
     ninja
@@ -46,6 +47,8 @@ stdenv.mkDerivation {
   buildInputs = [
     libffi
     libxml2
+    ncurses
+    zlib
   ];
 
   patches = map (d: fetchTritonPatch d) patches;
@@ -66,18 +69,21 @@ stdenv.mkDerivation {
   '';
 
   cmakeFlags = [
-    "-DCMAKE_BUILD_TYPE=Release"
-
-    "-DLLVM_INCLUDE_EXAMPLES=OFF"
-    "-DLLVM_BUILD_TESTS=OFF"
-    "-DLLVM_ENABLE_RTTI=ON"
     "-DLLVM_INSTALL_UTILS=ON"  # Needed by rustc
     "-DLLVM_ENABLE_FFI=ON"
-
-    # TODO: Figure out how to make the single shared library work
-    # for external builds
-    "-DLLVM_BUILD_LLVM_DYLIB=ON"
+    "-DLLVM_INCLUDE_EXAMPLES=OFF"
+    "-DLLVM_INCLUDE_TESTS=OFF"
+    "-DLLVM_INCLUDE_GO_TESTS=OFF"
+    "-DLLVM_INCLUDE_BENCHMARKS=OFF"
+    "-DLLVM_INCLUDE_DOCS=OFF"
+    "-DLLVM_ENABLE_OCAMLDOC=OFF"
+    "-DLLVM_ENABLE_BINDINGS=OFF"
+    "-DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON"
     "-DLLVM_LINK_LLVM_DYLIB=ON"
+    "-DLLVM_BUILD_LLVM_DYLIB=ON"
+    "-DLLVM_OPTIMIZED_TABLEGEN=ON"
+
+    "-DLLVM_ENABLE_RTTI=ON"
   ];
 
   preBuild = ''
@@ -88,11 +94,23 @@ stdenv.mkDerivation {
     mkdir -p "$lib"/lib
     mv -v "$dev"/lib/*.so* "$lib"/lib
 
+    # The cmake files require that we symlink to the real libraries
+    for f in "$lib"/lib/*; do
+      ln -sv "$f" "$dev"/lib
+    done
+
     mkdir -p "$bin"/bin
     mv -v "$dev"/bin/* "$bin"/bin
     mv -v "$bin"/bin/llvm-config "$dev"/bin
 
+    # The cmake files require that we symlink to the real utilties
+    export PATH="$PATH:$bin/bin"
+    for f in "$(dirname "$(type -tP llvm-tblgen)")"/*; do
+      ln -sv "$f" "$dev"/bin
+    done
+
     mkdir -p "$dev"/nix-support
+    substituteAll '${./setup-hook.sh}' "$dev"/nix-support/setup-hook
     echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
   '';
 
@@ -101,6 +119,12 @@ stdenv.mkDerivation {
     "bin"
     "lib"
   ];
+
+  passthru = {
+    inherit
+      srcs
+      version;
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

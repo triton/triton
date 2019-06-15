@@ -75,9 +75,6 @@ stdenv.mkDerivation {
   ];
 
   buildPhase = ''
-    # Ensure we don't end up with any references to llvm headers
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -ffile-prefix-map=${llvm_split.dev}=/no-such-path"
-
     # Build the initial bootstrapper and tools
     NIX_RUSTFLAGS_OLD="$NIX_RUSTFLAGS"
     export NIX_RUSTFLAGS="$NIX_RUSTFLAGS -L${rustc.std}/lib"
@@ -110,6 +107,7 @@ stdenv.mkDerivation {
   ];
 
   disallowedReferences = [
+    llvm_split.bin
     llvm_split.dev
   ];
 

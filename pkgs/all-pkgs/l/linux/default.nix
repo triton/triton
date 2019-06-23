@@ -50,14 +50,14 @@ let
     };
     "bcachefs" =
       let
-        date = "2019-06-11";
+        date = "2019-06-22";
       in {
-        version = "5.1.9";
+        version = "5.1.14";
         patchUrls = [
           "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/patch-bcachefs-${version}-${date}.xz"
         ];
         baseSha256 = "d06a7be6e73f97d1350677ad3bae0ce7daecb79c2c2902aaabe806f7fa94f041";
-        patchSha256 = "2410c6d01a57f59bd851cfdc707580a0fb57d9801bf213ea977955ef3ed0cdbb";
+        patchSha256 = "65f99e67a5991876179b43439c92eefc5d4206646ea844109db4a47534cebd07";
         features.bcachefs = true;
       };
   };

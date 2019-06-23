@@ -42,9 +42,10 @@ stdenv.mkDerivation rec {
   postInstall = ''
     mkdir -p "$lib"/lib
     mv "$dev"/lib/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/*.so* "$dev"/lib
 
-    mkdir -p "$dev"/nix-support
-    echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
+    mkdir -p "$lib"/nix-support
+    touch "$lib"/nix-support/cc-wrapper-ignore
   '';
 
   outputs = [

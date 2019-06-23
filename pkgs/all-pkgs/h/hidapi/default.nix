@@ -6,15 +6,15 @@
 , systemd_lib
 }:
 
-stdenv.mkDerivation {
-  name = "hidapi-2016-09-19";
+stdenv.mkDerivation rec {
+  name = "hidapi-0.9.0";
   
   src = fetchFromGitHub {
     version = 6;
-    owner = "signal11";
+    owner = "libusb";
     repo = "hidapi";
-    rev = "a6a622ffb680c55da0de787ff93b80280498330f";
-    sha256 = "313d5fe804fbbf8187cd456865457f89a307dd70095fd7e977262025505b69ec";
+    rev = name;
+    sha256 = "221e2768bf7e6ce306d4405eb80b5ea37e3d4f93b00f200aa0bad9df9d4cbc3a";
   };
 
   nativeBuildInputs = [

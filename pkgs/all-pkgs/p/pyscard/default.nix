@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.9.7";
+  version = "1.9.8";
 in
 buildPythonPackage {
   name = "pyscard-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pyscard";
     inherit version;
-    sha256 = "412c74c83e7401566e9d3d7b8b5ca965e74582a1f33179b3c1fabf1da73ebf80";
+    sha256 = "f59dc7ee467b210094e64c923e1c7f5e8e9501a672fc0c8f2cd958153e00d095";
   };
 
   nativeBuildInputs = [

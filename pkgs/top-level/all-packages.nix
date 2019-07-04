@@ -2829,10 +2829,7 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 
 mercurial = pkgs.python2Packages.mercurial;
 
-mesa = callPackage ../all-pkgs/m/mesa {
-  libglvnd = null;
-  buildConfig = "full";
-};
+mesa = callPackage ../all-pkgs/m/mesa { };
 mesa_drivers = pkgs.mesa.drivers;
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
@@ -3205,8 +3202,27 @@ opendht = callPackage ../all-pkgs/o/opendht { };
 
 openexr = callPackage ../all-pkgs/o/openexr { };
 
-opengl-dummy = callPackage ../all-pkgs/m/mesa {
-  buildConfig = "opengl-dummy";
+opengl-dummy = pkgs.buildEnv {
+  name = "opengl-dummy";
+  paths = [
+    pkgs.egl-headers
+    pkgs.libglvnd
+    pkgs.libglvnd.dummypc
+    pkgs.mesa-headers
+    pkgs.opengl-headers
+  ];
+  passthru = {
+    # This is the default search path for DRI drivers.
+    driverSearchPath = "/run/opengl-drivers/${pkgs.stdenv.targetSystem}";
+
+    egl = true;
+    egl-streams = true;
+    gbm = true;
+    glesv1 = true;
+    glesv2 = true;
+    glesv3 = true;
+    glx = true;
+  };
 };
 
 opengl-headers = callPackage ../all-pkgs/o/opengl-headers { };

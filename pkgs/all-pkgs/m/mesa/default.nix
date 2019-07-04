@@ -1,14 +1,16 @@
 { stdenv
-, autoreconfHook
 , bison
 , fetchTritonPatch
 , fetchurl
 , flex
 , gettext
-, intltool
 , lib
-, python2Packages
+, meson
+, ninja
+, opengl-dummy
+, python3Packages
 
+, egl-headers
 , elfutils
 , expat
 , libclc
@@ -17,6 +19,7 @@
 , libglvnd
 #, libomxil-bellagio
 , libpthread-stubs
+, libselinux
 , libva
 , libvdpau
 , libx11
@@ -28,46 +31,29 @@
 , libxshmfence
 , llvm
 , lm-sensors
+, opengl-headers
+, vulkan-headers
 , wayland
 , wayland-protocols
 , xorg
 , xorgproto
 , zlib
-
-, buildConfig
 }:
-
-/* Packaging design:
- * - The basic mesa ($out) contains headers and libraries (GLU is in mesa_glu
- *   now).  This or the mesa attribute (which also contains GLU) are small
- *   (~2MB, mostly headers) and are designed to be the buildInput of other
- *   packages.
- * - DRI drivers are compiled into $drivers output, which is much bigger and
- *   depends on LLVM. These should be searched at runtime in
- *   "/run/opengl-drivers/${stdenv.targetSystem}/lib/*" and so are kind-of
- *   impure (given by NixOS).  (I suppose on non-NixOS one would create the
- *   appropriate symlinks from there.)
- * - libOSMesa is in $osmesa (~4 MB)
- */
 
 let
   inherit (lib)
-    boolEn
-    boolWt
+    boolString
+    boolTf
     head
-    optional
     optionalAttrs
     optionals
     optionalString
     splitString;
 
-  version = "18.3.3";
-
-  # This is the default search path for DRI drivers
-  driverSearchPath = "/run/opengl-drivers/${stdenv.targetSystem}";
+  version = "19.1.1";
 in
 stdenv.mkDerivation rec {
-  name = "${if buildConfig == "opengl-dummy" then "opengl-dummy" else "mesa-noglu"}-${version}";
+  name = "mesa-${version}";
 
   src =  fetchurl {
     urls = [
@@ -79,26 +65,33 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmfLpZEcbBLXuYmPacoSLWmm13X9HMzGCGppxvtWFNUCdS";
-    hashOutput = false;  # Provided by upstream directly
-    sha256 = "2ab6886a6966c532ccbcc3b240925e681464b658244f0cbed752615af3936299";
+    #multihash = "QmZ31VE9JqXj1YW6iGcRTxUQJCwUDa8EiVcRmPP8Pc3ypL";
+    hashOutput = false;
+    sha256 = "72114b16b4a84373b2acda060fe2bb1d45ea2598efab3ef2d44bdeda74f15581";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
-  ] ++ optionals (buildConfig != "opengl-dummy") [
     bison
     flex
     gettext
-    intltool
-    python2Packages.Mako
-    python2Packages.python
-    xorg.makedepend
+    meson
+    ninja
+    python3Packages.Mako
+    python3Packages.python
   ];
 
   buildInputs = [
+    elfutils
     expat
+    libclc
     libdrm
+    libffi
+    libglvnd
+    #libomxil-bellagio  # FIXME
+    libpthread-stubs
+    libva
+    libvdpau
+    libselinux
     libx11
     libxcb
     libxdamage
@@ -106,32 +99,14 @@ stdenv.mkDerivation rec {
     libxfixes
     libxrandr
     libxshmfence
+    #xorg.libXvMC
+    llvm
+    lm-sensors
     xorg.libXxf86vm
     wayland
     wayland-protocols
     xorgproto
     zlib
-  ] ++ optionals (buildConfig != "opengl-dummy") [
-    elfutils
-    libclc
-    libffi
-    libglvnd
-    libpthread-stubs
-    #libomxil-bellagio
-    libva
-    libvdpau
-    llvm
-    lm-sensors
-    xorg.libXvMC
-  ];
-
-  patches = [
-    # fix for grsecurity/PaX
-    (fetchTritonPatch {
-      rev = "02cecd54589d7a77a38e4c183c24ffd30efdc9a7";
-      file = "mesa/glx_ro_text_segm.patch";
-      sha256 = "3f91c181307f7275f3c53ec172450b3b51129d796bacbca92f91e45acbbc861e";
-    })
   ];
 
   postPatch = ''
@@ -142,133 +117,150 @@ stdenv.mkDerivation rec {
   #   sed -i src/egl/main/egldriver.c \
   #     -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
   # ''
-  + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
-       the build environments PYTHONPATH */ ''
-    sed -e 's,PYTHONPATH=,PYTHONPATH=$(PYTHONPATH):,g' \
-      -i src/mesa/drivers/dri/i965/Makefile.am \
-      -i src/gallium/drivers/freedreno/Makefile.am
-  '' + /* Files are unnecessarily pre-generated for an older LLVM version */ ''
+   + /* Files are unnecessarily pre-generated for an older LLVM version */ ''
     # https://github.com/mesa3d/mesa/commit/5233eaf9ee85bb551ea38c1e2bbd8ac167754e50
-    rm src/gallium/drivers/swr/rasterizer/jitter/gen_builder.hpp
-  '' + /* Install glvnd files in the current prefix */ ''
-    sed -i src/egl/Makefile.am \
-      -e 's/LIBGLVND_DATADIR/DATADIR/'
+    local gen_builder='src/gallium/drivers/swr/rasterizer/jitter/gen_builder.hpp'
+    if [ -f "$gen_builder" ]; then
+      rm -v "$gen_builder"
+    fi
+  '' + ''
+    sed -i src/util/disk_cache.c \
+      -e '/#ifdef ENABLE_SHADER_CACHE/a #define __STDC_FORMAT_MACROS 1\n#include <inttypes.h>'
+    #cat src/util/disk_cache.c; return 1
+  '' + /* Unvendor Khronos headers */ ''
+    local -a mesa_headers
+    mapfile -t mesa_headers < <(
+      find \
+        '${egl-headers}/include/' \
+        '${opengl-headers}/include/' \
+        '${vulkan-headers}/include/' \
+        -maxdepth 2 \
+        -type f \
+        -name '*.h'
+    )
+    if [ -z "''${mesa_headers[*]}" ]; then
+      echo 'unvendoring mesa headers failed' >&2
+      return 1
+    fi
+    local mesa_glapidir
+    local mesa_header
+    for mesa_header in "''${mesa_headers[@]}"; do
+      printf 'replacing vendored header: %s\n' "$mesa_header"
+      mesa_glapidir=""
+      mesa_glapidir="$(basename "$(dirname "$mesa_header")")"
+      if [[ "$mesa_glapidir" == +('GLSC'|'GLSC2') ]]; then
+        continue
+      fi
+      install -D -m644 -v "$mesa_header" \
+        include/"$mesa_glapidir"/"$(basename "$mesa_header")"
+    done
+  '' + /**/ ''
+    #ls -al src/mapi/glapi/; return 1
+    #m -v src/egl/g_egldispatchstubs.{c,h}
+    install -D -m644 -v '${egl-headers}/share/egl-registry/egl.xml' \
+      src/egl/generate/egl.xml
+    #rm -v src/mapi/glapi/{{glapi_mapi_tmp,glprocs,glapitemp,glapitable}.h,glapi_gentable.c}
+    install -D -m644 -v '${opengl-headers}/share/opengl-registry/gl.xml' \
+      src/mapi/glapi/registry/gl.xml
+    install -D -m644 -v '${vulkan-headers}/share/vulkan-registry/vk.xml' \
+      src/vulkan/registry/vk.xml
+  '' + /* HACK: remove for > 19.1.x
+    https://gitlab.freedesktop.org/mesa/mesa/commit/5555db103e5c5a0932ed5f014231f04e129ab9e0 */ ''
+    sed -i src/amd/vulkan/radv_cmd_buffer.c \
+      -e '/radv_CmdDrawIndirectCountAMD/,+22d' \
+      -e '/radv_CmdDrawIndexedIndirectCountAMD/,+23d'
+  '' + /* Fix meson searching non-existant pkg-config path. */ ''
+    sed -i meson.build \
+      -e "s|wayland-scanner', native: true|wayland-scanner'|"
   '';
   # + /* Fix hardcoded OpenCL ICD install path */ ''
   #   sed -i src/gallium/targets/opencl/Makefile.{in,am} \
   #     -e "s,/etc,$out/etc,"
   # '';
 
-  configureFlags = [
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
-    "--enable-largefile"
-    "--disable-glx-rts"  # grsec
-    "--disable-debug"
-    "--disable-profile"
-    "--${boolEn (buildConfig != "opengl-dummy" && libglvnd != null)}-libglvnd"
-    "--disable-mangling"
-    "--disable-libunwind"
-    "--enable-asm"
-    # TODO: selinux support
-    "--disable-selinux"
-    "--${boolEn (buildConfig != "opengl-dummy")}-llvm-shared-libs"
-    "--enable-opengl"
-    "--enable-gles1"
-    "--enable-gles2"
-    "--enable-dri"
-    "--${boolEn (buildConfig != "opengl-dummy")}-gallium-extra-hud"
-    "--${boolEn (buildConfig != "opengl-dummy")}-lmsensors"
-    "--enable-dri3"
-    "--enable-glx=dri"
-    "--disable-osmesa"
-    "--${boolEn (buildConfig != "opengl-dummy")}-gallium-osmesa"
-    "--enable-egl"
-    "--${boolEn (buildConfig != "opengl-dummy")}-xa" # used in vmware driver
-    "--enable-gbm"
-    "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
-    "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
-    "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
-    #"--${boolEn (buildConfig != "opengl-dummy")}-omx-bellagio"
-    #"--${boolEn (buildConfig != "opengl-dummy")}-omx-tizonia"
-    "--${boolEn (buildConfig != "opengl-dummy")}-va"
-    # TODO: Figure out how to enable opencl without having a
-    #       runtime dependency on clang
-    "--disable-opencl"
-    "--disable-opencl-icd"
-    "--disable-gallium-tests"
-    "--enable-shared-glapi"
-    "--enable-driglx-direct"
-    "--enable-glx-tls"
-    "--disable-glx-read-only-text"
-    "--${boolEn (buildConfig != "opengl-dummy")}-llvm"
-    "--disable-valgrind"
+  #preConfigure = ''
+  #  mesonFlagsArray+=("-Ddri-drivers-path=$dri_drivers/lib/dri")
+  #'';
 
-    "--${boolWt (buildConfig != "opengl-dummy")}-gallium-drivers${if (buildConfig != "opengl-dummy") then "=svga,i915,nouveau,r300,r600,radeonsi,swrast,swr,virgl" else ""}"
-    "--${boolWt (buildConfig != "opengl-dummy")}-dri-driverdir${if (buildConfig != "opengl-dummy") then "=$(drivers)/lib/dri" else ""}"
-    "--with-dri-searchpath=${driverSearchPath}/lib/dri"
-    "--${boolWt (buildConfig != "opengl-dummy")}-dri-drivers${if (buildConfig != "opengl-dummy") then "=i915,i965,nouveau,radeon,r200,swrast" else ""}"
-    "--${boolWt (buildConfig != "opengl-dummy")}-vulkan-drivers${if (buildConfig != "opengl-dummy") then "=intel,radeon" else ""}"
-    #"--with-vulkan-icddir=DIR"
-    #osmesa-bits=8
-    #"--with-clang-libdir=${llvm}/lib"
-    "--with-platforms=x11,wayland,drm"
-    #llvm-prefix
-    #xvmc-libdir
-    #vdpau-libdir
-    #omx-libdir
-    #va-libdir
-    #d3d-libdir
+  mesonFlags = [
+    "-Dplaforms=drm,surfaceless,x11,wayland"
+    "-Ddri3=true"
+    # https://wiki.gentoo.org/wiki/Intel#Feature_support
+    # https://www.x.org/wiki/RadeonFeature/
+    # Not supported: i915,r100,r200,swrast
+    # TODO: drop i965 once Intel Broadwell is minimum supported x86 cpu.
+    "-Ddri-drivers=i965,nouveau"
+    "-Ddri-search-path=${opengl-dummy.driverSearchPath}"
+    # Not supported: i915,r300,svga
+    "-Dgallium-drivers=iris,nouveau,r600,radeonsi,swrast,swr,virgl"
+    # NOTE: kmsro is currently Arm only, but could be added to other arches.
+    # Arm: etnaviv,freedreno,kmsro,lima,panfrost,v3d,vc4,tegra
+    "-Dgallium-extra-hud=true"
+    "-Dgallium-vdpau=true"
+    "-Dgallium-xvmc=false"
+    "-Dgallium-omx=disabled"  # FIXME: package tizonia
+    "-Dgallium-va=true"
+    "-Dgallium-xa=true"
+    "-Dgallium-nine=true"
+    "-Dgallium-opencl=icd"
+    "-Dvulkan-drivers=amd,intel"
+    #"-Dvulkan-icd-dir="
+    "-Dvulkan-overlay-layer=false"  # FIXME: need glslangValidator
+    "-Dgles2=true"
+    "-Dgbm=true"
+    "-Dglx=dri"
+    "-Degl=true"
+    "-Dglvnd=true"
+    "-Dllvm=true"
+    "-Dvalgrind=false"
+    "-Dlibunwind=false"
+    "-Dlmsensors=true"
+    "-Dselinux=true"
+    "-Dosmesa=gallium"
+    #"-Dosmesa-bits="
+    # knl = Intel Knights Landing
+    # skx = Intel Skylake-X AVX512
+    "-Dswr-arches=avx,avx2,skx,knl"
+    #"-Dpower8="
+    "-Dxlib-lease=true"
   ];
 
-  preInstall = ''
-    installFlagsArray+=(
-      "sysconfdir=$out/etc"
-      "localstatedir=$TMPDIR"
-    )
-  '';
+  postInstall = (
+    ''
+      mkdir -pv "$dri_drivers"/lib/
+      mv -v -t "$dri_drivers"/lib/ \
+        "$out"/lib/libXvMC* \
+        "$out"/lib/d3d \
+        "$out"/lib/vdpau \
+        "$out"/lib/libxatracker* \
+        "$out"/lib/libvulkan_*  # FIXME
 
-  # move gallium-related stuff to $drivers, so $out doesn't depend on LLVM;
-  #   also move libOSMesa to $osmesa, as it's relatively big
-  # TODO: probably not all .la files are completely fixed, but it shouldn't matter
-  postInstall = optionalString (buildConfig != "opengl-dummy") (
-      /* Remove vendored Vulkan headers */ ''
-      rm -fv $out/include/vulkan/vk_platform.h
-      rm -fv $out/include/vulkan/vulkan.h
-    '' + ''
-      mv -t "$drivers/lib/" \
-        $out/lib/libXvMC* \
-        $out/lib/d3d \
-        $out/lib/vdpau \
-        $out/lib/libxatracker* \
-        $out/lib/libvulkan_*
+      mkdir -pv "$dri_drivers"/lib/dri/
+      mv -v "$out"/lib/dri/* "$dri_drivers"/lib/dri/
+      rmdir "$out"/lib/dri/
 
-      mv $out/lib/dri/* $drivers/lib/dri
-      rmdir "$out/lib/dri"
+      mkdir -pv {"$osmesa","$dri_drivers"}/lib/pkgconfig
+      mv -v "$out"/lib/libOSMesa* "$osmesa"/lib/
 
-      mkdir -p {$osmesa,$drivers}/lib/pkgconfig
-      mv -t $osmesa/lib/ $out/lib/libOSMesa*
+      # Vulkan ICD loader files.
+      mkdir -pv "$vulkan_drivers"/share/
+      mv -v "$out"/share/vulkan/ "$vulkan_drivers"/share/
+      sed -i "$vulkan_drivers"/share/vulkan/icd.d/* \
+        -e "s,$out,$vulkan_drivers,g"
 
-      # share/vulkan/icd.d/
-      mv $out/share/ $drivers/
-      sed "s,$out,$drivers,g" -i $drivers/share/vulkan/icd.d/*
+      mv -v "$out"/lib/pkgconfig/xatracker.pc \
+        "$dri_drivers"/lib/pkgconfig/
 
-      mv -t $drivers/lib/pkgconfig/ \
-        $out/lib/pkgconfig/xatracker.pc
-
-      mv -t $osmesa/lib/pkgconfig/ \
-        $out/lib/pkgconfig/osmesa.pc
-    '' + /* fix references in .la files */ ''
-      sed "/^libdir=/s,$out,$osmesa," -i \
-        $osmesa/lib/libOSMesa*.la
+      mv -v "$out"/lib/pkgconfig/osmesa.pc \
+        "$osmesa"/lib/pkgconfig/
     '' + /* work around bug #529, but maybe $drivers should also be patchelf'd */ ''
-      find $drivers/ $osmesa/ -type f -executable -print0 | \
-        xargs -0 strip -S || true
+      find "$dri_drivers"/ "$osmesa"/ -type f -executable -print0 | \
+        xargs 1 strip -S || true
     '' + /* add RPATH so the drivers can find the moved libgallium & libdricore9 */ ''
-      for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
+      for lib in "$dri_drivers"/lib/*.so* "$dri_drivers"/lib/*/*.so*; do
         if [[ ! -L "$lib" ]] ; then
           patchelf \
-            --set-rpath "$(patchelf --print-rpath $lib):$drivers/lib" \
+            --set-rpath "$(patchelf --print-rpath "$lib"):$dri_drivers/lib" \
             "$lib"
         fi
       done
@@ -277,15 +269,15 @@ stdenv.mkDerivation rec {
 
   preFixup = /* Fix path to dri driver dir */ ''
     grep -q '^dridriverdir=' "$out"/lib/pkgconfig/dri.pc
-    sed -i "s#^dridriverdir=.*#dridriverdir=${driverSearchPath}/lib/dri#" \
+    sed -i "s#^dridriverdir=.*#dridriverdir=${opengl-dummy.driverSearchPath}/lib/dri#" \
       "$out"/lib/pkgconfig/dri.pc
   '';
 
   outputs = [
     "out"
-  ] ++ optionals (buildConfig != "opengl-dummy") [
-    "drivers"
+    "dri_drivers"
     "osmesa"
+    "vulkan_drivers"
   ];
 
   doCheck = false;
@@ -294,8 +286,7 @@ stdenv.mkDerivation rec {
   bindnow = false;
 
   passthru = {
-    # FIXME: convert references to mesa-noglu.driverSearchPath -> opengl-dummy.driverSearchPath
-    inherit driverSearchPath version;
+    inherit version;
 
     srcVerification = fetchurl {
       failEarly = true;
@@ -306,23 +297,18 @@ stdenv.mkDerivation rec {
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") src.urls;
         pgpKeyFingerprints = [
+          # Dylan Baker
+          "71C4 B756 20BC 7570 8B4B  DB25 4C95 FAAB 3EB0 73EC"
+          # Juan A. Suarez Romero
+          "A5CC 9FEC 93F2 F837 CB04 4912 3369 09B6 B25F ADFA"
+          # Emil Velikov
           "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D"
+
           "946D 09B5 E4C9 845E 6307  5FF1 D961 C596 A720 3456"
           "E3E8 F480 C52A DD73 B278  EE78 E1EC BE07 D7D7 0895"
-          "71C4 B756 20BC 7570 8B4B  DB25 4C95 FAAB 3EB0 73EC"
         ];
       };
     };
-  } // optionalAttrs (buildConfig == "opengl-dummy") {
-    # opengl-dummy
-    # XXX: this establishes interfaces for future use
-    egl = true;
-    egl-streams = true;  # To soon to tell where this will lead
-    gbm = true;
-    glesv1 = true;
-    glesv2 = true;
-    glesv3 = true;
-    glx = true;
   };
 
   meta = with lib; {

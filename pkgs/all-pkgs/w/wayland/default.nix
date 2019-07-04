@@ -3,6 +3,7 @@
 , doxygen
 , fetchurl
 , graphviz
+, lib
 , libxslt
 , xmlto
 
@@ -14,7 +15,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals;
 
@@ -66,7 +67,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Reference implementation of the wayland protocol";
     homepage = https://wayland.freedesktop.org/;
     license = licenses.mit;

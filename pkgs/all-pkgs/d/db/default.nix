@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   name = "db-${source.version}";
 
   src = fetchurl {
-    url = "http://download.oracle.com/otn/berkeley-db/${name}.tar.gz";
+    url = "https://download.oracle.com/berkeley-db/${name}.tar.gz";
     hashOutput = false;
     inherit (source)
       multihash

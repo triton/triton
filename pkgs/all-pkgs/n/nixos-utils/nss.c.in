@@ -175,7 +175,7 @@ enum nss_status _nss_nixos_getgrgid_r(gid_t gid, struct group *grp, char *buf,
 	}
 
 	/* GID should be valid */
-	if (gid == base_gid) {
+	if (gid != base_gid) {
 		*errnop = ENOENT;
 		return NSS_STATUS_NOTFOUND;
 	}

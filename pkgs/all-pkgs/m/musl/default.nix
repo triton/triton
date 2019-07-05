@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "musl-1.1.20";
+  name = "musl-1.1.22";
 
   src = fetchurl {
     url = "https://www.musl-libc.org/releases/${name}.tar.gz";
-    multihash = "QmeeVzpstMMaRrY8AL9MYmDh3kZjFv2Pw4Q12vhWeQ1AEV";
+    multihash = "QmeCwx4n3waAyk6cEcg8g67zQm1nDyRwQW9dt24qToTxRR";
     hashOutput = false;
-    sha256 = "44be8771d0e6c6b5f82dd15662eb2957c9a3173a19a8b49966ac0542bbd40d61";
+    sha256 = "8b0941a48d2f980fd7036cfbd24aa1d414f03d9a0652ecbd5ec5c7ff1bee29e3";
   };
 
   preConfigure = ''

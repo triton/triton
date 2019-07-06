@@ -9,38 +9,21 @@
 let
   inherit (lib)
     optionalString;
-
-  version = "1.0.6.0.2";
 in
 stdenv.mkDerivation rec {
-  name = "bzip2-${version}";
+  name = "bzip2-1.0.7";
 
   src = fetchurl {
-    #url = "http://www.bzip.org/${version}/${name}.tar.gz";  # upstream
-    # https://github.com/NixOS/nixpkgs/issues/31396#issuecomment-342900842
-    url = "http://ftp.suse.com/pub/people/sbrabec/bzip2/tarballs/${name}.tar.gz";
-    multihash = "QmNXBLhp5sz86D8QzAseNQkxiKuSKU4wK8DnXQY7GbPbmA";
-    sha256 = "167870372e0e1def1de4cea26020a5931cdc07f1075e0d2f797c2fe37665c5b0";
+    url = "mirror://sourceware/bzip2/${name}.tar.gz";
+    sha256 = "e768a87c5b1a79511499beb41500bcc4caf203726fff46a6f5f9ad27fe08ab2b";
   };
 
   patches = [
-    # Fix buffer overflow in bzip2recover
-    # TODO: cite fedora issue
-    (fetchTritonPatch {
-      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
-      file = "b/bzip2/bzip2-1.0.4-bzip2recover.patch";
-      sha256 = "0585fb92a4b409404147a3f940ed2ca03b3eaed1ec4fb68ae6ad74db668bea83";
-    })
     # Fix bzgrep compat with POSIX shells
     (fetchTritonPatch {
       rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
       file = "b/bzip2/bzip2-1.0.4-POSIX-shell.patch";
       sha256 = "e8826fedfed105ba52c85a2e43589ba37424513cb932072136ceac01ceb0ec99";
-    })
-    (fetchTritonPatch {
-      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
-      file = "b/bzip2/bzip2-1.0.6-CVE-2016-3189.patch";
-      sha256 = "2ad8ead7e43cb584ea5c1df737394a8ca56ea3cac504756361e507dc5a263325";
     })
     # Fix include path
     (fetchTritonPatch {
@@ -56,8 +39,23 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  preBuild = ''
+    make -j $NIX_BUILD_CORES -f Makefile-libbz2_so
+  '';
+
+  preInstall = ''
+    installFlagsArray+=("PREFIX=$out")
+  '';
+
   postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share
+   rm -r "$out"/man
+  '' + ''
+    mv bzip2-shared "$out"/bin/bzip2
+    rm "$out"/bin/{bzcat,bunzip2}
+    ln -sv bzip2 "$out"/bin/bzcat
+    ln -sv bzip2 "$out"/bin/bunzip
+    ln -sv $(basename "$(readlink -f libbz2.so* | head -n 1)") "$out"/lib/libbz2.so
+    mv libbz2.so* "$out"/lib
   '';
 
   dontPatchShebangs = true;

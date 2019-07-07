@@ -11,12 +11,12 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "patchelf-0.9";
+  name = "patchelf-0.10";
 
   src = fetchurl {
     url = "https://nixos.org/releases/patchelf/${name}/${name}.tar.bz2";
-    multihash = "QmaF3c5ELwpV9T9FyDd3iwwmsPeHoRZiQzj2JtV9PfKd8w";
-    sha256 = "10sg04wrmx8482clzxkjfx0xbjkyvyzg88vq5yghx2a8l4dmrxm0";
+    multihash = "QmWVR5rMR4Gos2CLm4EHmEBwsiphh2x7oHwjviMbhLdbDG";
+    sha256 = "f670cd462ac7161588c28f45349bc20fb9bd842805e3f71387a320e7a9ddfcf3";
   };
 
   setupHook = ./setup-hook.sh;

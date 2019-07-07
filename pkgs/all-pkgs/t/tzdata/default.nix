@@ -4,16 +4,16 @@
 }:
 
 let
-  version = "2019a";
+  version = "2019b";
 in
 stdenv.mkDerivation rec {
   name = "tzdata-${version}";
 
   src = fetchurl {
     url = "https://data.iana.org/time-zones/releases/tzdb-${version}.tar.lz";
-    multihash = "QmZcwNYajuMvvcRS3q9G19uWUZ3M88gjHuNR2HxLqLk31Y";
+    multihash = "QmfGfJ6Gz1dywdpACqWNL2m8Jvs5Q9P3tyw6tn6NbuFaAi";
     hashOutput = false;
-    sha256 = "16d10794dd8de8eb21abbf21e74020b5e1b0227ea1f094299b0b4467954eecc7";
+    sha256 = "180adb8a6d9653a4892b9b1bf59ed0290a9fbfd3755f2f116cd46f2084ab02ef";
   };
 
   nativeBuildInputs = [

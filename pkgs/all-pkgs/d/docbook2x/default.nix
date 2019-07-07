@@ -8,7 +8,7 @@
 
 , findXMLCatalogs
 , gnugrep
-, gnused
+, gnused_small
 , opensp
 }:
 
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
       fi
       if head -n 1 "$file" | grep 'sh$'; then
         wrapProgram "$file" \
-          --prefix PATH : "${gnused}/bin:${gnugrep}/bin"
+          --prefix PATH : "${gnused_small}/bin:${gnugrep}/bin"
       fi
     done
   '';

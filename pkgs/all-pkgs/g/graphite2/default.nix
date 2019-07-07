@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.3.12";
+  version = "1.3.13";
 in
 stdenv.mkDerivation rec {
   name = "graphite2-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/silnrsi/graphite/releases/download/${version}/"
       + "${name}.tgz";
     hashOutput = false;
-    sha256 = "cd9530c16955c181149f9af1f13743643771cb920c75a04c95c77c871a2029d0";
+    sha256 = "dd63e169b0d3cf954b397c122551ab9343e0696fb2045e1b326db0202d875f06";
   };
 
   nativeBuildInputs = [

@@ -11,13 +11,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iptables-1.8.2";
+  name = "iptables-1.8.3";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/iptables/files/${name}.tar.bz2";
-    multihash = "QmZHJpWCopLMJ1pQKUt5tAipg7bmhPpJhw4YtZfomo6uMm";
+    multihash = "QmdANfbvVMfY96doUeAbUsQJrN39vPP8sbA5AAbS83iM3Z";
     hashOutput = false;
-    sha256 = "a3778b50ed1a3256f9ca975de82c2204e508001fc2471238c8c97f3d1c4c12af";
+    sha256 = "a23cac034181206b4545f4e7e730e76e08b5f3dd78771ba9645a6756de9cdd80";
   };
 
   nativeBuildInputs = [

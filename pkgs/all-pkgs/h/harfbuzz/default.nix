@@ -20,7 +20,7 @@ let
     optionals
     optionalString;
 
-  version = "2.3.1";
+  version = "2.5.3";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -28,11 +28,11 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = [
       "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2"
-      ("https://github.com/behdad/harfbuzz/releases/download/${version}/"
-        + "${name}.tar.bz2")
+      ("https://github.com/harfbuzz/harfbuzz/releases/download/${version}/"
+        + "${name}.tar.xz")
     ];
     hashOutput = false;
-    sha256 = "f205699d5b91374008d6f8e36c59e419ae2d9a7bb8c5d9f34041b9a5abcae468";
+    sha256 = "fed00dc797b7ba3ca943225f0a854baaed4c1640fff8a31d455cd3b5caec855c";
   };
 
   buildInputs = [

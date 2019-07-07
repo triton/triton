@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.2.4";
+  version = "2.2.6";
 
   tarballUrls = version: [
     "mirror://gnu/guile/guile-${version}.tar.xz"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "d9e8b94af7b206fcf52bec6501b921bd7d0bd7a31fb7e896a35ba8253678e31e";
+    sha256 = "b33576331465a60b003573541bf3b1c205936a16c407bc69f8419a527bf5c988";
   };
 
   nativeBuildInputs = [
@@ -67,15 +67,17 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.4";
-      pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprints = [
-        "FF47 8FB2 64DE 32EC 2967  25A3 DDC0 F535 8812 F8F2"
-        "3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5"
-        "4FD4 D288 D445 934E 0A14  F9A5 A880 3732 E443 6885"
-      ];
+      urls = tarballUrls "2.2.6";
       inherit (src) outputHashAlgo;
-      outputHash = "d9e8b94af7b206fcf52bec6501b921bd7d0bd7a31fb7e896a35ba8253678e31e";
+      outputHash = "b33576331465a60b003573541bf3b1c205936a16c407bc69f8419a527bf5c988";
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") urls;
+        pgpKeyFingerprints = [
+          "FF47 8FB2 64DE 32EC 2967  25A3 DDC0 F535 8812 F8F2"
+          "3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5"
+          "4FD4 D288 D445 934E 0A14  F9A5 A880 3732 E443 6885"
+        ];
+      };
     };
   };
 

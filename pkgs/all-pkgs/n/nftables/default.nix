@@ -1,7 +1,5 @@
 { stdenv
 , bison
-, docbook2x
-, docbook_xml_dtd_45
 , fetchurl
 , flex
 , lib
@@ -15,19 +13,17 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "nftables-0.9.0";
+  name = "nftables-0.9.1";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nftables/files/${name}.tar.bz2";
-    multihash = "QmVRkBjAnaDLBh56CGRGDEwdoaryZC9sajqXrjRyjH4X2A";
+    multihash = "QmYVNBforqq4SEdMr2xM2DvT6WkRSEDYDxwyMWYT9XwsM8";
     hashOutput = false;
-    sha256 = "ad8181b5fcb9ca572f444bed54018749588522ee97e4c21922648bb78d7e7e91";
+    sha256 = "ead3bb68ed540bfbb87a96f2b69c3d65ab0c2a0c3f6e739a395c09377d1b4fce";
   };
 
   nativeBuildInputs = [
     bison
-    docbook2x
-    docbook_xml_dtd_45
     flex
   ];
 
@@ -43,8 +39,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--without-mini-gmp"
-    "--with-cli"
+    "--disable-man-doc"  # No asciidoc support
     "--with-xtables"
     "--with-json"
   ];
@@ -56,9 +51,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      };
     };
   };
 

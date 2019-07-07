@@ -95,6 +95,11 @@ stdenv.mkDerivation rec {
       file = "n/nix/0009-hash-Default-to-base16-for-better-tool-support.patch";
       sha256 = "74a6e9652136083581a4a23ce6fd41c1c2f3996ee34e7b4d61853d594431e5ef";
     })
+    (fetchTritonPatch {
+      rev = "63fe483dbd9b4464b0e1f7fd8fb259af29ea92af";
+      file = "n/nix/0010-build-Support-for-any-system-type.patch";
+      sha256 = "58faa987f7a361d1ae48ac2ae05787356408454d40db6a5d06b9b8a684d2de25";
+    })
   ];
 
   postPatch = ''

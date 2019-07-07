@@ -5,7 +5,6 @@
 , gettext
 , python3Packages
 
-, dlm_lib
 , libaio
 , libselinux
 , libsepol
@@ -23,7 +22,7 @@ let
     "mirror://sourceware/lvm2/releases"
   ];
 
-  version = "2.03.02";
+  version = "2.03.05";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
@@ -31,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     hashOutput = false;
-    sha256 = "550ba750239fd75b7e52c9877565cabffef506bbf6d7f6f17b9700dee56c720f";
+    sha256 = "ca52815c999b20c6d25e3192f142f081b93d01f07b9d787e99664b169dba2700";
   };
 
   nativeBuildInputs = [
@@ -40,7 +39,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dlm_lib
     libaio
     libselinux
     libsepol
@@ -75,7 +73,7 @@ stdenv.mkDerivation rec {
     "--enable-pkgconfig"
     "--enable-lvmpolld"
     "--enable-lvmlockd-sanlock"
-    "--enable-lvmlockd-dlm"
+    #"--enable-lvmlockd-dlm"  # TODO: Not fully built
     "--enable-dmfilemapd"
     "--enable-notify-dbus"
     "--enable-udev_sync"

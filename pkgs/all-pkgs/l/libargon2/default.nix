@@ -3,8 +3,8 @@
 }:
 
 let
-  date = "2018-08-19";
-  rev = "b31aa322566a8559403d419b2e9cd3f57957e394";
+  date = "2019-05-20";
+  rev = "62358ba2123abd17fccf2a108a301d4b52c01a7c";
 in
 stdenv.mkDerivation {
   name = "libargon2-${date}";
@@ -14,20 +14,14 @@ stdenv.mkDerivation {
     owner = "P-H-C";
     repo = "phc-winner-argon2";
     inherit rev;
-    sha256 = "1cb3f9a1ae3180960f0141cb854021bb78b8cd7ed2ed09754f4d10b672568d98";
+    sha256 = "ff41a7638218452836e497bb164eb0370f63ff1cd286eb5c86353b5320427997";
   };
 
   preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
-  '';
-
-  postInstall = ''
-    mkdir -p "$out"/lib/pkgconfig
-    sed libargon2.pc \
-      -e "s,^prefix=.*,prefix=$out,g" \
-      -e 's,@HOST_MULTIARCH@,,g' \
-      -e 's,@UPSTREAM_VER@,${date},' \
-      >"$out"/lib/pkgconfig/libargon2.pc
+    makeFlagsArray+=(
+      "PREFIX=$out"
+      "LIBRARY_REL=lib"
+    )
   '';
 
   meta = with stdenv.lib; {

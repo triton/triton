@@ -1,6 +1,5 @@
 { stdenv
 , cargo
-, cargo-vendor
 , deterministic-zip
 , fetchFromGitHub
 , git
@@ -32,7 +31,6 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     cargo
-    cargo-vendor
     deterministic-zip'
     git
     rustc

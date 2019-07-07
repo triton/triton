@@ -113,4 +113,5 @@ stdenv.mkDerivation ({
   "name"
   "buildInputs"
   "nativeBuildInputs"
+  "passthru"
 ])

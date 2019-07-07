@@ -14,11 +14,11 @@
 let
   channels = {
     stable = rec {
-      version = "1.35.0";
+      version = "1.36.0";
       src = fetchurl {
         url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
         hashOutput = false;
-        sha256 = "5a4d637a716bac18d085f44dd87ef48b32195f71b967d872d80280b38cff712d";
+        sha256 = "04c4e4d7213d036d6aaed392841496d272146312c0290f728b7400fccd15bb1b";
       };
     };
   };

@@ -14,46 +14,52 @@
 let
   channels = {
     stable = rec {
-      version = "0.36.0";
+      version = "2019-07-06";
       src = fetchFromGitHub {
         version = 6;
         owner = "rust-lang";
         repo = "cargo";
-        rev = version;
-        sha256 = "a3c1cfb9d01367bc928f559596e9e8e8fc4e94cf57451d45ad392854416cae72";
+        rev = "644c8089f33baafe5dc8022ab7af8951291a7669";
+        sha256 = "7c95a4ae0d91be1f0ec272520078871929d26251df3e2f4772967ec82c1dbf59";
       };
       deps = fetchCargoDeps {
         zipVersion = 6;
         inherit src;
-        crates-rev = "7258c5460102c687b5fcb5e867c57870befa1e4d";
-        crates-hash = "sha256:25d9e52d3b86281f83e0ac854fdd7288b654ac0ae4d0223506b185d79d785e00";
-        hash = "sha256:77db96c3156dee63e00304f87536e3224f44f09d1bc3a18d10a076cbdee4fcf5";
+        crates-rev = "53ed7d36910de8cc02c7b31d48cbca6907bfe745";
+        crates-hash = "sha256:9bfdde0f096079238b4e19361217999ebea6d3f25730ad2bd5fde8723b5b4177";
+        hash = "sha256:d633d466d47aa684c78f240d622e269197a1c83b87b7e4b53c13f74f17dfab70";
       };
       patches = [
         (fetchTritonPatch {
-          rev = "1f558f41670d021a17b85c4308a49d7f9f2ca77b";
+          rev = "f69f451a442f21443033342b2c04a7e5a9a07c86";
           file = "c/cargo/stable/0001-cargo-Add-RUSTFLAGS-for-HOST-builds.patch";
-          sha256 = "128683f906f1f9075907b49a2bcc286b4ed07c2725800e66f8a184a665b69e47";
+          sha256 = "25d6644aeefed1b7f19bb4d8043a6144317ce4db22c000c9bca5d8c93957b9c5";
         })
       ];
     };
     nightly = rec {
-      version = "2019-05-03";
+      version = "2019-07-06";
       src = fetchFromGitHub {
         version = 6;
         owner = "rust-lang";
         repo = "cargo";
-        rev = "0f77ed5f615f61896a19fcc789a716fbca0d71be";
-        sha256 = "07eba5bce846f1e2caed7f9714f87a08d88c9eb8aa7d21addb4d759d6d02a5b9";
+        rev = "644c8089f33baafe5dc8022ab7af8951291a7669";
+        sha256 = "7c95a4ae0d91be1f0ec272520078871929d26251df3e2f4772967ec82c1dbf59";
       };
       deps = fetchCargoDeps {
         zipVersion = 6;
         inherit src;
-        crates-rev = "759070689729519b07c213feef8461397112bc3f";
-        crates-hash = "sha256:2fb232ce81d20feeaf126d41624df5422b250a580d83f62e9d48331afe06eb34";
-        hash = "sha256:da4e512c104b0c9197d12f75fbfce43150845bde6ca76ce581ca2c9b93125429";
+        crates-rev = "53ed7d36910de8cc02c7b31d48cbca6907bfe745";
+        crates-hash = "sha256:9bfdde0f096079238b4e19361217999ebea6d3f25730ad2bd5fde8723b5b4177";
+        hash = "sha256:d633d466d47aa684c78f240d622e269197a1c83b87b7e4b53c13f74f17dfab70";
       };
-      patches = [ ];
+      patches = [
+        (fetchTritonPatch {
+          rev = "f69f451a442f21443033342b2c04a7e5a9a07c86";
+          file = "c/cargo/stable/0001-cargo-Add-RUSTFLAGS-for-HOST-builds.patch";
+          sha256 = "25d6644aeefed1b7f19bb4d8043a6144317ce4db22c000c9bca5d8c93957b9c5";
+        })
+      ];
     };
   };
 

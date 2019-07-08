@@ -4551,6 +4551,11 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_5-2 = callPackage ../all-pkgs/l/linux {
+    channel = "5.2";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../all-pkgs/l/linux {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4640,6 +4645,9 @@ libstartup_notification =
   });
   linuxPackages_5-1 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_5-1;
+  });
+  linuxPackages_5-2 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_5-2;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

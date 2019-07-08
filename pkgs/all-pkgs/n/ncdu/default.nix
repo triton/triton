@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ncdu-1.13";
+  name = "ncdu-1.14";
 
   src = fetchurl {
     url = "https://dev.yorhel.nl/download/${name}.tar.gz";
-    multihash = "QmX9trpxBMrxLD1eCBm9gAMQ65tAwnSkHwzbByoTq229wG";
+    multihash = "QmTyUbhJ8zhm2NjGThFstGMDabebaaPDij6NZSq1gxhDYA";
     hashOutput = false;
-    sha256 = "f4d9285c38292c2de05e444d0ba271cbfe1a705eee37c2b23ea7c448ab37255a";
+    sha256 = "c694783aab21e27e64baad314b7c1ff34541bfa219fe9645ef6780f1c5558c44";
   };
   
   buildInputs = [
@@ -22,9 +22,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "7446 0D32 B808 10EB A9AF  A2E9 6239 4C69 8C27 39FA";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "7446 0D32 B808 10EB A9AF  A2E9 6239 4C69 8C27 39FA";
+      };
     };
   };
 

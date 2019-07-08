@@ -15,8 +15,8 @@ let
     };
     "3" = {
       fetchzipVersion = 6;
-      version = "3.6";
-      sha256 = "bbdcadcd7588f309838f04ca681ef367361bec1ba1873a4669ef3db7693d13a1";
+      version = "3.7";
+      sha256 = "f9ff150d2e485a943c0972f540a71752c95513ea35c5ac82147d088980dbfc83";
     };
   };
 

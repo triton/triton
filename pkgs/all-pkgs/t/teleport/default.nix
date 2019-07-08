@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "3.2.5";
+  version = "4.0.2";
 in
 buildGo {
   name = "teleport-${version}";
@@ -15,7 +15,7 @@ buildGo {
     owner = "gravitational";
     repo = "teleport";
     rev = "v${version}";
-    sha256 = "89cb20a057b34e288dcd0ebfea127064f7cf86e83910c2cb589d103c5a37a0b8";
+    sha256 = "95a8757d88d9067c5379c85eca4e34acf3d5305715d2e42ddf49f5a2b81efb1d";
   };
 
   srcRoot = null;

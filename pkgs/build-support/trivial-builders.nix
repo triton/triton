@@ -16,7 +16,6 @@ rec {
     builder = "/bin/sh";
     system = "x86_64-linux";
     args = [ "-e" (builtins.toFile "write-text.sh" ''
-      set -x
       exec 4<"$textPath"
       exec 5>"$out"
       while read -r txt <&4; do

@@ -5,7 +5,7 @@
 , lib
 
 , aws-sdk-cpp
-, busybox
+, busybox_shell
 , boehm-gc
 , boost
 , brotli
@@ -102,11 +102,6 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = ''
-    # Make sure we have a working busybox sh
-    '${busybox}'/bin/busybox sh --help 2>&1 | grep -q 'Usage: sh'
-  '';
-
   configureFlags = [
     "--sysconfdir=/etc"
     # Ideally this would be /var but this is standard
@@ -115,7 +110,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/nix/var"
     "--enable-gc"
     "--with-store-dir=${storeDir}"
-    "--with-sandbox-shell=${busybox}/bin/busybox"
+    "--with-sandbox-shell=${busybox_shell}/bin/busybox"
   ];
 
   preInstall = ''

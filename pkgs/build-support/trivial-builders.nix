@@ -10,6 +10,27 @@ rec {
       inherit name buildCommand;
     } // env);
 
+  # Trivial type of text file
+  writeText = name: text: derivation {
+    inherit name text;
+    builder = "/bin/sh";
+    system = "x86_64-linux";
+    args = [ "-e" (builtins.toFile "write-text.sh" ''
+      set -x
+      exec 4<"$textPath"
+      exec 5>"$out"
+      while read -r txt <&4; do
+        printf "%s\n" "$txt" >&5
+      done
+      printf "%s" "$txt" >&5
+    '') ];
+    passAsFile = [ "text" ];
+    allowSubstitutes = false;
+    preferLocalBuild = true;
+    __structuredAttrs = false;
+    __noChroot = true;
+  };
+
 
   # Create a single file.
   writeTextFile =
@@ -18,6 +39,9 @@ rec {
     , executable ? false # run chmod +x ?
     , destination ? ""   # relative path appended to $out eg "/bin/foo"
     }:
+    if executable == false && destination == "" then
+      writeText name text
+    else
     runCommand name
       { inherit text executable;
         passAsFile = [ "text" ];
@@ -40,7 +64,6 @@ rec {
 
 
   # Shorthands for `writeTextFile'.
-  writeText = name: text: writeTextFile {inherit name text;};
   writeTextDir = name: text: writeTextFile {inherit name text; destination = "/${name}";};
   writeScript = name: text: writeTextFile {inherit name text; executable = true;};
   writeScriptBin = name: text: writeTextFile {inherit name text; executable = true; destination = "/bin/${name}";};

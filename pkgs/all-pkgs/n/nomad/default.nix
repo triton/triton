@@ -1,11 +1,10 @@
 { lib
 , buildGo
 , fetchFromGitHub
-, fetchTritonPatch
 }:
 
 let
-  version = "0.9.1";
+  version = "0.9.3";
 in
 buildGo {
   name = "nomad-${version}";
@@ -15,16 +14,8 @@ buildGo {
     owner = "hashicorp";
     repo = "nomad";
     rev = "v${version}";
-    sha256 = "7eb28d09b28ffe63ef64dacd948f403322f272e0ba8f8da0e43039c7aeb5aa6e";
+    sha256 = "c19c9673dee8c5f4bbb30360072f0d57f56031807b12cf6e1979585762071893";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "a215f1eccb99b10440c4aa6bd2195093cedc43cb";
-      file = "n/nomad/0001-Allow-compiling-without-nvidia-integration.patch";
-      sha256 = "75998540a7c17869987b549d7c8c2f974d7229d978484996f340d206cd6fa5e7";
-    })
-  ];
 
   srcRoot = null;
 

@@ -2,10 +2,12 @@
 , fetchurl
 
 , libcap-ng
+, systemd-dummy
+, systemd_lib
 }:
 
 let
-  version = "6.6";
+  version = "7.0";
 in
 stdenv.mkDerivation rec {
   name = "smartmontools-${version}";
@@ -13,24 +15,31 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/smartmontools/smartmontools/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "51f43d0fb064fccaf823bbe68cf0d317d0895ff895aa353b3339a3b316a53054";
+    sha256 = "e5e1ac2786bc87fdbd6f92d0ee751b799fbb3e1a09c0a6a379f9eb64b3e8f61c";
   };
 
   buildInputs = [
     libcap-ng
+    systemd-dummy
+    systemd_lib
   ];
 
   configureFlags = [
-    "--with-libcap-ng"
-    "--with-nvme-devicescan"
+    "--with-systemdsystemunitdir=${placeholder "out"}/lib/systemd/system"
+    "--with-scriptpath=/no-such-path"
   ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "887B 8C63 2110 4CA8 4A8E  F91B 18EC DA46 CBF6 BAC6";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        pgpKeyFingerprint = "887B 8C63 2110 4CA8 4A8E  F91B 18EC DA46 CBF6 BAC6";
+      };
     };
   };
 

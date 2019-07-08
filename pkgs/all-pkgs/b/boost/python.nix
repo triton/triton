@@ -49,11 +49,11 @@ stdenv.mkDerivation {
     mkdir -p "$lib"/lib
     mv -v "$dev"/lib/*.so* "$lib"/lib
     rm -r "$dev"/lib
-
+  '' + lib.optionalString (lib.versionAtLeast boost.version "1.67.0") ''
     # Autoconf archive does not detect python minor versions correctly.
     ln -sv "$lib"/lib/libboost_python${if python.isPy2 then "" else pythonMajor}*.so \
       "$lib"/lib/libboost_python${if python.isPy2 then "" else pythonMajor}.so
-
+  '' + ''
     mkdir -p "$dev"/nix-support
     echo "$lib ${boost.dev}" >"$dev"/nix-support/propagated-native-build-inputs
   '';

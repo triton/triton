@@ -90,6 +90,10 @@ stdenv.mkDerivation {
     "lib"
   ];
 
+  passthru = {
+    inherit version;
+  };
+
   meta = with lib; {
     homepage = "http://boost.org/";
     description = "Collection of C++ libraries";

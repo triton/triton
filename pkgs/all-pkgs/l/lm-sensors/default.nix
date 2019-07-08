@@ -8,8 +8,8 @@
 }:
 
 let
-  rev = "84f773b3ec8b75f377a68fd1436ea3ac6d11b170";
-  date = "2018-11-23";
+  rev = "7daa6c5ed50215faa2b08fe1184a7b3f30194bef";
+  date = "2019-07-05";
 in
 stdenv.mkDerivation rec {
   name = "lm_sensors-${date}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "lm-sensors";
     repo = "lm-sensors";
     inherit rev;
-    sha256 = "f656d1597d95fdfc65ffe242a69841e9838ac7569fb5a22f9a7f75ecdd8a3915";
+    sha256 = "456d31d28f6fde4b5c78da54ce5faa8fbcf6e426129f70b095877a51966cada8";
   };
 
   nativeBuildInputs = [

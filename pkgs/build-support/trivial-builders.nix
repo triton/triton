@@ -47,6 +47,7 @@ rec {
         # Pointless to do this on a remote machine.
         preferLocalBuild = true;
         allowSubstitutes = false;
+        __noChroot = true;
       }
       ''
         n=$out${destination}

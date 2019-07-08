@@ -45,7 +45,7 @@ let
     platform
     target;
 
-  version = "2.04~rc1";
+  version = "2.04";
   version' = replaceStrings ["~"] ["-"] version;
 in
 stdenv.mkDerivation rec {
@@ -53,10 +53,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "grub-${version'}.tar.xz";
-    url = "https://alpha.gnu.org/gnu/grub/grub-${version}.tar.xz";
-    multihash = "QmeTicFn54TQYjWKBNM2e8X7DvbJxsFef6xQCxwyhmuiHS";
+    url = "mirror://gnu/grub/grub-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "62ab4435aff769233d09618d5ec36651ef4e4f6ae3939bbcb2f9b98c2a42adc8";
+    sha256 = "e5292496995ad42dabe843a0192cf2a2c502e7ffcc7479398232b10a472df77d";
   };
 
   nativeBuildInputs = [

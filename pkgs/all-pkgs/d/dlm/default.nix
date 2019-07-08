@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchzip
 , which
 
 , dlm_lib
@@ -18,14 +18,16 @@ let
     optionals;
 
   prefix = optionalString (type == "lib") "lib";
+  version = "4.0.9";
 in
-stdenv.mkDerivation rec {
-  name = "${prefix}dlm-4.0.7";
+stdenv.mkDerivation {
+  name = "${prefix}dlm-${version}";
 
-  src = fetchurl {
-    url = "https://releases.pagure.org/dlm/${name}.tar.gz";
-    multihash = "QmUWpz7UYFaUyG542YAXPwX2s8nFsPXRi1HiiX4VTTig6b";
-    sha256 = "639ddfc82369272a68d56816689736c00b8f1b6b2869a6b66b7dbf6dad86469a";
+  src = fetchzip {
+    version = 6;
+    url = "https://pagure.io/dlm/archive/dlm-${version}/dlm-dlm-${version}.tar.gz";
+    multihash = "Qma6shNbPkbtrfPZ7drYcugBmwURMay4zKqXTMe6aEhxtZ";
+    sha256 = "50ddcc2c6822621db3c80a72c7281a11d4c6b6847121d7b5a0a07e69806a573b";
   };
 
   nativeBuildInputs = [

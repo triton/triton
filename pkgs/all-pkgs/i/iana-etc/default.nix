@@ -4,21 +4,23 @@
 }:
 
 let
-  version = "2018-10-04";
+  version = "2019-07-05";
 in
 stdenv.mkDerivation rec {
   name = "iana-etc-${version}";
 
   srcs = [
     (fetchurl {
-      # 2018-10-04
-      url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml";
-      multihash = "QmTv56KqERBXzA6ne2k4umfpmnnN73rbaPa82PNeXGNGp1";
-      sha256 = "39cd8578705974d0c9a1eb645c7374b4f72d9ceed82ec3eefc5670121036ca52";
+      # 2019-07-05
+      # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
+      name = "service-names-port-numbers.xml";
+      multihash = "Qmbhqu9nDh5cpRU2n8m3WQaJ1KoUkTT98MNmYDAhFmn2QU";
+      sha256 = "a9bc2647460d183b27b6fcd048d505490ad47e7e455e980b8b78b5259a58b34f";
     })
     (fetchurl {
       # 2017-10-13
-      url = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml";
+      # https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
+      name = "protocol-numbers.xml";
       multihash = "QmcND9WWoYMiw8yX2V2J6qNZwikjtMYe2pK57ssXo3DqZk";
       sha256 = "4992fbc5453d0feb48492e6abda96bf9285ff4d2516f6924a0f92f773dc4cea2";
     })

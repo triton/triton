@@ -59,8 +59,8 @@ let
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
     "3.7" = {
-      versionPatch = "3";
-      sha256 = "da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318";
+      versionPatch = "4";
+      sha256 = "fb799134b868199930b75f26678f18932214042639cd52b16da7fd134cd9b13f";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
@@ -349,8 +349,8 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "3";
-      outputHash = "da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318";
+      urls = tarballUrls "4";
+      outputHash = "fb799134b868199930b75f26678f18932214042639cd52b16da7fd134cd9b13f";
       fullOpts = {
         inherit (source) pgpKeyFingerprint;
         pgpsigUrls = map (n: "${n}.asc") urls;

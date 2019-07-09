@@ -122,6 +122,9 @@ stdenv.mkDerivation rec {
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 
+  buildParallel = false;
+  installParallel = false;
+
   passthru = {
     inherit version fonts;
 

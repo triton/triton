@@ -1,7 +1,6 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy2
 , lib
 , unzip
 
@@ -11,8 +10,6 @@
 }:
 
 let
-  inherit (lib) optionals;
-
   version = "3.1.1";
 in
 buildPythonPackage rec {
@@ -31,11 +28,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     py-cpuinfo
     pytest
-  ] ++ optionals isPy2 /* <3.4 */ [
-    statistics
   ];
-
-  #doCheck = true;
 
   meta = with lib; {
     description = "py.test fixture for benchmarking code";

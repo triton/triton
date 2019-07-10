@@ -27,7 +27,7 @@ rec {
     allowSubstitutes = false;
     preferLocalBuild = true;
     __structuredAttrs = false;
-    __noChroot = true;
+    __optionalChroot = true;
   };
 
 
@@ -47,7 +47,7 @@ rec {
         # Pointless to do this on a remote machine.
         preferLocalBuild = true;
         allowSubstitutes = false;
-        __noChroot = true;
+        __optionalChroot = true;
       }
       ''
         n=$out${destination}

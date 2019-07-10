@@ -209,8 +209,6 @@ babel = callPackage ../all-pkgs/b/babel { };
 
 babelfish = callPackage ../all-pkgs/b/babelfish { };
 
-backports-abc = callPackage ../all-pkgs/b/backports-abc { };
-
 backports-ssl-match-hostname =
   callPackage ../all-pkgs/b/backports-ssl-match-hostname { };
 

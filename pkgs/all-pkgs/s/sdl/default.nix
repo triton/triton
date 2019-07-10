@@ -13,6 +13,7 @@
 , libsamplerate
 #, libusb
 , libx11
+, libxcb
 , libxcursor
 , libxext
 , libxfixes
@@ -27,7 +28,7 @@
 , pulseaudio_lib
 , systemd_lib
 , tslib
-#, vulkan-headers
+#, vulkan-headers  # FIXME: unvendor headers
 , wayland
 , wayland-protocols
 , xorg
@@ -40,9 +41,6 @@
 # FIXME: USBHID support
 
 let
-  inherit (lib)
-    boolOn;
-
   version = "2.0.8";
 in
 stdenv.mkDerivation rec {
@@ -70,6 +68,7 @@ stdenv.mkDerivation rec {
     libsamplerate
     #libusb
     libx11
+    libxcb
     libxcursor
     libxext
     libxfixes
@@ -92,72 +91,14 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DLIBC=ON"
-    #GCC_ATOMICS
-    "-DASSEMBLY=ON"
     "-DSSEMATH=ON"
-    "-DMMX=ON"
-    "-D3DNOW=ON"
-    "-DSSE=ON"
-    "-DSSE2=ON"
-    "-DSSE3=ON"
-    "-DALTIVEC=ON"
-    "-DDISKAUDIO=ON"
-    "-DDUMMYAUDIO=ON"
-    "-DVIDEO_DIRECTFB=OFF"
-    #"DIRECTFB_SHARED"
-    "-DVIDEO_DUMMY=ON"
-    "-DVIDEO_OPENGL=${boolOn (opengl-dummy != null)}"
-    "-DVIDEO_OPENGLES=${boolOn (opengl-dummy.glesv1 || opengl-dummy.glesv2)}"
-    "-DPTHREADS=ON"
-    #"PTHREADS_SEM"
     "-DSDL_DLOPEN=ON"  # FIXME: only for dynamic linking
     "-DOSS=OFF"
-    "-DALSA=ON"
-    #"-DALSA_SHARED=ON"
     #"JACK"  # TODO
-    #"JACK_SHARED"
-    #"ESD"  # TODO
-    #"ESD_SHARED"
-    "-DPULSEAUDIO=ON"
-    #"-DPULSEAUDIO_SHARED=ON"
-    #"ARTS"  $ TODO
-    #"ARTS_SHARED"
-    #"NAS"  # TODO
-    #"NAS_SHARED"
-    #"SNDIO"  # TODO
-    #"FUSIONSOUND"  # TODO
-    #"FUSIONSOUND_SHARED"
+    "-DESD=OFF"
     "-DLIBSAMPLERATE=ON"
-    #"-DLIBSAMPLERATE_SHARED=ON"
-    "-DRPATH=ON"
-    #"CLOCK_GETTIME"
-    "-DINPUT_TSLIB=ON"
-    "-DVIDEO_X11=ON"
-    "-DVIDEO_WAYLAND=ON"
-    #"-DWAYLAND_SHARED=ON"
-    #"VIDEO_WAYLAND_QT_TOUCH"  # TODO
-    "-DVIDEO_MIR=OFF"
-    #"-DMIR_SHARED=OFF"
-    "-DVIDEO_RPI=OFF"  # Raspberry Pi
-    #"-DX11_SHARED=${boolOn x11}"
-    "-DVIDEO_X11_XCURSOR=${boolOn x11}"
-    "-DVIDEO_X11_XINERAMA=${boolOn x11}"
-    "-DVIDEO_X11_XINPUT=${boolOn x11}"
-    "-DVIDEO_X11_XRANDR=${boolOn x11}"
-    "-DVIDEO_X11_XSCRNSAVER=${boolOn x11}"
-    "-DVIDEO_X11_XSHAPE=${boolOn x11}"
-    "-DVIDEO_X11_XVM=${boolOn x11}"
-    "-DVIDEO_COCOA=OFF"  # macOS
-    "-DDIRECTX=OFF"  # Windows
-    #"RENDER_D3D"
-    #"VIDEO_VIVANTE"
-    "-DVIDEO_VULKAN=ON"  # FIXME
-    "-DVIDEO_KMSDRM=ON"
-    #"KMSDRM_SHARED"
     "-DSDL_SHARED=ON"
     "-DSDL_STATIC=OFF"
-    #"SDL_STATIC_PIC"  # TODO
   ];
 
   # NIX_CFLAGS_COMPILE = [

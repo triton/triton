@@ -116,10 +116,6 @@ let
   impureEnvVars = common.impureEnvVars ++ [
     # This variable allows the user to pass additional options to curl
     "NIX_CURL_FLAGS"
-
-    # This allows the end user to specify the local ipfs host:port which hosts
-    # the content
-    "IPFS_API"
   ];
 
   urls_ = urls;

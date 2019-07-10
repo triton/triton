@@ -127,7 +127,10 @@ rec {
     ftp://imagemagick.mirrorcatalogs.com/imagemagick
   ];
 
-  ipfs-cached = [
+  ipfs-cached = (
+    let api = builtins.getEnv "IPFS_API"; in
+    if api != "" then [ "http://${api}" ] else [ ]
+  ) ++ [
     https://ipfs.wak.io
   ];
 

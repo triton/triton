@@ -13,7 +13,6 @@ str+="  FTP_PROXY: $FTP_PROXY\n"
 str+="  ALL_PROXY: $ALL_PROXY\n"
 str+="  NO_PROXY: $NO_PROXY\n"
 str+="  NIX_CURL_FLAGS: $NIX_CURL_FLAGS\n"
-str+="  IPFS_API: $IPFS_API\n"
 echo -e "$str" 2>&1
 
 # We need to normalize the hash for openssl
@@ -163,9 +162,6 @@ curl="curl \
 
 # Download the actual file from ipfs before doing anything else
 if [ -n "$multihash" ]; then
-  if [ -n "$IPFS_API" ]; then
-    tryDownload "http://$IPFS_API/ipfs/$multihash" "ipfs"
-  fi
   ipfsUrls="mirror://ipfs-cached/ipfs/$multihash"
   fixUrls 'ipfsUrls'
   for iurl in "${ipfsUrls[@]}"; do

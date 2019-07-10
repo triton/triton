@@ -4,7 +4,6 @@
 , lib
 , pythonOlder
 
-, backports-abc
 , backports-ssl-match-hostname
 , certifi
 , singledispatch
@@ -33,8 +32,6 @@ buildPythonPackage rec {
   ] ++ optionals (pythonOlder "3.4") [
     singledispatch
     certifi
-  ] ++ optionals (pythonOlder "3.5") [
-    backports-abc
   ];
 
   doCheck = false;

@@ -8,7 +8,6 @@
 , isort
 , mccabe
 , pytest-runner
-, singledispatch
 , six
 }:
 
@@ -32,7 +31,6 @@ buildPythonPackage rec {
     isort
     mccabe
     pytest-runner
-    singledispatch
     six
   ];
 

@@ -1906,14 +1906,14 @@ gtkhtml = callPackage ../all-pkgs/g/gtkhtml { };
 gtkimageview = callPackage ../all-pkgs/g/gtkimageview { };
 
 gtkmm_2 = callPackage ../all-pkgs/g/gtkmm/2.x.nix { };
-gtkmm_3-22 = callPackage ../all-pkgs/g/gtkmm {
-  channel = "3.22";
+gtkmm_3-24 = callPackage ../all-pkgs/g/gtkmm {
+  channel = "3.24";
   atkmm = pkgs.atkmm_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-38;
   gtk = pkgs.gtk_3-24;
   pangomm = pkgs.pangomm_2-40;
 };
-gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
+gtkmm_3 = callPackageAlias "gtkmm_3-24" { };
 
 gtksourceview_3-24 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.24";

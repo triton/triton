@@ -38,7 +38,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.1";
+      sha256 = "ddfe42ed2458a20a34de252854bcf4b52d3f0c671c045f56b42aa27c7542d2fd";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gtkmm-${source.version}";
@@ -77,17 +83,10 @@ stdenv.mkDerivation rec {
     "--${boolEn gtk.x11_backend}-x11-backend"
     "--${boolEn gtk.wayland_backend}-wayland-backend"
     "--${boolEn gtk.broadway_backend}-broadway-backend"
-    "--${boolEn (atkmm != null)}-api-atkmm"
+    "--enable-api-atkmm"
     # Requires deprecated api to build
-    "--enable-deprecated-api"
-    "--disable-documentation"
+    #"--enable-deprecated-api"
     "--enable-warnings"
-    "--without-libstdc-doc"
-    "--without-libsigc-doc"
-    "--without-glibmm-doc"
-    "--without-cairomm-doc"
-    "--without-pangomm-doc"
-    "--without-atkmm-doc"
   ];
 
   passthru = {
@@ -96,8 +95,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/gtkmm/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/gtkmm/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

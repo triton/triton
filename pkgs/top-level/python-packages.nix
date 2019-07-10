@@ -454,6 +454,8 @@ monotonic = callPackage ../all-pkgs/m/monotonic { };
 
 mopidy = callPackage ../all-pkgs/m/mopidy { };
 
+mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
+
 msgpack-python = callPackage ../all-pkgs/m/msgpack-python { };
 
 mutagen = callPackage ../all-pkgs/m/mutagen { };

@@ -2917,8 +2917,6 @@ mpd = callPackage ../all-pkgs/m/mpd {
   zziplib = null;
 };
 
-mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
-
 mpfr = callPackage ../all-pkgs/m/mpfr { };
 
 mpv_generics = overrides: callPackage ../all-pkgs/m/mpv ({

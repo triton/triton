@@ -5,7 +5,6 @@
 , isPy3
 , lib
 , python
-, pythonOlder
 
 , apscheduler
 , beautifulsoup
@@ -24,7 +23,6 @@
 , html5lib
 , jinja2
 , jsonschema
-, pathlib
 , pathpy
 , pkgs
 #, progressbar
@@ -90,8 +88,6 @@ buildPythonPackage rec {
     zxcvbn-python
   ] ++ optionals isPy2 [
     deluge
-  ] ++ optionals (pythonOlder "3.4") [
-    pathlib
   ];
 
   postPatch = /* Allow using newer dependencies */ ''

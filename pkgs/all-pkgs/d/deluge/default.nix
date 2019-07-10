@@ -1,8 +1,7 @@
 { stdenv
 , buildPythonPackage
-, fetchgit
-, fetchTritonPatch
-, fetchurl
+, fetchFromGitHub
+,  fetchurl
 , gettext
 , intltool
 , isPy3
@@ -46,13 +45,12 @@
 let
   inherit (lib)
     makeSearchPath
-    optionals
-    optionalString;
+    optionals;
 
   sources = {
     "stable" = {
-      version = "1.3.15";
-      sha256 = "a96405140e3cbc569e6e056165e289a5e9ec66e036c327f3912c73d049ccf92c";
+      version = "2.0.3";
+      sha256 = "7e7ae8e6ca2a2bf0d487227cecf81e27332f0b92b567cc2bda38e47d859da891";
     };
     "head" = {
       fetchzipversion = 6;
@@ -69,14 +67,15 @@ buildPythonPackage rec {
   src =
     if channel != "head" then
       fetchurl {
-        url = "http://download.deluge-torrent.org/source/deluge-${source.version}.tar.xz";
+        url = "http://download.deluge-torrent.org/source/2.0/"
+          + "deluge-${source.version}.tar.xz";
         inherit (source) sha256;
       }
     else
-      fetchgit {
+      fetchFromGitHub {
         version = source.fetchzipversion;
-        url = "git://git.deluge-torrent.org/deluge";
-        branchName = "develop";
+        owner = "deluge-torrent";
+        repo = "deluge";
         inherit (source) rev sha256;
       };
 
@@ -120,16 +119,7 @@ buildPythonPackage rec {
     pytest
   ];
 
-  patches = optionals (channel == "stable") [
-    # Remove for 1.3.16
-    (fetchTritonPatch {
-      rev = "fb4f50bb98024562652d4bfd702b660f2ae3cfe4";
-      file = "d/deluge/deluge-1.3.15-fix-preferences-dialog.patch";
-      sha256 = "01e01364dd41b0dcd69871a973448f50a5c8efb4e13dd456569e21259e1dc06c";
-    })
-  ];
-
-  postPatch = optionalString (channel == "head") (
+  postPatch = (
     /* Using an invalid version breaks compatibility with some trackers */ ''
       sed -i setup.py \
         -e 's/_version = .*/_version = "${sources.stable.version}"/' # .dev"/'
@@ -146,7 +136,7 @@ buildPythonPackage rec {
     ${python.interpreter} setup.py build
   '';
 
-  postInstall = optionalString (channel == "head") ''
+  postInstall = ''
     mkdir -pv $out/share/applications
     cp -Rv deluge/ui/data/pixmaps $out/share/
     cp -Rv deluge/ui/data/icons $out/share/
@@ -168,6 +158,18 @@ buildPythonPackage rec {
         --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
     done
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      fullOpts = {
+        sha256Urls = map (u: "${u}.sha256") src.urls;
+      };
+    };
+  };
 
   doCheck = false;
 

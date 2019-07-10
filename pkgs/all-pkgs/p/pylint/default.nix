@@ -5,7 +5,6 @@
 , lib
 
 , astroid
-, configparser
 , isort
 , mccabe
 , pytest-runner
@@ -35,8 +34,6 @@ buildPythonPackage rec {
     pytest-runner
     singledispatch
     six
-  ] ++ optionals isPy2 [  # FIXME: < 3.5
-    configparser
   ];
 
   meta = with lib; {

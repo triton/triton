@@ -99,7 +99,7 @@ while true; do
     fi
     pin_count=$(( $pin_count + 1 ))
   fi
-  if [ "$pin_count" -ge "20" ]; then
+  if [ "$pin_count" -ge "100" ]; then
     concurrent "${ARGS[@]}"
     ARGS=()
     pin_count=0

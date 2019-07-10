@@ -29,7 +29,6 @@
 , musicbrainzngs
 , mutagen
 , nose
-, pathlib
 , pyacoustid
 , pyechonest
 , pylast
@@ -125,7 +124,6 @@ buildPythonPackage rec {
     werkzeug
   ] ++ optionals isPy2 [
     enum34
-    pathlib
   ] ++ [
     pycountry
   ] ++ optional enableAlternatives (

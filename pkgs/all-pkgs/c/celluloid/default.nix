@@ -23,7 +23,7 @@
 }:
 
 let
-  version = "2019-02-25";
+  version = "2019-07-06";
 in
 stdenv.mkDerivation rec {
   name = "celluloid-${version}";
@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
     version = 6;
     owner = "celluloid-player";
     repo = "celluloid";
-    rev = "51821c02019a3e1fa6e280001952840ca79f82d9";
-    sha256 = "128fd9f34db5a9e57e8396d031ddc6dc607e976684e42f64d3646decf78a36d3";
+    rev = "6e5cd81065da0d2b61f2df7f90fb4602d3b8c69b";
+    sha256 = "fdd6d2bdf4421b390778c939edb1fea4baf706d562f90aaeff5af567a1353734";
   };
 
   nativeBuildInputs = [

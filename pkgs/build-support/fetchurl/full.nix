@@ -6,6 +6,7 @@
 , openssl
 , signify
 , textencode
+, writeText
 , ...
 }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
@@ -106,15 +107,11 @@ let
   # fetchurl instantiations via environment variables.  This makes the
   # resulting store derivations (.drv files) much smaller, which in
   # turn makes nix-env/nix-instantiate faster.
-  mirrorsFile = stdenv.mkDerivation {
-    name = "mirrors-list";
-    buildCommand = concatStrings (
-      flip mapAttrsToList mirrors (mirror: urls: ''
-        echo '${mirror} ${concatStringsSep " " urls}' >> "$out"
-      '')
-    );
-    preferLocalBuild = true;
-  };
+  mirrorsFile = writeText "mirrors-list" (concatStrings (
+    flip mapAttrsToList mirrors (mirror: urls: ''
+      ${mirror} ${concatStringsSep " " urls}
+    '')
+  ));
 
   impureEnvVars = common.impureEnvVars ++ [
     # This variable allows the user to pass additional options to curl

@@ -10,9 +10,9 @@
 
 let
   sources = {
-    "2.56" = {
-      version = "2.56.0";
-      sha256 = "6e74fcba0d245451c58fc8a196e9d103789bc510e1eee1a9b1e816c5209e79a9";
+    "2.60" = {
+      version = "2.60.0";
+      sha256 = "a3a1b1c9805479a16c0018acd84b3bfff23a122aee9e3c5013bb81231aeef2bc";
     };
   };
   source = sources."${channel}";
@@ -35,8 +35,6 @@ stdenv.mkDerivation rec {
     "--disable-schemas-compile"
     "--disable-documentation"
     "--enable-warnings"
-    # Deprecated apis used by gtkmm2
-    "--enable-deprecated-api"
   ];
 
   passthru = {
@@ -45,8 +43,10 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/glibmm/${channel}/"
-        + "${name}.sha256sum";
+      fullOpts = {
+        sha256Url = "https://download.gnome.org/sources/glibmm/${channel}/"
+          + "${name}.sha256sum";
+      };
       failEarly = true;
     };
   };

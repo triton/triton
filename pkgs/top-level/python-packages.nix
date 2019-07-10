@@ -466,8 +466,6 @@ netifaces = callPackage ../all-pkgs/n/netifaces { };
 
 nevow = callPackage ../all-pkgs/n/nevow { };
 
-notify-python = callPackage ../all-pkgs/n/notify-python { };
-
 oauthlib = callPackage ../all-pkgs/o/oauthlib { };
 
 olefile = callPackage ../all-pkgs/o/olefile { };

@@ -1,10 +1,11 @@
 { stdenv
 , fetchurl
+, lib
 , unzip
 }:
 
 let
-  version = "9.0.0";
+  version = "12.1.0";
 in
 stdenv.mkDerivation rec {
   name = "unicode-character-database-${version}";
@@ -12,13 +13,13 @@ stdenv.mkDerivation rec {
   srcs = [
     (fetchurl {
       url = "http://www.unicode.org/Public/${version}/ucd/UCD.zip";
-      multihash = "QmegKNLtXL7atq9QfUscnQVYNmcbVykJEWKzkuSdxYuVzk";
-      sha256 = "df9e028425816fd5117eaea7173704056f88f7cd030681e457c6f3827f9390ec";
+      multihash = "QmTtBP7ZFuUsWYdyUNQhinWbEDQxnvyPqA49VarVNst5As";
+      sha256 = "25ba51a0d4c6fa41047b7a5e5733068d4a734588f055f61e85f450097834a0a6";
     })
     (fetchurl {
       url = "http://www.unicode.org/Public/${version}/ucd/Unihan.zip";
-      multihash = "QmezUBbKW2cme2EsXWYm8EWw7tZ76Jm3hygWNtuRZCxojt";
-      sha256 = "6afdd48fb3c5d79a527ed27ce2582b2f684c09e16f5d0837fe7e5b0204f46362";
+      multihash = "QmUguLv4vL2V6EvxvksexsnEjyvXqoP74LyTKn95vaPdWy";
+      sha256 = "6e4553f3b5fffe0d312df324d020ef1278d9595932ae03f4e8a2d427de83cdcd";
     })
   ];
 
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
   # FIXME
   sourceDateEpochWarn = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Unicode Character Database";
     homepage = http://www.unicode.org/;
     license = licenses.bsd3;

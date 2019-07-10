@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-,  fetchurl
+, fetchurl
 , gettext
 , intltool
 , isPy3
@@ -54,9 +54,9 @@ let
     };
     "head" = {
       fetchzipversion = 6;
-      version = "2019-05-23";
-      rev = "bd4a3cba38d15f784f2805d4f4eff7d58b901927";
-      sha256 = "e772b900faf066f737ee37b88fb478e0c46d5dcbb85e48db0fa9e9482bee87af";
+      version = "2019-06-24";
+      rev = "3f9ae337932da550f2623daa6dedd9c3e0e5cfb3";
+      sha256 = "43b5e1e25df77a2eede02278545fe37ce66122e5f0a8b393c07db1f9f14eebd8";
     };
   };
   source = sources."${channel}";

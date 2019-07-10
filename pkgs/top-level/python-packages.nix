@@ -502,8 +502,6 @@ path-py = callPackage ../all-pkgs/p/path-py { };
 # Deprecated alias
 pathpy = callPackageAlias "path-py" { };
 
-pathlib = callPackage ../all-pkgs/p/pathlib { };
-
 pathlib2 = callPackage ../all-pkgs/p/pathlib2 { };
 
 pbr = callPackage ../all-pkgs/p/pbr { };

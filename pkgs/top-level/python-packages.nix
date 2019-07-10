@@ -718,8 +718,6 @@ signedjson = callPackage ../all-pkgs/s/signedjson { };
 
 simplejson = callPackage ../all-pkgs/s/simplejson { };
 
-singledispatch = callPackage ../all-pkgs/s/singledispatch { };
-
 six = callPackage ../all-pkgs/s/six {
   buildPythonPackage = self.buildBootstrapPythonPackage;
 };

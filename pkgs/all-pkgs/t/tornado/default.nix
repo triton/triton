@@ -6,7 +6,6 @@
 
 , backports-ssl-match-hostname
 , certifi
-, singledispatch
 , six
 }:
 
@@ -30,7 +29,6 @@ buildPythonPackage rec {
   ] ++ optionals (pythonOlder backports-ssl-match-hostname.currentImpl) [
     backports-ssl-match-hostname
   ] ++ optionals (pythonOlder "3.4") [
-    singledispatch
     certifi
   ];
 

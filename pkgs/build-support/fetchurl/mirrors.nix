@@ -132,8 +132,8 @@ rec {
   ];
 
   ipfs-nocache = [
-    https://cloudflare-ipfs.com
     https://ipfs.io
+    https://cloudflare-ipfs.com
   ];
 
   # Mirrors of ftp://ftp.kde.org/pub/kde/.

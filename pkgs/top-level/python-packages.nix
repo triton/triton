@@ -739,8 +739,6 @@ sphinxcontrib-websupport =
 
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
-statistics = callPackage ../all-pkgs/s/statistics { };
-
 stevedore = callPackage ../all-pkgs/s/stevedore { };
 
 sydent = callPackage ../all-pkgs/s/sydent { };

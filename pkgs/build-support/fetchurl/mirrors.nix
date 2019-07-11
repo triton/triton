@@ -132,6 +132,7 @@ rec {
     if api != "" then [ "http://${api}" ] else [ ]
   ) ++ [
     https://ipfs.wak.io
+    https://ipfs.chlorm.net
   ];
 
   ipfs-nocache = [

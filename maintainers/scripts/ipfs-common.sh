@@ -5,6 +5,7 @@ RW_GATEWAYS=(
 RO_GATEWAYS=(
   "https://ipfs.io"
   "https://cloudflare-ipfs.com"
+  "https://ipfs.chlorm.net"
   "https://ipfs.wak.io"
 )
 

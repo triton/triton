@@ -639,8 +639,6 @@ pyutil = callPackage ../all-pkgs/p/pyutil { };
 
 pywbem = callPackage ../all-pkgs/p/pywbem { };
 
-pyxml = callPackage ../all-pkgs/p/pyxml { };
-
 pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 
 pyzmq = callPackage ../all-pkgs/p/pyzmq { };

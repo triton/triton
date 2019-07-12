@@ -2511,6 +2511,8 @@ librelp = callPackage ../all-pkgs/l/librelp { };
 
 libressl = callPackage ../all-pkgs/l/libressl { };
 
+librevenge = callPackage ../all-pkgs/l/librevenge {};
+
 librsvg = callPackage ../all-pkgs/l/librsvg { };
 
 librsync = callPackage ../all-pkgs/l/librsync { };
@@ -4423,7 +4425,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   libndp = callPackage ../development/libraries/libndp { };
 #
-  librevenge = callPackage ../development/libraries/librevenge {};
 
   libiec61883 = callPackage ../development/libraries/libiec61883 { };
 #

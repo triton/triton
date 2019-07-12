@@ -2662,6 +2662,8 @@ libwnck = callPackage ../all-pkgs/l/libwnck { };
 
 libwpd = callPackage ../all-pkgs/l/libwpd { };
 
+libwpg = callPackage ../all-pkgs/l/libwpg { };
+
 libwps = callPackage ../all-pkgs/l/libwps { };
 
 libx11 = callPackage ../all-pkgs/l/libx11 { };
@@ -4450,7 +4452,6 @@ libstartup_notification =
   libwmf = callPackage ../development/libraries/libwmf { };
 #
 #
-  libwpg = callPackage ../development/libraries/libwpg { };
 #
   libxmlxx = callPackage ../development/libraries/libxmlxx { };
 #

@@ -100,6 +100,11 @@ stdenv.mkDerivation rec {
       file = "n/nix/0010-build-Support-for-any-system-type.patch";
       sha256 = "58faa987f7a361d1ae48ac2ae05787356408454d40db6a5d06b9b8a684d2de25";
     })
+    (fetchTritonPatch {
+      rev = "24c3ad6bdd1ef5a80d2f44b1fa818b5667e1cf6f";
+      file = "n/nix/0011-build-Support-optional-chroot-builds.patch";
+      sha256 = "a368b38d8c986334d6ab28df9aaf9d1ec32d781b038f2810c78fd149a4d9c1ab";
+    })
   ];
 
   configureFlags = [

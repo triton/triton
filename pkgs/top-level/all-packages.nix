@@ -2636,6 +2636,8 @@ libvdpau-va-gl = callPackage ../all-pkgs/l/libvdpau-va-gl { };
 
 libverto = callPackage ../all-pkgs/l/libverto { };
 
+libvisio = callPackage ../all-pkgs/l/libvisio { };
+
 libvisual = callPackage ../all-pkgs/l/libvisual { };
 
 libvorbis = callPackage ../all-pkgs/l/libvorbis { };
@@ -4447,7 +4449,6 @@ libstartup_notification =
 #
   libupnp = callPackage ../development/libraries/pupnp { };
 
-  libvisio = callPackage ../development/libraries/libvisio { };
 
   libwmf = callPackage ../development/libraries/libwmf { };
 #

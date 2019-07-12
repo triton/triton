@@ -2228,6 +2228,8 @@ libcdio = callPackage ../all-pkgs/l/libcdio { };
 
 libcdio-paranoia = callPackage ../all-pkgs/l/libcdio-paranoia { };
 
+libcdr = callPackage ../all-pkgs/l/libcdr { };
+
 libclc = callPackage ../all-pkgs/l/libclc { };
 
 libconfig = callPackage ../all-pkgs/l/libconfig { };
@@ -4411,9 +4413,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   libcaca = callPackage ../development/libraries/libcaca { };
 #
-  libcdr = callPackage ../development/libraries/libcdr {
-    lcms = callPackageAlias "lcms2" { };
-  };
 #
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #

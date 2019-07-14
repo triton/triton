@@ -185,8 +185,7 @@ tryDownload() {
           if [ -n "$signifyPub" ]; then
             echo "untrusted comment: signify public key" > "$TMPDIR/signify.pub"
             echo "$signifyPub" >> "$TMPDIR/signify.pub"
-            ln -s "$out" "$name"
-            if ! signify -C -p "$TMPDIR/signify.pub" -x "$TMPDIR/signify"; then
+            if ! signify -V -p "$TMPDIR/signify.pub" -x "$TMPDIR/signify" -m "$out"; then
               echo "$out Signify does not validate" >&2
               if [ "$failEarly" = "1" ]; then
                 exit 1

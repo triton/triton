@@ -15,7 +15,7 @@ stdenv.mkDerivation {
       -e "s,@BASE_UID@,${toString ids.config.ids.uids.nixbld},g" \
       -e "s,@BASE_GID@,${toString ids.config.ids.gids.nixbld},g" \
       > nss.c
-    gcc -shared -Wall -Werror -O2 -o libnss_nixos.so.2 nss.c
+    gcc -shared -fPIC -Wall -Werror -O2 -o libnss_nixos.so.2 nss.c
     mkdir -p "$out"/lib
     mv libnss_nixos.so.2 "$out"/lib
     set +x

@@ -3,15 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libev-4.24";
+  name = "libev-4.27";
 
   src = fetchurl {
-    urls = [
-      "mirror://gentoo/distfiles/${name}.tar.gz"
-      "http://dist.schmorp.de/libev/Attic/${name}.tar.gz"
-    ];
-    multihash = "QmPXg8u39fKvwp1TY6bjE54GScPizDGQWE6Lb5pXd4AxT6";
-    sha256 = "973593d3479abdf657674a55afe5f78624b0e440614e2b8cb3a07f16d4d7f821";
+    url = "http://dist.schmorp.de/libev/Attic/${name}.tar.gz";
+    multihash = "QmaAQTHb6C4CtipTSPgjriqasjJ5zqxxCoJdeLqKJPRcqA";
+    sha256 = "2d5526fc8da4f072dd5c73e18fbb1666f5ef8ed78b73bba12e195cfdd810344e";
   };
 
   # Fix c89 compliance
@@ -20,6 +17,20 @@ stdenv.mkDerivation rec {
     grep -q '__STDC_VERSION__ >= 199901L' ev.h
     sed -i 's,__STDC_VERSION__ >= 199901L.*,__STDC_VERSION__ >= 199901L,' ev.h
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        signifyUrl = map (n: "${n}.sig") src.urls;
+        signifyPub = "RWSUBDizLm/GKdlJp8Fr7pMD3pQbONEk+IqVldf+mQn0pYmkiCRDa22s";
+      };
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A high-performance event loop/event model with lots of features";

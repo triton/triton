@@ -793,6 +793,8 @@ wrapt = callPackage ../all-pkgs/w/wrapt { };
 
 xcb-proto = callPackage ../all-pkgs/x/xcb-proto { };
 
+yapf = callPackage ../all-pkgs/y/yapf { };
+
 youtube-dl = callPackage ../all-pkgs/y/youtube-dl { };
 
 yubikey-manager = callPackage ../all-pkgs/y/yubikey-manager { };

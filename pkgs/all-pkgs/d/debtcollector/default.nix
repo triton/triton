@@ -1,16 +1,17 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy2
 , lib
+, pbr
 
 , funcsigs
-, pbr
 , six
 , wrapt
 }:
 
 let
-  version = "1.17.1";
+  version = "1.21.0";
 in
 buildPythonPackage {
   name = "debtcollector-${version}";
@@ -22,10 +23,11 @@ buildPythonPackage {
   };
 
   propagatedBuildInputs = [
-    funcsigs
     pbr
     six
     wrapt
+  ] ++ lib.optionals isPy2 [
+    funcsigs
   ];
 
   meta = with lib; {

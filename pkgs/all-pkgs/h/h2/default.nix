@@ -1,7 +1,12 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy2
 , lib
+
+, enum34
+, hpack
+, hyperframe
 }:
 
 let
@@ -16,8 +21,19 @@ buildPythonPackage {
     sha256 = "fd07e865a3272ac6ef195d8904de92dc7b38dc28297ec39cfa22716b6d62e6eb";
   };
 
+  propagatedBuildInputs = [
+    hpack
+    hyperframe
+  ] ++ lib.optionals isPy2 [
+    enum34
+  ];
+
   meta = with lib; {
+    description = "HTTP/2 for Python";
+    homepage = https://github.com/python-hyper/hyper;
+    license = licenses.mit;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

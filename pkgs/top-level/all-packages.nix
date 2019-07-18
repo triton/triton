@@ -2840,7 +2840,7 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 mercurial = pkgs.python2Packages.mercurial;
 
 mesa = callPackage ../all-pkgs/m/mesa { };
-mesa_drivers = pkgs.mesa.drivers;
+mesa_drivers = pkgs.mesa.dri_drivers;
 
 mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 

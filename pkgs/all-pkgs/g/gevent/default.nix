@@ -1,31 +1,45 @@
 { stdenv
 , buildPythonPackage
 , cython
+, fetchFromGitHub
 , fetchPyPi
 , isPy3
 , isPyPy
 , lib
 , python
 
+, c-ares
+, cffi
 , dnspython
 , greenlet
 , idna
 , libev
+, libuv
+, psutil
+, zope-event
+, zope-interface
 }:
 
 let
-  inherit (lib)
-    optionals;
-
-  version = "1.3.7";
+  version = "2019-06-11";
+  #version = "1.4.0";
 in
 buildPythonPackage rec {
   name = "gevent-${version}";
 
-  src = fetchPyPi {
-    package = "gevent";
-    inherit version;
-    sha256 = "3f06f4802824c577272960df003a304ce95b3e82eea01dad2637cc8609c80e2c";
+  #src = fetchPyPi {
+  #  package = "gevent";
+  #  inherit version;
+  #  sha256 = "1eb7fa3b9bd9174dfe9c3b59b7a09b768ecd496debfc4976a9530a3e15c990d1";
+  #};
+
+  # Latest release (1.4.0) does not configure CFFI modules correctly.
+  src = fetchFromGitHub {
+    version = 6;
+    owner = "gevent";
+    repo = "gevent";
+    rev = "0283cffee5d3b2e0fe15e76982c5cf13180c1772";
+    sha256 = "a90f794f87f374c05828b4d9d91f196373c74ecb3dce3c46ee74f1dab7d746d0";
   };
 
   nativeBuildInputs = [
@@ -33,17 +47,32 @@ buildPythonPackage rec {
   ];
 
   buildInputs = [
+    c-ares
     libev
+    libuv
   ];
 
-  propagatedBuildInputs = optionals (!isPyPy) [
-    greenlet
-  ] ++ [
+  propagatedBuildInputs = [
+    cffi
     dnspython
     idna
+    zope-event
+    zope-interface
+  ] ++ lib.optionals (!isPyPy) [
+    greenlet
+    psutil
   ];
 
-  NIX_CFLAGS_COMPILE = [
+  postPatch = /* Disable vendored sources */ ''
+    sed -i _setupares.py \
+      -i _setuplibev.py \
+      -i src/gevent/libuv/_corecffi_build.py \
+      -e 's,./configure,non-existant-command,' \
+      -e 's/_setuputils.should_embed(.*)/False/' \
+      -e 's/should_embed(.*)/False/'
+  '';
+
+  NIX_CFLAGS_COMPILE = lib.optionals (!isPyPy) [
     "-I${greenlet}/include/${python.executable}${if isPy3 then "m" else ""}"
   ];
 

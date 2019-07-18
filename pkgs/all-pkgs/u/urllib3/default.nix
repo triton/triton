@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.24.1";
+  version = "1.25.3";
 in
 buildPythonPackage {
   name = "urllib3-${version}";
@@ -13,11 +13,15 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "urllib3";
     inherit version;
-    sha256 = "de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22";
+    sha256 = "dbe59173209418ae49d485b87d1681aefa36252ee85884c31346debd19463232";
   };
 
   meta = with lib; {
+    description = "HTTP client for Python";
+    homepage = https://github.com/urllib3/urllib3;
+    license = licenses.mit;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

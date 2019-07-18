@@ -25,7 +25,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "3.5.3";
+  version = "3.6.0";
 in
 buildPythonPackage rec {
   name = "apscheduler-${version}";
@@ -33,7 +33,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "APScheduler";
     inherit version;
-    sha256 = "6599bc78901ee7e9be85cbd073d9cc155c42d2bc867c5cde4d4d1cc339ebfbeb";
+    sha256 = "8f56b888fdc9dc57dd18d79c124b5093a01e29144be84e3e99130600eea34260";
   };
 
   propagatedBuildInputs = [
@@ -47,6 +47,7 @@ buildPythonPackage rec {
     tornado
     twisted
     /* job stores */
+    #kazoo  # TODO: zookeeper
     pymongo
     redis
     #rethinkdb

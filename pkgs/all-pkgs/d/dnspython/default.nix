@@ -4,15 +4,11 @@
 , lib
 , unzip
 
-, cyrus-sasl
-, openldap
+, idna
 }:
 
 let
-  inherit (stdenv.lib)
-    optionals;
-
-  version = "1.15.0";
+  version = "1.16.0";
 in
 buildPythonPackage {
   name = "dnspython-${version}";
@@ -21,11 +17,17 @@ buildPythonPackage {
     package = "dnspython";
     type = ".zip";
     inherit version;
-    sha256 = "40f563e1f7a7b80dc5a4e76ad75c23da53d62f1e15e6e517293b04e1f84ead7c";
+    sha256 = "36c5e8e38d4369a08b6780b7f27d790a292b2b08eea01607865bf0936c558e01";
   };
 
   nativeBuildInputs = [
     unzip
+  ];
+
+  propagatedBuiltInputs = [
+    #ecdsa
+    idna
+    #pycryptodome
   ];
 
   meta = with lib; {

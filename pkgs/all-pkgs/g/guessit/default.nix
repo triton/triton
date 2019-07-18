@@ -8,12 +8,6 @@
 , pytest-runner
 , python-dateutil
 , rebulk
-, regex
-
-, pytest
-, pytest-benchmark
-, pytest-capturelog
-, pyyaml
 
 , channel ? "stable"
 }:
@@ -24,8 +18,8 @@ let
 
   sources = {
     stable = {
-      version = "3.0.3";
-      sha256 = "590cfaac6adbc65a0297f7b2a44c2accf2cc660eeed6283b43cbad30e65806e0";
+      version = "3.0.4";
+      sha256 = "37803ec0d7f20f2e1425dfe3bb978dc3b9c65872aa3760c664b31a9115232ec1";
     };
     head = {
       fetchzipversion = 6;
@@ -53,26 +47,16 @@ buildPythonPackage rec {
         inherit (source) rev sha256;
       };
 
-  nativeBuildInputs = optionals doCheck [
-    pytest
-    pytest-benchmark
-    pytest-capturelog
-    pyyaml
-  ];
-
   propagatedBuildInputs = [
     babelfish
     pytest-runner
     python-dateutil
     rebulk
-    regex
   ];
-
-  doCheck = false;
 
   meta = with lib; {
     description = "A library for guessing information from video filenames";
-    homepage = https://pypi.python.org/pypi/guessit;
+    homepage = https://github.com/guessit-io/guessit;
     license = licenses.lgpl3;
     maintainers = with maintainers; [
       codyopel

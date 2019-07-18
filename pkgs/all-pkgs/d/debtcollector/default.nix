@@ -19,7 +19,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "debtcollector";
     inherit version;
-    sha256 = "1f751d74789baa82684f55bececf754ebff1ad40e3fb1bee44fcf5c25a31e92d";
+    sha256 = "f6ce5a383ad73c23e1138dbb69bf45d33f4a4bdec38f02dbf2b89477ec5e55bc";
   };
 
   propagatedBuildInputs = [

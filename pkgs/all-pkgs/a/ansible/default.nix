@@ -16,7 +16,7 @@
 }:
 
 let
-  version = "2.7.7";
+  version = "2.8.2";
 in
 buildPythonPackage rec {
   name = "ansible-${version}";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "ansible";
     inherit version;
-    sha256 = "040cc936f959b947800ffaa5f940d2508aaa41f899efe56b47a7442c89689150";
+    sha256 = "1e5ba829ca0602c55b33da399b06f99b135a34014b661d1c36d8892a1e2d3730";
   };
 
   propagatedBuildInputs = [

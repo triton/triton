@@ -6,7 +6,6 @@
 
 , py-cpuinfo
 , pytest
-, statistics
 }:
 
 let

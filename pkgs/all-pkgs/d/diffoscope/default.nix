@@ -1,13 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
+#, defusedxml
 , libarchive-c
+#. progressbar
 , python-magic
 }:
 
 let
-  version = "113";
+  version = "118";
 in
 buildPythonPackage rec {
   name = "diffoscope-${version}";
@@ -15,7 +18,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "diffoscope";
     inherit version;
-    sha256 = "9c9018ce0e4a996466feac654cd601c45d8ad1c01a4a799615ae63bd4dcc9283";
+    sha256 = "14d63a69822388e2929126f241b8f034913296069b556266c0dc4597fab0a5ff";
   };
 
   postPatch = /* Fix invalid encoding in README */ ''
@@ -24,13 +27,24 @@ buildPythonPackage rec {
   '';
 
   propagatedBuildInputs = [
+    #argcomplete
+    #binwalk
+    #defusedxml
+    #guestfs
+    #jsondiff
     libarchive-c
+    #progressbar
+    #pyxattr
+    #pypdf2
+    #python-debian
     python-magic
+    #rpm-python
+    #tlsh
   ];
 
-  meta = with stdenv.lib; {
-    description = "Perform in-depth comparison of files, archives, and directories";
-    homepage = https://wiki.debian.org/ReproducibleBuilds;
+  meta = with lib; {
+    description = "Compares files, archives, and directories in-depth";
+    homepage = https://diffoscope.org/;
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

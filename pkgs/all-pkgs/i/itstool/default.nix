@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.0.4";
+  version = "2.0.6";
 in
 buildPythonPackage rec {
   name = "itstool-${version}";
@@ -16,19 +16,11 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "itstool";
     inherit version;
-    sha256 = "e62b224d679aaa5f445255eee9893917f5f0ef1023010b8b57c3634fc588829d";
+    sha256 = "2f2a67c6cf525ada1cf437b8dda3bf5ad84b4cb172446011aa85c0542131d92b";
   };
 
   propagatedBuildInputs = [
     libxml2
-  ];
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "9a5628012d660812c9dbac289a5460d86a3cc908";
-      file = "i/itstool/0001-Be-more-careful-about-libxml2-memory-management.patch";
-      sha256 = "fb7ae169c80778de40944576983640cbf7c3511cceb37727697e6aee8af3200e";
-    })
   ];
 
   # Move our shared data to the correct directory

@@ -332,9 +332,6 @@ flask-login = callPackage ../all-pkgs/f/flask-login { };
 
 flask-restful = callPackage ../all-pkgs/f/flask-restful { };
 
-flask-restplus_0-8 = callPackage ../all-pkgs/f/flask-restplus {
-  channel = "0.8";
-};
 flask-restplus = callPackage ../all-pkgs/f/flask-restplus { };
 
 flexget = callPackage ../all-pkgs/f/flexget { };

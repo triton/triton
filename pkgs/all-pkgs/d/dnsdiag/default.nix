@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.6.2";
+  version = "1.6.4";
 in
 buildPythonPackage {
   name = "dnsdiag-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "dnsdiag";
     inherit version;
-    sha256 = "de455946346df2212e02f4c4138aaaa11203cbd6681970f08946e3af93c9e99c";
+    sha256 = "f50495e98928afff201516fcad89e31c80d443523f02cedc61c35961ec7bf10a";
   };
 
   propagatedBuildInputs = [

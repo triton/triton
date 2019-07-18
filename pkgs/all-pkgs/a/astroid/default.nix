@@ -5,11 +5,12 @@
 
 , lazy-object-proxy
 , six
+, typed-ast
 , wrapt
 }:
 
 let
-  version = "1.5.3";
+  version = "2.2.5";
 in
 buildPythonPackage rec {
   name = "astroid-${version}";
@@ -17,12 +18,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "astroid";
     inherit version;
-    sha256 = "492c2a2044adbf6a84a671b7522e9295ad2f6a7c781b899014308db25312dd35";
+    sha256 = "6560e1e1749f68c64a4b5dee4e091fce798d2f0d84ebe638cf0e0585a343acf4";
   };
 
   propagatedBuildInputs = [
     lazy-object-proxy
     six
+    typed-ast
     wrapt
   ];
 

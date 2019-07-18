@@ -803,6 +803,8 @@ yubikey-manager = callPackage ../all-pkgs/y/yubikey-manager { };
 
 zbase32 = callPackage ../all-pkgs/z/zbase32 { };
 
+zc-lockfile = callPackage ../all-pkgs/z/zc-lockfile { };
+
 zfec = callPackage ../all-pkgs/z/zfec { };
 
 zope-component = callPackage ../all-pkgs/z/zope-component { };

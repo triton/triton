@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.29.10";
+  version = "0.29.12";
 in
 buildPythonPackage {
   name = "cython-${version}";
@@ -13,11 +13,11 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Cython";
     inherit version;
-    sha256 = "26229570d6787ff3caa932fe9d802960f51a89239b990d275ae845405ce43857";
+    sha256 = "20da832a5e9a8e93d1e1eb64650258956723940968eb585506531719b55b804f";
   };
 
   meta = with lib; {
-    description = "An optimising static compiler for the Python and Cython programming languages";
+    description = "A static compiler for Python & Cython programming languages";
     homepage = http://cython.org;
     license = licenses.asl20;
     maintainers = with maintainers; [

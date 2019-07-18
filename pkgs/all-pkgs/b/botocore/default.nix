@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.12.96";
+  version = "1.12.189";
 in
 buildPythonPackage rec {
   name = "botocore-${version}";

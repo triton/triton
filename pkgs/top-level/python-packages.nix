@@ -373,6 +373,8 @@ hpack = callPackage ../all-pkgs/h/hpack { };
 
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
+hyperframe = callPackage ../all-pkgs/h/hyperframe { };
+
 hyperlink = callPackage ../all-pkgs/h/hyperlink { };
 
 idna = callPackage ../all-pkgs/i/idna { };

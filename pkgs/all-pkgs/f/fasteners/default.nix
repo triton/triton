@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , monotonic
 , six
 }:
 
 let
-  version = "0.14.1";
+  version = "0.15";
 in
 buildPythonPackage {
   name = "fasteners-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "fasteners";
     inherit version;
-    sha256 = "427c76773fe036ddfa41e57d89086ea03111bbac57c55fc55f3006d027107e18";
+    sha256 = "3a176da6b70df9bb88498e1a18a9e4a8579ed5b9141207762368a1017bf8f5ef";
   };
 
   propagatedBuildInputs = [
@@ -23,7 +24,7 @@ buildPythonPackage {
     six
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

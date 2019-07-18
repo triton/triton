@@ -758,6 +758,8 @@ transmissionrpc = callPackage ../all-pkgs/t/transmissionrpc { };
 
 twisted = callPackage ../all-pkgs/t/twisted { };
 
+typed-ast = callPackage ../all-pkgs/t/typed-ast { };
+
 typing = callPackage ../all-pkgs/t/typing { };
 
 tzlocal = callPackage ../all-pkgs/t/tzlocal { };

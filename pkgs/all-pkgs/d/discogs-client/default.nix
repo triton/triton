@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.2.2";
 in
 buildPythonPackage rec {
   name = "discogs-client-${version}";
@@ -17,7 +17,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "discogs-client";
     inherit version;
-    sha256 = "9e32b5e45cff41af8025891c71aa3025b3e1895de59b37c11fd203a8af687414";
+    sha256 = "aeae43fb9281e27c580d1bcd484e6c309f4f3a05af3908016ee3363786ef43d8";
   };
 
   propagatedBuildInputs = [

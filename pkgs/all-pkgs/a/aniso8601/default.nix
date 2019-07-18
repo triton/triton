@@ -2,12 +2,10 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-
-, python-dateutil
 }:
 
 let
-  version = "4.1.0";
+  version = "7.0.0";
 in
 buildPythonPackage rec {
   name = "aniso8601-${version}";
@@ -15,12 +13,8 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "aniso8601";
     inherit version;
-    sha256 = "03c0ffeeb04edeca1ed59684cc6836dc377f58e52e315dc7be3af879909889f4";
+    sha256 = "513d2b6637b7853806ae79ffaca6f3e8754bdd547048f5ccc1420aec4b714f1e";
   };
-
-  propagatedBuildInputs = [
-    python-dateutil
-  ];
 
   meta = with lib; {
     description = "A library for parsing ISO 8601 strings";

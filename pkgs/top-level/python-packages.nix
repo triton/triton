@@ -369,6 +369,8 @@ h2 = callPackage ../all-pkgs/h/h2 { };
 
 hkdf = callPackage ../all-pkgs/h/hkdf { };
 
+hpack = callPackage ../all-pkgs/h/hpack { };
+
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
 hyperlink = callPackage ../all-pkgs/h/hyperlink { };

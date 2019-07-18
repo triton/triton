@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.5.0";
+  version = "0.6.0";
 in
 buildPythonPackage {
   name = "defusedxml-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "defusedxml";
     inherit version;
-    sha256 = "24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4";
+    sha256 = "f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5";
   };
 
   meta = with lib; {

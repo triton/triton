@@ -4,14 +4,14 @@
 , lib
 
 , cheroot
-, jaraco-classes
+, more-itertools
 , portend
 , setuptools-scm
-, six
+, zc-lockfile
 }:
 
 let
-  version = "17.0.0";
+  version = "18.1.2";
 in
 buildPythonPackage rec {
   name = "cherrypy-${version}";
@@ -19,18 +19,16 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "3cdb5fbae183db49ab1f1a90643d521aa060c93f90001cc99c19d8d15b7a3fb7";
+    sha256 = "48de31ba3db04c5354a0fcf8acf21a9c5190380013afca746d50237c9ebe70f0";
   };
 
   propagatedBuildInputs = [
     cheroot
-    jaraco-classes
+    more-itertools
     portend
     setuptools-scm
-    six
+    zc-lockfile
   ];
-
-  doCheck = false;
 
   meta = with lib; {
     description = "A pythonic, object-oriented HTTP framework";

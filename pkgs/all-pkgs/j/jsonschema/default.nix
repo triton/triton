@@ -3,16 +3,20 @@
 , fetchPyPi
 , isPy2
 , lib
+, setuptools-scm
 
+, attrs
 , functools32
-, vcversioner
+, idna
+, pyrsistent
+, six
 }:
 
 let
   inherit (lib)
     optionals;
 
-  version = "2.6.0";
+  version = "3.0.1";
 in
 buildPythonPackage rec {
   name = "jsonschema-${version}";
@@ -20,18 +24,25 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "jsonschema";
     inherit version;
-    sha256 = "6ff5f3180870836cae40f06fa10419f557208175f13ad7bc26caa77beb1f6e02";
+    sha256 = "0c0a81564f181de3212efa2d17de1910f8732fa1b71c42266d983cd74304e20d";
   };
 
-  buildInputs = [
-    vcversioner
+  nativeBuildInputs = [
+    setuptools-scm
   ];
 
-  propagatedBuildInputs = optionals isPy2 [
+  propagatedBuildInputs = [
+    attrs
+    idna
+    pyrsistent
+    six
+  ] ++ optionals isPy2 [
     functools32
   ];
 
   meta = with lib; {
+    decription = "An(other) implementation of JSON Schema for Python";
+    homepage = https://github.com/Julian/jsonschema;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

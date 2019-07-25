@@ -803,6 +803,8 @@ busybox_shell = callPackageAlias "busybox" {
     CONFIG_ASH_TEST y
     CONFIG_ASH_GETOPTS y
     CONFIG_ASH_CMDCMD y
+    CONFIG_FEATURE_SH_MATH y
+    CONFIG_FEATURE_SH_MATH_BASE y
   '';
 };
 

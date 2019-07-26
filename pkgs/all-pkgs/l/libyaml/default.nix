@@ -4,16 +4,16 @@
 }:
 
 let
-  version = "0.2.1";
+  version = "0.2.2";
 in
 stdenv.mkDerivation rec {
   name = "yaml-${version}";
 
   src = fetchurl {
     url = "https://pyyaml.org/download/libyaml/yaml-${version}.tar.gz";
-    multihash = "QmVkw7QLMhv2xSFfYnhA1iZHjKZoamXyXevXK1ZfwoHBic";
+    multihash = "QmSYUuYEKL3Rpmu77MBu5oyF8w6i94rdqErQdmk9DmEdDL";
     hashOutput = false;
-    sha256 = "78281145641a080fb32d6e7a87b9c0664d611dcb4d542e90baf731f51cbb59cd";
+    sha256 = "4a9100ab61047fd9bd395bcef3ce5403365cafd55c1e0d0299cde14958e47be9";
   };
 
   passthru = {

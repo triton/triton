@@ -32,16 +32,16 @@ let
     optionals
     optionalString;
 
-  version = "9.13.7";
+  version = "9.14.4";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmWneoN5rVM8bVtnEjKeD54wnsaw3bJMhBAustcvGuwQhS";
+    multihash = "QmTqVQub44TAnYNJcjsX1XCUkLNvXMH6Na81qKU9r9EU8F";
     hashOutput = false;
-    sha256 = "e7f2065c790419d642dc0a32c5652a53b68a7f17c188fe25a20c5984ddfb74e6";
+    sha256 = "312efb82a6889074f31ef2849af498b3ec97ca69acd5c4e5e4b4045a8fe6b83f";
   };
 
   nativeBuildInputs = [
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
         pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
         pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
         pgpKeyFingerprints = [
-          "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
+          "AE3F AC79 6711 EC59 FC00  7AA4 74BB 6B9A 4CBB 3D38"
         ];
       };
     };

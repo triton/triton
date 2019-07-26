@@ -2,16 +2,16 @@
 , fetchurl
 , makeWrapper
 
-, coreutils
+, coreutils_small
 }:
 
 stdenv.mkDerivation rec {
-  name = "openresolv-3.9.0";
+  name = "openresolv-3.9.1";
 
   src = fetchurl {
     url = "mirror://roy/openresolv/${name}.tar.xz";
-    multihash = "QmXDub6YQT57hbvVh1tscQavrUnQpHbmzSYf4Pt72Bk7Pv";
-    sha256 = "51a04d39232bb797c9efeaad51a525cf50a1deefcb19a1ea5dd3475118634db8";
+    multihash = "QmPr6tHpbDnfpZ4HYNtYJymzo4yctEm998P6cCVQwT4gZP";
+    sha256 = "38b8e7e131a39b1c0d4e5688618b8572adf92a5bf757ae9f272e9f81108a9ff2";
   };
 
   nativeBuildInputs = [
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     # Scripts calls rm, cat & other executables
     wrapProgram "$out/sbin/resolvconf" \
-      --prefix PATH : "${coreutils}/bin"
+      --prefix PATH : "${coreutils_small}/bin"
   '';
 
   meta = with stdenv.lib; {

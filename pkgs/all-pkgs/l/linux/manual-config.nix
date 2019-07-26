@@ -1,4 +1,4 @@
-{ stdenv, runCommand, git, bison, flex, bc, elfutils, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, git, bison, flex, bc, cpio, elfutils, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -262,6 +262,7 @@ stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) con
   nativeBuildInputs = [ bc elfutils openssl perl ]
     ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ]
     ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.16") [ bison flex ]
+    ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "5.2") [ cpio ]
     ++ stdenv.lib.optionals needsGitPatch [ git ];
 
   preBuild = ''

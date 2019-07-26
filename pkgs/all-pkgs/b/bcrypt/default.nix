@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "bcrypt";
     inherit version;
-    sha256 = "44636759d222baa62806bbceb20e96f75a015a6381690d1bc2eda91c01ec02ea";
+    sha256 = "0b0069c752ec14172c5f78208f1863d7ad6755a6fae6fe76ec2c80d13be41e42";
   };
 
   propagatedBuildInputs = [

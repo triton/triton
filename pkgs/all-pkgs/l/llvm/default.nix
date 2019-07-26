@@ -5,7 +5,7 @@
 , gcc
 , ninja
 , perl
-, python
+, python3
 , swig
 
 , libedit
@@ -58,7 +58,7 @@ stdenv.mkDerivation {
     cmake
     ninja
     perl
-    python
+    python3
     swig
   ];
 

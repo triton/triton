@@ -1,27 +1,18 @@
 { stdenv
 , lib
-, autoreconfHook
-, fetchFromGitHub
+, fetchurl
 }:
 
 let
-  rev = "7feb2bb35dfe89750fba62bcd909409e995af754";
-  date = "2018-07-11";
+  version = "0.98.1";
 in
 stdenv.mkDerivation {
-  name = "libb2-${date}";
+  name = "libb2-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "BLAKE2";
-    repo = "libb2";
-    inherit rev;
-    sha256 = "0046d21f26fddccc2a0c135cc20c9d62cfc88225803f4c0c9fb6d7459f15ca63";
+  src = fetchurl {
+    url = "https://github.com/BLAKE2/libb2/releases/download/v${version}/libb2-${version}.tar.gz";
+    sha256 = "53626fddce753c454a3fea581cbbc7fe9bbcf0bc70416d48fdbbf5d87ef6c72e";
   };
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
 
   meta = with lib; {
     maintainers = with maintainers; [

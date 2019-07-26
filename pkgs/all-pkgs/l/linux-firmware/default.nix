@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2019-06-18";
+  version = "2019-07-17";
   version' = stdenv.lib.replaceStrings ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://kernel/linux/kernel/firmware/linux-firmware-${version'}.tar.xz";
-    sha256 = "a2f53e47d932e63062188a7b75798e919e659b4e1fbc15272ba8b2c9133e14ac";
+    sha256 = "43175c07d964cc1956b969ffee96c84ca5da622863e83b5521ed4f28a4eaf9d4";
   };
 
   preInstall = ''

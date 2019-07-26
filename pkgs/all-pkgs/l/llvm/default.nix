@@ -36,6 +36,7 @@ let
       version' = d.version or version;
     in makeOverridable fetchurl {
       urls = [
+        "https://github.com/llvm/llvm-project/releases/download/llvmorg-${version'}/${n}-${version'}.src.tar.xz"
         "https://releases.llvm.org/${version'}/${n}-${version'}.src.tar.xz"
         "https://distfiles.macports.org/llvm/${n}-${version'}.src.tar.xz"
       ];

@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.1.3";
+  version = "1.1.4";
 in
 buildGo {
   name = "vault-${version}";
@@ -14,7 +14,7 @@ buildGo {
     owner = "hashicorp";
     repo = "vault";
     rev = "v${version}";
-    sha256 = "266ca829bdf67c4617e4bd173c9873bf49a4d57da0153761b6ed36c038ca0f6b";
+    sha256 = "4179e0665b5814f495026d36503f383357b3cf58618aecffbd49b95d46c5862f";
   };
 
   srcRoot = null;

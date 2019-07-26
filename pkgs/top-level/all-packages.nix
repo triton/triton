@@ -2775,9 +2775,6 @@ lirc = callPackage ../all-pkgs/l/lirc { };
 
 live555 = callPackage ../all-pkgs/l/live555 { };
 
-llvm_7 = callPackage ../all-pkgs/l/llvm {
-  channel = "7";
-};
 llvm_8 = callPackage ../all-pkgs/l/llvm {
   channel = "8";
 };

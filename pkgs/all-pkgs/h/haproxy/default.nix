@@ -9,17 +9,17 @@
 }:
 
 let
-  major = "1.9";
-  version = "${major}.8";
+  major = "2.0";
+  version = "${major}.3";
 in
 stdenv.mkDerivation rec {
   name = "haproxy-${version}";
   
   src = fetchurl {
     url = "https://www.haproxy.org/download/${major}/src/${name}.tar.gz";
-    multihash = "QmYAXNXsJMyS1f6ud3rYYGwMkZEhoyRqCMWDvUyG5nXrj8";
+    multihash = "QmVc83Z8UEUYHtNvQB7UzYDX9ZcA7j5heLJzaDqPESJ2ur";
     hashOutput = false;
-    sha256 = "2d9a3300dbd871bc35b743a83caaf50fecfbf06290610231ca2d334fd04c2aee";
+    sha256 = "aac1ff3e5079997985b6560f46bf265447d0cd841f11c4d77f15942c9fe4b770";
   };
 
   buildInputs = [
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildFlags = [
-    "TARGET=linux2628"
+    "TARGET=linux-glibc"
     "USE_PCRE2=1"
     "USE_PCRE2_JIT=1"
     "USE_THREAD=1"

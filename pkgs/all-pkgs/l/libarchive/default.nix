@@ -1,6 +1,5 @@
 { stdenv
-, cmake
-, fetchFromGitHub
+, fetchurl
 
 , acl
 , bzip2
@@ -10,30 +9,21 @@
 , lz4
 , lzo
 , openssl
-, pcre
 , xz
 , zlib
 , zstd
 }:
 
 let
-  rev = "ba6bbc3aa4706b4af8b68a468cd2d0f45172042c";
-  date = "2019-04-24";
+  version = "3.4.0";
 in
 stdenv.mkDerivation rec {
-  name = "libarchive-${date}";
+  name = "libarchive-${version}";
 
-  src = fetchFromGitHub {
-    version = 6;
-    owner = "libarchive";
-    repo = "libarchive";
-    inherit rev;
-    sha256 = "b32bf9c4c1e871b49d6d0f7cfc3fe8b8c5291cba5772cb36487a27400cdc39d9";
+  src = fetchurl {
+    url = "https://github.com/libarchive/libarchive/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "8643d50ed40c759f5412a3af4e353cffbce4fdf3b5cf321cb72cacf06b2d825e";
   };
-
-  nativeBuildInputs = [
-    cmake
-  ];
 
   buildInputs = [
     acl
@@ -44,16 +34,13 @@ stdenv.mkDerivation rec {
     lz4
     lzo
     openssl
-    pcre
     xz
     zlib
     zstd
   ];
 
-  cmakeFlags = [
-    "-DENABLE_NETTLE=OFF"
-    "-DENABLE_LZO=ON"
-    "-DPOSIX_REGEX_LIB=LIBPCREPOSIX"
+  configureFlags = [
+    "--with-lzo"
   ];
 
   meta = with stdenv.lib; {

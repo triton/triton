@@ -4248,10 +4248,10 @@ zookeeper = callPackage ../all-pkgs/z/zookeeper { };
 
 zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd_1-4-0 = callPackage ../all-pkgs/z/zstd {
-  version = "1.4.0";
+zstd_1-4-2 = callPackage ../all-pkgs/z/zstd {
+  version = "1.4.2";
 };
-zstd = callPackageAlias "zstd_1-4-0" { };
+zstd = callPackageAlias "zstd_1-4-2" { };
 
 ################################################################################
 ################################################################################

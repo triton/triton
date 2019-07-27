@@ -10,6 +10,11 @@ stdenv.mkDerivation rec {
     sha256 = "0ckjqw5kz5m30srqi87idj7xhpw6bpki43mj07bazjm2qmh3cdbj";
   };
 
+  # Doesn't play nicely with a POSIX sh
+  postPatch = ''
+    patchShebangs configure
+  '';
+
   # Fails with -> pth_uctx.c:31:19: fatal error: pth_p.h: No such file or directory
   buildParallel = false;
 

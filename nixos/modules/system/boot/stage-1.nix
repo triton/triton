@@ -473,6 +473,7 @@ in
     # rebuilding the initrd locally
     system.extraDependencies = [
       pkgs.busybox
+      pkgs.stdenv
     ] ++ initialRamdisk.buildInputs
       ++ initialRamdisk.nativeBuildInputs;
 

@@ -121,7 +121,7 @@ let
         fi
         if [ "''${#patchelfArgs[@]}" -gt 0 ]; then
           echo "Patching $exe..."
-          patchelf "''${patchelfArgs[@]}" "$exe"
+          ${pkgs.patchelf_old}/bin/patchelf "''${patchelfArgs[@]}" "$exe"
         fi
       done
 

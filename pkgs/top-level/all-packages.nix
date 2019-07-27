@@ -3309,6 +3309,8 @@ parted = callPackage ../all-pkgs/p/parted { };
 
 patchelf = callPackage ../all-pkgs/p/patchelf { };
 
+patchelf_old = callPackage ../all-pkgs/p/patchelf/old.nix { };
+
 patchutils = callPackage ../all-pkgs/p/patchutils { };
 
 pavucontrol = callPackage ../all-pkgs/p/pavucontrol { };

@@ -107,7 +107,7 @@ let
       for i in $out/bin/* $out/lib/*; do if ! test -L $i; then nuke-refs -e $out $i; fi; done
 
       for exe in "$out"/bin/* "$out"/lib/*; do
-        if [ ! -f "$exe" ]; then
+        if [ ! -f "$exe" ] || [ -h "$exe" ]; then
           continue
         fi
         echo "Maybe patching: $exe"

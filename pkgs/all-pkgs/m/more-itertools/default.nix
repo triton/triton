@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "7.1.0";
+  version = "7.2.0";
 in
 buildPythonPackage {
   name = "more-itertools-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "more-itertools";
     inherit version;
-    sha256 = "8bb43d1f51ecef60d81854af61a3a880555a14643691cc4b64a6ee269c78f09a";
+    sha256 = "409cd48d4db7052af495b09dec721011634af3753ae1ef92d2b32f73a745f832";
   };
 
   meta = with lib; {

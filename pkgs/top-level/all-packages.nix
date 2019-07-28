@@ -4628,7 +4628,7 @@ libstartup_notification =
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_5-1;
+  linuxPackages_latest = pkgs.linuxPackages_5-2;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.

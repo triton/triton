@@ -9,6 +9,7 @@
 , gnugrep
 , gnused
 , openssl
+, socat
 }:
 
 let
@@ -22,6 +23,7 @@ let
 
     curl
     openssl
+    socat
   ];
 
   programsPath = lib.concatStringsSep ":" (map (n: "${n}/bin") programs);

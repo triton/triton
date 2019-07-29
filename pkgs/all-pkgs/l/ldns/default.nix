@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ldns-1.7.0";
+  name = "ldns-1.7.1";
 
   src = fetchurl {
     url = "https://www.nlnetlabs.nl/downloads/ldns/${name}.tar.gz";
-    multihash = "QmfBkuFVgMUEUnaRqNdCNWsrTwoYngL5S76z8fFYKyZ4bW";
+    multihash = "Qme9g4FYeQ7J7A3BfmBp6t1spoauKCV1TgJrQSTRGAVxXJ";
     hashOutput = false;
-    sha256 = "c19f5b1b4fb374cfe34f4845ea11b1e0551ddc67803bd6ddd5d2a20f0997a6cc";
+    sha256 = "8ac84c16bdca60e710eea75782356f3ac3b55680d40e1530d7cea474ac208229";
   };
 
   nativeBuildInputs = [
@@ -41,11 +41,13 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      sha1Urls = map (n: "${n}.sha1") src.urls;
-      sha256Urls = map (n: "${n}.sha256") src.urls;
-      pgpKeyFingerprint = "DC34 EE5D B241 7BCC 151E  5100 E5F8 F821 2F77 A498";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.asc") src.urls;
+        sha1Urls = map (n: "${n}.sha1") src.urls;
+        sha256Urls = map (n: "${n}.sha256") src.urls;
+        pgpKeyFingerprint = "DC34 EE5D B241 7BCC 151E  5100 E5F8 F821 2F77 A498";
+      };
     };
   };
 

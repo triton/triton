@@ -42,6 +42,11 @@ stdenv.mkDerivation rec {
       sha256 = "b1f8b4ca18dd4d5682a7071631132d1a2652e4b8e33b533f5c7b519348c6a4d4";
     })
   ];
+
+  # Configure script is not compatible with busybox ash
+  postPatch = ''
+    patchShebangs configure
+  '';
   
   postInstall = ''
     grep -r 'id3_compat_fixup'

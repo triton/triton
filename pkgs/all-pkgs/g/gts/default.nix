@@ -19,6 +19,11 @@ stdenv.mkDerivation rec {
     glib
   ];
 
+  # Old configure script not compatible with busybox ash
+  postPatch = ''
+    patchShebangs configure
+  '';
+
   meta = with stdenv.lib; {
     description = "GNU Triangulated Surface Library";
     homepage = http://gts.sourceforge.net/;

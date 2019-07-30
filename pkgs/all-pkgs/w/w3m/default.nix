@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     owner = "debian";
     repo = "w3m";
     inherit rev;
-    multihash = "QmNrmaZjnbFHn6YyMjL1Se1yPtAfrcbXCv4DtxehvQTdQ4";
+    multihash = "QmSusKf9rQ3y2NPgwrk7y4dFQf7GksNoUNQXGVDosMAsb2";
     sha256 = "bd6426cbc9b7e70ccd185e2cc479ac9321c5475b4eeac1292797e99c26f25b53";
   };
 

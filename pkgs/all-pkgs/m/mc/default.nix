@@ -19,10 +19,6 @@ buildGo {
     sourceJSON = ./source.json;
   };
 
-  postInstall = ''
-    find "$out"/bin -type f -not -name 'etcd*' -delete
-  '';
-
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

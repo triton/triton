@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.9.3";
+  version = "0.9.4";
 in
 buildGo {
   name = "nomad-${version}";
@@ -14,7 +14,7 @@ buildGo {
     owner = "hashicorp";
     repo = "nomad";
     rev = "v${version}";
-    sha256 = "c19c9673dee8c5f4bbb30360072f0d57f56031807b12cf6e1979585762071893";
+    sha256 = "1dedb8452b055a9d565853abc8b7a73be2b728624c176c8c58064b9b5e5c3890";
   };
 
   srcRoot = null;

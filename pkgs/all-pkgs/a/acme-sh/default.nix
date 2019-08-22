@@ -45,7 +45,12 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p "$out"/bin
-    cp acme.sh "$out"/bin
+    cp -v acme.sh "$out"/bin
+    for file in *; do
+      if [ -d "$file" ]; then
+        cp -rv "$file" "$out"/bin
+      fi
+    done
 
     wrapProgram "$out"/bin/acme.sh \
       --prefix PATH : "${programsPath}"

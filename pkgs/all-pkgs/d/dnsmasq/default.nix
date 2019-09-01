@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , dbus
@@ -32,6 +33,14 @@ stdenv.mkDerivation rec {
     libidn2
     libnetfilter_conntrack
     nettle
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "ad2ae94da66195c1e8883812980c22bd98bf731a";
+      file = "d/dnsmasq/nettle-3.5.patch";
+      sha256 = "d9e54439eb20ccd99c263d9c80013002fecb60b387fb8fefd787c7958fdb96c6";
+    })
   ];
 
   preBuild = ''

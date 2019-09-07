@@ -22,16 +22,16 @@
 }:
 
 let
-  version = "2.2.1";
+  version = "2.3";
 in
 stdenv.mkDerivation rec {
   name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
-    multihash = "Qmc9q3Kiu1L9MQfpe5yboBDXjTov3Y6g91wUmVuFvDyYwC";
+    multihash = "QmPv5VnXFdgoHUo5FjGmGvoZ5jZ7ZfqXa5Db3o9d94cwnD";
     hashOutput = false;
-    sha256 = "85f8d3518060803e44e51b1a9ada1a39cea904b36a632ba1844043a0b63be515";
+    sha256 = "b1d1b4d87390941fc64b19776f1ed9e3871231d38f5a1f295dd13925acd3a98d";
   };
 
   buildInputs = [
@@ -51,59 +51,59 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0001-Configurable-fixed-output-paths.patch";
-      sha256 = "e7b9455a8e8eff20780c253f0d126af83230c18b1afd54ef9daa28b0695ac803";
+      sha256 = "6a7da3cb3540555aa6ee27e44c2d66bd6dbdd34978bd577252d7c1ac0b8284e1";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0002-Remove-hardcoded-nixos.org-references.patch";
-      sha256 = "a6848f3879d2f4d03e19c535929e56e2104fe151bc43c35663e1dd63315b4336";
+      sha256 = "e0c8426b6f4bac4db3c377bd305c704a60214adbc29720f1db4d3dfcc6fe47ab";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0003-Remove-nixpkgs-references.patch";
-      sha256 = "34dc2c8f6abd4dbf4d649379b072a91a76f04ad828718be6abbde3c9caa9f1f2";
+      sha256 = "efe0a35a7a6ce25df1642d046b8b3b6afa1a4cf51d179a1b08f4c55976c57fb4";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0004-Build-dir-should-be-unique.patch";
-      sha256 = "a0ce713b8a9b9d6ae74164ff2433e9b968ea3aca6cadbdd4dffdc28369b450c2";
+      sha256 = "4f727034727b24762796b76d272532d00d342c051cd6d4817c5923cfafd1ff44";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0005-Always-verify-TLS.patch";
-      sha256 = "ae097620b84909d4b23d4930e67aa977ed9def87b4d056f723ea98d485c75422";
+      sha256 = "2fa541bfa2817a4253a03d5a81b2ad5570f8a3f36efb8c3ba3ac006a393e0fdc";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0006-SSL_CERT_FILE-for-fixed-output.patch";
-      sha256 = "e68e51d6a86db365545b3bd57327e80e19a6213f5b1077784e3db24a52876d18";
+      sha256 = "96cb0797a2a7849239f9a6e081850d405a4d4899af9ed03705aecfe6eaad79b2";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0007-Output-base16-by-default.patch";
-      sha256 = "a03c492a24dcf8e19896e2a841a3e18cc986dd80b8423f6ccb3fd504332e4d48";
+      sha256 = "f79e5e6a7528c3f7ec7b5e3377e4b73e4a37ffb9bd0c35bd43a42c0637d5296e";
     })
     (fetchTritonPatch {
-      rev = "63a0d0dcce69a14141613a47670c857480332677";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0008-builtin-fetchurl-Support-multiple-urls.patch";
-      sha256 = "57b82b2673d93c4ed4a1436e62b22b25d6f976848198834f357475317f76afee";
+      sha256 = "a0ca0deba8c6a4912d67426d73a42efbf791324bf7c6d4522e06bd5ccdbf73da";
     })
     (fetchTritonPatch {
-      rev = "1d634638656d4da132a505a8f9d3a402c2cc1092";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0009-hash-Default-to-base16-for-better-tool-support.patch";
-      sha256 = "74a6e9652136083581a4a23ce6fd41c1c2f3996ee34e7b4d61853d594431e5ef";
+      sha256 = "08e226045d69152c68599ee8ad2c24e5156eee15ea19125b2828a8739c68e19a";
     })
     (fetchTritonPatch {
-      rev = "63fe483dbd9b4464b0e1f7fd8fb259af29ea92af";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0010-build-Support-for-any-system-type.patch";
-      sha256 = "58faa987f7a361d1ae48ac2ae05787356408454d40db6a5d06b9b8a684d2de25";
+      sha256 = "f8913541ed9b367f065105860805b3ee6b43a17571c0d732c52a8878d599353c";
     })
     (fetchTritonPatch {
-      rev = "24c3ad6bdd1ef5a80d2f44b1fa818b5667e1cf6f";
+      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
       file = "n/nix/0011-build-Support-optional-chroot-builds.patch";
-      sha256 = "a368b38d8c986334d6ab28df9aaf9d1ec32d781b038f2810c78fd149a4d9c1ab";
+      sha256 = "bec8496990ba7f5d89d25c56592063e90aef193d85311b22a3ca093069907bf8";
     })
   ];
 

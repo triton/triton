@@ -39,6 +39,9 @@ with stdenv.lib;
   # This way the kernel supports any of the needed decompression
   # schemes at boot.
   KEY_DH_OPERATIONS y
+  ${optionalString (versionAtLeast version "5.3") ''
+    KEYS_REQUEST_CACHE y
+  ''}
   SECONDARY_TRUSTED_KEYRING y
   ASYMMETRIC_KEY_TYPE y
   SYSTEM_TRUSTED_KEYRING y
@@ -229,7 +232,9 @@ with stdenv.lib;
   NF_CONNTRACK_TIMESTAMP y
   ${optionalString (versionAtLeast version "4.17") ''
     NF_TABLES_ARP y
-    NF_TABLES_BRIDGE y
+    ${optionalString (versionOlder version "5.3") ''
+      NF_TABLES_BRIDGE y
+    ''}
     NF_TABLES_INET y
     NF_TABLES_NETDEV y
   ''}
@@ -240,7 +245,9 @@ with stdenv.lib;
   SCTP_COOKIE_HMAC_SHA1 y
   SCTP_COOKIE_HMAC_MD5 y
   L2TP_V3 y
-  NET_CLS_IND y
+  ${optionalString (versionOlder version "5.3") ''
+    NET_CLS_IND y
+  ''}
   BATMAN_ADV_BATMAN_V y
   BATMAN_ADV_DAT y
   BATMAN_ADV_NC y
@@ -249,6 +256,9 @@ with stdenv.lib;
   NET_L3_MASTER_DEV y
   ${optionalString (versionAtLeast version "4.17") ''
     NET_DSA_MV88E6XXX_PTP y
+  ''}
+  ${optionalString (versionAtLeast version "5.3") ''
+    NET_DSA_SJA1105_PTP y
   ''}
   AF_RXRPC_IPV6 y
   NET_DEVLINK y
@@ -384,6 +394,12 @@ with stdenv.lib;
     SND_SOC_SOF_TOPLEVEL y
     SND_SOC_SOF_INTEL_TOPLEVEL y
   ''}
+  ${optionalString (versionAtLeast version "5.3") ''
+    SND_SOC_SOF_HDA_LINK y
+    SND_SOC_SOF_HDA_AUDIO_CODEC y
+    SND_SOC_SOF_COMETLAKE_LP_SUPPORT y
+    SND_SOC_SOF_COMETLAKE_H_SUPPORT y
+  ''}
 
   # USB serial devices.
   USB_SERIAL_GENERIC y # USB Generic Serial Driver
@@ -477,7 +493,9 @@ with stdenv.lib;
     CIFS_ALLOW_INSECURE_LEGACY n
   ''}
   CIFS_UPCALL y
-  CIFS_ACL y
+  ${optionalString (versionOlder version "5.3") ''
+    CIFS_ACL y
+  ''}
   CIFS_XATTR y
   CIFS_FSCACHE y
   CIFS_DFS_UPCALL y
@@ -490,6 +508,9 @@ with stdenv.lib;
   ''}
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
+  ${optionalString (versionAtLeast version "5.3") ''
+    CEPH_FS_SECURITY_LABEL y
+  ''}
   CEPH_LIB_USE_DNS_RESOLVER y
   PSTORE_CONSOLE y
   PSTORE_PMSG y
@@ -549,7 +570,9 @@ with stdenv.lib;
   UNUSED_SYMBOLS y
   PERSISTENT_KEYRINGS y
   SECURITY_NETWORK_XFRM y
-  DDR y
+  ${optionalString (versionOlder version "5.3") ''
+    DDR y
+  ''}
   FONTS y
   ${optionalString (versionAtLeast version "5.2") ''
     UNICODE y
@@ -581,12 +604,12 @@ with stdenv.lib;
   BT_HCIUART_ATH3K y
   BT_HCIUART_3WIRE y
   BT_HCIUART_INTEL y
-  ${optionalString (versionOlder version "4.15") ''
-    BT_HCIUART_BCM y
-  ''}
   BT_HCIUART_QCA y
   BT_HCIUART_AG6XX y
   BT_HCIUART_MRVL y
+  ${optionalString (versionAtLeast version "5.3") ''
+    BT_HCIBTUSB_MTK y
+  ''}
   MAC80211_MESH y
   RFKILL_INPUT y
   NFC_SHDLC y
@@ -611,11 +634,13 @@ with stdenv.lib;
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
   IDE n
-  JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
-  JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
   JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
   JOYSTICK_XPAD_LEDS y # LED Support for Xbox360 controller 'BigX' LED
   LOGIRUMBLEPAD2_FF y # Logitech Rumblepad 2 force feedback
+  ${optionalString (versionOlder version "5.3") ''
+    JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
+    JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
+  ''}
   LOGO n # not needed
   MEDIA_ATTACH y
   MEGARAID_NEWGEN y
@@ -674,6 +699,9 @@ with stdenv.lib;
   USB_EHCI_TT_NEWSCHED y # Improved transaction translator scheduling
   X86_CHECK_BIOS_CORRUPTION y
   X86_MCE y
+  ${optionalString (versionAtLeast version "5.3") ''
+    NTB_MSI y
+  ''}
 
   # PCI-Expresscard hotplug support
   HOTPLUG_PCI_PCIE y
@@ -776,15 +804,17 @@ with stdenv.lib;
   MEMORY_FAILURE y
   MEM_SOFT_DIRTY y
   ZONE_DEVICE y
-  ${optionalString (versionAtLeast version "4.14") ''
+  ${optionalString (versionOlder version "5.3") ''
     MIGRATE_VMA_HELPER y
     HMM y
-    HMM_MIRROR y
   ''}
+  HMM_MIRROR y
   ${optionalString (versionAtLeast version "4.18") ''
     DEV_PAGEMAP_OPS y
     DEVICE_PRIVATE y
-    DEVICE_PUBLIC y
+    ${optionalString (versionOlder version "5.3") ''
+      DEVICE_PUBLIC y
+    ''}
   ''}
   FRAME_VECTOR y
   HZ_300 y
@@ -811,8 +841,11 @@ with stdenv.lib;
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y
-  ${optionalString (versionAtLeast version "5.1") ''
+  ${optionalString (versionAtLeast version "5.1" && versionOlder version "5.3") ''
     CONFIG_SUNRPC_DISABLE_INSECURE_ENCTYPES y
+  ''}
+  ${optionalString (versionAtLeast version "5.3") ''
+    SUNRPC_DISABLE_INSECURE_ENCTYPES y
   ''}
 
   # Virtualisation.
@@ -914,8 +947,13 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.16") ''
     CHELSIO_IPSEC_INLINE y
   ''}
-  ${optionalString (versionAtLeast version "4.18") ''
+  ${optionalString (versionAtLeast version "4.18" && versionOlder version "5.3") ''
     MLX5_EN_TLS y
+  ''}
+  ${optionalString (versionAtLeast version "5.3") ''
+    MLX5_FPGA_IPSEC y
+    MLX5_FPGA_TLS y
+    MLX5_TLS y
   ''}
 
   # zram support (e.g for in-memory compressed swap).
@@ -938,6 +976,9 @@ with stdenv.lib;
 
   # Disable the firmware helper fallback, udev doesn't implement it any more
   FW_LOADER_USER_HELPER_FALLBACK n
+  ${optionalString (versionAtLeast version "5.3") ''
+    FW_LOADER_COMPRESS y
+  ''}
 
   ${extraConfig}
 ''

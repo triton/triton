@@ -18,16 +18,16 @@
 
 let
   channel = "3.15";
-  version = "${channel}.0";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "cmake-${version}";
 
   src = fetchurl {
     url = "https://cmake.org/files/v${channel}/cmake-${version}.tar.gz";
-    multihash = "QmXvfAfXXMsrAVBu5KKUm1eULkZQviBttEpRvzzRvEYJeU";
+    multihash = "QmeLYfWfYbysm86DfQLotLm3xVyhReGYGHb2dz7u3uMuGK";
     hashOutput = false;
-    sha256 = "0678d74a45832cacaea053d85a5685f3ed8352475e6ddf9fcb742ffca00199b5";
+    sha256 = "13958243a01365b05652fa01b21d40fa834f70a9e30efa69c02604e64f58b8f5";
   };
 
   patches = [

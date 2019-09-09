@@ -1,7 +1,7 @@
 {
   "1.12" = {
-    version = "1.12.7";
-    sha256 = "95e8447d6f04b8d6a62de1726defbb20ab203208ee167ed15f83d7978ce43b13";
+    version = "1.12.9";
+    sha256 = "ab0e56ed9c4732a653ed22e232652709afbf573e710f56a07f7fdeca578d62fc";
     sha256Bootstrap = {
       "x86_64-linux" = "750a07fef8579ae4839458701f4df690e0b20b8bcce33b437e4df89c451b6f13";
     };

@@ -8,7 +8,7 @@ let
   inherit (stdenv.lib)
     optional;
 
-  version = "1.0.22";
+  version = "1.0.23";
 in
 stdenv.mkDerivation rec {
   name = "libusb-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libusb/libusb/releases/download/v${version}/"
       + "${name}.tar.bz2";
-    sha256 = "75aeb9d59a4fdb800d329a545c2e6799f732362193b465ea198f2aa275518157";
+    sha256 = "db11c06e958a82dac52cf3c65cb4dd2c3f339c8a988665110e0d24d19312ad8d";
   };
 
   buildInputs = [

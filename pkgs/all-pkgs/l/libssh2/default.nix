@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libssh2-1.8.2";
+  name = "libssh2-1.9.0";
 
   src = fetchurl {
     url = "https://www.libssh2.org/download/${name}.tar.gz";
-    multihash = "QmY53BrpWEkoySU9p9qVWtyj7ENQMR8hD4ZLKNGzGc8CEx";
+    multihash = "QmT68tepb4apvruR8So3GA6fSAtxKZ5pQHPZrdXgV8kpBV";
     hashOutput = false;
-    sha256 = "088307d9f6b6c4b8c13f34602e8ff65d21c2dc4d55284dfe15d502c4ee190d67";
+    sha256 = "d5fb8bd563305fd1074dda90bd053fb2d29fc4bce048d182f96eaa466dfadafd";
   };
 
   buildInputs = [
@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-examples-build"
-    "--with-openssl"
-    "--with-libz"
   ];
 
   passthru = {

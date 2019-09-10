@@ -1,7 +1,5 @@
 { stdenv
 , fetchurl
-
-, openssl
 }:
 
 let
@@ -9,21 +7,17 @@ let
     "https://libbsd.freedesktop.org/releases/libbsd-${version}.tar.xz"
   ];
 
-  version = "0.9.1";
+  version = "0.10.0";
 in
 stdenv.mkDerivation rec {
   name = "libbsd-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmVK1Z5H2Gx8xpKMbtpuLzfU43mYH5Zguq5divoYwc5qpe";
+    multihash = "QmZfsi4qLUfk3bzx7AqJGYRhyPJ1KnFZHN6PKzRv6Zm5pC";
     hashOutput = false;
-    sha256 = "56d835742327d69faccd16955a60b6dcf30684a8da518c4eca0ac713b9e0a7a4";
+    sha256 = "34b8adc726883d0e85b3118fa13605e179a62b31ba51f676136ecb2d0bc1a887";
   };
-
-  buildInputs = [
-    openssl
-  ];
 
   postPatch = ''
     sed \

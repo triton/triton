@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.1.10";
+  version = "2.1.11";
   channel = "stable";
 
   tarballUrls = version: [
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls "${version}-${channel}";
     hashOutput = false;
-    sha256 = "e864af41a336bb11dab1a23f32993afe963c1f69618bd9292b89ecf6904845b0";
+    sha256 = "a65bac6202ea8c5609fd5c7e480e6d25de467ea1917c08290c521752f147283d";
   };
 
   buildInputs = [
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     mkdir -p "$lib"/lib
-    mv "$dev"/lib/*.so* "$lib"/lib
+    mv -v "$dev"/lib/*.so* "$lib"/lib
     ln -sv "$lib"/lib/*.so* "$dev"/lib
 
     mkdir -p "$lib"/nix-support
@@ -56,10 +56,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.1.10-stable";
+      urls = tarballUrls "2.1.11-stable";
       inherit (src)
         outputHashAlgo;
-      outputHash = "e864af41a336bb11dab1a23f32993afe963c1f69618bd9292b89ecf6904845b0";
+      outputHash = "a65bac6202ea8c5609fd5c7e480e6d25de467ea1917c08290c521752f147283d";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprints = [

@@ -23,4 +23,18 @@
       }
     ];
   };
+  "1.13" = {
+    version = "1.13";
+    sha256 = "3fc0b8b6101d42efd7da1da3029c0a13f22079c0c37ef9730209d8ec665bf122";
+    sha256Bootstrap = {
+      "x86_64-linux" = "68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856";
+    };
+    patches = [
+      {
+        rev = "acec67beb6e4d812072b1ce84ebd667be48845d4";
+        file = "g/go/0001-Get-TOOLDIR-from-the-environment.patch";
+        sha256 = "72695d3dbe3ce401f8c69a3e433ebea7f5fb207a8d3ed1e8f65c58aea3906148";
+      }
+    ];
+  };
 }

@@ -1712,6 +1712,9 @@ gnutls = callPackage ../all-pkgs/g/gnutls { };
 goPackages_1-12 = callPackage ./go-packages.nix {
   channel = "1.12";
 };
+goPackages_1-13 = callPackage ./go-packages.nix {
+  channel = "1.13";
+};
 goPackages = callPackageAlias "goPackages_1-12" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };

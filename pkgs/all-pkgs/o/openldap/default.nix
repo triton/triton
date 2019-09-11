@@ -4,6 +4,7 @@
 
 , cyrus-sasl
 , db
+, icu
 , openssl
 }:
 
@@ -13,13 +14,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "openldap-2.4.47";
+  name = "openldap-2.4.48";
 
   src = fetchurl {
     urls = map (n: "${n}.tgz") (fileUrls name);
-    multihash = "Qmf5AeXRaN84o9Q4TMp2vi4qxuJAUUFp99CM5YZV7bauiu";
+    multihash = "QmXxHAUhzCmvkNodnFxQfDEKXHzfQxBJi2X1Dp2urSVSWq";
     hashOutput = false;
-    sha256 = "f54c5877865233d9ada77c60c0f69b3e0bfd8b1b55889504c650047cc305520b";
+    sha256 = "d9523ffcab5cd14b709fcf3cb4d04e8bc76bb8970113255f372bc74954c6074d";
   };
 
   nativeBuildInputs = [
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     cyrus-sasl
     db
+    icu
     openssl
   ];
 
@@ -39,7 +41,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-overlays"
-    "--disable-dependency-tracking"   # speeds up one-time build
     "--with-pic"
     "--with-tls"
     "--with-cyrus-sasl"

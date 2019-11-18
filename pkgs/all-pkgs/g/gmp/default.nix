@@ -39,8 +39,22 @@ stdenv.mkDerivation rec {
 
   # Only provides some info files
   postInstall = ''
-    rm -r "$out"/share
+    rm -r "$dev"/share
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
+  # Ensure we don't accidentally run into this again
+  disallowedReferences = [
+    stdenv.cc
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -53,12 +67,6 @@ stdenv.mkDerivation rec {
     };
   };
 
-  # Ensure we don't depend on anything unexpected
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs
-    ++ optionals cxx stdenv.cc.runtimeLibcxxLibs;
-
   meta = with stdenv.lib; {
     homepage = "http://gmplib.org/";
     description = "GNU multiple precision arithmetic library";
@@ -67,7 +75,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

@@ -10,43 +10,35 @@ let
       inherit multihash sha256 executable;
     };
 in
-if [ hostSystem ] == lib.platforms.x86_64-linux then {
+if [ hostSystem ] == lib.platforms.x86_64-linux || [ hostSystem ] == lib.platforms.i686-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
-    multihash = "QmQ5isT1tEmJhuQ6KNPdtamANEcppBDhv3EyAZE7PHYj1p";
-    sha256 = "0ks3flp1kl2dgakzmrj2rw81r54j7wkbm2g176lqki1syzi9wd1c";
+    nix-hash = "f219whihglbg08g4f0505b7hdcrd6ahf";
+    multihash = "QmQQZ4dTqXxss4MpjiyoAKKeKZvSHYKsysR9je9Sn1ckgL";
+    sha256 = "e5d220eacbbac7e11e2cf1535080aa1ce713d50bbb2f949c587f7f5a86264048";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools.tar.xz";
-    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
-    multihash = "QmVwrewK92FSgVPkbHbSL7V4UnYfyVvjA9mWkfJAudvGDH";
-    sha256 = "f11d55d5cf13189186c9dab09d887a14dd8a6c749178bbcad634b6cfbece92a8";
+    nix-hash = "f219whihglbg08g4f0505b7hdcrd6ahf";
+    multihash = "QmdmT6PVfJHaRrw6R7Hq6rdpca8GwaU7mgFxD78s9BpHeC";
+    sha256 = "7f143fbc300a5c017be65bb19edcbcf02d7a09d33af4d10545aee05ed9143a0b";
   };
-
-  langC = true;
-  langCC = true;
-  isGNU = true;
-} else if [ hostSystem ] == lib.platforms.i686-linux then {
+} else if [ hostSystem ] == lib.platforms.powerpc64le-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
-    multihash = "Qma8NRuL2omkHsjqYv7wYFqYJ5gVFsxe3C73iVpzQEKREV";
-    sha256 = "0m2jamdl5q86p7540g5bsb9g9dgxr3nq4a75rzchlm8ich6cljca";
+    nix-hash = "gx3nsbw7l24z851s1ry1zj45y21fcjjv";
+    multihash = "QmZ1iQEgpf2kUee456XBdWa6eMpgyGRYBabfvQpG3UoYLv";
+    sha256 = "7d979b4b03a1f12076df1030b44ab56a39b56f087553e47f819c2ef7599f0511";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools.tar.xz";
-    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
-    multihash = "QmWq525ugaE6MWjVMCz8xUjxxGa9nLdw9ibwxH8b1qJdr6";
-    sha256 = "86774a1d77dec741652a162a3003a3cddfa40cef8b168f3a954c877fe8a81164";
+    nix-hash = "gx3nsbw7l24z851s1ry1zj45y21fcjjv";
+    multihash = "QmdCsJdzoZ214wiNG5mVfiB5cjFA6QvFsbbic8QR8YaSok";
+    sha256 = "f1e879508797be294a77af3919b8266682ce5523db0ae6b669a6ba296a1d2881";
   };
-
-  langC = true;
-  langCC = true;
-  isGNU = true;
 } else
   throw "Unsupported System ${hostSystem}"

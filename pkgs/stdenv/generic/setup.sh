@@ -139,8 +139,8 @@ exitHandler() {
     # normally.  Otherwise, return the original exit code.
     if [ -n "$succeedOnFailure" ]; then
       echo "build failed with exit code $exitCode (ignored)"
-      mkdir -p "$out/nix-support"
-      printf "%s" "$exitCode" > "$out/nix-support/failed"
+      mkdir -p "${!defaultOutput}/nix-support"
+      printf "%s" "$exitCode" > "${!defaultOutput}/nix-support/failed"
       exit 0
     fi
   else
@@ -469,28 +469,71 @@ configurePhase() {
     configureScript=./configure
   fi
 
-  if [ -n "${fixLibtool-true}" ]; then
+  if [ -n "${fixLibtool-1}" ]; then
     find . -iname "ltmain.sh" | while read i; do
       echo "fixing libtool script $i"
       libtoolFix "$i"
     done
   fi
 
-  if [ -n "${addPrefix-true}" ]; then
-    configureFlags="${prefixKey:---prefix=}$prefix $configureFlags"
-  fi
+  : ${addSystem=1}
 
-  # Add --disable-dependency-tracking to speed up some builds.
-  if [ -n "${addDisableDepTrack-true}" ]; then
-    if grep -q dependency-tracking "$configureScript" 2>/dev/null; then
-      configureFlags="--disable-dependency-tracking $configureFlags"
+  if [ -n "${addBuild-$addSystem}" -a -n "${NIX_SYSTEM_BUILD-}" ]; then
+    if grep -q '\--build' "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--build=$NIX_SYSTEM_BUILD")
     fi
   fi
 
-  # By default, disable static builds.
-  if [ -n "${disableStatic-true}" ]; then
-    if grep -q enable-static "$configureScript" 2>/dev/null; then
-      configureFlags="--disable-static $configureFlags"
+  if [ -n "${addHost-$addSystem}" -a -n "${NIX_SYSTEM_HOST-}" ]; then
+    if grep -q '\--host' "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--host=$NIX_SYSTEM_HOST")
+    fi
+  fi
+
+  if [ -n "${addPrefix-1}" ]; then
+    configureFlagsArray+=("${prefixKey:---prefix=}$prefix")
+  fi
+
+  # Add --disable-dependency-tracking to speed up some builds.
+  if [ -n "${addDisableDepTrack-1}" ]; then
+    if grep -q dependency-tracking "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--disable-dependency-tracking")
+    fi
+  fi
+
+  # Add --disable-maintainer-mode to reduce unnecessary regeneration.
+  if [ -n "${addDisableMaintainerMode-1}" ]; then
+    if grep -q maintainer-mode "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--disable-maintainer-mode")
+    fi
+  fi
+
+  # Add --enable-shared by default since we always want shared libs
+  if [ -n "${addShared-1}" ]; then
+    local flag=enable
+    if [ -n "${disableShared-}" ]; then
+      flag=disable
+    fi
+    if grep -q "$flag-shared" "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--$flag-shared")
+    fi
+  fi
+
+  # By default, disable static builds if we don't have multiple outputs
+  # for storing the static libs
+  local defaultDisableStatic=1
+  for output in $outputs; do
+    if [ "$output" = "dev" ]; then
+      defaultDisableStatic=
+    fi
+  done
+  if [ -n "${addStatic-1}" ]; then
+    local flag=disable
+    if [ -z "${disableStatic-$defaultDisableStatic}" ]; then
+      flag=enable
+    fi
+    if grep -q "$flag-static" "$configureScript" 2>/dev/null; then
+      configureFlagsArray+=("--$flag-static")
     fi
   fi
 
@@ -603,23 +646,23 @@ fixupPhase() {
   done
 
   if [ -n "$propagatedBuildInputs" ]; then
-    mkdir -p "$out/nix-support"
-    echo "$propagatedBuildInputs" > "$out/nix-support/propagated-build-inputs"
+    mkdir -p "${!defaultOutput}/nix-support"
+    echo "$propagatedBuildInputs" > "${!defaultOutput}/nix-support/propagated-build-inputs"
   fi
 
   if [ -n "$propagatedNativeBuildInputs" ]; then
-    mkdir -p "$out/nix-support"
-    echo "$propagatedNativeBuildInputs" > "$out/nix-support/propagated-native-build-inputs"
+    mkdir -p "${!defaultOutput}/nix-support"
+    echo "$propagatedNativeBuildInputs" > "${!defaultOutput}/nix-support/propagated-native-build-inputs"
   fi
 
   if [ -n "$propagatedUserEnvPkgs" ]; then
-    mkdir -p "$out/nix-support"
-    echo "$propagatedUserEnvPkgs" > "$out/nix-support/propagated-user-env-packages"
+    mkdir -p "${!defaultOutput}/nix-support"
+    echo "$propagatedUserEnvPkgs" > "${!defaultOutput}/nix-support/propagated-user-env-packages"
   fi
 
   if [ -n "$setupHook" ]; then
-    mkdir -p "$out/nix-support"
-    substituteAll "$setupHook" "$out/nix-support/setup-hook"
+    mkdir -p "${!defaultOutput}/nix-support"
+    substituteAll "$setupHook" "${!defaultOutput}/nix-support/setup-hook"
   fi
 
   runHook 'postFixup'
@@ -815,6 +858,11 @@ export TZ='UTC'
 # Before doing anything else, state the build time
 NIX_BUILD_START="$(date '+%s')"
 
+# Determine the default output, we define this as the first one
+if [ -z "$defaultOutput" ]; then
+  defaultOutput="${outputs%% *}"
+fi
+
 # Execute the pre-hook.
 if [ -z "$shell" ]; then
   export shell=$SHELL
@@ -849,22 +897,11 @@ for i in $crossPkgs; do
   _addToCrossEnv "$i"
 done
 
-# Add the output as an rpath.
-if [ "$NIX_NO_SELF_RPATH" != 1 ]; then
-  export NIX_LDFLAGS="-rpath $out/lib $NIX_LDFLAGS"
-  if [ -n "$NIX_LIB64_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib64 $NIX_LDFLAGS"
-  fi
-  if [ -n "$NIX_LIB32_IN_SELF_RPATH" ]; then
-    export NIX_LDFLAGS="-rpath $out/lib32 $NIX_LDFLAGS"
-  fi
-fi
-
 # Set the prefix.  This is generally $out, but it can be overriden,
 # for instance if we just want to perform a test build/install to a
 # temporary location and write a build report to $out.
 if [ -z "$prefix" ]; then
-  prefix="$out"
+  prefix="${!defaultOutput}"
 fi
 
 if [ "$useTempPrefix" = 1 ]; then

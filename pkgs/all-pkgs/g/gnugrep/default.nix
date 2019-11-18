@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
 , pcre
 
 , type ? "full"
@@ -7,7 +8,8 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionalString
+    optionals;
 
   version = "3.3";
 
@@ -28,25 +30,35 @@ stdenv.mkDerivation rec {
     pcre
   ];
 
-  # Fix reference to sh in bootstrap-tools, and invoke grep via
-  # absolute path rather than looking at argv[0].
+  patches = [
+    (fetchTritonPatch {
+      rev = "ea2f05440159d91d94027aca8adc4c43b62fe8f1";
+      file = "g/gnugrep/0001-grep-Interpret-argv0-for-the-default-matcher.patch";
+      sha256 = "86ef1a8ca3869f926abd5626d03ba3a752aae6c4d2ee1682b5674cb4cd4da4d0";
+    })
+  ];
+
+  # Our grep understands argv0
   postInstall = ''
-    rm $out/bin/egrep $out/bin/fgrep
-    echo "#! /bin/sh" > $out/bin/egrep
-    echo "exec $out/bin/grep -E \"\$@\"" >> $out/bin/egrep
-    echo "#! /bin/sh" > $out/bin/fgrep
-    echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
-    chmod +x $out/bin/egrep $out/bin/fgrep
-  '' + optionalString (type != "full") ''
-    rm -r "$out"/share
+    rm "$bin"/bin/egrep "$bin"/bin/fgrep
+    ln -sv grep "$bin"/bin/fgrep
+    ln -sv grep "$bin"/bin/egrep
   '';
 
-  dontPatchShebangs = true;
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
+  '';
 
-  allowedReferences = [
-    "out"
-    pcre
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -69,7 +81,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

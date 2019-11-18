@@ -3,39 +3,31 @@
 fixupOutputHooks+=(_doStrip)
 
 _doStrip() {
-    if [ -z "$dontStrip" ]; then
-        stripDebugList=${stripDebugList:-lib lib32 lib64 libexec bin sbin}
-        if [ -n "$stripDebugList" ]; then
-            stripDirs "$stripDebugList" "${stripDebugFlags:--S}"
-        fi
+  if [ -n "${dontStrip-}" ]; then
+    return 0
+  fi
 
-        stripAllList=${stripAllList:-}
-        if [ -n "$stripAllList" ]; then
-            stripDirs "$stripAllList" "${stripAllFlags:--s}"
-        fi
+  local allFlags="${stripAllFlags--s}"
+  local debugFlags="${stripDebugFlags--S}"
+  header "Stripping in $prefix"
+
+  if ! $READELF --version >/dev/null 2>&1; then
+    echo "Missing readelf" >&2
+    exit 1
+  fi
+
+  local file
+  for file in $(find "$prefix" -type f); do
+    if ! $READELF -h "$file" >/dev/null 2>&1; then
+      continue
     fi
-}
-
-stripDirs() {
-    local dirs="$1"
-    local stripFlags="$2"
-    local dirsNew=
-
-    for d in ${dirs}; do
-        if [ -d "$prefix/$d" ]; then
-            dirsNew="${dirsNew} $prefix/$d "
-        fi
-    done
-    dirs=${dirsNew}
-
-    if [ -n "${dirs}" ]; then
-        header "stripping (with flags $stripFlags) in$dirs"
-        local files
-        files=($(find $dirs -type f))
-        for file in "${files[@]}"; do
-          echo "Stripping: $file" >&2
-          strip $commonStripFlags $stripFlags "$file" || true
-        done
-        stopNest
+    if [[ "$file" =~ \.[ao]$ ]]; then
+      echo "Stripping (debug only): $file" >&2
+      $STRIP $debugFlags "$file"
+    else
+      echo "Stripping (all): $file" >&2
+      $STRIP $allFlags "$file"
     fi
+  done
+  stopNest
 }

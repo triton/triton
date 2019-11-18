@@ -7,7 +7,7 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionals;
 
   tarballUrls = version: [
     "https://tukaani.org/xz/xz-${version}.tar.xz"
@@ -36,19 +36,32 @@ stdenv.mkDerivation rec {
     unset CONFIG_SHELL
   '';
 
+  configureFlags = [
+    "--localedir=${placeholder "bin"}/share/locale"
+  ];
+
   postInstall = ''
-    rm -r "$out"/share/doc
-  '' + optionalString (type != "full") ''
-    rm -r "$out"/share
+    # Move bin files
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    # Move shared libs
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
   '';
 
-  disableStatic = false;
+  postFixup = ''
+    ln -sv "$lib"/lib/* "$dev"/lib
+    rm -rv "$dev"/share
+  '';
 
-  dontPatchShebangs = true;
-
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -69,7 +82,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

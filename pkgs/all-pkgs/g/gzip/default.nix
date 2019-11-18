@@ -6,7 +6,8 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionalString
+    optionals;
 
   tarballUrls = version: [
     "mirror://gnu/gzip/gzip-${version}.tar.xz"
@@ -29,15 +30,17 @@ stdenv.mkDerivation rec {
     "GREP=grep"
   ];
 
-  postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share
+  postFixup = ''
+    mkdir -p "$bin"/share2
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
 
-  dontPatchShebangs = true;
-
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -58,7 +61,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

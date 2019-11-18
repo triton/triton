@@ -9,32 +9,31 @@
 let
   inherit (lib)
     boolEn
-    optionalAttrs
-    optionalString;
+    optionals;
 
   tarballUrls = version: [
     "mirror://gnu/bison/bison-${version}.tar.xz"
   ];
 
-  version = "3.4.1";
+  version = "3.4.2";
 in
-stdenv.mkDerivation (rec {
+stdenv.mkDerivation rec {
   name = "bison-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "27159ac5ebf736dffd5636fd2cd625767c9e437de65baa63cb0de83570bd820d";
+    sha256 = "27d05534699735dc69e86add5b808d6cb35900ad3fd63fa82e3eb644336abfa0";
   };
 
   nativeBuildInputs = [
-    gnum4
+    gnum4.bin
   ];
 
   # We need this for bison to work correctly when being
   # used during the build process
   propagatedBuildInputs = [
-    gnum4
+    gnum4.bin
   ];
 
   # Don't generate examples
@@ -50,11 +49,19 @@ stdenv.mkDerivation (rec {
     "ac_cv_path_PERL=perl"
   ];
 
-  postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share/{doc,man,info}
+  postFixup = ''
+    mkdir -p "$bin"/share2
+    mv "$bin"/share/{aclocal,bison} "$bin"/share2
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
+    rm -rv "$bin"/lib
   '';
 
-  dontPatchShebangs = true;
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -77,12 +84,8 @@ stdenv.mkDerivation (rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
-} // optionalAttrs (type != "bootstrap") {
-  allowedReferences = [
-    "out"
-    gnum4
-  ] ++ stdenv.cc.runtimeLibcLibs;
-})
+}

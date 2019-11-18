@@ -1,33 +1,27 @@
 { stdenv
 , nukeReferences
-, cpio
-, readelf
 
-, bash
+, bash_small
 , binutils
-, bison
-, coreutils
+, busybox_bootstrap
+, bzip2
+, coreutils_small
 , diffutils
 , findutils
-, flex
-, gawk
-, glibc
-, gnused
-, gnugrep
-, gnum4
-, gnutar
-, brotli
-, gzip
-, bzip2
-, xz
-, gnumake
-, gnupatch
-, patchelf
-, curl
-, openssl
+, gawk_small
+, glibc_lib_gcc
 , gcc
-, pkgconfig
-, busybox
+, gcc_lib_glibc
+, gcc_runtime_glibc
+, gnugrep
+, gnumake
+, gnupatch_small
+, gnused_small
+, gnutar_small
+, gzip
+, linux-headers
+, patchelf
+, xz
 }:
 
 rec {
@@ -36,148 +30,129 @@ rec {
 
     nativeBuildInputs = [
       nukeReferences
-      cpio
+    ];
+
+    binInputs = [
+      bash_small.bin
+      binutils.bin
+      bzip2.bin
+      coreutils_small.bin
+      diffutils.bin
+      findutils.bin
+      gawk_small.bin
+      gcc.bin
+      gnugrep.bin
+      gnumake.bin
+      gnupatch_small.bin
+      gnused_small.bin
+      gnutar_small.bin
+      gzip.bin
+      patchelf.bin
+      xz.bin
     ];
 
     buildCommand = ''
-      set -x
-      mkdir -p $out/bin $out/lib $out/libexec
-    '' +
-    /* Copy what we need of Glibc. */ ''
-      cp -d ${glibc}/lib/{*.so*,*.a,*crt*.o} $out/lib
-      chmod -R u+w $out/lib
-      cp -rL ${glibc}/include $out
-      chmod -R u+w $out/include
-    '' +
-    /* Hopefully we won't need these. */ ''
-      rm -rf $out/include/mtd $out/include/rdma $out/include/sound $out/include/video
-      find $out/include -name \*.install\* -exec rm {} \;
-      mv $out/include $out/include-glibc
-    '' +
-    /* Copy coreutils, bash, etc. */ ''
-      cp -v "${coreutils}"/bin/* "$out"/bin
-      cp -v "${bash}"/bin/bash "$out"/bin
-      ln -sv bash "$out"/bin/sh
-      cp -v "${findutils}"/bin/{find,xargs} "$out"/bin
-      cp -v "${diffutils}"/bin/{cmp,diff} "$out"/bin
-      cp -v "${gnused}"/bin/sed "$out"/bin
-      cp -v "${gnugrep}"/bin/grep "$out"/bin
-      cp -v "${gawk}"/bin/gawk "$out"/bin
-      ln -sv gawk "$out"/bin/awk
-      cp -v "${gnutar}"/bin/tar "$out"/bin
-      cp -v "${gzip}"/bin/gzip "$out"/bin
-      cp -v "${bzip2}"/bin/bzip2 "$out"/bin
-      cp -v "${xz}"/bin/xz "$out"/bin
-      cp -v "${gnumake}"/bin/make "$out"/bin
-      cp -v "${gnupatch}"/bin/patch "$out"/bin
-      cp -v "${gnum4}"/bin/m4 "$out"/bin
-      cp -v "${bison}"/bin/bison "$out"/bin
-      echo "#!/bin/sh" > "$out"/bin/yacc
-      echo 'exec "$(dirname "$0")"/bison -y "$@"' >> "$out"/bin/yacc
-      chmod +x "$out"/bin/yacc
-      mkdir -p "$out"/share
-      cp -rv "${bison}"/share/bison "$out"/share
-      cp -v "${flex}"/bin/flex "$out"/bin
-    '' +
-    /* Copy what we need of GCC. */ ''
-      cp -d "${gcc}"/bin/{cpp,g++,gcc} "$out"/bin
-      cp -d ${gcc}/lib/{*.a,*.so*} $out/lib
-      chmod -R u+w $out/lib
-      cp -rd ${gcc}/lib/gcc $out/lib
-      chmod -R u+w $out/lib
-      rm -f $out/lib/gcc/*/*/include*/linux
-      rm -f $out/lib/gcc/*/*/include*/sound
-      rm -rf $out/lib/gcc/*/*/include*/root
-      rm -f $out/lib/gcc/*/*/include-fixed/asm
-      rm -rf $out/lib/gcc/*/*/plugin
-      cp -rd ${gcc}/libexec/* $out/libexec
-      chmod -R u+w $out/libexec
-      rm -rf $out/libexec/gcc/*/*/plugin
-      mkdir $out/include
-      cp -rd ${gcc}/include/c++ $out/include
-      chmod -R u+w $out/include
-      rm -rf $out/include/c++/*/ext/pb_ds
-      rm -rf $out/include/c++/*/ext/parallel
-    '' +
-    /* Copy binutils. */ ''
-      cp -v "${binutils}"/bin/{ar,as,ld,ranlib,strip} "$out"/bin
-    '' +
-    /* We need patchelf to deal with fixing binaries after unpack */ ''
-      cp -v "${patchelf}/bin/patchelf" "$out"/libexec
-    '' +
-    /* Copy all of the needed libraries for the binaries */ ''
-      copy_libs_in_elf() {
-        local BIN; local RELF; local RPATH; local LIBS; local LIB; local LINK;
-        BIN=$1
-        # Determine what libraries are needed by the elf
-        set +x
-        RELF="$(${readelf} -a $BIN 2>&1)" || continue
-        if RPATH="$(echo "$RELF" | grep rpath | sed 's,.*\[\([^]]*\)\].*,\1,')" &&
-          LIBS="$(echo "$RELF" | grep 'Shared library' | sed 's,.*\[\([^]]*\)\].*,\1,')"; then
-          set -x
-          for LIB in $LIBS; do
-            # Find the libraries on the system
-            for LIBPATH in $(echo "$RPATH" | tr ':' ' '); do
-              if [ -f "$LIBPATH/$LIB" ]; then
-                LIB="$LIBPATH/$LIB"
-                break
-              fi
-            done
-            # Copy the library and possibly symlinks
-            while [ ! -f "$out/lib/$(basename $LIB)" ]; do
-              LINK="$(readlink $LIB)" || true
-              if [ -z "$LINK" ]; then
-                cp -pdv $LIB $out/lib
-                copy_libs_in_elf $LIB
-                break
-              else
-                ln -sv "$(basename $LINK)" "$out/lib/$(basename $LIB)"
-                if [ "${LINK:0:1}" != "/" ]; then
-                  LINK="$(dirname $LIB)/$LINK"
-                fi
-                LIB="$LINK"
-              fi
-            done
-          done
-        else
-          set -x
-          echo "ELF is not dynamic: $BIN" >&2
+      root="$TMPDIR/root"
+      mkdir -pv "$root"/{bin,lib,libexec}
+
+      cp -dv '${glibc_lib_gcc.cc_reqs}'/lib/libc.so "$root"/lib
+      cp -dv '${glibc_lib_gcc.dev}'/lib/{libc_nonshared.a,*.o} "$root"/lib
+      cp -dv '${gcc_lib_glibc.dev}'/lib/{libgcc_s.so,libgcc.a,*.o} "$root"/lib
+      sed -i "s,$NIX_STORE[^ ]*/,,g" "$root"/lib/lib{c,gcc_s}.so
+      chmod -R u+w "$root"/lib
+      cp -rLv '${linux-headers}'/include "$root"
+      chmod -R u+w "$root"/include
+      rm -rv "$root"/include/{xen,drm,rdma,sound}
+      cp -rLv '${glibc_lib_gcc.dev}'/include "$root"
+      chmod -R u+w "$root"/include
+      cp -rLv '${gcc.cc_headers}'/include "$root"/include-gcc
+      cp -rLv '${gcc.cc_headers}'/include-fixed "$root"/include-fixed-gcc
+      cp -rLv '${gcc_runtime_glibc.dev}'/include/c++/* "$root"/include-c++
+
+      declare -A sha256s=()
+      copy_bin_and_deps() {
+        local file="$1"
+        local outdir="$2"
+
+        local outfile="$outdir/$(basename "$file")"
+        if [ -e "$outfile" ]; then
+          echo "Already have: $outfile" >&2
+          return 0
         fi
-      }
-      for BIN in $out/bin/* $out/libexec/gcc/*/*/*; do
-        echo "Copying libs for bin $BIN"
-        copy_libs_in_elf $BIN
-      done
-
-      chmod -R u+w $out
-    '' +
-    /* Strip executables even further. */ ''
-      for i in $out/bin/* $out/libexec/gcc/*/*/*; do
-          if test -x $i -a ! -L $i; then
-              chmod +w $i
-              strip -s $i || true
+        mkdir -pv "$outdir"
+        sha="$(sha256sum "$file" | awk '{print $1}')"
+        if [ -n "''${sha256s["$sha"]-}" ]; then
+          ln -srv "''${sha256s["$sha"]}" "$outfile"
+          return 0
+        fi
+        sha256s["$sha"]="$outfile"
+        cp -v "$file" "$outfile"
+        local needed=""
+        needed+=" $(patchelf --print-interpreter "$file" 2>/dev/null)" || true
+        needed+=" $(patchelf --print-needed "$file" 2>/dev/null)" || true
+        local rpaths=""
+        rpaths="$(patchelf --print-rpath "$file" 2>/dev/null | tr ':' ' ')" || true
+        local lib
+        for lib in $needed; do
+          if [ "''${lib:0:1}" = "/" ]; then
+            copy_bin_and_deps "$lib" "$root"/lib
+            continue
           fi
+          local rpath
+          for rpath in $rpaths; do
+            if [ -e "$rpath/$lib" ]; then
+              copy_bin_and_deps "$rpath/$lib" "$root"/lib
+              break
+            fi
+          done
+        done
+      }
+
+      find_bin() {
+        local dir
+        for dir in $binInputs; do
+          if [ -e "$dir"/bin/$1 ]; then
+            echo "$dir"/bin/$1
+            return 0
+          fi
+        done
+        return 1
+      }
+
+      BINS="awk basename bash bzip2 cat chmod cksum cmp cp cut date diff dirname \
+            egrep env expr false fgrep find gawk grep gzip head id install join ld \
+            ln ls make mkdir mktemp mv nl nproc od patch readlink rm rmdir sed sh \
+            sleep sort stat tar tail tee test touch tsort tr true xz xargs uname uniq wc"
+      COMPILERS="as ar gcc g++ ld objdump ranlib readelf strip"
+      for bin in patchelf $BINS $COMPILERS; do
+        if ! file=$(find_bin "$bin"); then
+          echo "Failed to find $bin"
+          exit 1
+        fi
+        copy_bin_and_deps "$file" "$root"/bin
+      done
+      for file in '${gcc.bin}'/libexec/gcc/*/*/*; do
+        test -f "$file" && test -x "$file" || continue
+        copy_bin_and_deps "$file" "$(dirname "$root"/''${file#${gcc.bin}})"
       done
 
-      nuke-refs $out/bin/*
-      nuke-refs $out/lib/*
-      nuke-refs $out/libexec/*
-      nuke-refs $out/libexec/gcc/*/*/*
+      for lib in "$root"/lib/lib*.so*; do
+        slib="''${lib%.so*}.so"
+        test ! -e "$slib" || continue
+        ln -srv "$lib" "$slib"
+      done
 
-      mkdir $out/.pack
-      mv $out/* $out/.pack
-      mv $out/.pack $out/pack
-      #
-      mkdir $out/on-server
+      nuke-refs "$root"/{bin,lib,libexec}/*
+
+      mkdir -pv "$out"/on-server
       tar --sort=name --owner=0 --group=0 --numeric-owner \
         --no-acls --no-selinux --no-xattrs \
         --mode=go=rX,u+rw,a-s \
         --clamp-mtime --mtime=@946713600 \
-        -c -C "$out/pack" . | xz -9 -e > "$out"/on-server/bootstrap-tools.tar.xz
-      cp ${busybox}/bin/busybox $out/on-server/bootstrap-busybox
+        -c -C "$root" . | xz -9 -e > "$out"/on-server/bootstrap-tools.tar.xz
+      cp ${busybox_bootstrap}/bin/busybox "$out"/on-server/bootstrap-busybox
       chmod u+w $out/on-server/bootstrap-busybox
       nuke-refs $out/on-server/bootstrap-busybox
-      set +x
     '';
 
     # The result should not contain any references (store paths) so
@@ -191,8 +166,8 @@ rec {
 
     buildCommand = ''
       mkdir -p $out/nix-support
-      echo "file tarball ${build}/on-server/bootstrap-tools.tar.xz" >> $out/nix-support/hydra-build-products
-      echo "file busybox ${build}/on-server/busybox" >> $out/nix-support/hydra-build-products
+      echo "file tarball '${build}'/on-server/bootstrap-tools.tar.xz" >> $out/nix-support/hydra-build-products
+      echo "file busybox '${build}'/on-server/busybox" >> $out/nix-support/hydra-build-products
     '';
   };
 

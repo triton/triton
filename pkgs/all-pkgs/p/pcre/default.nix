@@ -51,11 +51,25 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
   ];
 
-  dontPatchShebangs = true;
+  postInstall = ''
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/bin/* "$bin"/bin
+    mv "$bin"/bin/pcre-config "$dev"/bin
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+  '';
+
+  postFixup = ''
+    ln -sv "$lib"/lib/* "$dev"/lib
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -77,7 +91,8 @@ stdenv.mkDerivation rec {
     license = licenses.bsd3;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

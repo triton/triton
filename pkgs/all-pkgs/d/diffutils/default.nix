@@ -6,7 +6,8 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionalString
+    optionals;
 
   version = "3.7";
 
@@ -26,13 +27,21 @@ stdenv.mkDerivation rec {
   # We don't want to end up with a dependency on bootstrap-tools
   ac_cv_path_PR_PROGRAM = "pr";
 
-  postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
+
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -53,7 +62,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

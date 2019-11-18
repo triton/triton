@@ -105,9 +105,7 @@ let  # BEGIN let/in 1
             callPackage
             callPackages
             callPackageAlias
-            recurseIntoAttrs
-            wrapCCWith
-            wrapCC;
+            recurseIntoAttrs;
           inherit (lib)
             hiPrio
             hiPrioSet
@@ -538,17 +536,7 @@ let  # BEGIN let/in 1
 ################################################################################
 ################################################################################
 
-
-wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
-  nativeTools = pkgs.stdenv.cc.nativeTools or false;
-  nativeLibc = pkgs.stdenv.cc.nativeLibc or false;
-  nativePrefix = pkgs.stdenv.cc.nativePrefix or "";
-  cc = baseCC;
-  inherit libc extraBuildCommands;
-};
-
-wrapCC =
-  wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.libc "";
+wrapCC = callPackage ../build-support/cc-wrapper { };
 
 ################################################################################
 ################################################################################
@@ -730,8 +718,6 @@ bash = callPackage ../all-pkgs/b/bash { };
 
 bash_small = callPackage ../all-pkgs/b/bash {
   type = "small";
-  gettext = null;
-  texinfo = null;
   readline = null;
   ncurses = null;
 };
@@ -836,9 +822,85 @@ cairomm = callPackage ../all-pkgs/c/cairomm { };
 
 caribou = callPackage ../all-pkgs/c/caribou { };
 
-cc = pkgs.cc_gcc;
+cc = null;
+hostcc = null;
 
-cc_gcc = wrapCC pkgs.gcc;
+cc_relinker = callPackage ../build-support/cc-relinker { };
+
+cc_clang_early = pkgs.wrapCCNew {
+  compiler = pkgs.clang.bin;
+  tools = [ pkgs.llvm.bin ];
+  inputs = [
+    pkgs.clang.cc_headers
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_early = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc.cc_headers
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_glibc_headers = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc.cc_headers
+    pkgs.glibc_headers_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_glibc_nolibc = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_glibc_static
+    pkgs.gcc.cc_headers
+    pkgs.glibc_headers_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_glibc_nolibgcc = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_glibc_static
+    pkgs.gcc.cc_headers
+    pkgs.glibc_lib_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_glibc_early = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_glibc
+    pkgs.gcc.cc_headers
+    pkgs.glibc_lib_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_glibc = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_runtime_glibc
+    pkgs.gcc_lib_glibc
+    pkgs.gcc.cc_headers
+    pkgs.glibc_lib_gcc.cc_reqs
+    pkgs.glibc_lib_gcc
+    pkgs.linux-headers
+  ];
+};
+
 
 cc-regression = callPackage ../all-pkgs/c/cc-regression { };
 
@@ -1456,6 +1518,27 @@ gcab = callPackage ../all-pkgs/g/gcab { };
 
 gcc = callPackage ../all-pkgs/g/gcc { };
 
+gcc_lib_glibc = callPackage ../all-pkgs/g/gcc/lib.nix {
+  cc = pkgs.cc_gcc_glibc_nolibgcc;
+};
+
+gcc_lib_glibc_static = callPackage ../all-pkgs/g/gcc/lib.nix {
+  cc = pkgs.cc_gcc_glibc_headers;
+  type = "nolibc";
+};
+
+gcc_cxx_glibc = callPackage ../all-pkgs/g/gcc/cxx.nix {
+  cc = pkgs.cc_gcc_glibc_early;
+  gcc_lib = pkgs.gcc_lib_glibc;
+};
+
+gcc_runtime_glibc = callPackage ../all-pkgs/g/gcc/runtime.nix {
+  cc = pkgs.cc_gcc_glibc_early;
+  gcc_lib = pkgs.gcc_lib_glibc;
+};
+
+gcc_runtime = null;
+
 gconf = callPackage ../all-pkgs/g/gconf { };
 
 gcr = callPackage ../all-pkgs/g/gcr { };
@@ -1527,7 +1610,21 @@ glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };
 
-glibc = callPackage ../all-pkgs/g/glibc { };
+glibc_lib = null;
+
+glibc_lib_gcc = callPackage ../all-pkgs/g/glibc {
+  cc = pkgs.cc_gcc_glibc_nolibc;
+};
+
+glibc_headers_clang = callPackage ../all-pkgs/g/glibc/headers.nix {
+  cc = pkgs.cc_clang_early;
+};
+
+glibc_headers_gcc = callPackage ../all-pkgs/g/glibc/headers.nix {
+  cc = pkgs.cc_gcc_early;
+};
+
+glibc_progs = callPackage ../all-pkgs/g/glibc/progs.nix { };
 
 glibc_locales = callPackage ../all-pkgs/g/glibc/locales.nix { };
 
@@ -2215,7 +2312,7 @@ libburn = callPackage ../all-pkgs/l/libburn { };
 
 libbytesize = callPackage ../all-pkgs/l/libbytesize { };
 
-libc = pkgs.glibc;
+libc = null;
 
 libcacard = callPackage ../all-pkgs/l/libcacard { };
 
@@ -2364,6 +2461,11 @@ libidl = callPackage ../all-pkgs/l/libidl { };
 libidn = callPackage ../all-pkgs/l/libidn { };
 
 libidn2 = callPackage ../all-pkgs/l/libidn2 { };
+
+libidn2_glibc = callPackage ../all-pkgs/l/libidn2 {
+  cc = pkgs.cc_gcc_glibc_early;
+  libunistring = pkgs.libunistring_glibc;
+};
 
 libimagequant = callPackage ../all-pkgs/l/libimagequant { };
 
@@ -2570,8 +2672,6 @@ libssh = callPackage ../all-pkgs/l/libssh { };
 
 libssh2 = callPackage ../all-pkgs/l/libssh2 { };
 
-libstdcxx = callPackage ../all-pkgs/l/libstdcxx { };
-
 libstoragemgmt = callPackage ../all-pkgs/l/libstoragemgmt { };
 
 libtasn1 = callPackage ../all-pkgs/l/libtasn1 { };
@@ -2610,6 +2710,10 @@ libuninameslist = callPackage ../all-pkgs/l/libuninameslist { };
 libunique = callPackage ../all-pkgs/l/libunique { };
 
 libunistring = callPackage ../all-pkgs/l/libunistring { };
+
+libunistring_glibc = callPackage ../all-pkgs/l/libunistring {
+  cc = pkgs.cc_gcc_glibc_early;
+};
 
 libunwind = callPackage ../all-pkgs/l/libunwind { };
 
@@ -3310,9 +3414,9 @@ parallel = callPackage ../all-pkgs/p/parallel { };
 
 parted = callPackage ../all-pkgs/p/parted { };
 
-patchelf = callPackage ../all-pkgs/p/patchelf { };
-
-patchelf_old = callPackage ../all-pkgs/p/patchelf/old.nix { };
+patchelf = callPackageAlias "patchelf_0-9" { };
+patchelf_0-9 = callPackage ../all-pkgs/p/patchelf/0.9.nix { };
+patchelf_0-10 = callPackage ../all-pkgs/p/patchelf/0.10.nix { };
 
 patchutils = callPackage ../all-pkgs/p/patchutils { };
 
@@ -3460,7 +3564,9 @@ python = callPackageAlias "python2" { };
 
 # Intended only for very early stage builds
 # Don't use this package without a good reason
-python_tiny = callPackage ../all-pkgs/p/python/tiny.nix { };
+python_tiny = callPackage ../all-pkgs/p/python/tiny.nix {
+  python = null;
+};
 
 python27Packages = hiPrioSet (
   recurseIntoAttrs (callPackage ../top-level/python-packages.nix {

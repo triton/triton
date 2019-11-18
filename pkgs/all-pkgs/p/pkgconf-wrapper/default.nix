@@ -24,7 +24,7 @@ stdenv.mkDerivation {
   name = "${pkg-config.name}-wrapped";
 
   buildCommand = ''
-    BIN='${pkg-config}/bin/pkg-config'
+    BIN='${pkg-config.bin}/bin/pkg-config'
     test -e "$BIN"
 
     mkdir -p "$out"/bin
@@ -47,7 +47,7 @@ stdenv.mkDerivation {
     test "$INSTALL_SYS_DIR" = "$("$out"/bin/pkg-config --variable=install_sys_dir test.pc)"
     set +x
 
-    ln -sv "${pkg-config}/share" "$out"
+    ln -sv "${pkg-config.bin}/share" "$out"
 
     mkdir -p "$out"/nix-support
     cp '${./setup-hook.sh}' "$out"/nix-support/setup-hook

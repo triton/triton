@@ -2,6 +2,7 @@
 , bison
 , fetchurl
 , flex
+, hostcc
 , lib
 
 , channel
@@ -34,25 +35,43 @@ let
   headerArch = {
     "x86_64-linux" = "x86_64";
     "i686-linux" = "i386";
+    "powerpc64le-linux" = "powerpc";
   };
 
   inherit (lib)
     optionals
     versionAtLeast;
 in
-stdenv.mkDerivation rec {
+(stdenv.override { cc = null; }).mkDerivation rec {
   name = "linux-headers-${source.version}";
 
   inherit (sourceFetch)
     src;
 
-  nativeBuildInputs = optionals (versionAtLeast source.version "4.16") [
+  nativeBuildInputs = [
+    hostcc
+  ] ++ optionals (versionAtLeast source.version "4.16") [
     bison
     flex
   ];
 
   patches = [
     sourceFetch.patch
+  ];
+
+  preBuild = ''
+    makeFlagsArray+=(
+      CC="$NIX_SYSTEM_HOST-gcc"
+      CXX="$NIX_SYSTEM_HOST-g++"
+      LD="$NIX_SYSTEM_HOST-ld"
+      HOSTCC="$CC_FOR_BUILD"
+      HOSTCXX="$CXX_FOR_BUILD"
+      HOSTLD="$LD_FOR_BUILD"
+    )
+  '';
+
+  makeFlags = [
+    "ARCH=${headerArch."${stdenv.targetSystem}"}"
   ];
 
   # The header install process requires a configuration
@@ -65,19 +84,23 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("INSTALL_HDR_PATH=$out")
   '';
 
-  installFlags = [
-    "ARCH=${headerArch."${stdenv.targetSystem}"}"
-  ];
-
   installTargets = "headers_install";
+
+  postInstall = ''
+    mkdir -p "$out"/nix-support
+    echo "-idirafter $out/include" >"$out"/nix-support/stdinc
+  '';
 
   preFixup = ''
     # Cleanup some unneeded files
     find "$out"/include \( -name .install -o -name ..install.cmd \) -delete
   '';
 
+  # We don't have an elf patcher yet
+  dontStrip = true;
+
   # The linux-headers do not need to maintain any references
-  allowedReferences = [ ];
+  allowedReferences = [ "out" ];
 
   passthru = {
     inherit channel;
@@ -90,7 +113,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

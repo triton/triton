@@ -44,11 +44,17 @@ stdenv.mkDerivation rec {
     export NIX_LDFLAGS="$NIX_LDFLAGS -lgmp"
   '';
 
-  # Ensure we don't depend on anything unexpected
-  allowedReferences = [
-    "out"
-    gmp
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    mv -v "$lib"/lib/*gdb* "$dev"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   meta = with stdenv.lib; {
     homepage = http://www.kotnet.org/~skimo/isl/;
@@ -58,7 +64,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

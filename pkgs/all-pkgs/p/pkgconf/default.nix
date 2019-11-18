@@ -6,7 +6,7 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionals;
 in
 stdenv.mkDerivation rec {
   name = "pkgconf-1.6.1";
@@ -25,20 +25,36 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
+    # Move bin files
+    mkdir -p "$bin"/share
+    mv -v "$dev"/bin "$bin"
+    mv -v "$dev"/share/aclocal "$bin"/share
+
+    # Move shared libs
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+
     # The header files expect themselves to be in libpkgconf
     # however they are installed to pkgconf
-    test -d "$out"/include/pkgconf
-    ln -sv pkgconf "$out"/include/libpkgconf
+    test -d "$dev"/include/pkgconf
+    ln -sv pkgconf/libpkgconf "$dev"/include
 
     # We want compatability with pkg-config
-    ln -sv pkgconf "$out"/bin/pkg-config
-  '' + optionalString (type != "full") ''
-    rm -r "$out"/share/{doc,man}
+    ln -sv pkgconf "$bin"/bin/pkg-config
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  postFixup = ''
+    ln -sv "$lib"/lib/* "$dev"/lib
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/pkgconf/pkgconf";
@@ -48,7 +64,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

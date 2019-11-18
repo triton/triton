@@ -44,15 +44,19 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postInstall = optionalString (type == "small") ''
-    rm -r "$out"/share
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs
-    ++ optionals (type == "full") [
-    attr
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
   ];
 
   passthru = {
@@ -74,7 +78,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

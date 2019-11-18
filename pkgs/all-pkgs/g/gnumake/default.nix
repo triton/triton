@@ -7,7 +7,8 @@
 
 let
   inherit (stdenv.lib)
-    optionalString;
+    optionalString
+    optionals;
 
   version = "4.2.1";
 
@@ -47,14 +48,24 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     # Nothing should be using the header
-    rm -r "$out"/include
-  '' + optionalString (type != "full") ''
-    rm -r "$out"/share
+    rm -rv "$bin"/include
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
+
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
+  '';
+
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -75,7 +86,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

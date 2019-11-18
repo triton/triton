@@ -1,11 +1,13 @@
 { stdenv
-, binutils
 , bison
+, cc
 , fetchurl
 , fetchTritonPatch
-, gcc
+, gcc_lib_glibc
+, glibc_progs
+, libidn2_glibc
 , linux-headers
-, python_tiny
+, python3
 
 , type ? "full"
 }:
@@ -19,88 +21,37 @@ let
     optionalAttrs
     optionalString;
 
-  host =
-    if type == "bootstrap" then
-      "x86_64-tritonboot-linux-gnu"
-    else
-      "x86_64-pc-linux-gnu";
-
-  version = "2.29";
-in
-stdenv.mkDerivation (rec {
+  inherit (import ./common.nix { inherit fetchurl fetchTritonPatch; })
+    src
+    patches
+    version;
+self = (stdenv.override { cc = null; }).mkDerivation rec {
   name = "glibc-${version}";
 
-  src = fetchurl {
-    url = "mirror://gnu/glibc/${name}.tar.xz";
-    hashOutput = false;
-    sha256 = "f3eeb8d57e25ca9fc13c2af3dae97754f9f643bc69229546828e3a240e2af04b";
-  };
+  inherit
+    src
+    patches;
 
   nativeBuildInputs = [
     bison
-    binutils
-    gcc
-    python_tiny
+    cc
+    python3
+  ] ++ optionals (type != "bootstrap") [
+    glibc_progs
   ];
 
-  # Some of the tools depend on a shell. Set to impure /bin/sh to
-  # prevent a retained dependency on the bootstrap tools in the stdenv-linux
-  # bootstrap.
-  BASH_SHELL = "/bin/sh";
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
-      file = "g/glibc/0001-Fix-common-header-paths.patch";
-      sha256 = "df93cbd406a5dd2add2dd0d601ff9fc97fc42a1402010268ee1ee8331ec6ec72";
-    })
-    (fetchTritonPatch {
-      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
-      file = "g/glibc/0002-sunrpc-Don-t-hardcode-cpp-path.patch";
-      sha256 = "7a9ce7f69cd6d3426d19a8343611dc3e9c48e3374fa1cb8b93c5c98d7e79d69b";
-    })
-    (fetchTritonPatch {
-      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
-      file = "g/glibc/0003-timezone-Fix-zoneinfo-path-for-triton.patch";
-      sha256 = "b4b47be63c3437882a160fc8d9b8ed7119ab383b1559599e2706ce8f211a0acd";
-    })
-    (fetchTritonPatch {
-      rev = "081b7a40d174baf95f1979ff15c60b49c8fdc30d";
-      file = "g/glibc/0004-nsswitch-Try-system-paths-for-modules.patch";
-      sha256 = "9cd235f0699661cbfd0b77f74c538d97514ba450dfba9a3f436adc2915ae0acf";
-    })
-    (fetchTritonPatch {
-      rev = "b772989f030aef70b8b5fd39a3bb04738d50b383";
-      file = "g/glibc/0005-locale-archive-Support-multiple-locale-archive-locat.patch";
-      sha256 = "3ab23b441e573e51ee67a8e65a3c0c5a40d8d80805838a389b9abca08c45156c";
-    })
-    (fetchTritonPatch {
-      rev = "cf6beafafc0d218cf156e3713fe62c0e53629419";
-      file = "g/glibc/0006-Add-C.UTF-8-Support.patch";
-      sha256 = "07f61db686dc36bc009999cb8d686581a29b13a0d2dd3f7f0b74cdfe964a0540";
-    })
-  ];
-
-  # We don't want to rewrite the paths to our dynamic linkers for ldd
-  # Just use the paths as-is.
-  postPatch = ''
-    grep -q '^ldd_rewrite_script=' sysdeps/unix/sysv/linux/x86_64/configure
-    find sysdeps -name configure -exec sed -i '/^ldd_rewrite_script=/d' {} \;
-  '';
+  prefix = placeholder "lib";
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--host=${host}"
-    "--disable-maintainer-mode"
     "--enable-stackguard-randomization"
     "--enable-bind-now"
     "--enable-stack-protector=strong"
     "--enable-kernel=${linux-headers.channel}"
     "--disable-werror"
-    "--${boolEn (type == "full")}-build-nscd"
-    "--with-binutils=${binutils}"
-    "--with-headers=${linux-headers}/include"
+  ] ++ optionals (type != "bootstrap") [
+    "libc_cv_use_default_link=yes"
   ];
 
   preConfigure = ''
@@ -108,40 +59,98 @@ stdenv.mkDerivation (rec {
     cd build
     configureScript='../configure'
   '';
-
+  
   preBuild = ''
     # We don't want to use the ld.so.cache from the system
     grep -q '#define USE_LDCONFIG' config.h
     echo '#undef USE_LDCONFIG' >>config.h
+
+    # Don't build programs
+    echo "build-programs=no" >>configparms
   '';
 
   preInstall = ''
     installFlagsArray+=(
-      "sysconfdir=$out/etc"
+      "sysconfdir=$dev/etc"
       "localstatedir=$TMPDIR"
     )
   '';
 
   postInstall = ''
-    # Ensure we always have a fallback C.UTF-8 locale-archive
-    export LOCALE_ARCHIVE="$out"/lib/locale/locale-archive
-    mkdir -p "$(dirname "$LOCALE_ARCHIVE")"
-    "$out"/bin/localedef -i C -f UTF-8 C.UTF-8
+    mkdir -p "$dev"/lib
 
-    # Make sure the cc-wrapper doesn't pick this up automagically
-    mkdir -p "$out"/nix-support
-    touch "$out"/nix-support/cc-wrapper-ignored
+    $READELF --version >/dev/null
+
+    pushd "$lib"/lib >/dev/null
+    for file in $(find * -not -type d); do
+      elf=1
+      $READELF -h "$file" >/dev/null 2>&1 || elf=0
+      if [[ "$file" == *.so* && "$elf" == 1 ]]; then
+        mkdir -p "$dev"/lib/"$(dirname "$file")"
+        ln -sv "$lib"/lib/"$file" "$dev"/lib/"$file"
+      else
+        if [[ "$elf" == 0 ]] && grep -q 'ld script' "$file"; then
+          sed -i "s,$lib,$dev,g" "$file"
+        fi
+        mv -v "$file" "$dev"/lib
+      fi
+    done
+    popd >/dev/null
+    mv "$dev"/lib/gconv-modules "$lib"/lib
+    rm -r "$dev"/etc
+    rm -r "$lib"/share
+    mv "$lib"/include "$dev"
+
+    mkdir -p "$dev"/nix-support
+    echo "-D_FORTIFY_SOURCE=2" >>"$dev"/nix-support/cflags-before
+    echo "-fno-strict-overflow" >>"$dev"/nix-support/cflags-before
+    echo "-fstack-protector-strong" >>"$dev"/nix-support/cflags-before
+    echo "-idirafter $dev/include" >>"$dev"/nix-support/stdinc
+    echo "-B$dev/lib" >>"$dev"/nix-support/cflags
+    dyld="$(echo "$lib"/lib/ld-*.so)"
+    echo -n "$dyld" >>"$dev"/nix-support/dynamic-linker
+    echo "-L$dev/lib" >>"$dev"/nix-support/ldflags
+    echo "--enable-new-dtags" >>"$dev"/nix-support/ldflags-before
+    echo "-z noexecstack" >>"$dev"/nix-support/ldflags-before
+    echo "-z now" >>"$dev"/nix-support/ldflags-before
+    echo "-z relro" >>"$dev"/nix-support/ldflags-before
+  '' + optionalString (type != "bootstrap") ''
+    # Ensure we always have a fallback C.UTF-8 locale-archive
+    export LOCALE_ARCHIVE="$lib"/lib/locale/locale-archive
+    mkdir -p "$(dirname "$LOCALE_ARCHIVE")"
+    localedef -i C -f UTF-8 C.UTF-8
   '';
 
-  # Don't retain shell referencs
-  dontPatchShebangs = true;
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
-  # We can't have references to any of our bootstrapping derivations
-  allowedReferences = [ "out" ];
+  # Patchelf will break our loader
+  dontPatchELF = true;
+
+  CC_WRAPPER_LD_ADD_RPATH = false;
 
   passthru = {
     impl = "glibc";
     inherit version;
+    cc_reqs = stdenv.mkDerivation {
+      name = "glibc-cc_reqs-${version}";
+
+      buildCommand = ''
+        mkdir -p "$out"/lib
+        ln -sv '${self.dev}'/lib/libc* "$out"/lib
+        ln -sfv '${self.lib}'/lib/libc* "$out"/lib
+
+        rm "$out"/lib/libc.so
+        cp '${self.dev}'/lib/libc.so "$out"/lib
+        chmod a+w "$out"/lib/libc.so
+        echo "GROUP ( ${gcc_lib_glibc}/lib/libgcc_s.so ${libidn2_glibc}/lib/libidn2.so )" >>"$out"/lib/libc.so
+
+        mkdir -p "$out"/nix-support
+        echo "-L$out/lib" >"$out"/nix-support/cflags-link
+      '';
+    };
   };
 
   meta = with stdenv.lib; {
@@ -149,8 +158,9 @@ stdenv.mkDerivation (rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
-} // optionalAttrs (type == "full") {
-  setupHook = ./setup-hook.sh;
-})
+};
+in (self // { all = self.all ++ [ self.cc_reqs ];})

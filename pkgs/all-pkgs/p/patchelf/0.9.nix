@@ -21,13 +21,9 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share
-  '';
-
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcxxLibs;
+  outputs = [
+    "bin"
+  ];
 
   passthru = {
     dist = stdenv.mkDerivation rec {
@@ -75,6 +71,7 @@ stdenv.mkDerivation rec {
     ];
     platforms = with platforms;
       i686-linux
+      ++ powerpc64le-linux
       ++ x86_64-linux;
   };
 }

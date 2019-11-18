@@ -13,8 +13,8 @@
 
 let
   inherit (stdenv.lib)
-    optionals
-    optionalString;
+    optionalString
+    optionals;
 
   tarballUrls = version: [
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
@@ -46,20 +46,19 @@ stdenv.mkDerivation rec {
     "--enable-single-binary=symlinks"
   ];
 
-  postInstall = optionalString (type == "small") ''
-    rm -r "$out"/share
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs
-    ++ optionals (type == "full") [
-    acl
-    attr
-    gmp
-    libcap
-    libselinux
-    libsepol
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
   ];
 
   passthru = {
@@ -83,8 +82,9 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
     priority = -9;  # This should have a higher priority than everything
   };
 }

@@ -1,17 +1,19 @@
 { stdenv
+, binutils
 , fetchTritonPatch
 , fetchurl
+, hostcc
 
-, binutils
 , gmp
 , isl
-, libc
 , libmpc
 , linux-headers
 , mpfr
 , zlib
 
+, target ? null
 , type ? "full"
+, fakeCanadian ? false
 }:
 
 let
@@ -24,34 +26,40 @@ let
     optionalString
     stringLength;
 
-  target =
-    if type == "bootstrap" then
-      "x86_64-tritonboot-linux-gnu"
-    else
-      "x86_64-pc-linux-gnu";
-
-  nativeHeaders =
-    if type == "bootstrap" then
-      "/no-such-path/native-headers"
-    else
-      "${libc}/include";
-
   checking =
     if type == "bootstrap" then
       "yes"
     else
       "release";
 
-  version = "9.1.0";
+  commonConfigureFlags = [
+    (optionalString (target != null) "--target=${target}")
+    "--${boolEn (type != "bootstrap")}-gcov"
+    "--disable-multilib"
+    "--disable-bootstrap"
+    "--enable-languages=c,c++"
+    "--disable-werror"
+    "--enable-checking=${checking}"
+    "--${boolEn (type != "bootstrap")}-nls"
+    "--enable-cet=auto"
+    "--with-glibc-version=2.28"
+  ];
+
+  version = "9.2.0";
 in
-stdenv.mkDerivation (rec {
+stdenv.mkDerivation rec {
   name = "gcc-${version}";
 
   src = fetchurl {
     url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0";
+    sha256 = "ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206";
   };
+
+  nativeBuildInputs = [
+    binutils.bin
+    hostcc
+  ];
 
   buildInputs = optionals (type != "bootstrap") [
     gmp
@@ -96,46 +104,32 @@ stdenv.mkDerivation (rec {
     mv mpfr-* mpfr
   '';
 
-  configureFlags = [
-    "--target=${target}"
-    "--${boolEn (type != "bootstrap")}-shared"
+  # We need to use the proper objdump tool for our build
+  postPatch = ''
+    grep -q 'export_sym_check.*"objdump' libcc1/configure
+    sed -i '/export_sym_check/s,"objdump,"$OBJDUMP,' {gcc,libcc1}/configure
+  '' + optionalString fakeCanadian ''
+    sed -i 's,@GCC_FOR_TARGET@,$$r/$(HOST_SUBDIR)/gcc/xgcc -B$$r/$(HOST_SUBDIR)/gcc/,' Makefile.in
+  '';
+
+  prefix = placeholder "bin";
+
+  configureFlags = commonConfigureFlags ++ [
     "--enable-host-shared"
-    "--${boolEn (type != "bootstrap")}-gcov"
-    "--disable-multilib"
-    "--${boolEn (type != "bootstrap")}-threads"
-    "--disable-maintainer-mode"
-    "--disable-bootstrap"
-    "--enable-languages=c,c++"
-    "--${boolEn (type != "bootstrap")}-libsanitizer"
-    (optional (type == "bootstrap") "--disable-libssp")
-    "--${boolEn (type != "bootstrap")}-libquadmath"
-    "--${boolEn (type != "bootstrap")}-libgomp"
-    "--${boolEn (type != "bootstrap")}-libvtv"
-    "--${boolEn (type != "bootstrap")}-libatomic"
-    "--${boolEn (type != "bootstrap")}-libitm"
-    "--${boolEn (type != "bootstrap")}-libmpx"
-    "--${boolEn (type != "bootstrap")}-libhsail-rt"
-    "--${boolEn (type != "bootstrap")}-libstdcxx"
-    "--disable-werror"
-    "--enable-checking=${checking}"
-    "--${boolEn (type != "bootstrap")}-nls"
-    (optional (type == "bootstrap") "--disable-decimal-float")
     "--${boolEn (type != "bootstrap")}-lto"
-    "--with-glibc-version=2.28"
-    (optional (type == "bootstrap") "--without-headers")
-    (optional (type == "bootstrap") "--with-newlib")
-    "--with-build-time-tools=${binutils}/bin"
-    "--${boolWt (type != "bootstrap")}-system-libunwind"
+    "--enable-linker-build-id"
     "--${boolWt (type != "bootstrap")}-system-zlib"
+    "--without-headers"
+    "--with-newlib"
+    "--with-local-prefix=/no-such-path/local-prefix"
+    "--with-native-system-header-dir=/no-such-path/native-headers"
+    "--with-debug-prefix-map=$NIX_BUILD_TOP=/no-such-path"
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "--with-local-prefix=/no-such-path/local-prefix"
-      "--with-native-system-header-dir=${nativeHeaders}"
-      "--with-debug-prefix-map=$NIX_BUILD_TOP=/no-such-path"
-    )
+  # Not autodetected during cross compiles
+  gcc_cv_initfini_array = optionalString (type != "bootstrap") "yes";
 
+  preConfigure = ''
     mkdir -v build
     cd build
     configureScript='../configure'
@@ -143,89 +137,113 @@ stdenv.mkDerivation (rec {
 
   preBuild = ''
     sed -i '/^TOPLEVEL_CONFIGURE_ARGUMENTS=/d' Makefile
-  '' + optionalString (type != "bootstrap") ''
-    # Our compiler needs to get libc objects
-    # Normally using -B${libc}/lib works but libtool filters
-    # that out for some of the runtime library builds
-    mkdir gcc
-    ln -sv "${libc}"/lib/*.o gcc/
-
-    # Our libc needs linux/limits.h for its limits.h
-    makeFlagsArray+=("CPPFLAGS_FOR_TARGET=-idirafter ${linux-headers}/include")
-    flags=(
-      "-idirafter" "${linux-headers}/include"
-
-      # Libc library configs
-      "-L${libc}/lib"
-      "-Wl,-dynamic-linker=$(echo ${libc}/lib/ld-linux-*.so*)"
-      "-Wl,-rpath=${libc}/lib"
-    )
-    oldifs="$IFS"
-    IFS=" "
-    makeFlagsArray+=("CFLAGS_FOR_TARGET=''${flags[*]}")
-    makeFlagsArray+=("CXXFLAGS_FOR_TARGET=''${flags[*]}")
-    makeFlagsArray+=("LDFLAGS_FOR_TARGET=''${flags[*]}")
-    IFS="$oldifs"
   '';
 
-  postInstall = optionalString (type == "bootstrap") ''
+  buildFlags = [
+    "all-host"
+  ];
+
+  installTargets = [
+    "install-host"
+  ];
+
+  postInstall = ''
+    rm -v "$bin"/bin/*-${version}
+
     # GCC won't include our libc limits.h if we don't fix it
-    cat ../gcc/{limitx.h,glimits.h,limity.h} >"$out"/lib/gcc/*/*/include-fixed/limits.h
+    ! test -e "$bin"/lib/gcc/*/*/include-fixed/limits.h
+    cat ../gcc/{limitx.h,glimits.h,limity.h} >"$bin"/lib/gcc/*/*/include-fixed/limits.h
 
-    # CC does not get installed for some reason
-    ln -srv "$out"/bin/${target}-gcc "$out"/bin/${target}-cc
+    find "$bin" -name '*'.la -delete
 
-    # Ensure we have all of the non-prefixed tools
-    for bin in "$out"/bin/${target}-*; do
-      base="$(basename "$bin")"
-      tool="$out/bin/''${base:${toString (stringLength (target + "-"))}}"
-      rm -fv "$tool"
-      ln -srv "$bin" "$tool"
-    done
-  '' + optionalString (type != "bootstrap") ''
-    # CC does not get installed for some reason
-    ln -srv "$out"/bin/gcc "$out"/bin/cc
+    rm -rv "$bin"/lib/gcc/*/*/install-tools
+    mkdir -p "$plugin_dev" "$plugin_lib/lib"
+    mv -v "$bin"/lib/gcc/*/*/plugin "$plugin_dev"
+    mv -v "$plugin_dev"/plugin/*.so* "$plugin_lib"/lib
+    ln -sv "$plugin_lib"/lib/* "$plugin_dev"/plugin
+
+    mkdir -p "$cc_headers"
+    mv -v "$bin"/lib/gcc/*/*/include "$cc_headers"
+    mv -v "$bin"/lib/gcc/*/*/include-fixed "$cc_headers"
+    mkdir -p "$cc_headers"/nix-support
+    echo "-idirafter $cc_headers/include" >>"$cc_headers"/nix-support/stdinc
+    echo "-idirafter $cc_headers/include-fixed" >>"$cc_headers"/nix-support/stdinc
+
+    mkdir -p "$lib"/lib "$dev"/lib
+    mv -v "$bin"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    mv -v "$bin"/include "$dev"
+    rmdir "$bin"/lib/gcc/*/* "$bin"/lib/gcc/* "$bin"/lib/gcc "$bin"/lib
+
+    pfx=
+  '' + optionalString (target != null) ''
+    if [ -e "$bin"/bin/${target}-gcc ]; then
+      pfx=${target}-
+    fi
+  '' + optionalString (target == null) ''
+    rm -rv "$bin"/bin/"$NIX_SYSTEM_HOST"-*
   '' + ''
+    # CC does not get installed for some reason
+    ln -srv "$bin"/bin/''${pfx}gcc "$bin"/bin/''${pfx}cc
+
+    find . -not -type d -and -not -name '*'.mvars -and -not -name Makefile -and -not -name '*'.h -delete
+    find . -type f -exec sed -i "s,$NIX_BUILD_TOP,/build-dir,g" {} \;
+    mkdir -p "$internal"
+    tar Jcf "$internal"/build.tar.xz .
+
     # Hash the tools and deduplicate
-    declare -A binMap
-    for bin in "$out"/bin/*; do
-      if [ -L "$bin" ]; then
+    declare -A progMap
+    for prog in "$bin"/bin/*; do
+      if [ -L "$prog" ]; then
         continue
       fi
-      checksum="$(cksum "$bin" | cut -d ' ' -f1)"
-      oBin="''${binMap["$checksum"]}"
-      if [ -z "$oBin" ]; then
-        binMap["$checksum"]="$bin"
-      elif cmp "$bin" "$oBin"; then
-        rm "$bin"
-        ln -srv "$oBin" "$bin"
+      checksum="$(cksum "$prog" | cut -d ' ' -f1)"
+      oProg="''${progMap["$checksum"]}"
+      if [ -z "$oProg" ]; then
+        progMap["$checksum"]="$prog"
+      elif cmp "$prog" "$oProg"; then
+        rm "$prog"
+        ln -srv "$oProg" "$prog"
       fi
     done
 
     # We don't need the install-tools for anything
     # They sometimes hold references to interpreters
-    rm -rv "$out"/libexec/gcc/*/*/install-tools
-
-    # Make sure the cc-wrapper doesn't pick this up automagically
-    mkdir -p "$out"/nix-support
-    touch "$out"/nix-support/cc-wrapper-ignored
+    rm -rv "$bin"/libexec/gcc/*/*/install-tools
   '';
 
-  preFixup = optionalString (type != "full") ''
-    # Remove unused files from bootstrap
-    rm -r "$out"/share
-  '' + optionalString (type != "bootstrap") ''
-    # We don't need the libtool archive files so purge them
-    # TODO: Fixup libtool archives so we don't reference an old compiler
-    find "$out"/lib* -name '*'.la -delete
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
 
-  # We want static libgcc_s
-  disableStatic = false;
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "cc_headers"
+    "plugin_dev"
+    "plugin_lib"
+    "internal"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
-    inherit version;
+    inherit target version commonConfigureFlags;
     impl = "gcc";
+    external = false;
+
+    cc = "gcc";
+    cxx = "g++";
+    optFlags = [ ];
+    prefixMapFlag = "file-prefix-map";
+    canStackClashProtect = true;
   };
 
   meta = with stdenv.lib; {
@@ -233,18 +251,8 @@ stdenv.mkDerivation (rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
-} // optionalAttrs (type != "bootstrap") {
-  # Ensure we don't depend on anything unexpected
-  allowedReferences = [
-    "out"
-    gmp
-    isl
-    libc
-    libmpc
-    linux-headers
-    mpfr
-    zlib
-  ] ++ stdenv.cc.runtimeLibcxxLibs;
-})
+}

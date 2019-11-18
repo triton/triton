@@ -39,28 +39,29 @@ stdenv.mkDerivation rec {
     readline
   ];
 
+  preConfigure = ''
+    makeFlagsArray+=("AR=$AR")
+  '';
+
   configureFlags = optionals (type == "full") [
     "--with-libsigsegv-prefix=${libsigsegv}"
     "--with-readline=${readline}"
   ];
 
   postInstall = ''
-    rm -v $out/bin/gawk-*
+    rm -v "$bin"/bin/gawk-*
   '';
 
-  preFixup = optionalString (type != "full") ''
-    rm -r "$out"/etc
-    rm -r "$out"/share/{locale,info,man}
+  postFixup = ''
+    rm -rv "$bin"/{include,share}
+  '' + optionalString (type != "full") ''
+    rm -rv "$bin"/etc
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs
-    ++ optionals (type == "full") [
-    libsigsegv
-    gmp
-    mpfr
-    readline
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
   ];
 
   passthru = {
@@ -84,7 +85,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

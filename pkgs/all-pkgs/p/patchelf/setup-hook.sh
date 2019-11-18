@@ -4,6 +4,30 @@
 
 fixupOutputHooks+=('if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi')
 
+patchelfPost() {
+  case "$($CC -dumpmachine)" in
+    powerpc*)
+      PATCHELF_PAGE_SIZE=65536
+      ;;
+    i[0-9]86*|x86_64*)
+      PATCHELF_PAGE_SIZE=4096
+      ;;
+    *)
+      dontPatchELF=1
+      ;;
+  esac
+}
+
+postHooks+=(patchelfPost)
+
+patchelf() {
+  if [ -z "${PATCHELF_PAGE_SIZE-}" ]; then
+    echo "No patchelf page size for ${CC-}"
+    exit 1
+  fi
+  command patchelf --page-size "$PATCHELF_PAGE_SIZE" "$@"
+}
+
 # Wrapper to make logging a single statement
 patchSingleBinary() {
   local output

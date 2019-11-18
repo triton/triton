@@ -1,9 +1,12 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
+, hostcc
 , lib
 
 , zlib
 
+, target ? null
 , type ? "full"
 }:
 
@@ -17,23 +20,48 @@ let
     optionalString
     stringLength;
 
-  target =
-    if type == "bootstrap" then
-      "x86_64-tritonboot-linux-gnu"
+  supportGold = type != "bootstrap";
+  defaultGold = supportGold && (
+    if target == null then
+      [ stdenv.targetSystem ] != lib.platforms.powerpc64le-linux
     else
-      "x86_64-pc-linux-gnu";
+      !(lib.hasPrefix "powerpc" target)
+    );
 in
-stdenv.mkDerivation (rec {
-  name = "binutils-2.32";
+stdenv.mkDerivation rec {
+  name = "binutils-2.33.1";
 
   src = fetchurl {
     url = "mirror://gnu/binutils/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "0ab6c55dd86a92ed561972ba15b9b70a8b9f75557f896446c82e8b36e473ee04";
+    sha256 = "ab66fc2d1c3ec0359b8e08843c9f33b63e8707efdff5e4cc5c200eae24722cbf";
   };
+
+  nativeBuildInputs = [
+    hostcc
+  ];
 
   buildInputs = optionals (type != "bootstrap") [
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "b42aadf32b9163a2c7dcd30f68210a2797bbda8f";
+      file = "b/binutils/0001-bfd-No-bundled-bfd-plugin-support.patch";
+      sha256 = "2611d9d326c615e2d3cfa71640b35ecd40338b7bd32cd92f26f35557b75142d5";
+    })
+  ] ++ optionals (type != "bootstrap") [
+    (fetchTritonPatch {
+      rev = "780a4108d3b9ffeab7c54dd68f7c7967d4e83b78";
+      file = "b/binutils/0001-gold-Don-t-use-absolute-file-paths-for-version-table.patch";
+      sha256 = "64750440ba41b3e7370a4535db230d43f39b583e12d566c6b28c6a3ef556d739";
+    })
+    (fetchTritonPatch {
+      rev = "9e454c8e63e519768d1dd557af5572eaed941e2b";
+      file = "b/binutils/0001-gold-Make-consistent-with-bfd-script-search-behavior.patch";
+      sha256 = "77857fc87f4a719e848116085ddfc5f54b8cced34d15953e1c644bd277a1ecc4";
+    })
   ];
 
   postPatch = ''
@@ -43,6 +71,9 @@ stdenv.mkDerivation (rec {
     # Fix host lib install directory
     find . -name configure -exec sed -i \
       's,^\([[:space:]]*bfd\(lib\|include\)dir=\).*$,\1"\\''${\2dir}",' {} \;
+
+    # We don't want our ld to reference "dev"
+    sed -i 's,"[^"]*/etc/ld.so.conf","/no-such-path/etc/ld.so.conf",' ld/emultempl/elf32.em
   '';
 
   preConfigure = ''
@@ -51,69 +82,91 @@ stdenv.mkDerivation (rec {
     echo 'NATIVE_LIB_DIRS=' >> ld/configure.tgt
   '';
 
+  # Needed by cross linker to search DT_RUNPATH of libs during link
+  # Otherwise, we won't have the necessary search paths for transitive libs
+  USE_LIBPATH = "yes";
+
   configureFlags = [
-    "--target=${target}"
-    "--enable-shared"
-    # Autodetection is not working for binutils because of how the nested
-    # configure system works
-    "--disable-static"
-    "--${boolEn (type != "bootstrap")}-nls"
+    "--exec-prefix=${placeholder "bin"}"
+    "--datarootdir=${placeholder "bin"}/share"
+    (optionalString (target != null) "--target=${target}")
+    "--${boolEn (type == "full")}-nls"
     "--disable-werror"
     "--enable-deterministic-archives"
-    "--${boolEn (type != "bootstrap")}-gold"
+    "--${boolEn supportGold}-gold${optionalString defaultGold "=default"}"
     "--${boolWt (type != "bootstrap")}-system-zlib"
+    "--with-separate-debug-dir=/no-such-path/debug"
   ];
 
-  preBuild = ''
-    # Needed otherwise it defaults to $prefix/$archtriple
-    makeFlagsArray+=("tooldir=$out")
-  '';
-
   postInstall = ''
-    # Ensure we have all of the non-prefixed tools
-    for bin in "$out"/bin/${target}-*; do
-      base="$(basename "$bin")"
-      tool="$out/bin/''${base:${toString (stringLength (target + "-"))}}"
-      rm -fv "$tool"
-      ln -srv "$bin" "$tool"
-    done
-
     # Invert ld links so that ld.bfd / ld.gold are the proper tools
-    ld="$out"/bin/${target}-ld
-    if [ ! -e "$ld" ]; then
-      ld="$out"/bin/ld
+    ld="$(echo "$bin"/*/bin/ld)"
+    if [ -z "$ld" ]; then
+      ld="$bin"/bin/ld
     fi
-    for bin in "$ld".*; do
-      if [ -L "$bin" ]; then
-        if [ "$(readlink -f "$bin")" = "$ld" ]; then
-          rm -v "$bin"
-          mv -v "$ld" "$bin"
-          ln -srv "$bin" "$ld"
+    for prog in "$ld".*; do
+      if [ -L "$prog" ]; then
+        if [ "$(readlink -f "$prog")" = "$ld" ]; then
+          rm -v "$prog"
+          mv -v "$ld" "$prog"
+          ln -srv "$prog" "$ld"
         fi
       else
-        if cmp "$bin" "$ld"; then
+        if cmp "$prog" "$ld"; then
           rm -v "$ld"
-          ln -srv "$bin" "$ld"
+          ln -srv "$prog" "$ld"
         fi
       fi
     done
+
+    # Make all duplicate binaries symlinks
+    declare -A progMap
+    for prog in "$bin"/*/bin/* "$bin"/bin/*; do
+      if [ -L "$prog" ]; then
+        continue
+      fi
+      checksum="$(cksum "$prog" | cut -d ' ' -f1)"
+      oProg="''${progMap["$checksum"]}"
+      if [ -z "$oProg" ]; then
+        progMap["$checksum"]="$prog"
+      elif cmp "$prog" "$oProg"; then
+        rm "$prog"
+        ln -srv "$oProg" "$prog"
+      fi
+    done
+
+    # Move outputs to their final locations
+    mkdir -p "$lib"/lib
+    mv "$bin"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$bin"/lib
+    mv "$bin"/lib "$dev"
   '';
 
-  preFixup = optionalString (type != "full") ''
-    # Remove unused files from bootstrap
-    rm -r "$out"/share
+  preFixup = ''
+    # Missing install of private static libraries
+    rm "$dev"/lib/*.la
+  '';
+
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
   '' + ''
-    # Libtool files reference intermediate static libraries in the build
-    # like libiberty. We don't need them anyway
-    rm "$out"/lib/*.la
-
-    # We don't build against binutils libraries so we don't need their headers
-    rm -r "$out"/include
-
-    # Make sure the cc-wrapper doesn't pick this up automagically
-    mkdir -p "$out"/nix-support
-    touch "$out"/nix-support/cc-wrapper-ignored
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
   '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
+
+  passthru = {
+    inherit target;
+  };
 
   meta = with lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";
@@ -123,12 +176,8 @@ stdenv.mkDerivation (rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
-} // optionalAttrs (type != "bootstrap") {
-  # Ensure we don't depend on anything unexpected
-  allowedReferences = [
-    "out"
-    zlib
-  ] ++ stdenv.cc.runtimeLibcLibs;
-})
+}

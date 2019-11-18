@@ -8,12 +8,11 @@
 let
   inherit (stdenv.lib)
     boolEn
-    optionalAttrs
-    optionalString;
+    optionals;
 
   version = "1.4.18";
 in
-stdenv.mkDerivation (rec {
+stdenv.mkDerivation rec {
   name = "gnum4-${version}";
 
   src = fetchurl {
@@ -39,16 +38,27 @@ stdenv.mkDerivation (rec {
     "--with-syscmd-shell=/bin/sh"
   ];
 
-  postInstall = optionalString (type != "full") ''
-    rm -r "$out"/share
+  postFixup = ''
+    rm -rv "$bin"/share
   '';
+
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      fullOpts = {
+        pgpsigUrls = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      };
     };
   };
 
@@ -59,11 +69,8 @@ stdenv.mkDerivation (rec {
     maintainers = with maintainers; [
     ];
     platforms = with platforms;
-      x86_64-linux
-      ++ i686-linux;
+      x86_64-linux ++
+      i686-linux ++
+      powerpc64le-linux;
   };
-} // optionalAttrs (type != "bootstrap") {
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcxxLibs;
-})
+}

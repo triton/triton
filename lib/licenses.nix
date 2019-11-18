@@ -65,8 +65,8 @@ rec {
   };
 
   agpl3Plus = {
+    spdxId = "AGPL-3.0+";
     fullName = "GNU Affero General Public License v3.0 or later";
-    inherit (agpl3) url;
   };
 
   amazonsl = {

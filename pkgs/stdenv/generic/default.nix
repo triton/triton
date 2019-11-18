@@ -7,6 +7,9 @@
 , initialPath
 , cc
 , shell
+, optionalChroot ? false
+, allowSubstitutes ? true
+, requiredSystemFeatures ? [ ]
 , allowedRequisites ? null
 , extraArgs ? { }
 , extraAttrs ? { }
@@ -261,8 +264,9 @@ let
       system = result.system;
       userHook = config.stdenv.userHook or null;
       __ignoreNulls = true;
-
-      extraCCFlags = true;
+      __optionalChroot = attrs.__optionalChroot or optionalChroot;
+      allowSubstitutes = attrs.allowSubstitutes or allowSubstitutes;
+      requiredSystemFeatures = attrs.requiredSystemFeatures or requiredSystemFeatures;
 
       # Inputs built by the cross compiler.
       buildInputs =
@@ -330,6 +334,10 @@ let
       args = [ "-e" ./builder.sh ];
 
       setup = setupScript;
+
+      __optionalChroot = optionalChroot;
+      allowSubstitutes = allowSubstitutes;
+      requiredSystemFeatures = requiredSystemFeatures;
 
       inherit
         preHook

@@ -17,7 +17,7 @@ buildAbsoluteLdflags() {
   if [ -e "$TMPDIR/absolute-lib-paths" ]; then
     return 0
   fi
-  echo "$LDFLAGS $NIX_LDFLAGS" > $TMPDIR/absolute-ldflags
+  echo "$LDFLAGS $CC_WRAPPER_LDFLAGS" > $TMPDIR/absolute-ldflags
 
   # Add the outputs to the LDFLAGS
   local output
@@ -43,7 +43,7 @@ buildAbsoluteLdflags() {
 
   # Get the paths to the ldflags files in the cc-wrapper
   local LDFLAGS_FILES
-  LDFLAGS_FILES=$(dirname $(type -P cc))/../nix-support/*-ldflags
+  LDFLAGS_FILES="$NIX_CC"/nix-support/ldflags*
 
   # Add them to the LDFLAGS variable
   local FILE
@@ -94,7 +94,6 @@ buildAbsoluteLdflags() {
     }
   }
   ' $TMPDIR/absolute-ldflags > $TMPDIR/absolute-lib-paths
-  du -bhs $TMPDIR/absolute-ldflags
   rm $TMPDIR/absolute-ldflags
 }
 

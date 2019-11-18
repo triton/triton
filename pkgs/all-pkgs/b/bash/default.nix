@@ -1,8 +1,7 @@
 { stdenv
+, hostcc
 , fetchurl
-, gettext
 , lib
-, texinfo
 
 , ncurses
 , readline
@@ -31,9 +30,8 @@ stdenv.mkDerivation rec {
     sha256 = "0kgvfwqdcd90waczf4gx39xnrxzijhjrzyzv7s8v4w31qqm0za5l";
   };
 
-  nativeBuildInputs = optionals (type == "full") [
-    gettext
-    texinfo
+  nativeBuildInputs = [
+    hostcc
   ];
 
   buildInputs = optionals (type == "full") [
@@ -41,7 +39,7 @@ stdenv.mkDerivation rec {
     readline
   ];
 
-  NIX_CFLAGS_COMPILE = [
+  CC_WRAPPER_CFLAGS = [
     "-DSYS_BASHRC=\"/etc/${passthru.systemBashrcName}\""
     "-DSYS_BASH_LOGOUT=\"/etc/${passthru.systemBashlogoutName}\""
     "-DDEFAULT_PATH_VALUE=\"/no-such-path\""
@@ -73,24 +71,34 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
-    ln -s bash "$out/bin/sh"
+    ln -s bash "$bin/bin/sh"
   '';
 
   preFixup = ''
-    rm -r "$out"/include
+    rm -rv "$bin"/include
+    rm -rv "$bin"/lib
 
     # Remove impurities
-    rm "$out"/lib/bash/Makefile.inc
-    rm "$out"/bin/bashbug
-  '' + optionalString (type == "small") ''
-    rm -r "$out"/share
+    rm -v "$bin"/bin/bashbug
   '';
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs ++ optionals (type == "full") [
-    ncurses
-    readline
+  postFixup = ''
+    mkdir -p "$bin"/share2
+  '' + optionalString (type == "full") ''
+    mv "$bin"/share/locale "$bin"/share2
+  '' + ''
+    rm -rv "$bin"/share
+    mv "$bin"/share2 "$bin"/share
+  '';
+
+  outputs = [
+    "bin"
+  ] ++ optionals (type == "full") [
+    "man"
+  ];
+
+  disallowedReferences = [
+    stdenv.cc
   ];
 
   passthru = rec {
@@ -107,7 +115,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

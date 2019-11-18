@@ -24,6 +24,15 @@ stdenv.mkDerivation rec {
     "CXXFLAGS=-O3"
   ];
 
+  postFixup = ''
+    rm -rv "$bin"/share
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

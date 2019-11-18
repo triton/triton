@@ -8,7 +8,6 @@
 { lib
 , deterministic-zip
 , fetchurl
-, unzip
 }:
 
 { # Optionally move the contents of the unpacked tree up one level.
@@ -50,8 +49,6 @@ lib.overrideDerivation (fetchurl (rec {
     downloadToTemp = true;
 
     postFetch = ''
-      export PATH=${unzip}/bin:$PATH
-
       unpackDir="$TMPDIR/unpack"
       rm -rf "$unpackDir"
       mkdir "$unpackDir"
@@ -98,11 +95,7 @@ lib.overrideDerivation (fetchurl (rec {
     '';
   };
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
-# Hackety-hack: we actually need unzip hooks, too
 (x: {
-  nativeBuildInputs = x.nativeBuildInputs ++ [
-    unzip
-  ];
 }) // {
   inherit purgeTimestamps version;
   deterministic-zip = deterministic-zip';

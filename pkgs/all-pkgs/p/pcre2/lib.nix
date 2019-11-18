@@ -43,6 +43,17 @@ stdenv.mkDerivation rec {
     "--enable-jit"
   ];
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
   passthru = {
     inherit version;
     srcVerification = fetchurl rec {

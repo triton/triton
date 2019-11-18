@@ -37,6 +37,22 @@ stdenv.mkDerivation rec {
     url = "mirror://gnu/readline/readline-${version}-patches/${name}";
   });
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+    "man"
+  ];
+
   meta = with stdenv.lib; {
     description = "Library for interactive line editing";
     homepage = http://savannah.gnu.org/projects/readline/;

@@ -4,20 +4,36 @@
 }:
 
 let
-  version = "0.7.9";
+  version = "0.7.10";
 in
 stdenv.mkDerivation rec {
   name = "libcap-ng-${version}";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/libcap-ng/${name}.tar.gz";
-    multihash = "QmRUFP2RxDnArPLs1ru9YxS7zsXYRB69Nimx436FD9kCfz";
-    sha256 = "4a1532bcf3731aade40936f6d6a586ed5a66ca4c7455e1338d1f6c3e09221328";
+    multihash = "QmXtza1B7b6AA2qpnvUdmdJxWq2PCyZHeQ7pNaSn3jUAok";
+    sha256 = "a84ca7b4e0444283ed269b7a29f5b6187f647c82e2b876636b49b9a744f0ffbf";
   };
 
   configureFlags = [
     "--without-python"
     "--without-python3"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
   ];
 
   passthru = {

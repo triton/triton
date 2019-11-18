@@ -3,15 +3,24 @@
 }:
 
 let
-  version = "1.1.1";
+  version = "1.2.1";
 in
 stdenv.mkDerivation rec {
   name = "re2c-${version}";
 
   src = fetchurl {
-    url = "https://github.com/skvadrik/re2c/releases/download/${version}/${name}.tar.gz";
-    sha256 = "856597337ea00b24ce91f549f79e6eece1b92ba5f8b63292cad66c14ac7451cf";
+    url = "https://github.com/skvadrik/re2c/releases/download/${version}/${name}.tar.xz";
+    sha256 = "1a4cd706b5b966aeffd78e3cf8b24239470ded30551e813610f9cd1a4e01b817";
   };
+
+  postFixup = ''
+    rm -rv "$bin"/share
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
 
   meta = with stdenv.lib; {
     description = "Tool for writing very fast and very flexible scanners";

@@ -1,5 +1,7 @@
 { stdenv
 , fetchurl
+
+, libunistring
 }:
 
 let
@@ -18,6 +20,10 @@ stdenv.mkDerivation rec {
     sha256 = "53f02fbbec9e798b0faaf7c73272f83608e835c6288dd58be6c9bb54624a3800";
   };
 
+  buildInputs = [
+    libunistring
+  ];
+
   postPatch = ''
     sed \
       -i gettext-tools/projects/KDE/trigger \
@@ -26,18 +32,38 @@ stdenv.mkDerivation rec {
       -e 's,/bin/pwd,pwd,g'
   '';
 
-  # Broken in 0.20 for some invocations
-  buildParallel = false;
+  prefix = placeholder "bin";
+
+  configureFlags = [
+    "--datadir=${placeholder "lib"}/share"
+    "--without-included-libunistring"
+  ];
 
   postInstall = ''
-    rm -r "$out"/share/doc
+    rm -rv "$bin"/share/{doc,info}
+    mv -v "$lib"/share/aclocal "$bin"/share
+
+    mkdir -p "$dev"
+    mv "$bin"/{include,lib} "$dev"
+    rm -v "$dev"/lib/preload*
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib*
   '';
 
   preFixup = ''
-    sed -i "$out/bin/gettext.sh" \
-      -e "/^  .\?gettext/ s,envsubst,$out/bin/\0,g" \
-      -e "/^  .\?gettext/ s,^  ,\0$out/bin/,"
+    sed -i "$bin/bin/gettext.sh" \
+      -e "/^  .\?gettext/ s,envsubst,$bin/bin/\0,g" \
+      -e "/^  .\?gettext/ s,^  ,\0$bin/bin/,"
   '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {
@@ -60,6 +86,7 @@ stdenv.mkDerivation rec {
     ];
     platforms = with platforms;
       i686-linux
+      ++ powerpc64le-linux
       ++ x86_64-linux;
   };
 }

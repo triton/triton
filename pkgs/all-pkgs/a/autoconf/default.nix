@@ -35,8 +35,17 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    gnum4
+    gnum4.bin
     perl
+  ];
+
+  postFixup = ''
+    rm -rv "$bin"/share/info
+  '';
+
+  outputs = [
+    "bin"
+    "man"
   ];
 
   meta = with lib; {

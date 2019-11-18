@@ -13,12 +13,22 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    gettext
+    gettext.bin
   ];
 
   preBuild = ''
-    makeFlagsArray+=("prefix=$out")
+    makeFlagsArray+=("prefix=$bin")
   '';
+
+  postInstall = ''
+    mkdir -p "$man"/share
+    mv -v "$bin"/man "$man"/share
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
 
   meta = with stdenv.lib; {
     description = "Program to help shell scripts parse command-line parameters";

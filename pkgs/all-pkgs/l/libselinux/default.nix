@@ -24,17 +24,14 @@ stdenv.mkDerivation rec {
     pcre2_lib
   ];
 
-  postPatch = ''
-    sed \
-      -e 's,-Werror ,,g' \
-      -i utils/Makefile \
-      -i src/Makefile
-  '';
+  CC_WRAPPER_CFLAGS = [
+    "-Wno-error"
+  ];
 
   preBuild = ''
     makeFlagsArray+=(
-      "PREFIX=$out"
-      "SHLIBDIR=$out/lib"
+      "PREFIX=$dev"
+      "SHLIBDIR=$dev/lib"
     )
   '';
 
@@ -45,6 +42,26 @@ stdenv.mkDerivation rec {
 
   installTargets = [
     "install"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/sbin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
   ];
 
   meta = with lib; {

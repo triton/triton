@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.16.0";
+  version = "1.16.1";
 in
 stdenv.mkDerivation rec {
   name = "editline-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/troglobit/editline/releases/download/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "38a3635f6850774d70f14d293b8755eaef85760755b600875aab59e9a3a98f3d";
+    sha256 = "6518cc0d8241bcebc860432d1babc662a9ce0f5d6035649effe38b5bc9463f8c";
   };
 
   buildInputs = [
@@ -23,6 +23,22 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-termcap"
+  ];
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+    "man"
   ];
 
   passthru = {

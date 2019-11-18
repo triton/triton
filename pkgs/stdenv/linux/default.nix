@@ -468,9 +468,13 @@ let
     '';
 
     extraArgs = rec {
-      stdenvDeps = stage21Pkgs.stdenv.mkDerivation {
+      stdenvDeps = derivation {
         name = "stdenv-deps";
+        builder = "/bin/sh";
+        system = targetSystem;
+        args = [ "-e" "-c" "eval \"$buildCommand\"" ];
         buildCommand = ''
+          export PATH="${stage21Pkgs.coreutils_small}/bin"
           mkdir -p $out
         '' + lib.flip lib.concatMapStrings extraAttrs.bootstrappedPackages (n: ''
           [ -h "$out/$(basename "${n}")" ] || ln -s "${n}" "$out"
@@ -478,9 +482,13 @@ let
         allowSubstitutes = false;
         preferLocalBuild = true;
       };
-      stdenvDepTest = stage21Pkgs.stdenv.mkDerivation {
+      stdenvDepTest = derivation {
         name = "stdenv-dep-test";
+        builder = "/bin/sh";
+        system = targetSystem;
+        args = [ "-e" "-c" "eval \"$buildCommand\"" ];
         buildCommand = ''
+          export PATH="${stage21Pkgs.coreutils_small}/bin"
           mkdir -p $out
           ln -s "${stdenvDeps}" $out
         '';

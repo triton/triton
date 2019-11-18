@@ -33,8 +33,19 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    makeFlagsArray+=("prefix=$out")
+    makeFlagsArray+=("prefix=$dev")
   '';
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

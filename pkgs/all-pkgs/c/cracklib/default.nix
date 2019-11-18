@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, gettext
 
 , zlib
 }:
@@ -17,12 +16,29 @@ stdenv.mkDerivation rec {
     sha256 = "fe82098509e4d60377b998662facf058dc405864a8947956718857dbb4bc35e6";
   };
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
   buildInputs = [
     zlib
+  ];
+
+  prefix = placeholder "bin";
+
+  preBuild = ''
+    makeFlagsArray+=('pkgdatadir=$lib/share/$(PACKAGE)')
+  '';
+
+  postInstall = ''
+    mkdir -p "$dev"
+    mv "$bin"/{include,lib} "$dev"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
   ];
 
   meta = with stdenv.lib; {

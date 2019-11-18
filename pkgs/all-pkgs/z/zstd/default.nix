@@ -8,7 +8,7 @@
 
 let
   sha256s = {
-    "1.4.2" = "12730983b521f9a604c6789140fcb94fadf9a3ca99199765e33c56eb65b643c9";
+    "1.4.3" = "e88ec8d420ff228610b77fba4fbf22b9f8b9d3f223a40ef59c9c075fcdad5767";
   };
 in
 stdenv.mkDerivation rec {
@@ -21,15 +21,29 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "PREFIX=$out"
+      "PREFIX=$bin"
     )
   '';
 
-  dontPatchShebangs = true;
+  postInstall = ''
+    mkdir -p "$dev"
+    mv "$bin"/{include,lib} "$dev"
 
-  allowedReferences = [
-    "out"
-  ] ++ stdenv.cc.runtimeLibcLibs;
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$bin"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   meta = with lib; {
     description = "Fast real-time lossless compression algorithm";

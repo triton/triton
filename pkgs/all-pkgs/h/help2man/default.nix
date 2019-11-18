@@ -1,12 +1,11 @@
 { stdenv
 , fetchurl
-, gettext
 , perlPackages
 , makeWrapper
 }:
 
 let
-  version = "1.47.10";
+  version = "1.47.11";
 
   tarballUrls = version: [
     "mirror://gnu/help2man/help2man-${version}.tar.xz"
@@ -18,11 +17,10 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "f371cbfd63f879065422b58fa6b81e21870cd791ef6e11d4528608204aa4dcfb";
+    sha256 = "5985b257f86304c8791842c0c807a37541d0d6807ee973000cf8a3fe6ad47b88";
   };
 
   nativeBuildInputs = [
-    gettext
     makeWrapper
   ];
 

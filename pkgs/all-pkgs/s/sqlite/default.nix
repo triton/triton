@@ -13,7 +13,7 @@ let
     splitString
     tail;
 
-  version = "3.29.0";
+  version = "3.30.1";
   releaseYear = "2019";
   versionList = splitString "." version;
   version' = "${head versionList}${fixedWidthString 2 "0" (head (tail versionList))}"
@@ -24,9 +24,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://sqlite.org/${releaseYear}/sqlite-autoconf-${version'}.tar.gz";
-    multihash = "QmcCj6vmXFPM3ZGhxZKuDPwYMYfYuhtzqFZvBaqQkr4kuL";
+    multihash = "QmVeHHEL4rQJZNgJQk3PgGvvd8QoY57LAqGKwmUKkXmpNb";
     hashOutput = false;
-    sha256 = "8e7c1e2950b5b04c5944a981cb31fffbf9d2ddda939d536838ebc854481afd5b";
+    sha256 = "8c5a50db089bd2a1b08dbc5b00d2027602ca7ff238ba7658fabca454d4298e60";
   };
 
   buildInputs = [
@@ -72,6 +72,26 @@ stdenv.mkDerivation rec {
     fi
   '';
 
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
@@ -80,7 +100,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo;
       fullOpts = {
-        sha1Confirm = "053d8237eb9741b0e297073810668c2611a8e38e";
+        sha1Confirm = "8383f29d53fa1d4383e4c8eb3e087f2ed940a9e0";
       };
     };
   };

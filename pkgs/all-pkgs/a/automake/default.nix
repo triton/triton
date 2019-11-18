@@ -26,6 +26,15 @@ stdenv.mkDerivation rec {
     autoconf
   ];
 
+  postFixup = ''
+    rm -rv "$bin"/share/{doc,info}
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
+
   setupHook = ./setup-hook.sh;
 
   # We don't want NIX_STORE paths in our dist scripts like config.guess

@@ -12,7 +12,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "busybox-1.31.0";
+  name = "busybox-1.31.1";
 
   src = fetchurl {
     urls = [
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
       "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "0e4925392fd9f3743cc517e031b68b012b24a63b0cf6c1ff03cce7bb3846cc99";
+    sha256 = "d0f940a72f648943c1f2211e0e3117387c31d765137d92bd8284a3fb9752a998";
   };
 
   patches = [
@@ -95,7 +95,9 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      i686-linux
+      ++ powerpc64le-linux
+      ++ x86_64-linux;
     priority = 9;  # Lower than everything but lowPrio packages
   };
 }

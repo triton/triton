@@ -20,6 +20,34 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  preConfigure = ''
+    export CC_WRAPPER_CFLAGS="-UMAGIC -DMAGIC=\"$data/share/magic\""
+  '';
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    mkdir -p "$data"/share
+    mv -v "$dev"/share/misc "$data"/share/magic
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "data"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

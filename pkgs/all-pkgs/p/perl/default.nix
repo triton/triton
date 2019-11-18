@@ -47,11 +47,25 @@ stdenv.mkDerivation rec {
     "-Uinstallusrbinperl"
     "-Dinstallstyle=lib/perl5"
     "-Duseshrplib"
-    "-Duse64bitall"
     "-Dusethreads"
   ];
 
   configureScript = "./configure.gnu";
+
+  preFixup = ''
+    # We don't want perl to depend on dev paths
+    sed -i "s,libpth => '.*',libpth => ' '," "$out"/lib/perl5/*/*/Config.pm
+    sed -i "s,\(incpth\|libpth\|libsdirs\|libsfound\|libspath\|timeincl\)='.*',\1=' '," "$out"/lib/perl5/*/*/Config_heavy.pl
+
+    # We don't need to depend on coreutils
+    sed -i "s,$(dirname "$(type -tP uname)"),," \
+      "$out"/lib/perl5/*/*/Config_heavy.pl \
+      "$out"/lib/perl5/*/*/CORE/config.h
+  '';
+
+  disallowedReferences = [
+    stdenv.cc
+  ];
 
   setupHook = ./setup-hook.sh;
 
@@ -79,7 +93,8 @@ stdenv.mkDerivation rec {
     ];
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

@@ -25,16 +25,16 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.xz"
   ];
 
-  version = "7.66.0";
+  version = "7.67.0";
 in
 stdenv.mkDerivation rec {
   name = "curl-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmPgf8ivFHqWmeKJwVxx7dMuNgLEJrECnme1uU8EQA8MsT";
+    multihash = "QmfZxQfT9WECmfR8eAWaVJwu2FJA1s7xJzrCG4zMWNnycu";
     hashOutput = false;
-    sha256 = "dbb48088193016d079b97c5c3efde8efa56ada2ebf336e8a97d04eb8e2ed98c1";
+    sha256 = "f5d2e7320379338c3952dcc7566a140abb49edb575f9f99272455785c40e536c";
   };
 
   buildInputs = [
@@ -65,16 +65,38 @@ stdenv.mkDerivation rec {
     "--with-libmetalink"
   ];
 
+  postInstall = ''
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+    mkdir -p "$dev"/bin
+    mv -v "$bin"/bin/curl-config "$dev"/bin
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "7.66.0";
+      urls = tarballUrls "7.67.0";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";
       };
       inherit (src) outputHashAlgo;
-      outputHash = "dbb48088193016d079b97c5c3efde8efa56ada2ebf336e8a97d04eb8e2ed98c1";
+      outputHash = "f5d2e7320379338c3952dcc7566a140abb49edb575f9f99272455785c40e536c";
     };
   };
 
@@ -86,7 +108,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
   };
 }

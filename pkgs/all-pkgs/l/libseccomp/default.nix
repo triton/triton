@@ -1,7 +1,5 @@
 { stdenv
 , fetchurl
-
-, getopt
 }:
 
 let
@@ -16,13 +14,29 @@ stdenv.mkDerivation rec {
     sha256 = "1ca3735249af66a1b2f762fe6e710fcc294ad7185f1cc961e5bd83f9988006e8";
   };
 
-  buildInputs = [
-    getopt
-  ];
-
   patchPhase = ''
     patchShebangs .
   '';
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

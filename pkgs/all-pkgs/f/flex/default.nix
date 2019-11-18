@@ -21,18 +21,34 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    bison
-    gnum4
+    bison.bin
+    gnum4.bin
+  ];
+
+  configureFlags = [
+    "--localedir=${placeholder "bin"}/share/locale"
   ];
 
   # Using static libraries fixes issues with references to
   # yylex in flex 2.6.0
   # This can be tested by building glusterfs
-  configureFlags = [
-    "--disable-shared"
-  ];
-
+  disableShared = true;
   disableStatic = false;
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

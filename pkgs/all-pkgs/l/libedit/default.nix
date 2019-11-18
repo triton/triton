@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libedit-20190324-3.1";
+  name = "libedit-20191025-3.1";
 
   src = fetchurl {
     url = "https://thrysoee.dk/editline/${name}.tar.gz";
-    multihash = "QmZ5jhgAtHZYBTnwDgMXQ3FYbSa4iDXYwGrx29j81DoAu6";
-    sha256 = "ac8f0f51c1cf65492e4d1e3ed2be360bda41e54633444666422fbf393bba1bae";
+    multihash = "QmbG7BSYK6ULpyohCFLbSxRJeNsRytMgcGv5fLHmQTr2PN";
+    sha256 = "6dff036660d478bfaa14e407fc5de26d22da1087118c897b1a3ad2e90cb7bf39";
   };
 
   buildInputs = [
@@ -19,6 +19,22 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-examples"
+  ];
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+    "man"
   ];
 
   meta = with stdenv.lib; {

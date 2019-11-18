@@ -1,27 +1,27 @@
 { stdenv
-, fetchFromGitLab
+, fetchurl
 , lib
 }:
 
 let
-  date = "2019-04-26";
-  rev = "7909e878851a569515e7b53e328d7d569eb75b50";
+  date = "2019-08-10";
+  rev = "ac860b672bd8da0c8c0e9e03b3ef62d798b0f87b";
 in
 stdenv.mkDerivation {
   name = "mime-types-${date}";
 
-  src = fetchFromGitLab {
-    version = 6;
-    host = "https://salsa.debian.org";
-    owner = "debian";
-    repo = "mime-support";
-    inherit rev;
-    multihash = "QmQNUW6DjRvBwepdeAmYdFopkj9PaSoaqXVE3XXViheCmP";
-    sha256 = "64406875391b0d37a19b5f9bc25fb5f0112194bf8591b497dbbc01544d6b0abf";
+  src = fetchurl {
+    url = "https://salsa.debian.org/debian/mime-support/raw/${rev}/mime.types";
+    multihash = "QmeNVW5u5R182PkZBKextQYz8WquDnacLZHUQJA7ZVUB9K";
+    sha256 = "0a764dac9e452844750e9f3551e4e78c152116133de4e6e4e5e8f50eba4e17f3";
   };
 
+  unpackPhase = ''
+    true
+  '';
+
   installPhase = ''
-    install -D -m644 -v mime.types "$out"/etc/mime.types
+    install -D -m644 -v $src "$out"/etc/mime.types
   '';
 
   meta = with lib; {
@@ -32,6 +32,8 @@ stdenv.mkDerivation {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      i686-linux
+      ++ powrpc64le-linux
+      ++ x86_64-linux;
   };
 }

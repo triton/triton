@@ -19,6 +19,15 @@ stdenv.mkDerivation rec {
     ncurses
   ];
 
+  postFixup = ''
+    rm -rv "$bin"/share
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

@@ -23,9 +23,18 @@ stdenv.mkDerivation rec {
   doCheck = true;
 
   postInstall = ''
-    ln -sv sodium "$out"/include/nacl
-    ln -sv "$(basename "$(readlink -f "$out/lib/libsodium.so")")" "$out/lib/libnacl.so"
+    ln -sv sodium "$dev"/include/nacl
+    ln -sv "$(basename "$(readlink -f "$dev/lib/libsodium.so")")" "$dev/lib/libnacl.so"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

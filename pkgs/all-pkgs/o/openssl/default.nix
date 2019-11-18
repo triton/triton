@@ -92,27 +92,40 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    makeFlagsArray+=("MANDIR=$out/share/man")
-    installFlagsArray+=("OPENSSLDIR=$out/etc/ssl")
+    makeFlagsArray+=(
+      "ENGINESDIR=$lib/lib/engines"
+      "MANDIR=$man/share/man"
+      "DOCDIR=$TMPDIR"
+    )
+    installFlagsArray+=("OPENSSLDIR=$bin/etc/ssl")
   '';
 
   # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
   installParallel = false;
 
-  # If we built shared objects don't include static
   postInstall = ''
-    if ls "$out"/lib | grep -q '.so''$'; then
-      rm "$out"/lib/*.a
-    fi
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
 
   preFixup = ''
     # remove dependency on Perl at runtime
-    rm -r $out/etc/ssl/misc $out/bin/c_rehash
+    rm -rv "$bin"/etc/ssl/misc "$bin"/bin/c_rehash
 
     # Remove unused stuff
-    rmdir $out/etc/ssl/{certs,private}
+    rmdir "$bin"/etc/ssl/{certs,private}
   '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   disallowedReferences = [
     perl
@@ -145,8 +158,9 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
     priority = 1;  # Let other ssl and passwd impls replace this
   };
 }

@@ -65,8 +65,25 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    rm -r "$out"/docs
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib "$libcxx"/lib
+    mv -v "$dev"/lib*/*cxx*.so* "$libcxx"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$libcxx"/lib/* "$dev"/lib
   '';
+
+  postFixup = ''
+    rm -r "$dev"/docs
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "libcxx"
+  ];
 
   meta = with lib; {
     description = "Berkeley DB";

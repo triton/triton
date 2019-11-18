@@ -6,20 +6,22 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
+  tarballName = v: "icu4c-${replaceChars ["."] ["_"] v}-src.tgz";
+
   tarballUrls = v: [
-    "http://download.icu-project.org/files/icu4c/${v}/icu4c-${replaceChars ["."] ["_"] v}-src.tgz"
+    "https://github.com/unicode-org/icu/releases/download/release-${replaceChars ["."] ["-"] v}/${tarballName v}"
+    "http://download.icu-project.org/files/icu4c/${v}/${tarballName v}"
   ];
 
-  version = "63.1";
+  version = "65.1";
 in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmcwUadnqKHdhksCRvvgsV4WK4nqM18X3gKnGY5oPJ75nS";
     hashOutput = false;
-    sha256 = "05c490b69454fce5860b7e8e2821231674af0a11d7ef2febea9a32512998cb9d";
+    sha256 = "53e37466b3d6d6d01ead029e3567d873a43a5d1c668ed2278e253b683136d948";
   };
 
   postUnpack = ''
@@ -33,12 +35,38 @@ stdenv.mkDerivation rec {
     "--disable-samples"
   ];
 
+  postInstall = ''
+    mkdir -p "$lib"/lib "$libicudata"/lib
+    mv -v "$dev"/lib*/libicudata.so* "$libicudata"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$libicudata"/lib/* "$lib"/lib/* "$dev"/lib
+
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+    mv -v "$dev"/sbin/* "$bin"/bin
+    rmdir "$dev"/sbin
+    mkdir -p "$dev"/bin
+    mv -v "$bin"/bin/icu-config "$dev"/bin
+  '';
+
+  postFixup = ''
+    rm -rf "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "libicudata"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "63.1";
+      urls = tarballUrls "65.1";
       inherit (src) outputHashAlgo;
-      outputHash = "05c490b69454fce5860b7e8e2821231674af0a11d7ef2febea9a32512998cb9d";
+      outputHash = "53e37466b3d6d6d01ead029e3567d873a43a5d1c668ed2278e253b683136d948";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprints = [

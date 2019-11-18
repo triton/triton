@@ -15,17 +15,9 @@ stdenv.mkDerivation rec {
     sha256 = "8ac84c16bdca60e710eea75782356f3ac3b55680d40e1530d7cea474ac208229";
   };
 
-  nativeBuildInputs = [
-    perl
-  ];
-
   buildInputs = [
     openssl
   ];
-
-  postPatch = ''
-    patchShebangs doc/doxyparse.pl
-  '';
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -36,6 +28,27 @@ stdenv.mkDerivation rec {
     "--with-drill"
     "--with-ssl=${openssl}"
     "--with-ca-file=/etc/ssl/certs/ca-certificates.crt"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/bin/* "$bin"/bin
+    mv -v "$bin"/bin/*-config "$dev"/bin
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
   ];
 
   passthru = {

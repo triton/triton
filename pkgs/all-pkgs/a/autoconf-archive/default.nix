@@ -26,6 +26,13 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postFixup = ''
+    mkdir -p "$out"/share2
+    mv "$out"/share/aclocal "$out"/share2
+    rm -rv "$out"/share
+    mv "$out"/share2 "$out"/share
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

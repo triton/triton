@@ -99,7 +99,7 @@ stdenv.mkDerivation {
     configureFlagsNcurses=(
       "--prefix=$dev"
       "--includedir=$dev/include"
-      "--datadir=$lib/share"
+      "--datadir=${placeholder "data"}/share"
       "--with-pkg-config-libdir=$PKG_CONFIG_LIBDIR"
       "--disable-static"
       "--without-ada"
@@ -138,7 +138,6 @@ stdenv.mkDerivation {
       # Enable big-core: Autodetected
       # Enable big-strings: Autodetected
       "--disable-termcap"
-      "--with-termpath=$out/share/misc/termcap"
       "--enable-getcap"
       "--disable-getcap-cache"
       "--enable-home-terminfo"
@@ -272,10 +271,16 @@ stdenv.mkDerivation {
     ln -sv "$lib"/lib/* "$dev"/lib
   '';
 
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
   outputs = [
     "dev"
     "bin"
     "lib"
+    "data"
+    "man"
   ];
 
   meta = with stdenv.lib; {

@@ -22,11 +22,13 @@ let
     tar
     xz;
 
+  tar' = tar.override { type = "small"; };
+
   inherit (lib)
     concatStringsSep;
 
   tarCmd = concatStringsSep " " [
-    "${tar}/bin/tar"
+    "${tar'.bin}/bin/tar"
     "--sort=name"
     "--owner=0"
     "--group=0"
@@ -42,13 +44,13 @@ let
   ];
 
   brotliCmd = concatStringsSep " " [
-    "${brotli}/bin/brotli"
+    "${brotli.bin}/bin/brotli"
     "-6"
     "-c"
   ];
 
   xzCmd = concatStringsSep " " [
-    "${xz}/bin/xz"
+    "${xz.bin}/bin/xz"
     "-9"
     "-e"
     "-c"
@@ -74,8 +76,8 @@ stdenv.mkDerivation {
   passthru = {
     inherit
       brotli
-      tar
       version;
+    tar = tar';
   };
 
   meta = with lib; {

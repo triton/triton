@@ -30,7 +30,7 @@ let
     "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz"
   ];
 
-  version = "1.39.1";
+  version = "1.40.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "679160766401f474731fd60c3aca095f88451e3cc4709b72306e4c34cf981448";
+    sha256 = "09fc43d428ff237138733c737b29fb1a7e49d49de06d2edbed3bc4cdcee69073";
   };
 
   buildInputs = optionals (!isLib) [
@@ -64,14 +64,23 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
-    rm -r "$out"/{bin,share}
+    rm -r "$dev"/{bin,share}
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      url = tarballUrls "1.39.1";
-      outputHash = "679160766401f474731fd60c3aca095f88451e3cc4709b72306e4c34cf981448";
+      url = tarballUrls "1.40.0";
+      outputHash = "09fc43d428ff237138733c737b29fb1a7e49d49de06d2edbed3bc4cdcee69073";
       inherit (src)
         outputHashAlgo;
       fullOpts = { };
@@ -86,6 +95,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      x86_64-linux ++
+      i686-linux ++
+      powerpc64le-linux;
   };
 }

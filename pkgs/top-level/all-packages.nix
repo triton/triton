@@ -781,6 +781,7 @@ busybox = callPackage ../all-pkgs/b/busybox { };
 
 busybox_shell = callPackageAlias "busybox" {
   minimal = true;
+  stdenv = pkgs.stdenv.override { cc = pkgs.cc_gcc_musl; };
   extraConfig = ''
     CONFIG_STATIC y
     CONFIG_ASH y
@@ -796,6 +797,7 @@ busybox_shell = callPackageAlias "busybox" {
 
 busybox_bootstrap = callPackageAlias "busybox" {
   minimal = true;
+  stdenv = pkgs.stdenv.override { cc = pkgs.cc_gcc_musl; };
   extraConfig = ''
     CONFIG_STATIC y
     CONFIG_ASH y
@@ -855,6 +857,16 @@ cc_gcc_glibc_headers = pkgs.wrapCC {
   ];
 };
 
+cc_gcc_musl_headers = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc.cc_headers
+    pkgs.musl_headers
+    pkgs.linux-headers
+  ];
+};
+
 cc_gcc_glibc_nolibc = pkgs.wrapCC {
   compiler = pkgs.gcc.bin;
   tools = [ pkgs.binutils.bin ];
@@ -862,6 +874,17 @@ cc_gcc_glibc_nolibc = pkgs.wrapCC {
     pkgs.gcc_lib_glibc_static
     pkgs.gcc.cc_headers
     pkgs.glibc_headers_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_musl_nolibc = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_musl_static
+    pkgs.gcc.cc_headers
+    pkgs.musl_headers
     pkgs.linux-headers
   ];
 };
@@ -877,6 +900,17 @@ cc_gcc_glibc_nolibgcc = pkgs.wrapCC {
   ];
 };
 
+cc_gcc_musl_nolibgcc = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_musl_static
+    pkgs.gcc.cc_headers
+    pkgs.musl_lib_gcc
+    pkgs.linux-headers
+  ];
+};
+
 cc_gcc_glibc_early = pkgs.wrapCC {
   compiler = pkgs.gcc.bin;
   tools = [ pkgs.binutils.bin ];
@@ -884,6 +918,17 @@ cc_gcc_glibc_early = pkgs.wrapCC {
     pkgs.gcc_lib_glibc
     pkgs.gcc.cc_headers
     pkgs.glibc_lib_gcc
+    pkgs.linux-headers
+  ];
+};
+
+cc_gcc_musl_early = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_lib_musl
+    pkgs.gcc.cc_headers
+    pkgs.musl_lib_gcc
     pkgs.linux-headers
   ];
 };
@@ -901,6 +946,17 @@ cc_gcc_glibc = pkgs.wrapCC {
   ];
 };
 
+cc_gcc_musl = pkgs.wrapCC {
+  compiler = pkgs.gcc.bin;
+  tools = [ pkgs.binutils.bin ];
+  inputs = [
+    pkgs.gcc_runtime_musl
+    pkgs.gcc_lib_musl
+    pkgs.gcc.cc_headers
+    pkgs.musl_lib_gcc
+    pkgs.linux-headers
+  ];
+};
 
 cc-regression = callPackage ../all-pkgs/c/cc-regression { };
 
@@ -1522,8 +1578,17 @@ gcc_lib_glibc = callPackage ../all-pkgs/g/gcc/lib.nix {
   cc = pkgs.cc_gcc_glibc_nolibgcc;
 };
 
+gcc_lib_musl = callPackage ../all-pkgs/g/gcc/lib.nix {
+  cc = pkgs.cc_gcc_musl_nolibgcc;
+};
+
 gcc_lib_glibc_static = callPackage ../all-pkgs/g/gcc/lib.nix {
   cc = pkgs.cc_gcc_glibc_headers;
+  type = "nolibc";
+};
+
+gcc_lib_musl_static = callPackage ../all-pkgs/g/gcc/lib.nix {
+  cc = pkgs.cc_gcc_musl_headers;
   type = "nolibc";
 };
 
@@ -1535,6 +1600,21 @@ gcc_cxx_glibc = callPackage ../all-pkgs/g/gcc/cxx.nix {
 gcc_runtime_glibc = callPackage ../all-pkgs/g/gcc/runtime.nix {
   cc = pkgs.cc_gcc_glibc_early;
   gcc_lib = pkgs.gcc_lib_glibc;
+};
+
+gcc_runtime_musl = callPackage ../all-pkgs/g/gcc/runtime.nix {
+  cc = pkgs.cc_gcc_musl_early;
+  gcc_lib = pkgs.gcc_lib_musl;
+  libsan = false;
+  preConfigure = ''
+    # Needed for the libstdc++ configure script to pick the right headers
+    # that don't use glibc macros
+    export NIX_SYSTEM_BUILD="$(echo "$NIX_SYSTEM_BUILD" | sed 's,gnu,musl,')"
+    export NIX_SYSTEM_HOST="$(echo "$NIX_SYSTEM_HOST" | sed 's,gnu,musl,')"
+  '';
+  failureHook = ''
+    find . -name config.log -exec cat {} \;
+  '';
 };
 
 gcc_runtime = null;
@@ -3091,7 +3171,13 @@ murmur = callPackageAlias "murmur_git" { };
 
 musepack = callPackage ../all-pkgs/m/musepack { };
 
-musl = callPackage ../all-pkgs/m/musl { };
+musl_lib = null;
+
+musl_lib_gcc = callPackage ../all-pkgs/m/musl {
+  cc = pkgs.cc_gcc_musl_nolibc;
+};
+
+musl_headers = callPackage ../all-pkgs/m/musl/headers.nix { };
 
 mutter_3-26 = callPackage ../all-pkgs/m/mutter {
   channel = "3.26";

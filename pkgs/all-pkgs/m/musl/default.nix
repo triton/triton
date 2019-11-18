@@ -1,37 +1,90 @@
 { stdenv
+, lib
+, cc
 , fetchurl
+, fetchTritonPatch
 }:
 
-stdenv.mkDerivation rec {
-  name = "musl-1.1.22";
+let
+  inherit (lib)
+    hasPrefix
+    optionalString
+    optionals;
+
+  version = "1.1.24";
+in
+(stdenv.override { cc = null; }).mkDerivation rec {
+  name = "musl-${version}";
 
   src = fetchurl {
     url = "https://www.musl-libc.org/releases/${name}.tar.gz";
-    multihash = "QmeCwx4n3waAyk6cEcg8g67zQm1nDyRwQW9dt24qToTxRR";
+    multihash = "QmT6j4ASw3xhXSMrdoN2tRuNz9E9ZgsaDU5DuV9XfXt3VE";
     hashOutput = false;
-    sha256 = "8b0941a48d2f980fd7036cfbd24aa1d414f03d9a0652ecbd5ec5c7ff1bee29e3";
+    sha256 = "1370c9a812b2cf2a7d92802510cca0058cc37e66a7bedd70051f0a34015022a3";
   };
 
-  preConfigure = ''
-    configureFlagsArray+=("--syslibdir=$out/lib")
-  '';
-
-  configureFlags = [
-    "--enable-shared"
-    "--enable-static"
+  nativeBuildInputs = [
+    cc
   ];
 
-  postInstall = ''
-   ln -rsv "$out"/lib/ld*.so* "$out"/bin/ldd
+  patches = optionals (stdenv.targetSystem == "powerpc64le-linux") [
+    #(fetchTritonPatch {
+    #  rev = "1b8396502775c93dfe8916cbfdc90c9265d6bfbd";
+    #  file = "m/musl/0001-powerpc64-add-IEEE-binary128-long-double-support.patch";
+    #  sha256 = "68e4fbec40859cbd0f01a04a841664f6016242e2467b26f0d5e5915061ecb382";
+    #})
+  ];
+
+  postPatch = ''
+    sed -i '/-m\(arch\|tune\)=/s,.*,true,' configure
   '';
 
-  # We need this for embedded things like busybox
-  disableStatic = false;
+  preBuild = ''
+    $CC -c -o ssp.o '${./ssp.c}'
+    $AR rcs libssp_nonshared.a ssp.o
+  '';
 
-  # Dont depend on a shell potentially from the bootstrap
-  dontPatchShebangs = true;
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    mkdir -p "$bin"/bin
+    ln -sv "$lib"/lib/libc.so "$bin"/bin/ldd
+
+    cp libssp_nonshared.a "$dev"/lib
+    rm "$dev"/lib/libc.so
+    sed "s,@lib@,$lib,g" '${./libc.so.in}' >"$dev"/lib/libc.so
+
+    mkdir -p "$dev"/nix-support
+    echo "-fno-strict-overflow" >>"$dev"/nix-support/cflags-before
+    echo "-fstack-protector-strong" >>"$dev"/nix-support/cflags-before
+    echo "-idirafter $dev/include" >"$dev"/nix-support/stdinc
+    echo "-B$dev/lib" >"$dev"/nix-support/cflags-link
+    echo -n "$lib/lib/libc.so" >>"$dev"/nix-support/dynamic-linker
+    echo "--enable-new-dtags" >>"$dev"/nix-support/ldflags-before
+    echo "-z noexecstack" >>"$dev"/nix-support/ldflags-before
+    echo "-z now" >>"$dev"/nix-support/ldflags-before
+    echo "-z relro" >>"$dev"/nix-support/ldflags-before
+    echo "-L$dev/lib" >"$dev"/nix-support/ldflags
+  '' + optionalString (stdenv.targetSystem == "powerpc64le-linux") ''
+    # TODO: Make 128-bit floats work
+    #echo "-Wno-psabi" >>"$dev"/nix-support/cflags-before
+    #echo "-mlong-double-128" >>"$dev"/nix-support/cflags-before
+    #echo "-mabi=ieeelongdouble" >>"$dev"/nix-support/cflags-before
+    echo "-mlong-double-64" >>"$dev"/nix-support/cflags-before
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ];
+
+  allowedReferences = outputs;
 
   passthru = {
+    inherit version;
     srcVerification = fetchurl {
       failEarly = true;
       inherit (src)
@@ -53,6 +106,8 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      powerpc64le-linux
+      ++ i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -33,7 +33,7 @@ stdenv.mkDerivation {
     ];
     platforms = with platforms;
       i686-linux
-      ++ powrpc64le-linux
+      ++ powerpc64le-linux
       ++ x86_64-linux;
   };
 }

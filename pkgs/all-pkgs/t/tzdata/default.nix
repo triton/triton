@@ -4,16 +4,16 @@
 }:
 
 let
-  version = "2019b";
+  version = "2019c";
 in
 stdenv.mkDerivation rec {
   name = "tzdata-${version}";
 
   src = fetchurl {
     url = "https://data.iana.org/time-zones/releases/tzdb-${version}.tar.lz";
-    multihash = "QmfGfJ6Gz1dywdpACqWNL2m8Jvs5Q9P3tyw6tn6NbuFaAi";
+    multihash = "QmS4DZimoEpdvritSwFZ3pHqD3zxeNaqtL6nNZFb5BD6G9";
     hashOutput = false;
-    sha256 = "180adb8a6d9653a4892b9b1bf59ed0290a9fbfd3755f2f116cd46f2084ab02ef";
+    sha256 = "0f9ebf1d04c21d95f8ca2371f342133503388d215e5e2599ae6213b4aeeb3118";
   };
 
   nativeBuildInputs = [
@@ -22,18 +22,27 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "TOPDIR=$out"
+      "TOPDIR=$bin"
       "USRDIR="
+      "TZDIR=$data/share/zoneinfo"
     )
   '';
 
   postInstall = ''
-    test -e "$out/share/zoneinfo-posix"
-    ln -sv ../zoneinfo-posix "$out"/share/zoneinfo/posix
-    test -e "$out/share/zoneinfo-leaps"
-    ln -sv ../zoneinfo-leaps "$out"/share/zoneinfo/leaps
-    ln -sv ../zoneinfo-leaps "$out"/share/zoneinfo/right
+    ln -srv "$data"/share/zoneinfo-posix "$data"/share/zoneinfo/posix
+    ln -srv "$data"/share/zoneinfo-leaps "$data"/share/zoneinfo/leaps
+    ln -srv "$data"/share/zoneinfo-leaps "$data"/share/zoneinfo/right
   '';
+
+  postFixup = ''
+    rm -rv "$bin"/{lib,share}
+  '';
+
+  outputs = [
+    "bin"
+    "data"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

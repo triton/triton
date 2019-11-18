@@ -26,7 +26,29 @@ stdenv.mkDerivation rec {
     readline
   ];
 
-  doCheck = true;
+  configureFlags = [
+    "--localedir=${placeholder "bin"}/share/locale"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

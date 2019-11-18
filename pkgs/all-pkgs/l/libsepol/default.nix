@@ -18,19 +18,39 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    flex
+    flex.bin
   ];
 
-  NIX_CFLAGS_COMPILE = [
+  CC_WRAPPER_CFLAGS = [
     "-Wno-error"
   ];
 
   preBuild = ''
     makeFlagsArray+=(
-      "PREFIX=$out"
-      "SHLIBDIR=$out/lib"
+      "PREFIX=$dev"
+      "SHLIBDIR=$dev/lib"
     )
   '';
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   meta = with lib; {
     description = "SELinux binary policy representation library";

@@ -148,8 +148,8 @@ stdenv.mkDerivation {
   builder = ./builder.sh;
 
   buildInputs = [
-    curl_minimal
-    openssl
+    curl_minimal.bin
+    openssl.bin
     textencode
   ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
     gnupg

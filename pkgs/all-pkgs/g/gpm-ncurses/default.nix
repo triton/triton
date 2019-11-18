@@ -42,11 +42,11 @@ stdenv.mkDerivation {
   srcRoot = ".";
 
   nativeBuildInputs = [
-    autoconf
-    automake
-    bison
-    flex
-    libtool
+    autoconf.bin
+    automake.bin
+    bison.bin
+    flex.bin
+    libtool.bin
   ];
 
   # Prevent build directory impurities from being injected
@@ -73,29 +73,33 @@ stdenv.mkDerivation {
     pushd gpm*
     ./autogen.sh
     configureFlagsGpm=(
-      "--prefix=$out"
+      "--prefix=$dev"
       "--disable-static"
+      "--sbindir=$lib/bin"
       "--sysconfdir=/etc"
       "--localstatedir=/var"
     )
+    patchShebangs configure
     ./configure "''${configureFlagsGpm[@]}" --without-curses
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES install
-    ln -sv libgpm.so.2 $out/lib/libgpm.so
-    for file in $(find $out -type l -or -type f); do
+    ln -sv libgpm.so.2 $dev/lib/libgpm.so
+    for file in $(find $dev -type l -or -type f); do
       GPM_FILES["$file"]=1
     done
     popd
 
     # Build the first round of ncurses
     pushd ncurses*
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$out/include"
-    export NIX_LDFLAGS="$NIX_LDFLAGS -L$out/lib"
-    export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
+    patchShebangs configure
+    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$dev/include"
+    export NIX_LDFLAGS="$NIX_LDFLAGS -L$dev/lib"
+    export PKG_CONFIG_LIBDIR="$dev/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
     configureFlagsNcurses=(
-      "--prefix=$out"
-      "--includedir=$out/include"
+      "--prefix=$dev"
+      "--includedir=$dev/include"
+      "--datadir=$lib/share"
       "--with-pkg-config-libdir=$PKG_CONFIG_LIBDIR"
       "--disable-static"
       "--without-ada"
@@ -189,7 +193,7 @@ stdenv.mkDerivation {
     ncursesBuild () {
       ./configure "''${configureFlagsNcurses[@]}"
 
-      sed -i "s,^\(#define LIBGPM_SONAME\).*,\1 \"$out/lib/libgpm.so\",g" ncurses/base/lib_mouse.c
+      sed -i "s,^\(#define LIBGPM_SONAME\).*,\1 \"$lib/lib/libgpm.so\",g" ncurses/base/lib_mouse.c
 
       make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES
       for file in "''${!NCURSES_FILES[@]}"; do
@@ -199,42 +203,40 @@ stdenv.mkDerivation {
 
       # Determine what suffixes our libraries have
       suffix="$(awk -F': ' 'f{print $3; f=0} /default library suffix/{f=1}' config.log)"
-      libs="$(ls $out/lib/pkgconfig | tr ' ' '\n' | sed "s,\(.*\)$suffix\.pc,\1,g")"
+      libs="$(ls $dev/lib/pkgconfig | tr ' ' '\n' | sed "s,\(.*\)$suffix\.pc,\1,g")"
       suffixes="$(echo "$suffix" | awk '{for (i=1; i < length($0); i++) {x=substr($0, i+1, length($0)-i); print x}}')"
 
       # Get the path to the config util
-      cfg=$(basename $out/bin/ncurses*-config)
+      cfg=$(basename $dev/bin/ncurses*-config)
 
       # symlink the full suffixed include directory
-      ln -svf . $out/include/ncurses$suffix
+      ln -svf . $dev/include/ncurses$suffix
 
       for newsuffix in $suffixes ""; do
         # Create a non-abi versioned config util links
-        ln -svf $cfg $out/bin/ncurses$newsuffix-config
+        ln -svf $cfg $dev/bin/ncurses$newsuffix-config
 
         # Allow for end users who #include <ncurses?w/*.h>
-        ln -svf . $out/include/ncurses$newsuffix
+        ln -svf . $dev/include/ncurses$newsuffix
 
+        local lib
         for lib in $libs; do
           for dylibtype in so dll dylib; do
-            if [ -e "$out/lib/lib''${lib}$suffix.$dylibtype" ]; then
-              ln -svf lib''${lib}$suffix.$dylibtype $out/lib/lib$lib$newsuffix.$dylibtype
+            if [ -e "$dev/lib/lib''${lib}$suffix.$dylibtype" ]; then
+              ln -svf lib''${lib}$suffix.$dylibtype $dev/lib/lib$lib$newsuffix.$dylibtype
             fi
           done
           for statictype in a dll.a la; do
-            if [ -e "$out/lib/lib''${lib}$suffix.$statictype" ]; then
-              ln -svf lib''${lib}$suffix.$statictype $out/lib/lib$lib$newsuffix.$statictype
+            if [ -e "$dev/lib/lib''${lib}$suffix.$statictype" ]; then
+              ln -svf lib''${lib}$suffix.$statictype $dev/lib/lib$lib$newsuffix.$statictype
             fi
           done
-          ln -svf ''${lib}$suffix.pc $out/lib/pkgconfig/$lib$newsuffix.pc
+          ln -svf ''${lib}$suffix.pc $dev/lib/pkgconfig/$lib$newsuffix.pc
         done
       done
-
-      # In the standard environment we don't want to have bootstrap references
-      sed -i 's,${stdenv.shell},/bin/sh,g' $out/bin/*-config
     }
     ncursesBuild
-    for file in $(find $out -type l -or -type f); do
+    for file in $(find $dev -type l -or -type f); do
       if [ "''${GPM_FILES["$file"]}" != "1" ]; then
         NCURSES_FILES["$file"]=1
       fi
@@ -246,19 +248,35 @@ stdenv.mkDerivation {
     for file in "''${!GPM_FILES[@]}"; do
       rm "$file"
     done
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$out/include"
-    export NIX_LDFLAGS="$NIX_LDFLAGS -L$out/lib"
+    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$dev/include"
+    export NIX_LDFLAGS="$NIX_LDFLAGS -L$dev/lib"
     ./configure "''${configureFlagsGpm[@]}" --with-curses
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES install
-    ln -sv libgpm.so.2 $out/lib/libgpm.so
+    ln -sv libgpm.so.2 $dev/lib/libgpm.so
     popd
 
     # Build the final ncurses
     pushd ncurses*
     ncursesBuild
     popd
+
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+    mkdir -p "$dev"/bin
+    mv -v "$bin"/bin/*-config "$dev"/bin
+    ln -sv "$lib"/bin/* "$bin"/bin
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ];
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

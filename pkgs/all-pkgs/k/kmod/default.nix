@@ -37,6 +37,8 @@ stdenv.mkDerivation rec {
     ./module-dir.patch
   ];
 
+  addStatic = false;
+
   configureFlags = [
     "--sysconfdir=/etc"
     "--with-xz"
@@ -44,14 +46,30 @@ stdenv.mkDerivation rec {
     "--with-openssl"
   ];
 
-  # Use symlinks instead of hard-links or copies
   postInstall = ''
-    ln -s kmod $out/bin/lsmod
-    mkdir -p $out/sbin
-    for prog in rmmod insmod modinfo modprobe depmod; do
-      ln -sv $out/bin/kmod $out/sbin/$prog
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    # Use symlinks instead of hard-links or copies
+    for prog in rmmod lsmod insmod modinfo modprobe depmod; do
+      ln -sv kmod $bin/bin/$prog
     done
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

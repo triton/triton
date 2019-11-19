@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.16.1";
+  version = "1.16.2";
 
   tarballUrls = version: [
     "mirror://gnu/automake/automake-${version}.tar.xz"
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921";
+    sha256 = "5d05ba38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921";
   };
 
   buildInputs = [

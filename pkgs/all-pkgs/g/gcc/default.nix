@@ -1,8 +1,10 @@
 { stdenv
 , binutils
+, cc
 , fetchTritonPatch
 , fetchurl
 , hostcc
+, patchelf
 
 , gmp
 , isl
@@ -45,20 +47,40 @@ let
     "--with-glibc-version=2.28"
   ];
 
-  version = "9.2.0";
+  types = {
+    "all" = rec {
+      version = "10-20200216";
+      name = "gcc-${version}";
+      src = fetchurl {
+        url = "https://bigsearcher.com/mirrors/gcc/snapshots/${version}/${name}.tar.xz";
+        hashOutput = false;
+        sha256 = "f7f129d4884eb9f7173018be2188c76e1f4bf0795a79c244cf6b6964e153961d";
+      };
+    };
+    "bootstrap" = rec {
+      version = "9.3.0";
+      name = "gcc-${version}";
+      src = fetchurl {
+        url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
+        hashOutput = false;
+        sha256 = "eaaef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206";
+      };
+    };
+  };
+
+  inherit (types."${type}" or types.all)
+    version
+    name
+    src;
 in
 stdenv.mkDerivation rec {
-  name = "gcc-${version}";
-
-  src = fetchurl {
-    url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
-    hashOutput = false;
-    sha256 = "ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206";
-  };
+  inherit name src;
 
   nativeBuildInputs = [
     binutils.bin
+    cc
     hostcc
+    patchelf
   ];
 
   buildInputs = optionals (type != "bootstrap") [
@@ -123,16 +145,16 @@ stdenv.mkDerivation rec {
     "--with-newlib"
     "--with-local-prefix=/no-such-path/local-prefix"
     "--with-native-system-header-dir=/no-such-path/native-headers"
-    "--with-debug-prefix-map=$NIX_BUILD_TOP=/no-such-path"
   ];
-
-  # Not autodetected during cross compiles
-  gcc_cv_initfini_array = optionalString (type != "bootstrap") "yes";
 
   preConfigure = ''
     mkdir -v build
     cd build
     configureScript='../configure'
+    configureFlags+=("--with-debug-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+  '' + optionalString (type != "bootstrap") ''
+    # Not autodetected during cross compiles
+    export gcc_cv_initfini_array='yes'
   '';
 
   preBuild = ''
@@ -199,7 +221,7 @@ stdenv.mkDerivation rec {
         continue
       fi
       checksum="$(cksum "$prog" | cut -d ' ' -f1)"
-      oProg="''${progMap["$checksum"]}"
+      oProg="''${progMap["$checksum"]-}"
       if [ -z "$oProg" ]; then
         progMap["$checksum"]="$prog"
       elif cmp "$prog" "$oProg"; then

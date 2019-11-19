@@ -1,7 +1,9 @@
 { stdenv
+, cc
 , fetchurl
 , fetchTritonPatch
 , hostcc
+, patchelf
 , lib
 
 , zlib
@@ -29,16 +31,18 @@ let
     );
 in
 stdenv.mkDerivation rec {
-  name = "binutils-2.33.1";
+  name = "binutils-2.34";
 
   src = fetchurl {
     url = "mirror://gnu/binutils/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "ab66fc2d1c3ec0359b8e08843c9f33b63e8707efdff5e4cc5c200eae24722cbf";
+    sha256 = "f00b0e8803dc9bab1e2165bd568528135be734df3fabf8d0161828cd56028952";
   };
 
   nativeBuildInputs = [
+    cc
     hostcc
+    patchelf
   ];
 
   buildInputs = optionals (type != "bootstrap") [
@@ -66,25 +70,22 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     # Don't rebuild the docs for bfd
-    sed -i '/SUBDIRS/s, doc,,' bfd/Makefile.in
+    find . -name Makefile.in -exec sed -i '/SUBDIRS/s, doc,,' {} \;
 
     # Fix host lib install directory
     find . -name configure -exec sed -i \
       's,^\([[:space:]]*bfd\(lib\|include\)dir=\).*$,\1"\\''${\2dir}",' {} \;
-
-    # We don't want our ld to reference "dev"
-    sed -i 's,"[^"]*/etc/ld.so.conf","/no-such-path/etc/ld.so.conf",' ld/emultempl/elf32.em
   '';
 
   preConfigure = ''
     # Clear the default library search path.
     grep -q 'NATIVE_LIB_DIRS=' ld/configure.tgt
     echo 'NATIVE_LIB_DIRS=' >> ld/configure.tgt
-  '';
 
-  # Needed by cross linker to search DT_RUNPATH of libs during link
-  # Otherwise, we won't have the necessary search paths for transitive libs
-  USE_LIBPATH = "yes";
+    # Needed by cross linker to search DT_RUNPATH of libs during link
+    # Otherwise, we won't have the necessary search paths for transitive libs
+    export USE_LIBPATH='yes'
+  '';
 
   configureFlags = [
     "--exec-prefix=${placeholder "bin"}"
@@ -126,11 +127,11 @@ stdenv.mkDerivation rec {
         continue
       fi
       checksum="$(cksum "$prog" | cut -d ' ' -f1)"
-      oProg="''${progMap["$checksum"]}"
+      oProg="''${progMap["$checksum"]-}"
       if [ -z "$oProg" ]; then
         progMap["$checksum"]="$prog"
       elif cmp "$prog" "$oProg"; then
-        rm "$prog"
+        rm -v "$prog"
         ln -srv "$oProg" "$prog"
       fi
     done
@@ -144,7 +145,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     # Missing install of private static libraries
-    rm "$dev"/lib/*.la
+    rm -v "$dev"/lib/*.la
   '';
 
   postFixup = ''

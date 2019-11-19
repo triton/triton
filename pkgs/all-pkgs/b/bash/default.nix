@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , hostcc
 , fetchurl
 , lib
@@ -12,10 +13,12 @@
 let
   inherit (lib)
     attrNames
+    filter
     flip
     length
     mapAttrsToList
     optionals
+    optionalAttrs
     optionalString;
 
   patchSha256s = import ./patches.nix;
@@ -31,21 +34,13 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    cc
     hostcc
   ];
 
   buildInputs = optionals (type == "full") [
     ncurses
     readline
-  ];
-
-  CC_WRAPPER_CFLAGS = [
-    "-DSYS_BASHRC=\"/etc/${passthru.systemBashrcName}\""
-    "-DSYS_BASH_LOGOUT=\"/etc/${passthru.systemBashlogoutName}\""
-    "-DDEFAULT_PATH_VALUE=\"/no-such-path\""
-    "-DSTANDARD_UTILS_PATH=\"/no-such-path\""
-    "-DNON_INTERACTIVE_LOGIN_SHELLS"
-    "-DSSH_SOURCE_BASHRC"
   ];
 
   patchFlags = [
@@ -60,6 +55,15 @@ stdenv.mkDerivation rec {
   postPatch = optionalString (type == "small") ''
     # Make sure we don't build readline
     find lib/readline -name '*'.c -delete
+  '';
+
+  preBuild = ''
+    export CC_WRAPPER_CFLAGS+=' -DSYS_BASHRC="/etc/${passthru.systemBashrcName}"'
+    export CC_WRAPPER_CFLAGS+=' -DSYS_BASH_LOGOUT="/etc/${passthru.systemBashlogoutName}"'
+    export CC_WRAPPER_CFLAGS+=' -DDEFAULT_PATH_VALUE="/no-such-path"'
+    export CC_WRAPPER_CFLAGS+=' -DSTANDARD_UTILS_PATH="/no-such-path"'
+    export CC_WRAPPER_CFLAGS+=' -DNON_INTERACTIVE_LOGIN_SHELLS'
+    export CC_WRAPPER_CFLAGS+=' -DSSH_SOURCE_BASHRC'
   '';
 
   configureFlags = optionals (type == "small") [
@@ -97,9 +101,11 @@ stdenv.mkDerivation rec {
     "man"
   ];
 
-  disallowedReferences = [
-    stdenv.cc
-  ];
+  outputChecks = {
+    bin.disallowedRequisites = optionals (type == "full") [ "man" ];
+  } // optionalAttrs (type == "full") {
+    man.allowedReferences = [ ];
+  };
 
   passthru = rec {
     shellPath = "/bin/bash";

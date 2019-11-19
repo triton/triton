@@ -64,7 +64,7 @@ in
     )
   '' + lib.optionalString (stdenv.targetSystem == "i686-linux") ''
     # Override bad arch options passed in for libatomic
-    export CC_WRAPPER_CFLAGS="$CC_WRAPPER_CFLAGS -march=prescott -mtune=prescott"
+    export CC_WRAPPER_CFLAGS+=" -march=prescott -mtune=prescott"
   '';
 
   buildFlags = [
@@ -101,7 +101,7 @@ in
   '';
 
   preFixup = ''
-    rm -r "$dev"/share
+    rm -rv "$dev"/share
   '';
 
   outputs = [

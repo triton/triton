@@ -2,6 +2,7 @@
 , cc
 , fetchurl
 , hostcc
+, lib
 
 , libunistring
 }:
@@ -9,11 +10,14 @@
 let
   version = "2.3.0";
 
+  inherit (lib)
+    filter;
+
   tarballUrls = version: [
     "mirror://gnu/libidn/libidn2-${version}.tar.gz"
   ];
 in
-(stdenv.override { cc = null; }).mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "libidn2-${version}";
 
   src = fetchurl {
@@ -50,6 +54,15 @@ in
     "bin"
     "lib"
   ];
+
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ]
+      ++ filter (n: n != null) (map (n: n.dev or null) (buildInputs ++ cc.inputs));
+    bin.allowedReferences = [ "bin" "lib" ]
+      ++ filter (n: n != null) (map (n: n.lib or null) (buildInputs ++ cc.inputs));
+    lib.allowedReferences = [ "lib" ]
+      ++ filter (n: n != null) (map (n: n.lib or null) (buildInputs ++ cc.inputs));
+  };
 
   passthru = {
     srcVerification = fetchurl rec {

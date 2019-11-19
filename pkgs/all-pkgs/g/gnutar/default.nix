@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchTritonPatch
 , fetchurl
 , lib
@@ -31,6 +32,10 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = sha256s."${version}";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   buildInputs = optionals (type == "full") [
     acl

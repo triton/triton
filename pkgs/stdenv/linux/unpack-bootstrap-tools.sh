@@ -35,7 +35,6 @@ if gcc --help >/dev/null 2>&1; then
   exit 0
 fi
 
-set -x
 # Unpack the bootstrap tools tarball.
 $busybox mkdir $out
 < $tarball $busybox unxz | $busybox tar x -C $out

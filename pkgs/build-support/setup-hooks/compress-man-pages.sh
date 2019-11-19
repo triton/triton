@@ -1,27 +1,29 @@
-fixupOutputHooks+=('if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi')
+fixupOutputHooks+=(_compressManPages)
 
-compressManPages() {
-    local dir="$1"
+_compressManPages() {
+  [ -n "${compressManPages-1}" ] || return 0
+  [ -e "$prefix"/share/man ] || return 0
 
-    echo "gzipping man pages in $dir"
+  echo "Compressing man pages: $prefix" >&2
+  local f
+  for f in $(find "$prefix"/share/man -type f); do
+    case "$(basename "$f")" in
+      *.gz)
+        gzip -d "$f"
+        f="${f%.gz}"
+        ;;
+      *.bz2)
+        bzip2 -d "$f"
+        f="${f%.bz2}"
+        ;;
+      *.*.*)
+        echo "Unknown compression for $f" >&2
+        exit 1
+        ;;
+      *)
+        ;;
+    esac
 
-    GLOBIGNORE=.:..:*.gz:*.bz2
-
-    for f in "$dir"/share/man/*/* "$dir"/share/man/*/*/*; do
-        if [ -f "$f" -a ! -L "$f" ]; then
-            if gzip -c -n "$f" > "$f".gz; then
-                rm "$f"
-            else
-                rm "$f".gz
-            fi
-        fi
-    done
-
-    for f in "$dir"/share/man/*/* "$dir"/share/man/*/*/*; do
-        if [ -L "$f" -a -f `readlink -f "$f"`.gz ]; then
-            ln -sf `readlink "$f"`.gz "$f".gz && rm "$f"
-        fi
-    done
-
-    unset GLOBIGNORE
+    xz -z "$f"
+  done
 }

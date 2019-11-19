@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "3.3-rc0";
+  version = "3.3";
 in
 stdenv.mkDerivation rec {
   name = "libffi-${version}";
@@ -13,10 +13,24 @@ stdenv.mkDerivation rec {
       "https://github.com/libffi/libffi/releases/download/v${version}/${name}.tar.gz"
       "mirror://sourceware/libffi/${name}.tar.gz"
     ];
-    sha256 = "403d67aabf1c05157855ea2b1d9950263fb6316536c8c333f5b9ab1eb2f20ecf";
+    sha256 = "65affdfc67fbb865f39c7e5df2a071c0beb17206ebfb0a9ecb18a18f63f6b263";
   };
 
-  disableStatic = false;
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+    "man"
+  ];
 
   meta = with stdenv.lib; {
     description = "A foreign function call interface library";

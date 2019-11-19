@@ -3,21 +3,20 @@
 fixupOutputHooks+=(_doAbsoluteLibtool)
 
 _doAbsoluteLibtool() {
-  if [ -n "$dontAbsoluteLibtool" ]; then
+  if [ -z "${absoluteLibtool-1}" ]; then
     return
   fi
   header "Fixing up library paths"
   buildAbsoluteLdflags
   patchLaFiles
   patchPcFiles
-  stopNest
 }
 
 buildAbsoluteLdflags() {
   if [ -e "$TMPDIR/absolute-lib-paths" ]; then
     return 0
   fi
-  echo "$LDFLAGS $CC_WRAPPER_LDFLAGS" > $TMPDIR/absolute-ldflags
+  echo "${LDFLAGS-} ${CC_WRAPPER_LDFLAGS-}" > $TMPDIR/absolute-ldflags
 
   # Add the outputs to the LDFLAGS
   local output

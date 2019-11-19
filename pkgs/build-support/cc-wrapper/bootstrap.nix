@@ -2,21 +2,14 @@
 , compiler
 }:
 
-assert stdenv.cc == null;
 stdenv.mkDerivation {
   name = "cc-wrapper-bootstrap";
 
-  inherit
-    compiler;
-
   buildCommand = ''
-    mkdir -p "$out"/nix-support
-    substituteAll '${./setup-hook-bootstrap.sh}' "$out"/nix-support/setup-hook
-    ln -sv "$compiler"/bin "$out"
+    mkdir -p "''${outputs[out]}"/nix-support
+    sed "s,@compiler@,${compiler},g" '${./setup-hook-bootstrap.sh}' >"''${outputs[out]}"/nix-support/setup-hook
+    ln -sv "${compiler}"/bin "''${outputs[out]}"
   '';
 
-  setupHook = ./setup-hook-bootstrap.sh;
-
   preferLocalBuild = true;
-  allowSubstitutes = false;
 }

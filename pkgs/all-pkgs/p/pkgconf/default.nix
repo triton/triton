@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchurl
 
 , type ? "full"
@@ -16,6 +17,10 @@ stdenv.mkDerivation rec {
     multihash = "QmeRLRYaTsvc1oN8EgoTECe2wjSxAdsAkyh9aus4KP5pNu";
     sha256 = "22b9ee38438901f9d60f180e5182821180854fa738fd071f593ea26a81da208c";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   configureFlags = [
     "--with-personality-dir=/no-such-path"

@@ -31,8 +31,29 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--disable-maintainer-mode"
+    "--bindir=${placeholder "bin"}/bin"
+    "--localedir=${placeholder "bin"}/share/locale"
     "--enable-deterministic-archives"
+  ];
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    # Symlink non-prefixed tools
+    pushd "$bin"/bin >/dev/null
+    for prog in *; do
+      [ "eu-" != "${prog:0:3}" ] && continue
+      ln -sv "$prog" "${prog:3}"
+    done
+    popd >/dev/null
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
   ];
 
   passthru = {

@@ -11,7 +11,7 @@ let
     optionalString
     optionals;
 
-  version = "3.3";
+  version = "3.4";
 
   tarballUrls = version: [
     "mirror://gnu/grep/grep-${version}.tar.xz"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "b960541c499619efd6afe1fa795402e4733c8e11ebf9fafccc0bb4bccdc5b514";
+    sha256 = "58e6751c41a7c25bfc6e9363a41786cff3ba5709cf11d5ad903cf7cce31cc3fb";
   };
 
   buildInputs = [
@@ -63,9 +63,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.3";
+      urls = tarballUrls "3.4";
       inherit (src) outputHashAlgo;
-      outputHash = "b960541c499619efd6afe1fa795402e4733c8e11ebf9fafccc0bb4bccdc5b514";
+      outputHash = "58e6751c41a7c25bfc6e9363a41786cff3ba5709cf11d5ad903cf7cce31cc3fb";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";

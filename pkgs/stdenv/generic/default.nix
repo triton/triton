@@ -5,7 +5,6 @@
 , name ? "stdenv"
 , preHook ? ""
 , initialPath
-, cc
 , shell
 , optionalChroot ? false
 , allowSubstitutes ? true
@@ -117,16 +116,15 @@ let
     ../../build-support/setup-hooks/move-docs.sh
     ../../build-support/setup-hooks/move-sbin.sh
     ../../build-support/setup-hooks/move-lib64.sh
-    ../../build-support/setup-hooks/pkgconfig.sh
-    ../../build-support/setup-hooks/strip.sh
-    ../../build-support/setup-hooks/patch-shebangs.sh
-    ../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
-    ../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
+    ../../build-support/setup-hooks/libtool-empty.sh
+    ../../build-support/setup-hooks/patch-shebangs-empty.sh
+    ../../build-support/setup-hooks/patchelf-empty.sh
+    ../../build-support/setup-hooks/pkgconfig-empty.sh
+    ../../build-support/setup-hooks/strip-empty.sh
     ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
-    ../../build-support/setup-hooks/compress-man-pages.sh
-    ../../build-support/setup-hooks/build-dir-check.sh
-    cc
   ] ++ extraBuildInputs;
+
+  defaultBuildInputs = [ ];
 
   # Add a utility function to produce derivations that use this
   # stdenv and its shell.
@@ -259,11 +257,18 @@ let
     in {
       builder = attrs.realBuilder or shell;
       inherit builderAssert;
-      args = attrs.args or ["-e" (attrs.builder or ./default-builder.sh)];
+      args =
+        if attrs ? "args" then
+          attrs.args
+        else if attrs ? "builder" then
+          [ "-e" attrs.builder ]
+        else
+          [ "-c" "source '${result}/setup'; genericBuild" ];
       stdenv = result;
       system = result.system;
       userHook = config.stdenv.userHook or null;
       __ignoreNulls = true;
+      __structuredAttrs = true;
       __optionalChroot = attrs.__optionalChroot or optionalChroot;
       allowSubstitutes = attrs.allowSubstitutes or allowSubstitutes;
       requiredSystemFeatures = attrs.requiredSystemFeatures or requiredSystemFeatures;
@@ -290,6 +295,7 @@ let
           if targetSystem == hostSystem then
             propagatedBuildInputs
           else [ ]);
+      defaultOutput = lib.head outputs;
     } // (if outputs != [ "out" ] then {
       outputs = outputs;
     } else { })))) (
@@ -322,7 +328,8 @@ let
      else {
        allowedRequisites =
         allowedRequisites ++
-        defaultNativeBuildInputs;
+        defaultNativeBuildInputs
+        defaultBuildInputs;
      }) // {
       inherit
         name;
@@ -335,6 +342,7 @@ let
 
       setup = setupScript;
 
+      __structuredAttrs = true;
       __optionalChroot = optionalChroot;
       allowSubstitutes = allowSubstitutes;
       requiredSystemFeatures = requiredSystemFeatures;
@@ -344,7 +352,8 @@ let
         preHook
         initialPath
         shell
-        defaultNativeBuildInputs;
+        defaultNativeBuildInputs
+        defaultBuildInputs;
     }
     // extraArgs)
 
@@ -360,8 +369,6 @@ let
       inherit lib;
 
       inherit overrides;
-
-      inherit cc;
     }
 
     # Propagate any extra attributes.  For instance, we use this to

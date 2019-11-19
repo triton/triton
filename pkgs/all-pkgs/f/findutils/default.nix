@@ -17,8 +17,10 @@ stdenv.mkDerivation rec {
     sha256 = "c5fefbdf9858f7e4feb86f036e1247a54c79fc2d8e4b7064d5aaa1f47dfa789a";
   };
 
-  # We don't want to depend on bootstrap-tools
-  ac_cv_path_SORT = "sort";
+  configureFlags = [
+    # We don't want to depend on bootstrap-tools
+    "ac_cv_path_SORT=sort"
+  ];
 
   postFixup = ''
     mkdir -p "$bin"/share2

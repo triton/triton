@@ -8,10 +8,10 @@
 
 let
   sources = {
-    "0.21" = {
-      version = "0.21";
-      multihash = "QmYhgCGiiUuUKahh3uugJyrsMSQ1wVXs16WvD5mDjxL9ui";
-      sha256 = "777058852a3db9500954361e294881214f6ecd4b594c00da5eee974cd6a54960";
+    "0.22" = {
+      version = "0.22";
+      multihash = "QmUJW5Mkw7spZCVbP6ZCxEVXqfZW469seVJbwfW8PSpQQT";
+      sha256 = "6c8bc56c477affecba9c59e2c9f026967ac8bad01b51bdd07916db40a517b9fa";
     };
   };
 
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://isl.gforge.inria.fr/${name}.tar.xz";
-    inherit multihash sha256;
+    inherit sha256; #multihash sha256;
   };
 
   buildInputs = [
@@ -36,13 +36,6 @@ stdenv.mkDerivation rec {
     "--disable-silent-rules"
     "--enable-portable-binary"
   ];
-
-  # For some reason the binaries built during the build process
-  # don't maintain references to libgmp. This is a workaround to
-  # make the build work.
-  preBuild = ''
-    export NIX_LDFLAGS="$NIX_LDFLAGS -lgmp"
-  '';
 
   postInstall = ''
     mkdir -p "$lib"/lib

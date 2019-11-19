@@ -4,7 +4,7 @@ export CC@typefx@='@targetfx@cc'
 export CXX@typefx@='@targetfx@c++'
 export CPP@typefx@='@targetfx@cpp'
 
-if [ -n ${NIX_ENFORCE_PURITY+x} ]; then
+if [ -n "${NIX_ENFORCE_PURITY+x}" ]; then
   export CC_WRAPPER@typefx@_ENFORCE_PURITY="$NIX_ENFORCE_PURITY"
 fi
 
@@ -61,6 +61,7 @@ if [ -z "${nix_@type@_cc_done-}" ]; then
 
   # TODO: Support native libraries and proper cross compiling
   if [ -z "@typefx@" ]; then
+    stripAction=@type@Strip
     envHooks+=(@type@AddCVars)
     postConfigureHooks+=(@type@RestoreLTO)
   fi
@@ -74,13 +75,14 @@ if [ -z "${nix_@type@_cc_done-}" ]; then
   if [ -z "@typefx@" ] && [ -n "${CC_WRAPPER_LD_ADD_RPATH-1}" ]; then
     rpathOutputs=()
     # We prefer libdirs over all others
-    for output in $outputs; do
+    local output
+    for output in "${!outputs[@]}"; do
       if [ "${output:0:3}" = "lib" ]; then
         rpathOutputs+=("$output")
       fi
     done
     # Bin outputs can have dynamic libraries
-    for output in $outputs; do
+    for output in "${!outputs[@]}"; do
       if [ "${output:0:3}" = "bin" ]; then
         rpathOutputs+=("$output")
       fi
@@ -89,7 +91,25 @@ if [ -z "${nix_@type@_cc_done-}" ]; then
       rpathOutputs+=("$defaultOutput")
     fi
     for output in "${rpathOutputs[@]}"; do
-      export CC_WRAPPER_LDFLAGS_BEFORE+=" -rpath ${!output}/lib"
+      export CC_WRAPPER_LDFLAGS_BEFORE+=" -rpath ${outputs["$output"]}/lib"
     done
   fi
 fi
+
+# This setup hook strips libraries and executables in the fixup phase.
+@type@Strip() {
+  local allFlags="${stripAllFlags--s}"
+  local debugFlags="${stripDebugFlags--S}"
+
+  local file
+  for file in $(find "$prefix" -name include -prune , -type f); do
+    isELF "$file" || continue
+    if [[ "$file" =~ \.[ao]$ ]]; then
+      echo "Stripping (debug only): $file" >&2
+      $STRIP@typefx@ $debugFlags "$file"
+    else
+      echo "Stripping (all): $file" >&2
+      $STRIP@typefx@ $allFlags "$file"
+    fi
+  done
+}

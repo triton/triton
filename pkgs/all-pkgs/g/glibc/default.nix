@@ -25,7 +25,7 @@ let
     src
     patches
     version;
-self = (stdenv.override { cc = null; }).mkDerivation rec {
+self = stdenv.mkDerivation rec {
   name = "glibc-${version}";
 
   inherit
@@ -59,7 +59,7 @@ self = (stdenv.override { cc = null; }).mkDerivation rec {
     cd build
     configureScript='../configure'
   '';
-  
+
   preBuild = ''
     # We don't want to use the ld.so.cache from the system
     grep -q '#define USE_LDCONFIG' config.h
@@ -67,10 +67,12 @@ self = (stdenv.override { cc = null; }).mkDerivation rec {
 
     # Don't build programs
     echo "build-programs=no" >>configparms
+
+    export CC_WRAPPER_LD_ADD_RPATH
   '';
 
   preInstall = ''
-    installFlagsArray+=(
+    installFlags+=(
       "sysconfdir=$dev/etc"
       "localstatedir=$TMPDIR"
     )
@@ -79,12 +81,10 @@ self = (stdenv.override { cc = null; }).mkDerivation rec {
   postInstall = ''
     mkdir -p "$dev"/lib
 
-    $READELF --version >/dev/null
-
     pushd "$lib"/lib >/dev/null
     for file in $(find * -not -type d); do
       elf=1
-      $READELF -h "$file" >/dev/null 2>&1 || elf=0
+      isELF "$file" || elf=0
       if [[ "$file" == *.so* && "$elf" == 1 ]]; then
         mkdir -p "$dev"/lib/"$(dirname "$file")"
         ln -sv "$lib"/lib/"$file" "$dev"/lib/"$file"
@@ -121,15 +121,21 @@ self = (stdenv.override { cc = null; }).mkDerivation rec {
     localedef -i C -f UTF-8 C.UTF-8
   '';
 
+  # Patchelf will break our loader
+  doPatchELF = false;
+
+  # Adding RPaths breaks ld.so and other things and just isn't necessary here
+  CC_WRAPPER_LD_ADD_RPATH = false;
+
   outputs = [
     "dev"
     "lib"
   ];
 
-  # Patchelf will break our loader
-  dontPatchELF = true;
-
-  CC_WRAPPER_LD_ADD_RPATH = false;
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ];
+    lib.allowedReferences = [ "lib" ];
+  };
 
   passthru = {
     impl = "glibc";

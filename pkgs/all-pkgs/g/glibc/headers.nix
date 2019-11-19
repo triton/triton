@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , cc
 , bison
 , fetchurl
@@ -13,7 +14,7 @@ let
     patches
     version;
 in
-(stdenv.override { cc = null; }).mkDerivation {
+stdenv.mkDerivation {
   name = "glibc-headers-${version}";
 
   inherit
@@ -25,6 +26,10 @@ in
     cc
     python3
   ];
+
+  failureHook = ''
+    cat config.log
+  '';
 
   # We don't need subdirs to install the stub headers
   postPatch = ''
@@ -63,4 +68,16 @@ in
     echo "-z now" >>"$out"/nix-support/ldflags-before
     echo "-z relro" >>"$out"/nix-support/ldflags-before
   '';
+
+  allowedReferences = [ "out" ];
+
+  meta = with lib; {
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux ++
+      x86_64-linux ++
+      powerpc64le-linux;
+  };
 }

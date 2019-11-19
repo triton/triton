@@ -92,13 +92,16 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    makeFlagsArray+=(
+    makeFlags+=(
       "ENGINESDIR=$lib/lib/engines"
       "MANDIR=$man/share/man"
       "DOCDIR=$TMPDIR"
     )
-    installFlagsArray+=("OPENSSLDIR=$bin/etc/ssl")
   '';
+
+  installFlags = [
+    "OPENSSLDIR=${placeholder "bin"}/etc/ssl"
+  ];
 
   # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
   installParallel = false;

@@ -37,11 +37,6 @@ in
     python3
   ];
 
-  # Some of the tools depend on a shell. Set to impure /bin/sh to
-  # prevent a retained dependency on the bootstrap tools in the stdenv-linux
-  # bootstrap.
-  BASH_SHELL = "/bin/sh";
-
   # We don't want to rewrite the paths to our dynamic linkers for ldd
   # Just use the paths as-is.
   postPatch = ''
@@ -64,6 +59,11 @@ in
     mkdir -v build
     cd build
     configureScript='../configure'
+
+    # Some of the tools depend on a shell. Set to impure /bin/sh to
+    # prevent a retained dependency on the bootstrap tools in the stdenv-linux
+    # bootstrap.
+    export BASH_SHELL="/bin/sh"
   '';
   
   preBuild = ''
@@ -73,7 +73,7 @@ in
   '';
 
   preInstall = ''
-    installFlagsArray+=(
+    installFlags+=(
       "sysconfdir=$out/etc"
       "localstatedir=$TMPDIR"
     )

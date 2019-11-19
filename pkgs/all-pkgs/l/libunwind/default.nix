@@ -17,6 +17,17 @@ stdenv.mkDerivation rec {
     xz
   ];
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

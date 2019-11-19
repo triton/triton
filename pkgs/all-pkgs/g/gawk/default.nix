@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    makeFlagsArray+=("AR=$AR")
+    makeFlags+=("AR=$AR")
   '';
 
   configureFlags = optionals (type == "full") [

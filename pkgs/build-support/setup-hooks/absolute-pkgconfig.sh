@@ -3,11 +3,10 @@
 fixupOutputHooks+=(_doAbsolutePkgconfig)
 
 _doAbsolutePkgconfig() {
-  if [ -z "$dontAbsolutePkgconfig" ]; then
+  if [ -n "${absolutePkgconfig-1}" ]; then
     header "Fixing up pkgconfig paths"
     addOutputPkgconfigPaths
     pkgconfigFiles | rewritePkgconfigFiles
-    stopNest
   fi
 }
 

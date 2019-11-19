@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sudo-1.8.27";
+  name = "sudo-1.8.29";
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
     multihash = "QmXCSyc7q5wJPybyzxExFnWtJHqHE1n4YixMvjrqBJ3KNB";
     hashOutput = false;
-    sha256 = "7beb68b94471ef56d8a1036dbcdc09a7b58a949a68ffce48b83f837dd33e2ec0";
+    sha256 = "7beb68a94471ef56d8a1036dbcdc09a7b58a949a68ffce48b83f837dd33e2ec0";
   };
 
   nativeBuildInputs = [

@@ -1,23 +1,15 @@
 { stdenv
 , bison
 , fetchurl
+, lib
 , perl
 
-, cyrus-sasl
-, libedit
-, libverto
-, openldap
 , openssl
-
-, type ? ""
 }:
 
 let
-  inherit (stdenv.lib)
-    optionals
+  inherit (lib)
     optionalString;
-
-  libOnly = type == "lib";
 
   tarballUrls = major: patch: [
     "https://web.mit.edu/kerberos/dist/krb5/${major}/krb5-${version major patch}.tar.gz"
@@ -29,7 +21,7 @@ let
   patch = null;
 in
 stdenv.mkDerivation rec {
-  name = "${type}krb5-${version major patch}";
+  name = "libkrb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
@@ -39,20 +31,17 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    bison
+    bison.bin
     perl
   ];
 
   # We prefer openssl over nss since it supports all crypto features
-  # We prefer libedit as it is more stable in krb5
   buildInputs = [
     openssl
-  ] ++ optionals (!libOnly) [
-    cyrus-sasl
-    libedit
-    libverto
-    openldap
   ];
+
+  # Doesn't support shared + static config
+  addStatic = false;
 
   prePatch = ''
     cd src
@@ -60,7 +49,7 @@ stdenv.mkDerivation rec {
 
   # KRad is only used interally and is the only dependency on libverto
   # If we don't provide verto it will be built unnecessarily so disable it
-  postPatch = optionalString libOnly ''
+  postPatch = ''
     grep -q '^SUBDIRS=.*krad' lib/Makefile.in
     sed -i '/^SUBDIRS=/s,\(krad\|apputils\),,g' lib/Makefile.in
 
@@ -69,47 +58,77 @@ stdenv.mkDerivation rec {
 
     grep -q '^MAYBE_VERTO.*verto' util/Makefile.in
     sed -i '/^MAYBE_VERTO/s, verto,,g' util/Makefile.in
+
+    grep -q '@LIBDIR' include/osconf.hin
+    sed -i "s,@LIBDIR,$lib/lib," include/osconf.hin
   '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-athena"
-    "--${if libOnly then "without" else "with"}-ldap"
     "--with-crypto-impl=openssl"
     "--with-tls-impl=openssl"
-    "--${if libOnly then "without" else "with"}-libedit"
-    "--${if libOnly then "without" else "with"}-system-verto"
   ];
 
-  buildPhase = optionalString libOnly ''
+  CC_WRAPPER_CFLAGS = [
+    "-ULIBDIR"
+    "-DLIBDIR=\"${placeholder "lib"}/lib\""
+    "-UBINDIR"
+    "-DBINDIR=\"${placeholder "lib"}/bin\""
+    "-USBINDIR"
+    "-DSBINDIR=\"${placeholder "lib"}/bin\""
+  ];
+
+  buildPhase = ''
     runHook preBuild
 
-    (cd util; make)
-    (cd include; make)
-    (cd lib; make)
-    (cd build-tools; make)
+    buildFlagsArray+=(
+      "MODULE_DIR=$lib/lib/krb5/plugins"
+      "GSS_MODULE_DIR=$lib/lib/gss"
+      "KRB5_LOCALEDIR=$lib/share/locale"
+    )
+
+    local actualMakeFlags
+    commonMakeFlags 'build'
+    printMakeFlags 'build'
+
+    (cd util; make "''${actualMakeFlags[@]}")
+    (cd include; make "''${actualMakeFlags[@]}")
+    (cd lib; make "''${actualMakeFlags[@]}")
+    (cd build-tools; make "''${actualMakeFlags[@]}")
 
     runHook postBuild
   '';
 
-  installPhase = optionalString libOnly ''
+  installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/{bin,include/{gssapi,gssrpc,kadm5,krb5},lib/pkgconfig,sbin,share/{et,man/man1}}
+    grep -r "$dev" .
+
+    mkdir -p $dev/{bin,include/{gssapi,gssrpc,kadm5,krb5},lib/pkgconfig,sbin,share/{et,man/man1}}
     (cd util; make install)
     (cd include; make install)
     (cd lib; make install)
     (cd build-tools; make install)
-    rm -rf $out/{sbin,share}
-    find $out/bin -type f | grep -v 'krb5-config' | xargs rm
+    rm -rf $dev/{sbin,share}
+    find $dev/bin -type f | grep -v 'krb5-config' | xargs rm
 
     runHook postInstall
   '';
 
   postInstall = ''
-    ln -s libgssapi_krb5.so "$out"/lib/libgssapi.so
+    ln -s libgssapi_krb5.so "$dev"/lib/libgssapi.so
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   passthru = rec {
     srcVerification = fetchurl rec {

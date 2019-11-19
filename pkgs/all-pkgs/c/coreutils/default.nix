@@ -20,7 +20,7 @@ let
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
   ];
 
-  version = "8.31";
+  version = "8.32";
 in
 stdenv.mkDerivation rec {
   name = "coreutils-${type}-${version}";
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "ff7a9c918edce6b4f4b2725e3f9b37b0c4d193531cac49a48b56c4d0d3a9e9fd";
+    sha256 = "ffaa9c918edce6b4f4b2725e3f9b37b0c4d193531cac49a48b56c4d0d3a9e9fd";
   };
 
   buildInputs = optionals (type == "full") [

@@ -4,7 +4,7 @@
 fixupCheckOutputHooks+=(_buildDirCheck)
 
 _buildDirCheck() {
-  if [ "${buildDirCheck-1}" != 1 ]; then
+  if [ -z "${buildDirCheck-1}" ]; then
     return;
   fi
   if [ ! -e "$prefix" ]; then

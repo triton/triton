@@ -9,6 +9,7 @@
 , libpsl
 , libssh2
 , nghttp2_lib
+, ngtcp2
 , openldap
 , openssl
 , zlib
@@ -46,6 +47,7 @@ stdenv.mkDerivation rec {
     libidn2
   ] ++ optionals (type != "minimal") [
     krb5_lib
+    ngtcp2
     libmetalink
     libpsl
     libssh2
@@ -56,6 +58,7 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-ares"
+    "--enable-alt-svc"
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
     "--with-ca-path=/etc/ssl/certs"
     "--with-ca-fallback"

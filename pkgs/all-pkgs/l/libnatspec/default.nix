@@ -14,9 +14,9 @@ stdenv.mkDerivation rec {
     sha256 = "0wffxjlc8svilwmrcg3crddpfrpv35mzzjgchf8ygqsvwbrbb3b7";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
+  #nativeBuildInputs = [
+  #  autoreconfHook
+  #];
 
   buildInputs = [
     popt
@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux;
+      powerpc64le-linux
+      ++ x86_64-linux;
   };
 }

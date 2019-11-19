@@ -1,16 +1,16 @@
 { stdenv
 , fetchFromGitHub
-, python2
+, python3
 
-, clang
+, cc_clang
 , llvm
 }:
 
 let
-  date = "2018-09-15";
+  date = "2019-03-27";
   rev = "dabae5a2afb78cba0320a86e3f5f0b5dc83e077c";
 in
-stdenv.mkDerivation {
+(stdenv.override { cc = cc_clang; }).mkDerivation {
   name = "libclc-${date}";
 
   src = fetchFromGitHub {
@@ -22,15 +22,18 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
-    python2
+    python3
   ];
 
   buildInputs = [
     llvm
   ];
 
+  NIX_DEBUG = true;
+  NIX_CFLAGS_COMPILE = " -v";
+
   postPatch = ''
-    sed -i 's,^\(llvm_clang =\).*,\1 "${clang}/bin/clang",g' configure.py
+    sed -i 's,^\(llvm_clang =\).*,\1 "${cc_clang}/bin/clang",g' configure.py
     patchShebangs .
   '';
 
@@ -41,7 +44,7 @@ stdenv.mkDerivation {
   configureScript = "./configure.py";
 
   configureFlags = [
-    "--with-cxx-compiler=${clang}/bin/clang++"
+    "--with-cxx-compiler=${cc_clang}/bin/clang++"
   ];
 
   meta = with stdenv.lib; {

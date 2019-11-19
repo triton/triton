@@ -11,11 +11,11 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "bzip2-1.0.7";
+  name = "bzip2-1.0.8";
 
   src = fetchurl {
     url = "mirror://sourceware/bzip2/${name}.tar.gz";
-    sha256 = "e768a87c5b1a79511499beb41500bcc4caf203726fff46a6f5f9ad27fe08ab2b";
+    sha256 = "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269";
   };
 
   patches = [
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   '';
 
   preInstall = ''
-    installFlagsArray+=("PREFIX=$bin")
+    installFlags+=("PREFIX=$bin")
   '';
 
   postInstall = ''

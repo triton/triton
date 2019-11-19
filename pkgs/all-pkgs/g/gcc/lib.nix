@@ -2,16 +2,19 @@
 , cc
 , fetchurl
 , gcc
+, lib
+, patchelf
 
 , type ? null
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
+    filter
     optionals
     optionalString;
 in
-(stdenv.override { cc = null; }).mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "libgcc${optionalString (type != null) "-${type}"}-${gcc.version}";
 
   inherit (gcc)
@@ -20,6 +23,7 @@ in
 
   nativeBuildInputs = [
     cc
+    patchelf
   ];
 
   configureFlags = gcc.commonConfigureFlags ++ optionals (type == "nolibc") [
@@ -51,13 +55,9 @@ in
 
     mv "$dev"/lib/include "$dev"
 
-    $READELF --version >/dev/null
-
     mkdir -p "$lib"/lib
     for file in "$dev"/lib*/*; do
-      elf=1
-      $READELF -h "$file" >/dev/null 2>&1 || elf=0
-      if [[ "$file" == *.so* && "$elf" == 1 ]]; then
+      if [[ "$file" == *.so* ]] && isELF "$file"; then
         mv "$file" "$lib"/lib
       fi
     done
@@ -85,6 +85,12 @@ in
   ] ++ optionals (type != "nolibc") [
     "internal"
   ];
+
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ] ++ filter (n: n != null) (map (n: n.dev or null) cc.inputs);
+    lib.allowedReferences = [ ] ++ filter (n: n != null) (map (n: n.lib or null) cc.inputs);
+    internal.allowedReferences = [ ];
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

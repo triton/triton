@@ -51,5 +51,8 @@ for LDFLAG in $LDFLAGS_PRE; do
   fi
 done
 
-export STRIP='strip'
-export READELF='readelf'
+export CC='gcc'
+export CXX='g++'
+
+# We don't support stripping with this compiler set
+doStrip=

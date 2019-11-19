@@ -5,15 +5,12 @@
 fixupOutputHooks+=(_moveSbin)
 
 _moveSbin() {
-    if [ "$dontMoveSbin" = 1 ]; then return; fi
-    if [ ! -e "$prefix/sbin" -o -L "$prefix/sbin" ]; then return; fi
-    echo "moving $prefix/sbin/* to $prefix/bin"
-    mkdir -p $prefix/bin
-    shopt -s dotglob
-    for i in $prefix/sbin/*; do
-        mv "$i" $prefix/bin
-    done
-    shopt -u dotglob
-    rmdir $prefix/sbin
-    ln -s bin $prefix/sbin
+    [ -n "${moveSbin-1}" ] || return 0
+
+    local sbin="$prefix/sbin"
+    [ -e "$sbin" -a ! -L "$sbin" ] || return 0
+
+    echo "Merging sbin into bin: $prefix"
+    _mergeInto "$sbin" "$prefix"/bin
+    ln -sv bin "$sbin"
 }

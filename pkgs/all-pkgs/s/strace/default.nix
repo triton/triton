@@ -1,9 +1,9 @@
 { stdenv
 , fetchurl
-, perl
 
 , elfutils
 , libunwind
+, perl
 }:
 
 let
@@ -18,13 +18,21 @@ stdenv.mkDerivation rec {
     sha256 = "d513bc085609a9afd64faf2ce71deb95b96faf46cd7bc86048bc655e4e4c24d2";
   };
 
-  nativeBuildInputs = [
-    perl
-  ];
-
   buildInputs = [
     elfutils
     libunwind
+    perl
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin_graph"/bin
+    mv -v "$bin"/bin/strace-graph "$bin_graph"/bin
+  '';
+
+  outputs = [
+    "bin"
+    "bin_graph"
+    "man"
   ];
 
   passthru = {

@@ -1,5 +1,6 @@
 { stdenv
 , autoreconfHook
+, cc
 , fetchFromGitHub
 , fetchurl
 
@@ -18,6 +19,10 @@ stdenv.mkDerivation rec {
     multihash = "QmaF3c5ELwpV9T9FyDd3iwwmsPeHoRZiQzj2JtV9PfKd8w";
     sha256 = "10sg04wrmx8482clzxkjfx0xbjkyvyzg88vq5yghx2a8l4dmrxm0";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   setupHook = ./setup-hook.sh;
 

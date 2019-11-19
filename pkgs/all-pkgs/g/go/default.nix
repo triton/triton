@@ -146,8 +146,6 @@ stdenv.mkDerivation {
     find "$out" -name '*'.pl -print -delete
   '';
 
-  dontStrip = true;
-
   setupHook = ./setup-hook.sh;
 
   passthru = {

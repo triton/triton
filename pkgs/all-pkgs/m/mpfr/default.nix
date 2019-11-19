@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchurl
 
 , gmp
@@ -26,6 +27,10 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "1d3be708604eae0e42d578ba93b390c2a145f17743a744d8f3f8c2ad5855a38a";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   buildInputs = [
     gmp

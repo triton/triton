@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchurl
 , perl
 
@@ -12,7 +13,7 @@ let
     optionals
     optionalString;
 
-  version = "4.7";
+  version = "4.8";
 
   tarballUrls = version: [
     "mirror://gnu/sed/sed-${version}.tar.xz"
@@ -24,10 +25,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "2885768cd0a29ff8d58a6280a270ff161f6a3deb5690b2be6c49f46d4c67bd6a";
+    sha256 = "f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633";
   };
 
-  nativeBuildInputs = optionals (type == "full") [
+  nativeBuildInputs = [
+    cc
+  ] ++ optionals (type == "full") [
     perl
   ];
 
@@ -57,9 +60,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4.7";
+      urls = tarballUrls "4.8";
       inherit (src) outputHashAlgo;
-      outputHash = "2885768cd0a29ff8d58a6280a270ff161f6a3deb5690b2be6c49f46d4c67bd6a";
+      outputHash = "f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";

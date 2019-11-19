@@ -1,11 +1,12 @@
 { stdenv
+, cc
 , fetchurl
 , lib
 , python
 }:
 
 let
-  version = "3.8.0";
+  version = "3.8.2";
 in
 stdenv.mkDerivation {
   name = "python-tiny-${version}";
@@ -13,10 +14,11 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "b356244e13fb5491da890b35b13b2118c3122977c2cd825e3eb6e7d462030d84";
+    sha256 = "2646e7dc233362f59714c6193017bb2d6f7b38d6ab4a0cb5fbac5c36c4d845df";
   };
 
   nativeBuildInputs = [
+    cc
     python
   ];
 
@@ -31,6 +33,7 @@ stdenv.mkDerivation {
   ];
 
   postInstall = ''
+    rm -r "$out"/lib/pkgconfig
     rm -r "$out"/lib/python*/test
     rm -r "$out"/lib/python*/config-*
     rm -r "$out"/share
@@ -39,6 +42,10 @@ stdenv.mkDerivation {
     rm -r "$out"/lib/python*/{idlelib,ensurepip}
     ln -sv python3 "$out"/bin/python
   '';
+
+  patchShebangsFileIgnore = [
+    "${placeholder "out"}/lib/python.*"
+  ];
 
   meta = with lib; {
     maintainers = with maintainers; [

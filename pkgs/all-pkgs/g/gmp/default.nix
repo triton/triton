@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchurl
 , gnum4
 
@@ -11,7 +12,7 @@ let
     optionals
     optionalString;
 
-  version = "6.1.2";
+  version = "6.2.0";
 
   tarballUrls = version: [
     "mirror://gnu/gmp/gmp-${version}.tar.xz"
@@ -24,10 +25,11 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "87b565e89a9a684fe4ebeeddb8399dce2599f9c9049854ca8c0dfbdea0e21912";
+    sha256 = "258e6cd51b3fbdfc185c716d55f82c08aff57df0c6fbd143cf6ed561267a1526";
   };
 
   nativeBuildInputs = [
+    cc
     gnum4
   ];
 
@@ -51,19 +53,14 @@ stdenv.mkDerivation rec {
     "lib"
   ];
 
-  # Ensure we don't accidentally run into this again
-  disallowedReferences = [
-    stdenv.cc
-  ];
-
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "6.1.2";
+      urls = tarballUrls "6.2.0";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "343C 2FF0 FBEE 5EC2 EDBE  F399 F359 9FF8 28C6 7298";
       inherit (src) outputHashAlgo;
-      outputHash = "87b565e89a9a684fe4ebeeddb8399dce2599f9c9049854ca8c0dfbdea0e21912";
+      outputHash = "258e6cd51b3fbdfc185c716d55f82c08aff57df0c6fbd143cf6ed561267a1526";
     };
   };
 

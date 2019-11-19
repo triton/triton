@@ -10,10 +10,10 @@ let
     optionalString
     optionals;
 
-  version = "4.2.1";
+  version = "4.3";
 
   tarballUrls = version: [
-    "mirror://gnu/make/make-${version}.tar.bz2"
+    "mirror://gnu/make/make-${version}.tar.gz"
   ];
 in
 stdenv.mkDerivation rec {
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589";
+    sha256 = "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19";
   };
 
   patches = [

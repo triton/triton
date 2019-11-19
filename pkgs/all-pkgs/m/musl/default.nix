@@ -81,7 +81,11 @@ in
     "lib"
   ];
 
-  allowedReferences = outputs;
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ];
+    bin.allowedReferences = [ "bin" "lib" ];
+    lib.allowedReferences = [ "lib" ];
+  };
 
   passthru = {
     inherit version;

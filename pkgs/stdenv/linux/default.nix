@@ -24,7 +24,7 @@ let
   commonStdenvOptions = {
     inherit targetSystem hostSystem config;
     preHook = ''
-      export NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY-1}"
+      NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY-1}"
     '';
   };
 
@@ -70,17 +70,8 @@ let
     requiredSystemFeatures = [ "bootstrap" ];
     initialPath = [ bootstrapTools ];
     extraBuildInputs = [ ];
-
     preHook = ''
-      # We cant patch shebangs or we will retain references to the bootstrap
-      export dontPatchShebangs=1
-      # We can allow build dir impurities because we might have a weird compiler
-      export buildDirCheck=
-      # We don't have package config early in the build process so don't use it
-      export dontAbsoluteLibtool=1
-      export dontAbsolutePkgconfig=1
     '';
-
   };
 
   bootstrapTarget = {
@@ -102,7 +93,11 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0";
-      cc = null;
+
+      preHook = commonBootstrapOptions.preHook + ''
+        # We don't have this support yet
+        doPatchELF=
+      '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit lib;
@@ -114,16 +109,16 @@ let
         };
 
         wrapCC = pkgs.wrapCC.override {
-          stdenv = stdenv.override {
-            cc = pkgs.callPackage ../../build-support/cc-wrapper/bootstrap.nix {
-              compiler = bootstrapCompiler;
-            };
+          cc = pkgs.callPackage ../../build-support/cc-wrapper/bootstrap.nix {
+            compiler = bootstrapCompiler;
           };
         };
 
         cc_gcc_glibc = wrapCC {
           compiler = bootstrapCompiler;
         };
+
+        cc = cc_gcc_glibc;
       };
     });
   };
@@ -133,11 +128,15 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0.1";
-      cc = stage0Pkgs.cc_gcc_glibc;
+
+      preHook = commonBootstrapOptions.preHook + ''
+        # We don't have this support yet
+        doPatchELF=
+      '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage01Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv python_tiny patchelf;
+        inherit (pkgs) stdenv python_tiny patchelf meson_bootstrap;
 
         bison = pkgs.bison.override {
           type = "bootstrap";
@@ -152,7 +151,7 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
+        inherit (stage0Pkgs) cc fetchurl fetchTritonPatch;
       };
     });
   };
@@ -162,10 +161,6 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0.2";
-      cc = stage0Pkgs.cc_gcc_glibc;
-      extraBuildInputs = [
-        stage01Pkgs.patchelf
-      ];
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage02Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
@@ -182,8 +177,8 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
-        inherit (stage01Pkgs) bison;
+        inherit (stage0Pkgs) cc fetchurl fetchTritonPatch;
+        inherit (stage01Pkgs) bison patchelf;
         inherit (pkgs) gmp libmpc mpfr zlib;
         hostcc = null;
       };
@@ -195,20 +190,15 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1";
-      cc = null;
-      extraBuildInputs = [
-        stage01Pkgs.patchelf
-      ];
 
       preHook = commonBootstrapOptions.preHook + ''
-        export NIX_SYSTEM_HOST='${bootstrapTarget}'
+        NIX_SYSTEM_HOST='${bootstrapTarget}'
         NIX_SYSTEM_BUILD="$('${bootstrapCompiler}'/bin/gcc -dumpmachine)" || exit 1
-        export NIX_SYSTEM_BUILD
       '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv linux-headers linux-headers_4-14 gcc_lib_glibc_static gcc_lib_glibc
+        inherit (pkgs) stdenv linux-headers linux-headers_4-19 gcc_lib_glibc_static gcc_lib_glibc
           gcc_cxx_glibc libidn2_glibc libunistring_glibc cc_gcc_early cc_gcc_glibc_headers cc_gcc_glibc_nolibc
           cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
 
@@ -227,7 +217,8 @@ let
 
         # These are only needed to evaluate
         inherit (stage0Pkgs) fetchurl fetchTritonPatch wrapCC;
-        inherit (stage02Pkgs) binutils gcc bison;
+        inherit (stage01Pkgs) bison patchelf;
+        inherit (stage02Pkgs) binutils gcc;
         gcc_runtime_glibc = stage1Pkgs.gcc_cxx_glibc;
       };
     });
@@ -238,21 +229,18 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1.1";
-      cc = stage1Pkgs.cc_gcc_glibc;
-      extraBuildInputs = [
-        stage01Pkgs.patchelf
-      ];
 
       preHook = commonBootstrapOptions.preHook + ''
-        export NIX_SYSTEM_HOST='${bootstrapTarget}'
+        NIX_SYSTEM_HOST='${bootstrapTarget}'
         NIX_SYSTEM_BUILD="$('${bootstrapCompiler}'/bin/gcc -dumpmachine)" || exit 1
-        export NIX_SYSTEM_BUILD
       '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage11Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv isl isl_0-21 libmpc mpfr bash_small coreutils_small gawk_small pcre
-          gnupatch_small gnused_small gnutar_small pkgconfig pkgconf pkgconf-wrapper xz wrapCC patchelf;
+        inherit (pkgs) stdenv isl isl_0-22 libmpc mpfr bash_small coreutils_small gawk_small pcre
+          gnupatch_small gnused_small gnutar_small xz wrapCC patchelf;
+
+        cc = stage1Pkgs.cc_gcc_glibc;
 
         python_tiny = pkgs.python_tiny.override {
           python = stage01Pkgs.python_tiny;
@@ -310,10 +298,6 @@ let
           type = "small";
         };
 
-        pkgconf_unwrapped = pkgs.pkgconf_unwrapped.override {
-          type = "small";
-        };
-
         xz_5-2-4 = pkgs.xz_5-2-4.override {
           type = "small";
         };
@@ -344,23 +328,22 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // {
       name = "stdenv-linux-boot-stage2";
-      cc = null;
       shell = stage11Pkgs.bash_small + stage11Pkgs.bash_small.shellPath;
       initialPath = lib.mapAttrsToList (_: v: v.bin or v) ((import ../generic/common-path.nix) { pkgs = stage11Pkgs; });
       extraBuildInputs = [
-        stage11Pkgs.patchelf
-        stage11Pkgs.pkgconfig
+        ../../build-support/setup-hooks/compress-man-pages.sh
+        ../../build-support/setup-hooks/patch-shebangs.sh
+        ../../build-support/setup-hooks/build-dir-check.sh
       ];
 
       preHook = commonStdenvOptions.preHook + ''
-        export NIX_SYSTEM_BUILD='${bootstrapTarget}'
-        export NIX_SYSTEM_HOST='${finalTarget}'
-        export dontPatchShebangs=1
+        NIX_SYSTEM_BUILD='${bootstrapTarget}'
+        NIX_SYSTEM_HOST='${finalTarget}'
       '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv linux-headers linux-headers_4-14 gcc_lib_glibc_static gcc_lib_glibc
+        inherit (pkgs) stdenv linux-headers linux-headers_4-19 gcc_lib_glibc_static gcc_lib_glibc
           gcc_runtime_glibc libidn2_glibc libunistring_glibc cc_gcc_early cc_gcc_glibc_headers cc_gcc_glibc_nolibc
           cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
 
@@ -404,28 +387,27 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // {
       name = "stdenv-linux-boot-stage2.1";
-      cc = stage2Pkgs.cc_gcc_glibc;
       shell = stage11Pkgs.bash_small + stage11Pkgs.bash_small.shellPath;
       initialPath = lib.mapAttrsToList (_: v: v.bin or v) ((import ../generic/common-path.nix) { pkgs = stage11Pkgs; });
 
       extraBuildInputs = [
-        stage11Pkgs.patchelf
-        stage11Pkgs.pkgconfig
+        ../../build-support/setup-hooks/compress-man-pages.sh
+        ../../build-support/setup-hooks/patch-shebangs.sh
+        ../../build-support/setup-hooks/build-dir-check.sh
       ];
 
       preHook = commonStdenvOptions.preHook + ''
-        export NIX_SYSTEM_BUILD='${finalTarget}'
-        export NIX_SYSTEM_HOST='${finalTarget}'
-        export dontPatchShebangs=1
+        NIX_SYSTEM_BUILD='${finalTarget}'
+        NIX_SYSTEM_HOST='${finalTarget}'
       '';
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage21Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
         inherit (stage2Pkgs) glibc_headers_gcc gcc_runtime_glibc gcc_lib_glibc glibc_lib_gcc
-          linux-headers_4-14 gcc_lib_glibc_static libidn2_glibc libunistring_glibc;
-        inherit (pkgs) stdenv isl isl_0-21 libmpc mpfr bash_small coreutils_small gawk_small pcre
-          gnupatch_small gnused_small gnutar_small pkgconfig pkgconf pkgconf-wrapper xz xz_5-2-4
-          patchelf patchelf_0-9 pkgconf_unwrapped brotli brotli_1-0-7 bzip2 diffutils findutils gnugrep gnumake
+          linux-headers_4-19 gcc_lib_glibc_static libidn2_glibc libunistring_glibc;
+        inherit (pkgs) stdenv isl isl_0-22 libmpc mpfr bash_small coreutils_small gawk_small pcre
+          gnupatch_small gnused_small gnutar_small xz xz_5-2-4
+          patchelf patchelf_0-9 brotli brotli_1-0-7 bzip2 diffutils findutils gnugrep gnumake
           gzip gcc binutils zlib gmp linux-headers cc_gcc_early cc_gcc_glibc_headers cc_gcc_glibc_nolibc
           cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
 
@@ -448,20 +430,17 @@ let
     initialPath = lib.mapAttrsToList (_: v: v.bin or v) ((import ../generic/common-path.nix) { pkgs = stage21Pkgs; });
 
     # We need patchelf to be a buildInput since it has to install a setup-hook.
-    # We need pkgconfig to be a buildInput as it has aclocal files needed to
-    # generate PKG_CHECK_MODULES.
     extraBuildInputs = with stage21Pkgs; [
-      patchelf
-      pkgconfig
+      ../../build-support/setup-hooks/compress-man-pages.sh
+      ../../build-support/setup-hooks/patch-shebangs.sh
+      ../../build-support/setup-hooks/build-dir-check.sh
     ];
-
-    cc = stage21Pkgs.cc_gcc_glibc;
 
     shell = stage21Pkgs.bash_small + stage21Pkgs.bash_small.shellPath;
 
     preHook = commonStdenvOptions.preHook + ''
-      export NIX_SYSTEM_BUILD='${finalTarget}'
-      export NIX_SYSTEM_HOST='${finalTarget}'
+      NIX_SYSTEM_BUILD='${finalTarget}'
+      NIX_SYSTEM_HOST='${finalTarget}'
       if [ -z "$LOCALE_PREDEFINED" ]; then
         export LC_ALL='C.UTF-8'
       fi
@@ -516,10 +495,10 @@ let
 
     overrides = pkgs: rec {
       inherit (stage2Pkgs) glibc_headers_gcc gcc_runtime_glibc gcc_lib_glibc glibc_lib_gcc
-        linux-headers_4-14 gcc_lib_glibc_static libidn2_glibc libunistring_glibc;
-      inherit (stage21Pkgs) isl isl_0-21 libmpc mpfr bash_small coreutils_small gawk_small pcre
-        gnupatch_small gnused_small gnutar_small pkgconfig pkgconf xz xz_5-2-4
-        patchelf pkgconf_unwrapped brotli brotli_1-0-7 bzip2 diffutils findutils gnugrep gnumake
+        linux-headers_4-19 gcc_lib_glibc_static libidn2_glibc libunistring_glibc;
+      inherit (stage21Pkgs) isl isl_0-22 libmpc mpfr bash_small coreutils_small gawk_small pcre
+        gnupatch_small gnused_small gnutar_small xz xz_5-2-4
+        patchelf brotli brotli_1-0-7 bzip2 diffutils findutils gnugrep gnumake
         gzip gcc binutils zlib gmp linux-headers cc_gcc_early cc_gcc_glibc_headers cc_gcc_glibc_nolibc
         cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
       libidn2 = libidn2_glibc;

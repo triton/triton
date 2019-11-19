@@ -1,0 +1,81 @@
+diff --git a/lib/Driver/ToolChains/Linux.cpp b/lib/Driver/ToolChains/Linux.cpp
+index d900508ad9..f66c3a1c82 100644
+--- a/lib/Driver/ToolChains/Linux.cpp
++++ b/lib/Driver/ToolChains/Linux.cpp
+@@ -40,6 +40,7 @@ using tools::addPathIfExists;
+ static std::string getMultiarchTriple(const Driver &D,
+                                       const llvm::Triple &TargetTriple,
+                                       StringRef SysRoot) {
++  return TargetTriple.str();
+   llvm::Triple::EnvironmentType TargetEnvironment =
+       TargetTriple.getEnvironment();
+   bool IsAndroid = TargetTriple.isAndroid();
+@@ -219,6 +220,7 @@ static void addMultilibsFilePaths(const Driver &D, const MultilibSet &Multilibs,
+ 
+ Linux::Linux(const Driver &D, const llvm::Triple &Triple, const ArgList &Args)
+     : Generic_ELF(D, Triple, Args) {
++  return;
+   GCCInstallation.init(Triple, Args);
+   Multilibs = GCCInstallation.getMultilibs();
+   SelectedMultilib = GCCInstallation.getMultilib();
+@@ -508,6 +510,8 @@ std::string Linux::computeSysRoot() const {
+ }
+ 
+ std::string Linux::getDynamicLinker(const ArgList &Args) const {
++  return "/no-such-path/ld.so";
++
+   const llvm::Triple::ArchType Arch = getArch();
+   const llvm::Triple &Triple = getTriple();
+ 
+@@ -649,6 +653,7 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
+ 
+ void Linux::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
+                                       ArgStringList &CC1Args) const {
++  return;
+   const Driver &D = getDriver();
+   std::string SysRoot = computeSysRoot();
+ 
+@@ -884,6 +889,7 @@ static std::string DetectLibcxxIncludePath(llvm::vfs::FileSystem &vfs,
+ 
+ void Linux::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
+                                   llvm::opt::ArgStringList &CC1Args) const {
++  return;
+   const std::string& SysRoot = computeSysRoot();
+   const std::string LibCXXIncludePathCandidates[] = {
+       DetectLibcxxIncludePath(getVFS(), getDriver().Dir + "/../include/c++"),
+@@ -903,6 +909,7 @@ void Linux::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
+ 
+ void Linux::addLibStdCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
+                                      llvm::opt::ArgStringList &CC1Args) const {
++  return;
+   // We need a detected GCC installation on Linux to provide libstdc++'s
+   // headers.
+   if (!GCCInstallation.isValid())
+diff --git a/lib/Frontend/InitHeaderSearch.cpp b/lib/Frontend/InitHeaderSearch.cpp
+index d65d13489d..9af2b6518e 100644
+--- a/lib/Frontend/InitHeaderSearch.cpp
++++ b/lib/Frontend/InitHeaderSearch.cpp
+@@ -208,6 +208,7 @@ void InitHeaderSearch::AddMinGWCPlusPlusIncludePaths(StringRef Base,
+ 
+ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
+                                             const HeaderSearchOptions &HSOpts) {
++  return;
+   llvm::Triple::OSType os = triple.getOS();
+ 
+   if (triple.isOSDarwin()) {
+@@ -365,6 +366,7 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
+ void InitHeaderSearch::AddDefaultCPlusPlusIncludePaths(
+     const LangOptions &LangOpts, const llvm::Triple &triple,
+     const HeaderSearchOptions &HSOpts) {
++  return;
+   llvm::Triple::OSType os = triple.getOS();
+   // FIXME: temporary hack: hard-coded paths.
+ 
+@@ -406,6 +408,7 @@ void InitHeaderSearch::AddDefaultCPlusPlusIncludePaths(
+ void InitHeaderSearch::AddDefaultIncludePaths(const LangOptions &Lang,
+                                               const llvm::Triple &triple,
+                                             const HeaderSearchOptions &HSOpts) {
++  return;
+   // NB: This code path is going away. All of the logic is moving into the
+   // driver which has the information necessary to do target-specific
+   // selections of default include paths. Each target which moves there will be

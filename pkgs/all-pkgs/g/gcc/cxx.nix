@@ -3,9 +3,14 @@
 , fetchurl
 , gcc
 , gcc_lib
+, lib
 }:
 
-(stdenv.override { cc = null; }).mkDerivation rec {
+let
+  inherit (lib)
+    filter;
+in
+stdenv.mkDerivation rec {
   name = "libstdcxx-${gcc.version}";
 
   src = gcc.src;
@@ -51,6 +56,11 @@
     "dev"
     "lib"
   ];
+
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ] ++ filter (n: n != null) (map (n: n.dev or null) cc.inputs);
+    lib.allowedReferences = [ ] ++ filter (n: n != null) (map (n: n.lib or null) cc.inputs);
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

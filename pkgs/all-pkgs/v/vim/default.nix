@@ -21,7 +21,7 @@ let
   inherit (lib)
     optionalString;
 
-  version = "8.1.1777";
+  version = "8.1.2318";
 in
 stdenv.mkDerivation rec {
   name = "vim-${version}";

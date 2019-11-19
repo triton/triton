@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     python3
-    re2c
+    re2c.bin
   ];
 
   buildPhase = ''
@@ -32,7 +32,6 @@ stdenv.mkDerivation rec {
   '';
 
   setupHook = ./setup-hook.sh;
-  selfApplySetupHook = true;
 
   meta = with stdenv.lib; {
     description = "Small build system with a focus on speed";

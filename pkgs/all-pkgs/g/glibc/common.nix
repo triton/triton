@@ -3,12 +3,12 @@
 }:
 
 rec {
-  version = "2.30";
+  version = "2.31";
 
   src = fetchurl {
     url = "mirror://gnu/glibc/glibc-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "e2c4114e569afbe7edbc29131a43be833850ab9a459d81beb2588016d2bbb8af";
+    sha256 = "9246fe44f68feeec8c666bb87973d590ce0137cca145df014c72ec95be9ffd17";
   };
 
   patches = [

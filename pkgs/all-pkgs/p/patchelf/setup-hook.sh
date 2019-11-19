@@ -1,11 +1,5 @@
-# This setup hook calls patchelf to automatically remove unneeded
-# directories from the RPATH of every library or executable in every
-# output.
-
-fixupOutputHooks+=('if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi')
-
 patchelfPost() {
-  case "$($CC -dumpmachine)" in
+  case "$(${CC-true} -dumpmachine)" in
     powerpc*)
       PATCHELF_PAGE_SIZE=65536
       ;;
@@ -13,7 +7,7 @@ patchelfPost() {
       PATCHELF_PAGE_SIZE=4096
       ;;
     *)
-      dontPatchELF=1
+      doPatchELF=
       ;;
   esac
 }
@@ -83,7 +77,7 @@ patchSingleBinaryWrapped() {
     rpath="$(echo "$rpathlist" | sed '/^$/d' | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
   fi
 
-  if [ "$NIX_DEBUG" = 1 ]; then
+  if [ -n "${NIX_DEBUG-}" ]; then
     echo "  Old Rpath: $oldrpath"
     echo "  NoTmp Rpath: $notmprpath"
     echo "  Exist Rpath: $existrpath"
@@ -100,13 +94,12 @@ patchSingleBinaryWrapped() {
   echo "  Shrinking rpath"
   patchelf --shrink-rpath "$file"
 
-  if [ "$NIX_DEBUG" = 1 ]; then
+  if [ -n "${NIX_DEBUG-}" ]; then
     echo "  Shrunk Rpath: $(patchelf --print-rpath "$file")"
   fi
 }
 
 patchELF() {
-  header "patching ELF executables and libraries in $prefix"
   if [ -e "$prefix" ]; then
     # We need to know the path to all of the shared objects for the set of outputs.
     # Our outputs are allowed to reference the private shared objects of these outputs
@@ -115,11 +108,11 @@ patchELF() {
     if [ -z "${sodirs+1}" ]; then
       echo "Finding shared object directories" >&2
       local output
-      for output in $outputs; do
-        sodirs="$(find "${!output}" -type f -a -name '*.so*' -exec dirname {} \;)"
+      for output in "${outputs[@]}"; do
+        sodirs="$(find "$output" -type f -a -name '*.so*' -exec dirname {} \;)"
       done
       sodirs="$(echo "$sodirs" | sort | uniq)"
-      if [ "$NIX_DEBUG" = 1 ]; then
+      if [ -n "${NIX_DEBUG-}" ]; then
         echo "Shared Object Directories:" >&2
         for sodir in $sodirs; do
           echo "  $sodir" >&2
@@ -141,5 +134,6 @@ patchELF() {
     done
     wait
   fi
-  stopNest
 }
+
+patchELFAction=patchELF

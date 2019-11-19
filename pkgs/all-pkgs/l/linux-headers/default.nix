@@ -1,7 +1,5 @@
 { stdenv
-, bison
 , fetchurl
-, flex
 , hostcc
 , lib
 
@@ -10,15 +8,15 @@
 
 let
   sources = {
-    "4.14" = {
-      version = "4.14.114";
-      baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
-      patchSha256 = "e1375e916f202b5ce73e17aa673aea741d2995f10eb448bb0581e3f82c8efe19";
-    };
     "4.19" = {
-      version = "4.19.37";
+      version = "4.19.112";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "517d79fc64b4c95ee5845ce21e4c60efb8f9479ce7c4ca2ac3496cf670e906ff";
+      patchSha256 = "a615e9089007999d1526736c30fb16650728898c10bdf009595fc87997093f97";
+    };
+    "5.4" = {
+      version = "5.4.27";
+      baseSha256 = "0c68f565a528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
+      patchSha256 = "5a7d79fa64b4c95ee5845ce21e4c60efb8f9479ce7c4ca2ac3496cf670e906ff";
     };
   };
 
@@ -37,12 +35,8 @@ let
     "i686-linux" = "i386";
     "powerpc64le-linux" = "powerpc";
   };
-
-  inherit (lib)
-    optionals
-    versionAtLeast;
 in
-(stdenv.override { cc = null; }).mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "linux-headers-${source.version}";
 
   inherit (sourceFetch)
@@ -50,17 +44,18 @@ in
 
   nativeBuildInputs = [
     hostcc
-  ] ++ optionals (versionAtLeast source.version "4.16") [
-    bison
-    flex
   ];
 
   patches = [
     sourceFetch.patch
   ];
 
-  preBuild = ''
-    makeFlagsArray+=(
+  buildPhase = ''
+    true
+  '';
+
+  preInstall = ''
+    makeFlags+=(
       CC="$NIX_SYSTEM_HOST-gcc"
       CXX="$NIX_SYSTEM_HOST-g++"
       LD="$NIX_SYSTEM_HOST-ld"
@@ -72,17 +67,8 @@ in
 
   makeFlags = [
     "ARCH=${headerArch."${stdenv.targetSystem}"}"
+    "INSTALL_HDR_PATH=${placeholder "out"}"
   ];
-
-  # The header install process requires a configuration
-  # The default configuration should be suitable for this
-  buildFlags = [
-    "defconfig"
-  ];
-
-  preInstall = ''
-    installFlagsArray+=("INSTALL_HDR_PATH=$out")
-  '';
 
   installTargets = "headers_install";
 
@@ -95,9 +81,6 @@ in
     # Cleanup some unneeded files
     find "$out"/include \( -name .install -o -name ..install.cmd \) -delete
   '';
-
-  # We don't have an elf patcher yet
-  dontStrip = true;
 
   # The linux-headers do not need to maintain any references
   allowedReferences = [ "out" ];

@@ -1022,7 +1022,10 @@ civetweb = callPackage ../all-pkgs/c/civetweb { };
 
 cjdns = callPackage ../all-pkgs/c/cjdns { };
 
-clang = wrapCC (callPackageAlias "llvm" { });
+clang_9 = callPackage ../all-pkgs/c/clang {
+  llvm = pkgs.llvm_9;
+};
+clang = callPackageAlias "clang_9" { };
 
 clr-boot-manager = callPackage ../all-pkgs/c/clr-boot-manager { };
 
@@ -1059,6 +1062,14 @@ collectd_plugins = callPackage ../all-pkgs/c/collectd {
   type = "plugins";
 };
 
+colm_0-12 = callPackage ../all-pkgs/c/colm {
+  channel = "0.12";
+};
+colm_0-13 = callPackage ../all-pkgs/c/colm {
+  channel = "0.13";
+};
+colm = callPackageAlias "colm_0-12" { };
+
 colord = callPackage ../all-pkgs/c/colord { };
 
 colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
@@ -1066,6 +1077,11 @@ colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 colorhug-client = callPackage ../all-pkgs/c/colorhug-client { };
 
 combine-xml-catalogs = callPackage ../all-pkgs/c/combine-xml-catalogs { };
+
+compiler-rt_9 = callPackage ../all-pkgs/c/compiler-rt {
+  llvm = pkgs.llvm_9;
+};
+compiler-rt = callPackageAlias "compiler-rt_9" { };
 
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
@@ -2241,10 +2257,10 @@ iputils = callPackage ../all-pkgs/i/iputils { };
 
 irqbalance = callPackage ../all-pkgs/i/irqbalance { };
 
-isl_0-21 = callPackage ../all-pkgs/i/isl {
-  channel = "0.21";
+isl_0-22 = callPackage ../all-pkgs/i/isl {
+  channel = "0.22";
 };
-isl = callPackageAlias "isl_0-21" { };
+isl = callPackageAlias "isl_0-22" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
@@ -2293,6 +2309,8 @@ keepalived = callPackage ../all-pkgs/k/keepalived { };
 
 keepassx = callPackage ../all-pkgs/k/keepassx { };
 
+kelbt = callPackage ../all-pkgs/k/kelbt { };
+
 kerberos = callPackageAlias "krb5_lib" { };
 
 kexec-tools = callPackage ../all-pkgs/k/kexec-tools { };
@@ -2311,10 +2329,9 @@ knot = callPackage ../all-pkgs/k/knot { };
 
 knot-resolver = callPackage ../all-pkgs/k/knot-resolver { };
 
-krb5_full = callPackage ../all-pkgs/k/krb5 { };
-krb5_lib = callPackageAlias "krb5_full" {
-  type = "lib";
-};
+krb5_full = callPackage ../all-pkgs/k/krb5/full.nix { };
+
+krb5_lib = callPackage ../all-pkgs/k/krb5/lib.nix { };
 
 #kubernetes = callPackage ../all-pkgs/k/kubernetes { };
 
@@ -2620,6 +2637,8 @@ libmusicbrainz = callPackage ../all-pkgs/l/libmusicbrainz { };
 libmypaint = callPackage ../all-pkgs/l/libmypaint { };
 
 libnatpmp = callPackage ../all-pkgs/l/libnatpmp { };
+
+libnatspec = callPackage ../all-pkgs/l/libnatspec { };
 
 libnetfilter_acct = callPackage ../all-pkgs/l/libnetfilter_acct { };
 
@@ -2945,25 +2964,30 @@ linenoise-ng = callPackage ../all-pkgs/l/linenoise-ng { };
 
 linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 
-linux-headers_4-14 = callPackage ../all-pkgs/l/linux-headers {
-  channel = "4.14";
-};
 linux-headers_4-19 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.19";
 };
+linux-headers_5-4 = callPackage ../all-pkgs/l/linux-headers {
+  channel = "5.4";
+};
 # Minimum version for external distros
-linux-headers = callPackageAlias "linux-headers_4-14" { };
+linux-headers = callPackageAlias "linux-headers_4-19" { };
 # Minimum version for triton
-linux-headers_triton = callPackageAlias "linux-headers_4-19" { };
+linux-headers_triton = callPackageAlias "linux-headers_5-4" { };
 
 lirc = callPackage ../all-pkgs/l/lirc { };
 
 live555 = callPackage ../all-pkgs/l/live555 { };
 
-llvm_8 = callPackage ../all-pkgs/l/llvm {
-  channel = "8";
+lld_9 = callPackage ../all-pkgs/l/lld {
+  llvm = pkgs.llvm_9;
 };
-llvm = callPackageAlias "llvm_8" { };
+lld = callPackageAlias "lld_9" { };
+
+llvm_9 = callPackage ../all-pkgs/l/llvm {
+  channel = "9";
+};
+llvm = callPackageAlias "llvm_9" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 
@@ -3031,6 +3055,10 @@ mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
 mesa-headers = callPackage ../all-pkgs/m/mesa-headers { };
 
 meson = pkgs.python3Packages.meson.dev;
+
+meson_bootstrap = callPackage ../all-pkgs/m/meson/bootstrap.nix {
+  python = pkgs.python_tiny;
+};
 
 #mesos = callPackage ../all-pkgs/m/mesos {
 #  inherit (pythonPackages) python boto setuptools wrapPython;
@@ -3277,6 +3305,8 @@ nfacct = callPackage ../all-pkgs/n/nfacct { };
 nfs-utils = callPackage ../all-pkgs/n/nfs-utils { };
 
 nftables = callPackage ../all-pkgs/n/nftables { };
+
+ngtcp2 = callPackage ../all-pkgs/n/ngtcp2 { };
 
 nghttp2_full = callPackage ../all-pkgs/n/nghttp2 { };
 nghttp2_lib = callPackage ../all-pkgs/n/nghttp2 {
@@ -3724,6 +3754,10 @@ quasselClient = hiPrio (pkgs.quassel.override {
 quazip = callPackage ../all-pkgs/q/quazip { };
 
 radvd = callPackage ../all-pkgs/r/radvd { };
+
+ragel_6 = callPackage ../all-pkgs/r/ragel/6.nix { };
+ragel_7 = callPackage ../all-pkgs/r/ragel/7.nix { };
+ragel = callPackageAlias "ragel_6" { };
 
 rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
@@ -4411,6 +4445,8 @@ youtube-dl = pkgs.python3Packages.youtube-dl;
 
 yubikey-manager = pkgs.python3Packages.yubikey-manager;
 
+z3 = callPackage ../all-pkgs/z/z3 { };
+
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 
 zenity_generics = overrides: callPackage ../all-pkgs/z/zenity ({
@@ -4622,8 +4658,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
 #
   libgtop = callPackage ../development/libraries/libgtop {};
-#
-  libnatspec = callPackage ../development/libraries/libnatspec { };
 #
   libndp = callPackage ../development/libraries/libndp { };
 #

@@ -8,15 +8,12 @@
 fixupOutputHooks+=(_moveLib64)
 
 _moveLib64() {
-    if [ "$dontMoveLib64" = 1 ]; then return; fi
-    if [ ! -e "$prefix/lib64" -o -L "$prefix/lib64" ]; then return; fi
-    echo "moving $prefix/lib64/* to $prefix/lib"
-    mkdir -p $prefix/lib
-    shopt -s dotglob
-    for i in $prefix/lib64/*; do
-        mv --no-clobber "$i" $prefix/lib
-    done
-    shopt -u dotglob
-    rmdir $prefix/lib64
-    ln -s lib $prefix/lib64
+    [ -n "${moveLib64-1}" ] || return 0
+
+    local lib64="$prefix/lib64"
+    [ -e "$lib64" -a ! -L "$lib64" ] || return 0
+
+    echo "Merging lib64 into lib: $prefix"
+    _mergeInto "$lib64" "$prefix"/lib
+    ln -sv lib "$lib64"
 }

@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchurl
 , lib
 
@@ -18,7 +19,7 @@ let
     "mirror://sourceforge/pcre/pcre/${version}/pcre-${version}.tar.bz2"
   ];
 
-  version = "8.43";
+  version = "8.44";
 in
 stdenv.mkDerivation rec {
   name = "pcre-${version}";
@@ -26,8 +27,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "91e762520003013834ac1adb4a938d53b22a216341c061b0cf05603b290faf6b";
+    sha256 = "19108658b23b3ec5058edc9f66ac545ea19f9537234be1ec62b714c84399366d";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   buildInputs = optionals pcregrep [
     bzip2
@@ -74,7 +79,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "8.43";
+      urls = tarballUrls "8.44";
       inherit (src)
         outputHash
         outputHashAlgo;

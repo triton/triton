@@ -6,6 +6,7 @@
 # compiler and the linker just "work".
 
 { stdenv
+, cc
 , lib
 , fetchurl
 }:
@@ -41,7 +42,7 @@ let
 
   external = compiler.external;
 
-  version = "0.1.5";
+  version = "0.1.6";
 in
 assert target != "";
 stdenv.mkDerivation rec {
@@ -49,11 +50,15 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/triton/cc-wrapper/releases/download/v${version}/${name}.tar.xz";
-    sha256 = "6d30712b0f6c285e2496cf6aa2c0237d7c4d253c0adf23a16429bc8fd4f7770e";
+    sha256 = "da9305c99a205791ec9028efae12e8cd5923cb5fe392adcd18000b5728d32e73";
   };
 
+  nativeBuildInputs = [
+    cc
+  ];
+
   preConfigure = ''
-    configureFlagsArray+=("--with-pure-prefixes=$NIX_STORE")
+    configureFlags+=("--with-pure-prefixes=$NIX_STORE")
 
     exists() {
       [ -h "$1" -o -e "$1" ]
@@ -79,7 +84,7 @@ stdenv.mkDerivation rec {
     vars['cflags-before']+=" -mcpu=power9"
     vars['cflags-before']+=" -msecure-plt"
   '' + ''
-    for inc in "$compiler" $tools $inputs; do
+    for inc in "$compiler" "''${tools[@]}" "''${inputs[@]}"; do
       maybeAppend stdinc "$inc"
       maybeAppend stdincxx "$inc"
       maybeAppend cflags "$inc"
@@ -94,14 +99,23 @@ stdenv.mkDerivation rec {
       maybeAppend ldflags-dynamic "$inc"
     done
 
-    if [ -n "''${vars['dynamic-linker']-}" -a ! -e "''${vars['dynamic-linker']}" ]; then
+    if [ -n "''${vars['dynamic-linker']-}" -a ! -e "''${vars['dynamic-linker']-}" ]; then
       echo "Invalid dynamic-linker \"''${vars['dynamic-linker']}\""
       exit 1
     fi
 
     for var in "''${!vars[@]}"; do
-      configureFlagsArray+=("--with-$var=''${vars["$var"]}")
+      configureFlags+=("--with-$var=''${vars["$var"]}")
     done
+
+    echo 'int main() { return 0; }' >main.c
+    if $CC -o main main.c -flto 2>/dev/null; then
+      echo 'Using LTO' >&2
+      configureFlags+=(
+        'CFLAGS=-O2 -flto'
+        'CXXFLAGS=-O2 -flto'
+      )
+    fi
   '';
 
   configureFlags = [
@@ -114,34 +128,22 @@ stdenv.mkDerivation rec {
     "--with-build-dir-env-var=NIX_BUILD_TOP"
   ];
 
-  preBuild = ''
-    echo 'int main() { return 0; }' >main.c
-    if $CC -o main main.c -flto 2>/dev/null; then
-      echo "Using LTO" >&2
-      export CC_WRAPPER_CFLAGS="$CC_WRAPPER_CFLAGS -flto"
-    fi
-  '';
-
   postInstall = ''
-    mkdir -p "$out"/nix-support
+    mkdir -p "''${outputs[out]}"/nix-support
     for var in "''${!vars[@]}"; do
-      echo "''${vars["$var"]}" >"$out"/nix-support/"$var"
+      echo "''${vars["$var"]}" >"''${outputs[out]}"/nix-support/"$var"
     done
-  '';
-
-  preFixup = ''
-    export targetbin="$(find "$out"/lib -name bin)"
+    sed '${./setup-hook.sh}' \
+      -e "s,@type@,${type},g" \
+      -e "s,@typefx@,${typefx},g" \
+      -e "s,@targetfx@,${targetfx},g" \
+      >"''${outputs[out]}"/nix-support/setup-hook
   '';
 
   inherit
     compiler
     tools
-    inputs
-    targetfx
-    type
-    typefx;
-
-  setupHook = ./setup-hook.sh;
+    inputs;
 
   meta = with lib; {
     maintainers = with maintainers; [

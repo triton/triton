@@ -1,4 +1,5 @@
 { stdenv
+, cc
 , fetchTritonPatch
 , fetchurl
 
@@ -20,6 +21,10 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "6640d76b043bc658139c8903e293d5978309bf0f408107146505eca701e67cf6";
   };
+
+  nativeBuildInputs = [
+    cc
+  ];
 
   patches = [
     (fetchTritonPatch {

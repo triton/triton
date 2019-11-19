@@ -1,6 +1,7 @@
 { stdenv
 , cc
 , fetchurl
+, lib
 }:
 
 let
@@ -8,9 +9,12 @@ let
     "mirror://gnu/libunistring/libunistring-${version}.tar.xz"
   ];
 
+  inherit (lib)
+    filter;
+
   version = "0.9.10";
 in
-(stdenv.override { cc = null; }).mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "libunistring-${version}";
 
   src = fetchurl {
@@ -23,19 +27,26 @@ in
     cc
   ];
 
+  preBuild = ''
+    # Needed to prevent libunistring.so from referencing dev
+    export CC_WRAPPER_CFLAGS="-DLIBDIR=\"$lib/lib\""
+  '';
+
   postInstall = ''
     mkdir -p "$lib"/lib
     mv "$dev"/lib*/*.so* "$lib"/lib
     ln -sv "$lib"/lib/* "$dev"/lib
   '';
 
-  # Needed to prevent libunistring.so from referencing dev
-  CC_WRAPPER_CFLAGS = "-DLIBDIR=\"${placeholder "lib"}/lib\"";
-
   outputs = [
     "dev"
     "lib"
   ];
+
+  outputChecks = {
+    dev.allowedReferences = [ "dev" "lib" ] ++ filter (n: n != null) (map (n: n.dev or null) cc.inputs);
+    lib.allowedReferences = [ "lib" ] ++ filter (n: n != null) (map (n: n.lib or null) cc.inputs);
+  };
 
   passthru = {
     srcVerification = fetchurl rec {

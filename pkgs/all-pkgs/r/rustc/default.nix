@@ -1,11 +1,12 @@
 { stdenv
 , cargo
+, cc_gcc_new
 , fetchurl
 , lib
 , python3
 , rustc
 
-, llvm
+, llvm_split
 , xz
 
 , channel
@@ -36,7 +37,7 @@ let
     src
     deps;
 in
-stdenv.mkDerivation {
+(stdenv.override { cc = cc_gcc_new; }).mkDerivation {
   name = "rustc-${version}";
 
   inherit src;
@@ -48,16 +49,20 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    llvm_split
     xz
   ];
 
   # This breaks compilation
   fixLibtool = false;
 
-  # Don't install anything we don't need as part of the compiler toolchain
-  # These should be generated separately as needed
   postPatch = ''
+    # Don't install anything we don't need as part of the compiler toolchain
+    # These should be generated separately as needed
     sed -i '/install::\(Docs\|Src\),/d' src/bootstrap/builder.rs
+
+    # Don't hardcode references to llvm dev files
+    sed -i 's,let cfg_llvm_root =.*;,let cfg_llvm_root = "";,' src/librustc_codegen_llvm/context.rs
   '';
 
   configureFlags = [
@@ -66,7 +71,7 @@ stdenv.mkDerivation {
     "--enable-llvm-link-shared"
     "--enable-vendor"
     "--enable-optimize"
-    "--llvm-root=${llvm}"
+    "--llvm-root=${llvm_split}"
     "--release-channel=${channel}"
   ];
 
@@ -100,6 +105,11 @@ stdenv.mkDerivation {
   outputs = [
     "out"
     "std"
+  ];
+
+  disallowedReferences = [
+    llvm_split.bin
+    llvm_split.dev
   ];
 
   setupHook = ./setup-hook.sh;

@@ -32,12 +32,12 @@ stdenv.mkDerivation rec {
   '';
 
   preBuild = optionalString (!onlyHeaders) ''
-    makeFlagsArray+=(
+    makeFlags+=(
       "-C" "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
       "SUBDIRS=$(pwd)"
       "INSTALL_PATH=$out"
     )
-    installFlagsArray+=("INSTALL_MOD_PATH=$out")
+    installFlags+=("INSTALL_MOD_PATH=$out")
   '';
 
   installTargets = [

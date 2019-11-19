@@ -3,15 +3,26 @@
 }:
 
 let
-  version = "6.9.2";
+  version = "6.9.3";
 in
 stdenv.mkDerivation rec {
   name = "oniguruma-${version}";
 
   src = fetchurl {
     url = "https://github.com/kkos/oniguruma/releases/download/v${version}/onig-${version}.tar.gz";
-    sha256 = "db7addb196ecb34e9f38d8f9c97b29a3e962c0e17ea9636127b3e3c42f24976a";
+    sha256 = "ab5992a76b7ab2185b55f3aacc1b0df81132c947b3d594f82eb0b41cf219725f";
   };
+
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
 
   meta = with stdenv.lib; {
     homepage = http://www.geocities.jp/kosako3/oniguruma/;

@@ -18,12 +18,11 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    ed
-    flex
+    ed.bin
+    flex.bin
   ];
 
   buildInputs = [
-    flex
     ncurses
     readline
   ];
@@ -38,7 +37,14 @@ stdenv.mkDerivation rec {
     touch doc doc/*
   '';
 
-  doCheck = true;
+  postFixup = ''
+    rm -rv "$bin"/share
+  '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

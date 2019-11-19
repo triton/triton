@@ -33,12 +33,32 @@ stdenv.mkDerivation rec {
     "--disable-random-daemon"
   ];
 
-  # Make sure includes are fixed for callers who don't use libgpgcrypt-config
   postInstall = ''
-    sed -i 's,#include <gpg-error.h>,#include "${libgpg-error}/include/gpg-error.h",g' $out/include/gcrypt.h
+    # Make sure includes are fixed for callers who don't use libgpgcrypt-config
+    sed -i 's,#include <gpg-error.h>,#include "${libgpg-error}/include/gpg-error.h",g' $dev/include/gcrypt.h
+
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/bin/* "$bin"/bin
+    mv -v "$bin"/bin/*-config "$dev"/bin
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
 
-  doCheck = true;
+  postFixup = ''
+    mkdir -p "$dev"/share2
+    mv "$dev"/share/aclocal "$dev"/share2
+    rm -rv "$dev"/share
+    mv "$dev"/share2 "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

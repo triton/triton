@@ -1,11 +1,9 @@
 { stdenv
 , fetchurl
-, findXMLCatalogs
-, flex
 , makeWrapper
 
+, findXMLCatalogs
 , getopt
-, libxml2
 }:
 
 stdenv.mkDerivation rec {
@@ -18,8 +16,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    getopt
-    libxml2
+    getopt.bin
   ];
 
   # When using xmlto, it needs the ability to set the environment variables
@@ -33,6 +30,11 @@ stdenv.mkDerivation rec {
       eval $line
     done < <(./configure --help 2>&1 | awk '{ if (/[A-Z][ ]*Name/) { print "export " $1 "=\"$(type -P " tolower($1) ")\""; } }')
   '';
+
+  outputs = [
+    "bin"
+    "man"
+  ];
 
   meta = with stdenv.lib; {
     description = "Front-end to an XSL toolchain";

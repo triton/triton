@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "2.9.9";
+  version = "2.9.10";
 
   tarballUrls = version: [
     "http://xmlsoft.org/sources/libxml2-${version}.tar.gz"
@@ -21,9 +21,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmZW6enUX5jA8JNCK72oQnCiaG4FEPuCHoC84yg12WyDqA";
+    multihash = "QmPWcjgfiucBtkhxoWqJjHcKDXuj7QTmj5qnrCRfxgBJXj";
     hashOutput = false;
-    sha256 = "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871";
+    sha256 = "aafee193ffb8fe0c82d4afef6ef91972cbaf5feea100edc2f262750611b4be1f";
   };
 
   buildInputs = [
@@ -33,23 +33,51 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  propagatedBuildInputs = [
-    findXMLCatalogs
-  ];
+  postPatch = ''
+    find . -name Makefile.in -exec sed -i '/^SUBDIRS /s, \(doc\|example\),,g' {} \;
+  '';
 
   configureFlags = [
-    "--with-icu=${icu}"
+    "--with-history"
+    "--with-icu"
     "--with-readline=${readline}"
-    "--with-zlib=${zlib}"
-    "--with-lzma=${xz}"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/bin/* "$bin"/bin
+    mv -v "$bin"/bin/*-config "$dev"/bin
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    mkdir -p "$dev"/nix-support "$bin"/nix-support
+    echo '${icu}' >"$dev"/nix-support/propagated-native-build-inputs
+    echo '${findXMLCatalogs}' >"$bin"/nix-support/propagated-native-build-inputs
+  '';
+
+  postFixup = ''
+    mkdir -p "$dev"/share2
+    mv -v "$dev"/share/aclocal "$dev"/share2
+    rm -rv "$dev"/share
+    mv "$dev"/share2 "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
   ];
 
   passthru = {
+    inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.9.9";
+      urls = tarballUrls "2.9.10";
       inherit (src) outputHashAlgo;
-      outputHash = "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871";
+      outputHash = "aafee193ffb8fe0c82d4afef6ef91972cbaf5feea100edc2f262750611b4be1f";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";

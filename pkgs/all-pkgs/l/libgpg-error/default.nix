@@ -33,6 +33,32 @@ stdenv.mkDerivation rec {
     sed '/BUILD_TIMESTAMP=/s/=.*/=1970-01-01T00:01+0000/' -i ./configure
   '';
 
+  configureFlags = [
+    "--localedir=${placeholder "data"}/share/locale"
+    "--datadir=${placeholder "data"}/share"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/bin/* "$bin"/bin
+    mv -v "$bin"/bin/*-config "$dev"/bin
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    mkdir -p "$dev"/share
+    mv -v "$data"/share/aclocal "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "data"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

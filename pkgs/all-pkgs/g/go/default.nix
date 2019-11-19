@@ -40,8 +40,10 @@ let
     ];
 
     buildPhase = ''
+      echo "int main() { }" >main.c
+      cc -o main main.c
       strip bin/*
-      find bin -type f -exec patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" {} \;
+      find bin -type f -exec patchelf --set-interpreter "$(patchelf --print-interpreter ./main)" {} \;
     '';
 
     installPhase = ''
@@ -83,15 +85,23 @@ stdenv.mkDerivation {
     grep -q '"/etc/protocols"' src/net/lookup_unix.go
     sed -i 's,/etc/protocols,${iana-etc}/etc/protocols,g' src/net/lookup_unix.go
     grep -q '"/usr/share/zoneinfo/"' src/time/zoneinfo_unix.go
-    sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata}/share/zoneinfo/",' src/time/zoneinfo_unix.go
+    sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata.data}/share/zoneinfo/",' src/time/zoneinfo_unix.go
 
     patchShebangs src/all.bash
   '';
 
-  # Incremental re-compilation requires a path relative to home to store
-  # the object files
   preBuild = ''
+    # Incremental re-compilation requires a path relative to home to store
+    # the object files
     export HOME="$TMPDIR"
+
+    # For some reason the go toolchain only adds an rpath to our libc and not
+    # all of our DT_NEEDED entries. This forces the toolchain to set all of
+    # the needed rpaths.
+    echo "int main() { }" >main.c
+    cc -o main main.c
+    patchelf --print-rpath main
+    export GO_LDFLAGS="-r=$(patchelf --print-rpath main)"
   '';
 
   GOOS = "linux";
@@ -105,15 +115,6 @@ stdenv.mkDerivation {
   GO386 = 387; # from Arch: don't assume sse2 on i686
   CGO_ENABLED = 1;
   GOROOT_BOOTSTRAP = "${goBootstrap}/share/go";
-
-  # For some reason the go toolchain only adds an rpath to our libc and not
-  # all of our DT_NEEDED entries. This forces the toolchain to set all of
-  # the needed rpaths.
-  GO_LDFLAGS = "-r=" + concatStringsSep ":" (map (n: "${n}/lib") stdenv.cc.runtimeLibcLibs);
-
-  # These optimizations / security hardenings break the `os` library
-  optimize = false;
-  fortifySource = false;
 
   installPhase = ''
     mkdir -p "$out/bin"
@@ -145,14 +146,9 @@ stdenv.mkDerivation {
     find "$out" -name '*'.pl -print -delete
   '';
 
-  setupHook = ./setup-hook.sh;
+  dontStrip = true;
 
-  allowedReferences = [
-    "out"
-    iana-etc
-    mime-types
-    tzdata
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  setupHook = ./setup-hook.sh;
 
   passthru = {
     inherit

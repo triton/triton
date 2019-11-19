@@ -20,6 +20,26 @@ stdenv.mkDerivation rec {
     "--disable-docs"
   ];
 
+  postInstall = ''
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "man"
+  ];
+
   meta = with stdenv.lib; {
     description = "A lightweight and flexible command-line JSON processor";
     license = licenses.mit;

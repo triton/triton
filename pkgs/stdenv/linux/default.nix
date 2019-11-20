@@ -468,6 +468,21 @@ let
     '';
 
     extraArgs = rec {
+      stdenvDepTested = derivation {
+        name = "stdenv-dep-tested";
+        builder = "/bin/sh";
+        system = targetSystem;
+        args = [ "-e" "-c" "eval \"$buildCommand\"" ];
+        buildCommand = ''
+          export PATH="${stage21Pkgs.coreutils_small}/bin"
+          echo "${extraAttrs.stdenvDepTest}"
+          touch "$out"
+        '';
+        preferLocalBuild = true;
+      };
+    };
+
+    extraAttrs = rec {
       stdenvDeps = derivation {
         name = "stdenv-deps";
         builder = "/bin/sh";
@@ -489,16 +504,12 @@ let
         args = [ "-e" "-c" "eval \"$buildCommand\"" ];
         buildCommand = ''
           export PATH="${stage21Pkgs.coreutils_small}/bin"
-          mkdir -p $out
-          ln -s "${stdenvDeps}" $out
+          ln -sv "${stdenvDeps}" $out
         '';
         allowedRequisites = extraAttrs.bootstrappedPackages ++ [ stdenvDeps ];
         allowSubstitutes = false;
         preferLocalBuild = true;
       };
-    };
-
-    extraAttrs = rec {
       bootstrappedPackages = lib.filter (n: n.allowSubstitutes != false) (
         lib.concatMap (n: n.all or [ ]) (lib.attrValues (overrides { })));
     };

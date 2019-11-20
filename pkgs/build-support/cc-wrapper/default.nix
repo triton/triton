@@ -41,7 +41,7 @@ let
 
   external = compiler.external;
 
-  version = "0.1.4";
+  version = "0.1.5";
 in
 assert target != "";
 stdenv.mkDerivation rec {
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/triton/cc-wrapper/releases/download/v${version}/${name}.tar.xz";
-    sha256 = "bf76f158d69a079f28fb776c6e63401d31c8b368a71c32974ad2446f3f135f55";
+    sha256 = "6d30712b0f6c285e2496cf6aa2c0237d7c4d253c0adf23a16429bc8fd4f7770e";
   };
 
   preConfigure = ''

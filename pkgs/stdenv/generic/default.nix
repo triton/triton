@@ -338,6 +338,7 @@ let
       __optionalChroot = optionalChroot;
       allowSubstitutes = allowSubstitutes;
       requiredSystemFeatures = requiredSystemFeatures;
+      preferLocalBuild = true;
 
       inherit
         preHook

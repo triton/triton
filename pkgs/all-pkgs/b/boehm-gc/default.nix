@@ -26,6 +26,17 @@ stdenv.mkDerivation rec {
     "--disable-docs"
   ];
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
   meta = with lib; {
     description = "The Boehm-Demers-Weiser conservative garbage collector for C and C++";
     homepage = http://hboehm.info/gc/;

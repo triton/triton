@@ -13,6 +13,21 @@ stdenv.mkDerivation rec {
     sha256 = "587edf60817f56daf1e1ab38a4b3c729b8e846ff67b4f62a6157183708f099af";
   };
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+  ];
+
   meta = with stdenv.lib; {
     description = ''A library for semi-portable access to hardware-provided atomic memory update operations'';
     license = licenses.gpl2Plus;

@@ -17,9 +17,9 @@ let
       version = "1.66.0";
       sha256 = "5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9";
     };
-    "1.70" = {
-      version = "1.70.0";
-      sha256 = "430ae8354789de4fd19ee52f3b1f739e1fba576f0aded0897c3c2bc00fb38778";
+    "1.71" = {
+      version = "1.71.0";
+      sha256 = "d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee";
     };
   };
   inherit (lib)
@@ -30,13 +30,17 @@ let
   inherit (sources."${channel}")
     version
     sha256;
+
+  srcFile = "boost_${replaceStrings ["."] ["_"] version}.tar.bz2";
 in
 stdenv.mkDerivation {
   name = "boost-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/boost/boost/${version}/"
-      + "boost_${replaceStrings ["."] ["_"] version}.tar.bz2";
+    urls = [
+      "https://dl.bintray.com/boostorg/release/${version}/source/${srcFile}"
+      "mirror://sourceforge/boost/boost/${version}/${srcFile}"
+    ];
     inherit sha256;
   };
 
@@ -56,7 +60,7 @@ stdenv.mkDerivation {
   b2Args = [
     "variant=release"
     "threading=multi"
-    "link=shared"
+    "link=static,shared"
     "runtime-link=shared"
   ];
 
@@ -71,11 +75,8 @@ stdenv.mkDerivation {
     ./b2 $b2Args install
 
     mkdir -p "$lib"/lib
-    mv -v "$dev"/lib/*.so* "$lib"/lib
-    rm -r "$dev"/lib
-
-    mkdir -p "$dev"/nix-support
-    echo "$lib" >"$dev"/nix-support/propagated-native-build-inputs
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
   '';
 
   preFixup = ''

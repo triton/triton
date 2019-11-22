@@ -4447,10 +4447,10 @@ zookeeper = callPackage ../all-pkgs/z/zookeeper { };
 
 zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd_1-4-3 = callPackage ../all-pkgs/z/zstd {
-  version = "1.4.3";
+zstd_1-4-4 = callPackage ../all-pkgs/z/zstd {
+  version = "1.4.4";
 };
-zstd = callPackageAlias "zstd_1-4-3" { };
+zstd = callPackageAlias "zstd_1-4-4" { };
 
 ################################################################################
 ################################################################################

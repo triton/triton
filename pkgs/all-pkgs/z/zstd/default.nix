@@ -8,7 +8,7 @@
 
 let
   sha256s = {
-    "1.4.3" = "e88ec8d420ff228610b77fba4fbf22b9f8b9d3f223a40ef59c9c075fcdad5767";
+    "1.4.4" = "59ef70ebb757ffe74a7b3fe9c305e2ba3350021a918d168a046c6300aeea9315";
   };
 in
 stdenv.mkDerivation rec {
@@ -19,11 +19,9 @@ stdenv.mkDerivation rec {
     sha256 = sha256s."${version}";
   };
 
-  preBuild = ''
-    makeFlagsArray+=(
-      "PREFIX=$bin"
-    )
-  '';
+  makeFlags = [
+    "PREFIX=${placeholder "bin"}"
+  ];
 
   postInstall = ''
     mkdir -p "$dev"

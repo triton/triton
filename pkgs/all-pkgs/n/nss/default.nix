@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.45";
+  version = "3.47.1";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "112f05223d1fde902c170966bfc6f011b24a838be16969b110ecf2bb7bc24e8b";
+    sha256 = "1ae3d1cb1de345b258788f2ef6b10a460068034c3fd64f42427a183d8342a6fb";
   };
 
   buildInputs = [
@@ -35,58 +35,50 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    (fetchTritonPatch {
-      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
-      file = "n/nss/0001-Add-pem-support.patch";
-      sha256 = "aa7c5a1a22474868d6781897b988f9e23d7958ae49c225bd7da65a3bf63fe9d1";
-    })
-    (fetchTritonPatch {
-      rev = "934da9af94d8e32bd17a4805e18268ce74c7d966";
-      file = "n/nss/0002-Fix-sharedlib-loading.patch";
-      sha256 = "8596bb081a57c61077cdde086331799de14f98ce9d50fdd02145c2a0598bfa4d";
-    })
-    (fetchTritonPatch {
-      rev = "cb1b429f5caaddd49687dc0a1348f5af555bcc72";
-      file = "n/nss/0003-Add-pkgconfig-files.patch";
-      sha256 = "ad8db1ad37e8accfd1213c9c4e5b0cb2b0e142c9ef2d0222062667a565cf380e";
-    })
+    ../../../../../nss/0001-Add-pem-support.patch
+    ../../../../../nss/0002-Fix-sharedlib-loading.patch
+    ../../../../../nss/0003-Add-pkgconfig-files.patch
 	];
-  preBuild = ''
-    makeFlagsArray+=("SOURCE_PREFIX=$out")
-  '';
 
   makeFlags = [
+    "SOURCE_PREFIX=${placeholder "dev"}"
     "NSPR_INCLUDE_DIR=${nspr}/include/nspr"
     "NSPR_LIB_DIR=${nspr}/lib"
     "NSDISTMODE=copy"
     "BUILD_OPT=1"
     "NSS_ENABLE_WERROR=0"
     "NSS_USE_SYSTEM_SQLITE=1"
+    "NSS_USE_SYSTEM_ZLIB=1"
+    "NSS_DISABLE_GTESTS=1"
   ] ++ stdenv.lib.optionals (stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.bit64) [
     "USE_64=1"
   ];
 
-  postInstall = ''
-    rm -r $out/private
-    mv $out/public $out/include
-    mkdir -p $out/{bin,lib}
-    mv $out/*.OBJ/bin/* $out/bin
-    mv $out/*.OBJ/lib/* $out/lib
-    rm -r $out/*.OBJ
-
-    rm -r "$out"/lib/*.a
-  '';
-
-  postFixup = ''
-    for libname in freebl3 nssdbm3 softokn3
-    do
-      libfile="$out/lib/lib$libname.so"
-      LD_LIBRARY_PATH=$out/lib $out/bin/shlibsign -v -i "$libfile"
-    done
-  '';
-
-  # Throws lots of errors as of 3.23
+  # Throws lots of errors as of 3.23 (checked 3.47.1)
   buildParallel = false;
+
+  postInstall = ''
+    rm -rv "$dev"/private
+    rm -rv "$dev"/public/dbm
+    mv -v "$dev"/public "$dev"/include
+    mkdir -p "$dev"/lib
+    mv -v "$dev"/*.OBJ/lib/* "$dev"/lib
+
+    mkdir -p "$bin"/bin
+    mv -v "$dev"/*.OBJ/bin/* "$bin"/bin
+
+    mkdir -p "$lib"/lib
+    mv -v "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+
+    rm -rv "$dev"/*.OBJ
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+  ];
 
   passthru = {
     inherit version;

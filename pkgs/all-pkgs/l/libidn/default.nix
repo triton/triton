@@ -18,6 +18,31 @@ stdenv.mkDerivation rec {
     sha256 = "f11af1005b46b7b15d057d7f107315a1ad46935c7fcdf243c16e46ec14f0fe1e";
   };
 
+  makeFlags = [
+    "localedir=${placeholder "data"}/share/locale"
+  ];
+
+  postInstall = ''
+    mkdir -p "$bin"
+    mv -v "$dev"/bin "$bin"
+
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "bin"
+    "lib"
+    "data"
+    "man"
+  ];
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

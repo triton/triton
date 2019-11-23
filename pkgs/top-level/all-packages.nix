@@ -3921,6 +3921,8 @@ stalonetray = callPackage ../all-pkgs/s/stalonetray { };
 
 strace = callPackage ../all-pkgs/s/strace { };
 
+stress-ng = callPackage ../all-pkgs/s/stress-ng { };
+
 sublime-text = callPackage ../all-pkgs/s/sublime-text { };
 
 subversion = callPackage ../all-pkgs/s/subversion { };

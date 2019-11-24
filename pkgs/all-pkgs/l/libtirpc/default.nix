@@ -24,6 +24,22 @@ stdenv.mkDerivation rec {
     "-std=c99"  # Breaks libraries linking against this one using >c99.
   ];
 
+  postInstall = ''
+    mkdir -p "$lib"/lib
+    mv "$dev"/lib*/*.so* "$lib"/lib
+    ln -sv "$lib"/lib/* "$dev"/lib
+  '';
+
+  postFixup = ''
+    rm -rv "$dev"/share
+  '';
+
+  outputs = [
+    "dev"
+    "lib"
+    "man"
+  ];
+
   meta = with lib; {
     homepage = "http://sourceforge.net/projects/libtirpc/";
     description = "The transport-independent Sun RPC implementation (TI-RPC)";

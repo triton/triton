@@ -7,6 +7,7 @@
 , db
 , expat
 , gdbm
+, libc
 , libffi
 , ncurses
 , openssl
@@ -115,6 +116,7 @@ stdenv.mkDerivation rec {
     db
     expat
     gdbm
+    libc
     libffi
     ncurses
     openssl

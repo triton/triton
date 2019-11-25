@@ -514,7 +514,7 @@ configurePhase() {
     if [ -n "${disableShared-}" ]; then
       flag=disable
     fi
-    if grep -q "$flag-shared" "$configureScript" 2>/dev/null; then
+    if grep -q '\(enable\|disable\)-shared' "$configureScript" 2>/dev/null; then
       configureFlagsArray+=("--$flag-shared")
     fi
   fi
@@ -532,7 +532,7 @@ configurePhase() {
     if [ -z "${disableStatic-$defaultDisableStatic}" ]; then
       flag=enable
     fi
-    if grep -q "$flag-static" "$configureScript" 2>/dev/null; then
+    if grep -q '\(enable\|disable\)-static' "$configureScript" 2>/dev/null; then
       configureFlagsArray+=("--$flag-static")
     fi
   fi

@@ -156,6 +156,9 @@ stdenv.mkDerivation rec {
       sed -i setup.py \
         -e "s,$i,/no-such-path,g"
     done
+
+  '' + /* setup.py tries to mistaken add -R* to gcc cmdline */ ''
+    sed -i '/runtime_library_dirs/d' setup.py
   '';
 
   preConfigure =

@@ -48,20 +48,20 @@ let
 
   sources = {
     "2.7" = {
-      versionPatch = "16";
-      sha256 = "f222ef602647eecb6853681156d32de4450a2c39f4de93bd5b20235f2e660ed7";
+      versionPatch = "17";
+      sha256 = "4d43f033cdbd0aa7b7023c81b0e986fd11e653b5248dac9144d508f11812ba41";
       # Benjamin Peterson
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };
-    "3.6" = {
-      versionPatch = "8";
-      sha256 = "35446241e995773b1bed7d196f4b624dadcadc8429f26282e756b2fb8a351193";
+    "3.7" = {
+      versionPatch = "5";
+      sha256 = "e85a76ea9f3d6c485ec1780fca4e500725a4a7bbc63c78ebc44170de9b619d94";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
-    "3.7" = {
-      versionPatch = "4";
-      sha256 = "fb799134b868199930b75f26678f18932214042639cd52b16da7fd134cd9b13f";
+    "3.8" = {
+      versionPatch = "0";
+      sha256 = "b356244e13fb5491da890b35b13b2118c3122977c2cd825e3eb6e7d462030d84";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
@@ -122,7 +122,6 @@ stdenv.mkDerivation rec {
     openssl
     readline
     sqlite
-    stdenv.cc.libc
     zlib
   ] ++ optionals isPy3 [
     xz

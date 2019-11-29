@@ -20,7 +20,7 @@ let
   ];
 
   major = "3.6";
-  minor = "9";
+  minor = "10";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "4331fca55817ecdd74450b908a6c29b4f05bb24dd13144c6284aa34d872e1fcb";
+    sha256 = "b1f3ca67673b05b746a961acf2243eaae0ffe658b6a6494265c648e7c7812293";
   };
 
   configureFlags = [
@@ -66,14 +66,14 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.6" "9";
+      urls = tarballUrls "3.6" "10";
       inherit (src)
         outputHashAlgo;
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       };
-      outputHash = "4331fca55817ecdd74450b908a6c29b4f05bb24dd13144c6284aa34d872e1fcb";
+      outputHash = "b1f3ca67673b05b746a961acf2243eaae0ffe658b6a6494265c648e7c7812293";
     };
   };
 

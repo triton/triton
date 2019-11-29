@@ -1,7 +1,6 @@
 { stdenv
-, asciidoctor_1
-, docbook_xml_dtd_45
-, docbook-xsl
+, asciidoctor_2
+, docbook-xsl-ns
 , fetchurl
 , gettext
 , libxslt
@@ -34,7 +33,7 @@ let
     gnused_small
   ];
 
-  version = "2.22.0";
+  version = "2.24.0";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -57,13 +56,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "159e4b599f8af4612e70b666600a3139541f8bacc18124daf2cbe8d1b934f29f";
+    sha256 = "9f71d61973626d8b28c4cdf8e2484b4bf13870ed643fed982d68b2cfd754371b";
   };
 
   nativeBuildInputs = [
-    asciidoctor_1
-    docbook_xml_dtd_45
-    docbook-xsl
+    asciidoctor_2
+    docbook-xsl-ns
     gettext
     libxslt
     makeWrapper

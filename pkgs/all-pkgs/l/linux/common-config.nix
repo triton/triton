@@ -126,6 +126,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "5.1") ''
     CPU_IDLE_GOV_TEO y
   ''}
+  ${optionalString (versionAtLeast version "5.4") ''
+    CPU_IDLE_GOV_HALTPOLL y
+  ''}
 
   HOTPLUG_PCI_ACPI y
   HOTPLUG_PCI_CPCI y
@@ -169,6 +172,8 @@ with stdenv.lib;
   # Enable NUMA.
   NUMA y
   NUMA_BALANCING y
+
+  REMOTEPROC y
 
   # Disable some expensive () features.
   PM_TRACE_RTC n
@@ -262,6 +267,9 @@ with stdenv.lib;
   ''}
   AF_RXRPC_IPV6 y
   NET_DEVLINK y
+  ${optionalString (versionAtLeast version "5.4") ''
+    NET_TC_SKB_EXT y
+  ''}
 
   MLX5_CORE_EN y
   ${optionalString (versionAtLeast version "4.12") ''
@@ -307,6 +315,9 @@ with stdenv.lib;
   DRM_AMDGPU_SI y
   ${optionalString (versionAtLeast version "4.20") ''
     HSA_AMD y
+  ''}
+  ${optionalString (versionAtLeast version "5.4") ''
+    DRM_AMD_DC_DCN2_1 y
   ''}
   DRM_VMWGFX_FBCON y
   DRM_I915_GVT y
@@ -400,6 +411,17 @@ with stdenv.lib;
     SND_SOC_SOF_COMETLAKE_LP_SUPPORT y
     SND_SOC_SOF_COMETLAKE_H_SUPPORT y
   ''}
+  ${optionalString (versionAtLeast version "5.4") ''
+    SND_HDA_INTEL_DETECT_DMIC y
+    SND_SOC_SOF_TIGERLAKE_SUPPORT y
+    SND_SOC_SOF_ELKHARTLAKE_SUPPORT y
+  ''}
+
+  # USB devices
+  ${optionalString (versionAtLeast version "5.4") ''
+    USB_CDNS3_GADGET y
+    USB_CDNS3_HOST y
+  ''}
 
   # USB serial devices.
   USB_SERIAL_GENERIC y # USB Generic Serial Driver
@@ -447,6 +469,10 @@ with stdenv.lib;
     F2FS_FS_ENCRYPTION y
   ''}
   FS_DAX y
+  ${optionalString (versionAtLeast version "5.4") ''
+    FS_VERITY y
+    FS_VERITY_BUILTIN_SIGNATURES y
+  ''}
   ${optionalString (versionAtLeast version "5.1") ''
     FS_ENCRYPTION y
   ''}
@@ -472,6 +498,9 @@ with stdenv.lib;
     CRAMFS_MTD y
   ''}
   FAT_DEFAULT_UTF8 y
+  ${optionalString (versionAtLeast version "5.4") ''
+    EXFAT_DELAYED_SYNC y
+  ''}
   JFFS2_FS_XATTR y
   JFFS2_COMPRESSION_OPTIONS y
   JFFS2_LZO y
@@ -631,6 +660,9 @@ with stdenv.lib;
   DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
+  ${optionalString (versionAtLeast version "5.4") ''
+    EFI_RCI2_TABLE y
+  ''}
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
   IDE n
@@ -670,6 +702,9 @@ with stdenv.lib;
   ''}
   DM_UEVENT y
   DM_VERITY_FEC y
+  ${optionalString (versionAtLeast version "5.4") ''
+    DM_VERITY_VERIFY_ROOTHASH_SIG y
+  ''}
   ${optionalString (versionAtLeast version "4.15") ''
     NVME_MULTIPATH y
   ''}
@@ -720,6 +755,9 @@ with stdenv.lib;
   CGROUP_PIDS y
   ${optionalString (versionAtLeast version "4.11") ''
     CGROUP_RDMA y
+  ''}
+  ${optionalString (versionAtLeast version "5.4") ''
+    BLK_CGROUP_IOCOST y
   ''}
   ${optionalString (versionAtLeast version "4.12") ''
     BFQ_GROUP_IOSCHED y

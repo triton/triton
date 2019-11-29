@@ -31,14 +31,19 @@ let
 
   sources = {
     "4.19" = {
-      version = "4.19.72";
+      version = "4.19.86";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "2a2dc86d90c197ff2d27a0315dbb9be116995ec096d39c03595ec977b796775c";
+      patchSha256 = "e6137c451daeda15e03207b833f3322faf893cad580b066ab8bd15855190fd9d";
     };
-    "5.2" = {
-      version = "5.2.14";
-      baseSha256 = "54ad66f672e1a831b574f5e704e8a05f1e6180a8245d4bdd811208a6cb0ac1e7";
-      patchSha256 = "ee77adddc2daa998fd861efd065976776ee100f06b7dff9be58e84f7b47feb12";
+    "5.3" = {
+      version = "5.3.14";
+      baseSha256 = "78f3c397513cf4ff0f96aa7d09a921d003e08fa97c09e0bb71d88211b40567b2";
+      patchSha256 = "6cd4270276e526f4324024e723b74fa18ef8d0e87752f58ea42e04198a301e81";
+    };
+    "5.4" = {
+      version = "5.4.1";
+      baseSha256 = "bf338980b1670bca287f9994b7441c2361907635879169c64ae78364efc5f491";
+      patchSha256 = "78f08a9d16bc88f1478c560bd9a3a71be6e2af1bbd5f6ff60771fa1e14b74705";
     };
     "testing" = {
       version = "5.3-rc7";

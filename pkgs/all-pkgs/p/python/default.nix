@@ -59,8 +59,8 @@ let
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
     "3.7" = {
-      versionPatch = "4";
-      sha256 = "fb799134b868199930b75f26678f18932214042639cd52b16da7fd134cd9b13f";
+      versionPatch = "5";
+      sha256 = "e85a76ea9f3d6c485ec1780fca4e500725a4a7bbc63c78ebc44170de9b619d94";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };

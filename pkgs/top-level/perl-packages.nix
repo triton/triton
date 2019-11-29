@@ -6040,10 +6040,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   IOSocketSSL = buildPerlPackage rec {
-    name = "IO-Socket-SSL-2.060";
+    name = "IO-Socket-SSL-2.066";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SU/SULLR/${name}.tar.gz";
-      sha256 = "fb5b2877ac5b686a5d7b8dd71cf5464ffe75d10c32047b5570674870e46b1b8c";
+      sha256 = "0d47064781a545304d5dcea5dfcee3acc2e95a32e1b4884d80505cde8ee6ebcd";
     };
     propagatedBuildInputs = [ URI NetSSLeay ];
     meta = {
@@ -8767,10 +8767,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   NetSSLeay = buildPerlPackage rec {
-    name = "Net-SSLeay-1.85";
+    name = "Net-SSLeay-1.88";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/M/MI/MIKEM/${name}.tar.gz";
-      sha256 = "9d8188b9fb1cae3bd791979c20554925d5e94a138d00414f1a6814549927b0c8";
+      url = "mirror://cpan/authors/id/C/CH/CHRISN/${name}.tar.gz";
+      sha256 = "2000da483c8471a0b61e06959e92a6fca7b9e40586d5c828de977d3d2081cfdd";
     };
     buildInputs = [ pkgs.openssl ];
     OPENSSL_PREFIX = pkgs.openssl;

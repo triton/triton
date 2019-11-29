@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 kernels=(
   4-19
-  5-0
-  5-1
-  testing
+  5-3
+  5-4
   bcachefs
 )
 

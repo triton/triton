@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "meson";
     inherit version;
-    sha256 = "99efa0d314cc0cc5ae92176f6d0681ebd4e9e4cace6fb96adfab86a5969c1033";
+    sha256 = "90a6542886e8b6a03439bdfde802de8a7af6ed462654dfc95e7420073d66a315";
   };
 
   postPatch = ''

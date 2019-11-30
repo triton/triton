@@ -28,6 +28,10 @@ stdenv.mkDerivation {
     sysfsutils
   ];
 
+  postPatch = ''
+    patchShebangs configure
+  '';
+
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"

@@ -22,16 +22,16 @@
 }:
 
 let
-  version = "2.3";
+  version = "2.3.1";
 in
 stdenv.mkDerivation rec {
   name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
-    multihash = "QmPv5VnXFdgoHUo5FjGmGvoZ5jZ7ZfqXa5Db3o9d94cwnD";
+    multihash = "QmYWRZkZPgMuMHNDSz8imv9pEB1oLYVLAMx5D64MFgBP5P";
     hashOutput = false;
-    sha256 = "b1d1b4d87390941fc64b19776f1ed9e3871231d38f5a1f295dd13925acd3a98d";
+    sha256 = "bb6578e9f20eebab6d78469ecc59c450ac54f276e5a86a882015d98fecb1bc7b";
   };
 
   buildInputs = [
@@ -61,9 +61,9 @@ stdenv.mkDerivation rec {
       sha256 = "e0c8426b6f4bac4db3c377bd305c704a60214adbc29720f1db4d3dfcc6fe47ab";
     })
     (fetchTritonPatch {
-      rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";
+      rev = "a4d91a2021319a6c00d6fc8e9c8407bf3acbe160";
       file = "n/nix/0003-Remove-nixpkgs-references.patch";
-      sha256 = "efe0a35a7a6ce25df1642d046b8b3b6afa1a4cf51d179a1b08f4c55976c57fb4";
+      sha256 = "9a4fdc251e5d3b1ec650497e5bb125a46c7f54fafa5302df1c57cbbe354456a5";
     })
     (fetchTritonPatch {
       rev = "093c19ef10a6771b9f8f08501bbaa1bb90f5b322";

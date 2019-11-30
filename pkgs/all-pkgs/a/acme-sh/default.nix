@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "2.8.2";
+  version = "2.8.3";
 
   programs = [
     coreutils
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     owner = "Neilpang";
     repo = "acme.sh";
     rev = version;
-    sha256 = "c28f0230249571c8db5dc3c1a91fe9aa0da00a95bdf5602113a1e914370c0a89";
+    sha256 = "46b1bcd9d5b38da1fad3f5eea044e38b38a3b51e9e9dcbabfb51d1fee3d2fb80";
   };
 
   nativeBuildInputs = [

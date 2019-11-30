@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.45";
+  version = "3.47.1";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "112f05223d1fde902c170966bfc6f011b24a838be16969b110ecf2bb7bc24e8b";
+    sha256 = "1ae3d1cb1de345b258788f2ef6b10a460068034c3fd64f42427a183d8342a6fb";
   };
 
   buildInputs = [
@@ -36,21 +36,22 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
       file = "n/nss/0001-Add-pem-support.patch";
-      sha256 = "aa7c5a1a22474868d6781897b988f9e23d7958ae49c225bd7da65a3bf63fe9d1";
+      sha256 = "9b87348be9f86cd0817469e5d20ad63c766aa4f3805b2ea2a8b7ca340da656c0";
     })
     (fetchTritonPatch {
-      rev = "934da9af94d8e32bd17a4805e18268ce74c7d966";
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
       file = "n/nss/0002-Fix-sharedlib-loading.patch";
-      sha256 = "8596bb081a57c61077cdde086331799de14f98ce9d50fdd02145c2a0598bfa4d";
+      sha256 = "cb1ea195088039ac65c9fe8c49c4f4ed94b2b81f85ffa74f8190da9a3ba7408b";
     })
     (fetchTritonPatch {
-      rev = "cb1b429f5caaddd49687dc0a1348f5af555bcc72";
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
       file = "n/nss/0003-Add-pkgconfig-files.patch";
-      sha256 = "ad8db1ad37e8accfd1213c9c4e5b0cb2b0e142c9ef2d0222062667a565cf380e";
+      sha256 = "f545241ef7ca7c384d6a6a0693838d5dc0e73a8fff294fc6dbe4f41bdec4aed7";
     })
 	];
+
   preBuild = ''
     makeFlagsArray+=("SOURCE_PREFIX=$out")
   '';
@@ -62,6 +63,8 @@ stdenv.mkDerivation rec {
     "BUILD_OPT=1"
     "NSS_ENABLE_WERROR=0"
     "NSS_USE_SYSTEM_SQLITE=1"
+    "NSS_USE_SYSTEM_ZLIB=1"
+    "NSS_DISABLE_GTESTS=1"
   ] ++ stdenv.lib.optionals (stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.bit64) [
     "USE_64=1"
   ];

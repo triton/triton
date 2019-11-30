@@ -35,9 +35,21 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    ../../../../../nss/0001-Add-pem-support.patch
-    ../../../../../nss/0002-Fix-sharedlib-loading.patch
-    ../../../../../nss/0003-Add-pkgconfig-files.patch
+    (fetchTritonPatch {
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
+      file = "n/nss/0001-Add-pem-support.patch";
+      sha256 = "9b87348be9f86cd0817469e5d20ad63c766aa4f3805b2ea2a8b7ca340da656c0";
+    })
+    (fetchTritonPatch {
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
+      file = "n/nss/0002-Fix-sharedlib-loading.patch";
+      sha256 = "cb1ea195088039ac65c9fe8c49c4f4ed94b2b81f85ffa74f8190da9a3ba7408b";
+    })
+    (fetchTritonPatch {
+      rev = "8dda9bf38ae60322770160feac0b9a69f2abb2f1";
+      file = "n/nss/0003-Add-pkgconfig-files.patch";
+      sha256 = "f545241ef7ca7c384d6a6a0693838d5dc0e73a8fff294fc6dbe4f41bdec4aed7";
+    })
 	];
 
   makeFlags = [

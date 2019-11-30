@@ -56,6 +56,9 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     test -f configure || ./autogen.sh
 
+    sed -i '/SUBDIRS/s, \(initramfs\|dracut\),,g' contrib/Makefile.in
+    patchShebangs scripts/zfs-tests.sh
+
     configureFlagsArray+=(
       "--with-mounthelperdir=$out/bin"
       "--with-udevdir=$out/lib/udev"
@@ -63,7 +66,6 @@ stdenv.mkDerivation rec {
       "--with-systemdpresetdir=$out/etc/systemd/system-preset"
       "--with-systemdmodulesloaddir=$out/etc/module-load.d"
       "--with-systemdgeneratordir=$out/lib/systemd/system-generators"
-      "--with-dracutdir=$TMPDIR"
     )
   '';
 
@@ -90,9 +92,6 @@ stdenv.mkDerivation rec {
   postInstall = ''
     # Remove test code
     rm -r "$out"/share/zfs
-
-    # Remove initrd stuff
-    rm -r "$out"/share/initramfs-tools
   '';
 
   passthru = {

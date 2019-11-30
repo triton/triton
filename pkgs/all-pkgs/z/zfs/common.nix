@@ -22,11 +22,11 @@ let
 in
 {
   "stable" = rec {
-    version = "0.8.1";
-    maxLinuxVersion = "5.1";
+    version = "0.8.2";
+    maxLinuxVersion = "5.3";
     src = fetcher {
       inherit version;
-      sha256 = "0af79fde44b7b8ecb94d5166ce2e4fff7409c20ed874c2d759db92909e6c2799";
+      sha256 = "47608e257c8ecebb918014ef1da6172c3a45d990885891af18e80f5cc28beab8";
     };
     patches = [
       (fetchTritonPatch {
@@ -37,18 +37,18 @@ in
     ];
   };
   "dev" = {
-    date = "2019-07-25";
-    maxLinuxVersion = "5.2";
+    date = "2019-11-27";
+    maxLinuxVersion = "5.4";
     src = fetcher {
       fetchzipVersion = 6;
-      rev = "d274ac54609894d00a49c0a0da89abd3a7f3998d";
-      sha256 = "bac602c69e1fc00dbd8725eaf321465fc8bbec41a7c4a35c38f73a7c95a4f2dd";
+      rev = "a7c358845b1fdfc60b5f1f70d9d6a4ab87f95fa4";
+      sha256 = "45f9baa30f3584b0cfeecf7bedcbaf25a681d8100e4a09827f75f7e85cf7e993";
     };
     patches = [
       (fetchTritonPatch {
-        rev = "af81e3b365a91a63b44e468b2dc0c770686dfa6e";
+        rev = "0dbe87cf3492212d1cbddf9b24f579bf1cfbe2e5";
         file = "z/zfs/0001-Fix-binary-paths.patch";
-        sha256 = "8009b1df288109d4f386842210c39e9e1ba3f0734d719dc6eb56deb3d29d2963";
+        sha256 = "233d3449babd612625a2fdd2bfceb4356329af77db3c1aba76e5447ccd0f4973";
       })
     ];
   };

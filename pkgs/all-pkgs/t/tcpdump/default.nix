@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tcpdump-4.9.2";
+  name = "tcpdump-4.9.3";
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
-    multihash = "QmYgD5Mag91Qe4dd7HrknJQKcXE7JWMeGAZqrDD1ed8fDd";
+    multihash = "QmQ9guCZJLP4svYDYCwubnNsD8Bp6CRwp4hoLCuukrJX3w";
     hashOutput = false;
-    sha256 = "798b3536a29832ce0cbb07fafb1ce5097c95e308a6f592d14052e1ef1505fe79";
+    sha256 = "2cd47cb3d460b6ff75f4a9940f594317ad456cfbf2bd2c8e5151e16559db6410";
   };
 
   buildInputs = [
@@ -36,9 +36,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1F16 6A57 42AB B9E0 249A  8D30 E089 DEF1 D9C1 5D0D";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1F16 6A57 42AB B9E0 249A  8D30 E089 DEF1 D9C1 5D0D";
+      };
     };
   };
 

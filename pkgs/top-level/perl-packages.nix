@@ -6844,10 +6844,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   LWP = buildPerlPackage rec {
-    name = "libwww-perl-6.35";
+    name = "libwww-perl-6.43";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/E/ET/ETHER/${name}.tar.gz";
-      sha256 = "dda2578d7b32152c4afce834761a61d117de286c705a9f7972c7ac6032ca5953";
+      url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
+      sha256 = "e9849d7ee6fd0e89cc999e63d7612c951afd6aeea6bc721b767870d9df4ac40d";
     };
     propagatedBuildInputs = [
       EncodeLocale
@@ -8637,10 +8637,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   NetHTTP = buildPerlPackage rec {
-    name = "Net-HTTP-6.17";
+    name = "Net-HTTP-6.19";
     src = fetchurl {
       url = "mirror://cpan/authors/id/O/OA/OALDERS/${name}.tar.gz";
-      sha256 = "1e8624b1618dc6f7f605f5545643ebb9b833930f4d7485d4124aa2f2f26d1611";
+      sha256 = "52b76ec13959522cae64d965f15da3d99dcb445eddd85d2ce4e4f4df385b2fc4";
     };
     propagatedBuildInputs = [ URI ];
     meta = {

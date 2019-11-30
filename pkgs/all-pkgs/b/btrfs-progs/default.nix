@@ -1,7 +1,6 @@
 { stdenv
-, asciidoctor_1
+, asciidoctor_2
 , docbook-xsl
-, docbook_xml_dtd_45
 , fetchurl
 , lib
 , libxslt
@@ -15,7 +14,7 @@
 }:
 
 let
-  version = "5.2.1";
+  version = "5.3.1";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -27,13 +26,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "36ac4a0198ffff79d5800c537ea4b19769a8fd3ad870f75413d25b20e2d83233";
+    sha256 = "bfa31ae60e54a068fd24e075a90b72f89b8e9006659273fbcecc2e1c790cda38";
   };
 
   nativeBuildInputs = [
-    asciidoctor_1
+    asciidoctor_2
     docbook-xsl
-    docbook_xml_dtd_45
     libxslt
     xmlto
   ];
@@ -45,6 +43,11 @@ stdenv.mkDerivation rec {
     zlib
     zstd
   ];
+
+  postPatch = ''
+    grep -q '^XMLTO_EXTRA =$' Documentation/Makefile.in
+    sed -i '/^XMLTO_EXTRA =$/d' Documentation/Makefile.in
+  '';
 
   configureFlags = [
     "--disable-python"

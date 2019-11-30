@@ -9,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libpcap-1.9.0";
+  name = "libpcap-1.9.1";
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
-    multihash = "QmT79aKdU6rvxhDRt9HXRCahVrsu9y7d9dLWfqS3ooas8H";
+    multihash = "QmcpcQsByLDkmbWdpaVB9Rf5Lr2CbFbpqSmTYveqi33dm4";
     hashOutput = false;
-    sha256 = "2edb88808e5913fdaa8e9c1fcaf272e19b2485338742b5074b9fe44d68f37019";
+    sha256 = "635237637c5b619bcceba91900666b64d56ecb7be63f298f601ec786ce087094";
   };
 
   nativeBuildInputs = [
@@ -41,9 +41,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "1F16 6A57 42AB B9E0 249A  8D30 E089 DEF1 D9C1 5D0D";
       inherit (src) urls outputHash outputHashAlgo;
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "1F16 6A57 42AB B9E0 249A  8D30 E089 DEF1 D9C1 5D0D";
+      };
     };
   };
 

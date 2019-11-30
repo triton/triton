@@ -76,6 +76,12 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  # Needed to pass the install process since it checks sudoers
+  preInstall = ''
+    mkdir -p "$out"/etc
+    touch "$out"/etc/sudoers
+  '';
+
   postInstall = ''
     rm -f $out/share/doc/sudo/ChangeLog
   '';

@@ -45,7 +45,7 @@ let
     optionals
     optionalString;
 
-  version = "4.10.6";
+  version = "4.11.2";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "9efbeb52db1203dc779b118f1c48c161e569f7a6af5101e745497ee6296eef42";
+    sha256 = "d27bf1b7cf5f25fb5587896fccb73747a705f7cf7ee352b5cbab82841db09f1f";
   };
 
   nativeBuildInputs = [
@@ -171,9 +171,6 @@ stdenv.mkDerivation rec {
     "--with-cluster-support"
     "--with-regedit"
     (if isClient then null else "--with-libcephfs=${ceph.lib}")
-
-    # source4/lib/tls/wscript options
-    "--enable-gnutls"
 
     # wscript options
     "--with-system-mitkrb5" "${krb5_full}"

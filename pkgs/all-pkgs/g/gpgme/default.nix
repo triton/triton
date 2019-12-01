@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gpgme-1.13.0";
+  name = "gpgme-1.13.1";
 
   src = fetchurl {
     url = "mirror://gnupg/gpgme/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "d4b23e47a9e784a63e029338cce0464a82ce0ae4af852886afda410f9e39c630";
+    sha256 = "c4e30b227682374c23cddc7fdb9324a99694d907e79242a25a4deeedb393be46";
   };
 
   buildInputs = [

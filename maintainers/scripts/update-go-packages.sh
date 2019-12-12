@@ -90,6 +90,10 @@ unset GOPATH
 unset GOROOT
 export GO11MODULE=on
 
+
+# Figure out the go version
+gover="$(go version | sed 's,.*go\([0-9]\+\.[0-9]\+\).*,\1,')"
+
 do_mod_update() {
   # Get the target information
   local updateDeps
@@ -160,6 +164,7 @@ do_mod_update() {
   exec 10>"$drv_dir"/source.json
   echo '{' >&10
   echo "  \"fetchzipVersion\": $FETCHZIP_VERSION," >&10
+  echo "  \"goVersion\": \"$gover\"," >&10
   echo "  \"rev\": \"$version\",">&10
   echo "  \"sha256\": \"$BAD_SHA256\"," >&10
   echo "  \"version\": \"$version\"">&10

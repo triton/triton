@@ -1,8 +1,8 @@
 { stdenv
 , deterministic-zip
 , git
-, go
 , lib
+, pkgs
 }:
 
 { name
@@ -12,10 +12,16 @@
 }:
 
 let
-  inherit (builtins.fromJSON (builtins.readFile sourceJSON))
+  json = builtins.fromJSON (builtins.readFile sourceJSON);
+
+  inherit (json)
     fetchzipVersion
     rev
     sha256;
+
+  goPackages' = pkgs.goPackages.override {
+    channel = json.goVersion or "1.12";
+  };
 
   deterministic-zip' = deterministic-zip.override {
     version = fetchzipVersion;
@@ -27,7 +33,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     deterministic-zip'
     git
-    go
+    goPackages'.go
   ];
 
   buildCommand = ''

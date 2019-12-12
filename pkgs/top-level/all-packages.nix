@@ -1715,7 +1715,7 @@ goPackages_1-12 = callPackage ./go-packages.nix {
 goPackages_1-13 = callPackage ./go-packages.nix {
   channel = "1.13";
 };
-goPackages = callPackageAlias "goPackages_1-12" { };
+goPackages = callPackageAlias "goPackages_1-13" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 

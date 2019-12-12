@@ -17,13 +17,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "nmap-7.70";
+  name = "nmap-7.80";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}.tar.bz2") baseUrls;
-    multihash = "QmdByChZAjZradH73dAockfRumaEpgA3X7DqAeLA4kabMb";
+    multihash = "QmaLKzYUGcwGLyUVvEmwLPss7HtF97H3AZP37Zjn2TmK2f";
     hashOutput = false;
-    sha256 = "847b068955f792f4cc247593aca6dc3dc4aae12976169873247488de147a6e18";
+    sha256 = "fcfa5a0e42099e12e4bf7a68ebe6fde05553383a682e816a7ec9256ab4773faa";
   };
 
   nativeBuildInputs = [

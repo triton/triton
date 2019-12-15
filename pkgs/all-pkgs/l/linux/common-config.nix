@@ -319,6 +319,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "5.4") ''
     DRM_AMD_DC_DCN2_1 y
   ''}
+  ${optionalString (versionAtLeast version "5.5") ''
+    DRM_AMD_DC_HDCP y
+  ''}
   DRM_VMWGFX_FBCON y
   DRM_I915_GVT y
   ${optionalString (versionAtLeast version "4.20") ''
@@ -404,6 +407,8 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "5.2") ''
     SND_SOC_SOF_TOPLEVEL y
     SND_SOC_SOF_INTEL_TOPLEVEL y
+    SND_SOC_SOF_BAYTRAIL_SUPPORT y
+    SND_SST_ATOM_HIFI2_PLATFORM_ACPI n
   ''}
   ${optionalString (versionAtLeast version "5.3") ''
     SND_SOC_SOF_HDA_LINK y
@@ -412,9 +417,12 @@ with stdenv.lib;
     SND_SOC_SOF_COMETLAKE_H_SUPPORT y
   ''}
   ${optionalString (versionAtLeast version "5.4") ''
-    SND_HDA_INTEL_DETECT_DMIC y
     SND_SOC_SOF_TIGERLAKE_SUPPORT y
     SND_SOC_SOF_ELKHARTLAKE_SUPPORT y
+  ''}
+  ${optionalString (versionAtLeast version "5.5") ''
+    SND_SOC_SOF_JASPERLAKE_SUPPORT y
+    SND_SOC_SOF_HDA_COMMON_HDMI_CODEC y
   ''}
 
   # USB devices
@@ -722,6 +730,9 @@ with stdenv.lib;
   SLIP_SMART y
   HWMON y
   THERMAL_HWMON y # Hardware monitoring support
+  ${optionalString (versionAtLeast version "5.5") ''
+    NVME_HWMON y
+  ''}
   ${optionalString (versionAtLeast version "4.17") ''
     THERMAL_STATISTICS y
   ''}
@@ -734,6 +745,7 @@ with stdenv.lib;
   USB_EHCI_TT_NEWSCHED y # Improved transaction translator scheduling
   X86_CHECK_BIOS_CORRUPTION y
   X86_MCE y
+  X86_5LEVEL y
   ${optionalString (versionAtLeast version "5.3") ''
     NTB_MSI y
   ''}
@@ -866,7 +878,6 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.13") ''
     #GCC_PLUGIN_RANDSTRUCT y
     #GCC_PLUGIN_RANDSTRUCT_PERFORMANCE y
-    REFCOUNT_FULL y
     FORTIFY_SOURCE y
   ''}
   ${optionalString (versionAtLeast version "4.14") ''

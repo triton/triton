@@ -4638,9 +4638,6 @@ libstartup_notification =
   linuxPackages_4-19 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-19;
   });
-  linuxPackages_5-3 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_5-3;
-  });
   linuxPackages_5-4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_5-4;
   });

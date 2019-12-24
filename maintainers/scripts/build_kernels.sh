@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 kernels=(
   4-19
-  5-3
   5-4
   testing
   bcachefs

@@ -8,14 +8,14 @@
 }:
 
 let
-  version = "0.3.0";
+  version = "0.3.1";
 in
 stdenv.mkDerivation rec {
   name = "libverto-${version}";
 
   src = fetchurl {
     url = "https://github.com/latchset/libverto/releases/download/${version}/${name}.tar.gz";
-    sha256 = "955d3ff4192830c74ce88185f39621c9e490d5a3e7aba04d1e5346d4886f862e";
+    sha256 = "983817c6bc0af6fa3731da2653e6371f6e1a56b4489ee44b3172e918574c50ea";
   };
 
   buildInputs = [

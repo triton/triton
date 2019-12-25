@@ -10,8 +10,8 @@
 }:
 
 let
-  version = "2.3.0";
-  newVersion = "2.3.0";
+  version = "2.3.1";
+  newVersion = "2.3.1";
 
   tarballUrls = version: [
     "mirror://samba/talloc/talloc-${version}.tar"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "75d5bcb34482545a82ffb06da8f6c797f963a0da450d0830c669267b14992fc6";
+    sha256 = "ef4822d2fdafd2be8e0cabc3ec3c806ae29b8268e932c5e9a4cd5585f37f9f77";
   };
 
   nativeBuildInputs = [
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
       failEarly = true;
       urls = map (n: "${n}.gz") (tarballUrls newVersion);
       inherit (src) outputHashAlgo;
-      outputHash = "75d5bcb34482545a82ffb06da8f6c797f963a0da450d0830c669267b14992fc6";
+      outputHash = "ef4822d2fdafd2be8e0cabc3ec3c806ae29b8268e932c5e9a4cd5585f37f9f77";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
         pgpDecompress = true;

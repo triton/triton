@@ -12,7 +12,7 @@
 }:
 
 let
-  name = "tdb-1.4.2";
+  name = "tdb-1.4.3";
 
   tarballUrls = [
     "mirror://samba/tdb/${name}.tar"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "9040b2cce4028e392f063f91bbe76b8b28fecc2b7c0c6071c67b5eb3168e004a";
+    sha256 = "c8058393dfa15f47e11ebd2f1d132693f0b3b3b8bf22d0201bfb305026f88a1b";
   };
 
   nativeBuildInputs = [

@@ -12,8 +12,8 @@
 }:
 
 let
-  version = "0.10.1";
-  newVersion = "0.10.1";
+  version = "0.10.2";
+  newVersion = "0.10.2";
 
   tarballUrls = version: [
     "mirror://samba/tevent/tevent-${version}.tar"
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "79a4da68b38b86ac71d8ac824ee3605ab22a6a91cfa83033a7db73f3dd6910b6";
+    sha256 = "f8427822e5b2878fb8b28d6f50d96848734f3f3130612fb574fdd2d2148a6696";
   };
 
   nativeBuildInputs = [
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
       failEarly = true;
       urls = map (n: "${n}.gz") (tarballUrls newVersion);
       inherit (src) outputHashAlgo;
-      outputHash = "79a4da68b38b86ac71d8ac824ee3605ab22a6a91cfa83033a7db73f3dd6910b6";
+      outputHash = "f8427822e5b2878fb8b28d6f50d96848734f3f3130612fb574fdd2d2148a6696";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
         pgpDecompress = true;

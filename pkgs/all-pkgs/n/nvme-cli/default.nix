@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.8.1";
+  version = "1.9";
 in
 stdenv.mkDerivation rec {
   name = "nvme-cli-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "linux-nvme";
     repo = "nvme-cli";
     rev = "v${version}";
-    sha256 = "81f27d969d3c9de8682be11d8dfcaaeafde258c2a1a0e2881bc6bfded0fa3e6b";
+    sha256 = "3f714d717ef2ff7843f4675a8a02bdf77dbb09c98c5459c2859a858b5f2a2723";
   };
 
   buildInputs = [
@@ -30,6 +30,14 @@ stdenv.mkDerivation rec {
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';
+
+  installFlags = [
+    "SYSCONFDIR=${placeholder "out"}/etc"
+  ];
+
+  installTargets = [
+    "install-spec"
+  ];
 
   meta = with lib; {
     maintainers = with maintainers; [

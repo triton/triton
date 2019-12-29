@@ -1,5 +1,5 @@
 {
-  "path": "github.com/ncw/rclone",
+  "path": "github.com/rclone/rclone",
   "version": "master",
   "updateDeps": false
 }

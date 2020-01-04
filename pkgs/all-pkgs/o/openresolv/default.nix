@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openresolv-3.9.1";
+  name = "openresolv-3.9.2";
 
   src = fetchurl {
     url = "mirror://roy/openresolv/${name}.tar.xz";
-    multihash = "QmPr6tHpbDnfpZ4HYNtYJymzo4yctEm998P6cCVQwT4gZP";
-    sha256 = "38b8e7e131a39b1c0d4e5688618b8572adf92a5bf757ae9f272e9f81108a9ff2";
+    multihash = "QmXXyAWmxtiprbaQ5hRaHesJnh3eSTxNqfP2zXGASn4bm8";
+    sha256 = "14d7e241682e5566f6b8bf4c7316c86d7a9b8e7ed48e1de4967dbf1ea84ed373";
   };
 
   nativeBuildInputs = [

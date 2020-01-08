@@ -2044,7 +2044,7 @@ iperf_3 = callPackage ../all-pkgs/i/iperf {
 };
 iperf = callPackageAlias "iperf_3" { };
 
-ipfs = pkgs.goPackages_1-12.ipfs;
+ipfs = pkgs.goPackages.ipfs;
 
 ipfs-cluster = pkgs.goPackages.ipfs-cluster;
 

@@ -25,16 +25,16 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.xz"
   ];
 
-  version = "7.67.0";
+  version = "7.68.0";
 in
 stdenv.mkDerivation rec {
   name = "curl-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmfZxQfT9WECmfR8eAWaVJwu2FJA1s7xJzrCG4zMWNnycu";
+    multihash = "QmNmYdb1sAd9A22MF6YR6kXgdoG3YhWx1aQZUSgt4A1NuS";
     hashOutput = false;
-    sha256 = "f5d2e7320379338c3952dcc7566a140abb49edb575f9f99272455785c40e536c";
+    sha256 = "b724240722276a27f6e770b952121a3afd097129d8c9fe18e6272dc34192035a";
   };
 
   buildInputs = [
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "7.67.0";
+      urls = tarballUrls "7.68.0";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";

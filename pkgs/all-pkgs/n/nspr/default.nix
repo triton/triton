@@ -9,7 +9,7 @@ let
     optionals
     platforms;
 
-  version = "4.23";
+  version = "4.25";
 
   baseUrls = [
     "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
@@ -20,9 +20,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
-    multihash = "QmbnDUBHks9q1yMwaYQSDFk1Z3Bai12TRVDCMvQQK4Pt5o";
+    multihash = "QmbmSPLokc2oopFVHxBZhmfvodq45pwCnSUJMNCJExxRFe";
     hashOutput = false;
-    sha256 = "4b9d821037faf5723da901515ed9cac8b23ef1ea3729022259777393453477a4";
+    sha256 = "0bc309be21f91da4474c56df90415101c7f0c7c7cab2943cd943cd7896985256";
   };
 
   prePatch = ''

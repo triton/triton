@@ -13,7 +13,7 @@ let
     concatMapStrings
     flip;
 
-  ncursesName = "ncurses-6.1";
+  ncursesName = "ncurses-6.2";
   gpmName = "gpm-1.20.7";
 
   gpmPatches = [
@@ -30,7 +30,7 @@ stdenv.mkDerivation {
   srcs = [
     (fetchurl {
       url = "mirror://gnu/ncurses/${ncursesName}.tar.gz";
-      sha256 = "aa057eeeb4a14d470101eff4597d5833dcef5965331be3528c08d99cebaa0d17";
+      sha256 = "30306e0c76e0f9f1f0de987cf1c82a5c21e1ce6568b9227f7da5b71cbea86c9d";
     })
     (fetchurl {
       url = "http://www.nico.schottelius.org/software/gpm/archives/${gpmName}.tar.bz2";

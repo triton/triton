@@ -194,6 +194,10 @@ with stdenv.lib;
   ${optionalString (versionOlder version "4.18") ''
     IPX n
   ''}
+  ${optionalString (versionAtLeast version "5.6") ''
+    INET_ESPINTCP y
+    MPTCP y
+  ''}
   IP_PNP n
   IP_MROUTE_MULTIPLE_TABLES y
   IPV6_ROUTER_PREF y
@@ -257,6 +261,9 @@ with stdenv.lib;
   BATMAN_ADV_DAT y
   BATMAN_ADV_NC y
   BATMAN_ADV_MCAST y
+  ${optionalString (versionAtLeast version "5.6") ''
+    BATMAN_ADV_SYSFS y
+  ''}
   NET_SWITCHDEV y
   NET_L3_MASTER_DEV y
   ${optionalString (versionAtLeast version "4.17") ''
@@ -316,7 +323,7 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.20") ''
     HSA_AMD y
   ''}
-  ${optionalString (versionAtLeast version "5.4") ''
+  ${optionalString (versionAtLeast version "5.4" && versionOlder version "5.6") ''
     DRM_AMD_DC_DCN2_1 y
   ''}
   ${optionalString (versionAtLeast version "5.5") ''
@@ -476,6 +483,9 @@ with stdenv.lib;
   ${optionalString (versionOlder version "5.1") ''
     F2FS_FS_ENCRYPTION y
   ''}
+  ${optionalString (versionAtLeast version "5.6") ''
+    F2FS_FS_COMPRESSION y
+  ''}
   FS_DAX y
   ${optionalString (versionAtLeast version "5.4") ''
     FS_VERITY y
@@ -506,7 +516,7 @@ with stdenv.lib;
     CRAMFS_MTD y
   ''}
   FAT_DEFAULT_UTF8 y
-  ${optionalString (versionAtLeast version "5.4") ''
+  ${optionalString (versionAtLeast version "5.4" && versionOlder version "5.6") ''
     EXFAT_DELAYED_SYNC y
   ''}
   JFFS2_FS_XATTR y
@@ -526,9 +536,12 @@ with stdenv.lib;
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
   NFSD_FLEXFILELAYOUT y
+  ${optionalString (versionAtLeast version "5.6") ''
+    NFSD_V4_2_INTER_SSC y
+  ''}
   ${optionalString (versionAtLeast version "4.19") ''
     CIFS_ALLOW_INSECURE_LEGACY n
-  ''}
+    ''}
   CIFS_UPCALL y
   ${optionalString (versionOlder version "5.3") ''
     CIFS_ACL y
@@ -858,6 +871,11 @@ with stdenv.lib;
     MIGRATE_VMA_HELPER y
     HMM y
   ''}
+  ${optionalString (versionAtLeast version "5.6") ''
+    DMABUF_HEAPS y
+    DMABUF_HEAPS_SYSTEM y
+    DMABUF_HEAPS_CMA y
+  ''}
   HMM_MIRROR y
   ${optionalString (versionAtLeast version "4.18") ''
     DEV_PAGEMAP_OPS y
@@ -951,11 +969,14 @@ with stdenv.lib;
   ''}
   VFIO_PCI_VGA y
   VIRTIO_MMIO_CMDLINE_DEVICES y
-  ${optionalString (versionAtLeast version "4.11") ''
+  ${optionalString (versionAtLeast version "4.11" && versionOlder version "5.6") ''
     VIRTIO_BLK_SCSI y
   ''}
   VIRT_DRIVERS y
   INTEL_IOMMU_SVM y
+  ${optionalString (versionAtLeast version "5.6") ''
+    INTEL_IOMMU_SCALABLE_MODE_DEFAULT_ON y
+  ''}
 
   # Media support.
   MEDIA_DIGITAL_TV_SUPPORT y
@@ -969,6 +990,9 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.12") ''
     CEC_PLATFORM_DRIVERS y
+  ''}
+  ${optionalString (versionAtLeast version "5.6") ''
+    MEDIA_CEC_RC y
   ''}
 
   # Our initrd init uses shebang scripts, so can't be modular.

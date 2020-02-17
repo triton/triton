@@ -3,7 +3,7 @@
 , makeWrapper
 
 , boehm-gc
-, gawk
+, gawk_small
 , gmp
 , libffi
 , libunistring
@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.2.6";
+  version = "3.0.0";
 
   tarballUrls = version: [
     "mirror://gnu/guile/guile-${version}.tar.xz"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "b33576331465a60b003573541bf3b1c205936a16c407bc69f8419a527bf5c988";
+    sha256 = "c9138d6595a9f69bf9733d0bc2d3b9f3d8b79f35f289006912b3361cb0510c75";
   };
 
   nativeBuildInputs = [
@@ -52,11 +52,11 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk}/bin"
+    wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk_small}/bin"
 
     # Hack to remove impurities
     # TODO: We should fix this so we have a cached version of this module
-    rm "$out"/lib/guile/2.2/ccache/srfi/srfi-4/gnu.go
+    rm "$out"/lib/guile/*/ccache/srfi/srfi-4/gnu.go
   '';
 
   # A native Guile 2.0 is needed to cross-build Guile.

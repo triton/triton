@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.68";
+  name = "libmicrohttpd-0.9.70";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "c5716e2a2899abc9e16c8fa7a1a58da88f81aca96a0b7e68a5d4d89e21610b61";
+    sha256 = "90d0a3d396f96f9bc41eb0f7e8187796049285fabef82604acd4879590977307";
   };
 
   buildInputs = [

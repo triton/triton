@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, fetchurl
 
 , ncurses
 , openssl
@@ -8,8 +9,15 @@
 }:
 
 let
-  rev = "e65a96b38d49a7b3a8bdfb28c91fc6a8ef035a3d";
-  date = "2019-05-29";
+  rev = "c3939dac2c060651361fc71516806f9ab8c38901";
+  date = "2020-02-13";
+
+  # Last fetched 2020-02-17
+  pen = fetchurl {
+    url = "http://www.iana.org/assignments/enterprise-numbers";
+    multihash = "QmVhHeJTYXgdzs65GAGJabzNm7uF5qNzxhVo6wwSzuasLy";
+    sha256 = "c4b7d075287e69e59ece3754f8fb05cf21ceb2b50f4266612461b8ef2237b348";
+  };
 in
 stdenv.mkDerivation rec {
   name = "ipmitool-${date}";
@@ -19,7 +27,7 @@ stdenv.mkDerivation rec {
     owner = "ipmitool";
     repo = "ipmitool";
     inherit rev;
-    sha256 = "c1584d1bf0f289e51ff013a4b85d79a6bef1d462578200f00ebb4a8c161fe833";
+    sha256 = "72f8250e0c88ad2b641380da8bf40a35be6820645119044497b135483cb7c44e";
   };
 
   nativeBuildInputs = [
@@ -33,13 +41,18 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs lib/create_pen_list
+    sed -i '/Neither wget nor curl could be found/aAM_CONDITIONAL([DOWNLOAD], [false])' configure.ac
   '';
 
   # Remove once fixed
   configureFlags = [
     "DEFAULT_INTF=open"
   ];
+
+  postInstall = ''
+    mkdir -p "$out"/share/misc
+    cp '${pen}' "$out"/share/misc/enterprise-numbers
+  '';
 
   meta = with stdenv.lib; {
     description = "Command-line interface to IPMI-enabled devices";

@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "5.4";
+  version = "5.4.1";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "0f973295911224ce15a10f9c9a0d9773d13a7f0d04959afb88783009b65670fa";
+    sha256 = "f3e07fb248d608bdad5b63973513211de5daba47aaecfa44d29a836f6e7a9d69";
   };
 
   nativeBuildInputs = [
@@ -43,11 +43,6 @@ stdenv.mkDerivation rec {
     zlib
     zstd
   ];
-
-  postPatch = ''
-    grep -q '^XMLTO_EXTRA =$' Documentation/Makefile.in
-    sed -i '/^XMLTO_EXTRA =$/d' Documentation/Makefile.in
-  '';
 
   configureFlags = [
     "--disable-python"

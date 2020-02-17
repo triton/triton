@@ -4011,9 +4011,7 @@ which = callPackage ../all-pkgs/w/which { };
 
 wiredtiger = callPackage ../all-pkgs/w/wiredtiger { };
 
-wireguard = callPackage ../all-pkgs/w/wireguard {
-  kernel = null;
-};
+wireguard = callPackage ../all-pkgs/w/wireguard { };
 
 wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
 
@@ -4615,9 +4613,12 @@ libstartup_notification =
         buildConfig = "kernelspace";
       };
 
-      wireguard = kCallPackage ../all-pkgs/w/wireguard {
-        inherit (kPkgs) kernel;
-      };
+      wireguard = if (lib.versionOlder kPkgs.kernel.version "5.6") then
+        kCallPackage ../all-pkgs/w/wireguard/kernel.nix {
+          inherit (kPkgs) kernel;
+        }
+      else
+        null;
 
       zfs = kCallPackage ../all-pkgs/z/zfs/kernel.nix {
         channel = "stable";

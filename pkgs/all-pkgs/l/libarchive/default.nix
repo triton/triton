@@ -15,14 +15,14 @@
 }:
 
 let
-  version = "3.4.0";
+  version = "3.4.2";
 in
 stdenv.mkDerivation rec {
   name = "libarchive-${version}";
 
   src = fetchurl {
     url = "https://github.com/libarchive/libarchive/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "8643d50ed40c759f5412a3af4e353cffbce4fdf3b5cf321cb72cacf06b2d825e";
+    sha256 = "b60d58d12632ecf1e8fad7316dc82c6b9738a35625746b47ecdcaf4aed176176";
   };
 
   buildInputs = [

@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     owner = "debian";
     repo = "mime-support";
     inherit rev;
-    multihash = "QmQNUW6DjRvBwepdeAmYdFopkj9PaSoaqXVE3XXViheCmP";
+    multihash = "QmahNahRURR6aPxTLadJWfbjZRq5ZeQcXs9dpfRLyNb4fU";
     sha256 = "64406875391b0d37a19b5f9bc25fb5f0112194bf8591b497dbbc01544d6b0abf";
   };
 

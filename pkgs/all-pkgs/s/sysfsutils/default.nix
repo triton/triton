@@ -14,6 +14,10 @@ stdenv.mkDerivation rec {
     sha256 = "e865de2c1f559fff0d3fc936e660c0efaf7afe662064f2fb97ccad1ec28d208a";
   };
 
+  preConfigure = ''
+    patchShebangs configure
+  '';
+
   meta = with lib; {
     homepage = http://linux-diag.sourceforge.net/Sysfsutils.html;
     license = with licenses; [

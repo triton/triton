@@ -72,6 +72,7 @@ stdenv.mkDerivation {
 
     # Remove impurities
     rm -rf go/pkg/mod/cache/vcs
+    rm -rf go/pkg/mod/cache/download/sumdb
     find go/pkg/mod/cache/download -name '*.zip' -delete
 
     # Build source tarball

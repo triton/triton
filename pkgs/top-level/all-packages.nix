@@ -1709,13 +1709,13 @@ gnutar_small = callPackage ../all-pkgs/g/gnutar {
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-goPackages_1-12 = callPackage ./go-packages.nix {
-  channel = "1.12";
-};
 goPackages_1-13 = callPackage ./go-packages.nix {
   channel = "1.13";
 };
-goPackages = callPackageAlias "goPackages_1-13" { };
+goPackages_1-14 = callPackage ./go-packages.nix {
+  channel = "1.14";
+};
+goPackages = callPackageAlias "goPackages_1-14" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 

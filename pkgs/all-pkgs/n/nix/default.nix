@@ -22,16 +22,16 @@
 }:
 
 let
-  version = "2.3.2";
+  version = "2.3.3";
 in
 stdenv.mkDerivation rec {
   name = "nix-${version}";
 
   src = fetchurl {
     url = "https://nixos.org/releases/nix/${name}/${name}.tar.xz";
-    multihash = "QmZhaZRefjJQMibpoqPviszUNjbTQ4MuGDtGnnHyaLgP6Q";
+    multihash = "QmWrmTT2iTudgh1gLXXc8YrXP8q1HiPW3ySVmW9NL3h61Y";
     hashOutput = false;
-    sha256 = "9fea4b52db0b296dcf05d36f7ecad9f48396af3a682bb21e31f8d04c469beef8";
+    sha256 = "332fffb8dfc33eab854c136ef162a88cec15b701def71fa63714d160831ba224";
   };
 
   buildInputs = [

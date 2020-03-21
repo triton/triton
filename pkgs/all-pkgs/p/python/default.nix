@@ -274,7 +274,10 @@ stdenv.mkDerivation rec {
           "";
       # e.g. _sysconfigdata_m_linux_x86_64-linux-gnu
       sysconfigdata =
-        if versionAtLeast channel "3.6" then
+        if versionAtLeast channel "3.8" then
+          # FIXME: this string looks like broken output (e.g. missing the m)
+          "_sysconfigdata__linux_${targetSystem}-gnu"
+        else if versionAtLeast channel "3.6" then
           "_sysconfigdata_m_linux_${targetSystem}-gnu"
         else
           "_sysconfigdata";
@@ -282,11 +285,13 @@ stdenv.mkDerivation rec {
       configdir =
         if versionOlder channel "3.0" then
           "config"
+        # FIXME: implement a list of platform tuples instead of
+        #        using the targetSystem string.  We may eventually
+        #        add a non-GNU system and our tuples differ
+        #        from those returned by the autoconf macro.
+        else if versionAtLeast channel "3.8" then
+          "config-${channel}${ifPyDebug}-${targetSystem}-gnu"
         else
-          # FIXME: implement a list of platform tuples instead of
-          #        using the targetSystem string.  We may eventually
-          #        add a non-GNU system and our tuples differ
-          #        from those returned by the autoconf macro.
           "config-${channel}${ifPyDebug}m-${targetSystem}-gnu";
     in ''
       # The lines we are replacing dont include libpython so we parse it out

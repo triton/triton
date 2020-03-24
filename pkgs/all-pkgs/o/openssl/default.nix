@@ -12,9 +12,9 @@
 let
   sources = {
     "1.0.2" = {
-      version = "1.0.2t";
-      multihash = "QmQFUWDeTD2ojLiEftQAimqzeVsviEgMKAdaGbFgShNUc4";
-      sha256 = "14cb464efe7ac6b54799b34456bd69558a749a4931ecfd9cf9f71d7881cac7bc";
+      version = "1.0.2u";
+      multihash = "QmPz3gXa5HuPviUgVRJmEKyiuvo1ETArMKU6YhQP4MuXzv";
+      sha256 = "ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f89669d16";
       patches = [
         (fetchTritonPatch {
            rev = "f2bfa2d2db51744e6fcb5677543b3bce8504bf82";

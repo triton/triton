@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.3.7";
+  version = "1.3.9";
 in
 stdenv.mkDerivation rec {
   name = "rhash-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/rhash/rhash/${version}/${name}-src.tar.gz";
     hashOutput = false;
-    sha256 = "a2441b7a04ae554ddd3eafcf50365c787b012e35ee6402eb6705d9cd4b8dfa65";
+    sha256 = "42b1006f998adb189b1f316bf1a60e3171da047a85c4aaded2d0d26c1476c9f6";
   };
 
   buildInputs = [

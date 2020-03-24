@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.9.0";
+  version = "1.10.0";
 in
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "ninja-build";
     repo = "ninja";
     rev = "v${version}";
-    sha256 = "c6bac3bb97b0cb6a2ea89eb6c0a16ec8f0a6d8b341e0097468441800a3aa0d6b";
+    sha256 = "1f26b1d74f1835b5b3185b8ccbf7220b1894acb6f99ffcd9ed4e040daad8ecd3";
   };
 
   nativeBuildInputs = [

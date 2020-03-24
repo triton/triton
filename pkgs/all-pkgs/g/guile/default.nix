@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "3.0.0";
+  version = "3.0.1";
 
   tarballUrls = version: [
     "mirror://gnu/guile/guile-${version}.tar.xz"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "c9138d6595a9f69bf9733d0bc2d3b9f3d8b79f35f289006912b3361cb0510c75";
+    sha256 = "d696ead0fd138cc7ef883b50cc6b4be2898d18ff64bd1e9379081e1186be53c9";
   };
 
   nativeBuildInputs = [
@@ -67,9 +67,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.2.6";
+      urls = tarballUrls "3.0.1";
       inherit (src) outputHashAlgo;
-      outputHash = "b33576331465a60b003573541bf3b1c205936a16c407bc69f8419a527bf5c988";
+      outputHash = "d696ead0fd138cc7ef883b50cc6b4be2898d18ff64bd1e9379081e1186be53c9";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprints = [

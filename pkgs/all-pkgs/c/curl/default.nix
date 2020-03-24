@@ -9,6 +9,8 @@
 , libpsl
 , libssh2
 , nghttp2_lib
+, nghttp3_lib
+, ngtcp2_lib
 , openldap
 , openssl
 , zlib
@@ -49,6 +51,8 @@ stdenv.mkDerivation rec {
     libmetalink
     libpsl
     libssh2
+    nghttp3_lib
+    ngtcp2_lib
     openldap
   ];
 

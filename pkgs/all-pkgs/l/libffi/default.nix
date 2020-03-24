@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "3.3-rc0";
+  version = "3.3";
 in
 stdenv.mkDerivation rec {
   name = "libffi-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
       "https://github.com/libffi/libffi/releases/download/v${version}/${name}.tar.gz"
       "mirror://sourceware/libffi/${name}.tar.gz"
     ];
-    sha256 = "403d67aabf1c05157855ea2b1d9950263fb6316536c8c333f5b9ab1eb2f20ecf";
+    sha256 = "72fba7922703ddfa7a028d513ac15a85c8d54c8d67f55fa5a4802885dc652056";
   };
 
   disableStatic = false;

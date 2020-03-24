@@ -3106,6 +3106,11 @@ nginx_unstable = callPackage ../all-pkgs/n/nginx {
 };
 nginx = callPackageAlias "nginx_stable" { };
 
+ngtcp2_full = callPackage ../all-pkgs/n/ngtcp2 { };
+ngtcp2_lib = callPackage ../all-pkgs/n/ngtcp2 {
+  prefix = "lib";
+};
+
 ninja = callPackage ../all-pkgs/n/ninja { };
 
 nix = callPackage ../all-pkgs/n/nix { };

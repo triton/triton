@@ -9,7 +9,7 @@ let
     "mirror://sourceforge/pcre/pcre/${version}/pcre2-${version}.tar.bz2"
   ];
 
-  version = "10.33";
+  version = "10.34";
 in
 stdenv.mkDerivation rec {
   name = "libpcre2-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "35514dff0ccdf02b55bd2e9fa586a1b9d01f62332c3356e379eabb75f789d8aa";
+    sha256 = "74c473ffaba9e13db6951fd146e0143fe9887852ce73406a03277af1d9b798ca";
   };
 
   preBuild = ''

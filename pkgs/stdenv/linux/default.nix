@@ -212,7 +212,7 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage11Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
         inherit (stage01Pkgs) linux-headers;
-        inherit (pkgs) stdenv libmpc mpfr isl isl_0-21;
+        inherit (pkgs) stdenv libmpc mpfr isl isl_0-22;
 
         gmp = pkgs.gmp.override {
           gnum4 = stage01Pkgs.gnum4;
@@ -331,7 +331,7 @@ let
           type = "small";
         };
 
-        xz_5-2-4 = pkgs.xz_5-2-4.override {
+        xz_5-2-5 = pkgs.xz_5-2-5.override {
           type = "small";
         };
 
@@ -420,7 +420,7 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage22Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
         inherit (stage21Pkgs) libc glibc linux-headers linux-headers_4-14;
-        inherit (pkgs) stdenv cc isl isl_0-21 libmpc mpfr zlib;
+        inherit (pkgs) stdenv cc isl isl_0-22 libmpc mpfr zlib;
 
         gcc = pkgs.gcc.override {
           binutils = stage11Pkgs.binutils;
@@ -468,11 +468,11 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage23Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
         inherit (stage21Pkgs) libc glibc linux-headers;
-        inherit (stage22Pkgs) gcc gmp isl isl_0-21 libmpc mpfr zlib;
+        inherit (stage22Pkgs) gcc gmp isl isl_0-22 libmpc mpfr zlib;
         inherit (pkgs) stdenv cc coreutils_small gnugrep binutils pcre
           bash_small patchelf pkgconfig pkgconf pkgconf-wrapper pkgconf_unwrapped
           brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-          gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-4 libidn2;
+          gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-5 libidn2;
 
         cc_gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -540,11 +540,11 @@ let
 
     overrides = pkgs: {
       inherit (stage21Pkgs) libc glibc linux-headers;
-      inherit (stage22Pkgs) gcc gmp isl isl_0-21 libmpc mpfr zlib;
+      inherit (stage22Pkgs) gcc gmp isl isl_0-22 libmpc mpfr zlib;
       inherit (stage23Pkgs) cc_gcc coreutils_small gnugrep binutils pcre
         bash_small patchelf pkgconfig pkgconf pkgconf_unwrapped
         brotli brotli_1-0-7 bzip2 diffutils findutils gawk_small gnumake
-        gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-4 libidn2;
+        gnupatch_small gnused_small gnutar_small gzip xz xz_5-2-5 libidn2;
     };
   });
 

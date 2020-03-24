@@ -2064,10 +2064,10 @@ iputils = callPackage ../all-pkgs/i/iputils { };
 
 irqbalance = callPackage ../all-pkgs/i/irqbalance { };
 
-isl_0-21 = callPackage ../all-pkgs/i/isl {
-  channel = "0.21";
+isl_0-22 = callPackage ../all-pkgs/i/isl {
+  channel = "0.22";
 };
-isl = callPackageAlias "isl_0-21" { };
+isl = callPackageAlias "isl_0-22" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
@@ -4194,7 +4194,10 @@ xwininfo = callPackage ../all-pkgs/x/xwininfo { };
 xz_5-2-4 = callPackage ../all-pkgs/x/xz {
   version = "5.2.4";
 };
-xz = callPackageAlias "xz_5-2-4" { };
+xz_5-2-5 = callPackage ../all-pkgs/x/xz {
+  version = "5.2.5";
+};
+xz = callPackageAlias "xz_5-2-5" { };
 
 yajl = callPackage ../all-pkgs/y/yajl { };
 

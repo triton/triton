@@ -9,10 +9,10 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "4.2.1";
+  version = "4.3";
 
   tarballUrls = version: [
-    "mirror://gnu/make/make-${version}.tar.bz2"
+    "mirror://gnu/make/make-${version}.tar.gz"
   ];
 in
 stdenv.mkDerivation rec {
@@ -21,22 +21,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589";
+    sha256 = "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19";
   };
 
   patches = [
     (fetchTritonPatch {
-      rev = "589213884b9474d570acbcb99ab58dbdec3e4832";
-      file = "g/gnumake/glibc-2.28.patch";
-      sha256 = "fe5b60d091c33f169740df8cb718bf4259f84528b42435194ffe0dd5b79cd125";
-    })
-    # Purity: don't look for library dependencies (of the form `-lfoo') in /lib
-    # and /usr/lib. It's a stupid feature anyway. Likewise, when searching for
-    # included Makefiles, don't look in /usr/include and friends.
-    (fetchTritonPatch {
-      rev = "6f9e7e9f66f12ecaa55dcae27460b37f1ee40de4";
-      file = "gnumake/impure-dirs.patch";
-      sha256 = "64efcd56eb445568f2e83d3c4535f645750a3f48ae04999ca4852e263819d416";
+      rev = "3a7cc75d7262018ac16d166a1f55840c89039219";
+      file = "g/gnumake/impure-dirs.patch";
+      sha256 = "ed2c31197e001e06ba14064c22608272cc4d2eded7e56ae70ae3e66a528a679d";
     })
   ];
 
@@ -59,11 +51,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4.2.1";
+      urls = tarballUrls "4.3";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "3D25 54F0 A153 38AB 9AF1  BB9D 96B0 4715 6338 B6D4";
       inherit (src) outputHashAlgo;
-      outputHash = "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589";
+      outputHash = "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19";
     };
   };
 

@@ -25,7 +25,7 @@ let
     else
       "x86_64-pc-linux-gnu";
 
-  version = "2.29";
+  version = "2.31";
 in
 stdenv.mkDerivation (rec {
   name = "glibc-${version}";
@@ -33,7 +33,7 @@ stdenv.mkDerivation (rec {
   src = fetchurl {
     url = "mirror://gnu/glibc/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "f3eeb8d57e25ca9fc13c2af3dae97754f9f643bc69229546828e3a240e2af04b";
+    sha256 = "9246fe44f68feeec8c666bb87973d590ce0137cca145df014c72ec95be9ffd17";
   };
 
   nativeBuildInputs = [

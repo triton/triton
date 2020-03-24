@@ -24,12 +24,12 @@ let
       "x86_64-pc-linux-gnu";
 in
 stdenv.mkDerivation (rec {
-  name = "binutils-2.32";
+  name = "binutils-2.34";
 
   src = fetchurl {
     url = "mirror://gnu/binutils/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "0ab6c55dd86a92ed561972ba15b9b70a8b9f75557f896446c82e8b36e473ee04";
+    sha256 = "f00b0e8803dc9bab1e2165bd568528135be734df3fabf8d0161828cd56028952";
   };
 
   buildInputs = optionals (type != "bootstrap") [
@@ -37,8 +37,9 @@ stdenv.mkDerivation (rec {
   ];
 
   postPatch = ''
-    # Don't rebuild the docs for bfd
-    sed -i '/SUBDIRS/s, doc,,' bfd/Makefile.in
+    # Don't rebuild the docs for anything
+    find . -name Makefile.in -exec sed -i '/SUBDIRS/s, doc,,' {} \;
+
 
     # Fix host lib install directory
     find . -name configure -exec sed -i \
@@ -130,5 +131,6 @@ stdenv.mkDerivation (rec {
   allowedReferences = [
     "out"
     zlib
-  ] ++ stdenv.cc.runtimeLibcLibs;
+  ] ++ stdenv.cc.runtimeLibcLibs
+    ++ stdenv.cc.runtimeLibcxxLibs;
 })

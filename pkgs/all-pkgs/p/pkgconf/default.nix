@@ -9,12 +9,12 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "pkgconf-1.6.1";
+  name = "pkgconf-1.6.3";
 
   src = fetchurl {
     url = "https://distfiles.dereferenced.org/pkgconf/${name}.tar.xz";
-    multihash = "QmeRLRYaTsvc1oN8EgoTECe2wjSxAdsAkyh9aus4KP5pNu";
-    sha256 = "22b9ee38438901f9d60f180e5182821180854fa738fd071f593ea26a81da208c";
+    multihash = "QmdB6f9sQZurX4rfnpr68GwYr3o8aWMXK6hLkD84korTF2";
+    sha256 = "61f0b31b0d5ea0e862b454a80c170f57bad47879c0c42bd8de89200ff62ea210";
   };
 
   configureFlags = [

@@ -42,7 +42,7 @@ let
     else
       "release";
 
-  version = "9.1.0";
+  version = "9.3.0";
 in
 stdenv.mkDerivation (rec {
   name = "gcc-${version}";
@@ -50,7 +50,7 @@ stdenv.mkDerivation (rec {
   src = fetchurl {
     url = "mirror://gnu/gcc/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0";
+    sha256 = "71e197867611f6054aa1119b13a0c0abac12834765fe2d81f35ac57f84f742d1";
   };
 
   buildInputs = optionals (type != "bootstrap") [

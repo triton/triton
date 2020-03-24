@@ -11,26 +11,14 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "bzip2-1.0.7";
+  name = "bzip2-1.0.8";
 
   src = fetchurl {
     url = "mirror://sourceware/bzip2/${name}.tar.gz";
-    sha256 = "e768a87c5b1a79511499beb41500bcc4caf203726fff46a6f5f9ad27fe08ab2b";
+    sha256 = "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269";
   };
 
   patches = [
-    # Fix bzgrep compat with POSIX shells
-    (fetchTritonPatch {
-      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
-      file = "b/bzip2/bzip2-1.0.4-POSIX-shell.patch";
-      sha256 = "e8826fedfed105ba52c85a2e43589ba37424513cb932072136ceac01ceb0ec99";
-    })
-    # Fix include path
-    (fetchTritonPatch {
-      rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";
-      file = "b/bzip2/bzip2-1.0.6-mingw.patch";
-      sha256 = "8da568f1d7daac4ac6b9d7946dd3b807e062b5a1710a2548029cc4f158e8d717";
-    })
     # https://bugs.gentoo.org/show_bug.cgi?id=82192
     (fetchTritonPatch {
       rev = "63e801888f6788d616d360a08f25604e2ac9cdcf";

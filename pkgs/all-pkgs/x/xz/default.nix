@@ -18,6 +18,10 @@ let
       multihash = "QmTvwVoGSrcoHNt7LKZDhnQUarCqFiJbY2ZwN4ctkVhCn1";
       sha256 = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
     };
+    "5.2.5" = {
+      multihash = "QmZ7Bq4K62KsuemBkfFBdcnomQsAqi1URpGUfbWJfD7zdR";
+      sha256 = "3e1e518ffc912f86608a8cb35e4bd41ad1aec210df2a47aaa1f95e7f5576ef56";
+    };
   };
 in
 stdenv.mkDerivation rec {
@@ -53,11 +57,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "5.2.4";
+      urls = tarballUrls "5.2.5";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "3690 C240 CE51 B467 0D30  AD1C 38EE 757D 6918 4620";
       inherit (src) outputHashAlgo;
-      outputHash = "9717ae363760dedf573dad241420c5fea86256b65bc21d2cf71b2b12f0544f4b";
+      outputHash = "3e1e518ffc912f86608a8cb35e4bd41ad1aec210df2a47aaa1f95e7f5576ef56";
     };
   };
 

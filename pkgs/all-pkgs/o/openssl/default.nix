@@ -29,6 +29,11 @@ let
       sha256 = "694f61ac11cb51c9bf73f54e771ff6022b0327a43bbdfa1b2f19de1662a6dcbe";
       patches = [
         (fetchTritonPatch {
+          rev = "8195f63308e915418ff06f11710873cdb74e5f68";
+          file = "o/openssl/quic-27.patch";
+          sha256 = "7d9c47042ac07cd98910cf7887fdbde653724d7dd41d3a5245420ba70dfefc51";
+        })
+        (fetchTritonPatch {
           rev = "29569cdc2793ba0e4902c2134fa3f3bbe9eb6a9f";
           file = "o/openssl/use-etc-ssl-certs.patch";
           sha256 = "db8dee66e41ea0a0186d4194d782f490f7222e9bce79f5496a578c1ed444b158";

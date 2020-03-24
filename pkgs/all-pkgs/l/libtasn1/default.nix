@@ -10,7 +10,7 @@ let
     "mirror://gnu/libtasn1/libtasn1-${version}.tar.gz"
   ];
 
-  version = "4.14";
+  version = "4.16.0";
 in
 stdenv.mkDerivation rec {
   name = "libtasn1-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "9e604ba5c5c8ea403487695c2e407405820d98540d9de884d6e844f9a9c5ba08";
+    sha256 = "0e0fb0903839117cb6e3b56e68222771bebf22ad7fc2295a0ed7d576e8d4329d";
   };
 
   nativeBuildInputs = [

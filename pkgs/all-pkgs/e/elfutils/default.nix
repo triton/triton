@@ -3,21 +3,24 @@
 , gnum4
 
 , bzip2
+, curl
+, libarchive
+, libmicrohttpd
+, sqlite
 , xz
 , zlib
 }:
 
 let
-  version = "0.176";
+  version = "0.178";
 in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
 
   src = fetchurl {
-    url = "https://sourceware.org/elfutils/ftp/${version}/${name}.tar.bz2";
-    multihash = "QmaaRXyFKYMEvvH7ctZMBqsYCHe5nbCotaNmMv2pTxbr19";
+    url = "mirror://sourceware/elfutils/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "eb5747c371b0af0f71e86215a5ebb88728533c3a104a43d4231963f308cd1023";
+    sha256 = "31e7a00e96d4e9c4bda452e1f2cdac4daf8abd24f5e154dee232131899f3a0f2";
   };
 
   nativeBuildInputs = [
@@ -33,7 +36,12 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-deterministic-archives"
+    "--disable-debuginfod"
   ];
+
+  preFixup = ''
+    rm "$out"/lib/pkgconfig/libdebuginfod.pc
+  '';
 
   passthru = {
     inherit version;

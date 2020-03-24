@@ -34,8 +34,8 @@ let
 
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
-  base = "2.34";
-  patch = null;
+  base = "2.35";
+  patch = "1";
 in
 stdenv.mkDerivation rec {
   name = "${type}util-linux-${version base patch}";
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "743f9d0c7252b6db246b659c1e1ce0bd45d8d4508b4dfa427bbb4a3e9b9f62b5";
+    sha256 = "d9de3edd287366cd908e77677514b9387b22bc7b88f45b83e1922c3597f1d7f9";
   };
 
   buildInputs = optionals (!libOnly) [

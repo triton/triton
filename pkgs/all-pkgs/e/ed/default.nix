@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ed-1.15";
+  name = "ed-1.16";
 
   src = fetchurl {
     url = "mirror://gnu/ed/${name}.tar.lz";
     hashOutput = false;
-    sha256 = "ad4489c0ad7a108c514262da28e6c2a426946fb408a3977ef1ed34308bdfd174";
+    sha256 = "cfc07a14ab048a758473ce222e784fbf031485bcd54a76f74acfee1f390d8b2c";
   };
 
   nativeBuildInputs = [

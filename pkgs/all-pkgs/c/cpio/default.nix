@@ -1,28 +1,14 @@
 { stdenv
 , fetchurl
-, fetchTritonPatch
 }:
 
 stdenv.mkDerivation rec {
-  name = "cpio-2.12";
+  name = "cpio-2.13";
 
   src = fetchurl {
     url = "mirror://gnu/cpio/${name}.tar.bz2";
-    sha256 = "0vi9q475h1rki53100zml75vxsykzyhrn70hidy41s5c2rc8r6bh";
+    sha256 = "eab5bdc5ae1df285c59f2a4f140a98fc33678a0bf61bdba67d9436ae26b46f6d";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "835bca21717df85a24bc5954603f37ca45c261a4";
-      file = "cpio/CVE-2015-1197.patch";
-      sha256 = "8a4e28af54458edab01c81e6dc39102d78ec270d74be5ae516a77869c64b6516";
-    })
-    (fetchTritonPatch {
-      rev = "835bca21717df85a24bc5954603f37ca45c261a4";
-      file = "cpio/CVE-2016-2037.patch";
-      sha256 = "03c47239a823c8554c1ad87740d2099161d9697e1affbd89dedd55e2382f5bf6";
-    })
-  ];
 
   configureFlags = [
     "--enable-mt"

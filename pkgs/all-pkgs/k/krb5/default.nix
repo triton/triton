@@ -25,7 +25,7 @@ let
 
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
-  major = "1.17";
+  major = "1.18";
   patch = null;
 in
 stdenv.mkDerivation rec {
@@ -33,9 +33,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "QmWC2q7VSM1FjPQ9K5fvKK2hHAdreHqfLuR8fLfPf7nAEk";
+    multihash = "QmdxBF7sN2joQtVqoY5HzGL3nK4fLPmDwrMqHV7teXf2KA";
     hashOutput = false;
-    sha256 = "5a6e2284a53de5702d3dc2be3b9339c963f9b5397d3fbbc53beb249380a781f5";
+    sha256 = "73913934d711dcf9d5f5605803578edb44b9a11786df3c1b2711f4e1752f2c88";
   };
 
   nativeBuildInputs = [

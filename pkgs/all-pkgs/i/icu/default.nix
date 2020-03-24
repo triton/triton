@@ -6,20 +6,23 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
+  tarballName = v: "icu4c-${replaceChars ["."] ["_"] v}-src.tgz";
+
   tarballUrls = v: [
-    "http://download.icu-project.org/files/icu4c/${v}/icu4c-${replaceChars ["."] ["_"] v}-src.tgz"
+    "https://github.com/unicode-org/icu/releases/download/release-${replaceChars ["."] ["-"] v}/${tarballName v}"
+    "http://download.icu-project.org/files/icu4c/${v}/${tarballName v}"
   ];
 
-  version = "63.1";
+
+  version = "66.1";
 in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmcwUadnqKHdhksCRvvgsV4WK4nqM18X3gKnGY5oPJ75nS";
     hashOutput = false;
-    sha256 = "05c490b69454fce5860b7e8e2821231674af0a11d7ef2febea9a32512998cb9d";
+    sha256 = "52a3f2209ab95559c1cf0a14f24338001f389615bf00e2585ef3dbc43ecf0a2e";
   };
 
   postUnpack = ''
@@ -36,9 +39,9 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "63.1";
+      urls = tarballUrls "66.1";
       inherit (src) outputHashAlgo;
-      outputHash = "05c490b69454fce5860b7e8e2821231674af0a11d7ef2febea9a32512998cb9d";
+      outputHash = "52a3f2209ab95559c1cf0a14f24338001f389615bf00e2585ef3dbc43ecf0a2e";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;
         pgpKeyFingerprints = [

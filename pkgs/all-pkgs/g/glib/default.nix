@@ -33,7 +33,7 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  channel = "2.62";
+  channel = "2.64";
   version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "6c257205a0a343b662c9961a58bb4ba1f1e31c82f5c6b909ec741194abc3da10";
+    sha256 = "e5e514e47d169cdb4111c3ea4af0300e1b1a5f428a474d2d7ddadf38dd061280";
   };
 
   nativeBuildInputs = [

@@ -7,23 +7,23 @@ let
     "https://c-ares.haxx.se/download/c-ares-${version}.tar.gz"
   ];
 
-  version = "1.15.0";
+  version = "1.16.0";
 in
 stdenv.mkDerivation rec {
   name = "c-ares-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmPSBCLotU8oPBJFvCAh3Tj2RkRta5MJVqD7CPKMJ6Pa5r";
+    multihash = "Qmd1mnDfQxcwU8VSRUgHYDUpiVtjhvFrLTpHsnitU79nFR";
     hashOutput = false;
-    sha256 = "6cdb97871f2930530c97deb7cf5c8fa4be5a0b02c7cea6e7c7667672a39d6852";
+    sha256 = "de058ad7c128156e2db6dc98b8a359924d6f210a1b99dd36ba15c8f839a83a89";
   };
 
   passthru = {
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
-      urls = tarballUrls "1.15.0";
-      outputHash = "6cdb97871f2930530c97deb7cf5c8fa4be5a0b02c7cea6e7c7667672a39d6852";
+      urls = tarballUrls "1.16.0";
+      outputHash = "de058ad7c128156e2db6dc98b8a359924d6f210a1b99dd36ba15c8f839a83a89";
       failEarly = true;
       fullOpts = {
         pgpsigUrls = map (n: "${n}.asc") urls;

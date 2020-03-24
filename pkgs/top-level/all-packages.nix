@@ -3093,6 +3093,11 @@ nghttp2_lib = callPackage ../all-pkgs/n/nghttp2 {
   prefix = "lib";
 };
 
+nghttp3_full = callPackage ../all-pkgs/n/nghttp3 { };
+nghttp3_lib = callPackage ../all-pkgs/n/nghttp3 {
+  prefix = "lib";
+};
+
 nginx_stable = callPackage ../all-pkgs/n/nginx {
   channel = "stable";
 };

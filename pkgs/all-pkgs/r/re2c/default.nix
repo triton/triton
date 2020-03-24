@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "1.1.1";
+  version = "1.3";
 in
 stdenv.mkDerivation rec {
   name = "re2c-${version}";
 
   src = fetchurl {
-    url = "https://github.com/skvadrik/re2c/releases/download/${version}/${name}.tar.gz";
-    sha256 = "856597337ea00b24ce91f549f79e6eece1b92ba5f8b63292cad66c14ac7451cf";
+    url = "https://github.com/skvadrik/re2c/releases/download/${version}/${name}.tar.xz";
+    sha256 = "f37f25ff760e90088e7d03d1232002c2c2672646d5844fdf8e0d51a5cd75a503";
   };
 
   meta = with stdenv.lib; {

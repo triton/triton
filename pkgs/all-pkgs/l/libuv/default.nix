@@ -7,16 +7,16 @@
 }:
 
 let
-  version = "1.32.0";
+  version = "1.35.0";
 in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";
 
   src = fetchurl {
     url = "https://dist.libuv.org/dist/v${version}/libuv-v${version}.tar.gz";
-    multihash = "QmVCerwwfx8m4Wo7pGpepjGUewfJ9gAaJWs6KKREJbma5z";
+    multihash = "QmZ7GEGFkCZy8nDDY1wbZusoTMjAHdaJ4kWUeWsL1guhbJ";
     hashOutput = false;
-    sha256 = "203927683d53d1b82eee766c8ffecfa8ed0e392679c15d5ad3a23504eda0ed1f";
+    sha256 = "0e947d02543ad6e6ef11c19ad1587afc57c95ff31a18f57413490faeaaab4604";
   };
 
   nativeBuildInputs = [

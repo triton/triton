@@ -31,19 +31,19 @@ let
 
   sources = {
     "4.19" = {
-      version = "4.19.112";
+      version = "4.19.113";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "a615e9089007999d1526736c30fb16650728898c10bdf009595fc87997093f97";
+      patchSha256 = "d49d16c39559c2ac5ad445e7af3a0fd2c8faa169912ab851255a06988eb7c3de";
     };
     "5.4" = {
-      version = "5.4.27";
+      version = "5.4.28";
       baseSha256 = "bf338980b1670bca287f9994b7441c2361907635879169c64ae78364efc5f491";
-      patchSha256 = "de58b00ad15ed4f58948e4a583d52829cd34a30cff06cdbbaea5cfc5a69e6030";
+      patchSha256 = "6965f4c20f73e4707361a69bcb71806901f835dc45fdb8232542947507144fc0";
     };
     "5.5" = {
-      version = "5.5.11";
+      version = "5.5.13";
       baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
-      patchSha256 = "50e8f105cca4b523e2bbf7e2766de31ac8d6f2305e11314444d311853213586c";
+      patchSha256 = "a58dad931dda6eba7656551da73d1c452317617c8282c094fa4f646d9422993a";
     };
     "testing" = {
       version = "5.6-rc7";

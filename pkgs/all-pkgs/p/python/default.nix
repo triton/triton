@@ -64,6 +64,12 @@ let
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };
+    "3.8" = {
+      versionPatch = "2";
+      sha256 = "2646e7dc233362f59714c6193017bb2d6f7b38d6ab4a0cb5fbac5c36c4d845df";
+      # Ned Deily
+      pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
+    };
   };
   source = sources."${channel}";
 
@@ -262,54 +268,33 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup =
-    let
-      ifPyDebug =
-        if pydebug then
-          "d"
-        else
-          "";
-      # e.g. _sysconfigdata_m_linux_x86_64-linux-gnu
-      sysconfigdata =
-        if versionAtLeast channel "3.6" then
-          "_sysconfigdata_m_linux_${targetSystem}-gnu"
-        else
-          "_sysconfigdata";
-      sysconfigdatapy = "${sysconfigdata}.py";
-      configdir =
-        if versionOlder channel "3.0" then
-          "config"
-        else
-          # FIXME: implement a list of platform tuples instead of
-          #        using the targetSystem string.  We may eventually
-          #        add a non-GNU system and our tuples differ
-          #        from those returned by the autoconf macro.
-          "config-${channel}${ifPyDebug}m-${targetSystem}-gnu";
-    in ''
+    ''
       # The lines we are replacing dont include libpython so we parse it out
       LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"
       LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
     '' + ''
-      sed -i $out/lib/python${channel}/${configdir}/Makefile \
+      sed -i $out/lib/python${channel}/config*/Makefile \
         -e "s@^LIBS=.*@LIBS= $LIBS@g" \
         -e "s@$NIX_BUILD_TOP@/no-such-path@g"
       sed -i "$out"/bin/python${channel}-config \
         -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@"
 
       # We need to update _sysconfigdata.py{,o,c}
-      sed -i $out/lib/python${channel}/${sysconfigdatapy} \
+      sysconfigdatapy="$(echo "$out"/lib/python${channel}/_sysconfigdata*.py)"
+      sed -i "$sysconfigdatapy" \
         -e "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" \
         -e "s@$NIX_BUILD_TOP@/no-such-path@g"
     '' + optionalString isPy2 ''
-      rm $out/lib/python${channel}/${sysconfigdatapy}{o,c}
+      rm "$sysconfigdatapy"{o,c}
     '' + optionalString isPy3 ''
-      rm $out/lib/python${channel}/__pycache__/_sysconfigdata*.pyc
-    '' + /* FIXME: the platform triplet included in the module name
-                   currently includes invalid characters (-). */
-      optionalString (versionOlder channel "3.6") ''
-      $out/bin/python${channel} -c "import ${sysconfigdata}"
-      $out/bin/python${channel} -O -c "import ${sysconfigdata}"
-      $out/bin/python${channel} -OO -c "import ${sysconfigdata}"
-      $out/bin/python${channel} -OOO -c "import ${sysconfigdata}"
+      rm "$out"/lib/python${channel}/__pycache__/_sysconfigdata*
+    '' + ''
+      sysconfigdata="''${sysconfigdatapy%.py}"
+      sysconfigmod="''${sysconfigdata##*/}"
+      "$out"/bin/python${channel} -c "import importlib; importlib.import_module('$sysconfigmod')"
+      "$out"/bin/python${channel} -O -c "import importlib; importlib.import_module('$sysconfigmod')"
+      "$out"/bin/python${channel} -OO -c "import importlib; importlib.import_module('$sysconfigmod')"
+      "$out"/bin/python${channel} -OOO -c "import importlib; importlib.import_module('$sysconfigmod')"
 
       sed --follow-symlinks -i $out/bin/python${channel}-config \
         -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"

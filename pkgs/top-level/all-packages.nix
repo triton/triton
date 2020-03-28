@@ -3461,11 +3461,15 @@ python37 = callPackage ../all-pkgs/p/python {
   channel = "3.7";
   self = callPackageAlias "python37" { };
 };
+python38 = callPackage ../all-pkgs/p/python {
+  channel = "3.8";
+  self = callPackageAlias "python38" { };
+};
 #pypy = callPackage ../all-pkgs/p/pypy {
 #  self = callPackageAlias "pypy" { };
 #};
 python2 = callPackageAlias "python27" { };
-python3 = callPackageAlias "python37" { };
+python3 = callPackageAlias "python38" { };
 python = callPackageAlias "python2" { };
 
 # Intended only for very early stage builds
@@ -3488,13 +3492,18 @@ python37Packages =
     python = callPackageAlias "python37" { };
     self = callPackageAlias "python37Packages" { };
   });
+python38Packages =
+  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+    python = callPackageAlias "python38" { };
+    self = callPackageAlias "python38Packages" { };
+  });
 #pypyPackages =
 #  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
 #    python = callPackageAlias "pypy" { };
 #    self = callPackageAlias "pypyPackages" { };
 #  });
 python2Packages = callPackageAlias "python27Packages" { };
-python3Packages = callPackageAlias "python37Packages" { };
+python3Packages = callPackageAlias "python38Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };

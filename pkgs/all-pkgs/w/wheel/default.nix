@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.32.2";
+  version = "0.34.2";
 in
 buildPythonPackage rec {
   name = "wheel-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "wheel";
     inherit version;
-    sha256 = "196c9842d79262bb66fcf59faa4bd0deb27da911dbc7c6cdca931080eb1f0783";
+    sha256 = "8788e9155fe14f54164c1b9eb0a319d98ef02c160725587ad60f14ddc57b6f96";
   };
 
   passthru = {

@@ -24,15 +24,7 @@ stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [
     python
-    appdirs
-    packaging
-    pyparsing
-    six
   ];
-
-  postPatch = /* Remove vendored sources, otherwise no errors are returned */ ''
-    rm -rv pkg_resources/_vendor/
-  '';
 
   installPhase = ''
     export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0

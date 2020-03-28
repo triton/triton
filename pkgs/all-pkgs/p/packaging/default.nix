@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "19.0";
+  version = "20.3";
 in
 buildPythonPackage rec {
   name = "packaging-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "packaging";
     inherit version;
-    sha256 = "0c98a5d0be38ed775798ece1b9727178c4469d9c3b4ada66e8e6b7849f8732af";
+    sha256 = "3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3";
   };
 
   propagatedBuildInputs = [

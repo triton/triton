@@ -4,7 +4,6 @@
 
 , audit_lib
 , libcap-ng
-, linux-headers_triton
 , libselinux
 , libutempter
 , ncurses
@@ -49,7 +48,6 @@ stdenv.mkDerivation rec {
   buildInputs = optionals (!libOnly) [
     audit_lib
     libcap-ng
-    linux-headers_triton
     libselinux
     libutempter
     ncurses

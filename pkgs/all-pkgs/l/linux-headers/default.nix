@@ -1,25 +1,15 @@
 { stdenv
 , fetchurl
 , lib
-
-, channel
 }:
 
 let
-  sources = {
-    "4.19" = {
-      version = "4.19.113";
-      baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "d49d16c39559c2ac5ad445e7af3a0fd2c8faa169912ab851255a06988eb7c3de";
-    };
-    "5.4" = {
-      version = "5.4.28";
-      baseSha256 = "bf338980b1670bca287f9994b7441c2361907635879169c64ae78364efc5f491";
-      patchSha256 = "6965f4c20f73e4707361a69bcb71806901f835dc45fdb8232542947507144fc0";
-    };
+  source = {
+    channel = "5.5";
+    version = "5.5.13";
+    baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
+    patchSha256 = "a58dad931dda6eba7656551da73d1c452317617c8282c094fa4f646d9422993a";
   };
-
-  source = sources."${channel}";
 
   sourceFetch = import ../linux/source.nix {
     inherit
@@ -33,6 +23,8 @@ let
     "x86_64-linux" = "x86_64";
     "i686-linux" = "i386";
   };
+
+  arch = headerArch."${stdenv.targetSystem}";
 
   inherit (lib)
     optionals
@@ -49,29 +41,30 @@ stdenv.mkDerivation rec {
   ];
 
   buildPhase = ''
-    true
+    if grep -q 'rsync' Makefile; then
+      make -j160 ARCH=${arch} headers
+    fi
   '';
 
-  preInstall = ''
-    installFlagsArray+=("INSTALL_HDR_PATH=$out")
+  installPhase = ''
+    if grep -q 'rsync' Makefile; then
+      mkdir -p "$out"
+      cp -r usr/include "$out"
+    else
+      make -j160 INSTALL_HDR_PATH="$out" headers_install
+    fi
   '';
-
-  installFlags = [
-    "ARCH=${headerArch."${stdenv.targetSystem}"}"
-  ];
-
-  installTargets = "headers_install";
 
   preFixup = ''
     # Cleanup some unneeded files
-    find "$out"/include \( -name .install -o -name ..install.cmd \) -delete
+    find "$out" -type f -and -not -name '*.h' -delete -print
   '';
 
   # The linux-headers do not need to maintain any references
   allowedReferences = [ ];
 
   passthru = {
-    inherit channel;
+    inherit (source) channel;
   };
 
   meta = with stdenv.lib; {

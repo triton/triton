@@ -104,7 +104,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage01Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv linux-headers linux-headers_4-19 python_tiny;
+        inherit (pkgs) stdenv linux-headers python_tiny;
 
         binutils = pkgs.binutils.override {
           type = "bootstrap";
@@ -369,9 +369,9 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage21Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (pkgs) stdenv cc libc linux-headers;
+        inherit (pkgs) stdenv cc libc;
 
-        linux-headers_4-19 = pkgs.linux-headers_4-19.override {
+        linux-headers = pkgs.linux-headers.override {
           stdenv = pkgs.stdenv.override {
             cc = stage13Pkgs.cc;
           };
@@ -419,7 +419,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage22Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
-        inherit (stage21Pkgs) libc glibc linux-headers linux-headers_4-19;
+        inherit (stage21Pkgs) libc glibc linux-headers;
         inherit (pkgs) stdenv cc isl isl_0-22 libmpc mpfr zlib;
 
         gcc = pkgs.gcc.override {

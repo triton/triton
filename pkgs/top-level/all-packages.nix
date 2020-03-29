@@ -2737,6 +2737,8 @@ libxslt = callPackage ../all-pkgs/l/libxslt { };
 
 libxt = callPackage ../all-pkgs/l/libxt { };
 
+libxtrans = callPackage ../all-pkgs/l/libxtrans { };
+
 libxtst = callPackage ../all-pkgs/l/libxtst { };
 
 libxv = callPackage ../all-pkgs/l/libxv { };
@@ -4190,8 +4192,6 @@ xrdb = callPackage ../all-pkgs/x/xrdb { };
 xrefresh = callPackage ../all-pkgs/x/xrefresh { };
 
 xsetroot = callPackage ../all-pkgs/x/xsetroot { };
-
-xtrans = callPackage ../all-pkgs/x/xtrans { };
 
 xvidcore = callPackage ../all-pkgs/x/xvidcore { };
 

@@ -3,19 +3,18 @@
 , lib
 , util-macros
 
-, libpthread-stubs
 , libxau
 , libxdmcp
 , python3Packages
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxcb-1.13.1";
+  name = "libxcb-1.14";
 
   src = fetchurl {
-    url = "mirror://xorg/individual/xcb/${name}.tar.bz2";
+    url = "mirror://xorg/individual/xcb/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "a89fb7af7a11f43d2ce84a844a4b38df688c092bf4b67683aef179cdf2a647c4";
+    sha256 = "a55ed6db98d43469801262d81dc2572ed124edc3db31059d4e9916eb9f844c34";
   };
 
   nativeBuildInputs = [
@@ -25,21 +24,18 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    libpthread-stubs
     libxau
     libxdmcp
   ];
 
   configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
     "--disable-devel-docs"
     "--enable-dri3"
     "--enable-xevie"
     "--enable-xprint"
     "--enable-selinux"
-    "--without-doxygen"
     "--without-launchd"
+    "--with-serverside-support"
   ];
 
   passthru = {

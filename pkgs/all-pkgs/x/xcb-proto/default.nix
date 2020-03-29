@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xcb-proto-1.13";
+  name = "xcb-proto-1.14";
 
   src = fetchurl {
-    url = "mirror://xorg/individual/xcb/${name}.tar.bz2";
-    sha256 = "7b98721e669be80284e9bbfeab02d2d0d54cd11172b72271e47a2fe875e2bde1";
+    url = "mirror://xorg/individual/xcb/${name}.tar.xz";
+    sha256 = "186a3ceb26f9b4a015f5a44dcc814c93033a5fc39684f36f1ecc79834416a605";
   };
 
   nativeBuildInputs = [

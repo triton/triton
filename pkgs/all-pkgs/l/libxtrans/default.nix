@@ -5,25 +5,25 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xtrans-1.3.5";
+  name = "xtrans-1.4.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "adbd3b36932ce4c062cd10f57d78a156ba98d618bdb6f50664da327502bc8301";
+    sha256 = "377c4491593c417946efcd2c7600d1e62639f7a8bbca391887e2c4679807d773";
   };
+
+  # Required for libx11 to compile
+  postPatch = ''
+    sed -i '\,sys/stropts.h,d' Xtranslcl.c
+  '';
 
   nativeBuildInputs = [
     util-macros
   ];
 
   configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
     "--disable-docs"
-    "--without-xmlto"
-    "--without-fop"
-    "--without-xsltproc"
   ];
 
   passthru = {

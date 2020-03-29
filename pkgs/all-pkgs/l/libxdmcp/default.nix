@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libXdmcp-1.1.2";
+  name = "libXdmcp-1.1.3";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "81fe09867918fff258296e1e1e159f0dc639cb30d201c53519f25ab73af4e4e2";
+    sha256 = "20523b44aaa513e17c009e873ad7bbc301507a3224c232610ce2e099011c6529";
   };
 
   nativeBuildInputs = [
@@ -26,15 +26,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
     "--disable-docs"
-    "--disable-lint-library"
     "--disable-unit-tests"
-    "--without-xmlto"
-    "--without-fop"
-    "--without-xsltproc"
-    "--without-lint"
   ];
 
   passthru = {

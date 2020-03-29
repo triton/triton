@@ -5,8 +5,8 @@
 , util-macros
 
 , libxcb
+, libxtrans
 , xorgproto
-, xtrans
 }:
 
 let
@@ -15,12 +15,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "libX11-1.6.7";
+  name = "libX11-1.6.9";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "910e9e30efba4ad3672ca277741c2728aebffa7bc526f04dcfa74df2e52a1348";
+    sha256 = "9cc7e8d000d6193fa5af580d50d689380b8287052270f5bb26a5fb6b58b2bed1";
   };
 
   nativeBuildInputs = [
@@ -30,13 +30,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libxcb
+    libxtrans
     xorgproto
-    xtrans
   ];
 
   configureFlags = [
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
     "--disable-specs"
     "--enable-unix-transport"
     "--enable-tcp-transport"
@@ -44,19 +42,11 @@ stdenv.mkDerivation rec {
     "--enable-local-transport"
     "--enable-loadable-i18n"
     "--enable-loadable-xcursor"
-    "--enable-xthreads"
-    "--enable-xcms"
-    "--enable-xlocale"
-    "--enable-xf86bigfont"
-    "--enable-xkb"
-    "--enable-composecache"
-    "--disable-lint-library"
     "--without-xmlto"
     "--without-fop"
     "--without-xsltproc"
     "--${boolWt (perl != null)}-perl"
     "--without-launchd"
-    "--without-lint"
   ];
 
   passthru = {

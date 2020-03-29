@@ -29,7 +29,7 @@ ninjaBuildPhase() {
     local actualMakeFlags
     ninjaCommonMakeFlags "build"
     printMakeFlags "build"
-    "$ninja" "${actualMakeFlags[@]}"
+    TERM=dumb "$ninja" "${actualMakeFlags[@]}"
 
     runHook postBuild
 }
@@ -41,7 +41,7 @@ ninjaCheckPhase() {
     ninjaCommonMakeFlags "check"
     actualMakeFlags+=(${checkTarget:-check})
     printMakeFlags "check"
-    "$ninja" "${actualMakeFlags[@]}"
+    TERM=dumb "$ninja" "${actualMakeFlags[@]}"
 
     runHook postCheck
 }
@@ -55,7 +55,7 @@ ninjaInstallPhase() {
     ninjaCommonMakeFlags "install"
     actualMakeFlags+=(${installTargets:-install})
     printMakeFlags "install"
-    "$ninja" "${actualMakeFlags[@]}"
+    TERM=dumb "$ninja" "${actualMakeFlags[@]}"
 
     runHook postInstall
 }

@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "24.0";
+  version = "28.0";
 in
 stdenv.mkDerivation rec {
   name = "rdma-core-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/linux-rdma/rdma-core/releases/download/v${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "e56e07de4611efda196b4c05b682ab9f82098f58ff703848fc7993cad18c136a";
+    sha256 = "e8ae3a78f9908cdc9139e8f6a155cd0bb43a30d0e54f28a3c7a2df4af51b3f4d";
   };
 
   nativeBuildInputs = [
@@ -31,6 +31,12 @@ stdenv.mkDerivation rec {
     libnl
     systemd_lib
   ];
+
+  # Man pages aren't working in 28.0
+  postPatch = ''
+    rm -rv buildlib/pandoc-prebuilt
+    sed -i '\,/man,d' CMakeLists.txt
+  '';
 
   passthru = {
     srcVerification = fetchurl rec {

@@ -1,7 +1,5 @@
 { stdenv
-, bison
 , fetchurl
-, flex
 , lib
 
 , channel
@@ -9,15 +7,15 @@
 
 let
   sources = {
-    "4.14" = {
-      version = "4.14.114";
-      baseSha256 = "f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7";
-      patchSha256 = "e1375e916f202b5ce73e17aa673aea741d2995f10eb448bb0581e3f82c8efe19";
-    };
     "4.19" = {
-      version = "4.19.37";
+      version = "4.19.113";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "517d79fc64b4c95ee5845ce21e4c60efb8f9479ce7c4ca2ac3496cf670e906ff";
+      patchSha256 = "d49d16c39559c2ac5ad445e7af3a0fd2c8faa169912ab851255a06988eb7c3de";
+    };
+    "5.4" = {
+      version = "5.4.28";
+      baseSha256 = "bf338980b1670bca287f9994b7441c2361907635879169c64ae78364efc5f491";
+      patchSha256 = "6965f4c20f73e4707361a69bcb71806901f835dc45fdb8232542947507144fc0";
     };
   };
 
@@ -46,20 +44,13 @@ stdenv.mkDerivation rec {
   inherit (sourceFetch)
     src;
 
-  nativeBuildInputs = optionals (versionAtLeast source.version "4.16") [
-    bison
-    flex
-  ];
-
   patches = [
     sourceFetch.patch
   ];
 
-  # The header install process requires a configuration
-  # The default configuration should be suitable for this
-  buildFlags = [
-    "defconfig"
-  ];
+  buildPhase = ''
+    true
+  '';
 
   preInstall = ''
     installFlagsArray+=("INSTALL_HDR_PATH=$out")

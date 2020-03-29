@@ -3,26 +3,20 @@
 , lib
 , meson
 , ninja
-, util-macros
 }:
 
 stdenv.mkDerivation rec {
-  name = "xorgproto-2018.4";
+  name = "xorgproto-2019.2";
 
   src = fetchurl {
     url = "mirror://xorg/individual/proto/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "fee885e0512899ea5280c593fdb2735beb1693ad170c22ebcc844470eec415a0";
+    sha256 = "46ecd0156c561d41e8aa87ce79340910cdf38373b759e737fcbba5df508e7b8e";
   };
 
   nativeBuildInputs = [
     meson
     ninja
-    util-macros
-  ];
-
-  configureFlags = [
-    "-Dlegacy=false"
   ];
 
   passthru = {

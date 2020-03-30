@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "12.1.0";
+  version = "13.0.0";
 in
 stdenv.mkDerivation rec {
   name = "unicode-character-database-${version}";
@@ -13,13 +13,13 @@ stdenv.mkDerivation rec {
   srcs = [
     (fetchurl {
       url = "http://www.unicode.org/Public/${version}/ucd/UCD.zip";
-      multihash = "QmTtBP7ZFuUsWYdyUNQhinWbEDQxnvyPqA49VarVNst5As";
-      sha256 = "25ba51a0d4c6fa41047b7a5e5733068d4a734588f055f61e85f450097834a0a6";
+      multihash = "QmcEUFWGdfmcGEM4UdEksvjGD943P5ZBg2WNEaTfMqJcP5";
+      sha256 = "2f76973b4d36ae45584f5a45ec65b47138932d777dd23a5669c89535ef3da951";
     })
     (fetchurl {
       url = "http://www.unicode.org/Public/${version}/ucd/Unihan.zip";
-      multihash = "QmUguLv4vL2V6EvxvksexsnEjyvXqoP74LyTKn95vaPdWy";
-      sha256 = "6e4553f3b5fffe0d312df324d020ef1278d9595932ae03f4e8a2d427de83cdcd";
+      multihash = "QmVz53sq2msSKr5fRHk8LUyU7C7tbax3W1HhNaB1p1C2dn";
+      sha256 = "e380194c4835ad85aa50e8750a58c1f605dbfc4aba9e3e3b0ca25b9530c02f64";
     })
   ];
 

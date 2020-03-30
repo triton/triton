@@ -5,9 +5,9 @@
 
 let
   source = {
-    version = "5.5.13";
-    baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
-    patchSha256 = "a58dad931dda6eba7656551da73d1c452317617c8282c094fa4f646d9422993a";
+    version = "5.6";
+    baseSha256 = "e342b04a2aa63808ea0ef1baab28fc520bd031ef8cf93d9ee4a31d4058fcb622";
+    patchSha256 = null;
   };
 
   sourceFetch = import ../linux/source.nix {

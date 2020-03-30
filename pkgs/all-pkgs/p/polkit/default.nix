@@ -11,30 +11,30 @@
 , glib
 , expat
 , pam
-, spidermonkey_52
+, spidermonkey_60
 , gobject-introspection
 , systemd_lib
 }:
 
 let
-  version = "0.115";
+  version = "0.116";
 in
 stdenv.mkDerivation rec {
   name = "polkit-${version}";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/polkit/releases/${name}.tar.gz";
-    multihash = "QmUQ3hjxbm3pQnc2L1iPEW3NJuXnNrwuenfKv69jJRVMzi";
+    multihash = "Qmf262WJaCdgGQ2SBtAyaPLnDgBJ7duQo7XdV3kh12upmK";
     hashOutput = false;
-    sha256 = "2f87ecdabfbd415c6306673ceadc59846f059b18ef2fce42bac63fe283f12131";
+    sha256 = "88170c9e711e8db305a12fdb8234fac5706c61969b94e084d0f117d8ec5d34b1";
   };
 
   nativeBuildInputs = [
-    docbook_xml_dtd_412
-    docbook-xsl
-    gettext
+    #docbook_xml_dtd_412
+    #docbook-xsl
+    #gettext
     intltool
-    libxslt
+    #libxslt
     perl
   ];
 
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     pam
-    spidermonkey_52
+    spidermonkey_60
     systemd_lib
   ];
 

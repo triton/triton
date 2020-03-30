@@ -10,6 +10,7 @@
 , json-c
 , kerberos
 , libcap
+, libuv
 , libxml2
 , lmdb
 , mariadb-connector-c
@@ -32,16 +33,16 @@ let
     optionals
     optionalString;
 
-  version = "9.14.8";
+  version = "9.16.1";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
 
   src = fetchurl {
-    url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    multihash = "QmWPFUdaZuTnhYVkvUe8qxYBNajsQjTkciSjg4Vm5EmjCa";
+    url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.xz";
+    multihash = "QmRyAiYh4hphX6PPfzZCwjoz3sx3dabzdfiSknz33tQSnz";
     hashOutput = false;
-    sha256 = "e545aa75ced6695a9bf4b591606ef00260fb3c055c2865b299cfe0fe6eeea076";
+    sha256 = "a913d7e78135b9123d233215b58102fa0f18130fb1e158465a1c2b6f3bd75e91";
   };
 
   nativeBuildInputs = [
@@ -56,6 +57,7 @@ stdenv.mkDerivation rec {
     ncurses
     openssl
     readline
+    libuv
   ] ++ optionals (!toolsOnly) [
     db
     fstrm
@@ -75,6 +77,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
+    "--disable-maintainer-mode"
     "--enable-largefile"
     "--disable-backtrace"
     "--disable-symtable"

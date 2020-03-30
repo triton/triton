@@ -20,15 +20,15 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "lftp-4.8.4";
+  name = "lftp-4.9.1";
 
   src = fetchurl {
     urls = [
-      "https://lftp.yar.ru/ftp/${name}.tar.bz2"
-      "https://lftp.yar.ru/ftp/old/${name}.tar.bz2"
+      "https://lftp.yar.ru/ftp/${name}.tar.xz"
+      "https://lftp.yar.ru/ftp/old/${name}.tar.xz"
     ];
-    multihash = "QmVMuN7XwnVHa7CXJszoe8LgFnQ8cVVfdAG7Bhtbg8zvt7";
-    sha256 = "a853edbd075b008c315679c7882b6dcc6821ed2365d2ed843a412acd3d40da0e";
+    multihash = "QmV8Fi6rntDnM8DvGjRvN9QYfqjTJJVEaHfqmDcDGq4SC5";
+    sha256 = "5969fcaefd102955dd882f3bcd8962198bc537224749ed92f206f415207a024b";
   };
 
   nativeBuildInputs = [

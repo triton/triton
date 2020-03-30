@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "4.6";
+  version = "4.8.1";
 in
 stdenv.mkDerivation rec {
   name = "shadow-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/shadow-maint/shadow/releases/download/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "0998c8d84242a231ab0acb7f8613927ff5bcff095f8aa6b79478893a03f05583";
+    sha256 = "a3ad4630bdc41372f02a647278a8c3514844295d36eefe68ece6c3a641c1ae62";
   };
 
   buildInputs = [

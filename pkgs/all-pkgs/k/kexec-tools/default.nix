@@ -6,7 +6,7 @@
 }:
 
 let
-  name = "kexec-tools-2.0.17";
+  name = "kexec-tools-2.0.20";
 
   tarballUrls = [
     "mirror://kernel/linux/utils/kernel/kexec/${name}.tar"
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "504c816b769da573167b63f3b6d4fce3740f231c98d8db0c4fda47a4b90482a9";
+    sha256 = "dad8077f0315445d1f6335579fc4ade222facf82a67124974c7be5303ba4f8c8";
   };
 
   buildInputs = [

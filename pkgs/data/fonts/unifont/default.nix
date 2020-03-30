@@ -5,7 +5,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "unifont-12.1.02";
+  name = "unifont-13.0.01";
 
   buildInputs = [
     xorg.mkfontdir
@@ -19,15 +19,13 @@ stdenv.mkDerivation rec {
   installPhase =
     let
       unifont_pcf = fetchurl {
-        url = "http://unifoundry.com/pub/unifont/${name}/font-builds/${name}.pcf.gz";
-        multihash = "QmcC7bSKatQwJXUR7rrZBPr4YidHaa7MzL91NVi91s1TME";
-        sha256 = "04d652be1e28a6d464965c75c71ac84633085cd0960c2687466651c34c94bd89";
+        url = "mirror://gnu/unifont/${name}/${name}.pcf.gz";
+        sha256 = "a847a7a6332c024865889b21011a248a2ef023c99be104b18c8c846201f8ef17";
       };
 
       unifont_ttf = fetchurl {
-        url = "http://unifoundry.com/pub/unifont/${name}/font-builds/${name}.ttf";
-        multihash = "QmUVsDN4tADFKCzuadUFFc9vREBPGJjJ82p6iDbNTp4F5L";
-        sha256 = "da4961540b9d02e01fb8755924db730db233c360b20ee321fda8ab7d0b9ca549";
+        url = "mirror://gnu/unifont/${name}/${name}.ttf";
+        sha256 = "8f3d8b12841ad564ef649c1c302248efa8c53dd40b603c9ad1335d58e269ab78";
       };
     in ''
       mkdir -pv $out/share/fonts $out/share/fonts/truetype

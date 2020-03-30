@@ -4,15 +4,15 @@
 }:
 
 let
-  version = "0.5.20150702";
+  version = "20190731";
 in
 stdenv.mkDerivation rec {
   name = "libspiro-${version}";
 
   src = fetchurl {
     url = "https://github.com/fontforge/libspiro/releases/download/"
-      + "${version}/libspiro-dist-${version}.tar.gz";
-    sha256 = "514d215942b860c8ee77282b14e11129ecea1992f8dfcb9ea69c0f68249f6c94";
+      + "${version}/libspiro-${version}.tar.gz";
+    sha256 = "24c7d1ccc7c7fe44ff10c376aa9f96e20e505f417ee72b63dc91a9b34eeac354";
   };
 
   meta = with lib; {

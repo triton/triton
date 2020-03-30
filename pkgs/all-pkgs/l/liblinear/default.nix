@@ -2,12 +2,12 @@
 , fetchurl
 }:
 stdenv.mkDerivation rec {
-  name = "liblinear-2.20";
+  name = "liblinear-2.30";
   
   src = fetchurl {
     url = "https://www.csie.ntu.edu.tw/~cjlin/liblinear/${name}.tar.gz";
-    multihash = "QmZdkESNmLtJHeubDQaf8ymxj6Gp5ZiaywDJrVo5hwme2u";
-    sha256 = "3f9fef20e76267bed1b817c9dc96d561ab5ee487828109bd44ed268fbf42048f";
+    multihash = "QmVzLRKiQVitvtmxMZxnDvyiZweUNfEW5LgAueDRYwgVrN";
+    sha256 = "881c7039c6cf93119c781fb56263de91617b3eca8c3951f2c19a3797de95c6ac";
   };
 
   buildFlags = [

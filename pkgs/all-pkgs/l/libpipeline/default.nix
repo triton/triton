@@ -3,12 +3,12 @@
 }:
  
 stdenv.mkDerivation rec {
-  name = "libpipeline-1.5.1";
+  name = "libpipeline-1.5.2";
   
   src = fetchurl {
     url = "mirror://savannah/libpipeline/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d633706b7d845f08b42bc66ddbe845d57e726bf89298e2cee29f09577e2f902f";
+    sha256 = "fd59c649c1ae9d67604d1644f116ad4d297eaa66f838e3dfab96b41e85b059fb";
   };
 
   passthru = {

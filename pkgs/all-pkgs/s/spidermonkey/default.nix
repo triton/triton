@@ -27,13 +27,9 @@ let
     versionAtLeast;
 
   sources = {
-    "45" = {
-      version = "45.9.0";
-      sha256 = "2afb02029e115fae65dbe1d9c562cbfeb761a6807338bbd30dbffba616cb2d20";
-    };
-    "52" = {
-      version = "52.9.0";
-      sha256 = "c01d09658c53c1b3a496e353a24dad03b26b81d3b1d099abc26a06f81c199dd6";
+    "60" = {
+      version = "60.9.0";
+      sha256 = "9f453c8cc5669e46e38f977764d49a36295bf0d023619d9aac782e6bb3e8c53f";
     };
   };
   source = sources."${channel}";
@@ -68,22 +64,6 @@ stdenv.mkDerivation rec {
   # They assume the autoconf binary is named `autoconf-2.13` so detection fails.
   AUTOCONF = "${autoconf_21x}/bin/autoconf";
 
-  # Fixes an issue with gcc7 c++ strictness
-  CXXFLAGS = "-fpermissive";
-
-  patches = optionals (channel == "52") [
-    (fetchTritonPatch {
-      rev = "b87ef54138a1e54298f50eb298b45475d0d0ba0e";
-      file = "s/spidermonkey/52-fix-linking-mozglue.patch";
-      sha256 = "5a84f02521f37de873991dd360a4c4bfdbdd2fb4a218e11be73f9cbbf02050e8";
-    })
-  ];
-
-  # Make sure we don't get spurius regeneration warnings
-  postPatch = optionalString (channel == "52") ''
-    touch js/src/configure
-  '';
-
   preConfigure = /* configure cannot be executed in the build directory */ ''
     mkdir -pv build/
     cd build/
@@ -91,6 +71,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--disable-jemalloc"
     "--disable-tests"
     "--disable-debug-symbols"
     "--enable-readline"

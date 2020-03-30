@@ -15,12 +15,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "libXt-1.1.5";
+  name = "libXt-1.2.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "46eeb6be780211fdd98c5109286618f6707712235fdd19df4ce1e6954f349f1a";
+    sha256 = "b31df531dabed9f4611fc8980bc51d7782967e2aff44c4105251a1acb5a77831";
   };
 
   nativeBuildInputs = [

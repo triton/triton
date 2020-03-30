@@ -20,9 +20,9 @@ let
     optionals;
 
   sources = {
-    "3.30" = {
-      version = "3.30.1";
-      sha256 = "e1335b70e36885bf1ae207ec1283a369b8fc3e080688046c1edb5a676edc11ce";
+    "3.36" = {
+      version = "3.36.0";
+      sha256 = "8683d2dfb5baa9e501a9a64eeba5c2c1117eadb781ab1cd7a9d255834af6daef";
     };
   };
   source = sources."${channel}";
@@ -53,6 +53,7 @@ stdenv.mkDerivation rec {
   mesonFlags = [
     "-Dpycairo=${boolTf (!nocairo)}"
     "-Dpython=${python.interpreter}"
+    "-Dtests=false"
   ];
 
   passthru = {

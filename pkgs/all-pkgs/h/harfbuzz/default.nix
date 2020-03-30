@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 , lib
+, meson
+, ninja
 
 , cairo
 , fontconfig
@@ -20,7 +22,7 @@ let
     optionals
     optionalString;
 
-  version = "2.5.3";
+  version = "2.6.4";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -32,7 +34,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.xz")
     ];
     hashOutput = false;
-    sha256 = "fed00dc797b7ba3ca943225f0a854baaed4c1640fff8a31d455cd3b5caec855c";
+    sha256 = "9413b8d96132d699687ef914ebb8c50440efc87b3f775d25856d7ec347c03c12";
   };
 
   buildInputs = [

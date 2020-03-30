@@ -10,16 +10,16 @@
 }:
 
 let
-  version = "4.0.10";
+  version = "4.1.0";
 in
 stdenv.mkDerivation rec {
   name = "libtiff-${version}";
 
   src = fetchurl {
     url = "https://download.osgeo.org/libtiff/tiff-${version}.tar.gz";
-    multihash = "QmfUyXXCpjnQkoxD2qsZycKyFKD9S1nH1tP89dztgrFDaM";
+    multihash = "QmRzaJStcaGEoN9Wu3fFzG7PcftDidP7M3vSVKi2EUrmmo";
     hashOutput = false;
-    sha256 = "2c52d11ccaf767457db0c46795d9c7d1a8d8f76f68b0b800a3dfe45786b996e4";
+    sha256 = "5d29f32517dadb6dbcd1255ea5bbc93a2b54b94fbf83653b4d65c7d6775b8634";
   };
 
   buildInputs = [

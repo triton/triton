@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.320";
+  version = "0.334";
 in
 stdenv.mkDerivation rec {
   name = "hwdata-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "vcrhonek";
     repo = "hwdata";
     rev = "v${version}";
-    sha256 = "5493463bea4c084db19a57d2d810595f92d8c21f577154a9ba72301966805e9b";
+    sha256 = "971e75ea22241f20ffaa5a369a507b2527c6e987d7f8655708c68567d61f1896";
   };
 
   postPatch = ''

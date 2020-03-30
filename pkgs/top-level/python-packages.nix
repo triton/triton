@@ -562,11 +562,11 @@ pygments = callPackage ../all-pkgs/p/pygments { };
 pygobject_2 = callPackage ../all-pkgs/p/pygobject {
   channel = "2.28";
 };
-pygobject_3-30 = callPackage ../all-pkgs/p/pygobject/meson.nix {
-  channel = "3.30";
+pygobject_3-36 = callPackage ../all-pkgs/p/pygobject/meson.nix {
+  channel = "3.36";
 };
-pygobject = callPackageAlias "pygobject_3-30" { };
-pygobject_nocairo = callPackageAlias "pygobject_3-30" {
+pygobject = callPackageAlias "pygobject_3-36" { };
+pygobject_nocairo = callPackageAlias "pygobject_3-36" {
   nocairo = true;
 };
 

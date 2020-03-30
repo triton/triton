@@ -1,4 +1,5 @@
 { stdenv
+, autoreconfHook
 , fetchurl
 
 , hwdata
@@ -11,7 +12,7 @@ let
     "mirror://kernel/linux/utils/usb/usbutils/usbutils-${version}.tar"
   ];
 
-  version = "010";
+  version = "012";
 in
 stdenv.mkDerivation rec {
   name = "usbutils-${version}";
@@ -19,8 +20,12 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "61c7364bb4986fb05e5067e4ac5585b1299b664c57f761caecd2e9e724794a19";
+    sha256 = "88634625f91840bc1993d2731cc081ee8d3b13d56069a95bdd6ac6ef0e063e46";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
 
   buildInputs = [
     libusb_1

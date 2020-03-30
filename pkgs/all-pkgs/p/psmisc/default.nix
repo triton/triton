@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "psmisc-23.2";
+  name = "psmisc-23.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/psmisc/psmisc/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "4b7cbffdc9373474da49b85dc3457ae511c43dc7fa7d94513fe06f89dcb87880";
+    sha256 = "41750e1a5abf7ed2647b094f58127c73dbce6876f77ba4e0a7e0995ae5c7279a";
   };
 
   buildInputs = [

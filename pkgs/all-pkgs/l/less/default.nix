@@ -16,13 +16,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "less-551";
+  name = "less-557";
 
   src = fetchurl {
     urls = map (n: "${n}.tar.gz") (fileUrls name);
-    multihash = "QmNX7upWugz8LAZJHbyKyJT2gsc6ZsiP6bBSFNWKCf58Tw";
+    multihash = "QmfCzU93Au5BqZyyb221FzuJVdKdAyAKy4SLFrMLikvXxW";
     hashOutput = false;
-    sha256 = "ff165275859381a63f19135a8f1f6c5a194d53ec3187f94121ecd8ef0795fe3d";
+    sha256 = "510e1fe87de3579f7deb4bec38e6d0ad959663d54598729c4cc43a4d64d5b1f7";
   };
 
   buildInputs = [

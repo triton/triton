@@ -3,8 +3,8 @@
 }:
 
 let
-  rev = "49428699aa376f6668d2aedcfa9929480132b66e";
-  date = "2018-05-09";
+  rev = "1124f0a70b0714886402c3c0df03d037e3c4d57a";
+  date = "2019-12-23";
 in
 stdenv.mkDerivation rec {
   name = "uthash-${date}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "troydhanson";
     repo = "uthash";
     inherit rev;
-    sha256 = "71df8dd22626eb1b235fe7fbb06f9d93d63f0a7265b7b0352b96aeb87b68f970";
+    sha256 = "e737d9a74ffe1c927df692bc8af43f2ada6a3a8c248a3c74ed220853c1a61f9d";
   };
 
   installPhase = ''

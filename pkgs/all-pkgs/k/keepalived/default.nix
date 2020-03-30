@@ -8,7 +8,6 @@
 , json-c
 , libnfnetlink
 , libnl
-, linux-headers_triton
 , net-snmp
 , openssl
 , pcre2_lib
@@ -35,7 +34,6 @@ stdenv.mkDerivation rec {
     json-c
     libnfnetlink
     libnl
-    linux-headers_triton
     net-snmp
     openssl
     pcre2_lib

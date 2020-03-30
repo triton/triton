@@ -914,7 +914,7 @@ in
       ++ optional hasBonds "bonding"
       ++ optional hasWgs "wireguard";
 
-    boot.extraModulePackages = optionals hasWgs [
+    boot.extraModulePackages = optionals (hasWgs && versionOlder config.boot.kernelPackages.kernel.version "5.6") [
       config.boot.kernelPackages.wireguard
     ];
 

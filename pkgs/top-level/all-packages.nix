@@ -3703,13 +3703,10 @@ spice = callPackage ../all-pkgs/s/spice { };
 
 spice-protocol = callPackage ../all-pkgs/s/spice-protocol { };
 
-spidermonkey_45 = callPackage ../all-pkgs/s/spidermonkey {
-  channel = "45";
+spidermonkey_60 = callPackage ../all-pkgs/s/spidermonkey {
+  channel = "60";
 };
-spidermonkey_52 = callPackage ../all-pkgs/s/spidermonkey {
-  channel = "52";
-};
-spidermonkey = callPackageAlias "spidermonkey_52" { };
+spidermonkey = callPackageAlias "spidermonkey_60" { };
 
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 
@@ -4566,6 +4563,11 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_5-6 = callPackage ../all-pkgs/l/linux {
+    channel = "5.6";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../all-pkgs/l/linux {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4646,7 +4648,7 @@ libstartup_notification =
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_5-5;
+  linuxPackages_latest = pkgs.linuxPackages_5-6;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
@@ -4658,6 +4660,9 @@ libstartup_notification =
   });
   linuxPackages_5-5 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_5-5;
+  });
+  linuxPackages_5-6 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_5-6;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

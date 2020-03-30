@@ -15,12 +15,12 @@
 }:
  
 stdenv.mkDerivation rec {
-  name = "man-db-2.8.5";
+  name = "man-db-2.9.1";
   
   src = fetchurl {
     url = "mirror://savannah/man-db/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "b64d52747534f1fe873b2876eb7f01319985309d5d7da319d2bc52ba1e73f6c1";
+    sha256 = "ba3d8afc5c09a7265a8dabfa0e7c1f4b3ab97df9abf1f6810faa8f301056c74f";
   };
 
   nativeBuildInputs = [

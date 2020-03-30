@@ -9,11 +9,10 @@
 , libxcb
 , wayland
 , wayland-protocols
-, xkeyboard-config
 }:
 
 let
-  version = "0.8.3";
+  version = "0.10.0";
 in
 stdenv.mkDerivation rec {
   name = "libxkbcommon-${version}";
@@ -24,12 +23,12 @@ stdenv.mkDerivation rec {
     owner = "xkbcommon";
     repo = "libxkbcommon";
     rev = "xkbcommon-${version}";
-    sha256 = "421444cc3bbf9fb024f09f5748c19db167452ce6541b9af80f7b07b033072d31";
+    sha256 = "a9d1c193048ec123ca270bbd2e631acfb872dfb68ca5f823f85c91d0aae47254";
   };
 
   nativeBuildInputs = [
     bison
-    flex
+    #flex
     meson
     ninja
   ];
@@ -38,11 +37,11 @@ stdenv.mkDerivation rec {
     libxcb
     wayland
     wayland-protocols
-    xkeyboard-config
   ];
 
   mesonFlags = [
     "-Denable-docs=false"
+    "-Dxkb-config-root=/run/current-system/sw/share/X11/xkb"
   ];
 
   meta = with lib; {

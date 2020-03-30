@@ -1,7 +1,10 @@
 { stdenv
+, cmake
+, fetchTritonPatch
 , fetchurl
 , gettext
 , lib
+, ninja
 
 , cairo
 , freetype
@@ -11,29 +14,30 @@
 , libpng
 , libspiro
 , libtiff
-, libtool
 , libuninameslist
 , libxml2
+, python3
 , readline
-, uthash
 , zeromq
 , zlib
 }:
 
 let
-  version = "20170731";
+  version = "20200314";
 in
 stdenv.mkDerivation rec {
   name = "fontforge-${version}";
 
   src = fetchurl {
     url = "https://github.com/fontforge/fontforge/releases/download/"
-      + "${version}/fontforge-dist-${version}.tar.xz";
-    sha256 = "840adefbedd1717e6b70b33ad1e7f2b116678fa6a3d52d45316793b9fd808822";
+      + "${version}/fontforge-${version}.tar.xz";
+    sha256 = "cd190b237353dc3f48ddca7b0b3439da8ec4fcf27911d14cc1ccc76c1a47c861";
   };
 
   nativeBuildInputs = [
+    cmake
     gettext
+    ninja
   ];
 
   buildInputs = [
@@ -44,23 +48,24 @@ stdenv.mkDerivation rec {
     libpng
     libspiro
     libtiff
-    libtool
     libuninameslist
     libxml2
+    python3
     readline
     zlib
   ];
 
-  # Remove vendoring
-  postPatch = ''
-    rm -r uthash
-    mkdir uthash
-    ln -sv '${uthash}'/include uthash/src
-  '';
+  patches = [
+    (fetchTritonPatch {
+      rev = "71c7bf99a443b1124fd81d47f6fee20f9ec24c3a";
+      file = "f/fontforge/fix.patch";
+      sha256 = "3556b3bb487c67456e5e44719faf294e0340a41f8f5a8cbcd5cf9293d78b7505";
+    })
+  ];
 
-  configureFlags = [
-    "--disable-python-extension"
-    "--disable-python-scripting"
+  cmakeFlags = [
+    "-DENABLE_GUI=OFF"
+    "-DENABLE_DOCS=OFF"
   ];
 
   meta = with lib; {

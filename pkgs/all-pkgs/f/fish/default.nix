@@ -1,6 +1,8 @@
 { stdenv
+, cmake
 , fetchurl
 , gettext
+, ninja
 
 , bc
 , coreutils
@@ -10,7 +12,7 @@
 }:
 
 let
-  version = "3.0.2";
+  version = "3.1.0";
 in
 stdenv.mkDerivation rec {
   name = "fish-${version}";
@@ -18,11 +20,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "14728ccc6b8e053d01526ebbd0822ca4eb0235e6487e832ec1d0d22f1395430e";
+    sha256 = "e5db1e6839685c56f172e1000c138e290add4aa521f187df4cd79d4eab294368";
   };
 
   nativeBuildInputs = [
+    cmake
     gettext
+    ninja
   ];
 
   buildInputs = [
@@ -30,15 +34,11 @@ stdenv.mkDerivation rec {
     pcre2_lib
   ];
 
-  postPatch = ''
-    # Hack around building the version file from the git tree
-    echo "FISH_BUILD_VERSION = '${version}'" >FISH-BUILD-VERSION-FILE
-    sed -i 's,^FISH-BUILD-VERSION-FILE:.*$,FISH-BUILD-VERSION-FILE:,' Makefile.in
-  '';
+  NIX_CFLAGS_COMPILE = "-UCMAKE_BINARY_DIR";
 
-  configureFlags = [
-    "--without-included-pcre2"
-  ];
+  postPatch = ''
+    patchShebangs build_tools/git_version_gen.sh
+  '';
 
   postInstall = ''
     for file in $(find "$out"/share/fish/functions -type f); do

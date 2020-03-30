@@ -4,9 +4,9 @@
 , util-macros
 
 , libice
+, libxtrans
 , util-linux_lib
 , xorgproto
-, xtrans
 }:
 
 let
@@ -28,9 +28,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libice
+    libxtrans
     util-linux_lib
     xorgproto
-    xtrans
   ];
 
   configureFlags = [

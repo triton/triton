@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libunwind-1.2.1";
+  name = "libunwind-1.4.0";
 
   src = fetchurl {
     url = "mirror://savannah/libunwind/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "3f3ecb90e28cbe53fba7a4a27ccce7aad188d3210bb1964a923a731a27a75acb";
+    sha256 = "df59c931bd4d7ebfd83ee481c943edf015138089b8e50abed8d9c57ba9338435";
   };
 
   buildInputs = [

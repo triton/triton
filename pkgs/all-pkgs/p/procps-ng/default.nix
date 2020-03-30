@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "3.3.15";
+  version = "3.3.16";
 in
 stdenv.mkDerivation rec {
   name = "procps-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/procps-ng/Production/procps-ng-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "10bd744ffcb3de2d591d2f6acf1a54a7ba070fdcc432a855931a5057149f0465";
+    sha256 = "925eacd65dedcf9c98eb94e8978bbfb63f5de37294cc1047d81462ed477a20af";
   };
 
   buildInputs = [

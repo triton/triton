@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "7.0";
+  version = "7.1";
 in
 stdenv.mkDerivation rec {
   name = "smartmontools-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/smartmontools/smartmontools/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "e5e1ac2786bc87fdbd6f92d0ee751b799fbb3e1a09c0a6a379f9eb64b3e8f61c";
+    sha256 = "3f734d2c99deb1e4af62b25d944c6252de70ca64d766c4c7294545a2e659b846";
   };
 
   buildInputs = [

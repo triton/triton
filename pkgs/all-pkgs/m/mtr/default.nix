@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name="mtr-0.92";
+  name = "mtr-0.93";
   
   src = fetchurl {
     url = "ftp://ftp.bitwizard.nl/mtr/${name}.tar.gz";
-    multihash = "QmedTmUYx5N4NtHMAuNA7aSVPVmHLHwKJw9rDGPiZTAuu3";
-    sha256 = "f2979db9e2f41aa8e6574e7771767c9afe111d9213814eb47f5e1e71876e4382";
+    multihash = "QmS3LAUhuR55k1zRQ2s6Qumkrva4nuV2rhnSd4FwfgCEEs";
+    sha256 = "229c673d637bd7dbb96471623785a47e85da0b1944978200c949994c1e6af10d";
   };
 
   nativeBuildInputs = [

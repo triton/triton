@@ -4,17 +4,17 @@
 , util-macros
 
 , libbsd
+, libxtrans
 , xorgproto
-, xtrans
 }:
 
 stdenv.mkDerivation rec {
-  name = "libICE-1.0.9";
+  name = "libICE-1.0.10";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "8f7032f2c1c64352b5423f6b48a8ebdc339cc63064af34d66a6c9aa79759e202";
+    sha256 = "6f86dce12cf4bcaf5c37dddd8b1b64ed2ddf1ef7b218f22b9942595fb747c348";
   };
 
   nativeBuildInputs = [
@@ -23,8 +23,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libbsd
+    libxtrans
     xorgproto
-    xtrans
   ];
 
   configureFlags = [

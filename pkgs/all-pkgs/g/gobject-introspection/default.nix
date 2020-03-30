@@ -18,8 +18,8 @@ let
     optionals
     optionalString;
 
-  channel = "1.60";
-  version = "${channel}.1";
+  channel = "1.64";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "gobject-introspection-${version}";
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "d844d1499ecd36f3ec8a3573616186d36626ec0c9a7981939e99aa02e9c824b3";
+    sha256 = "eac05a63091c81adfdc8ef34820bcc7e7778c5b9e34734d344fc9e69ddf4fc82";
   };
 
   nativeBuildInputs = [

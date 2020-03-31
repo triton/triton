@@ -5,7 +5,6 @@
 
 let
   source = {
-    channel = "5.5";
     version = "5.5.13";
     baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
     patchSha256 = "a58dad931dda6eba7656551da73d1c452317617c8282c094fa4f646d9422993a";
@@ -41,18 +40,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildPhase = ''
-    if grep -q 'rsync' Makefile; then
-      make -j160 ARCH=${arch} headers
-    fi
+    make -j160 ARCH=${arch} headers
   '';
 
   installPhase = ''
-    if grep -q 'rsync' Makefile; then
-      mkdir -p "$out"
-      cp -r usr/include "$out"
-    else
-      make -j160 INSTALL_HDR_PATH="$out" headers_install
-    fi
+    mkdir -p "$out"
+    cp -r usr/include "$out"
   '';
 
   preFixup = ''
@@ -62,10 +55,6 @@ stdenv.mkDerivation rec {
 
   # The linux-headers do not need to maintain any references
   allowedReferences = [ ];
-
-  passthru = {
-    inherit (source) channel;
-  };
 
   meta = with stdenv.lib; {
     description = "Header files and scripts for Linux kernel";

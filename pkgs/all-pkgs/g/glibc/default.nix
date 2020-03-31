@@ -96,7 +96,7 @@ stdenv.mkDerivation (rec {
     "--enable-stackguard-randomization"
     "--enable-bind-now"
     "--enable-stack-protector=strong"
-    "--enable-kernel=${linux-headers.channel}"
+    "--enable-kernel=4.19"
     "--disable-werror"
     "--${boolEn (type == "full")}-build-nscd"
     "--with-binutils=${binutils}"

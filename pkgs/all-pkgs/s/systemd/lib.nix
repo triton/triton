@@ -21,7 +21,7 @@
 let
   # This is intentionally a separate version from the full build
   # in case we don't have any library changes
-  version = "245.3";
+  version = "245.4";
 in
 stdenv.mkDerivation {
   name = "libsystemd-${version}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation {
     owner = "systemd";
     repo = "systemd-stable";
     rev = "v${version}";
-    sha256 = "0bc168805e409a50cef58883fe62918e59be21cf4a8c4f0987ebf333c0e33c76";
+    sha256 = "c510536780f2d705c2503e2aa2db6024bac4b9d727087979759944e191953fba";
   };
 
   nativeBuildInputs = [

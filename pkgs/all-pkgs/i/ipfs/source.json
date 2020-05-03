@@ -1,7 +1,7 @@
 {
   "fetchzipVersion": 6,
   "goVersion": "1.14",
-  "rev": "v0.4.22-0.20200320164224-7a4752ac9e7e",
-  "sha256": "d6abd9bc11063c8942a178679b7293c46748d6ec2d5bb69f42e1c81ae42ceee9",
-  "version": "v0.4.22-0.20200320164224-7a4752ac9e7e"
+  "rev": "v0.5.0",
+  "sha256": "5a94c0f0962d761c87c4caa447f1936c6ab73de99dd2b9c841c66fb6eb9e2ee5",
+  "version": "v0.5.0"
 }

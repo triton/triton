@@ -14,7 +14,7 @@ let
     optionals
     optionalString;
 
-  version = "5.0.1";
+  version = "5.1.0";
 
   tarballUrls = version: [
     "mirror://gnu/gawk/gawk-${version}.tar.xz"
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "8e4e86f04ed789648b66f757329743a0d6dfb5294c3b91b756a474f1ce05a794";
+    sha256 = "cf5fea4ac5665fd5171af4716baab2effc76306a9572988d5ba1078f196382bd";
   };
 
   # Small build doesn't need floating point with gmp / mpfr
@@ -67,8 +67,8 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "5.0.1";
-      outputHash = "8e4e86f04ed789648b66f757329743a0d6dfb5294c3b91b756a474f1ce05a794";
+      urls = tarballUrls "5.1.0";
+      outputHash = "cf5fea4ac5665fd5171af4716baab2effc76306a9572988d5ba1078f196382bd";
       fullOpts = {
         pgpsigUrls = map (n: "${n}.sig") urls;
         pgpKeyFingerprint = "D196 7C63 7887 1317 7D86  1ED7 DF59 7815 937E C0D2";

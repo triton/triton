@@ -5,8 +5,8 @@
 }:
 
 let
-  release = "20190315";
-  version = "2.9";
+  release = "20191204";
+  version = "3.0";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/SELinuxProject/selinux/releases/download/"
       + "${release}/${name}.tar.gz";
-    sha256 = "a34b12b038d121e3e459b1cbaca3c9202e983137819c16baf63658390e3f1d5d";
+    sha256 = "5b7ae1881909f1048b06f7a0c364c5c8a86ec12e0ec76e740fe9595a6033eb79";
   };
 
   nativeBuildInputs = [
@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
 
   NIX_CFLAGS_COMPILE = [
     "-Wno-error"
+    "-fcommon"
   ];
 
   preBuild = ''

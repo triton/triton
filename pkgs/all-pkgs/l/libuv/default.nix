@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.35.0";
+  version = "1.37.0";
 in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";

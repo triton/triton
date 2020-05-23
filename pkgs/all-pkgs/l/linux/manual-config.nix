@@ -129,6 +129,8 @@ let
       '' + stdenv.lib.optionalString (stdenv.lib.versionOlder version "4.18") ''
         # All current kernels ship with a broken classmap.h
         cp ${./classmap.h} security/selinux/include/classmap.h
+      '' + stdenv.lib.optionalString (stdenv.lib.versionAtLeast version "4.19") ''
+        patchShebangs scripts/ld-version.sh
       '';
 
       configurePhase = ''

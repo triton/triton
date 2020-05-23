@@ -14,13 +14,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "openldap-2.4.49";
+  name = "openldap-2.4.50";
 
   src = fetchurl {
     urls = map (n: "${n}.tgz") (fileUrls name);
-    multihash = "Qmf5rG2m7a84pB1Kr3SNuxGDJowqs6DCbx4uSrQVdAwnqt";
+    multihash = "QmcX3EAj5NvipCTafRAr2xso98XWvz5o8yqkjD1jyL7Hgw";
     hashOutput = false;
-    sha256 = "e3b117944b4180f23befe87d0dcf47f29de775befbc469dcf4ac3dab3311e56e";
+    sha256 = "5cb57d958bf5c55a678c6a0f06821e0e5504d5a92e6a33240841fbca1db586b8";
   };
 
   nativeBuildInputs = [

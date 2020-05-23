@@ -14,12 +14,15 @@
 let
   channels = {
     stable = rec {
-      version = "1.36.0";
+      version = "1.43.1";
       src = fetchurl {
         url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
         hashOutput = false;
-        sha256 = "04c4e4d7213d036d6aaed392841496d272146312c0290f728b7400fccd15bb1b";
+        sha256 = "cde177b4a8c687da96f20de27630a1eb55c9d146a15e4c900d5c31cd3c3ac41d";
       };
+      patches = [
+        ./../../../../../triton-patches/r/rustc/rust-pr70163-prepare-for-llvm-10-upgrade.patch
+      ];
     };
   };
 
@@ -34,12 +37,13 @@ let
   inherit (channels."${channel}")
     version
     src
+    patches
     deps;
 in
 stdenv.mkDerivation {
   name = "rustc-${version}";
 
-  inherit src;
+  inherit src patches;
 
   nativeBuildInputs = [
     cargo
@@ -48,6 +52,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    llvm
     xz
   ];
 

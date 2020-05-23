@@ -18,8 +18,8 @@ in
 let
   isLib = prefix == "lib";
 
-  rev = "61de9068057e5cb22f843a8c601422383dcf520c";
-  date = "2020-03-23";
+  rev = "016508872f81dfd7f705c5db8fda1086f02ca744";
+  date = "2020-05-09";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}ngtcp2-${date}";
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     owner = "ngtcp2";
     repo = "ngtcp2";
     inherit rev;
-    sha256 = "3219ac52881b7c39c29adfdf9ded9442e726f02b3383fecfbdfcb7fa7151c39b";
+    sha256 = "c0a119c1bd7da7bd338d0ce18f541026f25a20398babf6cd4728e85d85ff7ee7";
   };
 
   nativeBuildInputs = [

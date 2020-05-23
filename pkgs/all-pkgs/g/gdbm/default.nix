@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , ncurses
@@ -20,6 +21,14 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "86e613527e5dba544e73208f42b78b7c022d4fa5a6d5498bf18c8d6f745b91dc";
   };
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "4d4bea06e9ecee61287d28180089178cc9de8a50";
+      file = "g/gdbm/gcc-10.patch";
+      sha256 = "bb6d9743329707e385ede6033b2fa72ebf2548ab69106e4e70ae615b436bfc1c";
+    })
+  ];
 
   buildInputs = [
     ncurses

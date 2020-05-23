@@ -31,6 +31,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
+      rev = "c016b6e7f74f5393223e2d9bff668a4831142bfc";
+      file = "t/trousers/trousers-0.3.14-fno-common.patch";
+      sha256 = "770fd94510adb90605eb38745b62450a4cda25c2b8c9c6c8ea2e6043582d0e27";
+    })
+    (fetchTritonPatch {
       rev = "35e456a096e677dc4ee1453c76c52821423f7405";
       file = "t/trousers/trousers-0.3-allow-non-tss-config-file-owner.patch";
       sha256 = "891938eb62275871cafd5c279d677662e89620c59265cd8b4605f630f97afb87";

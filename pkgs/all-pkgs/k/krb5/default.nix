@@ -26,16 +26,16 @@ let
   version = major: patch: "${major}${optionalString (patch != null) ".${patch}"}";
 
   major = "1.18";
-  patch = null;
+  patch = "1";
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version major patch}";
 
   src = fetchurl {
     urls = tarballUrls major patch;
-    multihash = "QmdxBF7sN2joQtVqoY5HzGL3nK4fLPmDwrMqHV7teXf2KA";
+    multihash = "QmQgC5evXuQeCZKVhwY4itHf3K5n9CvwdQiskim66zGdFJ";
     hashOutput = false;
-    sha256 = "73913934d711dcf9d5f5605803578edb44b9a11786df3c1b2711f4e1752f2c88";
+    sha256 = "02a4e700f10936f937cd1a4c303cab8687a11abecc6107bd4b706b9329cd5400";
   };
 
   nativeBuildInputs = [

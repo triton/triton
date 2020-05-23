@@ -31,32 +31,27 @@ let
 
   sources = {
     "4.19" = {
-      version = "4.19.114";
+      version = "4.19.124";
       baseSha256 = "0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1";
-      patchSha256 = "88b64e1b2d3ecd9680638234de95c14b34ec522b414b8d85d74c628afc949418";
+      patchSha256 = "3f0f43ca3cb4eba7441d57cd3f9bb3d27721f8ffcef2d64469faaff2846f7f95";
     };
     "5.4" = {
-      version = "5.4.30";
+      version = "5.4.42";
       baseSha256 = "bf338980b1670bca287f9994b7441c2361907635879169c64ae78364efc5f491";
-      patchSha256 = "89dfaaba8052f609c02e04dfdf1362c6d916fb8a1057f9127f45be34af3d1241";
-    };
-    "5.5" = {
-      version = "5.5.15";
-      baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
-      patchSha256 = "938b47e8e6c8e7ee091d0da149eab7cc63f3858bc7cc043ed4963771dc621b90";
+      patchSha256 = "c01da2932dd8c04965760ca674abf8f150d456553bc9148bee1823f4c48a39d2";
     };
     "5.6" = {
-      version = "5.6.2";
+      version = "5.6.14";
       baseSha256 = "e342b04a2aa63808ea0ef1baab28fc520bd031ef8cf93d9ee4a31d4058fcb622";
-      patchSha256 = "f16c1edbc79caa6098ca9964b27330cff970f016adc32c7baf95f4c2e7a1665d";
+      patchSha256 = "07e737cfdc79382dc259c4844a150d8d72ebbcdc9d7e03a9503f8f8e19f1aea4";
     };
     "testing" = {
-      version = "5.6-rc7";
-      baseSha256 = "a6fbd4ee903c128367892c2393ee0d9657b6ed3ea90016d4dc6f1f6da20b2330";
+      version = "5.7-rc6";
+      baseSha256 = "e342b04a2aa63808ea0ef1baab28fc520bd031ef8cf93d9ee4a31d4058fcb622";
       patchUrls = [
         "https://github.com/wkennington/linux/releases/download/v${version}/patch-${version}.xz"
       ];
-      patchSha256 = "9e144e31f6f8515ac8d65031866645670717d3ac4878fa0cb5122dc0cdefb7fc";
+      patchSha256 = "7167770bdef636416288075f66b5b2bd262b95d63eb925f0736a20e4cbe1d18f";
     };
     "bcachefs" =
       let

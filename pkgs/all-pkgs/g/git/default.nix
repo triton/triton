@@ -33,7 +33,7 @@ let
     gnused_small
   ];
 
-  version = "2.26.0";
+  version = "2.26.2";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "9ece0dcb07a5e0d7366a92b613b201cca11ae368ab7687041364b3e756e495d6";
+    sha256 = "6d65132471df9e531807cb2746f8be317e22a343b9385bbe11c9ce7f0d2fc848";
   };
 
   nativeBuildInputs = [

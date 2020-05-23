@@ -20,7 +20,7 @@ let
   ];
 
   major = "3.6";
-  minor = "12";
+  minor = "13";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "bfacf16e342949ffd977a9232556092c47164bd26e166736cf3459a870506c4b";
+    sha256 = "32041df447d9f4644570cf573c9f60358e865637d69b7e59d1159b7240b52f38";
   };
 
   configureFlags = [

@@ -24,9 +24,9 @@ let
       ];
     };
     "1.1.1" = {
-      version = "1.1.1e";
-      multihash = "QmU2cSg4W8L79N3ZRZ4jH6sCPTD84TiSNXJhbrg47b364N";
-      sha256 = "694f61ac11cb51c9bf73f54e771ff6022b0327a43bbdfa1b2f19de1662a6dcbe";
+      version = "1.1.1g";
+      multihash = "QmTxXRjXjhGG2KhVexnrSeFSuVW5wBNseLcEyFyY75VRsZ";
+      sha256 = "ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209af2443400636d46";
       patches = [
         (fetchTritonPatch {
           rev = "8195f63308e915418ff06f11710873cdb74e5f68";
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    inherit multihash sha256;
+    inherit sha256; #multihash sha256;
   };
 
   inherit patches;

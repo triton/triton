@@ -47,26 +47,14 @@ let
 
   sources = {
     "2.7" = {
-      versionPatch = "17";
+      versionPatch = "18";
       sha256 = "4d43f033cdbd0aa7b7023c81b0e986fd11e653b5248dac9144d508f11812ba41";
       # Benjamin Peterson
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };
-    "3.6" = {
-      versionPatch = "8";
-      sha256 = "35446241e995773b1bed7d196f4b624dadcadc8429f26282e756b2fb8a351193";
-      # Ned Deily
-      pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
-    };
-    "3.7" = {
-      versionPatch = "7";
-      sha256 = "06a0a9f1bf0d8cd1e4121194d666c4e28ddae4dd54346de6c343206599f02136";
-      # Ned Deily
-      pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
-    };
     "3.8" = {
-      versionPatch = "2";
-      sha256 = "2646e7dc233362f59714c6193017bb2d6f7b38d6ab4a0cb5fbac5c36c4d845df";
+      versionPatch = "3";
+      sha256 = "dfab5ec723c218082fe3d5d7ae17ecbdebffa9a1aea4d64aa3a2ecdd2e795864";
       # Ned Deily
       pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
     };

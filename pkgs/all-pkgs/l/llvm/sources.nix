@@ -1,47 +1,43 @@
 {
-  "8" = {
-    version = "8.0.1";
+  "10" = {
+    version = "10.0.0";
     srcs = {
-      cfe = {
-        sha256 = "70effd69f7a8ab249f66b0a68aba8b08af52aa2ab710dfb8a0fba102685b1646";
+      clang = {
+        sha256 = "885b062b00e903df72631c5f98b9579ed1ed2790f74e5646b4234fa084eacb21";
       };
       clang-tools-extra = {
-        sha256 = "187179b617e4f07bb605cc215da0527e64990b4a7dd5cbcc452a16b64e02c3e1";
+        sha256 = "acdf8cf6574b40e6b1dabc93e76debb84a9feb6f22970126b04d4ba18b92911c";
       };
       compiler-rt = {
-        sha256 = "11828fb4823387d820c6715b25f6b2405e60837d12a7469e7a8882911c721837";
+        sha256 = "6a7da64d3a0a7320577b68b9ca4933bdcab676e898b759850e827333c3282c75";
       };
       libcxx = {
-        sha256 = "7f0652c86a0307a250b5741ab6e82bb10766fb6f2b5a5602a63f30337e629b78";
+        sha256 = "270f8a3f176f1981b0f6ab8aa556720988872ec2b48ed3b605d0ced8d09156c7";
       };
       libcxxabi = {
-        sha256 = "b75bf3c8dc506e7d950d877eefc8b6120a4651aaa110f5805308861f2cfaf6ef";
+        sha256 = "e71bac75a88c9dde455ad3f2a2b449bf745eafd41d2d8432253b2964e0ca14e1";
       };
       libunwind = {
-        sha256 = "1870161dda3172c63e632c1f60624564e1eb0f9233cfa8f040748ca5ff630f6e";
+        sha256 = "09dc5ecc4714809ecf62908ae8fe8635ab476880455287036a2730966833c626";
       };
       lld = {
-        sha256 = "9fba1e94249bd7913e8a6c3aadcb308b76c8c3d83c5ce36c99c3f34d73873d88";
+        sha256 = "b9a0d7c576eeef05bc06d6e954938a01c5396cee1d1e985891e0b1cf16e3d708";
       };
       lldb = {
-        sha256 = "e8a79baa6d11dd0650ab4a1b479f699dfad82af627cbbcd49fa6f2dc14e131d7";
+        sha256 = "dd1ffcb42ed033f5167089ec4c6ebe84fbca1db4a9eaebf5c614af09d89eb135";
       };
       llvm = {
-        sha256 = "44787a6d02f7140f145e2250d56c9f849334e11f9ae379827510ed72f12b75e7";
+        sha256 = "df83a44b3a9a71029049ec101fb0077ecbbdf5fe41e395215025779099a98fdf";
       };
       openmp = {
-        sha256 = "3e85dd3cad41117b7c89a41de72f2e6aa756ea7b4ef63bb10dcddf8561a7722c";
+        sha256 = "3b9ff29a45d0509a1e9667a0feb43538ef402ea8cfc7df3758a01f20df08adfa";
       };
       polly = {
-        sha256 = "e8a1f7e8af238b32ce39ab5de1f3317a2e3f7d71a8b1b8bbacbd481ac76fd2d1";
+        sha256 = "35fba6ed628896fe529be4c10407f1b1c8a7264d40c76bced212180e701b4d97";
       };
     };
     patches = [
-      {
-        rev = "b178552fe5e7431bfa98025cb8e4fe2e4927bd69";
-        file = "l/llvm/fix-llvm-config.patch";
-        sha256 = "7cbe2b2d1127c0995cb1af5d7d758e1a9a600ee17045f3a3341a68726ba8f0e8";
-      }
+      (../../../../../triton-patches/l/llvm/fix-llvm-config.patch)
     ];
   };
 }

@@ -51,7 +51,7 @@ let
     '';
   };
 
-  version = "245.4";
+  version = "245.5";
 in
 stdenv.mkDerivation {
   name = "systemd-${version}";
@@ -61,7 +61,7 @@ stdenv.mkDerivation {
     owner = "systemd";
     repo = "systemd-stable";
     rev = "v${version}";
-    sha256 = "c510536780f2d705c2503e2aa2db6024bac4b9d727087979759944e191953fba";
+    sha256 = "2694bbe2330b541bd559839513ecf660f5c1e38ea547aab94b706e1686205093";
   };
 
   nativeBuildInputs = [

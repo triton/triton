@@ -22,6 +22,11 @@ let
       file = "g/gpm/glibc-2.26.patch";
       sha256 = "420820b560bfdb22e0e5fdc05416b380f179091b00c42c407add245ff317d32d";
     })
+    (fetchTritonPatch {
+      rev = "af5cd0bbad8d56b91b01c663120bf082b6b6dad2";
+      file = "g/gpm/gcc-10.patch";
+      sha256 = "c77d1b2811249c6e08439274ba2867cb3fd210f1aa44d5f693599d6addedc9bb";
+    })
   ];
 in
 stdenv.mkDerivation {

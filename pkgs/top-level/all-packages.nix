@@ -2769,10 +2769,10 @@ lirc = callPackage ../all-pkgs/l/lirc { };
 
 live555 = callPackage ../all-pkgs/l/live555 { };
 
-llvm_8 = callPackage ../all-pkgs/l/llvm {
-  channel = "8";
+llvm_10 = callPackage ../all-pkgs/l/llvm {
+  channel = "10";
 };
-llvm = callPackageAlias "llvm_8" { };
+llvm = callPackageAlias "llvm_10" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 
@@ -3446,14 +3446,6 @@ python27 = callPackage ../all-pkgs/p/python {
   channel = "2.7";
   self = callPackageAlias "python27" { };
 };
-python36 = hiPrio (callPackage ../all-pkgs/p/python {
-  channel = "3.6";
-  self = callPackageAlias "python36" { };
-});
-python37 = callPackage ../all-pkgs/p/python {
-  channel = "3.7";
-  self = callPackageAlias "python37" { };
-};
 python38 = callPackage ../all-pkgs/p/python {
   channel = "3.8";
   self = callPackageAlias "python38" { };
@@ -3463,7 +3455,6 @@ python38 = callPackage ../all-pkgs/p/python {
 #};
 python2 = callPackageAlias "python27" { };
 python3 = callPackageAlias "python38" { };
-python = callPackageAlias "python2" { };
 
 # Intended only for very early stage builds
 # Don't use this package without a good reason
@@ -3475,16 +3466,6 @@ python27Packages = hiPrioSet (
     self = callPackageAlias "python27Packages" { };
   })
 );
-python36Packages =
-  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-    python = callPackageAlias "python36" { };
-    self = callPackageAlias "python36Packages" { };
-  });
-python37Packages =
-  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-    python = callPackageAlias "python37" { };
-    self = callPackageAlias "python37Packages" { };
-  });
 python38Packages =
   recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
     python = callPackageAlias "python38" { };
@@ -3497,7 +3478,6 @@ python38Packages =
 #  });
 python2Packages = callPackageAlias "python27Packages" { };
 python3Packages = callPackageAlias "python38Packages" { };
-pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };
 qbittorrent_head = callPackage ../all-pkgs/q/qbittorrent {
@@ -4257,10 +4237,10 @@ zookeeper = callPackage ../all-pkgs/z/zookeeper { };
 
 zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd_1-4-4 = callPackage ../all-pkgs/z/zstd {
-  version = "1.4.4";
+zstd_1-4-5 = callPackage ../all-pkgs/z/zstd {
+  version = "1.4.5";
 };
-zstd = callPackageAlias "zstd_1-4-4" { };
+zstd = callPackageAlias "zstd_1-4-5" { };
 
 ################################################################################
 ################################################################################
@@ -4558,11 +4538,6 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_5-5 = callPackage ../all-pkgs/l/linux {
-    channel = "5.5";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_5-6 = callPackage ../all-pkgs/l/linux {
     channel = "5.6";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4657,9 +4632,6 @@ libstartup_notification =
   });
   linuxPackages_5-4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_5-4;
-  });
-  linuxPackages_5-5 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_5-5;
   });
   linuxPackages_5-6 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_5-6;

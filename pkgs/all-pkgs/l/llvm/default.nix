@@ -8,11 +8,12 @@
 , python3
 , swig
 
+, elfutils
 , libedit
 , libffi
-, libtirpc
 , libxml2
 , ncurses
+, xz
 , zlib
 
 , channel
@@ -63,27 +64,26 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    elfutils
     libedit
     libffi
-    libtirpc
     libxml2
     ncurses
+    xz
     zlib
   ];
 
   prePatch = ''
     mkdir -p projects
-    ls .. \
-      | grep '[0-9]\.[0-9]\.[0-9]' \
-      | grep -v 'llvm' \
-      | sed 's,\(.*\)-[0-9]\.[0-9]\.[0-9]\(\|rc[0-9]\).src$,../\0 projects/\1,g' \
+    ls .. | grep '.src$' | grep -v '^llvm' \
+      | sed 's,\(.*\)-[0-9]\+\.[0-9]\+\.[0-9]\+\(\|rc[0-9]\).src$,../\0 projects/\1,g' \
       | xargs -n 2 mv
-    mv projects/cfe tools/clang
+    mv projects/clang tools/clang
     mv projects/clang-tools-extra tools/clang/tools/extra
     mv projects/lldb tools/lldb
   '';
 
-  patches = map (d: fetchTritonPatch d) patches;
+  patches = map (d: d) patches;
 
   postPatch = ''
     # Remove impurities from llvm-config

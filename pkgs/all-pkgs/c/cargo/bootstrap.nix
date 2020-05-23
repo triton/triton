@@ -6,12 +6,12 @@
 let
   sources = {
     "${stdenv.lib.head stdenv.lib.platforms.x86_64-linux}" = {
-      sha256 = "9bdba485ccbe884b9ab4928e1bc107d202240c5eaf0f06e54f874ead96ffe69b";
+      sha256 = "f2b07a4872f2ed09a207aaf7162c92868339144550c58f53f8c07f6e6b8a67d1";
       platform = "x86_64-unknown-linux-gnu";
     };
   };
 
-  version = "2019-07-06";
+  version = "2020-05-15";
 
   inherit (sources."${stdenv.targetSystem}")
     platform

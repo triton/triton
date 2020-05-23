@@ -8,7 +8,6 @@
 
 let
   inherit (builtins.getAttr channel (import ./sources.nix))
-    multihash
     sha256
     version;
 in
@@ -18,7 +17,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/swig/swig/${name}/${name}.tar.gz";
-    inherit multihash sha256;
+    inherit sha256;
   };
 
   buildInputs = [

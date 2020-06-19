@@ -24,6 +24,11 @@ rec {
     };
   };
 
+  gcc10_compat = {
+    name = "gcc10";
+    patch = ./0001-gcc-common.h-Update-for-GCC-10.patch;
+  };
+
   grsecurity_unstable = grsecPatch {
     kversion  = "4.3.4";
     revision  = "201601231215";

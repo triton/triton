@@ -114,6 +114,14 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.11") ''
     INTEL_TURBO_MAX_3 y
   ''}
+  ${optionalString (versionAtLeast version "5.3") ''
+    UCLAMP_TASK y
+    UCLAMP_TASK_GROUP y
+  ''}
+  ${optionalString (versionAtLeast version "5.7") ''
+    SCHED_THERMAL_PRESSURE y
+  ''}
+  CPU_FREQ_GOV_SCHEDUTIL y
   CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
   ACPI_PCI_SLOT y
   ACPI_HOTPLUG_MEMORY y
@@ -147,6 +155,9 @@ with stdenv.lib;
     SLAB_FREELIST_HARDENED y
   ''}
   PCIE_PTM y
+  ${optionalString (versionAtLeast version "5.7") ''
+    PCIE_EDR y
+  ''}
   ${optionalString (versionAtLeast version "4.12") ''
     PCI_ENDPOINT y
     PCI_ENDPOINT_CONFIGFS y
@@ -197,6 +208,10 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "5.6") ''
     INET_ESPINTCP y
     MPTCP y
+  ''}
+  ${optionalString (versionAtLeast version "5.7") ''
+    IPV6_RPL_LWTUNNEL y
+    HAMRADIO y
   ''}
   IP_PNP n
   IP_MROUTE_MULTIPLE_TABLES y
@@ -429,7 +444,9 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "5.5") ''
     SND_SOC_SOF_JASPERLAKE_SUPPORT y
-    SND_SOC_SOF_HDA_COMMON_HDMI_CODEC y
+    ${optionalString (versionOlder version "5.7") ''
+      SND_SOC_SOF_HDA_COMMON_HDMI_CODEC y
+    ''}
   ''}
 
   # USB devices
@@ -453,6 +470,9 @@ with stdenv.lib;
     USB_SERIAL_KEYSPAN_USA19QI y
     USB_SERIAL_KEYSPAN_USA49W y
     USB_SERIAL_KEYSPAN_USA49WLC y
+  ''}
+  ${optionalString (versionAtLeast version "5.7") ''
+    U_SERIAL_CONSOLE y
   ''}
 
   # Filesystem options - in particular, enable extended attributes and
@@ -536,7 +556,7 @@ with stdenv.lib;
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
   NFSD_FLEXFILELAYOUT y
-  ${optionalString (versionAtLeast version "5.6") ''
+  ${optionalString (versionAtLeast version "5.6" && versionOlder version "5.7") ''
     NFSD_V4_2_INTER_SSC y
   ''}
   ${optionalString (versionAtLeast version "4.19") ''
@@ -583,6 +603,9 @@ with stdenv.lib;
   ''}
 
   # Security related features.
+  ${optionalString (versionAtLeast version "5.7") ''
+    BPF_LSM y
+  ''}
   RANDOMIZE_BASE y
   STRICT_DEVMEM y # Filter access to /dev/mem
   IO_STRICT_DEVMEM y

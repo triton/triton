@@ -48,7 +48,7 @@ let
   sources = {
     "2.7" = {
       versionPatch = "18";
-      sha256 = "4d43f033cdbd0aa7b7023c81b0e986fd11e653b5248dac9144d508f11812ba41";
+      sha256 = "b62c0e7937551d0cc02b8fd5cb0f544f9405bafc9a54d3808ed4594812edef43";
       # Benjamin Peterson
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };

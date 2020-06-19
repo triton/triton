@@ -5,19 +5,19 @@
 }:
 
 let
-  name = "libcap-2.26";
+  name = "libcap-2.34";
 
   tarballUrls = [
     "mirror://kernel/linux/libs/security/linux-privs/libcap2/${name}.tar"
   ];
 in
 stdenv.mkDerivation rec {
-  name = "libcap-2.26";
+  inherit name;
   
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "b630b7c484271b3ba867680d6a14b10a86cfa67247a14631b14c06731d5a458b";
+    sha256 = "aecdd42015955068d3d94b7caa9590fcb2de5df53ce53c61a21b912bfc0b1611";
   };
   
   nativeBuildInputs = [

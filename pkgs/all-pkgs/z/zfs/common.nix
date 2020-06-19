@@ -22,33 +22,33 @@ let
 in
 {
   "stable" = rec {
-    version = "0.8.3";
-    maxLinuxVersion = "5.4";
+    version = "0.8.4";
+    maxLinuxVersion = "5.6";
     src = fetcher {
       inherit version;
-      sha256 = "545a4897ce30c2d2dd9010a0fdb600a0d3d45805e2387093c473efc03aa9d7fd";
+      sha256 = "2b988f5777976f09d08083f6bebf6e67219c4c4c183c1f33033fb7e5e5eacafb";
     };
     patches = [
       (fetchTritonPatch {
-        rev = "cde0dd71d1cd1f7b91d783a80b6dddda4c165886";
+        rev = "4f87fc5682b539844e878b8b914332d53384edcf";
         file = "z/zfs/0.8/0001-Fix-binary-paths.patch";
-        sha256 = "561a213bf25d334656d7be2b743229e7ffc82533642f222ea65768bc3461f74c";
+        sha256 = "9882f9f3c078735e0bde6ae57435ff6a53a35796a3f0b1d5e4d879c33d6cba0c";
       })
     ];
   };
   "dev" = {
-    date = "2020-02-14";
-    maxLinuxVersion = "5.5";
+    date = "2020-05-23";
+    maxLinuxVersion = "5.7";
     src = fetcher {
       fetchzipVersion = 6;
-      rev = "ecbbdac799e0fd33f9d8b5fd6315008e3b4c9a50";
-      sha256 = "c1a12e63d78b47dc4e16302124e8e2aafb3fdf7492d7fff18b7b1ec66626520d";
+      rev = "c946d5a91329b075fb9bda1ac703a2e85139cf1c";
+      sha256 = "fcba79f65f2d07b001abee03190cf608657cc335a6c08d6e9b6aca5a9ad35c00";
     };
     patches = [
       (fetchTritonPatch {
-        rev = "0dbe87cf3492212d1cbddf9b24f579bf1cfbe2e5";
+        rev = "4f87fc5682b539844e878b8b914332d53384edcf";
         file = "z/zfs/0001-Fix-binary-paths.patch";
-        sha256 = "233d3449babd612625a2fdd2bfceb4356329af77db3c1aba76e5447ccd0f4973";
+        sha256 = "799eadfd47ab72a0c152f9bd3cce789bc0aa9c077687052f03fba94fee7dd9bd";
       })
     ];
   };

@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "0.178";
+  version = "0.179";
 in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceware/elfutils/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "31e7a00e96d4e9c4bda452e1f2cdac4daf8abd24f5e154dee232131899f3a0f2";
+    sha256 = "25a545566cbacaa37ae6222e58f1c48ea4570f53ba991886e2f5ce96e22a23a2";
   };
 
   nativeBuildInputs = [
@@ -38,10 +38,6 @@ stdenv.mkDerivation rec {
     "--enable-deterministic-archives"
     "--disable-debuginfod"
   ];
-
-  preFixup = ''
-    rm "$out"/lib/pkgconfig/libdebuginfod.pc
-  '';
 
   passthru = {
     inherit version;

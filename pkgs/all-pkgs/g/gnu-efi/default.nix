@@ -5,14 +5,14 @@
 }:
 
 let
-  version = "3.0.11";
+  version = "3.0.12";
 in
 stdenv.mkDerivation rec {
   name = "gnu-efi-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/gnu-efi/${name}.tar.bz2";
-    sha256 = "f28da792a2532e91e18e0101468811739a22cde9eee5eacfd0efb9bf3a61d6b9";
+    sha256 = "0196f2e1fd3c334b66e610a608a0e59233474c7a01bec7bc53989639aa327669";
   };
 
   buildInputs = [

@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "2.0.12";
+  version = "2.0.13";
 in
 stdenv.mkDerivation rec {
   name = "numactl-${version}";
 
   src = fetchurl {
     url = "https://github.com/numactl/numactl/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "55bbda363f5b32abd057b6fbb4551dd71323f5dbb66335ba758ba93de2ada729";
+    sha256 = "991e254b867eb5951a44d2ae0bf1996a8ef0209e026911ef6c3ef4caf6f58c9a";
   };
 
   disableStatic = false;

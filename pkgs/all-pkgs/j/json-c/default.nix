@@ -1,24 +1,26 @@
 { stdenv
-, autoconf
+, cmake
 , fetchurl
+, ninja
 }:
 
 stdenv.mkDerivation rec {
-  name = "json-c-0.13.1";
+  name = "json-c-0.14";
 
   src = fetchurl {
     url = "https://s3.amazonaws.com/json-c_releases/releases/${name}-nodoc.tar.gz";
-    multihash = "QmcZKHLKKMKbQH3Gm7C57LnskNGCcvSJNDRyahiKSjib9X";
-    sha256 = "94a26340c0785fcff4f46ff38609cf84ebcd670df0c8efd75d039cc951d80132";
+    multihash = "QmaFo9Kdn2EooGdriKKNGeV7g9BJpTVPYzEL8V8bFv9Abk";
+    sha256 = "99914e644a25201d82ccefa20430f7515c110923360f9ef46755527c02412afa";
   };
 
   nativeBuildInputs = [
-    autoconf
+    cmake
+    ninja
   ];
 
-  configureFlags = [
-    "--enable-threading"
-    "--enable-rdrand"
+  cmakeFlags = [
+    "-DENABLE_RDRAND=ON"
+    "-DENABLE_THREADING=ON"
   ];
 
   meta = with stdenv.lib; {

@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "conntrack-tools-1.4.5";
+  name = "conntrack-tools-1.4.6";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/conntrack-tools/files/${name}.tar.bz2";
-    multihash = "QmctmXVM84zF4VTqkaCGd7hdzr6zi8AqqFgVHET9EUDFFe";
+    multihash = "QmPLZc3ijvwicuDMDwZdqnFMxyYnRKKvy8C73XaWkez14M";
     hashOutput = false;
-    sha256 = "36c6d99c7684851d4d72e75bd07ff3f0ff1baaf4b6f069eb7244990cd1a9a462";
+    sha256 = "590859cc848245dbfd9c6487761dd303b3a1771e007f4f42213063ca56205d5f";
   };
 
   nativeBuildInputs = [
@@ -61,8 +61,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrl = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      fullOpts = {
+        pgpsigUrl = map (n: "${n}.sig") src.urls;
+        pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      };
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

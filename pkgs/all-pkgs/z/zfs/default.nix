@@ -83,6 +83,7 @@ stdenv.mkDerivation rec {
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
+      "initconfdir=$out/etc/default"
     )
   '';
 

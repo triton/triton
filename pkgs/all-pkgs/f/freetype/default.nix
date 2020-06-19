@@ -21,15 +21,15 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "freetype-2.10.0";
+  name = "freetype-2.10.2";
 
   src = fetchurl {
     urls = [
-      "mirror://savannah/freetype/${name}.tar.bz2"
-      "mirror://sourceforge/freetype/${name}.tar.bz2"
+      "mirror://savannah/freetype/${name}.tar.xz"
+      "mirror://sourceforge/freetype/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "fccc62928c65192fff6c98847233b28eb7ce05f12d2fea3f6cc90e8b4e5fbe06";
+    sha256 = "1543d61025d2e6312e0a1c563652555f17378a204a61e99928c9fcef030a2d8b";
   };
 
   buildInputs = [

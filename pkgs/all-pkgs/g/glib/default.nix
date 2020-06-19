@@ -34,7 +34,7 @@ let
   '';
 
   channel = "2.64";
-  version = "${channel}.0";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "glib-${version}";
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "e5e514e47d169cdb4111c3ea4af0300e1b1a5f428a474d2d7ddadf38dd061280";
+    sha256 = "fe9cbc97925d14c804935f067a3ad77ef55c0bbe9befe68962318f5a767ceb22";
   };
 
   nativeBuildInputs = [

@@ -17,9 +17,9 @@ let
       version = "1.66.0";
       sha256 = "5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9";
     };
-    "1.72" = {
-      version = "1.72.0";
-      sha256 = "59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722";
+    "1.73" = {
+      version = "1.73.0";
+      sha256 = "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402";
     };
   };
   inherit (lib)

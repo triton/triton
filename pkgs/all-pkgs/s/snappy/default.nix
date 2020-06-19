@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.1.7";
+  version = "1.1.8";
 in
 stdenv.mkDerivation rec {
   name = "snappy-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "snappy";
     rev = version;
-    sha256 = "9f2bca05556d72c4597ce4a1d6963676d11eb6ddb4606ea4ad6eed03899f3680";
+    sha256 = "68065122872f48c29f98801ec7092345f94cbf6f18447e4dba9ceb6319c0c1db";
   };
 
   nativeBuildInputs = [

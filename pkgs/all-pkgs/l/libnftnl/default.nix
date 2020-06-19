@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libnftnl-1.1.5";
+  name = "libnftnl-1.1.6";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnftnl/files/${name}.tar.bz2";
-    multihash = "QmaX3dXXEnNy5ii6yTPgMUASR2zvT9CkF8vizWM1cqHSqn";
+    multihash = "QmYAGPPaTzG5rPqc8STQdEiJohLJfnzp6aUev6MojKR5cm";
     hashOutput = false;
-    sha256 = "66de4d05227c0a1a731c369b193010d18a05b1185c2735211e0ecf658eeb14f3";
+    sha256 = "c1eb5a696fc1d4b3b412770586017bc01af93da3ddd25233d34a62979dee1eca";
   };
 
   buildInputs = [

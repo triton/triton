@@ -765,10 +765,10 @@ boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 boost_1-66 = callPackage ../all-pkgs/b/boost {
   channel = "1.66";
 };
-boost_1-72 = callPackage ../all-pkgs/b/boost {
-  channel = "1.72";
+boost_1-73 = callPackage ../all-pkgs/b/boost {
+  channel = "1.73";
 };
-boost = callPackageAlias "boost_1-72" { };
+boost = callPackageAlias "boost_1-73" { };
 
 borgbackup = pkgs.python3Packages.borgbackup;
 
@@ -4525,22 +4525,17 @@ libstartup_notification =
 
   linux_4-19 = callPackage ../all-pkgs/l/linux {
     channel = "4.19";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
-  linux_5-3 = callPackage ../all-pkgs/l/linux {
-    channel = "5.3";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper pkgs.kernelPatches.gcc10_compat ];
   };
 
   linux_5-4 = callPackage ../all-pkgs/l/linux {
     channel = "5.4";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper pkgs.kernelPatches.gcc10_compat ];
   };
 
   linux_5-6 = callPackage ../all-pkgs/l/linux {
     channel = "5.6";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper pkgs.kernelPatches.gcc10_compat ];
   };
 
   linux_testing = callPackage ../all-pkgs/l/linux {

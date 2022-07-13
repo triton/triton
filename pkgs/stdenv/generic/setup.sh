@@ -1,4 +1,4 @@
-set -e
+set -o errexit
 set -o pipefail
 set -u
 

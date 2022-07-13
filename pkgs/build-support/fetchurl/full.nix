@@ -32,41 +32,41 @@
   curlOpts ? ""
 
 , sha256Url ? ""
-, sha256Urls ? []
+, sha256Urls ? [ ]
 , sha256Confirm ? ""
 , sha512Url ? ""
-, sha512Urls ? []
+, sha512Urls ? [ ]
 , sha512Confirm ? ""
 
 , sha1Confirm ? ""
 , sha1Url ? ""
-, sha1Urls ? []
+, sha1Urls ? [ ]
 , md5Confirm ? ""
 , md5Url ? ""
-, md5Urls ? []
+, md5Urls ? [ ]
 
 , minisignPub ? ""
 , minisignUrl ? ""
-, minisignUrls ? []
+, minisignUrls ? [ ]
 
 , pgpKeyFingerprint ? ""
-, pgpKeyFingerprints ? []
+, pgpKeyFingerprints ? [ ]
 , pgpKeyFile ? null
 , pgpsigUrl ? ""
-, pgpsigUrls ? []
+, pgpsigUrls ? [ ]
 , pgpsigMd5Url ? ""
-, pgpsigMd5Urls ? []
+, pgpsigMd5Urls ? [ ]
 , pgpsigSha1Url ? ""
-, pgpsigSha1Urls ? []
+, pgpsigSha1Urls ? [ ]
 , pgpsigSha256Url ? ""
-, pgpsigSha256Urls ? []
+, pgpsigSha256Urls ? [ ]
 , pgpsigSha512Url ? ""
-, pgpsigSha512Urls ? []
+, pgpsigSha512Urls ? [ ]
 , pgpDecompress ? false
 
 , signifyPub ? ""
 , signifyUrl ? ""
-, signifyUrls ? []
+, signifyUrls ? [ ]
 
 , # Shell code executed before the file has been fetched.
   # This can do things like force a site to generate the file.
@@ -86,9 +86,8 @@
   downloadToTemp ? false
 
 , # Meta information, if any.
-  meta ? {}
+  meta ? { }
 }:
-
 let
   common = import ./common.nix;
 
@@ -129,7 +128,7 @@ let
   pgpsigSha1Urls_ = (if pgpsigSha1Url != "" then [ pgpsigSha1Url ] else [ ]) ++ pgpsigSha1Urls;
   pgpsigSha256Urls_ = (if pgpsigSha256Url != "" then [ pgpsigSha256Url ] else [ ]) ++ pgpsigSha256Urls;
   pgpsigSha512Urls_ = (if pgpsigSha512Url != "" then [ pgpsigSha512Url ] else [ ]) ++ pgpsigSha512Urls;
-  pgpKeyFingerprints_ = map (n: replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
+  pgpKeyFingerprints_ = map (n: replaceChars [ " " ] [ "" ] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
   signifyUrls_ = (if signifyUrl != "" then [ signifyUrl ] else [ ]) ++ signifyUrls;
 in
 stdenv.mkDerivation {
@@ -151,7 +150,7 @@ stdenv.mkDerivation {
     curl_minimal.bin
     openssl.bin
     textencode
-  ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
+  ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != [ ]) [
     gnupg
   ] ++ optionals (minisignPub != "") [
     minisign

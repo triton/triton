@@ -212,7 +212,6 @@ let
       xpdf = linux;
       xscreensaver = linux;
       xsel = linux;
-      xterm = linux;
       zdelta = linux;
       zsh = linux;
 

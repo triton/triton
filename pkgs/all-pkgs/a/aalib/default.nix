@@ -4,7 +4,6 @@
 
 , ncurses
 }:
-
 let
   version = "1.4rc5";
 in

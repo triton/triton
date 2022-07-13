@@ -1,12 +1,10 @@
 { config, lib, pkgs, ... }:
-
 let
   inherit (lib)
     mkIf
     mkOption
     types;
 in
-
 {
   options = {
 

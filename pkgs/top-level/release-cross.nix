@@ -310,7 +310,6 @@ let
       abi = "32";
       arch = "mips32";
     };
-    mpg123.cpu = "generic_nofpu";
   };
 in {
   nanonote = mapTestOnCross crossSystem {
@@ -328,7 +327,6 @@ in {
     nix.crossDrv = nativePlatforms;
     fossil.crossDrv = nativePlatforms;
     binutils.crossDrv = nativePlatforms;
-    mpg123.crossDrv = nativePlatforms;
     yacas.crossDrv = nativePlatforms;
   };
 }) // (
@@ -373,7 +371,6 @@ in {
     nix.crossDrv = nativePlatforms;
     fossil.crossDrv = nativePlatforms;
     binutils.crossDrv = nativePlatforms;
-    mpg123.crossDrv = nativePlatforms;
     yacas.crossDrv = nativePlatforms;
   };
 })

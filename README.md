@@ -1,32 +1,28 @@
 Triton
 ======
 
-Triton is a collection of packages for the [Nix](https://nixos.org/nix/) package
-manager.
+This repo is the untouched commit history for triton-linux-distribution and
+triton-software-distribution.
 
-[Triton](https://nixos.org/nixos/) linux distribution source code is located inside the
-`nixos/` folder.
+```sh
+git clone triton triton-software-distribution/
+git filter-repo \
+    --paths nixos/ \
+    --paths services \
+    --paths pkgs/development/haskell-modules/ \
+    --paths pkgs/development/libraries/haskell/ \
+    --invert-paths
 
-##### Discussion Channels
-* [Matrix](https://matrix.org) Community: `+triton:matrix.org`
+git clone triton triton-linux-distribution/
+git filter-repo \
+    --paths lib/ \
+    --paths pkgs/ \
+    --paths tools/ \
+    --paths Dockerfile \
+    --paths .dockerignore \
+    --paths deault.nix \
+    --invert-paths
+git filter-repo \
+    --path-rename nixos/:''
+```
 
-[Documentation](https://triton.github.io/triton/)
-
-##### Legacy Documentation
-* [NixOS installation instructions](https://nixos.org/nixos/manual/#ch-installation)
-* [Documentation (Nix Expression Language chapter)](https://nixos.org/nix/manual/#ch-expression-language)
-* [Manual (How to write packages for Nix)](https://nixos.org/nixpkgs/manual/)
-* [Manual (NixOS)](https://nixos.org/nixos/manual/)
-* [Nix Wiki](https://nixos.org/wiki/)
-
-##### Supported Platforms `(not all platforms implemented)`
-+ `ARM` requires: `NEON`, `VFPv3+` (aka. armv7+)
-  * `armv7l-linux` WIP
-  * `armv8l-linux` WIP
-  * `aarch64-linux` WIP
-+ `x86` requires: `MMX`,`SSE`,`SSE2`,`SSE3`,`SSSE3`,`SSE4`,`SSE4.1`,`SSE4.2`,`AES`
- (aka. at least Intel Westmere, AMD 15h, or VIA Eden x4)
-  * `i686-linux` (libs only)
-  * `x86_64-linux`
-+ `POWER` requires: POWER8+
-  * `powerpc64le-linux` Incomplete

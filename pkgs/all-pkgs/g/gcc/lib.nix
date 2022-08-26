@@ -3,7 +3,6 @@
 , fetchurl
 , gcc
 , lib
-, patchelf
 
 , type ? null
 }:
@@ -23,7 +22,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cc
-    patchelf
   ];
 
   configureFlags = gcc.commonConfigureFlags ++ optionals (type == "nolibc") [

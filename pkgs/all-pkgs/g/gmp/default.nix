@@ -1,5 +1,4 @@
 { stdenv
-, cc
 , fetchurl
 , gnum4
 
@@ -29,7 +28,6 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    cc
     gnum4
   ];
 

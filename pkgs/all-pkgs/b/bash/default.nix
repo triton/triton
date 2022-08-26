@@ -1,6 +1,4 @@
 { stdenv
-, cc
-, hostcc
 , fetchurl
 , lib
 
@@ -34,8 +32,6 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    cc
-    hostcc
   ];
 
   buildInputs = optionals (type == "full") [

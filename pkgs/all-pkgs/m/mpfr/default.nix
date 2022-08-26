@@ -1,5 +1,4 @@
 { stdenv
-, cc
 , fetchurl
 
 , gmp
@@ -29,7 +28,6 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    cc
   ];
 
   buildInputs = [

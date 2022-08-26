@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, hostcc
+, cc
 , lib
 
 , channel
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     src;
 
   nativeBuildInputs = [
-    hostcc
+    cc
   ];
 
   patches = [

@@ -9,9 +9,14 @@ git clone triton triton-software-distribution/
 git filter-repo \
     --paths nixos/ \
     --paths services \
-    --paths pkgs/development/haskell-modules/ \
-    --paths pkgs/development/libraries/haskell/ \
     --invert-paths
+git filter-repo \
+    --path-rename pkgs/build-support/:build-support/ \
+    --path-rename pkgs/stdenv/:stdenv/ \
+    --path-rename pkgs/top-level/:sets/ \
+    --path-rename maintainers/scripts:tools/ \
+    --path-rename maintainers/docker/Dockerfile:Dockerfile \
+    --path-rename maintainers/docker/.dockerignore:.dockerignore
 
 git clone triton triton-linux-distribution/
 git filter-repo \

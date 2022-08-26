@@ -1,12 +1,11 @@
 { stdenv
 , cargo
-, cc_gcc_new
 , fetchurl
 , lib
 , python3
 , rustc
 
-, llvm_split
+, llvm
 , xz
 
 , channel
@@ -37,7 +36,7 @@ let
     src
     deps;
 in
-(stdenv.override { cc = cc_gcc_new; }).mkDerivation {
+stdenv.mkDerivation {
   name = "rustc-${version}";
 
   inherit src;
@@ -49,7 +48,7 @@ in
   ];
 
   buildInputs = [
-    llvm_split
+    llvm
     xz
   ];
 
@@ -71,7 +70,7 @@ in
     "--enable-llvm-link-shared"
     "--enable-vendor"
     "--enable-optimize"
-    "--llvm-root=${llvm_split}"
+    "--llvm-root=${llvm}"
     "--release-channel=${channel}"
   ];
 
@@ -108,8 +107,8 @@ in
   ];
 
   disallowedReferences = [
-    llvm_split.bin
-    llvm_split.dev
+    llvm.bin
+    llvm.dev
   ];
 
   setupHook = ./setup-hook.sh;

@@ -6,7 +6,6 @@
 # compiler and the linker just "work".
 
 { stdenv
-, cc
 , lib
 , fetchurl
 }:
@@ -54,7 +53,6 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    cc
   ];
 
   preConfigure = ''

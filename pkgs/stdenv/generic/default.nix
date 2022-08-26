@@ -6,6 +6,7 @@ lib.makeOverridable (
   , name ? "stdenv"
   , preHook ? ""
   , initialPath
+  , cc
   , shell
   , optionalChroot ? false
   , allowSubstitutes ? true
@@ -126,6 +127,7 @@ lib.makeOverridable (
       ../../build-support/setup-hooks/pkgconfig-empty.sh
       ../../build-support/setup-hooks/strip-empty.sh
       ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
+      cc
     ] ++ extraBuildInputs;
 
     defaultBuildInputs = [ ];
@@ -386,6 +388,8 @@ lib.makeOverridable (
         inherit lib;
 
         inherit overrides;
+
+        inherit cc;
       }
 
       # Propagate any extra attributes.  For instance, we use this to

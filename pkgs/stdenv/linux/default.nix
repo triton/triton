@@ -94,6 +94,8 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0";
 
+      cc = null;
+
       preHook = commonBootstrapOptions.preHook + ''
         # We don't have this support yet
         doPatchELF=
@@ -118,7 +120,8 @@ let
           compiler = bootstrapCompiler;
         };
 
-        cc = cc_gcc_glibc;
+        #cc = cc_gcc_glibc;
+        cc = null;
       };
     });
   };
@@ -128,6 +131,8 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0.1";
+
+      cc = stage0Pkgs.cc_gcc_glibc;
 
       preHook = commonBootstrapOptions.preHook + ''
         # We don't have this support yet
@@ -162,6 +167,8 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0.2";
 
+      cc = stage0Pkgs.cc_gcc_glibc;
+
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage02Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit lib;
         inherit (pkgs) stdenv;
@@ -180,7 +187,6 @@ let
         inherit (stage0Pkgs) cc fetchurl fetchTritonPatch;
         inherit (stage01Pkgs) bison patchelf;
         inherit (pkgs) gmp libmpc mpfr zlib;
-        hostcc = null;
       };
     });
   };
@@ -190,6 +196,8 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1";
+
+      cc = null;
 
       preHook = commonBootstrapOptions.preHook + ''
         NIX_SYSTEM_HOST='${bootstrapTarget}'
@@ -202,7 +210,7 @@ let
           gcc_cxx_glibc libidn2_glibc libunistring_glibc cc_gcc_early cc_gcc_glibc_headers cc_gcc_glibc_nolibc
           cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
 
-        hostcc = stage0Pkgs.cc_gcc_glibc.override {
+        cc = stage0Pkgs.cc_gcc_glibc.override {
           type = "build";
         };
 
@@ -230,6 +238,12 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1.1";
 
+      cc = stage1Pkgs.cc_gcc_glibc;
+
+      extraBuildInputs = [
+        stage01Pkgs.patchelf
+      ];
+
       preHook = commonBootstrapOptions.preHook + ''
         NIX_SYSTEM_HOST='${bootstrapTarget}'
         NIX_SYSTEM_BUILD="$('${bootstrapCompiler}'/bin/gcc -dumpmachine)" || exit 1
@@ -239,8 +253,6 @@ let
         inherit lib;
         inherit (pkgs) stdenv isl isl_0-22 libmpc mpfr bash_small coreutils_small gawk_small pcre
           gnupatch_small gnused_small gnutar_small xz wrapCC patchelf;
-
-        cc = stage1Pkgs.cc_gcc_glibc;
 
         python_tiny = pkgs.python_tiny.override {
           python = stage01Pkgs.python_tiny;
@@ -316,7 +328,7 @@ let
 
         # These are only needed to evaluate
         inherit (stage0Pkgs) fetchurl fetchTritonPatch;
-        inherit (stage1Pkgs) linux-headers hostcc;
+        inherit (stage1Pkgs) linux-headers cc;
         brotli = null;
       };
     });
@@ -328,9 +340,11 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // {
       name = "stdenv-linux-boot-stage2";
+      cc = null;
       shell = stage11Pkgs.bash_small + stage11Pkgs.bash_small.shellPath;
       initialPath = lib.mapAttrsToList (_: v: v.bin or v) ((import ../generic/common-path.nix) { pkgs = stage11Pkgs; });
       extraBuildInputs = [
+        stage11Pkgs.patchelf
         ../../build-support/setup-hooks/compress-man-pages.sh
         ../../build-support/setup-hooks/patch-shebangs.sh
         ../../build-support/setup-hooks/build-dir-check.sh
@@ -350,7 +364,7 @@ let
         # This is hacky so that we don't depend on the external system
         # runtimes to execute the initial bootstrap compiler. We use our
         # new compiler with our old runtimes.
-        hostcc = pkgs.cc_gcc_glibc.override {
+        cc = pkgs.cc_gcc_glibc.override {
           type = "build";
           compiler = pkgs.cc_relinker {
             tool = stage11Pkgs.gcc.bin;
@@ -387,10 +401,12 @@ let
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // {
       name = "stdenv-linux-boot-stage2.1";
+      cc = stage2Pkgs.cc_gcc_glibc;
       shell = stage11Pkgs.bash_small + stage11Pkgs.bash_small.shellPath;
       initialPath = lib.mapAttrsToList (_: v: v.bin or v) ((import ../generic/common-path.nix) { pkgs = stage11Pkgs; });
 
       extraBuildInputs = [
+        stage11Pkgs.patchelf
         ../../build-support/setup-hooks/compress-man-pages.sh
         ../../build-support/setup-hooks/patch-shebangs.sh
         ../../build-support/setup-hooks/build-dir-check.sh
@@ -415,7 +431,6 @@ let
         inherit (stage0Pkgs) fetchurl fetchTritonPatch;
         inherit (stage11Pkgs) gnum4;
         inherit (pkgs) wrapCC;
-        hostcc = null;
       };
     });
   };
@@ -431,10 +446,13 @@ let
 
     # We need patchelf to be a buildInput since it has to install a setup-hook.
     extraBuildInputs = with stage21Pkgs; [
+      patchelf
       ../../build-support/setup-hooks/compress-man-pages.sh
       ../../build-support/setup-hooks/patch-shebangs.sh
       ../../build-support/setup-hooks/build-dir-check.sh
     ];
+
+    cc = stage21Pkgs.cc_gcc_glibc;
 
     shell = stage21Pkgs.bash_small + stage21Pkgs.bash_small.shellPath;
 
@@ -503,8 +521,8 @@ let
         cc_gcc_glibc_nolibgcc cc_gcc_glibc_early cc_gcc_glibc;
       libidn2 = libidn2_glibc;
       libunistring = libunistring_glibc;
+      #cc = stage21Pkgs.cc_gcc_glibc;
       cc = stage21Pkgs.cc_gcc_glibc;
-      hostcc = cc;
       glibc_headers = glibc_headers_gcc;
       glibc_lib = glibc_lib_gcc;
       gcc_lib = gcc_lib_glibc;

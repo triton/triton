@@ -14,6 +14,6 @@
     gnused_small
     gnutar_small
     gzip
-    pkgconfig
+    #pkgconfig
     xz;
 }

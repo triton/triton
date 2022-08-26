@@ -848,7 +848,6 @@ cantarell_fonts = callPackage ../all-pkgs/c/cantarell-fonts { };
 caribou = callPackage ../all-pkgs/c/caribou { };
 
 cc = null;
-hostcc = null;
 
 cc_relinker = callPackage ../build-support/cc-relinker { };
 
@@ -3265,7 +3264,6 @@ man = callPackage ../all-pkgs/m/man { };
 man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/ean-pages { };
-  freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
 
 mariadb = callPackage ../all-pkgs/m/mariadb { };
 mysql = callPackageAlias "mariadb" { };

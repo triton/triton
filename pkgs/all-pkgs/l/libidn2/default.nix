@@ -1,7 +1,6 @@
 { stdenv
 , cc
 , fetchurl
-, hostcc
 , lib
 
 , libunistring
@@ -28,7 +27,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cc
-    hostcc
   ];
 
   buildInputs = [

@@ -1,7 +1,6 @@
 { stdenv
 , lib
 , cc
-, hostcc
 , gcc
 , gcc_lib
 
@@ -25,7 +24,6 @@ in
 
   nativeBuildInputs = [
     cc
-    hostcc
   ];
 
   configureFlags = gcc.commonConfigureFlags ++ [

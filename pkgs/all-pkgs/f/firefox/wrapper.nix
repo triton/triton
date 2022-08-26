@@ -19,7 +19,6 @@
 #, bluejeans
 #, djview4
 #, adobe-reader
-, google_talk_plugin
 #, fribid
 , gnome-shell
 , dconf
@@ -70,7 +69,6 @@ let
       #++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
       #++ optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
       #++ optional icedtea icedtea_web
-      ++ optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
       #++ optional (cfg.enableFriBIDPlugin or false) fribid
       ++ optional (cfg.enableGnomeExtensions or false) gnome-shell
       #++ optional (cfg.enableTrezor or false) trezor-bridge
